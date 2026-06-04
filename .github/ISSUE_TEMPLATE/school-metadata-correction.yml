@@ -1,0 +1,40 @@
+name: School metadata correction
+description: Request a source-backed correction to a school profile field.
+title: "School metadata correction: "
+labels:
+  - school-metadata
+  - correction
+  - pending-review
+body:
+  - type: markdown
+    attributes:
+      value: |
+        School metadata corrections must identify the institution, the field to amend, and a public source supporting the requested change.
+  - type: input
+    id: school
+    attributes:
+      label: School ID or name
+      description: Example: university_of_kentucky or University of Kentucky.
+    validations:
+      required: true
+  - type: input
+    id: field
+    attributes:
+      label: Field to correct
+      description: Example: name, state, school_type, location.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Requested metadata correction
+      description: State the correction in neutral language.
+    validations:
+      required: true
+  - type: input
+    id: source_url
+    attributes:
+      label: Public source URL
+      description: Public source supporting the requested metadata correction.
+    validations:
+      required: true

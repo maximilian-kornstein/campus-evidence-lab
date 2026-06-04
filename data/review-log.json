@@ -1,0 +1,85 @@
+{
+  "version": "0.1.0",
+  "updated_at": "2026-06-04",
+  "queues": [
+    {
+      "name": "source-submissions",
+      "status": "open",
+      "public_entrypoint": ".github/ISSUE_TEMPLATE/source-submission.yml",
+      "accepted_evidence": [
+        "campus newspaper reporting",
+        "university statement",
+        "public safety notice",
+        "public legal filing",
+        "government release",
+        "reliable journalism"
+      ],
+      "excluded_evidence": [
+        "private screenshots",
+        "direct messages",
+        "private testimony",
+        "sensitive personal information",
+        "unverified social media-only claims"
+      ]
+    },
+    {
+      "name": "correction-requests",
+      "status": "open",
+      "public_entrypoint": ".github/ISSUE_TEMPLATE/correction-request.yml",
+      "accepted_evidence": [
+        "record ID",
+        "field to correct",
+        "neutral requested correction",
+        "public source URL"
+      ],
+      "excluded_evidence": [
+        "unsupported assertions",
+        "private personal information",
+        "requests without public source support"
+      ]
+    },
+    {
+      "name": "duplicate-reports",
+      "status": "open",
+      "public_entrypoint": ".github/ISSUE_TEMPLATE/duplicate-report.yml",
+      "accepted_evidence": [
+        "primary record ID",
+        "possible duplicate record ID",
+        "neutral explanation of overlap",
+        "public source URL"
+      ],
+      "excluded_evidence": [
+        "unsupported assertions",
+        "private personal information",
+        "duplicate claims without record IDs"
+      ]
+    },
+    {
+      "name": "school-metadata-corrections",
+      "status": "open",
+      "public_entrypoint": ".github/ISSUE_TEMPLATE/school-metadata-correction.yml",
+      "accepted_evidence": [
+        "school ID or name",
+        "field to correct",
+        "neutral requested metadata correction",
+        "public source URL"
+      ],
+      "excluded_evidence": [
+        "unsupported assertions",
+        "private personal information",
+        "requests without public source support"
+      ]
+    }
+  ],
+  "decision_counts": {
+    "pending": 0,
+    "accepted": 0,
+    "rejected": 0,
+    "needs_more_evidence": 0
+  },
+  "service_standard": {
+    "triage_target_days": 7,
+    "publication_rule": "No submitted record is published until public source review is complete.",
+    "correction_rule": "Accepted corrections update the event changelog, record hash, dataset hash, and correction log."
+  }
+}

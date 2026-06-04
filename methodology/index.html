@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methodology / Campus Evidence Lab</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body data-page="methodology">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="/">
+          <span class="brand__name">Campus Evidence Lab</span>
+          <span class="brand__tag">Public evidence infrastructure</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="/" data-nav="dashboard">Dashboard</a>
+          <a href="/events/" data-nav="events">Events</a>
+          <a href="/schools/" data-nav="schools">Schools</a>
+          <a href="/briefs/" data-nav="briefs">Briefs</a>
+          <a href="/sources/" data-nav="sources">Sources</a>
+          <a href="/quality/" data-nav="quality">Quality</a>
+          <a href="/methodology/" data-nav="methodology">Methodology</a>
+          <a href="/downloads/" data-nav="downloads">Data</a>
+          <a href="/submit/" data-nav="submit">Submit</a>
+          <a href="/about/" data-nav="about">About</a>
+          <a href="/license/" data-nav="license">License</a>
+        </nav>
+      </div>
+    </header>
+    <main class="main prose">
+      <p class="page-kicker">Methodology</p>
+      <h1 class="page-title page-title--small">Standards before scale.</h1>
+      <p class="page-intro">The MVP tracks public-source records related to campus civil rights incidents and institutional responses. The first dataset focuses on campus antisemitism and shared-ancestry Title VI developments.</p>
+
+      <h2>Inclusion Criteria</h2>
+      <ul>
+        <li>Campus-related.</li>
+        <li>Connected to identity-based civil rights, discrimination, harassment, public policy, legal action, or institutional response.</li>
+        <li>Supported by at least one public source.</li>
+        <li>Written in neutral, attributed language.</li>
+        <li>Reviewed before publication.</li>
+      </ul>
+
+      <h2>Accepted Source Types</h2>
+      <ul>
+        <li>Campus newspaper reporting.</li>
+        <li>University statements and public policy notices.</li>
+        <li>Public safety notices.</li>
+        <li>Public legal filings.</li>
+        <li>OCR complaints, resolutions, and government releases.</li>
+        <li>Local or national journalism.</li>
+        <li>Nonprofit reports when methodology and source basis are clear.</li>
+      </ul>
+
+      <h2>Event Category Definitions</h2>
+      <ul>
+        <li>Harassment or threat: targeted harassment, threats, intimidation, or hostile-environment allegations.</li>
+        <li>Vandalism: property damage or defacement tied to identity-based hostility.</li>
+        <li>Discrimination allegation: public complaints, lawsuits, OCR matters, or institutional records alleging unequal treatment.</li>
+        <li>Institutional response: public actions by a school, agency, court, or accreditor responding to a civil-rights matter.</li>
+        <li>OCR complaint: public OCR complaints, investigations, letters, resolutions, or monitoring actions.</li>
+        <li>Lawsuit or legal filing: public court filings or legal actions.</li>
+      </ul>
+
+      <h2>Affected Community Definitions</h2>
+      <p>Affected communities are assigned only when supported by public source material. The field identifies the community named in the source record; it does not imply that Campus Evidence Lab independently determined motive, legal liability, or institutional fault.</p>
+
+      <h2>Exclusion Criteria</h2>
+      <ul>
+        <li>Private testimony.</li>
+        <li>Private screenshots or direct messages.</li>
+        <li>Unverified social media-only claims.</li>
+        <li>Records without public source links.</li>
+        <li>Private personal information.</li>
+        <li>Legal conclusions not present in source material.</li>
+      </ul>
+
+      <h2>Verification Status</h2>
+      <p>Verification describes the kind of public support behind a record. It does not determine legal truth and does not measure severity.</p>
+      <ul>
+        <li>Verified from public source.</li>
+        <li>Verified from multiple public sources.</li>
+        <li>Public allegation.</li>
+        <li>Institutional statement only.</li>
+        <li>Updated after correction.</li>
+      </ul>
+
+      <h2>Confidence</h2>
+      <p>Confidence describes source support, not moral severity.</p>
+      <ul>
+        <li>High: official documentation or multiple reliable public sources support the record.</li>
+        <li>Medium: one reliable public source supports the record, or public sources leave some details incomplete.</li>
+        <li>Low: a public source exists, but important details remain limited or disputed.</li>
+      </ul>
+
+      <h2>Review Workflow</h2>
+      <ul>
+        <li>A source is discovered or submitted.</li>
+        <li>A draft event record is created from public information only.</li>
+        <li>A reviewer checks the source, school, date, affected community, category, and attribution language.</li>
+        <li>The reviewer assigns verification status and confidence based on source support.</li>
+        <li>The record is published only after review.</li>
+        <li>Record hashes and snapshot hashes are regenerated after approved changes.</li>
+      </ul>
+
+      <h2>Correction Process</h2>
+      <p>Corrections must identify the record ID, the disputed field, and a public source supporting the change. Accepted corrections update the changelog and produce a new record hash. Rejected corrections should preserve a short rationale in review notes before the project has a formal public review queue.</p>
+
+      <h2>Privacy Limits</h2>
+      <p>The MVP does not collect private testimony or sensitive evidence. Public records should avoid naming private individuals unless a name is necessary to understand the public record and already appears in source material from a reliable public source.</p>
+
+      <h2>AI Use</h2>
+      <p>AI may assist with extraction, summarization, duplicate detection, and weekly brief drafting. AI does not publish records. Human review is required before a record appears in the public dataset.</p>
+
+      <h2>Integrity</h2>
+      <p>Each event receives a deterministic record hash. Each dataset snapshot receives a snapshot hash. Hashes are used to make silent retroactive edits easier to detect.</p>
+      <p>The current manifest is published at <a href="/data/snapshot-manifest.json">data/snapshot-manifest.json</a>. The current archived manifest is linked from the data downloads page. Weekly briefs reference the event dataset hash used for their record set.</p>
+
+      <h2>Limitations</h2>
+      <p>The dataset is not a complete census of campus civil-rights incidents. It reflects public-source availability, reviewer capacity, source discoverability, and the current scope of the MVP. Records should not be used as rankings, severity scores, or proof of legal liability.</p>
+
+      <h2>Versioning and Audit Policy</h2>
+      <p>Public changes regenerate record hashes, dataset hashes, snapshot manifests, the snapshot index, CSV exports, source audit metadata, and the public changelog. Archived snapshot manifests are listed in <a href="/data/snapshot-index.json">data/snapshot-index.json</a>. Before launch or major publication cycles, maintainers should run the advisory live source audit and manually review any failures.</p>
+    </main>
+    <footer class="site-footer">Campus Evidence Lab / Methodology is part of the product</footer>
+    <script type="module" src="/assets/app.js"></script>
+  </body>
+</html>

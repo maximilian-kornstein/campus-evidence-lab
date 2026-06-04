@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/event.schema.json",
+  "title": "Campus Evidence Lab Event",
+  "type": "object",
+  "required": [
+    "id",
+    "school_id",
+    "date",
+    "affected_communities",
+    "category",
+    "summary",
+    "description",
+    "source_ids",
+    "source_types",
+    "institutional_response",
+    "verification_status",
+    "confidence",
+    "tags",
+    "created_at",
+    "updated_at",
+    "record_hash",
+    "changelog"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^evt_[0-9]{4}_[0-9]{4}$" },
+    "school_id": { "type": "string" },
+    "date": { "type": "string", "format": "date" },
+    "date_precision": { "type": "string", "enum": ["day", "month", "year"] },
+    "location": { "type": "string" },
+    "affected_communities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "category": { "type": "string" },
+    "summary": { "type": "string" },
+    "description": { "type": "string" },
+    "source_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "source_types": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "institutional_response": { "type": "string" },
+    "response_date": { "type": ["string", "null"], "format": "date" },
+    "legal_status": { "type": "string" },
+    "verification_status": { "type": "string" },
+    "confidence": { "type": "string" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "created_at": { "type": "string", "format": "date" },
+    "updated_at": { "type": "string", "format": "date" },
+    "record_hash": { "type": "string" },
+    "changelog": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date", "note"],
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

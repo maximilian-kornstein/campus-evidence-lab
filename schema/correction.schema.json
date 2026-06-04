@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/correction.schema.json",
+  "title": "Campus Evidence Lab Correction",
+  "type": "object",
+  "required": [
+    "id",
+    "record_id",
+    "status",
+    "requested_at",
+    "field",
+    "requested_change",
+    "public_source_urls",
+    "public_rationale"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^corr_[0-9]{4}_[0-9]{4}$" },
+    "record_id": { "type": "string", "pattern": "^evt_[0-9]{4}_[0-9]{4}$" },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "accepted", "rejected", "needs_more_evidence"]
+    },
+    "requested_at": { "type": "string", "format": "date" },
+    "resolved_at": { "type": ["string", "null"], "format": "date" },
+    "field": { "type": "string" },
+    "requested_change": { "type": "string" },
+    "public_source_urls": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "public_rationale": { "type": "string" },
+    "applied_event_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^evt_[0-9]{4}_[0-9]{4}$" }
+    }
+  }
+}

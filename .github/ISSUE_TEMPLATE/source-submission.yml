@@ -1,0 +1,90 @@
+name: Public source submission
+description: Suggest a public source for review.
+title: "Source submission: "
+labels:
+  - source-submission
+  - pending-review
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Submit public sources only. Do not include private screenshots, direct messages, private testimony, names of private individuals, or sensitive personal information.
+  - type: input
+    id: source_url
+    attributes:
+      label: Public source URL
+      description: Campus newspaper, university statement, public legal filing, OCR/government release, public safety notice, or reliable journalism.
+    validations:
+      required: true
+  - type: input
+    id: school
+    attributes:
+      label: School
+      description: Institution name, city, and state if known.
+    validations:
+      required: true
+  - type: dropdown
+    id: affected_community
+    attributes:
+      label: Affected community
+      description: Choose the best public-source-supported category.
+      options:
+        - Jewish
+        - Asian
+        - Black
+        - Native
+        - Indigenous
+        - Latino
+        - Muslim
+        - Arab
+        - Palestinian
+        - Sikh
+        - Hindu
+        - LGBTQ+
+        - Disability
+        - Women
+        - Other source-backed civil rights community
+    validations:
+      required: true
+  - type: dropdown
+    id: event_category
+    attributes:
+      label: Event category
+      options:
+        - Harassment or threat
+        - Vandalism
+        - Discrimination allegation
+        - Protest-related incident
+        - Institutional response
+        - Public statement
+        - Policy change
+        - Public safety notice
+        - OCR complaint
+        - Lawsuit or legal filing
+        - Criminal investigation
+        - Community response
+        - Other source-backed civil rights event
+    validations:
+      required: true
+  - type: textarea
+    id: relevance
+    attributes:
+      label: Why this may fit
+      description: One or two neutral sentences explaining why the source may meet inclusion criteria.
+    validations:
+      required: true
+  - type: dropdown
+    id: source_type
+    attributes:
+      label: Source type
+      options:
+        - Campus newspaper
+        - University statement
+        - Public safety notice
+        - Public legal filing
+        - Government release
+        - Journalism
+        - Nonprofit report
+        - Other public source
+    validations:
+      required: true

@@ -1,0 +1,33 @@
+{
+  "name": "campus-evidence-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 5173",
+    "validate:data": "node scripts/validate-data.mjs",
+    "hash:data": "node scripts/hash-dataset.mjs",
+    "csv:data": "node scripts/generate-csv.mjs",
+    "audit:sources": "node scripts/audit-sources.mjs",
+    "audit:sources:live": "node scripts/audit-sources.mjs --check-live",
+    "changelog:data": "node scripts/generate-changelog.mjs",
+    "snapshots:data": "node scripts/generate-snapshot-index.mjs",
+    "rss:data": "node scripts/generate-rss.mjs",
+    "pages:data": "node scripts/generate-pages.mjs",
+    "sitemap:data": "node scripts/generate-sitemap.mjs",
+    "qa:site": "node scripts/qa-site.mjs",
+    "qa:content": "node scripts/qa-content.mjs",
+    "qa:data-quality": "node scripts/qa-data-quality.mjs",
+    "qa:accessibility": "node scripts/qa-accessibility.mjs",
+    "qa:render": "node scripts/qa-render.mjs",
+    "import:ed-letters": "node scripts/import-ed-letters.mjs",
+    "import:ocr-higher-ed": "node scripts/import-ocr-higher-ed.mjs",
+    "prepare:data": "npm run hash:data && npm run csv:data && npm run audit:sources && npm run changelog:data && npm run snapshots:data && npm run rss:data && npm run pages:data && npm run sitemap:data",
+    "check": "npm run validate:data && npm run qa:content && npm run qa:data-quality && node scripts/hash-dataset.mjs --check && npm run csv:data && npm run audit:sources && npm run changelog:data && npm run snapshots:data && npm run rss:data && npm run pages:data && npm run sitemap:data && npm run qa:site && npm run qa:accessibility && npm run qa:render",
+    "build": "npm run check && node scripts/build-static.mjs && SITE_ROOT=dist npm run qa:site && SITE_ROOT=dist npm run qa:accessibility && SITE_ROOT=dist npm run qa:render",
+    "deploy:cloudflare": "npm run build && npx wrangler pages deploy dist --project-name campus-evidence-lab"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1"
+  }
+}

@@ -1,0 +1,48 @@
+# Contribution Guide
+
+Campus Evidence Lab accepts public-source contributions only. Do not submit private testimony, private screenshots, direct messages, names of private individuals, sensitive personal information, or unsupported allegations.
+
+## Ways to Contribute
+
+- Submit a public source for review.
+- Request a source-backed correction to an existing event record.
+- Report a possible duplicate event record.
+- Suggest a source-backed school metadata correction.
+
+## GitHub Workflow
+
+The MVP is designed to use GitHub issues and pull requests as the public collaboration layer.
+
+Use the repository issue templates:
+
+- `.github/ISSUE_TEMPLATE/source-submission.yml`
+- `.github/ISSUE_TEMPLATE/correction-request.yml`
+- `.github/ISSUE_TEMPLATE/duplicate-report.yml`
+- `.github/ISSUE_TEMPLATE/school-metadata-correction.yml`
+
+If the public repository is not yet connected to the deployed site, use `/submit/` to generate a structured packet and include that packet in the relevant GitHub issue once the repository is public.
+
+## Review Standard
+
+Submitted material does not become a public record until a reviewer confirms that it:
+
+- uses public source material
+- fits the methodology
+- avoids private or sensitive evidence
+- uses neutral and attributed language
+- includes enough source detail to verify school, date, category, affected community, and confidence
+
+Accepted changes regenerate record hashes, dataset hashes, CSV exports, source audit metadata, snapshot manifests, the snapshot index, and the public changelog.
+
+## Pull Request Checklist
+
+Before proposing a data change:
+
+- add or update source records in `data/sources.json`
+- add or update event records in `data/events.json`
+- update correction records when applicable
+- run `npm run prepare:data`
+- run `npm run check`
+- include the public source URL and a neutral explanation of the change
+
+Do not bypass human review, publish AI-generated facts without source support, or use confidence labels as severity labels.

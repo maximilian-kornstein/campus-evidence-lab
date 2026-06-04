@@ -1,0 +1,39 @@
+name: Correction request
+description: Request a source-backed correction to an existing record.
+title: "Correction request: "
+labels:
+  - correction
+  - pending-review
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Corrections must identify a record ID, the field to change, and a public source supporting the change.
+  - type: input
+    id: record_id
+    attributes:
+      label: Record ID
+      description: Example: evt_2025_0010
+    validations:
+      required: true
+  - type: input
+    id: field
+    attributes:
+      label: Field to correct
+      description: Example: date, summary, school, affected_communities, legal_status.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Requested correction
+      description: State the correction in neutral language.
+    validations:
+      required: true
+  - type: input
+    id: source_url
+    attributes:
+      label: Public source URL
+      description: Public source supporting the correction.
+    validations:
+      required: true

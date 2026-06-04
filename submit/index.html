@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit / Campus Evidence Lab</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body data-page="submit">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="/">
+          <span class="brand__name">Campus Evidence Lab</span>
+          <span class="brand__tag">Public evidence infrastructure</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="/" data-nav="dashboard">Dashboard</a>
+          <a href="/events/" data-nav="events">Events</a>
+          <a href="/schools/" data-nav="schools">Schools</a>
+          <a href="/briefs/" data-nav="briefs">Briefs</a>
+          <a href="/sources/" data-nav="sources">Sources</a>
+          <a href="/quality/" data-nav="quality">Quality</a>
+          <a href="/methodology/" data-nav="methodology">Methodology</a>
+          <a href="/downloads/" data-nav="downloads">Data</a>
+          <a href="/submit/" data-nav="submit">Submit</a>
+          <a href="/about/" data-nav="about">About</a>
+          <a href="/license/" data-nav="license">License</a>
+        </nav>
+      </div>
+    </header>
+    <main class="main prose">
+      <p class="page-kicker">Submit / Correct</p>
+      <h1 class="page-title page-title--small">Public sources only.</h1>
+      <p class="page-intro">The MVP accepts public-source suggestions, corrections, duplicate reports, and school metadata corrections. It does not accept private testimony, screenshots, direct messages, or sensitive personal information.</p>
+
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">Free Intake System</h2>
+          <p class="section-note">Static MVP</p>
+        </div>
+        <p>The site can prepare structured source, correction, duplicate, and school metadata packets without a paid backend. Public deployment can route those packets through the repository issue templates or any free inbox later.</p>
+        <p><a href="/docs/contributing.md">Read the contribution guide</a> before opening a GitHub issue or pull request.</p>
+      </section>
+
+      <div id="submit-workflow-root" data-error-root></div>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Required Fields</h2>
+          <p class="section-note">Source submissions</p>
+        </div>
+        <dl>
+          <div class="data-line">
+            <dt>Public URL</dt>
+            <dd>Link to a campus newspaper article, university statement, public legal filing, government release, public safety notice, or reliable journalism.</dd>
+          </div>
+          <div class="data-line">
+            <dt>School</dt>
+            <dd>Institution name, city, and state if known.</dd>
+          </div>
+          <div class="data-line">
+            <dt>Community</dt>
+            <dd>The affected community supported by the public source.</dd>
+          </div>
+          <div class="data-line">
+            <dt>Category</dt>
+            <dd>The best source-backed event category.</dd>
+          </div>
+          <div class="data-line">
+            <dt>Reason</dt>
+            <dd>One sentence explaining why the source may meet the inclusion criteria.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Request a Correction</h2>
+          <p class="section-note">Source-backed only</p>
+        </div>
+        <p>Corrections should identify the record ID, the field that appears wrong, and the public source supporting the correction. Accepted corrections change the record hash, dataset hash, correction log, and event changelog.</p>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Report a Duplicate</h2>
+          <p class="section-note">Source-backed only</p>
+        </div>
+        <p>Duplicate reports should identify both record IDs and explain, using public source material, why the records appear to describe the same underlying event or institutional action.</p>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">School Metadata Corrections</h2>
+          <p class="section-note">Profile fields only</p>
+        </div>
+        <p>School metadata corrections should identify the institution, the field to amend, and a public source supporting the requested change.</p>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Do Not Submit</h2>
+        </div>
+        <ul>
+          <li>Private screenshots.</li>
+          <li>Direct messages.</li>
+          <li>Names of private individuals.</li>
+          <li>Unverified social media posts.</li>
+          <li>Sensitive personal information.</li>
+        </ul>
+      </section>
+    </main>
+    <footer class="site-footer">Campus Evidence Lab / Contribution flow is public-source only</footer>
+    <script type="module" src="/assets/app.js"></script>
+  </body>
+</html>

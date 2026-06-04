@@ -1,0 +1,39 @@
+name: Duplicate report
+description: Report two public records that may describe the same event.
+title: "Duplicate report: "
+labels:
+  - duplicate
+  - pending-review
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Duplicate reports must identify both record IDs and explain why public source material suggests they describe the same event or institutional action.
+  - type: input
+    id: primary_record_id
+    attributes:
+      label: Primary record ID
+      description: Example: evt_2025_0010
+    validations:
+      required: true
+  - type: input
+    id: duplicate_record_id
+    attributes:
+      label: Possible duplicate record ID
+      description: Example: evt_2025_0011
+    validations:
+      required: true
+  - type: input
+    id: source_url
+    attributes:
+      label: Public source URL
+      description: Public source supporting the duplicate report.
+    validations:
+      required: true
+  - type: textarea
+    id: duplicate_reason
+    attributes:
+      label: Why these appear duplicate
+      description: State the overlap in neutral language.
+    validations:
+      required: true

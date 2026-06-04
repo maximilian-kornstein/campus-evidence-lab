@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data / Campus Evidence Lab</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body data-page="downloads">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="/">
+          <span class="brand__name">Campus Evidence Lab</span>
+          <span class="brand__tag">Public evidence infrastructure</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="/" data-nav="dashboard">Dashboard</a>
+          <a href="/events/" data-nav="events">Events</a>
+          <a href="/schools/" data-nav="schools">Schools</a>
+          <a href="/briefs/" data-nav="briefs">Briefs</a>
+          <a href="/sources/" data-nav="sources">Sources</a>
+          <a href="/quality/" data-nav="quality">Quality</a>
+          <a href="/methodology/" data-nav="methodology">Methodology</a>
+          <a href="/downloads/" data-nav="downloads">Data</a>
+          <a href="/submit/" data-nav="submit">Submit</a>
+          <a href="/about/" data-nav="about">About</a>
+          <a href="/license/" data-nav="license">License</a>
+        </nav>
+      </div>
+    </header>
+    <main class="main">
+      <p class="page-kicker">Data</p>
+      <h1 class="page-title page-title--small">Download the public dataset.</h1>
+      <p class="page-intro">The MVP uses static JSON files as the database. Snapshot hashes make changes easier to audit.</p>
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">Direct Files</h2>
+          <p class="section-note">Static fallback</p>
+        </div>
+        <p class="section-note">The rendered dataset status below shows record count, last updated date, schema version, and latest snapshot hash.</p>
+        <ul class="source-list">
+          <li><a href="/data/events.json" download>Latest dataset JSON</a></li>
+          <li><a href="/data/events.csv" download>Latest dataset CSV</a></li>
+          <li><a href="/data/events-research.json" download>Research events JSON</a></li>
+          <li><a href="/data/events-research.csv" download>Research events CSV</a></li>
+          <li><a href="/data/schools.json" download>Schools dataset</a></li>
+          <li><a href="/data/schools-research.json" download>Research schools JSON</a></li>
+          <li><a href="/data/schools-research.csv" download>Research schools CSV</a></li>
+          <li><a href="/data/sources.json" download>Source index</a></li>
+          <li><a href="/data/sources-research.json" download>Research sources JSON</a></li>
+          <li><a href="/data/sources-research.csv" download>Research sources CSV</a></li>
+          <li><a href="/data/snapshot-index.json" download>Weekly snapshot downloads</a></li>
+          <li><a href="/data/snapshot-manifest.json" download>Snapshot manifest</a></li>
+          <li><a href="/data/changelog.json" download>Changelog</a></li>
+          <li><a href="/docs/data-dictionary.md" download>Data dictionary</a></li>
+          <li><a href="/docs/citation.md" download>Citation guidance</a></li>
+          <li><a href="/docs/contributing.md" download>Contribution guide</a></li>
+          <li><a href="/DATA_LICENSE.md" download>Dataset license</a></li>
+        </ul>
+      </section>
+      <div id="downloads-root" data-error-root></div>
+    </main>
+    <footer class="site-footer">Campus Evidence Lab / Static files / Public history</footer>
+    <script type="module" src="/assets/app.js"></script>
+  </body>
+</html>

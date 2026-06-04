@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events / Campus Evidence Lab</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body data-page="events">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="/">
+          <span class="brand__name">Campus Evidence Lab</span>
+          <span class="brand__tag">Public evidence infrastructure</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="/" data-nav="dashboard">Dashboard</a>
+          <a href="/events/" data-nav="events">Events</a>
+          <a href="/schools/" data-nav="schools">Schools</a>
+          <a href="/briefs/" data-nav="briefs">Briefs</a>
+          <a href="/sources/" data-nav="sources">Sources</a>
+          <a href="/quality/" data-nav="quality">Quality</a>
+          <a href="/methodology/" data-nav="methodology">Methodology</a>
+          <a href="/downloads/" data-nav="downloads">Data</a>
+          <a href="/submit/" data-nav="submit">Submit</a>
+          <a href="/about/" data-nav="about">About</a>
+          <a href="/license/" data-nav="license">License</a>
+        </nav>
+      </div>
+    </header>
+    <main class="main">
+      <p class="page-kicker">Event database</p>
+      <h1 class="page-title page-title--small">Search source-backed campus records.</h1>
+      <p class="page-intro">Search, filter by school, source type, date range, community, verification, and confidence, then sort the public records. Rows show community, verification, source count, and last updated metadata. Current events data is downloadable as canonical JSON, flat CSV, and denormalized research exports with school and source fields.</p>
+      <p class="section-note download-inline">Download current dataset: <a href="/data/events.json" download>Events JSON</a> / <a href="/data/events.csv" download>Events CSV</a> / <a href="/data/events-research.json" download>Research JSON</a> / <a href="/data/events-research.csv" download>Research CSV</a></p>
+      <div id="events-root" data-error-root></div>
+    </main>
+    <footer class="site-footer">Campus Evidence Lab / Public-source only / Human-reviewed before publication</footer>
+    <script type="module" src="/assets/app.js"></script>
+  </body>
+</html>
