@@ -70,6 +70,12 @@ To publish to a new public GitHub repository after creating it:
 npm run publish:github -- <repository-url>
 ```
 
+After the site is live:
+
+```sh
+npm run verify:public -- <public-site-url>
+```
+
 See [PUBLIC_LAUNCH.md](PUBLIC_LAUNCH.md) for the GitHub and Cloudflare launch checklist.
 
 The current dataset is conservative and public-source only. It is meant to prove the workflow, interface, and review standards across a broader civil-rights schema before private submissions or broader automation are considered.

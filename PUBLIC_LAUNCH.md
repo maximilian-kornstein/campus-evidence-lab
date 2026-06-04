@@ -80,6 +80,12 @@ After deployment, verify:
 - `/submit/` can generate source, correction, duplicate, and school metadata packets.
 - GitHub issue templates are visible in the public repository.
 
+Run the public verifier against the live URL:
+
+```sh
+npm run verify:public -- <public-site-url>
+```
+
 ## 5. First Public Proof Artifacts
 
 Record the public URLs for:

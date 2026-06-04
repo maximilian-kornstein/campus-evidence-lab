@@ -86,6 +86,12 @@ Set `SITE_URL` when deploying to a non-default public URL:
 SITE_URL=https://<public-site-url> npm run build
 ```
 
+After deployment, verify the public artifact:
+
+```sh
+npm run verify:public -- <public-site-url>
+```
+
 ## GitHub Integration
 
 Use these settings for a Cloudflare Pages Git integration:

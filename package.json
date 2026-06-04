@@ -30,6 +30,7 @@
     "build": "npm run check && node scripts/build-static.mjs && SITE_ROOT=dist npm run qa:site && SITE_ROOT=dist npm run qa:accessibility && SITE_ROOT=dist npm run qa:render",
     "launch:preflight": "node scripts/launch-preflight.mjs",
     "publish:github": "node scripts/publish-github.mjs",
+    "verify:public": "node scripts/verify-public.mjs",
     "deploy:cloudflare": "npm run build && npx wrangler pages deploy dist --project-name campus-evidence-lab"
   },
   "devDependencies": {
