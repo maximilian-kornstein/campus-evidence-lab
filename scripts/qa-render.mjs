@@ -246,7 +246,9 @@ async function renderPage(page, index) {
     const duplicateForm = dom.window.document.querySelector("#duplicate-report-form");
     const metadataForm = dom.window.document.querySelector("#school-metadata-form");
     const output = dom.window.document.querySelector("#submission-output");
-    if (!sourceForm || !correctionForm || !duplicateForm || !metadataForm || !output) {
+    const copyButton = dom.window.document.querySelector("#copy-packet");
+    const issueLink = dom.window.document.querySelector("#open-github-issue");
+    if (!sourceForm || !correctionForm || !duplicateForm || !metadataForm || !output || !copyButton || !issueLink) {
       errors.push(`${page.file} did not render all required intake forms`);
       return;
     }
@@ -266,6 +268,16 @@ async function renderPage(page, index) {
         errors.push(`${page.file} generated packet missing ${text}`);
       }
     }
+    if (copyButton.disabled) {
+      errors.push(`${page.file} did not enable packet copy after source submission`);
+    }
+    let issueParams = new URL(issueLink.href).searchParams;
+    if (!issueLink.href.includes("issues/new") || !issueParams.get("title")?.includes("Source submission")) {
+      errors.push(`${page.file} source submission issue link has invalid title`);
+    }
+    for (const text of ["source-submission", "pending-review"]) {
+      if (!issueParams.toString().includes(text)) errors.push(`${page.file} source submission issue link missing ${text}`);
+    }
 
     correctionForm.elements.record_id.value = "evt_2025_0010";
     correctionForm.elements.field.value = "summary";
@@ -276,6 +288,13 @@ async function renderPage(page, index) {
       if (!output.value.includes(text)) {
         errors.push(`${page.file} correction packet missing ${text}`);
       }
+    }
+    issueParams = new URL(issueLink.href).searchParams;
+    if (!issueLink.href.includes("issues/new") || !issueParams.get("title")?.includes("Correction request")) {
+      errors.push(`${page.file} correction issue link has invalid title`);
+    }
+    for (const text of ["correction-request", "pending-review"]) {
+      if (!issueParams.toString().includes(text)) errors.push(`${page.file} correction issue link missing ${text}`);
     }
 
     duplicateForm.elements.primary_record_id.value = "evt_2025_0010";
@@ -288,6 +307,13 @@ async function renderPage(page, index) {
         errors.push(`${page.file} duplicate packet missing ${text}`);
       }
     }
+    issueParams = new URL(issueLink.href).searchParams;
+    if (!issueLink.href.includes("issues/new") || !issueParams.get("title")?.includes("Duplicate report")) {
+      errors.push(`${page.file} duplicate issue link has invalid title`);
+    }
+    for (const text of ["duplicate-report", "pending-review"]) {
+      if (!issueParams.toString().includes(text)) errors.push(`${page.file} duplicate issue link missing ${text}`);
+    }
 
     metadataForm.elements.school.value = "Example University";
     metadataForm.elements.field.value = "state";
@@ -298,6 +324,13 @@ async function renderPage(page, index) {
       if (!output.value.includes(text)) {
         errors.push(`${page.file} metadata packet missing ${text}`);
       }
+    }
+    issueParams = new URL(issueLink.href).searchParams;
+    if (!issueLink.href.includes("issues/new") || !issueParams.get("title")?.includes("School metadata correction")) {
+      errors.push(`${page.file} metadata issue link has invalid title`);
+    }
+    for (const text of ["school-metadata-correction", "pending-review"]) {
+      if (!issueParams.toString().includes(text)) errors.push(`${page.file} metadata issue link missing ${text}`);
     }
   }
 
