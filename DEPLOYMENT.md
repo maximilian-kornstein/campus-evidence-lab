@@ -16,6 +16,7 @@ The build runs:
 - record-hash integrity check
 - CSV generation
 - source audit generation
+- release notes generation
 - event, school, and brief page generation
 - sitemap generation
 - site QA against the source tree

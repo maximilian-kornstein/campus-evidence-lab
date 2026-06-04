@@ -65,7 +65,7 @@ const pages = [
   {
     route: "/downloads/",
     file: "downloads/index.html",
-    checks: ["Dataset Status", "Record count", "Last updated", "Schema version", "Latest snapshot hash", "Events JSON", "Research Events JSON", "Research Events CSV", "Research Schools JSON", "Research Schools CSV", "Research Sources JSON", "Research Sources CSV", "Source Audit JSON", "Changelog JSON", "Snapshot Index", "Citation Guidance", "Contribution Guide", "Briefs RSS", "Source Audit Notes", "Corrections JSON", "Review Log JSON"]
+    checks: ["Dataset Status", "Record count", "Last updated", "Schema version", "Latest snapshot hash", "Events JSON", "Research Events JSON", "Research Events CSV", "Research Schools JSON", "Research Schools CSV", "Research Sources JSON", "Research Sources CSV", "Source Audit JSON", "Changelog JSON", "Release Notes", "Snapshot Index", "Citation Guidance", "Contribution Guide", "Briefs RSS", "Source Audit Notes", "Corrections JSON", "Review Log JSON"]
   },
   {
     route: "/about/",

@@ -23,6 +23,7 @@ const publicPaths = [
   "robots.txt",
   "rss.xml",
   "sitemap.xml",
+  "RELEASE_NOTES.md",
   "_headers",
   "LICENSE.md",
   "DATA_LICENSE.md"

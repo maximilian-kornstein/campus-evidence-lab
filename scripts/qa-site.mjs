@@ -120,6 +120,7 @@ for (const artifact of [
   "docs/source-audit.md",
   "rss.xml",
   "sitemap.xml",
+  "RELEASE_NOTES.md",
   "robots.txt",
   "LICENSE.md",
   "DATA_LICENSE.md",
@@ -217,6 +218,7 @@ for (const downloadsCopy of [
   "Snapshot manifest",
   "Dataset license",
   "Changelog",
+  "Release notes",
   "Data dictionary",
   "Citation guidance",
   "Contribution guide",
@@ -226,6 +228,20 @@ for (const downloadsCopy of [
   "latest snapshot hash"
 ]) {
   await mustContain("downloads/index.html", downloadsCopy);
+}
+
+for (const releaseCopy of [
+  manifest.snapshot_id,
+  manifest.hashes.full_snapshot,
+  "Dataset Counts",
+  "Dataset Hashes",
+  "Research Exports",
+  "Source Audit",
+  "/data/events-research.json",
+  "/data/schools-research.json",
+  "/data/sources-research.json"
+]) {
+  await mustContain("RELEASE_NOTES.md", releaseCopy);
 }
 
 if (researchEvents.length !== events.length) {

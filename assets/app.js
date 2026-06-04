@@ -1810,6 +1810,7 @@ function renderDownloads() {
         ${downloadRow("Research Sources CSV", "/data/sources-research.csv", "Denormalized source export")}
         ${downloadRow("Source Audit JSON", "/data/source-audit.json", "Source provenance checklist")}
         ${downloadRow("Changelog JSON", "/data/changelog.json", "Record-level public edit log")}
+        ${downloadRow("Release Notes", "/RELEASE_NOTES.md", state.manifest.snapshot_id)}
         ${downloadRow("Briefs JSON", "/data/briefs.json", `${state.manifest.totals.briefs} briefs`)}
         ${downloadRow("Briefs RSS", "/rss.xml", "Published research feed")}
         ${downloadRow("Corrections JSON", "/data/corrections.json", `${state.manifest.totals.corrections} corrections`)}

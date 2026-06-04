@@ -14,6 +14,7 @@ The current foundation includes:
 - CSV export generation
 - denormalized research exports with joined school, source, and event-reference fields
 - public changelog generation
+- generated release notes for the current dataset snapshot
 - RSS feed generation for briefs
 - generated event detail pages
 - public source detail pages
