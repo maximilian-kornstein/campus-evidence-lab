@@ -1534,6 +1534,7 @@ function renderSubmitWorkflow() {
             <option value="">Choose type</option>
             <option>Campus newspaper</option>
             <option>University statement</option>
+            <option>Annual security report</option>
             <option>Public safety notice</option>
             <option>Public legal filing</option>
             <option>Government release</option>
@@ -1558,7 +1559,13 @@ function renderSubmitWorkflow() {
             <option>Sikh</option>
             <option>Hindu</option>
             <option>LGBTQ+</option>
+            <option>Race</option>
+            <option>Religion</option>
+            <option>National origin</option>
+            <option>Ethnicity</option>
+            <option>Gender</option>
             <option>Disability</option>
+            <option>Students with disabilities</option>
             <option>Women</option>
             <option>Other source-backed civil rights community</option>
           </select>
@@ -1957,9 +1964,11 @@ function downloadRow(title, href, meta) {
 }
 
 async function init() {
+  const initDocument = document;
   setCurrentNav();
   try {
     await loadDataset();
+    if (document !== initDocument) return;
     renderDashboard();
     renderEvents();
     renderSchools();
@@ -1969,10 +1978,11 @@ async function init() {
     renderSubmitWorkflow();
     renderDownloads();
   } catch (error) {
+    if (document !== initDocument) return;
     const target = document.querySelector("[data-error-root]");
     if (target) target.textContent = error.message;
     console.error(error);
   }
 }
 
-init();
+window.__campusEvidenceLabReady = init();

@@ -2,18 +2,23 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { JSDOM } from "jsdom";
-import { rootDir } from "./lib.mjs";
+import { paths, readJson, rootDir } from "./lib.mjs";
 
 const errors = [];
 const siteRoot = process.env.SITE_ROOT ? path.resolve(rootDir, process.env.SITE_ROOT) : rootDir;
 const appUrl = pathToFileURL(path.join(siteRoot, "assets", "app.js")).href;
+const [events, schools, sources] = await Promise.all([
+  readJson(paths.events),
+  readJson(paths.schools),
+  readJson(paths.sources)
+]);
 
 const pages = [
   {
     route: "/",
     file: "index.html",
     checks: [
-      "102",
+      String(events.length),
       "Communities represented",
       "States represented",
       "Campus civil-rights records",
@@ -199,6 +204,7 @@ async function renderPage(page, index) {
 
   await installGlobals(dom);
   await import(`${appUrl}?qa_render=${Date.now()}_${index}`);
+  await dom.window.__campusEvidenceLabReady;
 
   for (const text of page.checks) {
     if (!(await waitForText(dom, text))) {
@@ -378,7 +384,7 @@ async function renderPage(page, index) {
     form.elements.sort.dispatchEvent(new dom.window.Event("change", { bubbles: true, cancelable: true }));
 
     for (const text of [
-      "1 of 102 records",
+      `1 of ${events.length} records`,
       "OCR found that the University of Kentucky violated Title VI",
       "evt_2026_0027",
       "External source URL",
@@ -426,7 +432,7 @@ async function renderPage(page, index) {
     form.elements.sort.dispatchEvent(new dom.window.Event("change", { bubbles: true, cancelable: true }));
 
     for (const text of [
-      "1 of 81 schools",
+      `1 of ${schools.length} schools`,
       "University of Kentucky",
       "Open event database filtered to this school",
       "Timeline",
@@ -465,7 +471,7 @@ async function renderPage(page, index) {
     form.elements.sort.dispatchEvent(new dom.window.Event("change", { bubbles: true, cancelable: true }));
 
     for (const text of [
-      "1 of 13 sources",
+      `1 of ${sources.length} sources`,
       "University of Kentucky OCR Case Number 03-25-2099",
       "metadata checked",
       "External source URL",
