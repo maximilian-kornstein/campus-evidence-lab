@@ -40,6 +40,7 @@ After pushing, confirm the repository shows:
 ## 3. Configure Cloudflare Pages
 
 GitHub Pages is already configured through `.github/workflows/pages.yml`. After pushing to `main`, GitHub Actions can build and deploy `dist/` to GitHub Pages using the repository's Pages settings.
+The workflow sets canonical feed, sitemap, and robots URLs to the GitHub Pages project URL for the first public launch.
 
 If using GitHub Pages:
 

@@ -38,6 +38,7 @@ After the repository is pushed to GitHub:
 3. Run the `Deploy GitHub Pages` workflow or push to `main`.
 
 The workflow runs `npm ci`, `npm run build`, uploads `dist/`, and deploys the verified static artifact.
+The workflow sets `SITE_URL` to the GitHub Pages project URL so `sitemap.xml`, `rss.xml`, and `robots.txt` point to the first public deployment.
 
 If `origin` is not configured yet, create the public GitHub repository first, then publish with:
 
@@ -67,6 +68,12 @@ The deploy command runs `npm run build` first, then deploys `dist/`:
 
 ```sh
 npx wrangler pages deploy dist --project-name campus-evidence-lab
+```
+
+Set `SITE_URL` when deploying to a non-default public URL:
+
+```sh
+SITE_URL=https://<public-site-url> npm run build
 ```
 
 ## GitHub Integration

@@ -2,7 +2,7 @@ import { readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { paths, readJson, rootDir } from "./lib.mjs";
 
-const baseUrl = "https://campusevidencelab.org";
+const baseUrl = (process.env.SITE_URL || "https://campusevidencelab.org").replace(/\/+$/, "");
 const [events, schools, briefs, sources] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),

@@ -2,7 +2,7 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { paths, readJson, rootDir } from "./lib.mjs";
 
-const baseUrl = "https://campusevidencelab.org";
+const baseUrl = (process.env.SITE_URL || "https://campusevidencelab.org").replace(/\/+$/, "");
 const briefs = await readJson(paths.briefs);
 
 function escapeXml(value) {
