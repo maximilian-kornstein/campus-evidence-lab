@@ -57,6 +57,13 @@ Before public launch, run:
 npm run launch:preflight
 ```
 
+For the public proof package, refresh the advisory live URL audit:
+
+```sh
+npm run audit:sources:live
+npm run audit:sources:live:check
+```
+
 To publish to a new public GitHub repository after creating it:
 
 ```sh

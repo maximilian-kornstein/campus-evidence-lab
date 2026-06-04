@@ -6,10 +6,12 @@ Use this checklist when the project is ready to move from local MVP to public pr
 
 ```sh
 npm run build
+npm run audit:sources:live
+npm run audit:sources:live:check
 npm run launch:preflight
 ```
 
-`npm run build` must pass before deployment. `npm run launch:preflight` should pass after a GitHub remote is configured. Cloudflare authentication is only required for direct Cloudflare CLI deployment.
+`npm run build` must pass before deployment. The live source audit should show all public sources reachable before launch. `npm run launch:preflight` should pass after a GitHub remote is configured. Cloudflare authentication is only required for direct Cloudflare CLI deployment.
 
 ## 2. Create Public GitHub Repository
 

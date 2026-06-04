@@ -16,7 +16,8 @@ const DATA_PATHS = {
   reviewLog: sitePath("/data/review-log.json"),
   manifest: sitePath("/data/snapshot-manifest.json"),
   snapshotIndex: sitePath("/data/snapshot-index.json"),
-  sourceAudit: sitePath("/data/source-audit.json")
+  sourceAudit: sitePath("/data/source-audit.json"),
+  sourceAuditLive: sitePath("/data/source-audit-live.json")
 };
 
 const state = {
@@ -27,6 +28,7 @@ const state = {
   reviewLog: null,
   snapshotIndex: null,
   sourceAudit: null,
+  sourceAuditLive: null,
   schools: new Map(),
   sources: new Map(),
   manifest: null,
@@ -182,7 +184,7 @@ function escapeHtml(value) {
 }
 
 async function loadDataset() {
-  const [events, schools, sources, briefs, corrections, reviewLog, manifest, snapshotIndex, sourceAudit] = await Promise.all([
+  const [events, schools, sources, briefs, corrections, reviewLog, manifest, snapshotIndex, sourceAudit, sourceAuditLive] = await Promise.all([
     fetchJson(DATA_PATHS.events),
     fetchJson(DATA_PATHS.schools),
     fetchJson(DATA_PATHS.sources),
@@ -191,7 +193,8 @@ async function loadDataset() {
     fetchJson(DATA_PATHS.reviewLog),
     fetchJson(DATA_PATHS.manifest),
     fetchJson(DATA_PATHS.snapshotIndex),
-    fetchJson(DATA_PATHS.sourceAudit)
+    fetchJson(DATA_PATHS.sourceAudit),
+    fetchJson(DATA_PATHS.sourceAuditLive)
   ]);
 
   state.schools = new Map(schools.map((school) => [school.id, school]));
@@ -203,6 +206,7 @@ async function loadDataset() {
   state.reviewLog = reviewLog;
   state.snapshotIndex = snapshotIndex;
   state.sourceAudit = sourceAudit;
+  state.sourceAuditLive = sourceAuditLive;
   state.records = events
     .map((event) => ({
       ...event,
@@ -1818,6 +1822,7 @@ function renderDownloads() {
         ${downloadRow("Research Sources JSON", sitePath("/data/sources-research.json"), "Sources with related event IDs")}
         ${downloadRow("Research Sources CSV", sitePath("/data/sources-research.csv"), "Denormalized source export")}
         ${downloadRow("Source Audit JSON", sitePath("/data/source-audit.json"), "Source provenance checklist")}
+        ${downloadRow("Live Source Audit JSON", sitePath("/data/source-audit-live.json"), `${state.sourceAuditLive.entries?.length ?? 0} live URL checks`)}
         ${downloadRow("Changelog JSON", sitePath("/data/changelog.json"), "Record-level public edit log")}
         ${downloadRow("Release Notes", sitePath("/RELEASE_NOTES.md"), state.manifest.snapshot_id)}
         ${downloadRow("Briefs JSON", sitePath("/data/briefs.json"), `${state.manifest.totals.briefs} briefs`)}

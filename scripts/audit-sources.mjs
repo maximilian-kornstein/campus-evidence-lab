@@ -3,6 +3,7 @@ import { paths, readJson, sha256, writeJson } from "./lib.mjs";
 const checkOnly = process.argv.includes("--check");
 const checkLive = process.argv.includes("--check-live");
 const currentDate = "2026-06-03";
+const outputPath = checkLive ? paths.sourceAuditLive : paths.sourceAudit;
 
 const [events, sources] = await Promise.all([
   readJson(paths.events),
@@ -86,17 +87,17 @@ const audit = {
 audit.audit_hash = sha256({ ...audit, audit_hash: "" });
 
 if (checkOnly) {
-  const existing = await readJson(paths.sourceAudit);
+  const existing = await readJson(outputPath);
   const existingComparable = JSON.stringify(existing);
   const nextComparable = JSON.stringify(audit);
   if (existingComparable !== nextComparable) {
-    console.error("Source audit artifact is stale. Run npm run audit:sources.");
+    console.error(`Source audit artifact is stale. Run ${checkLive ? "npm run audit:sources:live" : "npm run audit:sources"}.`);
     process.exit(1);
   }
   console.log(`Source audit check passed: ${audit.source_count} sources, ${audit.audit_hash}`);
   process.exit(0);
 }
 
-await writeJson(paths.sourceAudit, audit);
+await writeJson(outputPath, audit);
 console.log(`Wrote source audit for ${audit.source_count} sources.`);
 console.log(audit.audit_hash);

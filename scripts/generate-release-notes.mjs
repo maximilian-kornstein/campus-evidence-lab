@@ -2,11 +2,12 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { paths, readJson, rootDir } from "./lib.mjs";
 
-const [manifest, snapshotIndex, changelog, sourceAudit, briefs] = await Promise.all([
+const [manifest, snapshotIndex, changelog, sourceAudit, sourceAuditLive, briefs] = await Promise.all([
   readJson(paths.manifest),
   readJson(paths.snapshotIndex),
   readJson(paths.changelog),
   readJson(paths.sourceAudit),
+  readJson(paths.sourceAuditLive),
   readJson(paths.briefs)
 ]);
 
@@ -67,6 +68,9 @@ const lines = [
   bullet("Referenced events", sourceAudit.event_count),
   bullet("Audit hash", `\`${sourceAudit.audit_hash}\``),
   bullet("Audit artifact", "`/data/source-audit.json`"),
+  bullet("Live audit artifact", "`/data/source-audit-live.json`"),
+  bullet("Live checked sources", sourceAuditLive.entries?.filter((entry) => entry.launch_check_status === "live_checked").length ?? 0),
+  bullet("Live audit hash", `\`${sourceAuditLive.audit_hash}\``),
   "",
   "## Research Exports",
   "",

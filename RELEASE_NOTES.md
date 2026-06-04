@@ -47,6 +47,9 @@ Generated for `snapshot_2026_06_03_102_records`.
 - Referenced events: 102
 - Audit hash: `sha256:731d4c64aad0a10d1044fd9c9e571d566d72ce8965a1ef4df4be423de13dbfd1`
 - Audit artifact: `/data/source-audit.json`
+- Live audit artifact: `/data/source-audit-live.json`
+- Live checked sources: 13
+- Live audit hash: `sha256:9ba327eab9acbfddcddcd19825de78395c8e35336d6da921e75abdb0128515e7`
 
 ## Research Exports
 

@@ -105,6 +105,7 @@ for (const artifact of [
   "data/sources-research.json",
   "data/sources-research.csv",
   "data/source-audit.json",
+  "data/source-audit-live.json",
   "data/changelog.json",
   "data/snapshot-index.json",
   "data/corrections.json",
@@ -213,6 +214,7 @@ for (const downloadsCopy of [
   "Research schools CSV",
   "Research sources JSON",
   "Research sources CSV",
+  "Live source audit",
   "Schools dataset",
   "Source index",
   "Weekly snapshot downloads",
@@ -423,6 +425,31 @@ for (const source of sources) {
     errors.push(`Source audit missing ${source.id}`);
   } else {
     await mustExist(auditEntry.internal_source_path.replace(/^\//, "") + "index.html");
+  }
+}
+
+const liveSourceAudit = await readSiteJson(path.join(siteRoot, "data", "source-audit-live.json"));
+if (liveSourceAudit.mode !== "live") {
+  errors.push("Live source audit must use mode=live");
+}
+if (liveSourceAudit.source_count !== sources.length) {
+  errors.push(`Live source audit count ${liveSourceAudit.source_count} does not match sources ${sources.length}`);
+}
+if (liveSourceAudit.event_count !== events.length) {
+  errors.push(`Live source audit event count ${liveSourceAudit.event_count} does not match events ${events.length}`);
+}
+for (const source of sources) {
+  const liveEntry = liveSourceAudit.entries?.find((entry) => entry.source_id === source.id);
+  const sourceEvents = events.filter((event) => event.source_ids.includes(source.id)).map((event) => event.id).sort();
+  const liveEventIds = [...(liveEntry?.referenced_event_ids ?? [])].sort();
+  if (!liveEntry) {
+    errors.push(`Live source audit missing ${source.id}`);
+  } else if (liveEntry.launch_check_status !== "live_checked" || liveEntry.live_status !== "ok" || liveEntry.http_status < 200 || liveEntry.http_status > 399) {
+    errors.push(`Live source audit did not verify ${source.id}`);
+  } else if (liveEntry.external_url !== source.url) {
+    errors.push(`Live source audit has stale URL for ${source.id}`);
+  } else if (JSON.stringify(liveEventIds) !== JSON.stringify(sourceEvents)) {
+    errors.push(`Live source audit has stale event references for ${source.id}`);
   }
 }
 

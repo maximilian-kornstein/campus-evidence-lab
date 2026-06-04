@@ -1,6 +1,6 @@
 # Source Audit
 
-Campus Evidence Lab publishes a generated source audit at `data/source-audit.json`.
+Campus Evidence Lab publishes a deterministic source audit at `data/source-audit.json` and an advisory live URL audit at `data/source-audit-live.json`.
 
 The audit maps every source to:
 
@@ -30,8 +30,9 @@ Before public launch, run:
 
 ```sh
 npm run audit:sources:live
+npm run audit:sources:live:check
 ```
 
-Live mode attempts external URL checks and writes advisory HTTP status data into `data/source-audit.json`. Live results can be noisy because publishers may block automated requests, redirect visitors, rate-limit requests, or require JavaScript.
+Live mode attempts external URL checks and writes advisory HTTP status data into `data/source-audit-live.json`. Live results can be noisy because publishers may block automated requests, redirect visitors, rate-limit requests, or require JavaScript.
 
 Do not treat a failed automated live check as proof that a source is invalid. Manually review failures before publication.

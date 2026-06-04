@@ -16,6 +16,7 @@ The build runs:
 - record-hash integrity check
 - CSV generation
 - source audit generation
+- robots generation
 - release notes generation
 - event, school, and brief page generation
 - sitemap generation
@@ -62,7 +63,16 @@ npm run launch:preflight
 npm run deploy:cloudflare
 ```
 
-`launch:preflight` reports missing launch prerequisites, including a missing GitHub remote. Wrangler login is only required for direct Cloudflare CLI deployment.
+`launch:preflight` reports missing launch prerequisites, including a missing GitHub remote and a missing or failed live source audit. Wrangler login is only required for direct Cloudflare CLI deployment.
+
+Before public launch, run the advisory live source audit once from a networked local environment:
+
+```sh
+npm run audit:sources:live
+npm run audit:sources:live:check
+```
+
+This writes `data/source-audit-live.json`, which is included in `dist/` as a public proof artifact. CI keeps the deterministic metadata audit in `data/source-audit.json` and does not call external publishers.
 
 The deploy command runs `npm run build` first, then deploys `dist/`:
 

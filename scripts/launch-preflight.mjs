@@ -84,6 +84,7 @@ for (const [relativePath, label] of [
   ["dist/RELEASE_NOTES.md", "Built release notes"],
   ["dist/data/events.json", "Built events dataset"],
   ["dist/data/events-research.json", "Built research events dataset"],
+  ["dist/data/source-audit-live.json", "Built live source audit"],
   ["dist/sitemap.xml", "Built sitemap"],
   [".github/workflows/check.yml", "GitHub Actions workflow"],
   [".github/workflows/pages.yml", "GitHub Pages deployment workflow"],
@@ -103,6 +104,21 @@ try {
   }
 } catch {
   fail("Could not read package.json publish scripts");
+}
+
+try {
+  const liveSourceAudit = JSON.parse(readFileSync(path.join(rootDir, "data", "source-audit-live.json"), "utf8"));
+  const entries = liveSourceAudit.entries ?? [];
+  const failedEntries = entries.filter(
+    (entry) => entry.launch_check_status !== "live_checked" || entry.live_status !== "ok" || entry.http_status < 200 || entry.http_status > 399
+  );
+  if (liveSourceAudit.mode === "live" && entries.length && failedEntries.length === 0) {
+    pass(`Live source audit is clean: ${entries.length} sources checked`);
+  } else {
+    fail("Live source audit is missing or has failed source checks; run npm run audit:sources:live");
+  }
+} catch {
+  fail("Live source audit is missing; run npm run audit:sources:live");
 }
 
 const ghVersion = run("gh", ["--version"]);

@@ -13,6 +13,7 @@ export const paths = {
   corrections: path.join(rootDir, "data", "corrections.json"),
   reviewLog: path.join(rootDir, "data", "review-log.json"),
   sourceAudit: path.join(rootDir, "data", "source-audit.json"),
+  sourceAuditLive: path.join(rootDir, "data", "source-audit-live.json"),
   changelog: path.join(rootDir, "data", "changelog.json"),
   snapshotIndex: path.join(rootDir, "data", "snapshot-index.json"),
   eventsCsv: path.join(rootDir, "data", "events.csv"),
