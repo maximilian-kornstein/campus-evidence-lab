@@ -1,13 +1,22 @@
+const SITE_BASE = new URL("../", import.meta.url);
+
+function sitePath(target) {
+  const cleanTarget = String(target).replace(/^\/+/, "");
+  if (SITE_BASE.protocol === "file:") return `/${cleanTarget}`;
+  const url = new URL(cleanTarget, SITE_BASE);
+  return `${url.pathname}${url.search}${url.hash}`;
+}
+
 const DATA_PATHS = {
-  events: "/data/events.json",
-  schools: "/data/schools.json",
-  sources: "/data/sources.json",
-  briefs: "/data/briefs.json",
-  corrections: "/data/corrections.json",
-  reviewLog: "/data/review-log.json",
-  manifest: "/data/snapshot-manifest.json",
-  snapshotIndex: "/data/snapshot-index.json",
-  sourceAudit: "/data/source-audit.json"
+  events: sitePath("/data/events.json"),
+  schools: sitePath("/data/schools.json"),
+  sources: sitePath("/data/sources.json"),
+  briefs: sitePath("/data/briefs.json"),
+  corrections: sitePath("/data/corrections.json"),
+  reviewLog: sitePath("/data/review-log.json"),
+  manifest: sitePath("/data/snapshot-manifest.json"),
+  snapshotIndex: sitePath("/data/snapshot-index.json"),
+  sourceAudit: sitePath("/data/source-audit.json")
 };
 
 const state = {
@@ -301,19 +310,19 @@ function renderDashboard() {
         <p class="section-note">Search, brief, methodology, data</p>
       </div>
       <div class="action-grid">
-        <a class="action-link" href="/events/">
+        <a class="action-link" href="${sitePath("/events/")}">
           <span>Search Event Database</span>
           <span>Filter by school, state, community, category, source type, date, confidence, and verification.</span>
         </a>
-        <a class="action-link" href="${latestBrief ? `/briefs/${encodeURIComponent(latestBrief.id)}/` : "/briefs/"}">
+        <a class="action-link" href="${sitePath(latestBrief ? `/briefs/${encodeURIComponent(latestBrief.id)}/` : "/briefs/")}">
           <span>Latest Weekly Brief</span>
           <span>${latestBrief ? escapeHtml(`${latestBrief.title} / ${latestBrief.published_date}`) : "Open published research briefs."}</span>
         </a>
-        <a class="action-link" href="/methodology/">
+        <a class="action-link" href="${sitePath("/methodology/")}">
           <span>Read Methodology</span>
           <span>Review inclusion rules, source standards, confidence scoring, privacy limits, and corrections.</span>
         </a>
-        <a class="action-link" href="/downloads/">
+        <a class="action-link" href="${sitePath("/downloads/")}">
           <span>Download Data</span>
           <span>Use JSON, CSV, snapshots, changelog, source audit, citation guidance, and schemas.</span>
         </a>
@@ -335,7 +344,7 @@ function renderDashboard() {
     <section class="section">
       <div class="section-header">
         <h2 class="section-title">Recent Records</h2>
-        <p class="section-note"><a href="/events/">Open database</a></p>
+        <p class="section-note"><a href="${sitePath("/events/")}">Open database</a></p>
       </div>
       <div class="table-wrap">
         <table class="record-table record-table--dashboard">
@@ -362,7 +371,7 @@ function dashboardEventRow(record) {
       <td class="mono" data-label="Date">${escapeHtml(formatDate(record.date, record.date_precision))}</td>
       <td data-label="School">${escapeHtml(school.name)}<br><span class="section-note">${escapeHtml(school.state)}</span></td>
       <td data-label="Category">${escapeHtml(record.category)}</td>
-      <td class="summary-cell" data-label="Summary"><a href="/events/${encodeURIComponent(record.id)}/">${escapeHtml(record.summary)}</a></td>
+      <td class="summary-cell" data-label="Summary"><a href="${sitePath(`/events/${encodeURIComponent(record.id)}/`)}">${escapeHtml(record.summary)}</a></td>
       <td data-label="Confidence"><span class="status">${escapeHtml(record.confidence)}</span></td>
     </tr>
   `;
@@ -378,7 +387,7 @@ function eventRow(record, selectedId = null) {
       <td data-label="State">${escapeHtml(school.state)}</td>
       <td data-label="Category">${escapeHtml(record.category)}</td>
       <td data-label="Community">${escapeHtml(join(record.affected_communities))}</td>
-      <td class="summary-cell" data-label="Summary"><a href="/events/${encodeURIComponent(record.id)}/">${escapeHtml(record.summary)}</a></td>
+      <td class="summary-cell" data-label="Summary"><a href="${sitePath(`/events/${encodeURIComponent(record.id)}/`)}">${escapeHtml(record.summary)}</a></td>
       <td data-label="Verification">${escapeHtml(record.verification_status)}</td>
       <td data-label="Confidence"><span class="status">${escapeHtml(record.confidence)}</span></td>
       <td data-label="Sources">${record.sources.length}</td>
@@ -388,7 +397,7 @@ function eventRow(record, selectedId = null) {
 }
 
 function sourceDetailHref(source) {
-  return `/sources/${encodeURIComponent(source.id)}/`;
+  return sitePath(`/sources/${encodeURIComponent(source.id)}/`);
 }
 
 function renderSelectOptions(values, selected, label) {
@@ -532,7 +541,7 @@ function renderEvents() {
         <input id="date_to" name="date_to" type="date" value="${escapeHtml(state.filters.dateTo)}" aria-label="Filter to date">
         <select id="sort" name="sort" aria-label="Sort records">${renderOptionPairs(sortOptions, state.filters.sort, "Sort")}</select>
       </form>
-      <p class="section-note download-inline">Download current dataset: <a href="/data/events.json" download>Events JSON</a> / <a href="/data/events.csv" download>Events CSV</a> / <a href="/data/events-research.json" download>Research JSON</a> / <a href="/data/events-research.csv" download>Research CSV</a></p>
+      <p class="section-note download-inline">Download current dataset: <a href="${sitePath("/data/events.json")}" download>Events JSON</a> / <a href="${sitePath("/data/events.csv")}" download>Events CSV</a> / <a href="${sitePath("/data/events-research.json")}" download>Research JSON</a> / <a href="${sitePath("/data/events-research.csv")}" download>Research CSV</a></p>
     </section>
 
     <section class="section section--tight">
@@ -586,7 +595,7 @@ function updateEventsUrl() {
     if (value) params.set(key, value);
   }
   const query = params.toString();
-  window.history.replaceState(null, "", query ? `/events/?${query}` : "/events/");
+  window.history.replaceState(null, "", sitePath(query ? `/events/?${query}` : "/events/"));
 }
 
 function updateFilters(event) {
@@ -691,7 +700,7 @@ function renderEventDetail() {
             .join("")}
         </ul>
         <h3 class="section-title section-title--spaced">Correction</h3>
-        <p><a href="/submit/?record_id=${encodeURIComponent(record.id)}">Request a source-backed correction</a></p>
+        <p><a href="${sitePath(`/submit/?record_id=${encodeURIComponent(record.id)}`)}">Request a source-backed correction</a></p>
         <h3 class="section-title section-title--spaced">Changelog</h3>
         <ul class="source-list">
           ${record.changelog
@@ -768,7 +777,7 @@ function renderSchools() {
               .map(
                 ({ school, stats }) => `
                   <tr${school.id === selectedId ? " class=\"is-selected\"" : ""}>
-                    <td><a href="/schools/${encodeURIComponent(school.id)}/">${escapeHtml(school.name)}</a></td>
+                    <td><a href="${sitePath(`/schools/${encodeURIComponent(school.id)}/`)}">${escapeHtml(school.name)}</a></td>
                     <td>${escapeHtml(school.state)}</td>
                     <td>${stats.count}</td>
                     <td>${escapeHtml(stats.communities.join(", ") || "None")}</td>
@@ -825,7 +834,7 @@ function updateSchoolsUrl() {
   if (state.schoolFilters.state) params.set("state", state.schoolFilters.state);
   if (state.schoolFilters.sort !== "records_desc") params.set("sort", state.schoolFilters.sort);
   const query = params.toString();
-  window.history.replaceState(null, "", query ? `/schools/?${query}` : "/schools/");
+  window.history.replaceState(null, "", sitePath(query ? `/schools/?${query}` : "/schools/"));
 }
 
 function updateSchoolFilters(event) {
@@ -913,7 +922,7 @@ function updateSourcesUrl() {
   if (state.sourceFilters.publisher) params.set("publisher", state.sourceFilters.publisher);
   if (state.sourceFilters.sort !== "records_desc") params.set("sort", state.sourceFilters.sort);
   const query = params.toString();
-  window.history.replaceState(null, "", query ? `/sources/?${query}` : "/sources/");
+  window.history.replaceState(null, "", sitePath(query ? `/sources/?${query}` : "/sources/"));
 }
 
 function updateSourceFilters(event) {
@@ -952,7 +961,7 @@ function renderSchoolDetail(schoolId) {
         <p class="page-kicker">${escapeHtml(school.state)} / ${escapeHtml(school.city)}</p>
         <h2>${escapeHtml(school.name)}</h2>
         <p>${stats.count} public-source record${stats.count === 1 ? "" : "s"} in the current dataset.</p>
-        <p><a href="/events/?school=${encodeURIComponent(school.id)}">Open event database filtered to this school</a></p>
+        <p><a href="${sitePath(`/events/?school=${encodeURIComponent(school.id)}`)}">Open event database filtered to this school</a></p>
         <dl>
           <div class="data-line">
             <dt>Communities</dt>
@@ -997,7 +1006,7 @@ function renderSchoolDetail(schoolId) {
                     <tr>
                       <td class="mono">${escapeHtml(formatDate(record.date, record.date_precision))}</td>
                       <td>${escapeHtml(record.category)}</td>
-                      <td><a href="/events/${encodeURIComponent(record.id)}/">${escapeHtml(record.summary)}</a></td>
+                      <td><a href="${sitePath(`/events/${encodeURIComponent(record.id)}/`)}">${escapeHtml(record.summary)}</a></td>
                       <td>${record.sources.length}</td>
                     </tr>
                   `
@@ -1024,7 +1033,7 @@ function renderSchoolDetail(schoolId) {
                         (record) => `
                           <tr>
                             <td class="mono">${escapeHtml(formatDate(record.date, record.date_precision))}</td>
-                            <td><a href="/events/${encodeURIComponent(record.id)}/">${escapeHtml(record.summary)}</a></td>
+                            <td><a href="${sitePath(`/events/${encodeURIComponent(record.id)}/`)}">${escapeHtml(record.summary)}</a></td>
                             <td>${escapeHtml(record.institutional_response)}</td>
                           </tr>
                         `
@@ -1053,7 +1062,7 @@ function renderSchoolDetail(schoolId) {
                         (record) => `
                           <tr>
                             <td class="mono">${escapeHtml(formatDate(record.date, record.date_precision))}</td>
-                            <td><a href="/events/${encodeURIComponent(record.id)}/">${escapeHtml(record.summary)}</a></td>
+                            <td><a href="${sitePath(`/events/${encodeURIComponent(record.id)}/`)}">${escapeHtml(record.summary)}</a></td>
                             <td>${escapeHtml(record.legal_status || "Not recorded")}</td>
                           </tr>
                         `
@@ -1115,7 +1124,7 @@ function renderBriefs() {
                 (brief) => `
                   <tr${brief.id === selectedId ? " class=\"is-selected\"" : ""}>
                     <td class="mono">${escapeHtml(brief.published_date)}</td>
-                    <td><a href="/briefs/${encodeURIComponent(brief.id)}/">${escapeHtml(brief.title)}</a></td>
+                    <td><a href="${sitePath(`/briefs/${encodeURIComponent(brief.id)}/`)}">${escapeHtml(brief.title)}</a></td>
                     <td>${brief.new_event_ids.length}</td>
                     <td>${brief.updated_event_ids.length}</td>
                     <td class="mono">${escapeHtml(shortHash(brief.snapshot_hash || state.manifest.hashes.events))}</td>
@@ -1157,7 +1166,7 @@ function briefRecordTable(records, emptyText) {
                   <td class="mono">${escapeHtml(formatDate(record.date, record.date_precision))}</td>
                   <td>${escapeHtml(record.school?.name ?? "Unknown")}</td>
                   <td>${escapeHtml(record.category)}</td>
-                  <td><a href="/events/${encodeURIComponent(record.id)}/">${escapeHtml(record.summary)}</a></td>
+                  <td><a href="${sitePath(`/events/${encodeURIComponent(record.id)}/`)}">${escapeHtml(record.summary)}</a></td>
                 </tr>
               `
             )
@@ -1181,7 +1190,7 @@ function briefResponseList(records) {
         .map(
           (record) => `
             <li>
-              <a href="/events/${encodeURIComponent(record.id)}/">${escapeHtml(record.school?.name ?? "Unknown")}</a>
+              <a href="${sitePath(`/events/${encodeURIComponent(record.id)}/`)}">${escapeHtml(record.school?.name ?? "Unknown")}</a>
               <br><span>${escapeHtml(record.institutional_response)}</span>
             </li>
           `
@@ -1265,10 +1274,10 @@ function renderBriefDetail(briefId) {
         <p class="empty">${brief.correction_ids.length ? escapeHtml(brief.correction_ids.join(", ")) : "No corrections issued in this brief."}</p>
         <h3 class="section-title section-title--spaced">Dataset Downloads</h3>
         <ul class="source-list">
-          <li><a href="/data/events.json">Events JSON</a></li>
-          <li><a href="/data/events.csv">Events CSV</a></li>
-          <li><a href="/data/snapshot-manifest.json">Snapshot manifest</a></li>
-          <li><a href="/downloads/">All downloads</a></li>
+          <li><a href="${sitePath("/data/events.json")}">Events JSON</a></li>
+          <li><a href="${sitePath("/data/events.csv")}">Events CSV</a></li>
+          <li><a href="${sitePath("/data/snapshot-manifest.json")}">Snapshot manifest</a></li>
+          <li><a href="${sitePath("/downloads/")}">All downloads</a></li>
         </ul>
       </aside>
     </div>
@@ -1323,7 +1332,7 @@ function renderSources() {
                     .map(
                       ({ source, events, schools, audit }) => `
                   <tr>
-                    <td class="summary-cell"><a href="/sources/${encodeURIComponent(source.id)}/">${escapeHtml(source.title)}</a></td>
+                    <td class="summary-cell"><a href="${sitePath(`/sources/${encodeURIComponent(source.id)}/`)}">${escapeHtml(source.title)}</a></td>
                     <td>${escapeHtml(source.publisher)}</td>
                     <td>${escapeHtml(source.source_type)}</td>
                     <td class="mono">${escapeHtml(source.published_date)}</td>
@@ -1340,7 +1349,7 @@ function renderSources() {
           </tbody>
         </table>
       </div>
-      <p class="section-note download-inline">Audit files: <a href="/data/sources.json" download>Sources JSON</a> / <a href="/data/sources.csv" download>Sources CSV</a> / <a href="/data/source-audit.json" download>Source Audit JSON</a></p>
+      <p class="section-note download-inline">Audit files: <a href="${sitePath("/data/sources.json")}" download>Sources JSON</a> / <a href="${sitePath("/data/sources.csv")}" download>Sources CSV</a> / <a href="${sitePath("/data/source-audit.json")}" download>Source Audit JSON</a></p>
     </section>
   `;
 
@@ -1399,7 +1408,7 @@ function renderQuality() {
         </div>
         <div class="data-line">
           <dt>Archived snapshot</dt>
-          <dd><a href="/data/snapshots/${encodeURIComponent(state.manifest.snapshot_id)}.json">Open archived JSON</a></dd>
+          <dd><a href="${sitePath(`/data/snapshots/${encodeURIComponent(state.manifest.snapshot_id)}.json`)}">Open archived JSON</a></dd>
         </div>
       </dl>
     </section>
@@ -1796,36 +1805,36 @@ function renderDownloads() {
 
     <section class="section section--tight">
       <div class="download-list">
-        ${downloadRow("Events JSON", "/data/events.json", `${state.manifest.totals.events} records`)}
-        ${downloadRow("Events CSV", "/data/events.csv", "Flat event export")}
-        ${downloadRow("Research Events JSON", "/data/events-research.json", "Events with school and source fields")}
-        ${downloadRow("Research Events CSV", "/data/events-research.csv", "Denormalized event export")}
-        ${downloadRow("Schools JSON", "/data/schools.json", `${state.manifest.totals.schools} schools`)}
-        ${downloadRow("Schools CSV", "/data/schools.csv", "Flat school export")}
-        ${downloadRow("Research Schools JSON", "/data/schools-research.json", "Schools with derived event counts")}
-        ${downloadRow("Research Schools CSV", "/data/schools-research.csv", "Denormalized school export")}
-        ${downloadRow("Sources JSON", "/data/sources.json", `${state.manifest.totals.sources} sources`)}
-        ${downloadRow("Sources CSV", "/data/sources.csv", "Flat source export")}
-        ${downloadRow("Research Sources JSON", "/data/sources-research.json", "Sources with related event IDs")}
-        ${downloadRow("Research Sources CSV", "/data/sources-research.csv", "Denormalized source export")}
-        ${downloadRow("Source Audit JSON", "/data/source-audit.json", "Source provenance checklist")}
-        ${downloadRow("Changelog JSON", "/data/changelog.json", "Record-level public edit log")}
-        ${downloadRow("Release Notes", "/RELEASE_NOTES.md", state.manifest.snapshot_id)}
-        ${downloadRow("Briefs JSON", "/data/briefs.json", `${state.manifest.totals.briefs} briefs`)}
-        ${downloadRow("Briefs RSS", "/rss.xml", "Published research feed")}
-        ${downloadRow("Corrections JSON", "/data/corrections.json", `${state.manifest.totals.corrections} corrections`)}
-        ${downloadRow("Review Log JSON", "/data/review-log.json", `${state.manifest.totals.review_queues} review queues`)}
-        ${downloadRow("Snapshot Manifest", "/data/snapshot-manifest.json", shortHash(state.manifest.hashes.full_snapshot))}
-        ${downloadRow("Snapshot Index", "/data/snapshot-index.json", `${state.snapshotIndex.snapshot_count} archived snapshots`)}
-        ${downloadRow("Archived Snapshot", `/data/snapshots/${state.manifest.snapshot_id}.json`, state.manifest.snapshot_id)}
-        ${downloadRow("Data Dictionary", "/docs/data-dictionary.md", "Field definitions")}
-        ${downloadRow("Citation Guidance", "/docs/citation.md", "How to cite records, briefs, and snapshots")}
-        ${downloadRow("Contribution Guide", "/docs/contributing.md", "Public-source GitHub workflow")}
-        ${downloadRow("Source Audit Notes", "/docs/source-audit.md", "Pre-launch source checks")}
-        ${downloadRow("Correction Schema", "/schema/correction.schema.json", "Correction fields")}
-        ${downloadRow("Review Log Schema", "/schema/review-log.schema.json", "Review workflow fields")}
-        ${downloadRow("Dataset License", "/DATA_LICENSE.md", "Reuse terms")}
-        ${downloadRow("Code License", "/LICENSE.md", "MIT License")}
+        ${downloadRow("Events JSON", sitePath("/data/events.json"), `${state.manifest.totals.events} records`)}
+        ${downloadRow("Events CSV", sitePath("/data/events.csv"), "Flat event export")}
+        ${downloadRow("Research Events JSON", sitePath("/data/events-research.json"), "Events with school and source fields")}
+        ${downloadRow("Research Events CSV", sitePath("/data/events-research.csv"), "Denormalized event export")}
+        ${downloadRow("Schools JSON", sitePath("/data/schools.json"), `${state.manifest.totals.schools} schools`)}
+        ${downloadRow("Schools CSV", sitePath("/data/schools.csv"), "Flat school export")}
+        ${downloadRow("Research Schools JSON", sitePath("/data/schools-research.json"), "Schools with derived event counts")}
+        ${downloadRow("Research Schools CSV", sitePath("/data/schools-research.csv"), "Denormalized school export")}
+        ${downloadRow("Sources JSON", sitePath("/data/sources.json"), `${state.manifest.totals.sources} sources`)}
+        ${downloadRow("Sources CSV", sitePath("/data/sources.csv"), "Flat source export")}
+        ${downloadRow("Research Sources JSON", sitePath("/data/sources-research.json"), "Sources with related event IDs")}
+        ${downloadRow("Research Sources CSV", sitePath("/data/sources-research.csv"), "Denormalized source export")}
+        ${downloadRow("Source Audit JSON", sitePath("/data/source-audit.json"), "Source provenance checklist")}
+        ${downloadRow("Changelog JSON", sitePath("/data/changelog.json"), "Record-level public edit log")}
+        ${downloadRow("Release Notes", sitePath("/RELEASE_NOTES.md"), state.manifest.snapshot_id)}
+        ${downloadRow("Briefs JSON", sitePath("/data/briefs.json"), `${state.manifest.totals.briefs} briefs`)}
+        ${downloadRow("Briefs RSS", sitePath("/rss.xml"), "Published research feed")}
+        ${downloadRow("Corrections JSON", sitePath("/data/corrections.json"), `${state.manifest.totals.corrections} corrections`)}
+        ${downloadRow("Review Log JSON", sitePath("/data/review-log.json"), `${state.manifest.totals.review_queues} review queues`)}
+        ${downloadRow("Snapshot Manifest", sitePath("/data/snapshot-manifest.json"), shortHash(state.manifest.hashes.full_snapshot))}
+        ${downloadRow("Snapshot Index", sitePath("/data/snapshot-index.json"), `${state.snapshotIndex.snapshot_count} archived snapshots`)}
+        ${downloadRow("Archived Snapshot", sitePath(`/data/snapshots/${state.manifest.snapshot_id}.json`), state.manifest.snapshot_id)}
+        ${downloadRow("Data Dictionary", sitePath("/docs/data-dictionary.md"), "Field definitions")}
+        ${downloadRow("Citation Guidance", sitePath("/docs/citation.md"), "How to cite records, briefs, and snapshots")}
+        ${downloadRow("Contribution Guide", sitePath("/docs/contributing.md"), "Public-source GitHub workflow")}
+        ${downloadRow("Source Audit Notes", sitePath("/docs/source-audit.md"), "Pre-launch source checks")}
+        ${downloadRow("Correction Schema", sitePath("/schema/correction.schema.json"), "Correction fields")}
+        ${downloadRow("Review Log Schema", sitePath("/schema/review-log.schema.json"), "Review workflow fields")}
+        ${downloadRow("Dataset License", sitePath("/DATA_LICENSE.md"), "Reuse terms")}
+        ${downloadRow("Code License", sitePath("/LICENSE.md"), "MIT License")}
       </div>
     </section>
   `;

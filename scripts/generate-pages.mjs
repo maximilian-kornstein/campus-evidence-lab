@@ -16,6 +16,7 @@ const eventsDir = path.join(rootDir, "events");
 const schoolsDir = path.join(rootDir, "schools");
 const briefsDir = path.join(rootDir, "briefs");
 const sourcesDir = path.join(rootDir, "sources");
+const detailDepth = 2;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -26,43 +27,51 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
-function nav() {
+function sitePath(target, depth = 0) {
+  if (/^(?:[a-z][a-z0-9+.-]*:|#)/i.test(target)) return target;
+
+  const prefix = "../".repeat(depth);
+  const cleanTarget = String(target).replace(/^\/+/, "");
+  return cleanTarget ? `${prefix}${cleanTarget}` : prefix || "./";
+}
+
+function nav(depth = 0) {
   return `
     <header class="site-header">
       <div class="site-header__inner">
-        <a class="brand" href="/">
+        <a class="brand" href="${sitePath("/", depth)}">
           <span class="brand__name">Campus Evidence Lab</span>
           <span class="brand__tag">Public evidence infrastructure</span>
         </a>
         <nav class="nav" aria-label="Primary navigation">
-          <a href="/">Dashboard</a>
-          <a href="/events/">Events</a>
-          <a href="/schools/">Schools</a>
-          <a href="/briefs/">Briefs</a>
-          <a href="/sources/">Sources</a>
-          <a href="/quality/">Quality</a>
-          <a href="/methodology/">Methodology</a>
-          <a href="/downloads/">Data</a>
-          <a href="/submit/">Submit</a>
-          <a href="/about/">About</a>
-          <a href="/license/">License</a>
+          <a href="${sitePath("/", depth)}">Dashboard</a>
+          <a href="${sitePath("/events/", depth)}">Events</a>
+          <a href="${sitePath("/schools/", depth)}">Schools</a>
+          <a href="${sitePath("/briefs/", depth)}">Briefs</a>
+          <a href="${sitePath("/sources/", depth)}">Sources</a>
+          <a href="${sitePath("/quality/", depth)}">Quality</a>
+          <a href="${sitePath("/methodology/", depth)}">Methodology</a>
+          <a href="${sitePath("/downloads/", depth)}">Data</a>
+          <a href="${sitePath("/submit/", depth)}">Submit</a>
+          <a href="${sitePath("/about/", depth)}">About</a>
+          <a href="${sitePath("/license/", depth)}">License</a>
         </nav>
       </div>
     </header>
   `;
 }
 
-function page(title, body) {
+function page(title, body, depth = 0) {
   return `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${escapeHtml(title)} / Campus Evidence Lab</title>
-    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="stylesheet" href="${sitePath("/assets/styles.css", depth)}">
   </head>
   <body>
-    ${nav()}
+    ${nav(depth)}
     <main class="main">
       ${body}
     </main>
@@ -140,7 +149,7 @@ function briefRecordTable(records, emptyText) {
                   <td class="mono">${escapeHtml(event.date)}</td>
                   <td>${escapeHtml(school?.name ?? event.school_id)}</td>
                   <td>${escapeHtml(event.category)}</td>
-                  <td><a href="/events/${encodeURIComponent(event.id)}/">${escapeHtml(event.summary)}</a></td>
+                  <td><a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a></td>
                 </tr>
               `;
             })
@@ -161,7 +170,7 @@ function briefResponseList(records) {
           const school = schoolMap.get(event.school_id);
           return `
             <li>
-              <a href="/events/${encodeURIComponent(event.id)}/">${escapeHtml(school?.name ?? event.school_id)}</a>
+              <a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(school?.name ?? event.school_id)}</a>
               <br><span>${escapeHtml(event.institutional_response)}</span>
             </li>
           `;
@@ -197,7 +206,7 @@ for (const event of events) {
     .map(
       (source) => `
         <li>
-          <a href="/sources/${encodeURIComponent(source.id)}/">${escapeHtml(source.title)}</a>
+          <a href="${sitePath(`/sources/${encodeURIComponent(source.id)}/`, detailDepth)}">${escapeHtml(source.title)}</a>
           <br><span class="section-note">${escapeHtml(source.publisher)} / ${escapeHtml(source.source_type)} / ${escapeHtml(source.published_date)}</span>
           <br><a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">External source URL</a>
         </li>
@@ -228,7 +237,7 @@ for (const event of events) {
           <div class="detail-grid">
             <div>
               <dl>
-                ${dataLine("School", `<a href="/schools/${encodeURIComponent(event.school_id)}/">${escapeHtml(school?.name ?? event.school_id)}</a>`)}
+                ${dataLine("School", `<a href="${sitePath(`/schools/${encodeURIComponent(event.school_id)}/`, detailDepth)}">${escapeHtml(school?.name ?? event.school_id)}</a>`)}
                 ${dataLine("Date", escapeHtml(event.date), "mono")}
                 ${dataLine("Location", escapeHtml(event.location))}
                 ${dataLine("Category", escapeHtml(event.category))}
@@ -247,13 +256,14 @@ for (const event of events) {
               <h2 class="section-title">Sources</h2>
               <ul class="source-list">${sourceItems}</ul>
               <h2 class="section-title section-title--spaced">Correction</h2>
-              <p><a href="/submit/?record_id=${encodeURIComponent(event.id)}">Request a source-backed correction</a></p>
+              <p><a href="${sitePath(`/submit/?record_id=${encodeURIComponent(event.id)}`, detailDepth)}">Request a source-backed correction</a></p>
               <h2 class="section-title section-title--spaced">Changelog</h2>
               <ul class="source-list">${changelog}</ul>
             </aside>
           </div>
         </section>
-      `
+      `,
+      detailDepth
     )
   );
 }
@@ -306,7 +316,7 @@ for (const source of sources) {
                           <tr>
                             <td class="mono">${escapeHtml(event.date)}</td>
                             <td>${escapeHtml(school?.name ?? event.school_id)}</td>
-                            <td><a href="/events/${encodeURIComponent(event.id)}/">${escapeHtml(event.summary)}</a></td>
+                            <td><a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a></td>
                           </tr>
                         `;
                       })
@@ -323,7 +333,8 @@ for (const source of sources) {
             </aside>
           </div>
         </section>
-      `
+      `,
+      detailDepth
     )
   );
 }
@@ -359,7 +370,7 @@ for (const school of schools) {
         <p class="page-kicker">${escapeHtml(school.state)} / ${escapeHtml(school.city)}</p>
         <h1 class="page-title page-title--small">${escapeHtml(school.name)}</h1>
         <p class="page-intro">${schoolEvents.length} source-backed record${schoolEvents.length === 1 ? "" : "s"} in the current dataset. This profile is generated from public event records and does not rank the institution.</p>
-        <p><a href="/events/?school=${encodeURIComponent(school.id)}">Open event database filtered to this school</a></p>
+        <p><a href="${sitePath(`/events/?school=${encodeURIComponent(school.id)}`, detailDepth)}">Open event database filtered to this school</a></p>
         <section class="detail-panel">
           <div class="detail-grid">
             <div>
@@ -393,7 +404,7 @@ for (const school of schools) {
                           <tr>
                             <td class="mono">${escapeHtml(event.date)}</td>
                             <td>${escapeHtml(event.category)}</td>
-                            <td><a href="/events/${encodeURIComponent(event.id)}/">${escapeHtml(event.summary)}</a></td>
+                            <td><a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a></td>
                             <td>${event.source_ids.length}</td>
                           </tr>
                         `
@@ -420,7 +431,7 @@ for (const school of schools) {
                               (event) => `
                                 <tr>
                                   <td class="mono">${escapeHtml(event.date)}</td>
-                                  <td><a href="/events/${encodeURIComponent(event.id)}/">${escapeHtml(event.summary)}</a></td>
+                                  <td><a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a></td>
                                   <td>${escapeHtml(event.institutional_response)}</td>
                                 </tr>
                               `
@@ -449,7 +460,7 @@ for (const school of schools) {
                               (event) => `
                                 <tr>
                                   <td class="mono">${escapeHtml(event.date)}</td>
-                                  <td><a href="/events/${encodeURIComponent(event.id)}/">${escapeHtml(event.summary)}</a></td>
+                                  <td><a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a></td>
                                   <td>${escapeHtml(event.legal_status || "Not recorded")}</td>
                                 </tr>
                               `
@@ -468,7 +479,7 @@ for (const school of schools) {
                   .map(
                     (source) => `
                       <li>
-                        <a href="/sources/${encodeURIComponent(source.id)}/">${escapeHtml(source.title)}</a>
+                        <a href="${sitePath(`/sources/${encodeURIComponent(source.id)}/`, detailDepth)}">${escapeHtml(source.title)}</a>
                         <br><span class="section-note">${escapeHtml(source.publisher)} / ${escapeHtml(source.source_type)}</span>
                       </li>
                     `
@@ -478,7 +489,8 @@ for (const school of schools) {
             </aside>
           </div>
         </section>
-      `
+      `,
+      detailDepth
     )
   );
 }
@@ -533,15 +545,16 @@ for (const brief of briefs) {
               <p class="empty">${brief.correction_ids.length ? escapeHtml(brief.correction_ids.join(", ")) : "No corrections issued in this brief."}</p>
               <h2 class="section-title section-title--spaced">Dataset Downloads</h2>
               <ul class="source-list">
-                <li><a href="/data/events.json">Events JSON</a></li>
-                <li><a href="/data/events.csv">Events CSV</a></li>
-                <li><a href="/data/snapshot-manifest.json">Snapshot manifest</a></li>
-                <li><a href="/downloads/">All downloads</a></li>
+                <li><a href="${sitePath("/data/events.json", detailDepth)}">Events JSON</a></li>
+                <li><a href="${sitePath("/data/events.csv", detailDepth)}">Events CSV</a></li>
+                <li><a href="${sitePath("/data/snapshot-manifest.json", detailDepth)}">Snapshot manifest</a></li>
+                <li><a href="${sitePath("/downloads/", detailDepth)}">All downloads</a></li>
               </ul>
             </aside>
           </div>
         </section>
-      `
+      `,
+      detailDepth
     )
   );
 }

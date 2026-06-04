@@ -147,7 +147,7 @@ for (const submitCopy of [
   "corrections",
   "duplicate reports",
   "school metadata corrections",
-  "/docs/contributing.md"
+  "docs/contributing.md"
 ]) {
   await mustContain("submit/index.html", submitCopy);
 }
@@ -179,7 +179,7 @@ for (const methodologyCopy of [
 for (const eventsCopy of ["source type", "date range", "verification", "sort"]) {
   await mustContain("events/index.html", eventsCopy);
 }
-for (const eventsDownload of ["/data/events.json", "/data/events.csv", "/data/events-research.json", "/data/events-research.csv", "Current events data is downloadable"]) {
+for (const eventsDownload of ["data/events.json", "data/events.csv", "data/events-research.json", "data/events-research.csv", "Current events data is downloadable"]) {
   await mustContain("events/index.html", eventsDownload);
 }
 
@@ -197,9 +197,9 @@ for (const aboutCopy of [
   "Why This Starts Narrow",
   "Open-Source Commitment",
   "Contact and Contributions",
-  "/submit/",
-  "/methodology/",
-  "/downloads/"
+  "submit/",
+  "methodology/",
+  "downloads/"
 ]) {
   await mustContain("about/index.html", aboutCopy);
 }
@@ -319,7 +319,7 @@ for (const event of events) {
   for (const eventCopy of [
     "External source URL",
     "Request a source-backed correction",
-    `/submit/?record_id=${event.id}`,
+    `submit/?record_id=${event.id}`,
     "Response date",
     "Last updated",
     "Verification rationale",
@@ -336,7 +336,7 @@ for (const event of events) {
 for (const school of schools) {
   const schoolPath = `schools/${school.id}/index.html`;
   await mustExist(schoolPath);
-  await mustContain(schoolPath, `/events/?school=${school.id}`);
+  await mustContain(schoolPath, `events/?school=${school.id}`);
   for (const schoolCopy of ["Timeline", "Institutional Responses", "Public Legal/OCR Items", "Related Sources", "Dataset snapshot"]) {
     await mustContain(schoolPath, schoolCopy);
   }
@@ -356,9 +356,9 @@ for (const brief of briefs) {
     "Source-Type Breakdown",
     "Corrections Issued",
     "Dataset Downloads",
-    "/data/events.json",
-    "/data/events.csv",
-    "/data/snapshot-manifest.json"
+    "data/events.json",
+    "data/events.csv",
+    "data/snapshot-manifest.json"
   ]) {
     await mustContain(`briefs/${brief.id}/index.html`, briefCopy);
   }
@@ -476,6 +476,10 @@ for (const filePath of await htmlFiles()) {
 
     const cleanHref = href.split("#")[0].split("?")[0];
     if (!cleanHref) continue;
+    if (cleanHref.startsWith("/") && !cleanHref.startsWith("//")) {
+      errors.push(`${relativeFile} uses root-relative internal link ${href}; use a relative path for project-page deploys`);
+      continue;
+    }
     const relativeTarget = cleanHref.startsWith("/") ? cleanHref.slice(1) : path.join(path.dirname(relativeFile), cleanHref);
     const normalized = relativeTarget.endsWith("/") ? path.join(relativeTarget, "index.html") : relativeTarget;
     const exists = await fileExists(normalized);
