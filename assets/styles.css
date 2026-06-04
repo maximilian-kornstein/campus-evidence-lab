@@ -57,6 +57,20 @@ textarea {
   border-radius: 0;
 }
 
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) 50%,
+    calc(100% - 12px) 50%;
+  background-repeat: no-repeat;
+  background-size: 6px 6px;
+  padding-right: 38px;
+}
+
 button {
   cursor: pointer;
   padding: 10px 13px;
@@ -302,6 +316,10 @@ textarea:focus-visible {
   padding: 0 10px;
 }
 
+.toolbar select {
+  padding-right: 38px;
+}
+
 .download-inline {
   margin-top: 16px;
 }
@@ -510,6 +528,10 @@ tr.is-selected {
 .packet-output {
   width: 100%;
   padding: 11px 12px;
+}
+
+.stacked-form select {
+  padding-right: 38px;
 }
 
 .stacked-form textarea,
