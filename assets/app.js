@@ -1668,7 +1668,7 @@ function renderSubmitWorkflow() {
       </form>
     </section>
 
-    <section class="section">
+    <section class="section packet-section" id="generated-packet-section">
       <div class="section-header">
         <h2 class="section-title">Generated Packet</h2>
         <p class="section-note">Public-source review format</p>
@@ -1735,18 +1735,45 @@ function setPacketOutput(value, packet = null) {
 
   if (copyButton) copyButton.disabled = !value || !packet;
   if (status) status.textContent = packet ? "Packet ready for public issue filing" : "";
-  if (!issueLink) return;
+  if (!issueLink) {
+    if (value) revealPacketOutput();
+    return;
+  }
 
   if (!packet) {
     issueLink.removeAttribute("href");
     issueLink.classList.add("is-disabled");
     issueLink.setAttribute("aria-disabled", "true");
+    if (value) revealPacketOutput();
     return;
   }
 
   issueLink.href = issueUrlForPacket(packet, value);
   issueLink.classList.remove("is-disabled");
   issueLink.setAttribute("aria-disabled", "false");
+  revealPacketOutput();
+}
+
+function revealPacketOutput() {
+  const section = document.querySelector("#generated-packet-section");
+  const output = document.querySelector("#submission-output");
+  if (!section || !output) return;
+  const schedule = window.requestAnimationFrame || ((callback) => window.setTimeout(callback, 0));
+
+  schedule(() => {
+    const targetTop = section.getBoundingClientRect().top + window.scrollY;
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    try {
+      window.scrollTo({
+        top: targetTop,
+        left: 0,
+        behavior: reduceMotion ? "auto" : "smooth"
+      });
+    } catch {
+      window.location.hash = "generated-packet-section";
+    }
+    output.focus({ preventScroll: true });
+  });
 }
 
 async function copyPacketOutput() {

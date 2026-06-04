@@ -192,6 +192,10 @@ async function renderPage(page, index) {
     url: `https://campusevidencelab.test${page.route}`,
     pretendToBeVisual: true
   });
+  dom.window.__packetScrolls = [];
+  dom.window.scrollTo = (options) => {
+    dom.window.__packetScrolls.push(options);
+  };
 
   await installGlobals(dom);
   await import(`${appUrl}?qa_render=${Date.now()}_${index}`);
@@ -248,9 +252,21 @@ async function renderPage(page, index) {
     const output = dom.window.document.querySelector("#submission-output");
     const copyButton = dom.window.document.querySelector("#copy-packet");
     const issueLink = dom.window.document.querySelector("#open-github-issue");
-    if (!sourceForm || !correctionForm || !duplicateForm || !metadataForm || !output || !copyButton || !issueLink) {
+    const packetSection = dom.window.document.querySelector("#generated-packet-section");
+    if (!sourceForm || !correctionForm || !duplicateForm || !metadataForm || !output || !copyButton || !issueLink || !packetSection) {
       errors.push(`${page.file} did not render all required intake forms`);
       return;
+    }
+    async function checkPacketReveal(label) {
+      await new Promise((resolve) => dom.window.requestAnimationFrame(resolve));
+      const scroll = dom.window.__packetScrolls.at(-1);
+      const expectedTop = packetSection.getBoundingClientRect().top + dom.window.scrollY;
+      if (!scroll || scroll.top !== expectedTop || scroll.left !== 0) {
+        errors.push(`${page.file} ${label} did not scroll exactly to generated packet section`);
+      }
+      if (dom.window.document.activeElement !== output) {
+        errors.push(`${page.file} ${label} did not focus generated packet output`);
+      }
     }
     if (correctionForm.elements.record_id.value !== "evt_2026_0027") {
       errors.push(`${page.file} did not prefill correction record ID from URL`);
@@ -262,6 +278,7 @@ async function renderPage(page, index) {
     sourceForm.elements.event_category.value = "Harassment or threat";
     sourceForm.elements.relevance.value = "Public source may document a campus civil-rights record.";
     sourceForm.dispatchEvent(new dom.window.Event("submit", { bubbles: true, cancelable: true }));
+    await checkPacketReveal("source submission");
 
     for (const text of ["source-submission", "affected_community", "event_category", "No private screenshots"]) {
       if (!output.value.includes(text)) {
@@ -284,6 +301,7 @@ async function renderPage(page, index) {
     correctionForm.elements.source_url.value = "https://example.edu/correction-source";
     correctionForm.elements.correction.value = "Use the public source wording.";
     correctionForm.dispatchEvent(new dom.window.Event("submit", { bubbles: true, cancelable: true }));
+    await checkPacketReveal("correction submission");
     for (const text of ["correction-request", "record_id", "requested_correction"]) {
       if (!output.value.includes(text)) {
         errors.push(`${page.file} correction packet missing ${text}`);
@@ -302,6 +320,7 @@ async function renderPage(page, index) {
     duplicateForm.elements.source_url.value = "https://example.edu/duplicate-source";
     duplicateForm.elements.duplicate_reason.value = "Both records appear to describe the same source-backed event.";
     duplicateForm.dispatchEvent(new dom.window.Event("submit", { bubbles: true, cancelable: true }));
+    await checkPacketReveal("duplicate submission");
     for (const text of ["duplicate-report", "primary_record_id", "duplicate_record_id"]) {
       if (!output.value.includes(text)) {
         errors.push(`${page.file} duplicate packet missing ${text}`);
@@ -320,6 +339,7 @@ async function renderPage(page, index) {
     metadataForm.elements.source_url.value = "https://example.edu/metadata-source";
     metadataForm.elements.metadata_correction.value = "Use the public source school metadata.";
     metadataForm.dispatchEvent(new dom.window.Event("submit", { bubbles: true, cancelable: true }));
+    await checkPacketReveal("metadata submission");
     for (const text of ["school-metadata-correction", "requested_metadata_correction", "public_source_url"]) {
       if (!output.value.includes(text)) {
         errors.push(`${page.file} metadata packet missing ${text}`);
