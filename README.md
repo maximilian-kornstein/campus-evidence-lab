@@ -15,6 +15,7 @@ The current foundation includes:
 - denormalized research exports with joined school, source, and event-reference fields
 - public changelog generation
 - generated release notes for the current dataset snapshot
+- public launch preflight checks and launch checklist
 - RSS feed generation for briefs
 - generated event detail pages
 - public source detail pages
@@ -48,6 +49,14 @@ npm run build
 ```
 
 The deployable output is `dist/`. See [DEPLOYMENT.md](DEPLOYMENT.md).
+
+Before public launch, run:
+
+```sh
+npm run launch:preflight
+```
+
+See [PUBLIC_LAUNCH.md](PUBLIC_LAUNCH.md) for the GitHub and Cloudflare launch checklist.
 
 The current dataset is conservative and public-source only. It is meant to prove the workflow, interface, and review standards across a broader civil-rights schema before private submissions or broader automation are considered.
 

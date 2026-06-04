@@ -26,6 +26,7 @@
     "prepare:data": "npm run hash:data && npm run csv:data && npm run audit:sources && npm run changelog:data && npm run snapshots:data && npm run rss:data && npm run release-notes:data && npm run pages:data && npm run sitemap:data",
     "check": "npm run validate:data && npm run qa:content && npm run qa:data-quality && node scripts/hash-dataset.mjs --check && npm run csv:data && npm run audit:sources && npm run changelog:data && npm run snapshots:data && npm run rss:data && npm run release-notes:data && npm run pages:data && npm run sitemap:data && npm run qa:site && npm run qa:accessibility && npm run qa:render",
     "build": "npm run check && node scripts/build-static.mjs && SITE_ROOT=dist npm run qa:site && SITE_ROOT=dist npm run qa:accessibility && SITE_ROOT=dist npm run qa:render",
+    "launch:preflight": "node scripts/launch-preflight.mjs",
     "deploy:cloudflare": "npm run build && npx wrangler pages deploy dist --project-name campus-evidence-lab"
   },
   "devDependencies": {

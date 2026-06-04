@@ -33,8 +33,11 @@ This project is configured for Cloudflare Pages.
 
 ```sh
 npx wrangler login
+npm run launch:preflight
 npm run deploy:cloudflare
 ```
+
+`launch:preflight` reports missing launch prerequisites, including a missing GitHub remote or unauthenticated Wrangler session. It is expected to fail until the repository remote is configured and Wrangler login has completed.
 
 The deploy command runs `npm run build` first, then deploys `dist/`:
 
