@@ -141,7 +141,7 @@ for (const record of records) {
     location: `${record.city}, ${record.state}`,
     affected_communities: [record.bias],
     category: categoryForOffense(record.offense),
-    summary: `The Department of Education campus safety data listed ${countText} for ${record.name}: ${record.offense} characterized by ${record.bias}.`,
+    summary: `ED campus safety data listed ${countText} for ${record.name}: ${record.offense} characterized by ${record.bias}.`,
     description: `According to the Department of Education Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files, the Oncampushate222324.xlsx workbook listed ${countText} for ${record.name} in ${record.year}: ${record.offense} characterized by ${record.bias}.`,
     source_ids: [sourceId],
     source_types: [sourceType],
