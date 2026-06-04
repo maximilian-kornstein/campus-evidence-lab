@@ -1,30 +1,30 @@
 # Release Notes
 
-Generated for `snapshot_2026_06_03_350_records`.
+Generated for `snapshot_2026_06_03_400_records`.
 
 ## Snapshot
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:cb600ead0509692b2573a905b99f929765f14c3452af4a4a5986cf7653669782`
-- Previous snapshot hash: `sha256:e1473edda67693c0d784a469cd1a15c4b7b9f631856adc0eed03b4e229bbe62b`
-- Archived snapshot: `/data/snapshots/snapshot_2026_06_03_350_records.json`
+- Full snapshot hash: `sha256:e4e76ea81022ee9e5d9d4ff4478428cdc9e2af9b98c0cacfe8a1424e8aa500ae`
+- Previous snapshot hash: `sha256:cb600ead0509692b2573a905b99f929765f14c3452af4a4a5986cf7653669782`
+- Archived snapshot: `/data/snapshots/snapshot_2026_06_03_400_records.json`
 
 ## Dataset Counts
 
-- Events: 350
-- Schools: 284
+- Events: 400
+- Schools: 334
 - Sources: 24
-- Briefs: 9
+- Briefs: 10
 - Corrections: 0
 - Review queues: 4
 
 ## Dataset Hashes
 
-- Events: `sha256:2be7285f81e9ebb19183cabda44bf7130b646e893f644ff63fee2914f798f705`
-- Schools: `sha256:f76ceb098af02e0e161e959405960c67246dc636d01fbcf298a8f8f696a0a0e9`
+- Events: `sha256:ba59a3f3c86851b90a5fe945c316cf2f51b7d90307493144ec2974ddc1b748d9`
+- Schools: `sha256:8f4cbc0a72c3d6cb3d39ebc377ccac4ebbb008136a76c753b61d2425e6acc8aa`
 - Sources: `sha256:db0c8b16dd5651968c81061524d191acfae4d0c4fb1495736a37793c52b2a002`
-- Briefs: `sha256:1ee4e1a0868b3bfc66352de4ef686509fbf555746e219c4e1feafaed72bc501b`
+- Briefs: `sha256:f996b21ce451445fb29fa16bd2b244844318fab34319920a612fc99760853796`
 - Corrections: `sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`
 - Review log: `sha256:7afd34d27de6a6fff8349b2bc1e210eedf56ddb35748129364dc2ef90e149840`
 
@@ -38,19 +38,19 @@ Generated for `snapshot_2026_06_03_350_records`.
 
 ## Changelog
 
-- Public changelog entries: 353
+- Public changelog entries: 403
 - Changelog artifact: `/data/changelog.json`
 
 ## Source Audit
 
 - Audit mode: `metadata`
 - Audited sources: 24
-- Referenced events: 350
-- Audit hash: `sha256:905213a18a8641bc8186a6c3884a94b15652a6ae2b652337833b367fbf2b3f39`
+- Referenced events: 400
+- Audit hash: `sha256:59e051512ad6ca91d7ccbc967a681240a4d3d6dbbddb43b58e5701450bb71760`
 - Audit artifact: `/data/source-audit.json`
 - Live audit artifact: `/data/source-audit-live.json`
 - Live checked sources: 24
-- Live audit hash: `sha256:3ce690dec27e144ea6d099ca06a361add641bfc136673c8c2ac7e7359e4b1a94`
+- Live audit hash: `sha256:5e3890673cce0806eb2bf3d0a936c7cdec31f21dd6db43e2a9cdfc413db849ea`
 
 ## Research Exports
 
@@ -60,7 +60,7 @@ Generated for `snapshot_2026_06_03_350_records`.
 
 ## Prior Snapshot
 
-Previous archived snapshot: `snapshot_2026_06_03_300_records` with full hash `sha256:e1473edda67693c0d784a469cd1a15c4b7b9f631856adc0eed03b4e229bbe62b`.
+Previous archived snapshot: `snapshot_2026_06_03_350_records` with full hash `sha256:cb600ead0509692b2573a905b99f929765f14c3452af4a4a5986cf7653669782`.
 
 ## Verification
 
