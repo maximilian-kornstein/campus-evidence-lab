@@ -27,6 +27,18 @@ The build runs:
 - accessibility QA against `dist/`
 - render QA against `dist/`
 
+## GitHub Pages
+
+GitHub Pages deployment is configured in `.github/workflows/pages.yml`.
+
+After the repository is pushed to GitHub:
+
+1. Open repository Settings -> Pages.
+2. Set source to GitHub Actions.
+3. Run the `Deploy GitHub Pages` workflow or push to `main`.
+
+The workflow runs `npm ci`, `npm run build`, uploads `dist/`, and deploys the verified static artifact.
+
 ## Cloudflare Pages
 
 This project is configured for Cloudflare Pages.
@@ -37,7 +49,7 @@ npm run launch:preflight
 npm run deploy:cloudflare
 ```
 
-`launch:preflight` reports missing launch prerequisites, including a missing GitHub remote or unauthenticated Wrangler session. It is expected to fail until the repository remote is configured and Wrangler login has completed.
+`launch:preflight` reports missing launch prerequisites, including a missing GitHub remote. Wrangler login is only required for direct Cloudflare CLI deployment.
 
 The deploy command runs `npm run build` first, then deploys `dist/`:
 

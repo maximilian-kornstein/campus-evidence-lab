@@ -27,6 +27,7 @@ The current foundation includes:
 - accessibility QA for document semantics, tables, links, and form labels
 - GitHub issue templates for source submissions, corrections, duplicate reports, and school metadata corrections
 - GitHub Actions data validation workflow
+- GitHub Pages deployment workflow
 - static event sitemap
 - Cloudflare Pages configuration
 - public About and License pages

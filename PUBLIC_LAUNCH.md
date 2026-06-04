@@ -9,7 +9,7 @@ npm run build
 npm run launch:preflight
 ```
 
-`npm run build` must pass before deployment. `npm run launch:preflight` should only pass after a GitHub remote and Cloudflare authentication are configured.
+`npm run build` must pass before deployment. `npm run launch:preflight` should pass after a GitHub remote is configured. Cloudflare authentication is only required for direct Cloudflare CLI deployment.
 
 ## 2. Create Public GitHub Repository
 
@@ -37,6 +37,18 @@ After pushing, confirm the repository shows:
 - generated public pages
 
 ## 3. Configure Cloudflare Pages
+
+GitHub Pages is already configured through `.github/workflows/pages.yml`. After pushing to `main`, GitHub Actions can build and deploy `dist/` to GitHub Pages using the repository's Pages settings.
+
+If using GitHub Pages:
+
+1. Push `main` to the public repository.
+2. Open repository Settings -> Pages.
+3. Set source to GitHub Actions.
+4. Run or re-run the `Deploy GitHub Pages` workflow.
+5. Record the published Pages URL.
+
+Cloudflare Pages remains available as an alternate free-hosting path.
 
 Use Cloudflare Pages with:
 

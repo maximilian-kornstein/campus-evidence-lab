@@ -135,7 +135,8 @@ if (siteRoot === rootDir) {
     ".github/ISSUE_TEMPLATE/correction-request.yml",
     ".github/ISSUE_TEMPLATE/duplicate-report.yml",
     ".github/ISSUE_TEMPLATE/school-metadata-correction.yml",
-    ".github/workflows/check.yml"
+    ".github/workflows/check.yml",
+    ".github/workflows/pages.yml"
   ]) {
     await mustExist(workflowArtifact);
   }

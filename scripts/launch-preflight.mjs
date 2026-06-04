@@ -86,6 +86,7 @@ for (const [relativePath, label] of [
   ["dist/data/events-research.json", "Built research events dataset"],
   ["dist/sitemap.xml", "Built sitemap"],
   [".github/workflows/check.yml", "GitHub Actions workflow"],
+  [".github/workflows/pages.yml", "GitHub Pages deployment workflow"],
   [".github/ISSUE_TEMPLATE/source-submission.yml", "Source submission issue template"],
   ["wrangler.toml", "Cloudflare Pages config"]
 ]) {
@@ -110,7 +111,13 @@ const wranglerOutput = `${wranglerWhoami.stdout}\n${wranglerWhoami.stderr}`;
 if (wranglerWhoami.ok && !/not authenticated/i.test(wranglerOutput)) {
   pass("Wrangler is authenticated");
 } else {
-  fail("Wrangler is not authenticated; run `npx wrangler login` before deploying");
+  warn("Wrangler is not authenticated; run `npx wrangler login` before Cloudflare direct deploy");
+}
+
+if (existsSync(path.join(rootDir, ".github/workflows/pages.yml"))) {
+  pass("GitHub Pages deployment path is configured");
+} else if (!wranglerWhoami.ok || /not authenticated/i.test(wranglerOutput)) {
+  fail("No authenticated or configured free static deployment path is available");
 }
 
 let head = "";
