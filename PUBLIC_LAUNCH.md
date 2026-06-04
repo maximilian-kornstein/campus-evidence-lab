@@ -22,9 +22,10 @@ gh repo create campus-evidence-lab --public --source=. --remote=origin --push
 If GitHub CLI is not available, create a public repository named `campus-evidence-lab` in the GitHub web UI, then run:
 
 ```sh
-git remote add origin <repository-url>
-git push -u origin main
+npm run publish:github -- <repository-url>
 ```
+
+The publish helper verifies the local build, adds `origin` if needed, pushes `main`, and reruns the launch preflight. If `origin` is already configured, run `npm run publish:github`.
 
 After pushing, confirm the repository shows:
 

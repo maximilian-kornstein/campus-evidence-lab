@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { execFileSync, spawnSync } from "node:child_process";
 import path from "node:path";
 import { rootDir } from "./lib.mjs";
@@ -88,9 +88,21 @@ for (const [relativePath, label] of [
   [".github/workflows/check.yml", "GitHub Actions workflow"],
   [".github/workflows/pages.yml", "GitHub Pages deployment workflow"],
   [".github/ISSUE_TEMPLATE/source-submission.yml", "Source submission issue template"],
+  ["scripts/publish-github.mjs", "GitHub publish helper"],
   ["wrangler.toml", "Cloudflare Pages config"]
 ]) {
   checkExists(relativePath, label);
+}
+
+try {
+  const packageJson = JSON.parse(readFileSync(path.join(rootDir, "package.json"), "utf8"));
+  if (packageJson.scripts?.["publish:github"]) {
+    pass("GitHub publish npm script is configured");
+  } else {
+    fail("GitHub publish npm script is not configured");
+  }
+} catch {
+  fail("Could not read package.json publish scripts");
 }
 
 const ghVersion = run("gh", ["--version"]);

@@ -39,6 +39,18 @@ After the repository is pushed to GitHub:
 
 The workflow runs `npm ci`, `npm run build`, uploads `dist/`, and deploys the verified static artifact.
 
+If `origin` is not configured yet, create the public GitHub repository first, then publish with:
+
+```sh
+npm run publish:github -- <repository-url>
+```
+
+If `origin` already points to the intended repository, use:
+
+```sh
+npm run publish:github
+```
+
 ## Cloudflare Pages
 
 This project is configured for Cloudflare Pages.
