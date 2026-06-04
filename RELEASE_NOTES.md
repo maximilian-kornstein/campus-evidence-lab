@@ -1,30 +1,30 @@
 # Release Notes
 
-Generated for `snapshot_2026_06_03_155_records`.
+Generated for `snapshot_2026_06_03_200_records`.
 
 ## Snapshot
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:17e739caf914819a2a5a5f083ba234d5e050d8669eb9c7b53c30b4d28e701cd7`
-- Previous snapshot hash: `sha256:67b8d27fa037f9de58df5b07738d447536a8b74aa6a2a69e6d42736603dd8ed7`
-- Archived snapshot: `/data/snapshots/snapshot_2026_06_03_155_records.json`
+- Full snapshot hash: `sha256:8511aa3290109db3afdf72f4b933a075c526fb8aa85fb1e349c8e245e5b50919`
+- Previous snapshot hash: `sha256:17e739caf914819a2a5a5f083ba234d5e050d8669eb9c7b53c30b4d28e701cd7`
+- Archived snapshot: `/data/snapshots/snapshot_2026_06_03_200_records.json`
 
 ## Dataset Counts
 
-- Events: 155
-- Schools: 90
-- Sources: 23
-- Briefs: 5
+- Events: 200
+- Schools: 135
+- Sources: 24
+- Briefs: 6
 - Corrections: 0
 - Review queues: 4
 
 ## Dataset Hashes
 
-- Events: `sha256:dcbcebf65bb2f22f8da9d806d1968060cf7b0af6928d57b25114250e6be94088`
-- Schools: `sha256:5b1f2738adba629a69681bad5f4d0ea5dbfde2fd2d732455cf948ebb9b06cc09`
-- Sources: `sha256:e0a32893ee32f5b46be48d3c3a44a8894af46218e74c62c655efd91c42b21694`
-- Briefs: `sha256:bf3629ba5b58858b967b5c2ae1c905caa1e3d8f9a5c71eb9e37305b9c772e003`
+- Events: `sha256:316922fa15f369aedba00e8a4bf5aefac6de530eb13996df1b3d29218ba67a1e`
+- Schools: `sha256:2deafda6f626e0e6db396a674625abd572f288ce5755e96b3d469d9260962f76`
+- Sources: `sha256:db0c8b16dd5651968c81061524d191acfae4d0c4fb1495736a37793c52b2a002`
+- Briefs: `sha256:bd45560bd662e3c780f38c0ad72445a2ee53cf8b7f4e34df6dd4de56380c3825`
 - Corrections: `sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`
 - Review log: `sha256:7afd34d27de6a6fff8349b2bc1e210eedf56ddb35748129364dc2ef90e149840`
 
@@ -33,24 +33,24 @@ Generated for `snapshot_2026_06_03_155_records`.
 - 2026-06-03: [Broader Civil Rights Scope Seed](/briefs/brief_2026_06_03_broader_scope_seed/) (2 new, 0 updated)
 - 2026-06-03: [Clery and University Hate/Bias Record Expansion](/briefs/brief_2026_06_03_clery_hate_crime_batch/) (53 new, 0 updated)
 - 2026-06-03: [Department of Education 60-University Letter Import](/briefs/brief_2026_06_03_ed_letters/) (60 new, 0 updated)
+- 2026-06-03: [Department of Education Campus Safety Hate-Crime Data Expansion](/briefs/brief_2026_06_03_ed_campus_safety_hate_data_batch/) (45 new, 0 updated)
 - 2026-06-03: [OCR Higher-Education Public Record Import](/briefs/brief_2026_06_03_ocr_higher_ed/) (25 new, 0 updated)
-- 2026-06-03: [Seed Dataset Note](/briefs/brief_2026_06_03_seed/) (15 new, 0 updated)
 
 ## Changelog
 
-- Public changelog entries: 158
+- Public changelog entries: 203
 - Changelog artifact: `/data/changelog.json`
 
 ## Source Audit
 
 - Audit mode: `metadata`
-- Audited sources: 23
-- Referenced events: 155
-- Audit hash: `sha256:a308df55409e0c1995493c6b3c24397cd0f496a9f55df08d38b43bcd2fd199be`
+- Audited sources: 24
+- Referenced events: 200
+- Audit hash: `sha256:4f68b8d55a746cc221f23809ef8fbb15e3e0b3e775a6c35e82e71bf3f01838d4`
 - Audit artifact: `/data/source-audit.json`
 - Live audit artifact: `/data/source-audit-live.json`
-- Live checked sources: 23
-- Live audit hash: `sha256:719bb8d840fc9f879e61edd9b91b858a3628b18f4c9f59b7c47ed98fa81811e5`
+- Live checked sources: 24
+- Live audit hash: `sha256:057bcfa672a97928fb5107d289a14e5466e8166687637adacad185388f5c6668`
 
 ## Research Exports
 
@@ -60,7 +60,7 @@ Generated for `snapshot_2026_06_03_155_records`.
 
 ## Prior Snapshot
 
-Previous archived snapshot: `snapshot_2026_06_03_102_records` with full hash `sha256:67b8d27fa037f9de58df5b07738d447536a8b74aa6a2a69e6d42736603dd8ed7`.
+Previous archived snapshot: `snapshot_2026_06_03_155_records` with full hash `sha256:17e739caf914819a2a5a5f083ba234d5e050d8669eb9c7b53c30b4d28e701cd7`.
 
 ## Verification
 

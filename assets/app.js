@@ -1538,6 +1538,7 @@ function renderSubmitWorkflow() {
             <option>Public safety notice</option>
             <option>Public legal filing</option>
             <option>Government release</option>
+            <option>Government dataset</option>
             <option>Journalism</option>
             <option>Nonprofit report</option>
             <option>Other public source</option>
