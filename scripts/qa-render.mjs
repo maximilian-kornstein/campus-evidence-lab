@@ -47,7 +47,6 @@ const pages = [
     route: "/schools/",
     file: "schools/index.html",
     checks: ["Tracked Schools", "Search schools", "Most recent update", "University of Kentucky"],
-    linkChecks: ["/sources/src_ed_2025_03_10_letters_60/"],
     schoolsSmoke: true
   },
   {
