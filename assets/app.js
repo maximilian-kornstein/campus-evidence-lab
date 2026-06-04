@@ -326,6 +326,14 @@ function renderDashboard() {
           <span>Read Methodology</span>
           <span>Review inclusion rules, source standards, confidence scoring, privacy limits, and corrections.</span>
         </a>
+        <a class="action-link" href="${sitePath("/impact/")}">
+          <span>Impact Page</span>
+          <span>Inspect current reach, research infrastructure, accountability signals, and partnership status.</span>
+        </a>
+        <a class="action-link" href="${sitePath("/guide/")}">
+          <span>Contributor Guide</span>
+          <span>Submit public sources, corrections, duplicate reports, and reviewer feedback without private evidence.</span>
+        </a>
         <a class="action-link" href="${sitePath("/downloads/")}">
           <span>Download Data</span>
           <span>Use JSON, CSV, snapshots, changelog, source audit, citation guidance, and schemas.</span>
@@ -1883,6 +1891,83 @@ function handleSchoolMetadataCorrection(event) {
   }
 }
 
+function renderImpact() {
+  const root = document.querySelector("#impact-root");
+  if (!root) return;
+
+  const statesRepresented = unique(state.records.map((record) => [record.school?.state]));
+  const communitiesRepresented = unique(state.records.map((record) => record.affected_communities));
+  const sourceTypesRepresented = unique(state.sources.values ? [...state.sources.values()].map((source) => [source.source_type]) : []);
+  const latestUpdated = state.records.map((record) => record.updated_at).sort().at(-1) ?? state.manifest.created_at;
+  const liveChecked = (state.sourceAuditLive.entries ?? []).filter((entry) => entry.live_status === "ok").length;
+
+  root.innerHTML = `
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Current Reach</h2>
+        <p class="section-note">Current public snapshot</p>
+      </div>
+      <div class="metric-grid metric-grid--dashboard">
+        ${metric(String(state.manifest.totals.events), "Public-source records")}
+        ${metric(String(state.manifest.totals.schools), "Schools tracked")}
+        ${metric(String(statesRepresented.length), "States and jurisdictions")}
+        ${metric(String(state.manifest.totals.sources), "Source collections")}
+        ${metric(String(state.manifest.totals.briefs), "Research briefs")}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Research Infrastructure</h2>
+        <p class="section-note">What is public now</p>
+      </div>
+      <dl>
+        <div class="data-line">
+          <dt>Search surface</dt>
+          <dd>Events, schools, sources, briefs, filters, generated detail pages, and source-backed school timelines.</dd>
+        </div>
+        <div class="data-line">
+          <dt>Exports</dt>
+          <dd>JSON, CSV, research exports, source audit files, changelog, release notes, RSS, and archived snapshots.</dd>
+        </div>
+        <div class="data-line">
+          <dt>Coverage dimensions</dt>
+          <dd>${communitiesRepresented.length} community labels and ${sourceTypesRepresented.length} source types represented in the current dataset.</dd>
+        </div>
+        <div class="data-line">
+          <dt>Latest update</dt>
+          <dd class="mono">${escapeHtml(latestUpdated)}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Trust and Accountability</h2>
+        <p class="section-note">Audit signals</p>
+      </div>
+      <dl>
+        <div class="data-line">
+          <dt>Snapshot</dt>
+          <dd class="mono">${escapeHtml(state.manifest.snapshot_id)}</dd>
+        </div>
+        <div class="data-line">
+          <dt>Snapshot hash</dt>
+          <dd class="mono">${escapeHtml(state.manifest.hashes.full_snapshot)}</dd>
+        </div>
+        <div class="data-line">
+          <dt>Live source audit</dt>
+          <dd>${liveChecked} source URLs checked in the latest live audit artifact.</dd>
+        </div>
+        <div class="data-line">
+          <dt>Public limits</dt>
+          <dd>Impact is measured as infrastructure shipped and verified, not as prevalence, school quality, or legal fault.</dd>
+        </div>
+      </dl>
+    </section>
+  `;
+}
+
 function renderDownloads() {
   const root = document.querySelector("#downloads-root");
   if (!root) return;
@@ -1977,6 +2062,7 @@ async function init() {
     renderSources();
     renderQuality();
     renderSubmitWorkflow();
+    renderImpact();
     renderDownloads();
   } catch (error) {
     if (document !== initDocument) return;

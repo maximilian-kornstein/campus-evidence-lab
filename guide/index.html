@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributor Guide / Campus Evidence Lab</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+  </head>
+  <body data-page="guide">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="../">
+          <span class="brand__name">Campus Evidence Lab</span>
+          <span class="brand__tag">Public evidence infrastructure</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="../" data-nav="dashboard">Dashboard</a>
+          <a href="../events/" data-nav="events">Events</a>
+          <a href="../schools/" data-nav="schools">Schools</a>
+          <a href="../briefs/" data-nav="briefs">Briefs</a>
+          <a href="../sources/" data-nav="sources">Sources</a>
+          <a href="../quality/" data-nav="quality">Quality</a>
+          <a href="../methodology/" data-nav="methodology">Methodology</a>
+          <a href="../impact/" data-nav="impact">Impact</a>
+          <a href="../guide/" data-nav="guide">Guide</a>
+          <a href="../downloads/" data-nav="downloads">Data</a>
+          <a href="../submit/" data-nav="submit">Submit</a>
+          <a href="../about/" data-nav="about">About</a>
+          <a href="../license/" data-nav="license">License</a>
+        </nav>
+      </div>
+    </header>
+    <main class="main prose">
+      <p class="page-kicker">Contributor Guide</p>
+      <h1 class="page-title page-title--small">Help by making the public record cleaner.</h1>
+      <p class="page-intro">Contributions are useful when they improve source coverage, correction quality, duplicate detection, or school metadata without introducing private evidence or unsupported claims.</p>
+
+      <h2>Ways to Contribute</h2>
+      <ul>
+        <li>Submit a public source for review.</li>
+        <li>Request a source-backed correction to an existing record.</li>
+        <li>Report a likely duplicate record.</li>
+        <li>Suggest a school metadata correction.</li>
+        <li>Review methodology gaps, source-type gaps, or coverage gaps.</li>
+        <li>Help test downloads, search filters, and generated detail pages.</li>
+      </ul>
+
+      <h2>Accepted Sources</h2>
+      <ul>
+        <li>Government releases, datasets, OCR materials, court records, and public legal filings.</li>
+        <li>University statements, annual security reports, public safety notices, and policy notices.</li>
+        <li>Campus newspaper reporting, reliable local journalism, and reliable national journalism.</li>
+        <li>Nonprofit or civil-rights reports when the methodology and source basis are clear.</li>
+      </ul>
+
+      <h2>Rejected Material</h2>
+      <ul>
+        <li>Private testimony, private screenshots, direct messages, private emails, or anonymous tips.</li>
+        <li>Unverified social media-only claims.</li>
+        <li>Private contact information or unnecessary names of private individuals.</li>
+        <li>Legal conclusions not present in the public source.</li>
+        <li>Submissions that ask the project to rank schools by hate, safety, or severity.</li>
+      </ul>
+
+      <h2>Submission Workflow</h2>
+      <p>Use the <a href="../submit/">submit page</a> to prepare a structured packet. The packet can be copied into the appropriate GitHub issue template when the repository is public and ready for outside intake.</p>
+      <ul>
+        <li>Source submission: `.github/ISSUE_TEMPLATE/source-submission.yml`</li>
+        <li>Correction request: `.github/ISSUE_TEMPLATE/correction-request.yml`</li>
+        <li>Duplicate report: `.github/ISSUE_TEMPLATE/duplicate-report.yml`</li>
+        <li>School metadata correction: `.github/ISSUE_TEMPLATE/school-metadata-correction.yml`</li>
+      </ul>
+
+      <h2>Review Standard</h2>
+      <p>A submission does not become a public record until a reviewer confirms the source URL, school, date, category, affected community, attribution language, verification status, confidence label, and privacy risk.</p>
+
+      <h2>Correction Standard</h2>
+      <p>Corrections must identify the record ID, the disputed field, the requested change, and a public source supporting the change. Accepted corrections regenerate record hashes, dataset hashes, release notes, source audit metadata, and the public changelog.</p>
+
+      <h2>Partner and Reviewer Path</h2>
+      <p>Organizations, researchers, journalists, student groups, and civil-rights reviewers can help by reviewing methodology, identifying missing source categories, auditing classification rules, or testing the dataset against a narrow research question. Acknowledgments should appear only after documented review or collaboration.</p>
+
+      <h2>Local Data Workflow</h2>
+      <p>Code or data contributors should read <a href="../docs/contributing.md">docs/contributing.md</a>, then run `npm run prepare:data` and `npm run check` before proposing dataset changes.</p>
+
+      <h2>Contributor Rule</h2>
+      <p>If a contribution would make the dataset less public, less neutral, less attributable, or less auditable, it does not belong in the MVP.</p>
+    </main>
+    <footer class="site-footer">Campus Evidence Lab / Contributor Guide</footer>
+    <script type="module" src="../assets/app.js"></script>
+  </body>
+</html>

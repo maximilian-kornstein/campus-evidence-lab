@@ -18,6 +18,8 @@ const staticPaths = [
   "/sources/",
   "/quality/",
   "/methodology/",
+  "/impact/",
+  "/guide/",
   "/downloads/",
   "/submit/",
   "/about/",

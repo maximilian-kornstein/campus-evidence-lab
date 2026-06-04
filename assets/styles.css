@@ -314,6 +314,44 @@ textarea:focus-visible {
   line-height: 1.45;
 }
 
+.principle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+}
+
+.principle-grid > div {
+  min-height: 148px;
+  padding: 20px;
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.principle-grid h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.principle-grid p,
+.section-copy {
+  color: var(--muted);
+}
+
+.evidence-list {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-strong);
+}
+
+.evidence-list li {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+}
+
 .mono {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 12px;
@@ -620,6 +658,7 @@ tr.is-selected {
   }
 
   .action-grid,
+  .principle-grid,
   .trend-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -655,6 +694,7 @@ tr.is-selected {
 
   .metric-grid,
   .action-grid,
+  .principle-grid,
   .trend-grid,
   .toolbar,
   .download-row {

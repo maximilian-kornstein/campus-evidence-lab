@@ -26,6 +26,8 @@ const pages = [
       "Search Event Database",
       "Latest Weekly Brief",
       "Read Methodology",
+      "Impact Page",
+      "Contributor Guide",
       "Download Data",
       "Trend Charts",
       "Records by Event Month",
@@ -33,7 +35,7 @@ const pages = [
       "Records by Source Type",
       "Small charts summarize current public records"
     ],
-    linkChecks: ["/events/", "/methodology/", "/downloads/", "/briefs/brief_2026_06_03_broader_scope_seed/"],
+    linkChecks: ["/events/", "/methodology/", "/impact/", "/guide/", "/downloads/", "/briefs/brief_2026_06_03_broader_scope_seed/"],
     dashboardSmoke: true
   },
   {
@@ -67,6 +69,16 @@ const pages = [
     checks: ["Snapshot Integrity", "Review System", "Black", "Latino", "Native", "Indigenous"]
   },
   {
+    route: "/impact/",
+    file: "impact/index.html",
+    checks: ["Current Reach", "Research Infrastructure", "Trust and Accountability", "Partnership Status", "Claims Not Made", String(events.length), String(schools.length), String(sources.length)],
+  },
+  {
+    route: "/guide/",
+    file: "guide/index.html",
+    checks: ["Contributor Guide", "Accepted Sources", "Rejected Material", "Submission Workflow", "Partner and Reviewer Path", "npm run prepare:data", "npm run check"]
+  },
+  {
     route: "/downloads/",
     file: "downloads/index.html",
     checks: ["Dataset Status", "Record count", "Last updated", "Schema version", "Latest snapshot hash", "Events JSON", "Research Events JSON", "Research Events CSV", "Research Schools JSON", "Research Schools CSV", "Research Sources JSON", "Research Sources CSV", "Source Audit JSON", "Changelog JSON", "Release Notes", "Snapshot Index", "Citation Guidance", "Contribution Guide", "Briefs RSS", "Source Audit Notes", "Corrections JSON", "Review Log JSON"]
@@ -84,7 +96,7 @@ const pages = [
       "Generate Correction Packet",
       "Generate Duplicate Packet",
       "Generate Metadata Packet",
-      "Read the contribution guide",
+      "Read the contributor guide",
       "Affected community",
       "Event category"
     ],
@@ -225,8 +237,8 @@ async function renderPage(page, index) {
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
-    if (actionLinks.length !== 4) {
-      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 4`);
+    if (actionLinks.length !== 6) {
+      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 6`);
     }
     for (const panel of trendPanels) {
       if (panel.getAttribute("role") !== "img" || !panel.getAttribute("aria-label")) {

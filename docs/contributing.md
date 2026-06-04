@@ -2,6 +2,8 @@
 
 Campus Evidence Lab accepts public-source contributions only. Do not submit private testimony, private screenshots, direct messages, names of private individuals, sensitive personal information, or unsupported allegations.
 
+The public contributor guide is published at `/guide/`; this file is the repository checklist for contributors working directly with issues, pull requests, and local data validation.
+
 ## Ways to Contribute
 
 - Submit a public source for review.
