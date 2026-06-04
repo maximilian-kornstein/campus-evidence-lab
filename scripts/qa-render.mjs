@@ -93,15 +93,23 @@ function responseForPath(urlPath) {
   return path.join(siteRoot, cleanPath);
 }
 
+function installGlobal(name, value) {
+  Object.defineProperty(globalThis, name, {
+    configurable: true,
+    writable: true,
+    value
+  });
+}
+
 async function installGlobals(dom) {
-  globalThis.window = dom.window;
-  globalThis.document = dom.window.document;
-  globalThis.navigator = dom.window.navigator;
-  globalThis.FormData = dom.window.FormData;
-  globalThis.Event = dom.window.Event;
-  globalThis.HTMLElement = dom.window.HTMLElement;
-  globalThis.URLSearchParams = dom.window.URLSearchParams;
-  globalThis.fetch = async (url) => {
+  installGlobal("window", dom.window);
+  installGlobal("document", dom.window.document);
+  installGlobal("navigator", dom.window.navigator);
+  installGlobal("FormData", dom.window.FormData);
+  installGlobal("Event", dom.window.Event);
+  installGlobal("HTMLElement", dom.window.HTMLElement);
+  installGlobal("URLSearchParams", dom.window.URLSearchParams);
+  installGlobal("fetch", async (url) => {
     const urlPath = typeof url === "string" ? url : url.url;
     const filePath = responseForPath(urlPath);
     try {
@@ -113,7 +121,7 @@ async function installGlobals(dom) {
     } catch {
       return new Response("", { status: 404 });
     }
-  };
+  });
 }
 
 async function waitForText(dom, expectedText) {
