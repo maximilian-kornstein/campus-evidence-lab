@@ -85,6 +85,7 @@ for (const route of [
   "methodology/index.html",
   "impact/index.html",
   "guide/index.html",
+  "research-guide/index.html",
   "downloads/index.html",
   "submit/index.html",
   "about/index.html",
@@ -186,6 +187,8 @@ for (const impactCopy of [
   "Current Reach",
   "Research Infrastructure",
   "Trust and Accountability",
+  "Current Use Cases",
+  "Public Roadmap",
   "Partnership Status",
   "Claims Not Made",
   "not school rankings"
@@ -200,10 +203,22 @@ for (const guideCopy of [
   "Rejected Material",
   "Submission Workflow",
   "Partner and Reviewer Path",
+  "Research Guide",
   "npm run prepare:data",
   "npm run check"
 ]) {
   await mustContain("guide/index.html", guideCopy);
+}
+
+for (const researchGuideCopy of [
+  "Research Guide",
+  "Use the archive without overstating it",
+  "Read Counts As Documentation",
+  "Check Source Support",
+  "Cite The Snapshot",
+  "Responsible Output Checklist"
+]) {
+  await mustContain("research-guide/index.html", researchGuideCopy);
 }
 
 for (const eventsCopy of ["source type", "date range", "verification", "sort"]) {
@@ -231,6 +246,7 @@ for (const aboutCopy of [
   "methodology/",
   "impact/",
   "guide/",
+  "research-guide/",
   "downloads/"
 ]) {
   await mustContain("about/index.html", aboutCopy);

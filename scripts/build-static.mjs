@@ -18,6 +18,7 @@ const publicPaths = [
   "methodology",
   "impact",
   "guide",
+  "research-guide",
   "downloads",
   "submit",
   "about",

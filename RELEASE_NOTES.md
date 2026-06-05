@@ -6,7 +6,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:2b29da48204a78e7b124b7754c3df3f4266aebeb704e6acd604ee93c2802220e`
+- Full snapshot hash: `sha256:f496244d36c95437896fd7911ac302f4b30373a2719496bc19a44ef7ac1d8c79`
 - Previous snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
 - Archived snapshot: `/data/snapshots/snapshot_2026_06_03_4000_records.json`
 
@@ -15,7 +15,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Events: 4000
 - Schools: 947
 - Sources: 25
-- Briefs: 26
+- Briefs: 30
 - Corrections: 0
 - Review queues: 4
 
@@ -24,17 +24,17 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Events: `sha256:d8a87f47dc9fee5fbad6fa4ff81d509235a92be820bc4861554324a67c2832b6`
 - Schools: `sha256:4b5b7b8c7a74806bfc0b95bc78606c4b8ab3a87a7c18328dbcb47f4cfa40cb88`
 - Sources: `sha256:6612f537f4743f1f03c7f062bf1da299b78a1da44949ef63b2fe1a69ccb837a1`
-- Briefs: `sha256:86085d3999c8d2c313663f452f56978ea98e99b00f88356b063271f8373b006d`
+- Briefs: `sha256:416276bf864f4fdf7ef4cdd493e02e115dac44f5fab6e5fc5579034f161ad2fc`
 - Corrections: `sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`
 - Review log: `sha256:7afd34d27de6a6fff8349b2bc1e210eedf56ddb35748129364dc2ef90e149840`
 
 ## Public Briefs
 
+- 2026-06-05: [Reviewer Network As The Next Proof Layer](/briefs/brief_2026_06_05_reviewer_network_next_step/) (0 new, 0 updated)
+- 2026-06-05: [Source Availability And Documentation Gaps](/briefs/brief_2026_06_05_source_availability_limits/) (0 new, 0 updated)
+- 2026-06-05: [What ED Campus Safety Data Can And Cannot Show](/briefs/brief_2026_06_05_ed_data_can_and_cannot_show/) (0 new, 0 updated)
+- 2026-06-05: [Why Public Records Are Not School Rankings](/briefs/brief_2026_06_05_records_are_not_rankings/) (0 new, 0 updated)
 - 2026-06-03: [Broader Civil Rights Scope Seed](/briefs/brief_2026_06_03_broader_scope_seed/) (2 new, 0 updated)
-- 2026-06-03: [Clery and University Hate/Bias Record Expansion](/briefs/brief_2026_06_03_clery_hate_crime_batch/) (53 new, 0 updated)
-- 2026-06-03: [Department of Education 60-University Letter Import](/briefs/brief_2026_06_03_ed_letters/) (60 new, 0 updated)
-- 2026-06-03: [Department of Education Campus Safety Hate-Crime Additional Cell Expansion 1500](/briefs/brief_2026_06_03_ed_campus_safety_hate_data_1500_additional_cells/) (750 new, 0 updated)
-- 2026-06-03: [Department of Education Campus Safety Hate-Crime Additional Cell Expansion 2500](/briefs/brief_2026_06_03_ed_campus_safety_hate_data_2500_additional_cells/) (1000 new, 0 updated)
 
 ## Changelog
 

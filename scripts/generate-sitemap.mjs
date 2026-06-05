@@ -20,6 +20,7 @@ const staticPaths = [
   "/methodology/",
   "/impact/",
   "/guide/",
+  "/research-guide/",
   "/downloads/",
   "/submit/",
   "/about/",

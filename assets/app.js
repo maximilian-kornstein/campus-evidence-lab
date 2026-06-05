@@ -398,6 +398,10 @@ function renderDashboard() {
           <span>Contributor Guide</span>
           <span>Submit public sources, corrections, duplicate reports, and reviewer feedback without private evidence.</span>
         </a>
+        <a class="action-link" href="${sitePath("/research-guide/")}">
+          <span>Research Guide</span>
+          <span>Use the archive responsibly without turning public documentation into school rankings or safety claims.</span>
+        </a>
         <a class="action-link" href="${sitePath("/downloads/")}">
           <span>Download Data</span>
           <span>Use JSON, CSV, snapshots, changelog, source audit, citation guidance, and schemas.</span>
@@ -1286,6 +1290,16 @@ function briefLegalUpdates(records) {
   return briefRecordTable(legalRecords, "No legal or OCR updates recorded in this brief.");
 }
 
+function briefListSection(title, items) {
+  if (!Array.isArray(items) || !items.length) return "";
+  return `
+    <h3 class="section-title section-title--spaced">${escapeHtml(title)}</h3>
+    <ul class="evidence-list">
+      ${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+    </ul>
+  `;
+}
+
 function verificationRationale(record) {
   const sourceCount = record.sources?.length ?? record.source_ids?.length ?? 0;
   const sourceTypes = join(record.source_types);
@@ -1312,6 +1326,14 @@ function renderBriefDetail(briefId) {
         <p class="page-kicker">${escapeHtml(brief.week_start)} / ${escapeHtml(brief.week_end)}</p>
         <h2>${escapeHtml(brief.title)}</h2>
         <p>${escapeHtml(brief.summary)}</p>
+        ${briefListSection("Analysis Notes", brief.analysis_points)}
+        ${briefListSection("Responsible Uses", brief.responsible_uses)}
+        ${
+          brief.methods_note
+            ? `<h3 class="section-title section-title--spaced">Method Note</h3>
+               <p>${escapeHtml(brief.methods_note)}</p>`
+            : ""
+        }
         <h3 class="section-title section-title--spaced">Newly Added Verified Records</h3>
         ${briefRecordTable(newRecords, "No newly added records in this brief.")}
         <h3 class="section-title section-title--spaced">Updated Records</h3>
@@ -1323,6 +1345,10 @@ function renderBriefDetail(briefId) {
       </div>
       <aside>
         <dl>
+          <div class="data-line">
+            <dt>Brief type</dt>
+            <dd>${escapeHtml(brief.brief_type || "Dataset update")}</dd>
+          </div>
           <div class="data-line">
             <dt>Published</dt>
             <dd class="mono">${escapeHtml(brief.published_date)}</dd>
@@ -1348,6 +1374,7 @@ function renderBriefDetail(briefId) {
             <dd>${brief.correction_ids.length}</dd>
           </div>
         </dl>
+        ${briefListSection("Research Questions", brief.research_questions)}
         <h3 class="section-title section-title--spaced">Source-Type Breakdown</h3>
         ${briefSourceBreakdown(allBriefRecords)}
         <h3 class="section-title section-title--spaced">Corrections Issued</h3>
@@ -2020,6 +2047,31 @@ function renderImpact() {
 
     <section class="section">
       <div class="section-header">
+        <h2 class="section-title">Current Use Cases</h2>
+        <p class="section-note">Useful without overclaiming</p>
+      </div>
+      <div class="principle-grid">
+        <div>
+          <h3>Journalists</h3>
+          <p>Find public-source records, source pages, and school timelines before requesting comment or records from institutions.</p>
+        </div>
+        <div>
+          <h3>Student leaders</h3>
+          <p>Compare source-backed documentation patterns and identify where public records are thin, stale, or hard to audit.</p>
+        </div>
+        <div>
+          <h3>Civil-rights researchers</h3>
+          <p>Use hashes, source audits, CSV exports, and methodology limits to build reproducible questions from public evidence.</p>
+        </div>
+        <div>
+          <h3>Prospective students</h3>
+          <p>Read source material and institutional responses without treating record counts as rankings, safety scores, or legal findings.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
         <h2 class="section-title">Trust and Accountability</h2>
         <p class="section-note">Audit signals</p>
       </div>
@@ -2039,6 +2091,31 @@ function renderImpact() {
         <div class="data-line">
           <dt>Public limits</dt>
           <dd>Impact is measured as infrastructure shipped and verified, not as prevalence, school quality, or legal fault.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Public Roadmap</h2>
+        <p class="section-note">Conservative sequence</p>
+      </div>
+      <dl>
+        <div class="data-line">
+          <dt>Phase 1</dt>
+          <dd>Keep the 4,000-record archive stable, searchable, auditable, and correction-friendly.</dd>
+        </div>
+        <div class="data-line">
+          <dt>Phase 2</dt>
+          <dd>Recruit a small reviewer circle to audit methodology, source categories, duplicate handling, and neutral language.</dd>
+        </div>
+        <div class="data-line">
+          <dt>Phase 3</dt>
+          <dd>Publish partner-reviewed research briefs only after outside review creates documented value.</dd>
+        </div>
+        <div class="data-line">
+          <dt>Phase 4</dt>
+          <dd>Explore institutional transparency tools after the evidence standards and reviewer workflow are proven.</dd>
         </div>
       </dl>
     </section>

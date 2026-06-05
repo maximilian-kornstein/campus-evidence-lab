@@ -35,7 +35,7 @@ const pages = [
       "Records by Source Type",
       "Small charts summarize current public records"
     ],
-    linkChecks: ["/events/", "/methodology/", "/impact/", "/guide/", "/downloads/", "/briefs/brief_2026_06_03_broader_scope_seed/"],
+    linkChecks: ["/events/", "/methodology/", "/impact/", "/guide/", "/research-guide/", "/downloads/", "/briefs/brief_2026_06_05_records_are_not_rankings/"],
     dashboardSmoke: true
   },
   {
@@ -77,6 +77,11 @@ const pages = [
     route: "/guide/",
     file: "guide/index.html",
     checks: ["Contributor Guide", "Accepted Sources", "Rejected Material", "Submission Workflow", "Partner and Reviewer Path", "npm run prepare:data", "npm run check"]
+  },
+  {
+    route: "/research-guide/",
+    file: "research-guide/index.html",
+    checks: ["Research Guide", "Use the archive without overstating it", "Read Counts As Documentation", "Cite The Snapshot", "Responsible Output Checklist"]
   },
   {
     route: "/downloads/",
@@ -237,8 +242,8 @@ async function renderPage(page, index) {
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
-    if (actionLinks.length !== 6) {
-      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 6`);
+    if (actionLinks.length !== 7) {
+      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 7`);
     }
     for (const panel of trendPanels) {
       if (panel.getAttribute("role") !== "img" || !panel.getAttribute("aria-label")) {

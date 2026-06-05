@@ -31,7 +31,8 @@ The current foundation includes:
 - static event sitemap
 - Cloudflare Pages configuration
 - public About and License pages
-- severe minimalist dashboard, event database, school, brief, source, quality, methodology, submit, and data pages
+- severe minimalist dashboard, event database, school, brief, source, quality, methodology, impact, contributor guide, research guide, submit, and data pages
+- analysis briefs for responsible use, source availability limits, ED data limits, and reviewer-network readiness
 
 Run locally:
 
@@ -80,6 +81,6 @@ See [PUBLIC_LAUNCH.md](PUBLIC_LAUNCH.md) for the GitHub and Cloudflare launch ch
 
 The current dataset is conservative and public-source only. It is meant to prove the workflow, interface, and review standards across a broader civil-rights schema before private submissions or broader automation are considered.
 
-Review operations are documented in [docs/review-workflow.md](docs/review-workflow.md). Content safety rules are documented in [docs/content-safety.md](docs/content-safety.md). The current public review state is published in `data/review-log.json`; correction outcomes are published in `data/corrections.json`.
+Review operations are documented in [docs/review-workflow.md](docs/review-workflow.md). Content safety rules are documented in [docs/content-safety.md](docs/content-safety.md). Responsible public use is published at `/research-guide/`. The current public review state is published in `data/review-log.json`; correction outcomes are published in `data/corrections.json`.
 
 Contribution standards are documented in [docs/contributing.md](docs/contributing.md). The public intake page can generate structured source, correction, duplicate, and school metadata packets for GitHub issue review.

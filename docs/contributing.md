@@ -10,6 +10,7 @@ The public contributor guide is published at `/guide/`; this file is the reposit
 - Request a source-backed correction to an existing event record.
 - Report a possible duplicate event record.
 - Suggest a source-backed school metadata correction.
+- Review the public methodology, source hierarchy, deduplication logic, and research guide for overclaiming risk.
 
 ## GitHub Workflow
 
@@ -35,6 +36,17 @@ Submitted material does not become a public record until a reviewer confirms tha
 - includes enough source detail to verify school, date, category, affected community, and confidence
 
 Accepted changes regenerate record hashes, dataset hashes, CSV exports, source audit metadata, snapshot manifests, the snapshot index, and the public changelog.
+
+## Reviewer Entry Points
+
+Reviewer work should stay narrow and documented:
+
+- methodology review: inclusion, exclusion, confidence, verification, deduplication, and no-ranking rules
+- source audit: URL availability, publisher identity, publication date, source type, and source-to-record fit
+- classification audit: category and affected-community labels against the source text
+- research audit: one narrow question tested against the public research guide, with any failure cases reported
+
+Acknowledgments or partner notes should appear only after documented review or collaboration is complete.
 
 ## Pull Request Checklist
 

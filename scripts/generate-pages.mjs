@@ -187,6 +187,16 @@ function briefLegalUpdates(records) {
   return briefRecordTable(legalRecords, "No legal or OCR updates recorded in this brief.");
 }
 
+function briefListSection(title, items) {
+  if (!Array.isArray(items) || !items.length) return "";
+  return `
+    <h2 class="section-title section-title--spaced">${escapeHtml(title)}</h2>
+    <ul class="evidence-list">
+      ${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+    </ul>
+  `;
+}
+
 function verificationRationale(event, sourceCount) {
   return `${event.verification_status}; ${sourceCount} public source${sourceCount === 1 ? "" : "s"} reviewed (${event.source_types.join(", ")}). Confidence reflects source support, not severity.`;
 }
@@ -523,6 +533,14 @@ for (const brief of briefs) {
         <section class="detail-panel">
           <div class="detail-grid">
             <div>
+              ${briefListSection("Analysis Notes", brief.analysis_points)}
+              ${briefListSection("Responsible Uses", brief.responsible_uses)}
+              ${
+                brief.methods_note
+                  ? `<h2 class="section-title section-title--spaced">Method Note</h2>
+                     <p>${escapeHtml(brief.methods_note)}</p>`
+                  : ""
+              }
               <h2 class="section-title">Newly Added Verified Records</h2>
               ${briefRecordTable(newEvents, "No newly added records in this brief.")}
               <h2 class="section-title section-title--spaced">Updated Records</h2>
@@ -534,6 +552,7 @@ for (const brief of briefs) {
             </div>
             <aside>
               <dl>
+                ${dataLine("Brief type", escapeHtml(brief.brief_type || "Dataset update"))}
                 ${dataLine("Published", escapeHtml(brief.published_date), "mono")}
                 ${dataLine("Dataset version", escapeHtml(manifest.snapshot_id), "mono")}
                 ${dataLine("Dataset hash", escapeHtml(brief.snapshot_hash || "See current manifest"), "mono")}
@@ -541,6 +560,7 @@ for (const brief of briefs) {
                 ${dataLine("Updated records", escapeHtml(brief.updated_event_ids.length))}
                 ${dataLine("Corrections", escapeHtml(brief.correction_ids.length))}
               </dl>
+              ${briefListSection("Research Questions", brief.research_questions)}
               <h2 class="section-title section-title--spaced">Source-Type Breakdown</h2>
               ${countTable(sourceTypeRows, "Source Type")}
               <h2 class="section-title section-title--spaced">Corrections Issued</h2>
