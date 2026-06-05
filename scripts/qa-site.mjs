@@ -88,6 +88,8 @@ for (const route of [
   "acknowledgments/index.html",
   "guide/index.html",
   "research-guide/index.html",
+  "research-workspace/index.html",
+  "reviewer-queue/index.html",
   "downloads/index.html",
   "submit/index.html",
   "about/index.html",
@@ -255,15 +257,44 @@ for (const researchGuideCopy of [
   await mustContain("research-guide/index.html", researchGuideCopy);
 }
 
+for (const workspaceCopy of [
+  "Research Workspace",
+  "Build a source packet from selected records",
+  "citation packet",
+  "Nothing is submitted or stored"
+]) {
+  await mustContain("research-workspace/index.html", workspaceCopy);
+}
+
+for (const reviewerQueueCopy of [
+  "Reviewer Queue",
+  "Find the records most worth reviewing next",
+  "low-confidence records",
+  "source-audit follow-ups",
+  "not danger or school quality"
+]) {
+  await mustContain("reviewer-queue/index.html", reviewerQueueCopy);
+}
+
 for (const eventsCopy of ["source type", "date range", "verification", "sort"]) {
   await mustContain("events/index.html", eventsCopy);
 }
-for (const eventsDownload of ["data/events.json", "data/events.csv", "data/events-research.json", "data/events-research.csv", "Current events data is downloadable"]) {
+for (const eventsDownload of ["data/events.json", "data/events.csv", "data/events-research.json", "data/events-research.csv", "Filter URLs are shareable"]) {
   await mustContain("events/index.html", eventsDownload);
 }
 
 for (const schoolsCopy of ["Search schools", "filter by state", "most recent update"]) {
   await mustContain("schools/index.html", schoolsCopy);
+}
+
+for (const schoolDossierCopy of [
+  "University of Kentucky Dossier",
+  "Build Citation Packet",
+  "Dossier Review Needs",
+  "Use limit",
+  "does not rank the institution"
+]) {
+  await mustContain("schools/university_of_kentucky/index.html", schoolDossierCopy);
 }
 
 for (const sourcesCopy of ["Search sources", "filter by source type", "direct external source URLs", "audit downloads"]) {

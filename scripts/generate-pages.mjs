@@ -63,8 +63,8 @@ function nav(depth = 0) {
   `;
 }
 
-function page(title, body, depth = 0) {
-  return `<!doctype html>
+function page(title, body, depth = 0, stripTrailingWhitespace = false) {
+  const html = `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -81,6 +81,7 @@ function page(title, body, depth = 0) {
   </body>
 </html>
 `;
+  return stripTrailingWhitespace ? html.replace(/[ \t]+$/gm, "") : html;
 }
 
 function dataLine(label, value, className = "") {
@@ -125,6 +126,25 @@ function countTable(rows, firstLabel, secondLabel = "Records") {
       </table>
     </div>
   `;
+}
+
+function reviewNeedLabels(event) {
+  const labels = [];
+  if (event.confidence === "Low") labels.push("Low-confidence source support");
+  if ((event.source_ids?.length ?? 0) <= 1) labels.push("Single-source record");
+  if (!event.institutional_response) labels.push("No public institutional response recorded");
+  if (event.affected_communities.some((community) => ["Race", "Religion", "National origin", "Ethnicity", "Gender"].includes(community))) {
+    labels.push("Broad affected-community label");
+  }
+  if (/ocr|legal|lawsuit|title vi|title ix|resolution|settlement|federal|doj|complaint|finding/i.test(`${event.category} ${event.legal_status}`)) {
+    labels.push("Legal/OCR status review");
+  }
+  return labels;
+}
+
+function workspaceUrlForEvents(records, depth = 0) {
+  const ids = records.slice(0, 100).map((event) => event.id).join(",");
+  return sitePath(ids ? `/research-workspace/?record_ids=${encodeURIComponent(ids)}` : "/research-workspace/", depth);
 }
 
 function briefRecordTable(records, emptyText) {
@@ -371,6 +391,7 @@ for (const school of schools) {
   const legalEvents = schoolEvents.filter((event) =>
     /ocr|legal|lawsuit|title vi|title ix|resolution|settlement|federal|doj|complaint|finding/i.test(`${event.category} ${event.legal_status}`)
   );
+  const reviewNeeds = countBy(schoolEvents.flatMap(reviewNeedLabels));
   const schoolDir = path.join(schoolsDir, school.id);
   await mkdir(schoolDir, { recursive: true });
 
@@ -380,9 +401,13 @@ for (const school of schools) {
       school.name,
       `
         <p class="page-kicker">${escapeHtml(school.state)} / ${escapeHtml(school.city)}</p>
-        <h1 class="page-title page-title--small">${escapeHtml(school.name)}</h1>
-        <p class="page-intro">${schoolEvents.length} source-backed record${schoolEvents.length === 1 ? "" : "s"} in the current dataset. This profile is generated from public event records and does not rank the institution.</p>
-        <p><a href="${sitePath(`/events/?school=${encodeURIComponent(school.id)}`, detailDepth)}">Open event database filtered to this school</a></p>
+        <h1 class="page-title page-title--small">${escapeHtml(school.name)} Dossier</h1>
+        <p class="page-intro">${schoolEvents.length} source-backed record${schoolEvents.length === 1 ? "" : "s"} in the current dataset. This dossier is generated from public event records and does not rank the institution, score safety, or estimate incident prevalence.</p>
+        <div class="utility-bar">
+          <a class="button-link" href="${sitePath(`/events/?school=${encodeURIComponent(school.id)}`, detailDepth)}">Open Filtered Records</a>
+          <a class="button-link" href="${workspaceUrlForEvents(schoolEvents, detailDepth)}">Build Citation Packet</a>
+          <a class="button-link" href="${sitePath(`/submit/?record_id=${encodeURIComponent(schoolEvents[0]?.id ?? "")}`, detailDepth)}">Request Correction</a>
+        </div>
         <section class="detail-panel">
           <div class="detail-grid">
             <div>
@@ -392,6 +417,7 @@ for (const school of schools) {
                 ${dataLine("Categories", escapeHtml(categories.join(", ") || "None"))}
                 ${dataLine("Latest update", escapeHtml(latestUpdate || "None"), "mono")}
                 ${dataLine("Dataset snapshot", escapeHtml(manifest.hashes.full_snapshot), "mono")}
+                ${dataLine("Use limit", "Do not read this dossier as a ranking, safety score, legal finding, or complete incident history.")}
                 ${
                   school.website
                     ? dataLine("Website", `<a href="${escapeHtml(school.website)}" target="_blank" rel="noreferrer">${escapeHtml(school.website)}</a>`)
@@ -485,6 +511,8 @@ for (const school of schools) {
               }
             </div>
             <aside>
+              <h2 class="section-title">Dossier Review Needs</h2>
+              ${countTable(reviewNeeds.length ? reviewNeeds : [["No priority review flags", 0]], "Review Need")}
               <h2 class="section-title">Related Sources</h2>
               <ul class="source-list">
                 ${schoolSources
@@ -502,7 +530,8 @@ for (const school of schools) {
           </div>
         </section>
       `,
-      detailDepth
+      detailDepth,
+      true
     )
   );
 }

@@ -29,6 +29,8 @@ const pages = [
       "Impact Page",
       "Trust & Review Packet",
       "Contributor Guide",
+      "Research Workspace",
+      "Reviewer Queue",
       "Download Data",
       "Trend Charts",
       "Records by Event Month",
@@ -36,20 +38,20 @@ const pages = [
       "Records by Source Type",
       "Small charts summarize current public records"
     ],
-    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/guide/", "/research-guide/", "/downloads/", "/briefs/brief_2026_06_05_records_are_not_rankings/"],
+    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_05_records_are_not_rankings/"],
     dashboardSmoke: true
   },
   {
     route: "/events/",
     file: "events/index.html",
-    checks: ["Search", "Source type", "Verification", "Sort", "Community", "Sources", "Updated", "Events JSON", "Events CSV", "Research JSON", "Research CSV", "University of Kentucky", "Asian, Black, Latino, Native, Indigenous"],
+    checks: ["Search", "Source type", "Verification", "Sort", "Search relevance", "Community", "Sources", "Updated", "Copy Share Link", "Download Filtered JSON", "Download Filtered CSV", "Open Research Workspace", "Events JSON", "Events CSV", "Research JSON", "Research CSV", "University of Kentucky", "Asian, Black, Latino, Native, Indigenous"],
     linkChecks: ["/sources/src_uky_2025_09_23_ocr_phd_project/"],
     eventsSmoke: true
   },
   {
     route: "/schools/",
     file: "schools/index.html",
-    checks: ["Tracked Schools", "Search schools", "Most recent update", "University of Kentucky"],
+    checks: ["Tracked Schools", "Search schools", "Most recent update", "Dossier", "Build Citation Packet", "University of Kentucky"],
     schoolsSmoke: true
   },
   {
@@ -60,7 +62,7 @@ const pages = [
   {
     route: "/sources/",
     file: "sources/index.html",
-    checks: ["Source Index", "Search sources", "Source type", "Publisher", "Sort", "Audit", "External source URL", "Source Audit JSON", "University of Kentucky OCR Case Number 03-25-2099"],
+    checks: ["Source Index", "Search sources", "Source type", "Publisher", "Sort", "Search relevance", "Audit", "External source URL", "Source Audit JSON", "University of Kentucky OCR Case Number 03-25-2099"],
     linkChecks: ["/sources/src_uky_2025_09_23_ocr_phd_project/"],
     sourcesSmoke: true
   },
@@ -95,6 +97,17 @@ const pages = [
     route: "/research-guide/",
     file: "research-guide/index.html",
     checks: ["Research Guide", "Use the archive without overstating it", "Read Counts As Documentation", "Cite The Snapshot", "Responsible Output Checklist"]
+  },
+  {
+    route: "/research-workspace/?record_ids=evt_2026_0027",
+    file: "research-workspace/index.html",
+    checks: ["Research Workspace", "Record Selection", "Citation Packet", "Selection is encoded in the URL", "Snapshot hash", "University of Kentucky", "evt_2026_0027"],
+    workspaceSmoke: true
+  },
+  {
+    route: "/reviewer-queue/",
+    file: "reviewer-queue/index.html",
+    checks: ["Reviewer Queue", "Review Priorities", "Low-Confidence Review Sample", "Classification Review Sample", "Source Expansion Sample", "Open checklist", "Build sample packet"]
   },
   {
     route: "/downloads/",
@@ -255,8 +268,8 @@ async function renderPage(page, index) {
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
-    if (actionLinks.length !== 8) {
-      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 8`);
+    if (actionLinks.length !== 10) {
+      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 10`);
     }
     for (const panel of trendPanels) {
       if (panel.getAttribute("role") !== "img" || !panel.getAttribute("aria-label")) {
@@ -389,6 +402,33 @@ async function renderPage(page, index) {
     }
   }
 
+  if (page.workspaceSmoke) {
+    const searchForm = dom.window.document.querySelector("#workspace-search-form");
+    const packetForm = dom.window.document.querySelector("#workspace-packet-form");
+    const output = dom.window.document.querySelector("#workspace-packet-output");
+    const selectedToggle = dom.window.document.querySelector('.workspace-record-toggle[value="evt_2026_0027"]');
+    const addVisible = dom.window.document.querySelector("#workspace-add-visible");
+    const clearSelection = dom.window.document.querySelector("#workspace-clear");
+    const copyLink = dom.window.document.querySelector("#workspace-copy-link");
+    if (!searchForm || !packetForm || !output || !selectedToggle || !addVisible || !clearSelection || !copyLink) {
+      errors.push(`${page.file} did not render the research workspace controls`);
+      return;
+    }
+    for (const text of ["Campus Evidence Lab Research Packet", "Use limits:", "source_urls", "evt_2026_0027"]) {
+      if (!output.value.includes(text)) {
+        errors.push(`${page.file} workspace packet missing ${text}`);
+      }
+    }
+    if (!selectedToggle.checked) {
+      errors.push(`${page.file} did not initialize selected record from URL`);
+    }
+    searchForm.elements.q.value = "Kentucky OCR";
+    searchForm.dispatchEvent(new dom.window.Event("submit", { bubbles: true, cancelable: true }));
+    if (!dom.window.location.href.includes("q=Kentucky+OCR")) {
+      errors.push(`${page.file} did not preserve workspace search in URL`);
+    }
+  }
+
   if (page.eventsSmoke) {
     const form = dom.window.document.querySelector("#event-filter-form");
     if (!form) {
@@ -463,7 +503,8 @@ async function renderPage(page, index) {
     for (const text of [
       `1 of ${schools.length} schools`,
       "University of Kentucky",
-      "Open event database filtered to this school",
+      "Open Filtered Records",
+      "Build Citation Packet",
       "Timeline",
       "Institutional Responses",
       "Public Legal/OCR Items",

@@ -34,6 +34,7 @@ The current foundation includes:
 - Cloudflare Pages configuration
 - public About and License pages
 - severe minimalist dashboard, event database, school, brief, source, quality, methodology, impact, contributor guide, research guide, submit, and data pages
+- static-first usability surfaces for filtered exports, shareable searches, school dossiers, research citation packets, and reviewer queues
 - analysis briefs for responsible use, source availability limits, ED data limits, and reviewer-network readiness
 
 Run locally:

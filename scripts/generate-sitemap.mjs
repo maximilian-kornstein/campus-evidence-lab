@@ -23,6 +23,8 @@ const staticPaths = [
   "/acknowledgments/",
   "/guide/",
   "/research-guide/",
+  "/research-workspace/",
+  "/reviewer-queue/",
   "/downloads/",
   "/submit/",
   "/about/",

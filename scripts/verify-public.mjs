@@ -66,6 +66,8 @@ await check("Core pages", async () => {
     ["/acknowledgments/", "No public acknowledgments yet"],
     ["/guide/", "Contributor Guide"],
     ["/research-guide/", "Research Guide"],
+    ["/research-workspace/", "Research Workspace"],
+    ["/reviewer-queue/", "Reviewer Queue"],
     ["/downloads/", "Download the public dataset"],
     ["/submit/", "Public sources only"],
     ["/about/", "Mission"],

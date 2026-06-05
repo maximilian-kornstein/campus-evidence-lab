@@ -21,6 +21,8 @@ const publicPaths = [
   "acknowledgments",
   "guide",
   "research-guide",
+  "research-workspace",
+  "reviewer-queue",
   "downloads",
   "submit",
   "about",
