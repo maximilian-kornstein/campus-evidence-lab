@@ -173,7 +173,7 @@ Required content:
 - Total verified records.
 - Schools tracked.
 - Affected communities represented.
-- States represented.
+- States and jurisdictions represented.
 - Latest dataset update.
 - Latest dataset version or snapshot hash.
 - Search entry point.

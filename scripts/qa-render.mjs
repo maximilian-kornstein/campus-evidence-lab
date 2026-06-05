@@ -20,7 +20,7 @@ const pages = [
     checks: [
       String(events.length),
       "Communities represented",
-      "States represented",
+      "States and jurisdictions represented",
       "Campus civil-rights records",
       "Research Entry Points",
       "Search Event Database",

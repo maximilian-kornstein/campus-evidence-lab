@@ -278,7 +278,7 @@ function renderDashboard() {
         </div>
         <div class="metric">
           <span class="metric__value">${statesRepresented.length}</span>
-          <span class="metric__label">States represented</span>
+          <span class="metric__label">States and jurisdictions represented</span>
         </div>
         <div class="metric">
           <span class="metric__value">${latestUpdate ? formatDate(latestUpdate) : "None"}</span>
