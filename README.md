@@ -35,6 +35,7 @@ The current foundation includes:
 - public About and License pages
 - severe minimalist dashboard, event database, school, brief, source, quality, methodology, impact, contributor guide, research guide, submit, and data pages
 - static-first usability surfaces for filtered exports, shareable searches, school dossiers, research citation packets, and reviewer queues
+- minimal Solidity snapshot registry for optional public dataset-hash attestations
 - analysis briefs for responsible use, source availability limits, ED data limits, and reviewer-network readiness
 
 Run locally:
@@ -54,6 +55,14 @@ npm run build
 ```
 
 The deployable output is `dist/`. See [DEPLOYMENT.md](DEPLOYMENT.md).
+
+Run the local Solidity registry tests:
+
+```sh
+npm run test:contracts
+```
+
+The registry is documented in [docs/snapshot-registry.md](docs/snapshot-registry.md). No mainnet deployment is included or authorized by default.
 
 Before public launch, run:
 
