@@ -394,6 +394,10 @@ function renderDashboard() {
           <span>Impact Page</span>
           <span>Inspect current reach, research infrastructure, accountability signals, and partnership status.</span>
         </a>
+        <a class="action-link" href="${sitePath("/trust/")}">
+          <span>Trust & Review Packet</span>
+          <span>Give outside reviewers a compact path to audit methodology, sources, classifications, and responsible-use limits.</span>
+        </a>
         <a class="action-link" href="${sitePath("/guide/")}">
           <span>Contributor Guide</span>
           <span>Submit public sources, corrections, duplicate reports, and reviewer feedback without private evidence.</span>

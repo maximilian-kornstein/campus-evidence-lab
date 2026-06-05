@@ -22,6 +22,7 @@ Use the repository issue templates:
 - `.github/ISSUE_TEMPLATE/correction-request.yml`
 - `.github/ISSUE_TEMPLATE/duplicate-report.yml`
 - `.github/ISSUE_TEMPLATE/school-metadata-correction.yml`
+- `.github/ISSUE_TEMPLATE/reviewer-checklist.yml`
 
 If the public repository is not yet connected to the deployed site, use `/submit/` to generate a structured packet and include that packet in the relevant GitHub issue once the repository is public.
 
@@ -47,6 +48,8 @@ Reviewer work should stay narrow and documented:
 - research audit: one narrow question tested against the public research guide, with any failure cases reported
 
 Acknowledgments or partner notes should appear only after documented review or collaboration is complete.
+
+The public trust packet is published at `/trust/`. Outreach language is drafted in `docs/outreach-email.md`; acknowledgment standards are defined in `docs/partner-acknowledgment-policy.md`.
 
 ## Pull Request Checklist
 

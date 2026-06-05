@@ -26,6 +26,8 @@ The current foundation includes:
 - data-quality QA for cross-file consistency and release thresholds
 - accessibility QA for document semantics, tables, links, and form labels
 - GitHub issue templates for source submissions, corrections, duplicate reports, and school metadata corrections
+- reviewer checklist issue template for documented methodology, source, classification, research-guide, and data-export review
+- public trust packet, acknowledgment status page, outreach draft, and partner acknowledgment policy
 - GitHub Actions data validation workflow
 - GitHub Pages deployment workflow
 - static event sitemap
@@ -81,6 +83,6 @@ See [PUBLIC_LAUNCH.md](PUBLIC_LAUNCH.md) for the GitHub and Cloudflare launch ch
 
 The current dataset is conservative and public-source only. It is meant to prove the workflow, interface, and review standards across a broader civil-rights schema before private submissions or broader automation are considered.
 
-Review operations are documented in [docs/review-workflow.md](docs/review-workflow.md). Content safety rules are documented in [docs/content-safety.md](docs/content-safety.md). Responsible public use is published at `/research-guide/`. The current public review state is published in `data/review-log.json`; correction outcomes are published in `data/corrections.json`.
+Review operations are documented in [docs/review-workflow.md](docs/review-workflow.md). Content safety rules are documented in [docs/content-safety.md](docs/content-safety.md). Responsible public use is published at `/research-guide/`. The trust packet is published at `/trust/`; public acknowledgment status is published at `/acknowledgments/`. The current public review state is published in `data/review-log.json`; correction outcomes are published in `data/corrections.json`.
 
 Contribution standards are documented in [docs/contributing.md](docs/contributing.md). The public intake page can generate structured source, correction, duplicate, and school metadata packets for GitHub issue review.

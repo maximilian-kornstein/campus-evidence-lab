@@ -17,6 +17,8 @@ const publicPaths = [
   "quality",
   "methodology",
   "impact",
+  "trust",
+  "acknowledgments",
   "guide",
   "research-guide",
   "downloads",

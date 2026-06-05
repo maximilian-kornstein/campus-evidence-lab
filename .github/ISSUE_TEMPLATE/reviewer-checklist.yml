@@ -1,0 +1,82 @@
+name: Reviewer checklist
+description: Document a methodology, source, classification, research, or data-export review.
+title: "Reviewer checklist: "
+labels:
+  - reviewer-feedback
+  - pending-review
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for narrow public review. Do not include private testimony, private screenshots, names of private individuals, sensitive personal information, or unsupported allegations.
+  - type: dropdown
+    id: review_type
+    attributes:
+      label: Review type
+      options:
+        - Methodology review
+        - Source audit review
+        - Classification review
+        - Research guide review
+        - Data export review
+    validations:
+      required: true
+  - type: input
+    id: reviewer_name
+    attributes:
+      label: Reviewer name or organization
+      description: Optional if you do not want a public name attached.
+      placeholder: Name, organization, or anonymous reviewer
+  - type: input
+    id: public_role
+    attributes:
+      label: Public role or affiliation
+      description: Optional. Include only what may be public.
+      placeholder: Student group, researcher, journalist, civil-rights organization, technical reviewer
+  - type: textarea
+    id: scope_reviewed
+    attributes:
+      label: Scope reviewed
+      description: Name the page, data file, issue, source family, sample, or brief you reviewed.
+      placeholder: Reviewed methodology sections on confidence and no-ranking language; sampled 10 records from one source family.
+    validations:
+      required: true
+  - type: textarea
+    id: sample_reviewed
+    attributes:
+      label: Records, sources, pages, or exports sampled
+      description: Include record IDs, source IDs, page URLs, export names, or brief IDs when available.
+      placeholder: evt_..., src_..., /methodology/, /research-guide/, data/events.csv
+  - type: textarea
+    id: findings
+    attributes:
+      label: Findings
+      description: State what held up, what failed, and where the project should be more careful.
+      placeholder: Findings should be source-backed and specific.
+    validations:
+      required: true
+  - type: textarea
+    id: suggested_changes
+    attributes:
+      label: Suggested changes
+      description: List concrete changes if any are needed.
+      placeholder: Change label, clarify methodology language, update source type, add limitation, or no change recommended.
+    validations:
+      required: true
+  - type: dropdown
+    id: acknowledgment_permission
+    attributes:
+      label: Public acknowledgment permission
+      description: This does not create endorsement language.
+      options:
+        - Do not list me publicly
+        - May list with exact display name above
+        - Discuss public display name first
+    validations:
+      required: true
+  - type: textarea
+    id: public_links
+    attributes:
+      label: Public supporting links
+      description: Optional. Add only public links that support the review.
+      placeholder: Public source URLs, issue links, public reports, or repository links.

@@ -27,6 +27,7 @@ const pages = [
       "Latest Weekly Brief",
       "Read Methodology",
       "Impact Page",
+      "Trust & Review Packet",
       "Contributor Guide",
       "Download Data",
       "Trend Charts",
@@ -35,7 +36,7 @@ const pages = [
       "Records by Source Type",
       "Small charts summarize current public records"
     ],
-    linkChecks: ["/events/", "/methodology/", "/impact/", "/guide/", "/research-guide/", "/downloads/", "/briefs/brief_2026_06_05_records_are_not_rankings/"],
+    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/guide/", "/research-guide/", "/downloads/", "/briefs/brief_2026_06_05_records_are_not_rankings/"],
     dashboardSmoke: true
   },
   {
@@ -74,9 +75,21 @@ const pages = [
     checks: ["Current Reach", "Research Infrastructure", "Trust and Accountability", "Partnership Status", "Claims Not Made", String(events.length), String(schools.length), String(sources.length)],
   },
   {
+    route: "/trust/",
+    file: "trust/index.html",
+    checks: ["Trust & Review Packet", "Current Proof Package", "What A Reviewer Can Audit In 30 Minutes", "Review Tasks", "What Trust Signals Prove", "What They Do Not Prove", "Reviewer Entry Points", "Acknowledgment Rule"],
+    linkChecks: ["../methodology/", "../quality/", "../research-guide/", "../downloads/", "../acknowledgments/"]
+  },
+  {
+    route: "/acknowledgments/",
+    file: "acknowledgments/index.html",
+    checks: ["No public acknowledgments yet", "Acknowledgment Criteria", "Future Categories", "Methodology reviewer", "Source audit reviewer", "Organizational collaborator"],
+    linkChecks: ["../trust/"]
+  },
+  {
     route: "/guide/",
     file: "guide/index.html",
-    checks: ["Contributor Guide", "Accepted Sources", "Rejected Material", "Submission Workflow", "Partner and Reviewer Path", "npm run prepare:data", "npm run check"]
+    checks: ["Contributor Guide", "Accepted Sources", "Rejected Material", "Submission Workflow", "Partner and Reviewer Path", "Trust & Review Packet", "reviewer-checklist.yml", "npm run prepare:data", "npm run check"]
   },
   {
     route: "/research-guide/",
@@ -242,8 +255,8 @@ async function renderPage(page, index) {
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
-    if (actionLinks.length !== 7) {
-      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 7`);
+    if (actionLinks.length !== 8) {
+      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 8`);
     }
     for (const panel of trendPanels) {
       if (panel.getAttribute("role") !== "img" || !panel.getAttribute("aria-label")) {

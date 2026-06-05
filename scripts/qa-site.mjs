@@ -84,6 +84,8 @@ for (const route of [
   "quality/index.html",
   "methodology/index.html",
   "impact/index.html",
+  "trust/index.html",
+  "acknowledgments/index.html",
   "guide/index.html",
   "research-guide/index.html",
   "downloads/index.html",
@@ -139,6 +141,7 @@ if (siteRoot === rootDir) {
     ".github/ISSUE_TEMPLATE/correction-request.yml",
     ".github/ISSUE_TEMPLATE/duplicate-report.yml",
     ".github/ISSUE_TEMPLATE/school-metadata-correction.yml",
+    ".github/ISSUE_TEMPLATE/reviewer-checklist.yml",
     ".github/workflows/check.yml",
     ".github/workflows/pages.yml"
   ]) {
@@ -165,6 +168,7 @@ for (const contributingCopy of [
   ".github/ISSUE_TEMPLATE/correction-request.yml",
   ".github/ISSUE_TEMPLATE/duplicate-report.yml",
   ".github/ISSUE_TEMPLATE/school-metadata-correction.yml",
+  ".github/ISSUE_TEMPLATE/reviewer-checklist.yml",
   "npm run prepare:data",
   "npm run check"
 ]) {
@@ -196,6 +200,34 @@ for (const impactCopy of [
   await mustContain("impact/index.html", impactCopy);
 }
 
+for (const trustCopy of [
+  "Trust & Review Packet",
+  "Current Proof Package",
+  "What A Reviewer Can Audit In 30 Minutes",
+  "Review Tasks",
+  "What Trust Signals Prove",
+  "What They Do Not Prove",
+  "Reviewer Entry Points",
+  "Acknowledgment Rule",
+  "reviewer-checklist.yml",
+  "docs/outreach-email.md",
+  "docs/partner-acknowledgment-policy.md"
+]) {
+  await mustContain("trust/index.html", trustCopy);
+}
+
+for (const acknowledgmentCopy of [
+  "No public acknowledgments yet",
+  "Acknowledgment Criteria",
+  "Future Categories",
+  "Methodology reviewer",
+  "Source audit reviewer",
+  "Organizational collaborator",
+  "partner-acknowledgment-policy.md"
+]) {
+  await mustContain("acknowledgments/index.html", acknowledgmentCopy);
+}
+
 for (const guideCopy of [
   "Contributor Guide",
   "Ways to Contribute",
@@ -203,6 +235,8 @@ for (const guideCopy of [
   "Rejected Material",
   "Submission Workflow",
   "Partner and Reviewer Path",
+  "Trust & Review Packet",
+  "reviewer-checklist.yml",
   "Research Guide",
   "npm run prepare:data",
   "npm run check"
@@ -245,6 +279,8 @@ for (const aboutCopy of [
   "submit/",
   "methodology/",
   "impact/",
+  "trust/",
+  "acknowledgments/",
   "guide/",
   "research-guide/",
   "downloads/"
