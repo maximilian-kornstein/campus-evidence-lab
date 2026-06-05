@@ -57,7 +57,7 @@ await check("Core pages", async () => {
     ["/", "Campus Evidence Lab"],
     ["/events/", "Search source-backed campus records"],
     ["/schools/", "Search schools"],
-    ["/briefs/", "Weekly dataset notes"],
+    ["/briefs/", "Dataset notes and analysis memos"],
     ["/sources/", "source index"],
     ["/quality/", "Quality"],
     ["/methodology/", "No Ranking System"],
