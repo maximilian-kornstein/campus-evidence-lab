@@ -229,6 +229,61 @@ function schoolStats(schoolId) {
   };
 }
 
+function documentationSignals(records) {
+  const sourceIds = unique(records.map((record) => record.source_ids));
+  const sources = sourceIds.map((id) => state.sources.get(id)).filter(Boolean);
+  const sourceTypes = unique(records.map((record) => record.source_types));
+  const communities = unique(records.map((record) => record.affected_communities));
+  const officialRecords = records.filter((record) =>
+    record.sources.some((source) => /government|court|public legal|annual security|public safety/i.test(source.source_type))
+  ).length;
+  const responseRecords = records.filter((record) => record.institutional_response).length;
+  const latestRecordDate = records.map((record) => record.date).sort().at(-1) ?? "";
+  const latestUpdate = records.map((record) => record.updated_at).sort().at(-1) ?? "";
+
+  return {
+    recordCount: records.length,
+    sourceCount: sources.length,
+    sourceTypeCount: sourceTypes.length,
+    communityCount: communities.length,
+    officialRecords,
+    responseRecords,
+    latestRecordDate,
+    latestUpdate
+  };
+}
+
+function documentationSignalRows(signals) {
+  return `
+    <dl>
+      <div class="data-line">
+        <dt>Public-source density</dt>
+        <dd>${signals.recordCount} record${signals.recordCount === 1 ? "" : "s"}</dd>
+      </div>
+      <div class="data-line">
+        <dt>Source collections</dt>
+        <dd>${signals.sourceCount}</dd>
+      </div>
+      <div class="data-line">
+        <dt>Source-type diversity</dt>
+        <dd>${signals.sourceTypeCount}</dd>
+      </div>
+      <div class="data-line">
+        <dt>Official-source records</dt>
+        <dd>${signals.officialRecords}</dd>
+      </div>
+      <div class="data-line">
+        <dt>Records with public response text</dt>
+        <dd>${signals.responseRecords}</dd>
+      </div>
+      <div class="data-line">
+        <dt>Latest public record date</dt>
+        <dd class="mono">${escapeHtml(signals.latestRecordDate ? formatDate(signals.latestRecordDate) : "None")}</dd>
+      </div>
+    </dl>
+  `;
+}
+
 function setCurrentNav() {
   const page = document.body.dataset.page;
   for (const link of document.querySelectorAll(".nav a")) {
@@ -247,6 +302,7 @@ function renderDashboard() {
   const statesRepresented = unique(state.records.map((record) => [record.school?.state]));
   const latestUpdate = state.records.map((record) => record.updated_at).sort().at(-1);
   const latestBrief = [...state.briefs].sort((a, b) => b.published_date.localeCompare(a.published_date))[0];
+  const signals = documentationSignals(state.records);
   const recentRows = state.records.slice(0, 5).map(dashboardEventRow).join("");
   const recordsByMonth = countBy(state.records, (record) => record.date.slice(0, 7))
     .sort((a, b) => b[0].localeCompare(a[0]))
@@ -306,6 +362,14 @@ function renderDashboard() {
           <dd>Campus civil-rights records across shared ancestry, race, national origin, sex, pregnancy, disability, and athletic-equity categories.</dd>
         </div>
       </dl>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Documentation Signals</h2>
+        <p class="section-note">Public documentation density and auditability; not safety scores, school rankings, or incident prevalence.</p>
+      </div>
+      ${documentationSignalRows(signals)}
     </section>
 
     <section class="section">
@@ -963,6 +1027,7 @@ function renderSchoolDetail(schoolId) {
   const sourceIds = unique(stats.records.map((record) => record.source_ids));
   const sources = sourceIds.map((id) => state.sources.get(id)).filter(Boolean);
   const responseRecords = stats.records.filter((record) => record.institutional_response);
+  const signals = documentationSignals(stats.records);
   const legalRecords = stats.records.filter((record) =>
     /ocr|legal|lawsuit|title vi|title ix|resolution|settlement|federal|doj|complaint|finding/i.test(`${record.category} ${record.legal_status}`)
   );
@@ -1087,6 +1152,9 @@ function renderSchoolDetail(schoolId) {
         }
       </div>
       <aside>
+        <h3 class="section-title">Documentation Signals</h3>
+        <p class="section-note">These signals describe public documentation in this dataset, not safety, prevalence, or quality of life.</p>
+        ${documentationSignalRows(signals)}
         <h3 class="section-title">Related Sources</h3>
         <ul class="source-list">
           ${sources
@@ -1381,6 +1449,7 @@ function renderQuality() {
     .map((source) => [source.title, state.records.filter((record) => record.source_ids.includes(source.id)).length])
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   const decisionCounts = state.reviewLog?.decision_counts ?? {};
+  const signals = documentationSignals(state.records);
 
   root.innerHTML = `
     <section class="section section--tight" aria-label="Quality metrics">
@@ -1390,6 +1459,14 @@ function renderQuality() {
         ${metric(recordsWithHashes, "Records with hashes")}
         ${metric(state.corrections.length, "Correction records")}
       </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Documentation Signals, Not Safety Scores</h2>
+        <p class="section-note">These fields describe how much public documentation the archive currently holds and how auditable it is. They do not rate campus safety, quality of life, institutional virtue, or event prevalence.</p>
+      </div>
+      ${documentationSignalRows(signals)}
     </section>
 
     <section class="section">

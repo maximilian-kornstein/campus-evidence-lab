@@ -9,15 +9,25 @@ const workbookPath = process.argv[3];
 const scopeTag = process.argv[4];
 const scopeLabel = process.argv[5];
 const scopeDescription = process.argv[6];
-const sourceId = "src_ed_campus_safety_2025_hate_crime_data_files";
-const sourceType = "Government dataset";
+const sourceId = process.env.ED_SOURCE_ID || "src_ed_campus_safety_2025_hate_crime_data_files";
+const sourceType = process.env.ED_SOURCE_TYPE || "Government dataset";
+const sourceTitle = process.env.ED_SOURCE_TITLE || "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files";
+const sourceUrl = process.env.ED_SOURCE_URL || "https://ope.ed.gov/campussafety/#/datafile/list";
+const sourcePublishedDate = process.env.ED_SOURCE_PUBLISHED_DATE || "2026-04-30";
+const packageLabel = process.env.ED_PACKAGE_LABEL || "2025 Excel data files";
+const allowedYearSuffixes = (process.env.ED_HEADER_YEARS || "22,23,24")
+  .split(",")
+  .map((year) => year.trim())
+  .filter(Boolean);
+const allowedYearPattern = allowedYearSuffixes.map((year) => year.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
+const headerPattern = new RegExp(`^(.+?)_(RAC|REL|SEX|GEN|GID|DIS|ET|NAT)(${allowedYearPattern})$`);
 const source = {
   id: sourceId,
-  title: "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
-  url: "https://ope.ed.gov/campussafety/#/datafile/list",
+  title: sourceTitle,
+  url: sourceUrl,
   publisher: "U.S. Department of Education Office of Postsecondary Education",
   source_type: sourceType,
-  published_date: "2026-04-30",
+  published_date: sourcePublishedDate,
   accessed_date: importedAt
 };
 
@@ -27,12 +37,16 @@ if (!Number.isInteger(targetCount) || targetCount <= 0 || !workbookPath || !scop
   );
 }
 
+if (!allowedYearSuffixes.length) {
+  throw new Error("ED_HEADER_YEARS must include at least one two-digit year suffix, such as 22 or 21.");
+}
+
 if (!/^[a-z0-9+.-]+$/.test(scopeTag)) {
   throw new Error("scope-tag must be a slug-safe tag");
 }
 
 if (!existsSync(workbookPath)) {
-  throw new Error(`Missing workbook at ${workbookPath}. Extract the official ED Crime2025EXCEL.zip package first.`);
+  throw new Error(`Missing workbook at ${workbookPath}. Extract the official ED campus-safety Excel package first.`);
 }
 
 function xml(entry) {
@@ -150,7 +164,7 @@ const headers = rows[0];
 const workbookCodeTags = new Set(
   headers
     .map((header) => String(header || ""))
-    .filter((header) => /^(.+?)_(RAC|REL|SEX|GEN|GID|DIS|ET|NAT)(22|23|24)$/.test(header))
+    .filter((header) => headerPattern.test(header))
     .map(tagForCode)
 );
 
@@ -170,7 +184,7 @@ for (const row of rows.slice(1)) {
 
   const schoolId = slugify(name);
   for (const [index, header] of headers.entries()) {
-    const match = String(header || "").match(/^(.+?)_(RAC|REL|SEX|GEN|GID|DIS|ET|NAT)(22|23|24)$/);
+    const match = String(header || "").match(headerPattern);
     if (!match) continue;
     const count = Number(row[index] || 0);
     if (count <= 0) continue;
@@ -284,7 +298,7 @@ for (const record of selected) {
     affected_communities: [record.bias],
     category: categoryForOffense(record.offense),
     summary: `ED campus safety data listed ${countText} for ${record.name}: ${record.offense} characterized by ${record.bias}.`,
-    description: `According to the Department of Education Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files, the ${workbookName} workbook listed ${countText} for ${record.name} in ${record.year}: ${record.offense} characterized by ${record.bias}.`,
+    description: `According to the Department of Education Campus Safety and Security Data Analysis Cutting Tool ${packageLabel}, the ${workbookName} workbook listed ${countText} for ${record.name} in ${record.year}: ${record.offense} characterized by ${record.bias}.`,
     source_ids: [sourceId],
     source_types: [sourceType],
     institutional_response: `The record summarizes a Department of Education Clery/campus-safety ${scopeDescription} dataset cell and does not independently evaluate investigative, disciplinary, or institutional response outcomes.`,
@@ -299,7 +313,7 @@ for (const record of selected) {
     changelog: [
       {
         date: importedAt,
-        note: `Imported from the Department of Education Campus Safety and Security 2025 Excel ${scopeDescription} hate-crime data-file cell for the ${targetCount}-record expansion.`
+        note: `Imported from the Department of Education Campus Safety and Security ${packageLabel} ${scopeDescription} hate-crime data-file cell for the ${targetCount}-record expansion.`
       }
     ]
   });

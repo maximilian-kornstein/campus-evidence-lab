@@ -1,30 +1,30 @@
 # Release Notes
 
-Generated for `snapshot_2026_06_03_3500_records`.
+Generated for `snapshot_2026_06_03_4000_records`.
 
 ## Snapshot
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
-- Previous snapshot hash: `sha256:a63bb415bfd229d4d4a8b6c92502f6aee11af01f2bd0bee500dcbf76ad02baa5`
-- Archived snapshot: `/data/snapshots/snapshot_2026_06_03_3500_records.json`
+- Full snapshot hash: `sha256:2b29da48204a78e7b124b7754c3df3f4266aebeb704e6acd604ee93c2802220e`
+- Previous snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
+- Archived snapshot: `/data/snapshots/snapshot_2026_06_03_4000_records.json`
 
 ## Dataset Counts
 
-- Events: 3500
-- Schools: 899
-- Sources: 24
-- Briefs: 23
+- Events: 4000
+- Schools: 947
+- Sources: 25
+- Briefs: 26
 - Corrections: 0
 - Review queues: 4
 
 ## Dataset Hashes
 
-- Events: `sha256:7f8f48896e2ec51a97fff7d7e0b6d78f24e578cf8cb0ec38306e593040c73241`
-- Schools: `sha256:a17c5af87f74414ab75042bb8fafdd847dfeab9cbc7925ed6132fb10059457a8`
-- Sources: `sha256:db0c8b16dd5651968c81061524d191acfae4d0c4fb1495736a37793c52b2a002`
-- Briefs: `sha256:58a985e37939798abf52cdd3ff8145773a2bfa4808a9258ab00298cb82eda18d`
+- Events: `sha256:d8a87f47dc9fee5fbad6fa4ff81d509235a92be820bc4861554324a67c2832b6`
+- Schools: `sha256:4b5b7b8c7a74806bfc0b95bc78606c4b8ab3a87a7c18328dbcb47f4cfa40cb88`
+- Sources: `sha256:6612f537f4743f1f03c7f062bf1da299b78a1da44949ef63b2fe1a69ccb837a1`
+- Briefs: `sha256:86085d3999c8d2c313663f452f56978ea98e99b00f88356b063271f8373b006d`
 - Corrections: `sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`
 - Review log: `sha256:7afd34d27de6a6fff8349b2bc1e210eedf56ddb35748129364dc2ef90e149840`
 
@@ -38,19 +38,19 @@ Generated for `snapshot_2026_06_03_3500_records`.
 
 ## Changelog
 
-- Public changelog entries: 3503
+- Public changelog entries: 4003
 - Changelog artifact: `/data/changelog.json`
 
 ## Source Audit
 
 - Audit mode: `metadata`
-- Audited sources: 24
-- Referenced events: 3500
-- Audit hash: `sha256:7ed208f434b292b0d49f9895f8f91a2f2576e13b41726a19f73d5a0f6036cc1e`
+- Audited sources: 25
+- Referenced events: 4000
+- Audit hash: `sha256:58ee80fdf3fcc528d194e0cc280527f725ce76cd3b5eed05137c6f2654bbc5af`
 - Audit artifact: `/data/source-audit.json`
 - Live audit artifact: `/data/source-audit-live.json`
-- Live checked sources: 24
-- Live audit hash: `sha256:66eda267d774479922ff2879f5c537bf5c8a0a5064e4b77b65422ae3ef395ec2`
+- Live checked sources: 25
+- Live audit hash: `sha256:746d4fefe0357b6f8936339b07ea5e9dfcc3c0ec80aa547e3cf4e8477230581a`
 
 ## Research Exports
 
