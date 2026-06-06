@@ -28,6 +28,7 @@ const pages = [
       "Read Methodology",
       "Impact Page",
       "Trust & Review Packet",
+      "Reviewer Brief",
       "Contributor Guide",
       "Research Workspace",
       "Reviewer Queue",
@@ -38,7 +39,7 @@ const pages = [
       "Records by Source Type",
       "Small charts summarize current public records"
     ],
-    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_05_records_are_not_rankings/"],
+    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_05_records_are_not_rankings/"],
     dashboardSmoke: true
   },
   {
@@ -87,6 +88,12 @@ const pages = [
     file: "acknowledgments/index.html",
     checks: ["No public acknowledgments yet", "Acknowledgment Criteria", "Future Categories", "Methodology reviewer", "Source audit reviewer", "Organizational collaborator"],
     linkChecks: ["../trust/"]
+  },
+  {
+    route: "/reviewer-brief/",
+    file: "reviewer-brief/index.html",
+    checks: ["Reviewer Brief", "A small ask for outside critique", "Project In One Paragraph", "Three Review Questions", "Suggested 10-Record Sample", "Acknowledgment Boundary", "Download the Markdown reviewer packet"],
+    linkChecks: ["../methodology/", "../research-guide/", "../trust/", "../reviewer-queue/", "../docs/reviewer-brief.md"]
   },
   {
     route: "/guide/",
@@ -268,8 +275,8 @@ async function renderPage(page, index) {
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
-    if (actionLinks.length !== 10) {
-      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 10`);
+    if (actionLinks.length !== 11) {
+      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 11`);
     }
     for (const panel of trendPanels) {
       if (panel.getAttribute("role") !== "img" || !panel.getAttribute("aria-label")) {

@@ -86,6 +86,7 @@ for (const route of [
   "impact/index.html",
   "trust/index.html",
   "acknowledgments/index.html",
+  "reviewer-brief/index.html",
   "guide/index.html",
   "research-guide/index.html",
   "research-workspace/index.html",
@@ -125,6 +126,7 @@ for (const artifact of [
   "docs/contributing.md",
   "docs/citation.md",
   "docs/review-workflow.md",
+  "docs/reviewer-brief.md",
   "docs/source-audit.md",
   "rss.xml",
   "sitemap.xml",
@@ -228,6 +230,17 @@ for (const acknowledgmentCopy of [
   "partner-acknowledgment-policy.md"
 ]) {
   await mustContain("acknowledgments/index.html", acknowledgmentCopy);
+}
+
+for (const reviewerBriefCopy of [
+  "Reviewer Brief",
+  "A small ask for outside critique",
+  "Three Review Questions",
+  "Suggested 10-Record Sample",
+  "Acknowledgment Boundary",
+  "docs/reviewer-brief.md"
+]) {
+  await mustContain("reviewer-brief/index.html", reviewerBriefCopy);
 }
 
 for (const guideCopy of [

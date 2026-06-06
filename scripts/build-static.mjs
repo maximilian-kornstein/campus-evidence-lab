@@ -19,6 +19,7 @@ const publicPaths = [
   "impact",
   "trust",
   "acknowledgments",
+  "reviewer-brief",
   "guide",
   "research-guide",
   "research-workspace",

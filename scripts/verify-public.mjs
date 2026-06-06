@@ -64,6 +64,7 @@ await check("Core pages", async () => {
     ["/impact/", "Proof of infrastructure"],
     ["/trust/", "Trust & Review Packet"],
     ["/acknowledgments/", "No public acknowledgments yet"],
+    ["/reviewer-brief/", "Reviewer Brief"],
     ["/guide/", "Contributor Guide"],
     ["/research-guide/", "Research Guide"],
     ["/research-workspace/", "Research Workspace"],
