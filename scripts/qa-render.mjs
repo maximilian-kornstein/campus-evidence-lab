@@ -39,7 +39,7 @@ const pages = [
       "Records by Source Type",
       "Small charts summarize current public records"
     ],
-    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_05_records_are_not_rankings/"],
+    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_11_findings_memo_001_archive_visibility/"],
     dashboardSmoke: true
   },
   {
@@ -81,7 +81,13 @@ const pages = [
     route: "/trust/",
     file: "trust/index.html",
     checks: ["Trust & Review Packet", "Current Proof Package", "What A Reviewer Can Audit In 30 Minutes", "Review Tasks", "What Trust Signals Prove", "What They Do Not Prove", "Reviewer Entry Points", "Acknowledgment Rule"],
-    linkChecks: ["../methodology/", "../quality/", "../research-guide/", "../downloads/", "../acknowledgments/"]
+    linkChecks: ["../methodology/", "../quality/", "../research-guide/", "../downloads/", "../acknowledgments/", "../press/", "../journalist-guide/"]
+  },
+  {
+    route: "/press/",
+    file: "press/index.html",
+    checks: ["Press / Research Brief", "What Campus Evidence Lab Is", "What It Is Not", "Current Public Scale", "Press and research contact", "maxkornstein04@gmail.com"],
+    linkChecks: ["../methodology/", "../reviewer-brief/", "../trust/", "../downloads/", "../research-guide/", "../briefs/", "../journalist-guide/"]
   },
   {
     route: "/acknowledgments/",
@@ -94,6 +100,12 @@ const pages = [
     file: "reviewer-brief/index.html",
     checks: ["Reviewer Brief", "A small ask for outside critique", "Project In One Paragraph", "Three Review Questions", "Suggested 10-Record Sample", "Acknowledgment Boundary", "Download the Markdown reviewer packet"],
     linkChecks: ["../methodology/", "../research-guide/", "../trust/", "../reviewer-queue/", "../docs/reviewer-brief.md"]
+  },
+  {
+    route: "/journalist-guide/",
+    file: "journalist-guide/index.html",
+    checks: ["Journalist Use Guide", "Who This Is For", "How To Use The Archive", "Before Publication Checklist", "Common Mistakes To Avoid", "maxkornstein04@gmail.com"],
+    linkChecks: ["../downloads/", "../docs/citation.md", "../research-guide/", "../methodology/", "../press/", "../briefs/"]
   },
   {
     route: "/guide/",

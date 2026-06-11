@@ -85,8 +85,10 @@ for (const route of [
   "methodology/index.html",
   "impact/index.html",
   "trust/index.html",
+  "press/index.html",
   "acknowledgments/index.html",
   "reviewer-brief/index.html",
+  "journalist-guide/index.html",
   "guide/index.html",
   "research-guide/index.html",
   "research-workspace/index.html",
@@ -220,6 +222,18 @@ for (const trustCopy of [
   await mustContain("trust/index.html", trustCopy);
 }
 
+for (const pressCopy of [
+  "Press / Research Brief",
+  "What Campus Evidence Lab Is",
+  "What It Is Not",
+  "Current Public Scale",
+  "Why Public-Source Evidence Infrastructure Matters",
+  "Press and research contact",
+  "maxkornstein04@gmail.com"
+]) {
+  await mustContain("press/index.html", pressCopy);
+}
+
 for (const acknowledgmentCopy of [
   "No public acknowledgments yet",
   "Acknowledgment Criteria",
@@ -241,6 +255,18 @@ for (const reviewerBriefCopy of [
   "docs/reviewer-brief.md"
 ]) {
   await mustContain("reviewer-brief/index.html", reviewerBriefCopy);
+}
+
+for (const journalistGuideCopy of [
+  "Journalist Use Guide",
+  "Who This Is For",
+  "How To Use The Archive",
+  "Before Publication Checklist",
+  "Common Mistakes To Avoid",
+  "docs/citation.md",
+  "maxkornstein04@gmail.com"
+]) {
+  await mustContain("journalist-guide/index.html", journalistGuideCopy);
 }
 
 for (const guideCopy of [
