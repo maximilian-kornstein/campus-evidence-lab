@@ -347,6 +347,50 @@ function downloadTextFile(filename, mimeType, content) {
   URL.revokeObjectURL(url);
 }
 
+function isTextEntryControl(element) {
+  if (!element) return false;
+  const tagName = element.tagName?.toLowerCase();
+  return tagName === "input" || tagName === "textarea";
+}
+
+function preservedTextInputState() {
+  const active = document.activeElement;
+  if (!isTextEntryControl(active)) return null;
+  const identifier =
+    active.id ||
+    (active.name ? `${active.tagName.toLowerCase()}[name="${active.name}"]` : null) ||
+    active.getAttribute("data-focus-key");
+  if (!identifier) return null;
+  return {
+    selector: active.id ? `#${active.id}` : identifier,
+    selectionStart: typeof active.selectionStart === "number" ? active.selectionStart : null,
+    selectionEnd: typeof active.selectionEnd === "number" ? active.selectionEnd : null
+  };
+}
+
+function restoreTextInputState(snapshot) {
+  if (!snapshot) return;
+  const restore = () => {
+    const next = document.querySelector(snapshot.selector);
+    if (!isTextEntryControl(next)) return;
+    next.focus({ preventScroll: true });
+    if (snapshot.selectionStart !== null && snapshot.selectionEnd !== null && typeof next.setSelectionRange === "function") {
+      next.setSelectionRange(snapshot.selectionStart, snapshot.selectionEnd);
+    }
+  };
+  if (window.requestAnimationFrame) {
+    window.requestAnimationFrame(restore);
+    return;
+  }
+  window.setTimeout(restore, 0);
+}
+
+function withPreservedTextInputState(render) {
+  const snapshot = preservedTextInputState();
+  render();
+  restoreTextInputState(snapshot);
+}
+
 async function copyText(value) {
   if (navigator.clipboard?.writeText) {
     await navigator.clipboard.writeText(value);
@@ -959,7 +1003,7 @@ function updateFilters(event) {
     sort: String(formData.get("sort") || "date_desc")
   };
   updateEventsUrl();
-  renderEvents();
+  withPreservedTextInputState(renderEvents);
 }
 
 async function copyEventSearchLink() {
@@ -1218,7 +1262,7 @@ function updateSchoolFilters(event) {
     sort: String(formData.get("sort") || "records_desc")
   };
   updateSchoolsUrl();
-  renderSchools();
+  withPreservedTextInputState(renderSchools);
 }
 
 function initializeSourceFiltersFromUrl() {
@@ -1296,7 +1340,7 @@ function updateSourceFilters(event) {
     sort: String(formData.get("sort") || "records_desc")
   };
   updateSourcesUrl();
-  renderSources();
+  withPreservedTextInputState(renderSources);
 }
 
 function renderSchoolDetail(schoolId) {
