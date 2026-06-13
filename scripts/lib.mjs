@@ -15,6 +15,7 @@ export const paths = {
   sourceAudit: path.join(rootDir, "data", "source-audit.json"),
   sourceAuditLive: path.join(rootDir, "data", "source-audit-live.json"),
   changelog: path.join(rootDir, "data", "changelog.json"),
+  productUpdates: path.join(rootDir, "data", "product-updates.json"),
   snapshotIndex: path.join(rootDir, "data", "snapshot-index.json"),
   eventsCsv: path.join(rootDir, "data", "events.csv"),
   eventsResearchJson: path.join(rootDir, "data", "events-research.json"),

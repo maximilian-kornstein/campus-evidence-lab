@@ -110,6 +110,7 @@ for (const route of [
   "quality/index.html",
   "methodology/index.html",
   "impact/index.html",
+  "updates/index.html",
   "trust/index.html",
   "press/index.html",
   "acknowledgments/index.html",
@@ -142,6 +143,7 @@ for (const artifact of [
   "data/sources-research.csv",
   "data/source-audit.json",
   "data/source-audit-live.json",
+  "data/product-updates.json",
   "data/changelog.json",
   "data/snapshot-index.json",
   "data/corrections.json",
@@ -230,6 +232,17 @@ for (const impactCopy of [
   "not school rankings"
 ]) {
   await mustContain("impact/index.html", impactCopy);
+}
+
+for (const updatesCopy of [
+  "Public product updates",
+  "What This Page Tracks",
+  "Product consistency",
+  "Recent Product Work",
+  "data/changelog.json",
+  "release notes"
+]) {
+  await mustContain("updates/index.html", updatesCopy);
 }
 
 for (const trustCopy of [
@@ -375,6 +388,7 @@ for (const aboutCopy of [
   "submit/",
   "methodology/",
   "impact/",
+  "updates/",
   "trust/",
   "acknowledgments/",
   "guide/",
@@ -383,6 +397,11 @@ for (const aboutCopy of [
 ]) {
   await mustContain("about/index.html", aboutCopy);
 }
+
+await mustContain("trust/index.html", "../updates/");
+await mustContain("impact/index.html", "../updates/");
+await mustContain("downloads/index.html", "../data/product-updates.json");
+await mustContain("downloads/index.html", "../updates/");
 
 for (const eventResponseCopy of [
   "Public institutional response",
@@ -406,12 +425,14 @@ for (const downloadsCopy of [
   "Research sources JSON",
   "Research sources CSV",
   "Live source audit",
+  "Product updates JSON",
   "Schools dataset",
   "Source index",
   "Weekly snapshot downloads",
   "Snapshot manifest",
   "Dataset license",
   "Changelog",
+  "Public product updates page",
   "Release notes",
   "Data dictionary",
   "Citation guidance",

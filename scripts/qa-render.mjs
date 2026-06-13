@@ -27,6 +27,7 @@ const pages = [
       "Latest Weekly Brief",
       "Read Methodology",
       "Impact Page",
+      "Product Updates",
       "Trust & Review Packet",
       "Reviewer Brief",
       "Contributor Guide",
@@ -87,6 +88,11 @@ const pages = [
     route: "/impact/",
     file: "impact/index.html",
     checks: ["Current Reach", "Research Infrastructure", "Trust and Accountability", "Partnership Status", "Claims Not Made", String(events.length), String(schools.length), String(sources.length)],
+  },
+  {
+    route: "/updates/",
+    file: "updates/index.html",
+    checks: ["Public product updates", "What This Page Tracks", "Cadence", "Recent Product Work", "Institutional response visibility upgrade", "Product consistency log"]
   },
   {
     route: "/trust/",
@@ -304,8 +310,8 @@ async function renderPage(page, index) {
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
-    if (actionLinks.length !== 11) {
-      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 11`);
+    if (actionLinks.length !== 12) {
+      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 12`);
     }
     for (const panel of trendPanels) {
       if (panel.getAttribute("role") !== "img" || !panel.getAttribute("aria-label")) {

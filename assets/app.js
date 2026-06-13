@@ -17,7 +17,8 @@ const DATA_PATHS = {
   manifest: sitePath("/data/snapshot-manifest.json"),
   snapshotIndex: sitePath("/data/snapshot-index.json"),
   sourceAudit: sitePath("/data/source-audit.json"),
-  sourceAuditLive: sitePath("/data/source-audit-live.json")
+  sourceAuditLive: sitePath("/data/source-audit-live.json"),
+  productUpdates: sitePath("/data/product-updates.json")
 };
 
 const MAX_WORKSPACE_HANDOFF = 100;
@@ -31,6 +32,7 @@ const state = {
   snapshotIndex: null,
   sourceAudit: null,
   sourceAuditLive: null,
+  productUpdates: null,
   schools: new Map(),
   sources: new Map(),
   manifest: null,
@@ -504,7 +506,7 @@ function researchPacket(records, title = "Campus Evidence Lab Research Packet", 
 }
 
 async function loadDataset() {
-  const [events, schools, sources, briefs, corrections, reviewLog, manifest, snapshotIndex, sourceAudit, sourceAuditLive] = await Promise.all([
+  const [events, schools, sources, briefs, corrections, reviewLog, manifest, snapshotIndex, sourceAudit, sourceAuditLive, productUpdates] = await Promise.all([
     fetchJson(DATA_PATHS.events),
     fetchJson(DATA_PATHS.schools),
     fetchJson(DATA_PATHS.sources),
@@ -514,7 +516,8 @@ async function loadDataset() {
     fetchJson(DATA_PATHS.manifest),
     fetchJson(DATA_PATHS.snapshotIndex),
     fetchJson(DATA_PATHS.sourceAudit),
-    fetchJson(DATA_PATHS.sourceAuditLive)
+    fetchJson(DATA_PATHS.sourceAuditLive),
+    fetchJson(DATA_PATHS.productUpdates)
   ]);
 
   state.schools = new Map(schools.map((school) => [school.id, school]));
@@ -527,6 +530,7 @@ async function loadDataset() {
   state.snapshotIndex = snapshotIndex;
   state.sourceAudit = sourceAudit;
   state.sourceAuditLive = sourceAuditLive;
+  state.productUpdates = productUpdates;
   state.records = events
     .map((event) => ({
       ...event,
@@ -732,6 +736,10 @@ function renderDashboard() {
         <a class="action-link" href="${sitePath("/impact/")}">
           <span>Impact Page</span>
           <span>Inspect current reach, research infrastructure, accountability signals, and partnership status.</span>
+        </a>
+        <a class="action-link" href="${sitePath("/updates/")}">
+          <span>Product Updates</span>
+          <span>Inspect visible archive, workflow, and interface improvements through a separate weekly consistency log.</span>
         </a>
         <a class="action-link" href="${sitePath("/trust/")}">
           <span>Trust & Review Packet</span>
@@ -2801,6 +2809,68 @@ function renderImpact() {
   `;
 }
 
+function renderUpdates() {
+  const root = document.querySelector("#updates-root");
+  if (!root) return;
+
+  const entries = [...(state.productUpdates?.entries ?? [])].sort((a, b) => b.publish_date.localeCompare(a.publish_date));
+  const latest = entries[0]?.publish_date ?? state.manifest.created_at;
+  const categories = unique(entries.map((entry) => [entry.category]));
+
+  root.innerHTML = `
+    <section class="section section--tight">
+      <div class="section-header">
+        <h2 class="section-title">Cadence</h2>
+        <p class="section-note">Product consistency log</p>
+      </div>
+      <div class="metric-grid">
+        ${metric(String(entries.length), "Published updates")}
+        ${metric(String(categories.length), "Update categories")}
+        ${metric(formatDate(latest), "Latest product update")}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Recent Product Work</h2>
+        <p class="section-note">Archive, workflow, and interface improvements</p>
+      </div>
+      ${
+        entries.length
+          ? `<ul class="update-list">
+              ${entries
+                .map((entry) => {
+                  const links = Array.isArray(entry.links) && entry.links.length
+                    ? `<ul class="update-entry__links">
+                        ${entry.links
+                          .map(
+                            (link) => `
+                              <li><a href="${sitePath(link.href)}">${escapeHtml(link.label)}</a></li>
+                            `
+                          )
+                          .join("")}
+                      </ul>`
+                    : "";
+                  return `
+                    <li class="update-entry">
+                      <div class="update-entry__meta">
+                        <span class="mono">${escapeHtml(entry.publish_date)}</span>
+                        <span class="update-entry__category">${escapeHtml(entry.category)}</span>
+                      </div>
+                      <h2>${escapeHtml(entry.title)}</h2>
+                      <p>${escapeHtml(entry.summary)}</p>
+                      ${links}
+                    </li>
+                  `;
+                })
+                .join("")}
+            </ul>`
+          : `<p class="empty">No public product updates have been published yet.</p>`
+      }
+    </section>
+  `;
+}
+
 function renderDownloads() {
   const root = document.querySelector("#downloads-root");
   if (!root) return;
@@ -2848,7 +2918,9 @@ function renderDownloads() {
         ${downloadRow("Research Sources CSV", sitePath("/data/sources-research.csv"), "Denormalized source export")}
         ${downloadRow("Source Audit JSON", sitePath("/data/source-audit.json"), "Source provenance checklist")}
         ${downloadRow("Live Source Audit JSON", sitePath("/data/source-audit-live.json"), `${state.sourceAuditLive.entries?.length ?? 0} live URL checks`)}
+        ${downloadRow("Product Updates JSON", sitePath("/data/product-updates.json"), `${state.productUpdates?.entry_count ?? 0} public product entries`)}
         ${downloadRow("Changelog JSON", sitePath("/data/changelog.json"), "Record-level public edit log")}
+        ${downloadRow("Public Product Updates Page", sitePath("/updates/"), "Human-readable archive and workflow changes", false)}
         ${downloadRow("Release Notes", sitePath("/RELEASE_NOTES.md"), state.manifest.snapshot_id)}
         ${downloadRow("Briefs JSON", sitePath("/data/briefs.json"), `${state.manifest.totals.briefs} briefs`)}
         ${downloadRow("Briefs RSS", sitePath("/rss.xml"), "Published research feed")}
@@ -2870,14 +2942,14 @@ function renderDownloads() {
   `;
 }
 
-function downloadRow(title, href, meta) {
+function downloadRow(title, href, meta, downloadable = true) {
   return `
     <div class="download-row">
       <div>
         <h2>${escapeHtml(title)}</h2>
         <p>${escapeHtml(meta)}</p>
       </div>
-      <a href="${href}" download>Download</a>
+      <a href="${href}"${downloadable ? " download" : ""}>${downloadable ? "Download" : "Open"}</a>
     </div>
   `;
 }
@@ -2898,6 +2970,7 @@ async function init() {
     renderResearchWorkspace();
     renderReviewerQueue();
     renderImpact();
+    renderUpdates();
     renderDownloads();
   } catch (error) {
     if (document !== initDocument) return;

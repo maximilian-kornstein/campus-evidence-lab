@@ -19,6 +19,7 @@ const staticPaths = [
   "/quality/",
   "/methodology/",
   "/impact/",
+  "/updates/",
   "/trust/",
   "/press/",
   "/acknowledgments/",

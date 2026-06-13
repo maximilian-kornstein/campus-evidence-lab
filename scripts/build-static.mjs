@@ -17,6 +17,7 @@ const publicPaths = [
   "quality",
   "methodology",
   "impact",
+  "updates",
   "trust",
   "press",
   "acknowledgments",

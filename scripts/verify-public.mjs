@@ -62,6 +62,7 @@ await check("Core pages", async () => {
     ["/quality/", "Quality"],
     ["/methodology/", "No Ranking System"],
     ["/impact/", "Proof of infrastructure"],
+    ["/updates/", "Public product updates"],
     ["/trust/", "Trust & Review Packet"],
     ["/press/", "Press / Research Brief"],
     ["/acknowledgments/", "No public acknowledgments yet"],
@@ -93,12 +94,14 @@ await check("Datasets", async () => {
   const { json: sources } = await fetchJson("/data/sources.json");
   const { json: manifest } = await fetchJson("/data/snapshot-manifest.json");
   const { json: researchEvents } = await fetchJson("/data/events-research.json");
+  const { json: productUpdates } = await fetchJson("/data/product-updates.json");
 
   if (!Array.isArray(events) || events.length < 100) throw new Error(`Expected at least 100 events, found ${events.length}`);
   if (!Array.isArray(schools) || schools.length !== manifest.totals.schools) throw new Error("School count does not match manifest");
   if (!Array.isArray(sources) || sources.length !== manifest.totals.sources) throw new Error("Source count does not match manifest");
   if (!Array.isArray(researchEvents) || researchEvents.length !== events.length) throw new Error("Research events export does not match event count");
   if (manifest.totals.events !== events.length) throw new Error("Event count does not match manifest");
+  if (!Array.isArray(productUpdates.entries) || productUpdates.entry_count !== productUpdates.entries.length) throw new Error("Product updates artifact is malformed");
 });
 
 await check("Source audits", async () => {
