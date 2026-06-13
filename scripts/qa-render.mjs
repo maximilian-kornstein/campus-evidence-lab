@@ -22,6 +22,9 @@ const pages = [
       "Communities represented",
       "States and jurisdictions represented",
       "Campus civil-rights records",
+      "Audience Entry Points",
+      "Journalist Path",
+      "Research Path",
       "Research Entry Points",
       "Search Event Database",
       "Latest Weekly Brief",
@@ -103,8 +106,8 @@ const pages = [
   {
     route: "/press/",
     file: "press/index.html",
-    checks: ["Press / Research Brief", "What Campus Evidence Lab Is", "What It Is Not", "Current Public Scale", "Press and research contact", "maxkornstein04@gmail.com"],
-    linkChecks: ["../methodology/", "../reviewer-brief/", "../trust/", "../downloads/", "../research-guide/", "../briefs/", "../journalist-guide/"]
+    checks: ["Press / Research Brief", "What Campus Evidence Lab Is", "What It Is Not", "Current Public Scale", "Start Here By Task", "Build a reporting packet", "Press and research contact", "maxkornstein04@gmail.com"],
+    linkChecks: ["../methodology/", "../reviewer-brief/", "../trust/", "../downloads/", "../research-guide/", "../briefs/", "../journalist-guide/", "../schools/"]
   },
   {
     route: "/acknowledgments/",
@@ -121,8 +124,8 @@ const pages = [
   {
     route: "/journalist-guide/",
     file: "journalist-guide/index.html",
-    checks: ["Journalist Use Guide", "Who This Is For", "How To Use The Archive", "Before Publication Checklist", "Common Mistakes To Avoid", "maxkornstein04@gmail.com"],
-    linkChecks: ["../downloads/", "../docs/citation.md", "../research-guide/", "../methodology/", "../press/", "../briefs/"]
+    checks: ["Journalist Use Guide", "Who This Is For", "Fast Start Paths", "How To Use The Archive", "Before Publication Checklist", "Common Mistakes To Avoid", "maxkornstein04@gmail.com"],
+    linkChecks: ["../schools/", "../events/", "../downloads/", "../docs/citation.md", "../research-guide/", "../methodology/", "../press/", "../briefs/"]
   },
   {
     route: "/guide/",
@@ -137,7 +140,7 @@ const pages = [
   {
     route: "/research-workspace/?record_ids=evt_2026_0027",
     file: "research-workspace/index.html",
-    checks: ["Research Workspace", "Record Selection", "Citation Packet", "Selection is encoded in the URL", "Snapshot hash", "University of Kentucky", "evt_2026_0027"],
+    checks: ["Research Workspace", "Start Here", "Quick Packet Presets", "Record Selection", "Citation Packet", "Selection is encoded in the URL", "Snapshot hash", "University of Kentucky", "evt_2026_0027"],
     workspaceSmoke: true
   },
   {
@@ -148,7 +151,7 @@ const pages = [
   {
     route: "/downloads/",
     file: "downloads/index.html",
-    checks: ["Dataset Status", "Record count", "Last updated", "Schema version", "Latest snapshot hash", "Events JSON", "Research Events JSON", "Research Events CSV", "Research Schools JSON", "Research Schools CSV", "Research Sources JSON", "Research Sources CSV", "Source Audit JSON", "Milestones JSON", "Changelog JSON", "Release Notes", "Snapshot Index", "Citation Guidance", "Contribution Guide", "Briefs RSS", "Source Audit Notes", "Corrections JSON", "Review Log JSON"]
+    checks: ["Choose The Right Artifact", "Dataset Status", "Record count", "Last updated", "Schema version", "Latest snapshot hash", "Research Workspace", "Events JSON", "Research Events JSON", "Research Events CSV", "Research Schools JSON", "Research Schools CSV", "Research Sources JSON", "Research Sources CSV", "Source Audit JSON", "Milestones JSON", "Changelog JSON", "Release Notes", "Snapshot Index", "Citation Guidance", "Contribution Guide", "Briefs RSS", "Source Audit Notes", "Corrections JSON", "Review Log JSON"]
   },
   {
     route: "/about/",
@@ -310,8 +313,8 @@ async function renderPage(page, index) {
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
-    if (actionLinks.length !== 12) {
-      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 12`);
+    if (actionLinks.length !== 16) {
+      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 16`);
     }
     for (const panel of trendPanels) {
       if (panel.getAttribute("role") !== "img" || !panel.getAttribute("aria-label")) {

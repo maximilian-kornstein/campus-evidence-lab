@@ -721,6 +721,31 @@ function renderDashboard() {
 
     <section class="section">
       <div class="section-header">
+        <h2 class="section-title">Audience Entry Points</h2>
+        <p class="section-note">Start with the narrowest useful path</p>
+      </div>
+      <div class="action-grid">
+        <a class="action-link" href="${sitePath("/journalist-guide/")}">
+          <span>Journalist Path</span>
+          <span>Start with one school, one record, or one reporting packet before moving into the full dataset.</span>
+        </a>
+        <a class="action-link" href="${sitePath("/research-guide/")}">
+          <span>Research Path</span>
+          <span>Use documentation signals, citation rules, and comparison limits before exporting broader files.</span>
+        </a>
+        <a class="action-link" href="${sitePath("/trust/")}">
+          <span>Reviewer Path</span>
+          <span>Inspect methodology, sample records, and audit artifacts without treating review as endorsement.</span>
+        </a>
+        <a class="action-link" href="${sitePath("/downloads/")}">
+          <span>Data Path</span>
+          <span>Choose the smallest useful artifact: packet, CSV, research JSON, manifest, or archived snapshot.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
         <h2 class="section-title">Research Entry Points</h2>
         <p class="section-note">Search, brief, methodology, data</p>
       </div>
@@ -2428,6 +2453,31 @@ function renderResearchWorkspace() {
   root.innerHTML = `
     <section class="section section--tight">
       <div class="section-header">
+        <h2 class="section-title">Quick Packet Presets</h2>
+        <p class="section-note">URL-encoded templates</p>
+      </div>
+      <div class="action-grid">
+        <a class="action-link" href="${sitePath("/research-workspace/?title=Campus%20Evidence%20Lab%20Reporting%20Packet&question=What%20public-source%20records%20support%20this%20reporting%20question%3F")}">
+          <span>Reporting Packet</span>
+          <span>Use for a school, incident, or institutional-response story that needs a local source packet.</span>
+        </a>
+        <a class="action-link" href="${sitePath("/research-workspace/?title=Campus%20Evidence%20Lab%20Methodology%20Review%20Packet&question=Which%20records%20or%20fields%20should%20be%20checked%20for%20classification%2C%20source%20support%2C%20or%20responsible-use%20language%3F")}">
+          <span>Methodology Review Packet</span>
+          <span>Use for outside reviewers or internal audit work focused on classification, source support, or use limits.</span>
+        </a>
+        <a class="action-link" href="${sitePath("/research-workspace/?title=Campus%20Evidence%20Lab%20Research%20Packet&question=What%20documentation%20pattern%20does%20this%20selected%20record%20set%20show%20in%20the%20current%20snapshot%3F")}">
+          <span>Research Packet</span>
+          <span>Use for a narrow snapshot-bound question before moving into research JSON or CSV exports.</span>
+        </a>
+        <a class="action-link" href="${sitePath("/downloads/")}">
+          <span>Open Downloads</span>
+          <span>Move to raw files only after deciding whether you need a packet, CSV, research JSON, or full snapshot artifact.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="section-header">
         <h2 class="section-title">Record Selection</h2>
         <p class="section-note">${selectedRecords.length} selected / ${candidates.length} visible candidates</p>
       </div>
@@ -2914,6 +2964,7 @@ function renderDownloads() {
 
     <section class="section section--tight">
       <div class="download-list">
+        ${downloadRow("Research Workspace", sitePath("/research-workspace/"), "Local packet builder for reporters, researchers, and reviewers", false)}
         ${downloadRow("Events JSON", sitePath("/data/events.json"), `${state.manifest.totals.events} records`)}
         ${downloadRow("Events CSV", sitePath("/data/events.csv"), "Flat event export")}
         ${downloadRow("Research Events JSON", sitePath("/data/events-research.json"), "Events with school and source fields")}
