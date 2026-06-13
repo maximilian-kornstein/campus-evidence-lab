@@ -6,7 +6,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:b545d062e11d82ab58053d6da3f7931514cecbd841cef50d1883397d845a3a0f`
+- Full snapshot hash: `sha256:350cf2e2797cbfe3241b937126ac3c9faec10c77ea5d1a4034bddfd9ab1f028f`
 - Previous snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
 - Archived snapshot: `/data/snapshots/snapshot_2026_06_03_4000_records.json`
 
@@ -15,7 +15,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Events: 4000
 - Schools: 947
 - Sources: 25
-- Briefs: 31
+- Briefs: 32
 - Corrections: 0
 - Review queues: 4
 
@@ -24,17 +24,17 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Events: `sha256:d8a87f47dc9fee5fbad6fa4ff81d509235a92be820bc4861554324a67c2832b6`
 - Schools: `sha256:4b5b7b8c7a74806bfc0b95bc78606c4b8ab3a87a7c18328dbcb47f4cfa40cb88`
 - Sources: `sha256:6612f537f4743f1f03c7f062bf1da299b78a1da44949ef63b2fe1a69ccb837a1`
-- Briefs: `sha256:be43e20acf79e5f522d4d24dbefcd15f3bf3f3f8a13cab5b5188e8db0d8c3913`
+- Briefs: `sha256:479df2df3e4e2b22ab8739c0ce6d06fbac6becb68d37ac8b85d862bbbe381d69`
 - Corrections: `sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`
 - Review log: `sha256:7afd34d27de6a6fff8349b2bc1e210eedf56ddb35748129364dc2ef90e149840`
 
 ## Public Briefs
 
+- 2026-06-13: [Findings Memo 002: What Public Institutional Responses Can and Cannot Show](/briefs/brief_2026_06_13_findings_memo_002_public_institutional_responses/) (0 new, 0 updated)
 - 2026-06-11: [Findings Memo 001: What The Archive Makes Visible](/briefs/brief_2026_06_11_findings_memo_001_archive_visibility/) (0 new, 0 updated)
 - 2026-06-05: [Reviewer Network As The Next Proof Layer](/briefs/brief_2026_06_05_reviewer_network_next_step/) (0 new, 0 updated)
 - 2026-06-05: [Source Availability And Documentation Gaps](/briefs/brief_2026_06_05_source_availability_limits/) (0 new, 0 updated)
 - 2026-06-05: [What ED Campus Safety Data Can And Cannot Show](/briefs/brief_2026_06_05_ed_data_can_and_cannot_show/) (0 new, 0 updated)
-- 2026-06-05: [Why Public Records Are Not School Rankings](/briefs/brief_2026_06_05_records_are_not_rankings/) (0 new, 0 updated)
 
 ## Changelog
 

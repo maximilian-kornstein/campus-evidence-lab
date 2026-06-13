@@ -43,7 +43,7 @@ const pages = [
       "Records by Source Type",
       "Small charts summarize current public records"
     ],
-    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_11_findings_memo_001_archive_visibility/"],
+    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_13_findings_memo_002_public_institutional_responses/"],
     dashboardSmoke: true
   },
   {
