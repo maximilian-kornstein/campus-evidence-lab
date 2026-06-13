@@ -87,18 +87,18 @@ const pages = [
   {
     route: "/impact/",
     file: "impact/index.html",
-    checks: ["Current Reach", "Research Infrastructure", "Trust and Accountability", "Partnership Status", "Claims Not Made", String(events.length), String(schools.length), String(sources.length)],
+    checks: ["Proof Summary", "Selected Milestones", "Research Infrastructure", "Auditability and Correction", "How To Inspect This Work", "Documentation, Not Prevalence", "Claims Not Made", String(events.length), String(schools.length)],
   },
   {
     route: "/updates/",
     file: "updates/index.html",
-    checks: ["Public product updates", "What This Page Tracks", "Cadence", "Recent Product Work", "Institutional response visibility upgrade", "Product consistency log"]
+    checks: ["Public product updates", "What This Page Tracks", "Cadence", "Recent Product Work", "Institutional response visibility upgrade", "Product consistency log", "Impact page"]
   },
   {
     route: "/trust/",
     file: "trust/index.html",
-    checks: ["Trust & Review Packet", "Current Proof Package", "What A Reviewer Can Audit In 30 Minutes", "Review Tasks", "What Trust Signals Prove", "What They Do Not Prove", "Reviewer Entry Points", "Acknowledgment Rule"],
-    linkChecks: ["../methodology/", "../quality/", "../research-guide/", "../downloads/", "../acknowledgments/", "../press/", "../journalist-guide/"]
+    checks: ["Trust & Review Packet", "Current Proof Package", "What A Reviewer Can Audit In 30 Minutes", "Review Tasks", "What Trust Signals Prove", "What They Do Not Prove", "Reviewer Entry Points", "Acknowledgment Rule", "Impact page"],
+    linkChecks: ["../impact/", "../methodology/", "../quality/", "../research-guide/", "../downloads/", "../acknowledgments/", "../press/", "../journalist-guide/"]
   },
   {
     route: "/press/",
@@ -148,7 +148,7 @@ const pages = [
   {
     route: "/downloads/",
     file: "downloads/index.html",
-    checks: ["Dataset Status", "Record count", "Last updated", "Schema version", "Latest snapshot hash", "Events JSON", "Research Events JSON", "Research Events CSV", "Research Schools JSON", "Research Schools CSV", "Research Sources JSON", "Research Sources CSV", "Source Audit JSON", "Changelog JSON", "Release Notes", "Snapshot Index", "Citation Guidance", "Contribution Guide", "Briefs RSS", "Source Audit Notes", "Corrections JSON", "Review Log JSON"]
+    checks: ["Dataset Status", "Record count", "Last updated", "Schema version", "Latest snapshot hash", "Events JSON", "Research Events JSON", "Research Events CSV", "Research Schools JSON", "Research Schools CSV", "Research Sources JSON", "Research Sources CSV", "Source Audit JSON", "Milestones JSON", "Changelog JSON", "Release Notes", "Snapshot Index", "Citation Guidance", "Contribution Guide", "Briefs RSS", "Source Audit Notes", "Corrections JSON", "Review Log JSON"]
   },
   {
     route: "/about/",

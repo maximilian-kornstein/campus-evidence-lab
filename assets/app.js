@@ -18,7 +18,8 @@ const DATA_PATHS = {
   snapshotIndex: sitePath("/data/snapshot-index.json"),
   sourceAudit: sitePath("/data/source-audit.json"),
   sourceAuditLive: sitePath("/data/source-audit-live.json"),
-  productUpdates: sitePath("/data/product-updates.json")
+  productUpdates: sitePath("/data/product-updates.json"),
+  productMilestones: sitePath("/data/product-milestones.json")
 };
 
 const MAX_WORKSPACE_HANDOFF = 100;
@@ -33,6 +34,7 @@ const state = {
   sourceAudit: null,
   sourceAuditLive: null,
   productUpdates: null,
+  productMilestones: null,
   schools: new Map(),
   sources: new Map(),
   manifest: null,
@@ -506,7 +508,7 @@ function researchPacket(records, title = "Campus Evidence Lab Research Packet", 
 }
 
 async function loadDataset() {
-  const [events, schools, sources, briefs, corrections, reviewLog, manifest, snapshotIndex, sourceAudit, sourceAuditLive, productUpdates] = await Promise.all([
+  const [events, schools, sources, briefs, corrections, reviewLog, manifest, snapshotIndex, sourceAudit, sourceAuditLive, productUpdates, productMilestones] = await Promise.all([
     fetchJson(DATA_PATHS.events),
     fetchJson(DATA_PATHS.schools),
     fetchJson(DATA_PATHS.sources),
@@ -517,7 +519,8 @@ async function loadDataset() {
     fetchJson(DATA_PATHS.snapshotIndex),
     fetchJson(DATA_PATHS.sourceAudit),
     fetchJson(DATA_PATHS.sourceAuditLive),
-    fetchJson(DATA_PATHS.productUpdates)
+    fetchJson(DATA_PATHS.productUpdates),
+    fetchJson(DATA_PATHS.productMilestones)
   ]);
 
   state.schools = new Map(schools.map((school) => [school.id, school]));
@@ -531,6 +534,7 @@ async function loadDataset() {
   state.sourceAudit = sourceAudit;
   state.sourceAuditLive = sourceAuditLive;
   state.productUpdates = productUpdates;
+  state.productMilestones = productMilestones;
   state.records = events
     .map((event) => ({
       ...event,
@@ -2691,42 +2695,90 @@ function renderImpact() {
   const sourceTypesRepresented = unique(state.sources.values ? [...state.sources.values()].map((source) => [source.source_type]) : []);
   const latestUpdated = state.records.map((record) => record.updated_at).sort().at(-1) ?? state.manifest.created_at;
   const liveChecked = (state.sourceAuditLive.entries ?? []).filter((entry) => entry.live_status === "ok").length;
+  const updates = [...(state.productUpdates?.entries ?? [])].sort((a, b) => b.publish_date.localeCompare(a.publish_date));
+  const milestones = [...(state.productMilestones?.entries ?? [])].sort((a, b) => b.publish_date.localeCompare(a.publish_date));
+  const latestProductUpdate = updates[0]?.publish_date ?? state.manifest.created_at;
 
   root.innerHTML = `
     <section class="section">
       <div class="section-header">
-        <h2 class="section-title">Current Reach</h2>
-        <p class="section-note">Current public snapshot</p>
+        <h2 class="section-title">Proof Summary</h2>
+        <p class="section-note">Current public snapshot and visible cadence</p>
       </div>
       <div class="metric-grid metric-grid--dashboard">
         ${metric(String(state.manifest.totals.events), "Public-source records")}
         ${metric(String(state.manifest.totals.schools), "Schools tracked")}
-        ${metric(String(statesRepresented.length), "States and jurisdictions")}
-        ${metric(String(state.manifest.totals.sources), "Source collections")}
+        ${metric(String(updates.length), "Product/archive improvements")}
+        ${metric(String(milestones.length), "Selected milestones")}
         ${metric(String(state.manifest.totals.briefs), "Research briefs")}
+        ${metric(formatDate(latestProductUpdate), "Latest product update")}
       </div>
     </section>
 
     <section class="section">
       <div class="section-header">
+        <h2 class="section-title">Selected Milestones</h2>
+        <p class="section-note">Curated project phases, not a dump of every update</p>
+      </div>
+      ${
+        milestones.length
+          ? `<ul class="update-list">
+              ${milestones
+                .map((entry) => {
+                  const links = Array.isArray(entry.links) && entry.links.length
+                    ? `<ul class="update-entry__links">
+                        ${entry.links
+                          .map(
+                            (link) => `
+                              <li><a href="${sitePath(link.href)}">${escapeHtml(link.label)}</a></li>
+                            `
+                          )
+                          .join("")}
+                      </ul>`
+                    : "";
+                  return `
+                    <li class="update-entry">
+                      <div class="update-entry__meta">
+                        <span class="mono">${escapeHtml(entry.publish_date)}</span>
+                        <span class="update-entry__category">${escapeHtml(entry.phase)}</span>
+                      </div>
+                      <h2>${escapeHtml(entry.title)}</h2>
+                      <p>${escapeHtml(entry.summary)}</p>
+                      ${links}
+                    </li>
+                  `;
+                })
+                .join("")}
+            </ul>`
+          : `<p class="empty">No selected milestones have been published yet.</p>`
+      }
+      <p class="section-copy">For the complete chronological maintenance log, use the <a href="${sitePath("/updates/")}">Updates page</a>.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
         <h2 class="section-title">Research Infrastructure</h2>
-        <p class="section-note">What is public now</p>
+        <p class="section-note">Public-source archive and research infrastructure</p>
       </div>
       <dl>
         <div class="data-line">
-          <dt>Search surface</dt>
-          <dd>Events, schools, sources, briefs, filters, generated detail pages, and source-backed school timelines.</dd>
+          <dt>Searchable archive</dt>
+          <dd>Events, schools, sources, briefs, filters, generated detail pages, and source-backed school timelines are public and reproducible.</dd>
         </div>
         <div class="data-line">
-          <dt>Exports</dt>
-          <dd>JSON, CSV, research exports, source audit files, changelog, release notes, RSS, and archived snapshots.</dd>
+          <dt>Research surfaces</dt>
+          <dd>Briefs, the research workspace, the reviewer queue, the press brief, and the journalist guide extend the archive beyond record listings.</dd>
+        </div>
+        <div class="data-line">
+          <dt>Exports and artifacts</dt>
+          <dd>JSON, CSV, research exports, source audits, changelog, release notes, RSS, archived snapshots, and the public product/archive improvements log are all published.</dd>
         </div>
         <div class="data-line">
           <dt>Coverage dimensions</dt>
-          <dd>${communitiesRepresented.length} community labels and ${sourceTypesRepresented.length} source types represented in the current dataset.</dd>
+          <dd>${statesRepresented.length} states and jurisdictions, ${communitiesRepresented.length} community labels, and ${sourceTypesRepresented.length} source types are represented in the current dataset.</dd>
         </div>
         <div class="data-line">
-          <dt>Latest update</dt>
+          <dt>Latest dataset update</dt>
           <dd class="mono">${escapeHtml(latestUpdated)}</dd>
         </div>
       </dl>
@@ -2734,33 +2786,8 @@ function renderImpact() {
 
     <section class="section">
       <div class="section-header">
-        <h2 class="section-title">Current Use Cases</h2>
-        <p class="section-note">Useful without overclaiming</p>
-      </div>
-      <div class="principle-grid">
-        <div>
-          <h3>Journalists</h3>
-          <p>Find public-source records, source pages, and school timelines before requesting comment or records from institutions.</p>
-        </div>
-        <div>
-          <h3>Student leaders</h3>
-          <p>Compare source-backed documentation patterns and identify where public records are thin, stale, or hard to audit.</p>
-        </div>
-        <div>
-          <h3>Civil-rights researchers</h3>
-          <p>Use hashes, source audits, CSV exports, and methodology limits to build reproducible questions from public evidence.</p>
-        </div>
-        <div>
-          <h3>Prospective students</h3>
-          <p>Read source material and institutional responses without treating record counts as rankings, safety scores, or legal findings.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">Trust and Accountability</h2>
-        <p class="section-note">Audit signals</p>
+        <h2 class="section-title">Auditability and Correction</h2>
+        <p class="section-note">Documentation, not prevalence</p>
       </div>
       <dl>
         <div class="data-line">
@@ -2776,33 +2803,16 @@ function renderImpact() {
           <dd>${liveChecked} source URLs checked in the latest live audit artifact.</dd>
         </div>
         <div class="data-line">
+          <dt>Correction path</dt>
+          <dd>Public source submissions, corrections, duplicate reports, metadata fixes, and changelog artifacts are published as auditability and correction surfaces.</dd>
+        </div>
+        <div class="data-line">
+          <dt>Reviewer path</dt>
+          <dd>Use the <a href="${sitePath("/trust/")}">Trust & Review Packet</a>, <a href="${sitePath("/reviewer-brief/")}">Reviewer Brief</a>, <a href="${sitePath("/quality/")}">Quality page</a>, and <a href="${sitePath("/downloads/")}">Downloads</a> to inspect standards and artifacts without implying endorsement.</dd>
+        </div>
+        <div class="data-line">
           <dt>Public limits</dt>
-          <dd>Impact is measured as infrastructure shipped and verified, not as prevalence, school quality, or legal fault.</dd>
-        </div>
-      </dl>
-    </section>
-
-    <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">Public Roadmap</h2>
-        <p class="section-note">Conservative sequence</p>
-      </div>
-      <dl>
-        <div class="data-line">
-          <dt>Phase 1</dt>
-          <dd>Keep the 4,000-record archive stable, searchable, auditable, and correction-friendly.</dd>
-        </div>
-        <div class="data-line">
-          <dt>Phase 2</dt>
-          <dd>Recruit a small reviewer circle to audit methodology, source categories, duplicate handling, and neutral language.</dd>
-        </div>
-        <div class="data-line">
-          <dt>Phase 3</dt>
-          <dd>Publish partner-reviewed research briefs only after outside review creates documented value.</dd>
-        </div>
-        <div class="data-line">
-          <dt>Phase 4</dt>
-          <dd>Explore institutional transparency tools after the evidence standards and reviewer workflow are proven.</dd>
+          <dd>This public-source archive documents what has been collected, checked, and shipped. It does not measure prevalence, school quality, legal fault, or campus safety.</dd>
         </div>
       </dl>
     </section>
@@ -2919,6 +2929,7 @@ function renderDownloads() {
         ${downloadRow("Source Audit JSON", sitePath("/data/source-audit.json"), "Source provenance checklist")}
         ${downloadRow("Live Source Audit JSON", sitePath("/data/source-audit-live.json"), `${state.sourceAuditLive.entries?.length ?? 0} live URL checks`)}
         ${downloadRow("Product Updates JSON", sitePath("/data/product-updates.json"), `${state.productUpdates?.entry_count ?? 0} public product entries`)}
+        ${downloadRow("Milestones JSON", sitePath("/data/product-milestones.json"), `${state.productMilestones?.entry_count ?? 0} curated proof milestones`)}
         ${downloadRow("Changelog JSON", sitePath("/data/changelog.json"), "Record-level public edit log")}
         ${downloadRow("Public Product Updates Page", sitePath("/updates/"), "Human-readable archive and workflow changes", false)}
         ${downloadRow("Release Notes", sitePath("/RELEASE_NOTES.md"), state.manifest.snapshot_id)}

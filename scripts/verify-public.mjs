@@ -95,6 +95,7 @@ await check("Datasets", async () => {
   const { json: manifest } = await fetchJson("/data/snapshot-manifest.json");
   const { json: researchEvents } = await fetchJson("/data/events-research.json");
   const { json: productUpdates } = await fetchJson("/data/product-updates.json");
+  const { json: productMilestones } = await fetchJson("/data/product-milestones.json");
 
   if (!Array.isArray(events) || events.length < 100) throw new Error(`Expected at least 100 events, found ${events.length}`);
   if (!Array.isArray(schools) || schools.length !== manifest.totals.schools) throw new Error("School count does not match manifest");
@@ -102,6 +103,7 @@ await check("Datasets", async () => {
   if (!Array.isArray(researchEvents) || researchEvents.length !== events.length) throw new Error("Research events export does not match event count");
   if (manifest.totals.events !== events.length) throw new Error("Event count does not match manifest");
   if (!Array.isArray(productUpdates.entries) || productUpdates.entry_count !== productUpdates.entries.length) throw new Error("Product updates artifact is malformed");
+  if (!Array.isArray(productMilestones.entries) || productMilestones.entry_count !== productMilestones.entries.length) throw new Error("Product milestones artifact is malformed");
 });
 
 await check("Source audits", async () => {

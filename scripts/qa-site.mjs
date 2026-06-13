@@ -144,6 +144,7 @@ for (const artifact of [
   "data/source-audit.json",
   "data/source-audit-live.json",
   "data/product-updates.json",
+  "data/product-milestones.json",
   "data/changelog.json",
   "data/snapshot-index.json",
   "data/corrections.json",
@@ -222,14 +223,10 @@ for (const methodologyCopy of [
 
 for (const impactCopy of [
   "Proof of infrastructure",
-  "Current Reach",
-  "Research Infrastructure",
-  "Trust and Accountability",
-  "Current Use Cases",
-  "Public Roadmap",
-  "Partnership Status",
+  "How To Inspect This Work",
+  "Documentation, Not Prevalence",
   "Claims Not Made",
-  "not school rankings"
+  "rankings, safety scores, or prevalence claims"
 ]) {
   await mustContain("impact/index.html", impactCopy);
 }
@@ -240,7 +237,8 @@ for (const updatesCopy of [
   "Product consistency",
   "Recent Product Work",
   "data/changelog.json",
-  "release notes"
+  "release notes",
+  "Impact page"
 ]) {
   await mustContain("updates/index.html", updatesCopy);
 }
@@ -256,7 +254,9 @@ for (const trustCopy of [
   "Acknowledgment Rule",
   "reviewer-checklist.yml",
   "docs/outreach-email.md",
-  "docs/partner-acknowledgment-policy.md"
+  "docs/partner-acknowledgment-policy.md",
+  "Impact page",
+  "impact summary"
 ]) {
   await mustContain("trust/index.html", trustCopy);
 }
