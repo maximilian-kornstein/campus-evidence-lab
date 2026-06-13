@@ -93,7 +93,7 @@ The MVP will not:
 4. Families and prospective students who want transparent information about campus conditions.
 5. Campus organizations that need public evidence for advocacy, education, or institutional conversations.
 6. Open-source contributors who want to submit sources, corrections, or data improvements.
-7. Admissions readers and external evaluators who need to see a serious, sustained, technically rigorous project.
+7. External evaluators who need to see a serious, sustained, technically rigorous project.
 
 ## Product Principles
 
