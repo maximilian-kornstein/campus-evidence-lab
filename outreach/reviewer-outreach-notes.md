@@ -94,3 +94,50 @@ Use this link for future outreach once published:
 ```text
 Reviewer brief: https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-brief/
 ```
+
+## Narrow-Ask Rule
+
+Cold outreach should default to one of these asks:
+
+- one-page methodology review
+- one-page responsible-use / no-ranking review
+- 10-record source-audit review
+
+Do not ask strangers to review the whole project unless they explicitly offer.
+
+## Conversion Rule
+
+If someone replies positively, stop using the broad cold-email template.
+
+Move immediately to:
+
+- send the reviewer brief
+- send the 10-record packet when useful
+- ask the three narrow review questions
+- log the reply in the tracker
+
+The first positive reply should convert into a documented review task, not another broad email.
+
+## Reply Handling
+
+Use these repo docs once outreach starts converting:
+
+- `docs/outreach-email.md` for cold outreach and follow-up structure
+- `docs/reviewer-response-playbook.md` for replies, packet sends, call offers, criticism, redirects, and acknowledgment questions
+
+## Internal Logging Rule
+
+When someone replies, update the tracker as soon as possible with:
+
+- `status`
+- `response_date`
+- `feedback_type`
+- `acknowledgment_permission`
+- next step in `notes`
+
+Good `notes` examples:
+
+- `Requested 10-record sample packet on 2026-06-13.`
+- `Offered methodology review; waiting on packet send.`
+- `Declined but suggested redirect to campus-policy colleague.`
+- `Gave critical feedback on no-ranking language; site update needed.`
