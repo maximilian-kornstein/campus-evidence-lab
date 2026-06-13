@@ -266,6 +266,48 @@ function recordWeightedFields(record) {
   ];
 }
 
+function normalizedInstitutionalResponse(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[’']/g, "'");
+}
+
+function hasDisplayInstitutionalResponse(record) {
+  const response = normalizedInstitutionalResponse(record.institutional_response);
+  if (!response) return false;
+  if (response.startsWith("the record summarizes ")) return false;
+  if (response.includes("does not independently evaluate investigative, disciplinary, or institutional response outcomes")) return false;
+  if (response.includes("does not independently evaluate the institution's completed response")) return false;
+  return true;
+}
+
+function institutionalResponseSection(record, headingLevel = "h3") {
+  if (!hasDisplayInstitutionalResponse(record)) return "";
+  const response = String(record.institutional_response ?? "").trim();
+  const details = [
+    record.response_date
+      ? `<div class="data-line">
+          <dt>Response date</dt>
+          <dd class="mono">${escapeHtml(record.response_date)}</dd>
+        </div>`
+      : "",
+    record.legal_status
+      ? `<div class="data-line">
+          <dt>Legal status</dt>
+          <dd>${escapeHtml(record.legal_status)}</dd>
+        </div>`
+      : ""
+  ]
+    .filter(Boolean)
+    .join("");
+  return `
+    <${headingLevel} class="section-title section-title--spaced">Public institutional response</${headingLevel}>
+    <p>${escapeHtml(response)}</p>
+    ${details ? `<dl>${details}</dl>` : ""}
+  `;
+}
+
 function sourceWeightedFields(source, events, schoolNames) {
   return [
     [source.id, 26],
@@ -515,7 +557,7 @@ function documentationSignals(records) {
   const officialRecords = records.filter((record) =>
     record.sources.some((source) => /government|court|public legal|annual security|public safety/i.test(source.source_type))
   ).length;
-  const responseRecords = records.filter((record) => record.institutional_response).length;
+  const responseRecords = records.filter(hasDisplayInstitutionalResponse).length;
   const latestRecordDate = records.map((record) => record.date).sort().at(-1) ?? "";
   const latestUpdate = records.map((record) => record.updated_at).sort().at(-1) ?? "";
 
@@ -566,7 +608,7 @@ function reviewNeedLabels(record) {
   const labels = [];
   if (record.confidence === "Low") labels.push("Low-confidence source support");
   if ((record.sources?.length ?? record.source_ids?.length ?? 0) <= 1) labels.push("Single-source record");
-  if (!record.institutional_response) labels.push("No public institutional response recorded");
+  if (!hasDisplayInstitutionalResponse(record)) labels.push("No public institutional response recorded");
   if (record.affected_communities.some((community) => ["Race", "Religion", "National origin", "Ethnicity", "Gender"].includes(community))) {
     labels.push("Broad affected-community label");
   }
@@ -1051,19 +1093,16 @@ function renderEventDetail() {
         <p class="page-kicker">${escapeHtml(record.id)}</p>
         <h2>${escapeHtml(record.summary)}</h2>
         <p>${escapeHtml(record.description)}</p>
+        ${institutionalResponseSection(record)}
         <dl>
-          <div class="data-line">
-            <dt>Institutional response</dt>
-            <dd>${escapeHtml(record.institutional_response)}</dd>
-          </div>
-          <div class="data-line">
-            <dt>Legal status</dt>
-            <dd>${escapeHtml(record.legal_status)}</dd>
-          </div>
-          <div class="data-line">
-            <dt>Response date</dt>
-            <dd class="mono">${escapeHtml(record.response_date || "None recorded")}</dd>
-          </div>
+          ${
+            !hasDisplayInstitutionalResponse(record)
+              ? `<div class="data-line">
+                  <dt>Legal status</dt>
+                  <dd>${escapeHtml(record.legal_status)}</dd>
+                </div>`
+              : ""
+          }
           <div class="data-line">
             <dt>Last updated</dt>
             <dd class="mono">${escapeHtml(record.updated_at)}</dd>
@@ -1356,7 +1395,7 @@ function renderSchoolDetail(schoolId) {
   const stats = schoolStats(schoolId);
   const sourceIds = unique(stats.records.map((record) => record.source_ids));
   const sources = sourceIds.map((id) => state.sources.get(id)).filter(Boolean);
-  const responseRecords = stats.records.filter((record) => record.institutional_response);
+  const responseRecords = stats.records.filter(hasDisplayInstitutionalResponse);
   const signals = documentationSignals(stats.records);
   const legalRecords = stats.records.filter((record) =>
     /ocr|legal|lawsuit|title vi|title ix|resolution|settlement|federal|doj|complaint|finding/i.test(`${record.category} ${record.legal_status}`)
@@ -1449,7 +1488,7 @@ function renderSchoolDetail(schoolId) {
                           <tr>
                             <td class="mono">${escapeHtml(formatDate(record.date, record.date_precision))}</td>
                             <td><a href="${sitePath(`/events/${encodeURIComponent(record.id)}/`)}">${escapeHtml(record.summary)}</a></td>
-                            <td>${escapeHtml(record.institutional_response)}</td>
+                            <td>${escapeHtml(String(record.institutional_response ?? "").trim())}</td>
                           </tr>
                         `
                       )
@@ -1602,7 +1641,7 @@ function briefSourceBreakdown(records) {
 }
 
 function briefResponseList(records) {
-  const responseRecords = records.filter((record) => record.institutional_response);
+  const responseRecords = records.filter(hasDisplayInstitutionalResponse);
   if (!responseRecords.length) return `<p class="empty">No institutional responses recorded in this brief.</p>`;
   return `
     <ul class="source-list">
@@ -1611,7 +1650,7 @@ function briefResponseList(records) {
           (record) => `
             <li>
               <a href="${sitePath(`/events/${encodeURIComponent(record.id)}/`)}">${escapeHtml(record.school?.name ?? "Unknown")}</a>
-              <br><span>${escapeHtml(record.institutional_response)}</span>
+              <br><span>${escapeHtml(String(record.institutional_response ?? "").trim())}</span>
             </li>
           `
         )

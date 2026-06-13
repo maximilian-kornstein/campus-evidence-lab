@@ -63,7 +63,7 @@ function nav(depth = 0) {
   `;
 }
 
-function page(title, body, depth = 0, stripTrailingWhitespace = false) {
+function page(title, body, depth = 0, stripTrailingWhitespace = true) {
   const html = `<!doctype html>
 <html lang="en">
   <head>
@@ -128,11 +128,43 @@ function countTable(rows, firstLabel, secondLabel = "Records") {
   `;
 }
 
+function normalizedInstitutionalResponse(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[’']/g, "'");
+}
+
+function hasDisplayInstitutionalResponse(event) {
+  const response = normalizedInstitutionalResponse(event.institutional_response);
+  if (!response) return false;
+  if (response.startsWith("the record summarizes ")) return false;
+  if (response.includes("does not independently evaluate investigative, disciplinary, or institutional response outcomes")) return false;
+  if (response.includes("does not independently evaluate the institution's completed response")) return false;
+  return true;
+}
+
+function institutionalResponseSection(event) {
+  if (!hasDisplayInstitutionalResponse(event)) return "";
+  const response = String(event.institutional_response ?? "").trim();
+  const details = [
+    event.response_date ? dataLine("Response date", escapeHtml(event.response_date), "mono") : "",
+    event.legal_status ? dataLine("Legal status", escapeHtml(event.legal_status)) : ""
+  ]
+    .filter(Boolean)
+    .join("");
+  return `
+    <h2 class="section-title section-title--spaced">Public institutional response</h2>
+    <p>${escapeHtml(response)}</p>
+    ${details ? `<dl>${details}</dl>` : ""}
+  `;
+}
+
 function reviewNeedLabels(event) {
   const labels = [];
   if (event.confidence === "Low") labels.push("Low-confidence source support");
   if ((event.source_ids?.length ?? 0) <= 1) labels.push("Single-source record");
-  if (!event.institutional_response) labels.push("No public institutional response recorded");
+  if (!hasDisplayInstitutionalResponse(event)) labels.push("No public institutional response recorded");
   if (event.affected_communities.some((community) => ["Race", "Religion", "National origin", "Ethnicity", "Gender"].includes(community))) {
     labels.push("Broad affected-community label");
   }
@@ -183,17 +215,18 @@ function briefRecordTable(records, emptyText) {
 }
 
 function briefResponseList(records) {
-  const responseRecords = records.filter((event) => event.institutional_response);
+  const responseRecords = records.filter(hasDisplayInstitutionalResponse);
   if (!responseRecords.length) return `<p class="empty">No institutional responses recorded in this brief.</p>`;
   return `
     <ul class="source-list">
       ${responseRecords
         .map((event) => {
           const school = schoolMap.get(event.school_id);
+          const response = String(event.institutional_response ?? "").trim();
           return `
             <li>
               <a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(school?.name ?? event.school_id)}</a>
-              <br><span>${escapeHtml(event.institutional_response)}</span>
+              <br><span>${escapeHtml(response)}</span>
             </li>
           `;
         })
@@ -268,15 +301,14 @@ for (const event of events) {
         <section class="detail-panel">
           <div class="detail-grid">
             <div>
+              ${institutionalResponseSection(event)}
               <dl>
                 ${dataLine("School", `<a href="${sitePath(`/schools/${encodeURIComponent(event.school_id)}/`, detailDepth)}">${escapeHtml(school?.name ?? event.school_id)}</a>`)}
                 ${dataLine("Date", escapeHtml(event.date), "mono")}
                 ${dataLine("Location", escapeHtml(event.location))}
                 ${dataLine("Category", escapeHtml(event.category))}
                 ${dataLine("Communities", escapeHtml(event.affected_communities.join(", ")))}
-                ${dataLine("Institutional response", escapeHtml(event.institutional_response))}
-                ${dataLine("Legal status", escapeHtml(event.legal_status))}
-                ${dataLine("Response date", escapeHtml(event.response_date || "None recorded"), "mono")}
+                ${!hasDisplayInstitutionalResponse(event) ? dataLine("Legal status", escapeHtml(event.legal_status)) : ""}
                 ${dataLine("Verification", escapeHtml(event.verification_status))}
                 ${dataLine("Confidence", escapeHtml(event.confidence))}
                 ${dataLine("Verification rationale", escapeHtml(verificationRationale(event, eventSources.length)))}
@@ -387,7 +419,7 @@ for (const school of schools) {
   const latestUpdate = schoolEvents.map((event) => event.updated_at).sort().at(-1) ?? "";
   const sourceIds = [...new Set(schoolEvents.flatMap((event) => event.source_ids))];
   const schoolSources = sourceIds.map((id) => sourceMap.get(id)).filter(Boolean);
-  const responseEvents = schoolEvents.filter((event) => event.institutional_response);
+  const responseEvents = schoolEvents.filter(hasDisplayInstitutionalResponse);
   const legalEvents = schoolEvents.filter((event) =>
     /ocr|legal|lawsuit|title vi|title ix|resolution|settlement|federal|doj|complaint|finding/i.test(`${event.category} ${event.legal_status}`)
   );
@@ -470,7 +502,7 @@ for (const school of schools) {
                                 <tr>
                                   <td class="mono">${escapeHtml(event.date)}</td>
                                   <td><a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a></td>
-                                  <td>${escapeHtml(event.institutional_response)}</td>
+                                  <td>${escapeHtml(String(event.institutional_response ?? "").trim())}</td>
                                 </tr>
                               `
                             )

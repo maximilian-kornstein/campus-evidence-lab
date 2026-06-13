@@ -38,6 +38,16 @@ async function mustContain(relativePath, text) {
   }
 }
 
+async function mustNotContain(relativePath, text) {
+  const filePath = path.join(siteRoot, relativePath);
+  try {
+    const content = await readFile(filePath, "utf8");
+    if (content.includes(text)) errors.push(`${relativePath} should not contain ${text}`);
+  } catch {
+    errors.push(`Unable to read ${relativePath}`);
+  }
+}
+
 async function fileExists(relativePath) {
   try {
     await access(path.join(siteRoot, relativePath));
@@ -45,6 +55,22 @@ async function fileExists(relativePath) {
   } catch {
     return false;
   }
+}
+
+function normalizedInstitutionalResponse(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[’']/g, "'");
+}
+
+function hasDisplayInstitutionalResponse(event) {
+  const response = normalizedInstitutionalResponse(event.institutional_response);
+  if (!response) return false;
+  if (response.startsWith("the record summarizes ")) return false;
+  if (response.includes("does not independently evaluate investigative, disciplinary, or institutional response outcomes")) return false;
+  if (response.includes("does not independently evaluate the institution's completed response")) return false;
+  return true;
 }
 
 async function htmlFiles(dir = siteRoot) {
@@ -358,6 +384,18 @@ for (const aboutCopy of [
   await mustContain("about/index.html", aboutCopy);
 }
 
+for (const eventResponseCopy of [
+  "Public institutional response",
+  "Brown said it agreed to continue nondiscrimination training",
+  "Response date"
+]) {
+  await mustContain("events/evt_2024_0001/index.html", eventResponseCopy);
+}
+
+await mustNotContain("events/evt_2026_0712/index.html", "Public institutional response");
+await mustNotContain("events/evt_2026_0712/index.html", "<dt>Institutional response</dt>");
+await mustNotContain("schools/brown_university/index.html", "does not independently evaluate investigative, disciplinary, or institutional response outcomes.");
+
 for (const downloadsCopy of [
   "Latest dataset JSON",
   "Latest dataset CSV",
@@ -475,12 +513,17 @@ for (const event of events) {
     "External source URL",
     "Request a source-backed correction",
     `submit/?record_id=${event.id}`,
-    "Response date",
     "Last updated",
     "Verification rationale",
     "Changelog"
   ]) {
     await mustContain(detailPath, eventCopy);
+  }
+  if (hasDisplayInstitutionalResponse(event)) {
+    await mustContain(detailPath, "Public institutional response");
+    if (event.response_date) await mustContain(detailPath, "Response date");
+  } else {
+    await mustNotContain(detailPath, "Public institutional response");
   }
   for (const sourceId of event.source_ids) {
     const source = sources.find((item) => item.id === sourceId);

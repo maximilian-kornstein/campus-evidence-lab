@@ -50,10 +50,21 @@ const pages = [
     eventsSmoke: true
   },
   {
+    route: "/events/?q=Brown%20University%20announced%20a%20voluntary%20agreement",
+    file: "events/index.html",
+    checks: ["Public institutional response", "Brown said it agreed to continue nondiscrimination training", "Response date"]
+  },
+  {
     route: "/schools/",
     file: "schools/index.html",
     checks: ["Tracked Schools", "Search schools", "Most recent update", "Dossier", "Build Citation Packet", "University of Kentucky"],
     schoolsSmoke: true
+  },
+  {
+    route: "/schools/?q=Brown",
+    file: "schools/index.html",
+    checks: ["Brown University Dossier", "Institutional Responses", "Brown said it agreed to continue nondiscrimination training"],
+    absentChecks: ["does not independently evaluate investigative, disciplinary, or institutional response outcomes."]
   },
   {
     route: "/briefs/",
@@ -270,6 +281,12 @@ async function renderPage(page, index) {
   for (const text of page.checks) {
     if (!(await waitForText(dom, text))) {
       errors.push(`${page.file} did not render expected text: ${text}`);
+    }
+  }
+
+  for (const text of page.absentChecks ?? []) {
+    if (dom.window.document.body.textContent.includes(text)) {
+      errors.push(`${page.file} rendered unexpected text: ${text}`);
     }
   }
 
