@@ -33,10 +33,10 @@
     <main class="main prose">
       <p class="page-kicker">Methodology</p>
       <h1 class="page-title page-title--small">Standards before scale.</h1>
-      <p class="page-intro">Campus Evidence Lab tracks public-source records related to campus civil-rights incidents, hate-related reports, and institutional responses. The dataset is evidence infrastructure, not a verdict system.</p>
+      <p class="page-intro">Campus Evidence Lab tracks public-source records related to campus civil-rights matters, identity-based conflict, public enforcement activity, and institutional responses. The dataset is documentation infrastructure, not a verdict system.</p>
 
       <h2>Current Scope</h2>
-      <p>The current dataset covers U.S. campus civil-rights records across shared ancestry, religion, race, ethnicity, national origin, sex, pregnancy, disability, and athletic-equity categories. Records may involve antisemitism, anti-Asian hate, anti-Black racism, anti-Latino bias, anti-Native or Indigenous bias, anti-Muslim bias, and other source-backed identity categories when the public source supports that classification.</p>
+      <p>The current dataset covers U.S. campus civil-rights records across religion, race, ethnicity, national origin, sex, pregnancy, disability, and athletic-equity categories. Community labels are assigned only when the public source supports them, and they describe what is documented in the source record rather than an independent project finding.</p>
 
       <h2>Inclusion Criteria</h2>
       <ul>
@@ -69,7 +69,7 @@
 
       <h2>Event Category Definitions</h2>
       <ul>
-        <li>Harassment or threat: targeted harassment, threats, intimidation, or hostile-environment allegations.</li>
+        <li>Harassment or threat: targeted harassment, threats, intimidation, or public allegations of identity-based hostile treatment.</li>
         <li>Vandalism: property damage or defacement tied to identity-based hostility.</li>
         <li>Discrimination allegation: public complaints, lawsuits, OCR matters, or institutional records alleging unequal treatment.</li>
         <li>Protest-related incident: campus protest events where public sources identify civil-rights or identity-based conflict.</li>
@@ -130,20 +130,20 @@
       <p>A reviewer should be able to reproduce the record from public material without private context. Review checks include source availability, source type, date precision, school identity, category choice, affected community label, legal-status wording, privacy risk, duplicate risk, neutral language, and whether confidence describes source support instead of severity.</p>
 
       <h2>No Ranking System</h2>
-      <p>Campus Evidence Lab does not rank schools by hate, safety, severity, or moral standing. Record counts reflect public-source availability, source discovery, reporting practices, school size, jurisdiction, institutional transparency, and reviewer capacity. Future coverage signals may describe documentation density or source diversity, but they should not be presented as school rankings.</p>
+      <p>Campus Evidence Lab does not rank schools by hate, safety, severity, or moral standing. Record counts reflect public-source availability, source discovery, reporting practices, school size, jurisdiction, institutional transparency, and reviewer capacity. If future coverage signals describe documentation density or source diversity, they should remain documentation signals rather than comparative school judgments.</p>
 
       <h2>Privacy Limits</h2>
       <p>The MVP does not collect private testimony or sensitive evidence. Public records should avoid naming private individuals unless a name is necessary to understand the public record and already appears in source material from a reliable public source.</p>
 
       <h2>AI Use</h2>
-      <p>AI may assist with extraction, summarization, duplicate detection, and weekly brief drafting. AI does not publish records. Human review is required before a record appears in the public dataset.</p>
+      <p>AI may assist with extraction, summarization, duplicate detection, and brief drafting. AI does not publish records, determine legal meaning, or assign final classification without human review. Human review is required before a record appears in the public dataset.</p>
 
       <h2>Integrity</h2>
       <p>Each event receives a deterministic record hash. Each dataset snapshot receives a snapshot hash. Hashes are used to make silent retroactive edits easier to detect.</p>
       <p>The current manifest is published at <a href="../data/snapshot-manifest.json">data/snapshot-manifest.json</a>. The current archived manifest is linked from the data downloads page. Weekly briefs reference the event dataset hash used for their record set.</p>
 
       <h2>Limitations</h2>
-      <p>The dataset is not a complete census of campus civil-rights incidents. It reflects public-source availability, reviewer capacity, source discoverability, and the current scope of the MVP. Records should not be used as rankings, severity scores, or proof of legal liability.</p>
+      <p>The dataset is not a complete census of campus civil-rights incidents. It reflects public-source availability, reviewer capacity, source discoverability, and the current scope of the MVP. Records should not be used as rankings, severity scores, prevalence measures, or proof of legal liability.</p>
 
       <h2>Versioning and Audit Policy</h2>
       <p>Public changes regenerate record hashes, dataset hashes, snapshot manifests, the snapshot index, CSV exports, source audit metadata, and the public changelog. Archived snapshot manifests are listed in <a href="../data/snapshot-index.json">data/snapshot-index.json</a>. Before launch or major publication cycles, maintainers should run the advisory live source audit and manually review any failures.</p>

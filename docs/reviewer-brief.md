@@ -42,7 +42,7 @@ https://maximilian-kornstein.github.io/campus-evidence-lab/research-workspace/?r
 ## What The Project Does Not Claim
 
 - It does not rank schools.
-- It does not score safety, quality of life, danger, bias, or institutional morality.
+- It does not score safety, lived experience, danger, bias, or institutional morality.
 - It does not estimate incident prevalence or claim complete coverage.
 - It does not make legal findings beyond what public sources say.
 - It does not treat private allegations, anonymous tips, or social media-only claims as records.
