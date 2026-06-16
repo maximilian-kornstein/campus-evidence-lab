@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Campus Evidence Lab Challenge Ledger",
+  "type": "object",
+  "required": ["snapshot_id", "updated_at", "method", "statuses", "entries"],
+  "properties": {
+    "snapshot_id": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "method": { "type": "string" },
+    "statuses": { "type": "array", "items": { "type": "string" } },
+    "entries": { "type": "array" }
+  }
+}

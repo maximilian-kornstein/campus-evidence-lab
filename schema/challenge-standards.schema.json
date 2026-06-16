@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Campus Evidence Lab Challenge Standards",
+  "type": "object",
+  "required": ["snapshot_id", "generated_at", "method", "standards"],
+  "properties": {
+    "snapshot_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "method": { "type": "string" },
+    "standards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "applies_when",
+          "acceptable_counterevidence",
+          "insufficient_counterevidence",
+          "possible_outcomes",
+          "fields_that_may_change",
+          "no_overclaiming_warning"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "applies_when": { "type": "string" },
+          "acceptable_counterevidence": { "type": "array", "items": { "type": "string" } },
+          "insufficient_counterevidence": { "type": "array", "items": { "type": "string" } },
+          "possible_outcomes": { "type": "array", "items": { "type": "string" } },
+          "fields_that_may_change": { "type": "array", "items": { "type": "string" } },
+          "no_overclaiming_warning": { "type": "string" }
+        }
+      }
+    }
+  }
+}

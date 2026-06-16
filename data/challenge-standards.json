@@ -1,0 +1,216 @@
+{
+  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "generated_at": "2026-06-03",
+  "method": "Challenge standards define what public counterevidence can change a Campus Evidence Lab record. They are correction standards, not external audit, endorsement, ranking, severity scoring, safety scoring, or prevalence measurement.",
+  "standards": [
+    {
+      "id": "category_challenge",
+      "label": "Category challenge",
+      "applies_when": "The assigned event category may be broader or different from what the linked public source supports.",
+      "acceptable_counterevidence": [
+        "A public source showing the event belongs in a narrower or different Campus Evidence Lab category.",
+        "A public source showing the current category relies on language not present in the source basis."
+      ],
+      "insufficient_counterevidence": [
+        "A disagreement with the category without a public source.",
+        "A preference for different terminology that does not change the source-supported meaning."
+      ],
+      "possible_outcomes": [
+        "category_changed",
+        "category_narrowed",
+        "closed_no_change",
+        "needs_more_evidence"
+      ],
+      "fields_that_may_change": [
+        "category",
+        "classification_rationale",
+        "limitations"
+      ],
+      "no_overclaiming_warning": "A category challenge is about source fit, not incident severity or institutional quality."
+    },
+    {
+      "id": "affected_community_challenge",
+      "label": "Affected-community challenge",
+      "applies_when": "Affected-community labels may be broader than the public source supports.",
+      "acceptable_counterevidence": [
+        "A public source identifying a narrower affected community.",
+        "A public source showing that a listed community is not supported by the record basis."
+      ],
+      "insufficient_counterevidence": [
+        "A claim that the event affected a different group without public support.",
+        "A general objection to group labels without evidence tied to the record."
+      ],
+      "possible_outcomes": [
+        "community_label_changed",
+        "community_label_narrowed",
+        "closed_no_change",
+        "needs_more_evidence"
+      ],
+      "fields_that_may_change": [
+        "affected_communities",
+        "community_rationale",
+        "limitations"
+      ],
+      "no_overclaiming_warning": "Affected-community labels describe source-backed record metadata, not prevalence or campus climate."
+    },
+    {
+      "id": "confidence_challenge",
+      "label": "Confidence challenge",
+      "applies_when": "The confidence label may not match the current source basis or rationale.",
+      "acceptable_counterevidence": [
+        "A public source adding independent support for the same record.",
+        "A public source or source limitation showing current confidence should be lower."
+      ],
+      "insufficient_counterevidence": [
+        "A severity argument.",
+        "An assertion that a record is important without source-basis evidence."
+      ],
+      "possible_outcomes": [
+        "confidence_raised",
+        "confidence_lowered",
+        "confidence_rationale_updated",
+        "closed_no_change",
+        "needs_more_evidence"
+      ],
+      "fields_that_may_change": [
+        "confidence",
+        "confidence_rationale",
+        "field_support",
+        "limitations"
+      ],
+      "no_overclaiming_warning": "Confidence describes source support, not truth, severity, or legal findings."
+    },
+    {
+      "id": "date_precision_challenge",
+      "label": "Date-precision challenge",
+      "applies_when": "The date precision may be more exact or less exact than the public source supports.",
+      "acceptable_counterevidence": [
+        "A public source identifying the exact day, month, or only year supported by the record.",
+        "A public source showing the current date refers to publication, resolution, or reporting period rather than event timing."
+      ],
+      "insufficient_counterevidence": [
+        "A date guess from secondary discussion.",
+        "A date from a non-public source that cannot be reviewed."
+      ],
+      "possible_outcomes": [
+        "date_changed",
+        "date_precision_narrowed",
+        "date_precision_broadened",
+        "closed_no_change",
+        "needs_more_evidence"
+      ],
+      "fields_that_may_change": [
+        "date",
+        "date_precision",
+        "description",
+        "limitations"
+      ],
+      "no_overclaiming_warning": "Date precision is a source-support field, not a claim that the underlying event occurred on a more exact date than sources allow."
+    },
+    {
+      "id": "institutional_response_challenge",
+      "label": "Institutional-response challenge",
+      "applies_when": "The institutional response text or response-depth label may be incomplete, generic, or overstated.",
+      "acceptable_counterevidence": [
+        "A direct public institutional statement or archived page.",
+        "A public agency document describing institutional action.",
+        "A public source showing no public institutional response was found after reasonable search."
+      ],
+      "insufficient_counterevidence": [
+        "Private correspondence.",
+        "A general belief that the institution must have responded."
+      ],
+      "possible_outcomes": [
+        "response_text_updated",
+        "response_depth_changed",
+        "closed_no_change",
+        "needs_more_evidence"
+      ],
+      "fields_that_may_change": [
+        "institutional_response",
+        "response_depth",
+        "response_date",
+        "limitations"
+      ],
+      "no_overclaiming_warning": "Response depth describes public documentation, not whether an institution acted appropriately."
+    },
+    {
+      "id": "legal_status_challenge",
+      "label": "Legal-status challenge",
+      "applies_when": "Legal, OCR, procedural, or administrative status may be outdated, imprecise, or too broad.",
+      "acceptable_counterevidence": [
+        "A public docket, OCR page, agency release, court filing, or institutional document updating status.",
+        "A public source showing that the current status text should be narrower."
+      ],
+      "insufficient_counterevidence": [
+        "A legal conclusion without a public source.",
+        "A news summary that does not update the procedural status."
+      ],
+      "possible_outcomes": [
+        "legal_status_updated",
+        "legal_status_narrowed",
+        "closed_no_change",
+        "needs_more_evidence"
+      ],
+      "fields_that_may_change": [
+        "legal_status",
+        "description",
+        "limitations"
+      ],
+      "no_overclaiming_warning": "Legal-status text is procedural metadata, not a legal finding by Campus Evidence Lab."
+    },
+    {
+      "id": "source_sufficiency_challenge",
+      "label": "Source-sufficiency challenge",
+      "applies_when": "The record may need another source, a better locator, or narrower language.",
+      "acceptable_counterevidence": [
+        "A better public URL, archived copy, source page, data file locator, or source excerpt pointer.",
+        "A public source showing current language should be narrowed."
+      ],
+      "insufficient_counterevidence": [
+        "A broken-link report without an alternate public locator.",
+        "A source that does not refer to the same record."
+      ],
+      "possible_outcomes": [
+        "source_added",
+        "source_locator_updated",
+        "language_narrowed",
+        "closed_no_change",
+        "needs_more_evidence"
+      ],
+      "fields_that_may_change": [
+        "source_ids",
+        "description",
+        "field_support",
+        "limitations"
+      ],
+      "no_overclaiming_warning": "Source sufficiency is about reviewability of the record, not whether the underlying event is more or less serious."
+    },
+    {
+      "id": "inclusion_challenge",
+      "label": "Inclusion challenge",
+      "applies_when": "The record may not satisfy the public-source inclusion rule or may be outside current scope.",
+      "acceptable_counterevidence": [
+        "A public source showing the record is outside the current civil-rights or public-source scope.",
+        "A public correction showing the source basis does not support inclusion."
+      ],
+      "insufficient_counterevidence": [
+        "A request to remove an uncomfortable record without source-basis evidence.",
+        "A disagreement with public reporting alone."
+      ],
+      "possible_outcomes": [
+        "record_removed",
+        "record_archived",
+        "record_limited",
+        "closed_no_change",
+        "needs_more_evidence"
+      ],
+      "fields_that_may_change": [
+        "verification_status",
+        "limitations",
+        "changelog"
+      ],
+      "no_overclaiming_warning": "Inclusion means the record fits current source and scope rules; it is not a finding of legal truth."
+    }
+  ]
+}
