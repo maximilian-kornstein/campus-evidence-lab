@@ -30,6 +30,9 @@ const DATA_PATHS = {
   reviewerChallengePack: sitePath("/data/reviewer-challenge-pack.json"),
   evidenceCapsules: sitePath("/data/evidence-capsules.json"),
   sourceProvenanceQueues: sitePath("/data/source-provenance-queues.json"),
+  challengeStandards: sitePath("/data/challenge-standards.json"),
+  challengeQueues: sitePath("/data/challenge-queues.json"),
+  challengeLedger: sitePath("/data/challenge-ledger.json"),
   manifest: sitePath("/data/snapshot-manifest.json"),
   snapshotIndex: sitePath("/data/snapshot-index.json"),
   sourceAudit: sitePath("/data/source-audit.json"),
@@ -59,6 +62,9 @@ const state = {
   reviewerChallengePack: { records: [] },
   evidenceCapsules: { records: [], totals: {}, import_family_counts: {}, locator_quality_counts: {}, review_need_counts: {} },
   sourceProvenanceQueues: { queues: [] },
+  challengeStandards: { standards: [] },
+  challengeQueues: { queues: [], packets: [] },
+  challengeLedger: { entries: [] },
   snapshotIndex: null,
   sourceAudit: null,
   sourceAuditLive: null,
@@ -560,6 +566,9 @@ async function loadDataset() {
     reviewerChallengePack,
     evidenceCapsules,
     sourceProvenanceQueues,
+    challengeStandards,
+    challengeQueues,
+    challengeLedger,
     manifest,
     snapshotIndex,
     sourceAudit,
@@ -586,6 +595,9 @@ async function loadDataset() {
     fetchJson(DATA_PATHS.reviewerChallengePack),
     fetchJson(DATA_PATHS.evidenceCapsules),
     fetchJson(DATA_PATHS.sourceProvenanceQueues),
+    fetchJson(DATA_PATHS.challengeStandards),
+    fetchJson(DATA_PATHS.challengeQueues),
+    fetchJson(DATA_PATHS.challengeLedger),
     fetchJson(DATA_PATHS.manifest),
     fetchJson(DATA_PATHS.snapshotIndex),
     fetchJson(DATA_PATHS.sourceAudit),
@@ -614,6 +626,9 @@ async function loadDataset() {
   state.reviewerChallengePack = reviewerChallengePack;
   state.evidenceCapsules = evidenceCapsules;
   state.sourceProvenanceQueues = sourceProvenanceQueues;
+  state.challengeStandards = challengeStandards;
+  state.challengeQueues = challengeQueues;
+  state.challengeLedger = challengeLedger;
   state.snapshotIndex = snapshotIndex;
   state.sourceAudit = sourceAudit;
   state.sourceAuditLive = sourceAuditLive;
@@ -3361,6 +3376,141 @@ function renderEvidence() {
   `;
 }
 
+function challengeLabel(value) {
+  return String(value ?? "")
+    .replaceAll("_", " ")
+    .replaceAll("-", " ");
+}
+
+function renderChallenge() {
+  const root = document.querySelector("#challenge-root");
+  if (!root) return;
+
+  const standards = state.challengeStandards.standards ?? [];
+  const queues = state.challengeQueues.queues ?? [];
+  const packets = state.challengeQueues.packets ?? [];
+  const ledgerEntries = state.challengeLedger.entries ?? [];
+
+  root.innerHTML = `
+    <section class="section section--tight">
+      <div class="metric-grid metric-grid--dashboard">
+        ${metric(String(standards.length), "Challenge standards")}
+        ${metric(String(queues.length), "Adversarial queues")}
+        ${metric(String(packets.length), "Challenge packets")}
+        ${metric(String(ledgerEntries.length), "Ledger entries")}
+        ${metric(formatDate(state.challengeQueues.generated_at ?? state.challengeStandards.generated_at), "Generated")}
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="section-header">
+        <h2 class="section-title">Use Limit</h2>
+        <p class="section-note">Correction workflow, not comparative judgment.</p>
+      </div>
+      <p class="section-copy">Challenge materials identify where public counterevidence may change record fields or rationale. Queue order and packet inclusion are workflow aids only; they are not ranking, safety scoring, severity scoring, prevalence measurement, legal findings, endorsement, or external audit.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Challenge Standards</h2>
+        <p class="section-note">${escapeHtml(state.challengeStandards.method ?? "Correction standards for public-source counterevidence.")}</p>
+      </div>
+      <div class="principle-grid">
+        ${standards
+          .map(
+            (standard) => `
+              <div>
+                <h3>${escapeHtml(standard.label)}</h3>
+                <dl>
+                  <dt>Applies when</dt>
+                  <dd>${escapeHtml(standard.applies_when)}</dd>
+                  <dt>Fields that may change</dt>
+                  <dd>${escapeHtml((standard.fields_that_may_change ?? []).join(", "))}</dd>
+                  <dt>Use limit</dt>
+                  <dd>${escapeHtml(standard.no_overclaiming_warning)}</dd>
+                </dl>
+              </div>
+            `
+          )
+          .join("")}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Adversarial Queues</h2>
+        <p class="section-note">${escapeHtml(state.challengeQueues.method ?? "Deterministic review-workflow queues.")}</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Queue</th>
+              <th>Records</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${queues
+              .map(
+                (queue) => `
+                  <tr>
+                    <td>${escapeHtml(queue.label)}</td>
+                    <td>${escapeHtml(String(queue.records?.length ?? 0))}</td>
+                    <td>${escapeHtml(queue.description)}</td>
+                  </tr>
+                `
+              )
+              .join("")}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Featured Challenge Packets</h2>
+        <p class="section-note">First eight generated packets for public-source review.</p>
+      </div>
+      <div class="action-grid">
+        ${packets
+          .slice(0, 8)
+          .map(
+            (packet) => `
+              <div class="action-link">
+                <span><a href="${sitePath(`/schools/${encodeURIComponent(packet.school_id)}/`)}">${escapeHtml(packet.school_name)}</a></span>
+                <span>
+                  ${escapeHtml(packet.category)} / ${escapeHtml(packet.confidence)} / ${escapeHtml(packet.date_precision)} precision<br>
+                  Challenge types: ${escapeHtml((packet.challenge_types ?? []).map(challengeLabel).join("; "))}<br>
+                  Questions: ${escapeHtml((packet.review_questions ?? []).slice(0, 2).join(" "))}<br>
+                  <a href="${sitePath(packet.event_url)}">Record</a> / <a href="${sitePath(packet.workspace_url)}">Workspace</a> / <a href="${sitePath(packet.submission_packet_url)}">Correction packet</a>
+                </span>
+              </div>
+            `
+          )
+          .join("")}
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="section-header">
+        <h2 class="section-title">Artifacts</h2>
+        <p class="section-note">Machine-readable files and contribution path.</p>
+      </div>
+      <ul>
+        <li><a href="${sitePath("/data/challenge-standards.json")}">Challenge standards JSON</a></li>
+        <li><a href="${sitePath("/data/challenge-queues.json")}">Challenge queues JSON</a></li>
+        <li><a href="${sitePath("/data/challenge-ledger.json")}">Challenge ledger JSON</a></li>
+        <li><a href="${sitePath("/schema/challenge-standards.schema.json")}">Challenge standards schema</a></li>
+        <li><a href="${sitePath("/schema/challenge-queues.schema.json")}">Challenge queues schema</a></li>
+        <li><a href="${sitePath("/schema/challenge-ledger.schema.json")}">Challenge ledger schema</a></li>
+        <li><a href="${sitePath("/evidence/")}">Evidence provenance page</a></li>
+        <li><a href="${sitePath("/docs/contributing.md")}">Contribution guide</a></li>
+      </ul>
+    </section>
+  `;
+}
+
 function renderImpact() {
   const root = document.querySelector("#impact-root");
   if (!root) return;
@@ -3692,6 +3842,10 @@ async function init() {
     renderWorkflows();
     renderRobustness();
     renderEvidence();
+    const page = document.body.dataset.page;
+    if (page === "challenge") {
+      renderChallenge();
+    }
     renderImpact();
     renderUpdates();
     renderDownloads();
