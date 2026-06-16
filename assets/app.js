@@ -65,6 +65,7 @@ const state = {
   challengeStandards: { standards: [] },
   challengeQueues: { queues: [], packets: [] },
   challengeLedger: { entries: [] },
+  challengeLoadError: "",
   snapshotIndex: null,
   sourceAudit: null,
   sourceAuditLive: null,
@@ -566,9 +567,6 @@ async function loadDataset() {
     reviewerChallengePack,
     evidenceCapsules,
     sourceProvenanceQueues,
-    challengeStandards,
-    challengeQueues,
-    challengeLedger,
     manifest,
     snapshotIndex,
     sourceAudit,
@@ -595,9 +593,6 @@ async function loadDataset() {
     fetchJson(DATA_PATHS.reviewerChallengePack),
     fetchJson(DATA_PATHS.evidenceCapsules),
     fetchJson(DATA_PATHS.sourceProvenanceQueues),
-    fetchJson(DATA_PATHS.challengeStandards),
-    fetchJson(DATA_PATHS.challengeQueues),
-    fetchJson(DATA_PATHS.challengeLedger),
     fetchJson(DATA_PATHS.manifest),
     fetchJson(DATA_PATHS.snapshotIndex),
     fetchJson(DATA_PATHS.sourceAudit),
@@ -626,9 +621,6 @@ async function loadDataset() {
   state.reviewerChallengePack = reviewerChallengePack;
   state.evidenceCapsules = evidenceCapsules;
   state.sourceProvenanceQueues = sourceProvenanceQueues;
-  state.challengeStandards = challengeStandards;
-  state.challengeQueues = challengeQueues;
-  state.challengeLedger = challengeLedger;
   state.snapshotIndex = snapshotIndex;
   state.sourceAudit = sourceAudit;
   state.sourceAuditLive = sourceAuditLive;
@@ -641,6 +633,25 @@ async function loadDataset() {
       sources: event.source_ids.map((id) => state.sources.get(id)).filter(Boolean)
     }))
     .sort(byDateDesc);
+}
+
+async function loadChallengeData() {
+  try {
+    const [challengeStandards, challengeQueues, challengeLedger] = await Promise.all([
+      fetchJson(DATA_PATHS.challengeStandards),
+      fetchJson(DATA_PATHS.challengeQueues),
+      fetchJson(DATA_PATHS.challengeLedger)
+    ]);
+    state.challengeStandards = challengeStandards;
+    state.challengeQueues = challengeQueues;
+    state.challengeLedger = challengeLedger;
+    state.challengeLoadError = "";
+  } catch (error) {
+    state.challengeStandards = { standards: [] };
+    state.challengeQueues = { queues: [], packets: [] };
+    state.challengeLedger = { entries: [] };
+    state.challengeLoadError = error.message;
+  }
 }
 
 function schoolStats(schoolId) {
@@ -3390,6 +3401,7 @@ function renderChallenge() {
   const queues = state.challengeQueues.queues ?? [];
   const packets = state.challengeQueues.packets ?? [];
   const ledgerEntries = state.challengeLedger.entries ?? [];
+  const hasChallengeData = standards.length || queues.length || packets.length || ledgerEntries.length;
 
   root.innerHTML = `
     <section class="section section--tight">
@@ -3408,6 +3420,16 @@ function renderChallenge() {
         <p class="section-note">Correction workflow, not comparative judgment.</p>
       </div>
       <p class="section-copy">Challenge materials identify where public counterevidence may change record fields or rationale. Queue order and packet inclusion are workflow aids only; they are not ranking, safety scoring, severity scoring, prevalence measurement, legal findings, endorsement, or external audit.</p>
+      ${
+        state.challengeLoadError
+          ? `<p class="section-copy">Challenge artifacts could not be loaded for this page: ${escapeHtml(state.challengeLoadError)}</p>`
+          : ""
+      }
+      ${
+        !state.challengeLoadError && !hasChallengeData
+          ? `<p class="section-copy">No challenge artifacts are available in this snapshot.</p>`
+          : ""
+      }
     </section>
 
     <section class="section">
@@ -3415,25 +3437,29 @@ function renderChallenge() {
         <h2 class="section-title">Challenge Standards</h2>
         <p class="section-note">${escapeHtml(state.challengeStandards.method ?? "Correction standards for public-source counterevidence.")}</p>
       </div>
-      <div class="principle-grid">
-        ${standards
-          .map(
-            (standard) => `
-              <div>
-                <h3>${escapeHtml(standard.label)}</h3>
-                <dl>
-                  <dt>Applies when</dt>
-                  <dd>${escapeHtml(standard.applies_when)}</dd>
-                  <dt>Fields that may change</dt>
-                  <dd>${escapeHtml((standard.fields_that_may_change ?? []).join(", "))}</dd>
-                  <dt>Use limit</dt>
-                  <dd>${escapeHtml(standard.no_overclaiming_warning)}</dd>
-                </dl>
-              </div>
-            `
-          )
-          .join("")}
-      </div>
+      ${
+        standards.length
+          ? `<div class="principle-grid">
+              ${standards
+                .map(
+                  (standard) => `
+                    <div>
+                      <h3>${escapeHtml(standard.label)}</h3>
+                      <dl>
+                        <dt>Applies when</dt>
+                        <dd>${escapeHtml(standard.applies_when)}</dd>
+                        <dt>Fields that may change</dt>
+                        <dd>${escapeHtml((standard.fields_that_may_change ?? []).join(", "))}</dd>
+                        <dt>Use limit</dt>
+                        <dd>${escapeHtml(standard.no_overclaiming_warning)}</dd>
+                      </dl>
+                    </div>
+                  `
+                )
+                .join("")}
+            </div>`
+          : `<p class="section-copy">No challenge standards are available to render.</p>`
+      }
     </section>
 
     <section class="section">
@@ -3441,30 +3467,34 @@ function renderChallenge() {
         <h2 class="section-title">Adversarial Queues</h2>
         <p class="section-note">${escapeHtml(state.challengeQueues.method ?? "Deterministic review-workflow queues.")}</p>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Queue</th>
-              <th>Records</th>
-              <th>Purpose</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${queues
-              .map(
-                (queue) => `
+      ${
+        queues.length
+          ? `<div class="table-wrap">
+              <table>
+                <thead>
                   <tr>
-                    <td>${escapeHtml(queue.label)}</td>
-                    <td>${escapeHtml(String(queue.records?.length ?? 0))}</td>
-                    <td>${escapeHtml(queue.description)}</td>
+                    <th>Queue</th>
+                    <th>Records</th>
+                    <th>Purpose</th>
                   </tr>
-                `
-              )
-              .join("")}
-          </tbody>
-        </table>
-      </div>
+                </thead>
+                <tbody>
+                  ${queues
+                    .map(
+                      (queue) => `
+                        <tr>
+                          <td>${escapeHtml(queue.label)}</td>
+                          <td>${escapeHtml(String(queue.records?.length ?? 0))}</td>
+                          <td>${escapeHtml(queue.description)}</td>
+                        </tr>
+                      `
+                    )
+                    .join("")}
+                </tbody>
+              </table>
+            </div>`
+          : `<p class="section-copy">No adversarial queues are available to render.</p>`
+      }
     </section>
 
     <section class="section">
@@ -3472,24 +3502,28 @@ function renderChallenge() {
         <h2 class="section-title">Featured Challenge Packets</h2>
         <p class="section-note">First eight generated packets for public-source review.</p>
       </div>
-      <div class="action-grid">
-        ${packets
-          .slice(0, 8)
-          .map(
-            (packet) => `
-              <div class="action-link">
-                <span><a href="${sitePath(`/schools/${encodeURIComponent(packet.school_id)}/`)}">${escapeHtml(packet.school_name)}</a></span>
-                <span>
-                  ${escapeHtml(packet.category)} / ${escapeHtml(packet.confidence)} / ${escapeHtml(packet.date_precision)} precision<br>
-                  Challenge types: ${escapeHtml((packet.challenge_types ?? []).map(challengeLabel).join("; "))}<br>
-                  Questions: ${escapeHtml((packet.review_questions ?? []).slice(0, 2).join(" "))}<br>
-                  <a href="${sitePath(packet.event_url)}">Record</a> / <a href="${sitePath(packet.workspace_url)}">Workspace</a> / <a href="${sitePath(packet.submission_packet_url)}">Correction packet</a>
-                </span>
-              </div>
-            `
-          )
-          .join("")}
-      </div>
+      ${
+        packets.length
+          ? `<div class="action-grid">
+              ${packets
+                .slice(0, 8)
+                .map(
+                  (packet) => `
+                    <div class="action-link">
+                      <span><a href="${sitePath(`/schools/${encodeURIComponent(packet.school_id)}/`)}">${escapeHtml(packet.school_name)}</a></span>
+                      <span>
+                        ${escapeHtml(packet.category)} / ${escapeHtml(packet.confidence)} / ${escapeHtml(packet.date_precision)} precision<br>
+                        Challenge types: ${escapeHtml((packet.challenge_types ?? []).map(challengeLabel).join("; "))}<br>
+                        Questions: ${escapeHtml((packet.review_questions ?? []).slice(0, 2).join(" "))}<br>
+                        <a href="${sitePath(packet.event_url)}" aria-label="Open record ${escapeHtml(packet.event_id)}">Record</a> / <a href="${sitePath(packet.workspace_url)}" aria-label="Open research workspace for ${escapeHtml(packet.event_id)}">Workspace</a> / <a href="${sitePath(packet.submission_packet_url)}" aria-label="Prepare correction packet for ${escapeHtml(packet.event_id)}">Correction packet</a>
+                      </span>
+                    </div>
+                  `
+                )
+                .join("")}
+            </div>`
+          : `<p class="section-copy">No featured challenge packets are available to render.</p>`
+      }
     </section>
 
     <section class="section section--tight">
@@ -3826,6 +3860,7 @@ function downloadRow(title, href, meta, downloadable = true) {
 
 async function init() {
   const initDocument = document;
+  const page = document.body.dataset.page;
   setCurrentNav();
   try {
     await loadDataset();
@@ -3842,8 +3877,9 @@ async function init() {
     renderWorkflows();
     renderRobustness();
     renderEvidence();
-    const page = document.body.dataset.page;
     if (page === "challenge") {
+      await loadChallengeData();
+      if (document !== initDocument) return;
       renderChallenge();
     }
     renderImpact();
