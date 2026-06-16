@@ -517,6 +517,24 @@ for (const capsule of evidenceCapsules.records ?? []) {
 
 errors.push(...validateChallengeArtifacts({ standards: challengeStandards, queues: challengeQueues, ledger: challengeLedger, events, sources, corrections }));
 
+for (const [label, artifact] of [
+  ["Challenge standards", challengeStandards],
+  ["Challenge queues", challengeQueues],
+  ["Challenge ledger", challengeLedger]
+]) {
+  if (artifact.snapshot_id !== manifest.snapshot_id) {
+    errors.push(`${label} snapshot_id must match snapshot manifest`);
+  }
+}
+if (challengeStandards.generated_at !== manifest.created_at) {
+  errors.push("Challenge standards generated_at must match snapshot manifest created_at");
+}
+if (challengeQueues.generated_at !== manifest.created_at) {
+  errors.push("Challenge queues generated_at must match snapshot manifest created_at");
+}
+if (challengeLedger.updated_at !== manifest.created_at) {
+  errors.push("Challenge ledger updated_at must match snapshot manifest created_at");
+}
 if (hasProhibitedChallengeClaim(JSON.stringify(challengeStandards))) errors.push("Challenge standards contain prohibited overclaiming language");
 if (hasProhibitedChallengeClaim(JSON.stringify(challengeQueues))) errors.push("Challenge queues contain prohibited overclaiming language");
 if (hasProhibitedChallengeClaim(JSON.stringify(challengeLedger))) errors.push("Challenge ledger contains prohibited overclaiming language");
