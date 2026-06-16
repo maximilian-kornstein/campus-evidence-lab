@@ -134,6 +134,14 @@ function assertBoundaryLanguage(value) {
   }
 }
 
+function assertHasEvidenceLink(finding, expectedUrl) {
+  assert.equal(
+    finding.evidence_links.some((link) => link.url === expectedUrl),
+    true,
+    `${finding.id} should link to ${expectedUrl}`
+  );
+}
+
 test("buildFlagshipReport creates a bounded thesis with evidence-backed findings", () => {
   const report = buildFlagshipReport({
     events,
@@ -157,15 +165,42 @@ test("buildFlagshipReport creates a bounded thesis with evidence-backed findings
     report.findings.every((finding) => finding.evidence_links.every((link) => link.url.startsWith("/") && link.label && link.note)),
     true
   );
-  assert.equal(report.findings.some((finding) => finding.metric?.value === events.length), true);
+
+  const findingsById = new Map(report.findings.map((finding) => [finding.id, finding]));
+  const documentationFinding = findingsById.get("documentation_over_counts");
+  const sourceConcentrationFinding = findingsById.get("source_concentration_requires_review");
+  const precisionFinding = findingsById.get("precision_is_a_review_dimension");
+  const responseDepthFinding = findingsById.get("response_depth_prevents_false_clarity");
+  const adversarialReviewFinding = findingsById.get("adversarial_review_is_infrastructure");
+
+  assert.ok(documentationFinding);
+  assert.ok(sourceConcentrationFinding);
+  assert.ok(precisionFinding);
+  assert.ok(responseDepthFinding);
+  assert.ok(adversarialReviewFinding);
+
+  assert.equal(documentationFinding.metric.value, events.length);
+  assertHasEvidenceLink(documentationFinding, "/data/events.json");
+  assertHasEvidenceLink(documentationFinding, "/data/snapshot-manifest.json");
+
   assert.equal(
-    report.findings.some((finding) => finding.metric?.value === robustnessMetrics.review_gaps.year_precision),
+    sourceConcentrationFinding.metric.value === robustnessMetrics.source_type_concentration.top_value.value ||
+      sourceConcentrationFinding.metric.count === robustnessMetrics.source_type_concentration.top_value.count,
     true
   );
-  assert.equal(
-    report.findings.some((finding) => finding.metric?.value === challengeQueues.packets.length),
-    true
-  );
+  assertHasEvidenceLink(sourceConcentrationFinding, "/data/robustness-metrics.json");
+  assertHasEvidenceLink(sourceConcentrationFinding, "/data/evidence-capsules.json");
+
+  assert.equal(precisionFinding.metric.value, robustnessMetrics.review_gaps.year_precision);
+  assertHasEvidenceLink(precisionFinding, "/data/evidence-depth-queues.json");
+
+  assert.equal(responseDepthFinding.metric.value, robustnessMetrics.review_gaps.limited_or_missing_response);
+  assertHasEvidenceLink(responseDepthFinding, "/data/robustness-metrics.json");
+
+  assert.equal(adversarialReviewFinding.metric.value, challengeQueues.packets.length);
+  assertHasEvidenceLink(adversarialReviewFinding, "/data/challenge-queues.json");
+  assertHasEvidenceLink(adversarialReviewFinding, "/data/challenge-ledger.json");
+
   assertBoundaryLanguage(report.public_claim_limit);
   for (const finding of report.findings) {
     assertBoundaryLanguage(finding.use_limit);
@@ -204,6 +239,35 @@ test("buildGoldRecordV1 creates exactly bounded review packets with challenge an
     assert.equal(record.public_claim_limit.includes("not outside validation"), true);
     assertBoundaryLanguage(record.public_claim_limit);
   }
+
+  const recordsByEventId = new Map(gold.records.map((record) => [record.event_id, record]));
+  const alphaRecord = recordsByEventId.get("evt_alpha");
+  const betaRecord = recordsByEventId.get("evt_beta");
+  const missingRationalePattern = /not explicitly captured|review|current metadata/i;
+
+  assert.ok(alphaRecord);
+  assert.ok(betaRecord);
+  assert.equal(alphaRecord.rationale_packet.classification_rationale, events[0].classification_rationale);
+  assert.equal(alphaRecord.rationale_packet.community_rationale, events[0].community_rationale);
+  assert.equal(alphaRecord.rationale_packet.confidence_rationale, events[0].confidence_rationale);
+
+  assert.match(betaRecord.rationale_packet.classification_rationale, missingRationalePattern);
+  assert.match(betaRecord.rationale_packet.community_rationale, missingRationalePattern);
+  assert.match(betaRecord.rationale_packet.confidence_rationale, missingRationalePattern);
+  assert.equal(betaRecord.rationale_packet.response_note.includes(events[1].institutional_response), true);
+
+  const goldWithMissingResponse = buildGoldRecordV1({
+    events,
+    schools,
+    sources,
+    challengeQueues,
+    manifest: { snapshot_id: "snapshot_test", created_at: "2026-06-16" },
+    limit: 3
+  });
+  const gammaRecord = goldWithMissingResponse.records.find((record) => record.event_id === "evt_gamma");
+  assert.ok(gammaRecord);
+  assert.match(gammaRecord.rationale_packet.response_note, /no public institutional response text is stored/i);
+
   assert.equal(containsProhibitedFlagshipClaim(JSON.stringify(gold)), false);
 });
 
@@ -219,7 +283,13 @@ test("containsProhibitedFlagshipClaim rejects ranking, safety, prevalence, and e
     "approved by reviewers",
     "endorsed by a federal agency",
     "legal finding against the institution",
-    "frequency measurement across campuses"
+    "frequency measurement across campuses",
+    "independently audited",
+    "certified gold standard",
+    "reviewer-validated",
+    "representative sample",
+    "incidence rate",
+    "comprehensive measurement"
   ]) {
     assert.equal(containsProhibitedFlagshipClaim(prohibited), true, prohibited);
   }
