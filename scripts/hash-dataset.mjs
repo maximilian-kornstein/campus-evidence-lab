@@ -22,7 +22,10 @@ const [
   goldRecordSet,
   reviewerChallengePack,
   evidenceCapsules,
-  sourceProvenanceQueues
+  sourceProvenanceQueues,
+  challengeStandards,
+  challengeQueues,
+  challengeLedger
 ] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
@@ -42,7 +45,10 @@ const [
   readJson(paths.goldRecordSet),
   readJson(paths.reviewerChallengePack),
   readJson(paths.evidenceCapsules),
-  readJson(paths.sourceProvenanceQueues)
+  readJson(paths.sourceProvenanceQueues),
+  readJson(paths.challengeStandards),
+  readJson(paths.challengeQueues),
+  readJson(paths.challengeLedger)
 ]);
 
 const hashedEvents = events.map((event) => ({
@@ -73,6 +79,9 @@ const goldRecordSetHash = sha256(goldRecordSet);
 const reviewerChallengePackHash = sha256(reviewerChallengePack);
 const evidenceCapsulesHash = sha256(evidenceCapsules);
 const sourceProvenanceQueuesHash = sha256(sourceProvenanceQueues);
+const challengeStandardsHash = sha256(challengeStandards);
+const challengeQueuesHash = sha256(challengeQueues);
+const challengeLedgerHash = sha256(challengeLedger);
 
 const previousManifest = existsSync(paths.manifest) ? await readJson(paths.manifest) : null;
 
@@ -104,7 +113,11 @@ const manifest = {
     gold_record_candidates: goldRecordSet.records.length,
     reviewer_challenge_records: reviewerChallengePack.records.length,
     evidence_capsules: evidenceCapsules.records.length,
-    source_provenance_queues: sourceProvenanceQueues.queues.length
+    source_provenance_queues: sourceProvenanceQueues.queues.length,
+    challenge_standards: challengeStandards.standards.length,
+    challenge_queues: challengeQueues.queues.length,
+    challenge_packets: challengeQueues.packets.length,
+    challenge_ledger_entries: challengeLedger.entries.length
   },
   hashes: {
     events: eventsHash,
@@ -126,6 +139,9 @@ const manifest = {
     reviewer_challenge_pack: reviewerChallengePackHash,
     evidence_capsules: evidenceCapsulesHash,
     source_provenance_queues: sourceProvenanceQueuesHash,
+    challenge_standards: challengeStandardsHash,
+    challenge_queues: challengeQueuesHash,
+    challenge_ledger: challengeLedgerHash,
     full_snapshot: sha256({
       events: eventsHash,
       schools: schoolsHash,
@@ -145,7 +161,10 @@ const manifest = {
       gold_record_set: goldRecordSetHash,
       reviewer_challenge_pack: reviewerChallengePackHash,
       evidence_capsules: evidenceCapsulesHash,
-      source_provenance_queues: sourceProvenanceQueuesHash
+      source_provenance_queues: sourceProvenanceQueuesHash,
+      challenge_standards: challengeStandardsHash,
+      challenge_queues: challengeQueuesHash,
+      challenge_ledger: challengeLedgerHash
     }),
     previous_snapshot: previousSnapshotHash
   }

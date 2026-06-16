@@ -6,7 +6,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:9e8e82ea0c6339d51ae9d40ef004c0dd1a4a24c30c43a20fc0255ef64d75efe4`
+- Full snapshot hash: `sha256:78f91ad886c8cf3024e25989b79d251b519077afb4b87f8d44e95ea5413cbee2`
 - Previous snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
 - Archived snapshot: `/data/snapshots/snapshot_2026_06_03_4000_records.json`
 
@@ -27,6 +27,10 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Reviewer challenge records: 25
 - Evidence capsules: 4000
 - Source provenance queues: 5
+- Challenge standards: 8
+- Challenge queues: 7
+- Challenge packets: 75
+- Challenge ledger entries: 25
 
 ## Dataset Hashes
 
@@ -46,6 +50,9 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Reviewer challenge pack: `sha256:df8cab496473899c58603ca0c9c4435571d3687a792bd407c32fe5896f3199f5`
 - Evidence capsules: `sha256:b07d2b14ba54b1640fff192882184f660aa29f9b989f90383060a2b500522808`
 - Source provenance queues: `sha256:35625bf0694ce986e820ec41c05d175f1f767c3bb5e594764f552924a0d5eb6a`
+- Challenge standards: `sha256:f3c0843e8dcd6789b7e36042ef2c961e349a9cc39a4e5b20b2c38df7fa0414b9`
+- Challenge queues: `sha256:aff31414f2776914356159d5567f9c257ae925a03eb6b5181e25a239b95d2884`
+- Challenge ledger: `sha256:70f336f76fe94e36e61045381f8ec223d978d44c1c5db2e6605235b1e48c8373`
 
 ## Evidence Depth & Robustness
 
@@ -57,6 +64,14 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Evidence capsules: `/data/evidence-capsules.json`
 - Source provenance queues: `/data/source-provenance-queues.json`
 - These artifacts describe current dataset composition and review priorities; they must not be used as comparative campus judgments, frequency measures, risk ratings, or approval claims.
+
+## Adversarial Review Protocol
+
+- Challenge arena: `/challenge/`
+- Challenge standards: `/data/challenge-standards.json`
+- Challenge queues and packets: `/data/challenge-queues.json`
+- Challenge ledger: `/data/challenge-ledger.json`
+- Challenge artifacts are public review workflow aids. They do not represent external audit, endorsement, ranking, safety scoring, severity scoring, prevalence estimates, legal findings, or institutional quality judgments.
 
 ## Public Briefs
 

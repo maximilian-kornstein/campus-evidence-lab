@@ -6,6 +6,7 @@ import { validateMethodologyExamples } from "./methodology-definitions.mjs";
 import { validateCredibilityStatus, validateReleaseVerification, validateReleases } from "./release-credibility-lib.mjs";
 import { containsProhibitedRobustnessClaim } from "./robustness-metrics-lib.mjs";
 import { hasProhibitedEvidenceClaim } from "./evidence-capsules-lib.mjs";
+import { hasProhibitedChallengeClaim, validateChallengeArtifacts } from "./challenge-protocol-lib.mjs";
 
 const allowedCommunities = new Set([
   "Jewish",
@@ -99,6 +100,9 @@ const [
   reviewerChallengePack,
   evidenceCapsules,
   sourceProvenanceQueues,
+  challengeStandards,
+  challengeQueues,
+  challengeLedger,
   manifest
 ] = await Promise.all([
   readJson(paths.events),
@@ -120,6 +124,9 @@ const [
   readJson(paths.reviewerChallengePack),
   readJson(paths.evidenceCapsules),
   readJson(paths.sourceProvenanceQueues),
+  readJson(paths.challengeStandards),
+  readJson(paths.challengeQueues),
+  readJson(paths.challengeLedger),
   readJson(paths.manifest)
 ]);
 
@@ -506,6 +513,18 @@ for (const capsule of evidenceCapsules.records ?? []) {
       if (!sourceIds.has(sourceId)) errors.push(`evidence-capsules ${capsule.event_id} field evidence references unknown source ${sourceId}`);
     }
   }
+}
+
+errors.push(...validateChallengeArtifacts({ standards: challengeStandards, queues: challengeQueues, ledger: challengeLedger, events, sources, corrections }));
+
+if (hasProhibitedChallengeClaim(JSON.stringify(challengeStandards))) errors.push("Challenge standards contain prohibited overclaiming language");
+if (hasProhibitedChallengeClaim(JSON.stringify(challengeQueues))) errors.push("Challenge queues contain prohibited overclaiming language");
+if (hasProhibitedChallengeClaim(JSON.stringify(challengeLedger))) errors.push("Challenge ledger contains prohibited overclaiming language");
+if (challengeQueues.queue_count !== (challengeQueues.queues ?? []).length) {
+  errors.push(`Challenge queues queue_count is ${challengeQueues.queue_count}, expected ${(challengeQueues.queues ?? []).length}`);
+}
+if (challengeQueues.packet_count !== (challengeQueues.packets ?? []).length) {
+  errors.push(`Challenge queues packet_count is ${challengeQueues.packet_count}, expected ${(challengeQueues.packets ?? []).length}`);
 }
 
 if (!Array.isArray(sourceProvenanceQueues.queues) || sourceProvenanceQueues.queues.length < 5) {
