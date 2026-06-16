@@ -1,0 +1,122 @@
+{
+  "id": "flagship_public_evidence_infrastructure_v1",
+  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "generated_at": "2026-06-03",
+  "thesis": "Campus Evidence Lab is evidence infrastructure for public-source review: it makes record basis, review gaps, correction paths, and challenge queues inspectable without turning documentation into institutional judgment.",
+  "public_claim_limit": "This artifact is for public evidence infrastructure review. It is not a ranking, not a safety score, not a severity score, not a prevalence estimate, not a legal finding, not an endorsement, and not external validation.",
+  "inputs": {
+    "events": 4000,
+    "schools": 947,
+    "sources": 25,
+    "challenge_packets": 75
+  },
+  "findings": [
+    {
+      "id": "documentation_over_counts",
+      "title": "Documentation over counts",
+      "summary": "The useful public claim is that records are inspectable with linked data and manifest context; the event count is dataset scope, not a measure of campus conditions.",
+      "metric": {
+        "label": "current event records",
+        "value": 4000
+      },
+      "evidence_links": [
+        {
+          "label": "Events dataset",
+          "url": "/data/events.json",
+          "note": "Current public event records used by the artifact."
+        },
+        {
+          "label": "Snapshot manifest",
+          "url": "/data/snapshot-manifest.json",
+          "note": "Snapshot identifier, totals, and hashes for review context."
+        }
+      ],
+      "challenge_url": "/challenge/?finding=documentation_over_counts",
+      "use_limit": "This artifact is for public evidence infrastructure review. It is not a ranking, not a safety score, not a severity score, not a prevalence estimate, not a legal finding, not an endorsement, and not external validation."
+    },
+    {
+      "id": "source_concentration_requires_review",
+      "title": "Source concentration requires review",
+      "summary": "The largest source-type bucket is a review-planning signal because source mix shapes what is documented in the current records.",
+      "metric": {
+        "label": "top source type in current records",
+        "value": "Government dataset",
+        "count": 3845,
+        "percent": 96.13
+      },
+      "evidence_links": [
+        {
+          "label": "Robustness metrics",
+          "url": "/data/robustness-metrics.json",
+          "note": "Composition metrics for the current dataset."
+        },
+        {
+          "label": "Evidence capsules",
+          "url": "/data/evidence-capsules.json",
+          "note": "Record-level evidence summaries used for review."
+        }
+      ],
+      "challenge_url": "/challenge/?finding=source_concentration_requires_review",
+      "use_limit": "This artifact is for public evidence infrastructure review. It is not a ranking, not a safety score, not a severity score, not a prevalence estimate, not a legal finding, not an endorsement, and not external validation."
+    },
+    {
+      "id": "precision_is_a_review_dimension",
+      "title": "Precision is a review dimension",
+      "summary": "Year-level date precision is exposed as a review queue dimension so public reuse can distinguish exact dates from broader source-supported timing.",
+      "metric": {
+        "label": "records with year-level date precision",
+        "value": 3895
+      },
+      "evidence_links": [
+        {
+          "label": "Evidence-depth queues",
+          "url": "/data/evidence-depth-queues.json",
+          "note": "Queues that route date precision gaps to review."
+        }
+      ],
+      "challenge_url": "/challenge/?finding=precision_is_a_review_dimension",
+      "use_limit": "This artifact is for public evidence infrastructure review. It is not a ranking, not a safety score, not a severity score, not a prevalence estimate, not a legal finding, not an endorsement, and not external validation."
+    },
+    {
+      "id": "response_depth_prevents_false_clarity",
+      "title": "Response depth prevents false clarity",
+      "summary": "Limited or missing stored response text is shown as a metadata review gap so absence or brevity is not converted into a conclusion about institutional action.",
+      "metric": {
+        "label": "records with limited or missing stored response text",
+        "value": 3983
+      },
+      "evidence_links": [
+        {
+          "label": "Robustness metrics",
+          "url": "/data/robustness-metrics.json",
+          "note": "Response-depth review-gap counts for current records."
+        }
+      ],
+      "challenge_url": "/challenge/?finding=response_depth_prevents_false_clarity",
+      "use_limit": "This artifact is for public evidence infrastructure review. It is not a ranking, not a safety score, not a severity score, not a prevalence estimate, not a legal finding, not an endorsement, and not external validation."
+    },
+    {
+      "id": "adversarial_review_is_infrastructure",
+      "title": "Adversarial review is infrastructure",
+      "summary": "Challenge packets turn record weaknesses into inspectable correction workflows instead of treating the dataset as settled.",
+      "metric": {
+        "label": "current challenge packets",
+        "value": 75
+      },
+      "evidence_links": [
+        {
+          "label": "Challenge queues",
+          "url": "/data/challenge-queues.json",
+          "note": "Current packets available for public challenge workflow."
+        },
+        {
+          "label": "Challenge ledger",
+          "url": "/data/challenge-ledger.json",
+          "note": "Ledger structure for recording challenge outcomes."
+        }
+      ],
+      "challenge_url": "/challenge/?finding=adversarial_review_is_infrastructure",
+      "use_limit": "This artifact is for public evidence infrastructure review. It is not a ranking, not a safety score, not a severity score, not a prevalence estimate, not a legal finding, not an endorsement, and not external validation."
+    }
+  ]
+}

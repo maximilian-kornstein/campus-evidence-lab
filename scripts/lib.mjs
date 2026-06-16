@@ -28,6 +28,8 @@ export const paths = {
   challengeStandards: path.join(rootDir, "data", "challenge-standards.json"),
   challengeQueues: path.join(rootDir, "data", "challenge-queues.json"),
   challengeLedger: path.join(rootDir, "data", "challenge-ledger.json"),
+  flagshipReport: path.join(rootDir, "data", "flagship-report.json"),
+  goldRecordV1: path.join(rootDir, "data", "gold-record-v1.json"),
   sourceAudit: path.join(rootDir, "data", "source-audit.json"),
   sourceAuditLive: path.join(rootDir, "data", "source-audit-live.json"),
   changelog: path.join(rootDir, "data", "changelog.json"),
