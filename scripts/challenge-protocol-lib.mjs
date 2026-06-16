@@ -153,6 +153,11 @@ function standardsMap(standards) {
   return new Map((standards.standards ?? []).map((standard) => [standard.id, standard]));
 }
 
+function hasAny(values, patterns) {
+  const text = (values ?? []).join(" ");
+  return patterns.some((pattern) => pattern.test(text));
+}
+
 function isNegatedClaim(text, matchIndex) {
   const prefix = text.slice(Math.max(0, matchIndex - 200), matchIndex).toLowerCase();
   const sameSentencePrefix = prefix.slice(Math.max(prefix.lastIndexOf("."), prefix.lastIndexOf(";"), prefix.lastIndexOf(":")) + 1);
@@ -202,11 +207,24 @@ export function buildChallengeStandards({ snapshot_id = "unversioned", generated
 export function challengeTypesForCapsule(capsule) {
   const types = [];
   const needs = new Set(capsule.review_needs ?? []);
+  const needText = [...needs].join(" ");
   if (needs.has("date_precision_review") || capsule.date_precision === "year") types.push("date_precision_challenge");
   if (needs.has("response_depth_review")) types.push("institutional_response_challenge");
   if (needs.has("explicit_rationale_review")) types.push("confidence_challenge");
+  if (
+    /affected_community|community_label|broad_label/.test(needText) ||
+    hasAny(capsule.affected_communities, [/^religion$/i, /^race$/i, /^national origin$/i, /^ethnicity$/i])
+  ) {
+    types.push("affected_community_challenge");
+  }
   if (needs.has("dataset_cell_locator_review") || needs.has("source_url_review") || (capsule.source_basis?.source_count ?? 0) <= 1) {
     types.push("source_sufficiency_challenge");
+  }
+  if (
+    /inclusion|scope/.test(needText) ||
+    /archived|no_longer_included|out_of_scope|removed|record_limited/i.test(`${capsule.verification_status ?? ""} ${capsule.scope_status ?? ""}`)
+  ) {
+    types.push("inclusion_challenge");
   }
   if (/ocr|lawsuit|legal|criminal|investigation|title ix|title vi/i.test(`${capsule.category} ${capsule.source_basis?.source_types?.join(" ")}`)) {
     types.push("legal_status_challenge");
@@ -297,6 +315,7 @@ export function buildChallengeQueues({ capsules, events = [], schools = [], stan
   const records = capsules.records ?? [];
   const eventsById = eventMap(events);
   const schoolsById = schoolMap(schools);
+  const packets = buildChallengePackets({ capsules, events, schools, standards, limit: packetLimit });
   const queues = [
     {
       id: "single_source_high_priority",
@@ -348,9 +367,9 @@ export function buildChallengeQueues({ capsules, events = [], schools = [], stan
     method:
       "Challenge queues are deterministic review-workflow queues generated from evidence capsules. Queue order is for review operations only and is not a ranking, severity score, safety score, prevalence estimate, legal finding, endorsement, or external audit.",
     queue_count: queues.length,
-    packet_count: Math.min(packetLimit, records.length),
+    packet_count: packets.length,
     queues,
-    packets: buildChallengePackets({ capsules, events, schools, standards, limit: packetLimit })
+    packets
   };
 }
 

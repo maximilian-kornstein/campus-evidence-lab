@@ -144,6 +144,7 @@ test("hasProhibitedChallengeClaim catches audit, endorsement, score, and prevale
   assert.equal(hasProhibitedChallengeClaim("No question this is the safest school ranking."), true);
   assert.equal(hasProhibitedChallengeClaim("This is not a ranking but it is the safest school."), true);
   assert.equal(hasProhibitedChallengeClaim("This is not a ranking, safety score, severity score, prevalence estimate, endorsement, or external audit."), false);
+  assert.equal(hasProhibitedChallengeClaim("This is not an external audit or endorsement."), false);
   assert.equal(hasProhibitedChallengeClaim("review queue for adversarial source checks"), false);
 });
 
@@ -153,6 +154,26 @@ test("challengeTypesForCapsule maps review needs into applicable adversarial cha
     "confidence_challenge",
     "source_sufficiency_challenge"
   ]);
+});
+
+test("challengeTypesForCapsule reaches community and inclusion standards from conservative review signals", () => {
+  const communityCapsule = {
+    ...capsules.records[1],
+    review_needs: ["affected_community_review"],
+    affected_communities: ["Religion"]
+  };
+  assert.equal(challengeTypesForCapsule(communityCapsule).includes("affected_community_challenge"), true);
+  const standards = buildChallengeStandards({ snapshot_id: "snapshot_test", generated_at: "2026-06-03" });
+  const [communityPacket] = buildChallengePackets({ capsules: { records: [communityCapsule] }, events, schools, standards, limit: 1 });
+  assert.equal(communityPacket.challenge_types.includes("affected_community_challenge"), true);
+  assert.equal(communityPacket.review_questions.some((question) => question.includes("Affected-community challenge")), true);
+
+  const inclusionCapsule = {
+    ...capsules.records[0],
+    review_needs: ["inclusion_scope_review"],
+    verification_status: "archived_no_longer_included"
+  };
+  assert.equal(challengeTypesForCapsule(inclusionCapsule).includes("inclusion_challenge"), true);
 });
 
 test("buildChallengeQueues produces deterministic review-order queues and packets", () => {
@@ -167,6 +188,36 @@ test("buildChallengeQueues produces deterministic review-order queues and packet
   );
   assert.equal(queues.packets[0].public_claim_limit.includes("not a ranking"), true);
   assert.equal(hasProhibitedChallengeClaim(JSON.stringify(queues)), false);
+});
+
+test("buildChallengeQueues reports packet_count from generated packets only", () => {
+  const standards = buildChallengeStandards({ snapshot_id: "snapshot_test", generated_at: "2026-06-03" });
+  const capsulesWithUnchallengedRecord = {
+    ...capsules,
+    records: [
+      ...capsules.records,
+      {
+        event_id: "evt_2026_0003",
+        school_id: "alpha_university",
+        category: "Source-backed record",
+        confidence: "Medium",
+        date_precision: "day",
+        import_family: { id: "other_public_source", label: "Other public source" },
+        locator_quality: { code: "source_page", label: "Source page locator" },
+        source_basis: {
+          source_count: 2,
+          source_ids: ["src_ocr", "src_dataset"],
+          source_types: ["News report", "University statement"]
+        },
+        review_needs: [],
+        workspace_url: "/research-workspace/?record=evt_2026_0003",
+        event_url: "/events/evt_2026_0003/"
+      }
+    ]
+  };
+  const queues = buildChallengeQueues({ capsules: capsulesWithUnchallengedRecord, events, schools, standards, limit: 3, packetLimit: 10 });
+  assert.equal(queues.packet_count, queues.packets.length);
+  assert.equal(queues.packet_count, 2);
 });
 
 test("buildChallengePackets creates bounded packets with questions and counterevidence standards", () => {
