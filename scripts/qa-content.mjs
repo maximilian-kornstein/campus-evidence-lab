@@ -21,7 +21,7 @@ const violationPattern = /\b(violated|violation|violations)\b/i;
 const officialFindingPattern =
   /\b(ocr|department|federal|title vi|title ix|finding|found|determined|stated|agreement|resolution|civil-rights violations)\b/i;
 const prohibitedClaimPattern =
-  /\b(?:externally audited|external audit(?: confirmed)?|externally validated|outside validated|validated by|approved by|endorsed by|school rankings?|ranking system|rankings?|safety scores?|safety scoring|severity scores?|severity scoring|prevalence estimates?|prevalence measurement|frequency measures?)\b/gi;
+  /\b(?:externally audited|external audit(?: confirmed)?|external validation|externally validated|independently validated|outside validated|validated by|third[- ]party audit|approved by|endorsed by|school rankings?|school ratings?|ranking system|rankings?|safety[- ]scores?|safety scoring|severity[- ]scores?|severity scoring|risk ratings?|risk scores?|prevalence estimates?|prevalence measurement|frequency measures?)\b/gi;
 const disallowedSourceHosts = [
   "facebook.com",
   "instagram.com",
@@ -52,7 +52,7 @@ function isNegatedClaim(text, matchIndex) {
 
   const scopedPrefix = sameSentencePrefix.slice(lastNegation.index);
   if (/\b(?:but|however|though|although|except|yet|just)\b/.test(scopedPrefix)) return false;
-  return /^(?:not|no|nor|without|cannot|never|does not|do not|should not|must not)\s+(?:(?:represent|represents|constitute|constitutes|make|makes|support|supports|claim|claims|describe|describes|provide|provides|convert|converts|turn|turns|read|used|use|be|as)\s+)*(?:(?:a|an|the|any)\s+)?(?:(?:ranking|rankings|system|score|scores|scoring|safety|severity|prevalence|estimate|estimates|measurement|measure|measures|frequency|endorsement|external|audit|audited|validation|validated|school)[,\s]*(?:or|and)?\s*){0,24}$/.test(scopedPrefix.trimStart());
+  return /^(?:not|no|nor|without|cannot|never|does not|do not|should not|must not)\s+(?:(?:represent|represents|constitute|constitutes|make|makes|support|supports|claim|claims|describe|describes|provide|provides|convert|converts|turn|turns|read|used|use|be|as)\s+)*(?:(?:a|an|the|any|third[- ]party)\s+)?(?:(?:ranking|rankings|rating|ratings|system|score|scores|scoring|risk|safety|severity|prevalence|estimate|estimates|measurement|measure|measures|frequency|endorsement|external|audit|audited|validation|validated|school|independently|externally)[,\s]*(?:or|and)?\s*){0,24}$/.test(scopedPrefix.trimStart());
 }
 
 function prohibitedClaimsInText(text) {

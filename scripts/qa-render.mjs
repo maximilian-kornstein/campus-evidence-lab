@@ -159,7 +159,8 @@ const pages = [
     route: selectedChallengePacket ? `/challenge/?packet=${encodeURIComponent(selectedChallengePacket.event_id)}` : "/challenge/",
     file: "challenge/index.html",
     checks: ["Adversarial Review", "Challenge Standards", "Adversarial Queues", "Challenge packets", "Challenge standards JSON", "Challenge queues JSON", "Challenge ledger JSON", "not ranking", "external audit", ...(selectedChallengePacket ? [selectedChallengePacket.event_id, "Selected challenge packet"] : [])],
-    linkChecks: ["/data/challenge-standards.json", "/data/challenge-queues.json", "/data/challenge-ledger.json"]
+    linkChecks: ["/data/challenge-standards.json", "/data/challenge-queues.json", "/data/challenge-ledger.json"],
+    challengeSmoke: selectedChallengePacket ? { selectedPacketId: selectedChallengePacket.event_id } : null
   },
   {
     route: "/about/",
@@ -314,6 +315,18 @@ async function renderPage(page, index) {
   }
 
   checkRenderedAccessibility(dom, page.file);
+
+  if (page.challengeSmoke) {
+    const challengeStandardHeadings = [...dom.window.document.querySelectorAll("h2")].filter((heading) => visibleText(heading) === "Challenge Standards");
+    if (challengeStandardHeadings.length !== 1) {
+      errors.push(`${page.file} rendered ${challengeStandardHeadings.length} Challenge Standards headings; expected 1`);
+    }
+
+    const firstPacketCard = dom.window.document.querySelector("#challenge-root .action-grid .action-link");
+    if (!firstPacketCard || !visibleText(firstPacketCard).includes(page.challengeSmoke.selectedPacketId)) {
+      errors.push(`${page.file} did not render selected packet ${page.challengeSmoke.selectedPacketId} as the first challenge packet card`);
+    }
+  }
 
   if (page.dashboardSmoke) {
     const trendPanels = dom.window.document.querySelectorAll(".trend-panel");

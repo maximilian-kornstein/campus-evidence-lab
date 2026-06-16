@@ -86,15 +86,6 @@ function challengeRecordHrefs(html) {
   return hrefs;
 }
 
-function normalizedChallengeHref(href, eventId) {
-  try {
-    const normalized = new URL(href, `https://campusevidencelab.test/events/${eventId}/index.html`);
-    return `${normalized.pathname}${normalized.search}`;
-  } catch {
-    return "";
-  }
-}
-
 const [events, schools, sources, corrections, reviewLog, manifest] = await Promise.all([
   readSiteJson(sitePaths.events),
   readSiteJson(sitePaths.schools),
@@ -665,9 +656,8 @@ for (const event of events) {
     eventPagesWithChallengeLinks.add(event.id);
   }
   for (const href of challengeHrefs) {
-    const normalizedHref = normalizedChallengeHref(href, event.id);
-    const expectedHref = `/challenge/?packet=${event.id}`;
-    if (normalizedHref !== expectedHref) {
+    const expectedHref = `../../challenge/?packet=${event.id}`;
+    if (href !== expectedHref) {
       errors.push(`${detailPath} Challenge this record href is ${href || "missing"}; expected ${expectedHref}`);
     }
   }
