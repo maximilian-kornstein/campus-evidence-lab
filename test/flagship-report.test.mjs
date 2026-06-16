@@ -183,11 +183,8 @@ test("buildFlagshipReport creates a bounded thesis with evidence-backed findings
   assertHasEvidenceLink(documentationFinding, "/data/events.json");
   assertHasEvidenceLink(documentationFinding, "/data/snapshot-manifest.json");
 
-  assert.equal(
-    sourceConcentrationFinding.metric.value === robustnessMetrics.source_type_concentration.top_value.value ||
-      sourceConcentrationFinding.metric.count === robustnessMetrics.source_type_concentration.top_value.count,
-    true
-  );
+  assert.equal(sourceConcentrationFinding.metric.value, robustnessMetrics.source_type_concentration.top_value.value);
+  assert.equal(sourceConcentrationFinding.metric.count, robustnessMetrics.source_type_concentration.top_value.count);
   assertHasEvidenceLink(sourceConcentrationFinding, "/data/robustness-metrics.json");
   assertHasEvidenceLink(sourceConcentrationFinding, "/data/evidence-capsules.json");
 
