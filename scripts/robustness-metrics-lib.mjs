@@ -155,7 +155,7 @@ function reasonCodesForEvent(event, sourcesById) {
 }
 
 function reviewUrl(eventId) {
-  return `/research-workspace/?record=${encodeURIComponent(eventId)}`;
+  return `/research-workspace/?record_ids=${encodeURIComponent(eventId)}`;
 }
 
 function eventPriorityScore(event, sourcesById) {

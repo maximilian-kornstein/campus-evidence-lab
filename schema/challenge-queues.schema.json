@@ -56,7 +56,12 @@
                 "source_count": { "type": "integer", "minimum": 0 },
                 "import_family": { "type": "string" },
                 "locator_quality": { "type": "string" },
-                "packet_url": { "type": "string", "minLength": 1 },
+                "packet_url": {
+                  "anyOf": [
+                    { "type": "string", "minLength": 1 },
+                    { "type": "null" }
+                  ]
+                },
                 "event_url": { "type": "string", "minLength": 1 },
                 "workspace_url": { "type": "string", "minLength": 1 }
               }

@@ -241,10 +241,11 @@ function challengePriority(capsule) {
   return reasonCodes.length * 10 + ((capsule.source_basis?.source_count ?? 0) <= 1 ? 5 : 0) + (capsule.date_precision === "year" ? 2 : 0);
 }
 
-function queueRecord(capsule, eventsById, schoolsById) {
+function queueRecord(capsule, eventsById, schoolsById, packetEventIds = new Set()) {
   const event = eventsById.get(capsule.event_id);
   const school = schoolsById.get(capsule.school_id);
   const challengeTypes = challengeTypesForCapsule(capsule, event);
+  const hasGeneratedPacket = packetEventIds.has(capsule.event_id);
   return {
     event_id: capsule.event_id,
     school_id: capsule.school_id,
@@ -258,18 +259,18 @@ function queueRecord(capsule, eventsById, schoolsById) {
     source_count: capsule.source_basis?.source_count ?? 0,
     import_family: capsule.import_family?.id,
     locator_quality: capsule.locator_quality?.code,
-    packet_url: `/challenge/?packet=${encodeURIComponent(capsule.event_id)}`,
+    packet_url: hasGeneratedPacket ? `/challenge/?packet=${encodeURIComponent(capsule.event_id)}` : null,
     event_url: capsule.event_url,
     workspace_url: capsule.workspace_url
   };
 }
 
-function stableQueue(records, predicate, limit, eventsById, schoolsById) {
+function stableQueue(records, predicate, limit, eventsById, schoolsById, packetEventIds) {
   return records
     .filter((capsule) => predicate(capsule, eventsById.get(capsule.event_id)))
     .sort((a, b) => challengePriority(b) - challengePriority(a) || a.school_id.localeCompare(b.school_id) || a.event_id.localeCompare(b.event_id))
     .slice(0, limit)
-    .map((capsule) => queueRecord(capsule, eventsById, schoolsById));
+    .map((capsule) => queueRecord(capsule, eventsById, schoolsById, packetEventIds));
 }
 
 function packetForCapsule(capsule, eventsById, schoolsById, standardsById) {
@@ -296,7 +297,7 @@ function packetForCapsule(capsule, eventsById, schoolsById, standardsById) {
     evidence_capsule_url: `/data/evidence-capsules.json#${encodeURIComponent(capsule.event_id)}`,
     event_url: capsule.event_url,
     workspace_url: capsule.workspace_url,
-    submission_packet_url: `/submit/?type=correction&record=${encodeURIComponent(capsule.event_id)}`,
+    submission_packet_url: `/submit/?type=correction&record_id=${encodeURIComponent(capsule.event_id)}`,
     public_claim_limit:
       "This challenge packet identifies review questions for source-supported correction work. It is not a ranking, safety score, severity score, prevalence estimate, legal finding, endorsement, or external audit."
   };
@@ -318,12 +319,13 @@ export function buildChallengeQueues({ capsules, events = [], schools = [], stan
   const eventsById = eventMap(events);
   const schoolsById = schoolMap(schools);
   const packets = buildChallengePackets({ capsules, events, schools, standards, limit: packetLimit });
+  const packetEventIds = new Set(packets.map((packet) => packet.event_id));
   const queues = [
     {
       id: "single_source_high_priority",
       label: "Single-source high-priority review",
       description: "Single-source records where additional public support or narrower language would improve reviewability.",
-      records: stableQueue(records, (capsule) => (capsule.source_basis?.source_count ?? 0) <= 1, limit, eventsById, schoolsById)
+      records: stableQueue(records, (capsule) => (capsule.source_basis?.source_count ?? 0) <= 1, limit, eventsById, schoolsById, packetEventIds)
     },
     {
       id: "broad_label_challenges",
@@ -334,38 +336,39 @@ export function buildChallengeQueues({ capsules, events = [], schools = [], stan
         (capsule, event) => /other source-backed|religion|race|national origin|ethnicity/i.test(JSON.stringify({ capsule, affected_communities: event?.affected_communities ?? [] })),
         limit,
         eventsById,
-        schoolsById
+        schoolsById,
+        packetEventIds
       )
     },
     {
       id: "response_depth_challenges",
       label: "Institutional-response challenges",
       description: "Records where public response text or response-depth classification should be checked against public sources.",
-      records: stableQueue(records, (capsule) => capsule.review_needs?.includes("response_depth_review"), limit, eventsById, schoolsById)
+      records: stableQueue(records, (capsule) => capsule.review_needs?.includes("response_depth_review"), limit, eventsById, schoolsById, packetEventIds)
     },
     {
       id: "confidence_rationale_challenges",
       label: "Confidence-rationale challenges",
       description: "Records where confidence labels need explicit source-support rationale.",
-      records: stableQueue(records, (capsule) => capsule.review_needs?.includes("explicit_rationale_review"), limit, eventsById, schoolsById)
+      records: stableQueue(records, (capsule) => capsule.review_needs?.includes("explicit_rationale_review"), limit, eventsById, schoolsById, packetEventIds)
     },
     {
       id: "dataset_locator_challenges",
       label: "Dataset locator challenges",
       description: "Dataset-derived records where workbook, row, or cell-level provenance should be made clearer.",
-      records: stableQueue(records, (capsule) => capsule.review_needs?.includes("dataset_cell_locator_review"), limit, eventsById, schoolsById)
+      records: stableQueue(records, (capsule) => capsule.review_needs?.includes("dataset_cell_locator_review"), limit, eventsById, schoolsById, packetEventIds)
     },
     {
       id: "legal_status_challenges",
       label: "Legal-status challenges",
       description: "Records with legal, OCR, procedural, or investigative language that should be checked for precision.",
-      records: stableQueue(records, (capsule, event) => challengeTypesForCapsule(capsule, event).includes("legal_status_challenge"), limit, eventsById, schoolsById)
+      records: stableQueue(records, (capsule, event) => challengeTypesForCapsule(capsule, event).includes("legal_status_challenge"), limit, eventsById, schoolsById, packetEventIds)
     },
     {
       id: "gold_record_candidates",
       label: "Gold record candidates",
       description: "Records worth upgrading into fully argued examples with alternate interpretations and change criteria.",
-      records: stableQueue(records, (capsule, event) => challengeTypesForCapsule(capsule, event).length >= 3, limit, eventsById, schoolsById)
+      records: stableQueue(records, (capsule, event) => challengeTypesForCapsule(capsule, event).length >= 3, limit, eventsById, schoolsById, packetEventIds)
     }
   ];
 
@@ -418,6 +421,7 @@ export function validateChallengeArtifacts({ standards, queues, ledger, events =
   const correctionIds = new Set(corrections.map((correction) => correction.id));
   const standardIds = new Set((standards.standards ?? []).map((standard) => standard.id));
   const statusIds = new Set(ledger.statuses ?? []);
+  const packetEventIds = new Set((queues.packets ?? []).map((packet) => packet.event_id));
 
   for (const artifact of [standards, queues, ledger]) {
     if (hasProhibitedChallengeClaim(JSON.stringify(artifact))) {
@@ -441,6 +445,12 @@ export function validateChallengeArtifacts({ standards, queues, ledger, events =
     }
     for (const record of queue.records ?? []) {
       if (!eventIds.has(record.event_id)) errors.push(`Challenge queue ${queue.id} references unknown event ${record.event_id}`);
+      if (record.packet_url && !packetEventIds.has(record.event_id)) {
+        errors.push(`Challenge queue ${queue.id} publishes packet_url for ${record.event_id}, but no generated packet exists.`);
+      }
+      if (record.packet_url && record.packet_url !== `/challenge/?packet=${encodeURIComponent(record.event_id)}`) {
+        errors.push(`Challenge queue ${queue.id} packet_url for ${record.event_id} does not match the generated packet route.`);
+      }
       for (const type of record.challenge_types ?? []) {
         if (!standardIds.has(type)) errors.push(`Challenge queue ${queue.id} uses unknown challenge type ${type}`);
       }
@@ -456,6 +466,8 @@ export function validateChallengeArtifacts({ standards, queues, ledger, events =
       if (!standardIds.has(type)) errors.push(`Challenge packet ${packet.id} uses unknown challenge type ${type}`);
     }
     if (!packet.public_claim_limit) errors.push(`Challenge packet ${packet.id} missing public_claim_limit`);
+    if (!packet.workspace_url?.includes("record_ids=")) errors.push(`Challenge packet ${packet.id} workspace_url must select record_ids.`);
+    if (!packet.submission_packet_url?.includes("record_id=")) errors.push(`Challenge packet ${packet.id} submission_packet_url must prefill record_id.`);
   }
 
   for (const entry of ledger.entries ?? []) {

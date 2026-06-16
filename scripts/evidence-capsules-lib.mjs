@@ -202,7 +202,7 @@ export function recordEvidenceCapsule(record, sources = []) {
     },
     field_evidence: fieldEvidenceRows(record, sources),
     review_needs: needs,
-    workspace_url: `/research-workspace/?record=${encodeURIComponent(record.id)}`,
+    workspace_url: `/research-workspace/?record_ids=${encodeURIComponent(record.id)}`,
     event_url: `/events/${encodeURIComponent(record.id)}/`,
     public_claim_limit:
       "This capsule summarizes current metadata support and review needs. It does not represent direct source re-review, outside validation, comparative campus judgment, or legal truth."

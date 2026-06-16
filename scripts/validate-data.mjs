@@ -439,6 +439,9 @@ for (const queue of evidenceDepthQueues.queues ?? []) {
     if (!row.workspace_url || !row.packet_url) {
       errors.push(`evidence-depth-queues ${queue.id} row ${row.event_id} missing review URLs`);
     }
+    if (!row.workspace_url?.includes("record_ids=") || !row.packet_url?.includes("record_ids=")) {
+      errors.push(`evidence-depth-queues ${queue.id} row ${row.event_id} review URLs must select record_ids`);
+    }
   }
 }
 

@@ -39,7 +39,7 @@ const capsules = {
         { field: "category", source_ids: ["src_ocr"], support_level: "linked_public_source", support_note: "Category is supported by source metadata." }
       ],
       review_needs: ["single_source_review", "explicit_rationale_review", "response_depth_review"],
-      workspace_url: "/research-workspace/?record=evt_2026_0001",
+      workspace_url: "/research-workspace/?record_ids=evt_2026_0001",
       event_url: "/events/evt_2026_0001/",
       public_claim_limit: "Review aid only; not outside validation or legal truth."
     },
@@ -68,7 +68,7 @@ const capsules = {
         { field: "date", source_ids: ["src_dataset"], support_level: "linked_public_source", support_note: "Date is represented at year precision." }
       ],
       review_needs: ["dataset_cell_locator_review", "single_source_review", "date_precision_review", "explicit_rationale_review"],
-      workspace_url: "/research-workspace/?record=evt_2026_0002",
+      workspace_url: "/research-workspace/?record_ids=evt_2026_0002",
       event_url: "/events/evt_2026_0002/",
       public_claim_limit: "Review aid only; not outside validation or legal truth."
     }
@@ -195,6 +195,9 @@ test("buildChallengeQueues produces deterministic review-order queues and packet
     queues.packets.find((packet) => packet.event_id === "evt_2026_0002").challenge_types.includes("affected_community_challenge"),
     true
   );
+  assert.equal(queues.packets[0].workspace_url.includes("record_ids="), true);
+  assert.equal(queues.packets[0].submission_packet_url.includes("record_id="), true);
+  assert.equal(queues.queues.every((queue) => queue.records.every((record) => record.packet_url === `/challenge/?packet=${record.event_id}`)), true);
   assert.equal(queues.packets[0].public_claim_limit.includes("not a ranking"), true);
   assert.equal(hasProhibitedChallengeClaim(JSON.stringify(queues)), false);
 });
@@ -219,7 +222,7 @@ test("buildChallengeQueues reports packet_count from generated packets only", ()
           source_types: ["News report", "University statement"]
         },
         review_needs: [],
-        workspace_url: "/research-workspace/?record=evt_2026_0003",
+        workspace_url: "/research-workspace/?record_ids=evt_2026_0003",
         event_url: "/events/evt_2026_0003/"
       }
     ]
@@ -227,6 +230,15 @@ test("buildChallengeQueues reports packet_count from generated packets only", ()
   const queues = buildChallengeQueues({ capsules: capsulesWithUnchallengedRecord, events, schools, standards, limit: 3, packetLimit: 10 });
   assert.equal(queues.packet_count, queues.packets.length);
   assert.equal(queues.packet_count, 2);
+});
+
+test("buildChallengeQueues does not publish packet links for queue records outside the generated packet cap", () => {
+  const standards = buildChallengeStandards({ snapshot_id: "snapshot_test", generated_at: "2026-06-03" });
+  const queues = buildChallengeQueues({ capsules, events, schools, standards, limit: 2, packetLimit: 1 });
+  const packetEventIds = new Set(queues.packets.map((packet) => packet.event_id));
+  const queuedRecords = queues.queues.flatMap((queue) => queue.records);
+  assert.equal(queuedRecords.some((record) => !packetEventIds.has(record.event_id) && record.packet_url === null), true);
+  assert.equal(queuedRecords.every((record) => record.packet_url === null || packetEventIds.has(record.event_id)), true);
 });
 
 test("buildChallengePackets creates bounded packets with questions and counterevidence standards", () => {

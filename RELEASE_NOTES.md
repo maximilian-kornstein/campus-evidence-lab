@@ -6,7 +6,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:78f91ad886c8cf3024e25989b79d251b519077afb4b87f8d44e95ea5413cbee2`
+- Full snapshot hash: `sha256:24df1ec3100523595dd9af6678d6c971862daf7f4cce218cd42ffc33d85b14db`
 - Previous snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
 - Archived snapshot: `/data/snapshots/snapshot_2026_06_03_4000_records.json`
 
@@ -45,13 +45,13 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Methodology examples: `sha256:c906ed1cfa729480bd4a6b313b602f1f9f394ce5d0f5c82007b3bbca3e466eb8`
 - Workflows: `sha256:a00927c9daa38f6dda1ad6dd44b152e270700aa39a21972b4bd0b7de69b24c26`
 - Robustness metrics: `sha256:0de337b4a07f5e3e539a17f638f52549de872639c6730529fdd85432e6f414ba`
-- Evidence-depth queues: `sha256:00f9c078f0ba9ad0f1f6e63109142be6f77bda3e99a165ccbd7160397cad3857`
-- Gold record set: `sha256:aa32c384327b215fb6a97844f95bab72a7ad275ea22dd70f01e376516a27b2d7`
-- Reviewer challenge pack: `sha256:df8cab496473899c58603ca0c9c4435571d3687a792bd407c32fe5896f3199f5`
-- Evidence capsules: `sha256:b07d2b14ba54b1640fff192882184f660aa29f9b989f90383060a2b500522808`
-- Source provenance queues: `sha256:35625bf0694ce986e820ec41c05d175f1f767c3bb5e594764f552924a0d5eb6a`
+- Evidence-depth queues: `sha256:5c115d08f4a4d6c13fece375325a36bcfd8f9976686781b40976cbd71db97405`
+- Gold record set: `sha256:958c9cf27dc711cb6a0a219ed8ffdca1458ad1daac170474c247177167d4b7d0`
+- Reviewer challenge pack: `sha256:05731ef493edcf90f7f79f327aa78218504bdc48ae8ad0c2429273f1a07d3346`
+- Evidence capsules: `sha256:4b41f4f4eb12eacf9e1917f4cee1ff5093b91ebc40ef59d55a4a2f1ca6fed40b`
+- Source provenance queues: `sha256:40a3797410ef404552316e300fc170ae038232733bad13f43adf488813f2a1f1`
 - Challenge standards: `sha256:f3c0843e8dcd6789b7e36042ef2c961e349a9cc39a4e5b20b2c38df7fa0414b9`
-- Challenge queues: `sha256:aff31414f2776914356159d5567f9c257ae925a03eb6b5181e25a239b95d2884`
+- Challenge queues: `sha256:a18eb53e06998f8b3f00cda4821069dd0c4209bd836c90db99b51aeffa174680`
 - Challenge ledger: `sha256:70f336f76fe94e36e61045381f8ec223d978d44c1c5db2e6605235b1e48c8373`
 
 ## Evidence Depth & Robustness

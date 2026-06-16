@@ -688,6 +688,17 @@ for (const event of events) {
 
 const challengeQueues = await readSiteJson(path.join(siteRoot, "data", "challenge-queues.json"));
 const packetEventIds = new Set((challengeQueues.packets ?? []).map((packet) => packet.event_id));
+for (const queue of challengeQueues.queues ?? []) {
+  for (const record of queue.records ?? []) {
+    const expectedPacketUrl = `/challenge/?packet=${record.event_id}`;
+    if (record.packet_url && !packetEventIds.has(record.event_id)) {
+      errors.push(`Challenge queue ${queue.id} links missing packet for ${record.event_id}`);
+    }
+    if (record.packet_url && record.packet_url !== expectedPacketUrl) {
+      errors.push(`Challenge queue ${queue.id} packet_url for ${record.event_id} is ${record.packet_url}; expected ${expectedPacketUrl}`);
+    }
+  }
+}
 const missingChallengeLinks = [...packetEventIds].filter((eventId) => !eventPagesWithChallengeLinks.has(eventId)).sort();
 const extraChallengeLinks = [...eventPagesWithChallengeLinks].filter((eventId) => !packetEventIds.has(eventId)).sort();
 if (missingChallengeLinks.length || extraChallengeLinks.length) {

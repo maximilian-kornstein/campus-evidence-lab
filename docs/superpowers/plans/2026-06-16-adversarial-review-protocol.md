@@ -107,7 +107,7 @@ const capsules = {
         { field: "category", source_ids: ["src_ocr"], support_level: "linked_public_source", support_note: "Category is supported by source metadata." }
       ],
       review_needs: ["single_source_review", "explicit_rationale_review", "response_depth_review"],
-      workspace_url: "/research-workspace/?record=evt_2026_0001",
+      workspace_url: "/research-workspace/?record_ids=evt_2026_0001",
       event_url: "/events/evt_2026_0001/",
       public_claim_limit: "Review aid only; not outside validation or legal truth."
     },
@@ -136,7 +136,7 @@ const capsules = {
         { field: "date", source_ids: ["src_dataset"], support_level: "linked_public_source", support_note: "Date is represented at year precision." }
       ],
       review_needs: ["dataset_cell_locator_review", "single_source_review", "date_precision_review", "explicit_rationale_review"],
-      workspace_url: "/research-workspace/?record=evt_2026_0002",
+      workspace_url: "/research-workspace/?record_ids=evt_2026_0002",
       event_url: "/events/evt_2026_0002/",
       public_claim_limit: "Review aid only; not outside validation or legal truth."
     }
@@ -543,7 +543,7 @@ function packetForCapsule(capsule, eventsById, schoolsById, standardsById) {
     evidence_capsule_url: `/data/evidence-capsules.json#${encodeURIComponent(capsule.event_id)}`,
     event_url: capsule.event_url,
     workspace_url: capsule.workspace_url,
-    submission_packet_url: `/submit/?type=correction&record=${encodeURIComponent(capsule.event_id)}`,
+    submission_packet_url: `/submit/?type=correction&record_id=${encodeURIComponent(capsule.event_id)}`,
     public_claim_limit:
       "This challenge packet identifies review questions for source-supported correction work. It is not a ranking, safety score, severity score, prevalence estimate, legal finding, endorsement, or external audit."
   };

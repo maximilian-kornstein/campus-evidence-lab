@@ -128,6 +128,8 @@ test("buildEvidenceDepthQueues returns deterministic bounded review queues with 
     queues.queues.find((queue) => queue.id === "single-source-government-dataset").records.map((row) => row.event_id),
     ["evt_2026_0002", "evt_2026_0003"]
   );
+  assert.equal(queues.queues.every((queue) => queue.records.every((row) => row.workspace_url.includes("record_ids="))), true);
+  assert.equal(queues.queues.every((queue) => queue.records.every((row) => row.packet_url.includes("record_ids="))), true);
   assert.equal(containsProhibitedRobustnessClaim(JSON.stringify(queues)), false);
 });
 
@@ -199,6 +201,7 @@ test("buildReviewerChallengePack selects difficult records from evidence-depth q
   assert.equal(challenge.snapshot_id, "snapshot_test");
   assert.equal(challenge.records.length, 3);
   assert.equal(challenge.records.every((record) => record.challenge_reason_codes.length > 0), true);
+  assert.equal(challenge.records.every((record) => record.workspace_url.includes("record_ids=")), true);
   assert.equal(containsProhibitedRobustnessClaim(JSON.stringify(challenge)), false);
 });
 
