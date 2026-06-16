@@ -300,3 +300,26 @@ The review ledger records review activity separately from canonical event record
 - method: deterministic queue-generation note.
 - queues: named source-provenance review queues.
 - queue.records: event rows with import family, locator quality, source count, review needs, event URL, and workspace URL.
+
+## challenge-standards.json
+
+- snapshot_id: snapshot the standards are tied to.
+- generated_at: date the standards artifact was generated.
+- method: public explanation of what the standards do and do not claim.
+- standards: challenge standards defining acceptable counterevidence, insufficient counterevidence, possible outcomes, fields that may change, and no-overclaiming warnings.
+
+## challenge-queues.json
+
+- snapshot_id: snapshot the queues are tied to.
+- generated_at: date the queue artifact was generated.
+- method: public explanation that queues are review workflow aids, not rankings, severity scores, safety scores, prevalence estimates, legal findings, endorsement, or external audit.
+- queues: deterministic adversarial review queues with reason codes and record links.
+- packets: bounded record-level challenge packets with review questions, acceptable counterevidence, possible outcomes, evidence capsule links, submission packet links, and public claim limits.
+
+## challenge-ledger.json
+
+- snapshot_id: snapshot the ledger is tied to.
+- updated_at: latest ledger update date.
+- method: public explanation that initial entries are seeded open packets, not external submissions.
+- statuses: supported challenge status values.
+- entries: challenge packet status rows with event IDs, challenge types, decision summaries, correction links, and public limitations.

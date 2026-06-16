@@ -4,16 +4,18 @@ import { buildAuditProfile } from "../assets/audit-profile.js";
 import { hasSubstantiveInstitutionalResponse, responseDepthDisplayProfile, responseDisplayProfile } from "../assets/record-display.js";
 import { paths, readJson, rootDir } from "./lib.mjs";
 
-const [events, schools, sources, briefs, manifest] = await Promise.all([
+const [events, schools, sources, briefs, manifest, challengeQueues] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
   readJson(paths.sources),
   readJson(paths.briefs),
-  readJson(paths.manifest)
+  readJson(paths.manifest),
+  readJson(paths.challengeQueues)
 ]);
 
 const schoolMap = new Map(schools.map((school) => [school.id, school]));
 const sourceMap = new Map(sources.map((source) => [source.id, source]));
+const challengePacketEventIds = new Set((challengeQueues.packets ?? []).map((packet) => packet.event_id));
 const eventsDir = path.join(rootDir, "events");
 const schoolsDir = path.join(rootDir, "schools");
 const briefsDir = path.join(rootDir, "briefs");
@@ -371,7 +373,8 @@ for (const event of events) {
               <h2 class="section-title">Sources</h2>
               <ul class="source-list">${sourceItems}</ul>
               <h2 class="section-title section-title--spaced">Correction</h2>
-              <p><a href="${sitePath(`/submit/?record_id=${encodeURIComponent(event.id)}`, detailDepth)}">Request a source-backed correction</a></p>
+              <p><a href="${sitePath(`/submit/?record_id=${encodeURIComponent(event.id)}`, detailDepth)}">Request a source-backed correction</a></p>${challengePacketEventIds.has(event.id) ? `
+              <p><a href="${sitePath(`/challenge/?packet=${encodeURIComponent(event.id)}`, detailDepth)}">Challenge this record</a></p>` : ""}
               <h2 class="section-title section-title--spaced">Changelog</h2>
               <ul class="source-list">${changelog}</ul>
             </aside>

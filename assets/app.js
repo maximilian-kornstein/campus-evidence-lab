@@ -3808,6 +3808,10 @@ function renderDownloads() {
         ${downloadRow("Evidence-Depth Queues JSON", sitePath("/data/evidence-depth-queues.json"), `${state.evidenceDepthQueues.queues.length} review queues`)}
         ${downloadRow("Gold Record Set JSON", sitePath("/data/gold-record-set.json"), `${state.goldRecordSet.records.length} candidate records`)}
         ${downloadRow("Reviewer Challenge Pack JSON", sitePath("/data/reviewer-challenge-pack.json"), `${state.reviewerChallengePack.records.length} challenge records`)}
+        ${downloadRow("Challenge Standards JSON", sitePath("/data/challenge-standards.json"), "Challenge standards")}
+        ${downloadRow("Challenge Queues JSON", sitePath("/data/challenge-queues.json"), "Challenge queues and packets")}
+        ${downloadRow("Challenge Ledger JSON", sitePath("/data/challenge-ledger.json"), "Challenge ledger entries")}
+        ${downloadRow("Challenge Arena", sitePath("/challenge/"), "Public adversarial review workflow", false)}
         ${downloadRow("Evidence Capsules JSON", sitePath("/data/evidence-capsules.json"), `${state.evidenceCapsules.records.length} source-to-field capsules`)}
         ${downloadRow("Source Provenance Queues JSON", sitePath("/data/source-provenance-queues.json"), `${state.sourceProvenanceQueues.queues.length} provenance queues`)}
         ${downloadRow("Workflows Page", sitePath("/workflows/"), "Task-based entry points for public use", false)}
@@ -3837,6 +3841,9 @@ function renderDownloads() {
         ${downloadRow("Evidence-Depth Queues Schema", sitePath("/schema/evidence-depth-queues.schema.json"), "Evidence-depth queue fields")}
         ${downloadRow("Gold Record Set Schema", sitePath("/schema/gold-record-set.schema.json"), "Gold candidate fields")}
         ${downloadRow("Reviewer Challenge Pack Schema", sitePath("/schema/reviewer-challenge-pack.schema.json"), "Challenge pack fields")}
+        ${downloadRow("Challenge Standards Schema", sitePath("/schema/challenge-standards.schema.json"), "Challenge standard fields")}
+        ${downloadRow("Challenge Queues Schema", sitePath("/schema/challenge-queues.schema.json"), "Challenge queue and packet fields")}
+        ${downloadRow("Challenge Ledger Schema", sitePath("/schema/challenge-ledger.schema.json"), "Challenge ledger fields")}
         ${downloadRow("Evidence Capsules Schema", sitePath("/schema/evidence-capsules.schema.json"), "Evidence capsule fields")}
         ${downloadRow("Source Provenance Queues Schema", sitePath("/schema/source-provenance-queues.schema.json"), "Source provenance queue fields")}
         ${downloadRow("Dataset License", sitePath("/DATA_LICENSE.md"), "Reuse terms")}
