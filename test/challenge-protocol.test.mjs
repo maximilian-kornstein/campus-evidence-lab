@@ -157,12 +157,13 @@ test("challengeTypesForCapsule maps review needs into applicable adversarial cha
 });
 
 test("challengeTypesForCapsule reaches community and inclusion standards from conservative review signals", () => {
+  assert.equal(challengeTypesForCapsule(capsules.records[1], events[1]).includes("affected_community_challenge"), true);
+
   const communityCapsule = {
     ...capsules.records[1],
-    review_needs: ["affected_community_review"],
-    affected_communities: ["Religion"]
+    review_needs: ["affected_community_review"]
   };
-  assert.equal(challengeTypesForCapsule(communityCapsule).includes("affected_community_challenge"), true);
+  assert.equal(challengeTypesForCapsule(communityCapsule, events[1]).includes("affected_community_challenge"), true);
   const standards = buildChallengeStandards({ snapshot_id: "snapshot_test", generated_at: "2026-06-03" });
   const [communityPacket] = buildChallengePackets({ capsules: { records: [communityCapsule] }, events, schools, standards, limit: 1 });
   assert.equal(communityPacket.challenge_types.includes("affected_community_challenge"), true);
@@ -185,6 +186,14 @@ test("buildChallengeQueues produces deterministic review-order queues and packet
   assert.deepEqual(
     queues.queues.find((queue) => queue.id === "dataset_locator_challenges").records.map((record) => record.event_id),
     ["evt_2026_0002"]
+  );
+  assert.equal(
+    queues.queues.find((queue) => queue.id === "broad_label_challenges").records.some((record) => record.event_id === "evt_2026_0002"),
+    true
+  );
+  assert.equal(
+    queues.packets.find((packet) => packet.event_id === "evt_2026_0002").challenge_types.includes("affected_community_challenge"),
+    true
   );
   assert.equal(queues.packets[0].public_claim_limit.includes("not a ranking"), true);
   assert.equal(hasProhibitedChallengeClaim(JSON.stringify(queues)), false);

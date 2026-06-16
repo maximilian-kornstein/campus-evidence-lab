@@ -204,16 +204,17 @@ export function buildChallengeStandards({ snapshot_id = "unversioned", generated
   };
 }
 
-export function challengeTypesForCapsule(capsule) {
+export function challengeTypesForCapsule(capsule, event) {
   const types = [];
   const needs = new Set(capsule.review_needs ?? []);
+  const communities = unique([...(capsule.affected_communities ?? []), ...(event?.affected_communities ?? [])]);
   const needText = [...needs].join(" ");
   if (needs.has("date_precision_review") || capsule.date_precision === "year") types.push("date_precision_challenge");
   if (needs.has("response_depth_review")) types.push("institutional_response_challenge");
   if (needs.has("explicit_rationale_review")) types.push("confidence_challenge");
   if (
     /affected_community|community_label|broad_label/.test(needText) ||
-    hasAny(capsule.affected_communities, [/^religion$/i, /^race$/i, /^national origin$/i, /^ethnicity$/i])
+    hasAny(communities, [/^religion$/i, /^race$/i, /^national origin$/i, /^ethnicity$/i])
   ) {
     types.push("affected_community_challenge");
   }
@@ -243,6 +244,7 @@ function challengePriority(capsule) {
 function queueRecord(capsule, eventsById, schoolsById) {
   const event = eventsById.get(capsule.event_id);
   const school = schoolsById.get(capsule.school_id);
+  const challengeTypes = challengeTypesForCapsule(capsule, event);
   return {
     event_id: capsule.event_id,
     school_id: capsule.school_id,
@@ -251,7 +253,7 @@ function queueRecord(capsule, eventsById, schoolsById) {
     affected_communities: event?.affected_communities ?? [],
     confidence: capsule.confidence,
     date_precision: capsule.date_precision,
-    challenge_types: challengeTypesForCapsule(capsule),
+    challenge_types: challengeTypes,
     reason_codes: reasonCodesForCapsule(capsule),
     source_count: capsule.source_basis?.source_count ?? 0,
     import_family: capsule.import_family?.id,
@@ -264,7 +266,7 @@ function queueRecord(capsule, eventsById, schoolsById) {
 
 function stableQueue(records, predicate, limit, eventsById, schoolsById) {
   return records
-    .filter(predicate)
+    .filter((capsule) => predicate(capsule, eventsById.get(capsule.event_id)))
     .sort((a, b) => challengePriority(b) - challengePriority(a) || a.school_id.localeCompare(b.school_id) || a.event_id.localeCompare(b.event_id))
     .slice(0, limit)
     .map((capsule) => queueRecord(capsule, eventsById, schoolsById));
@@ -273,7 +275,7 @@ function stableQueue(records, predicate, limit, eventsById, schoolsById) {
 function packetForCapsule(capsule, eventsById, schoolsById, standardsById) {
   const event = eventsById.get(capsule.event_id);
   const school = schoolsById.get(capsule.school_id);
-  const challengeTypes = challengeTypesForCapsule(capsule);
+  const challengeTypes = challengeTypesForCapsule(capsule, event);
   const standards = challengeTypes.map((type) => standardsById.get(type)).filter(Boolean);
   return {
     id: `challenge_${capsule.event_id}`,
@@ -305,7 +307,7 @@ export function buildChallengePackets({ capsules, events = [], schools = [], sta
   const schoolsById = schoolMap(schools);
   const standardsById = standardsMap(standards);
   return (capsules.records ?? [])
-    .filter((capsule) => challengeTypesForCapsule(capsule).length > 0)
+    .filter((capsule) => challengeTypesForCapsule(capsule, eventsById.get(capsule.event_id)).length > 0)
     .sort((a, b) => challengePriority(b) - challengePriority(a) || a.school_id.localeCompare(b.school_id) || a.event_id.localeCompare(b.event_id))
     .slice(0, limit)
     .map((capsule) => packetForCapsule(capsule, eventsById, schoolsById, standardsById));
@@ -327,7 +329,13 @@ export function buildChallengeQueues({ capsules, events = [], schools = [], stan
       id: "broad_label_challenges",
       label: "Broad-label challenges",
       description: "Records with broad category or affected-community labels that deserve label-boundary review.",
-      records: stableQueue(records, (capsule) => /other source-backed|religion|race|national origin|ethnicity/i.test(JSON.stringify(capsule)), limit, eventsById, schoolsById)
+      records: stableQueue(
+        records,
+        (capsule, event) => /other source-backed|religion|race|national origin|ethnicity/i.test(JSON.stringify({ capsule, affected_communities: event?.affected_communities ?? [] })),
+        limit,
+        eventsById,
+        schoolsById
+      )
     },
     {
       id: "response_depth_challenges",
@@ -351,13 +359,13 @@ export function buildChallengeQueues({ capsules, events = [], schools = [], stan
       id: "legal_status_challenges",
       label: "Legal-status challenges",
       description: "Records with legal, OCR, procedural, or investigative language that should be checked for precision.",
-      records: stableQueue(records, (capsule) => challengeTypesForCapsule(capsule).includes("legal_status_challenge"), limit, eventsById, schoolsById)
+      records: stableQueue(records, (capsule, event) => challengeTypesForCapsule(capsule, event).includes("legal_status_challenge"), limit, eventsById, schoolsById)
     },
     {
       id: "gold_record_candidates",
       label: "Gold record candidates",
       description: "Records worth upgrading into fully argued examples with alternate interpretations and change criteria.",
-      records: stableQueue(records, (capsule) => challengeTypesForCapsule(capsule).length >= 3, limit, eventsById, schoolsById)
+      records: stableQueue(records, (capsule, event) => challengeTypesForCapsule(capsule, event).length >= 3, limit, eventsById, schoolsById)
     }
   ];
 
