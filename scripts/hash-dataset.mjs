@@ -25,7 +25,9 @@ const [
   sourceProvenanceQueues,
   challengeStandards,
   challengeQueues,
-  challengeLedger
+  challengeLedger,
+  flagshipReport,
+  goldRecordV1
 ] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
@@ -48,7 +50,9 @@ const [
   readJson(paths.sourceProvenanceQueues),
   readJson(paths.challengeStandards),
   readJson(paths.challengeQueues),
-  readJson(paths.challengeLedger)
+  readJson(paths.challengeLedger),
+  readJson(paths.flagshipReport),
+  readJson(paths.goldRecordV1)
 ]);
 
 const hashedEvents = events.map((event) => ({
@@ -82,6 +86,8 @@ const sourceProvenanceQueuesHash = sha256(sourceProvenanceQueues);
 const challengeStandardsHash = sha256(challengeStandards);
 const challengeQueuesHash = sha256(challengeQueues);
 const challengeLedgerHash = sha256(challengeLedger);
+const flagshipReportHash = sha256(flagshipReport);
+const goldRecordV1Hash = sha256(goldRecordV1);
 
 const previousManifest = existsSync(paths.manifest) ? await readJson(paths.manifest) : null;
 
@@ -117,7 +123,9 @@ const manifest = {
     challenge_standards: challengeStandards.standards.length,
     challenge_queues: challengeQueues.queues.length,
     challenge_packets: challengeQueues.packets.length,
-    challenge_ledger_entries: challengeLedger.entries.length
+    challenge_ledger_entries: challengeLedger.entries.length,
+    flagship_findings: flagshipReport.findings.length,
+    gold_record_v1_packets: goldRecordV1.records.length
   },
   hashes: {
     events: eventsHash,
@@ -142,6 +150,9 @@ const manifest = {
     challenge_standards: challengeStandardsHash,
     challenge_queues: challengeQueuesHash,
     challenge_ledger: challengeLedgerHash,
+    flagship_report: flagshipReportHash,
+    gold_record_v1: goldRecordV1Hash,
+    // Flagship artifacts cite full_snapshot, so their hashes are tracked alongside it rather than folded into it.
     full_snapshot: sha256({
       events: eventsHash,
       schools: schoolsHash,

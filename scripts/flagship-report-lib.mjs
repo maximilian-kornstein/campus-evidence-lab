@@ -1,3 +1,5 @@
+import { sha256 } from "./lib.mjs";
+
 const PUBLIC_CLAIM_LIMIT =
   "This artifact is for public evidence infrastructure review. It is not a ranking, not a safety score, not a severity score, not a prevalence estimate, not a legal finding, not an endorsement, and not external validation.";
 
@@ -545,6 +547,8 @@ export function validateFlagshipArtifacts({ report, gold, events = [], schools =
   if ((manifest?.hashes?.full_snapshot ?? null) !== null && report.snapshot_hash !== manifest.hashes.full_snapshot) {
     errors.push("flagship-report snapshot_hash must match snapshot manifest full_snapshot");
   }
+  if (manifest?.hashes?.flagship_report !== undefined && manifest.hashes.flagship_report !== sha256(report)) errors.push("snapshot manifest hashes.flagship_report is stale");
+  if (manifest?.created_at && report.generated_at !== manifest.created_at) errors.push("flagship-report generated_at must match snapshot manifest created_at");
   if (report.inputs?.events !== events.length) errors.push("flagship-report inputs.events must match event count");
   if (report.inputs?.schools !== schools.length) errors.push("flagship-report inputs.schools must match school count");
   if (report.inputs?.sources !== sources.length) errors.push("flagship-report inputs.sources must match source count");
@@ -579,6 +583,8 @@ export function validateFlagshipArtifacts({ report, gold, events = [], schools =
 
   if (gold.id !== "gold_record_v1_review_packets") errors.push("gold-record-v1 id must be gold_record_v1_review_packets");
   if (gold.snapshot_id !== expectedSnapshotId) errors.push("gold-record-v1 snapshot_id must match snapshot manifest");
+  if (manifest?.hashes?.gold_record_v1 !== undefined && manifest.hashes.gold_record_v1 !== sha256(gold)) errors.push("snapshot manifest hashes.gold_record_v1 is stale");
+  if (manifest?.created_at && gold.generated_at !== manifest.created_at) errors.push("gold-record-v1 generated_at must match snapshot manifest created_at");
   if (gold.status !== "review_packets") errors.push("gold-record-v1 status must be review_packets");
   if (gold.selection_version !== SELECTION_VERSION) errors.push(`gold-record-v1 selection_version must be ${SELECTION_VERSION}`);
   assertClaimBoundary(gold.public_claim_limit, "gold-record-v1 public_claim_limit", errors);
@@ -631,6 +637,12 @@ export function validateFlagshipArtifacts({ report, gold, events = [], schools =
   }
   if (gold.coverage_summary?.total_records !== (gold.records ?? []).length) {
     errors.push("gold-record-v1 coverage_summary.total_records is stale");
+  }
+  if (manifest?.totals?.flagship_findings !== undefined && manifest.totals.flagship_findings !== (report.findings ?? []).length) {
+    errors.push("snapshot manifest totals.flagship_findings is stale");
+  }
+  if (manifest?.totals?.gold_record_v1_packets !== undefined && manifest.totals.gold_record_v1_packets !== (gold.records ?? []).length) {
+    errors.push("snapshot manifest totals.gold_record_v1_packets is stale");
   }
 
   const availableCategories = new Set(events.map((event) => event.category).filter(Boolean));
