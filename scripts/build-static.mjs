@@ -29,6 +29,7 @@ const publicPaths = [
   "reviewer-queue",
   "workflows",
   "robustness",
+  "evidence",
   "codebook",
   "coverage",
   "replicate",

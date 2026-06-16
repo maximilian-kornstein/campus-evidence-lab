@@ -6,7 +6,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:6127847da5a9f419bd17ce7f29771a2ede8b0aee5f2ebfc249c0d18024bd22e2`
+- Full snapshot hash: `sha256:9e8e82ea0c6339d51ae9d40ef004c0dd1a4a24c30c43a20fc0255ef64d75efe4`
 - Previous snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
 - Archived snapshot: `/data/snapshots/snapshot_2026_06_03_4000_records.json`
 
@@ -25,6 +25,8 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Evidence-depth queues: 6
 - Gold record candidates: 100
 - Reviewer challenge records: 25
+- Evidence capsules: 4000
+- Source provenance queues: 5
 
 ## Dataset Hashes
 
@@ -42,6 +44,8 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Evidence-depth queues: `sha256:00f9c078f0ba9ad0f1f6e63109142be6f77bda3e99a165ccbd7160397cad3857`
 - Gold record set: `sha256:aa32c384327b215fb6a97844f95bab72a7ad275ea22dd70f01e376516a27b2d7`
 - Reviewer challenge pack: `sha256:df8cab496473899c58603ca0c9c4435571d3687a792bd407c32fe5896f3199f5`
+- Evidence capsules: `sha256:b07d2b14ba54b1640fff192882184f660aa29f9b989f90383060a2b500522808`
+- Source provenance queues: `sha256:35625bf0694ce986e820ec41c05d175f1f767c3bb5e594764f552924a0d5eb6a`
 
 ## Evidence Depth & Robustness
 
@@ -50,6 +54,8 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Evidence-depth queues: `/data/evidence-depth-queues.json`
 - Gold record candidates: `/data/gold-record-set.json`
 - Reviewer challenge pack: `/data/reviewer-challenge-pack.json`
+- Evidence capsules: `/data/evidence-capsules.json`
+- Source provenance queues: `/data/source-provenance-queues.json`
 - These artifacts describe current dataset composition and review priorities; they must not be used as comparative campus judgments, frequency measures, risk ratings, or approval claims.
 
 ## Public Briefs

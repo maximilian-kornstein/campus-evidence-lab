@@ -107,6 +107,7 @@ for (const route of [
   "reviewer-queue/index.html",
   "workflows/index.html",
   "robustness/index.html",
+  "evidence/index.html",
   "codebook/index.html",
   "coverage/index.html",
   "replicate/index.html",
@@ -153,6 +154,8 @@ for (const artifact of [
   "data/evidence-depth-queues.json",
   "data/gold-record-set.json",
   "data/reviewer-challenge-pack.json",
+  "data/evidence-capsules.json",
+  "data/source-provenance-queues.json",
   "data/snapshot-manifest.json",
   `data/snapshots/${manifest.snapshot_id}.json`,
   "schema/correction.schema.json",
@@ -167,6 +170,8 @@ for (const artifact of [
   "schema/evidence-depth-queues.schema.json",
   "schema/gold-record-set.schema.json",
   "schema/reviewer-challenge-pack.schema.json",
+  "schema/evidence-capsules.schema.json",
+  "schema/source-provenance-queues.schema.json",
   "docs/codebook.md",
   "docs/content-safety.md",
   "docs/contributing.md",
@@ -257,6 +262,10 @@ for (const workflowCopy of ["Workflows", "Start with a task", "workflows-root"])
 
 for (const robustnessCopy of ["Evidence Robustness", "source concentration", "response depth", "robustness-root"]) {
   await mustContain("robustness/index.html", robustnessCopy);
+}
+
+for (const evidenceCopy of ["Evidence Provenance", "source-to-field capsule", "evidence-root"]) {
+  await mustContain("evidence/index.html", evidenceCopy);
 }
 
 for (const replicateCopy of ["Replication", "npm run check", "Release verification"]) {
@@ -503,6 +512,9 @@ for (const downloadsCopy of [
   "Gold record candidates",
   "Reviewer challenge pack",
   "Evidence robustness dashboard",
+  "Evidence capsules",
+  "Source provenance queues",
+  "Evidence provenance page",
   "Data dictionary",
   "Citation guidance",
   "Contribution guide",
@@ -524,6 +536,8 @@ for (const releaseCopy of [
   "Evidence Depth & Robustness",
   "/data/robustness-metrics.json",
   "/data/evidence-depth-queues.json",
+  "/data/evidence-capsules.json",
+  "/data/source-provenance-queues.json",
   "/data/events-research.json",
   "/data/schools-research.json",
   "/data/sources-research.json"

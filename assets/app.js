@@ -28,6 +28,8 @@ const DATA_PATHS = {
   evidenceDepthQueues: sitePath("/data/evidence-depth-queues.json"),
   goldRecordSet: sitePath("/data/gold-record-set.json"),
   reviewerChallengePack: sitePath("/data/reviewer-challenge-pack.json"),
+  evidenceCapsules: sitePath("/data/evidence-capsules.json"),
+  sourceProvenanceQueues: sitePath("/data/source-provenance-queues.json"),
   manifest: sitePath("/data/snapshot-manifest.json"),
   snapshotIndex: sitePath("/data/snapshot-index.json"),
   sourceAudit: sitePath("/data/source-audit.json"),
@@ -55,6 +57,8 @@ const state = {
   evidenceDepthQueues: { queues: [] },
   goldRecordSet: { records: [] },
   reviewerChallengePack: { records: [] },
+  evidenceCapsules: { records: [], totals: {}, import_family_counts: {}, locator_quality_counts: {}, review_need_counts: {} },
+  sourceProvenanceQueues: { queues: [] },
   snapshotIndex: null,
   sourceAudit: null,
   sourceAuditLive: null,
@@ -554,6 +558,8 @@ async function loadDataset() {
     evidenceDepthQueues,
     goldRecordSet,
     reviewerChallengePack,
+    evidenceCapsules,
+    sourceProvenanceQueues,
     manifest,
     snapshotIndex,
     sourceAudit,
@@ -578,6 +584,8 @@ async function loadDataset() {
     fetchJson(DATA_PATHS.evidenceDepthQueues),
     fetchJson(DATA_PATHS.goldRecordSet),
     fetchJson(DATA_PATHS.reviewerChallengePack),
+    fetchJson(DATA_PATHS.evidenceCapsules),
+    fetchJson(DATA_PATHS.sourceProvenanceQueues),
     fetchJson(DATA_PATHS.manifest),
     fetchJson(DATA_PATHS.snapshotIndex),
     fetchJson(DATA_PATHS.sourceAudit),
@@ -604,6 +612,8 @@ async function loadDataset() {
   state.evidenceDepthQueues = evidenceDepthQueues;
   state.goldRecordSet = goldRecordSet;
   state.reviewerChallengePack = reviewerChallengePack;
+  state.evidenceCapsules = evidenceCapsules;
+  state.sourceProvenanceQueues = sourceProvenanceQueues;
   state.snapshotIndex = snapshotIndex;
   state.sourceAudit = sourceAudit;
   state.sourceAuditLive = sourceAuditLive;
@@ -3223,6 +3233,134 @@ function renderRobustness() {
   `;
 }
 
+function sourceProvenanceQueueTable(queue, recordById) {
+  if (!queue?.records?.length) return `<p class="empty">No records are currently in this queue.</p>`;
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Record</th>
+            <th>School</th>
+            <th>Import family</th>
+            <th>Locator</th>
+            <th>Review needs</th>
+            <th>Packet</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${queue.records
+            .slice(0, 10)
+            .map((row) => {
+              const record = recordById.get(row.event_id);
+              return `
+                <tr>
+                  <td class="summary-cell"><a href="${sitePath(row.event_url)}">${escapeHtml(record?.summary ?? row.event_id)}</a></td>
+                  <td>${escapeHtml(record?.school?.name ?? row.school_id)}</td>
+                  <td>${escapeHtml(row.import_family)}</td>
+                  <td>${escapeHtml(row.locator_quality)}</td>
+                  <td>${escapeHtml(row.review_needs.join("; "))}</td>
+                  <td><a href="${sitePath(row.workspace_url)}">Open</a></td>
+                </tr>
+              `;
+            })
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function objectCountRows(counts = {}, limit = 8) {
+  return Object.entries(counts)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit);
+}
+
+function renderEvidence() {
+  const root = document.querySelector("#evidence-root");
+  if (!root) return;
+
+  const capsules = state.evidenceCapsules;
+  const queues = state.sourceProvenanceQueues.queues ?? [];
+  const recordById = new Map(state.records.map((record) => [record.id, record]));
+  const priorityQueues = ["dataset-cell-locator-review", "single-source-review", "response-depth-review", "explicit-rationale-review"]
+    .map((id) => queues.find((queue) => queue.id === id))
+    .filter(Boolean);
+
+  root.innerHTML = `
+    <section class="section section--tight">
+      <div class="metric-grid metric-grid--dashboard">
+        ${metric(String(capsules.totals.records ?? 0), "Evidence capsules")}
+        ${metric(String(capsules.totals.records_with_single_source ?? 0), "Single-source capsules")}
+        ${metric(String(capsules.totals.records_with_dataset_file_locator ?? 0), "Dataset-file locators")}
+        ${metric(String(capsules.totals.records_with_source_page_locator ?? 0), "Source-page locators")}
+        ${metric(String(queues.length), "Provenance queues")}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Import and Locator Mix</h2>
+        <p class="section-note">Generated from current event and source metadata; use as a review map.</p>
+      </div>
+      <div class="detail-grid">
+        <div>
+          <h3>Import families</h3>
+          ${countRows(objectCountRows(capsules.import_family_counts), "Import family", "Records")}
+        </div>
+        <div>
+          <h3>Locator quality</h3>
+          ${countRows(objectCountRows(capsules.locator_quality_counts), "Locator", "Records")}
+        </div>
+      </div>
+      <div class="detail-grid">
+        <div>
+          <h3>Review needs</h3>
+          ${countRows(objectCountRows(capsules.review_need_counts), "Review need", "Records")}
+        </div>
+        <div>
+          <h3>Artifacts</h3>
+          <ul>
+            <li><a href="${sitePath("/data/evidence-capsules.json")}">Evidence capsules JSON</a></li>
+            <li><a href="${sitePath("/data/source-provenance-queues.json")}">Source provenance queues JSON</a></li>
+            <li><a href="${sitePath("/schema/evidence-capsules.schema.json")}">Evidence capsules schema</a></li>
+            <li><a href="${sitePath("/schema/source-provenance-queues.schema.json")}">Source provenance queues schema</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Source-Provenance Queues</h2>
+        <p class="section-note">${escapeHtml(state.sourceProvenanceQueues.method)}</p>
+      </div>
+      ${priorityQueues
+        .map(
+          (queue) => `
+            <div class="section section--tight">
+              <div class="section-header">
+                <h3 class="section-title">${escapeHtml(queue.label)}</h3>
+                <p class="section-note">${escapeHtml(queue.description)}</p>
+              </div>
+              ${sourceProvenanceQueueTable(queue, recordById)}
+            </div>
+          `
+        )
+        .join("")}
+    </section>
+
+    <section class="section section--tight">
+      <div class="section-header">
+        <h2 class="section-title">Use Limit</h2>
+        <p class="section-note">Capsules describe metadata support, not outside source re-review.</p>
+      </div>
+      <p>Evidence capsules are source-to-field review aids. They help reviewers find weak locators, dataset-cell follow-up needs, and missing rationales. They must not be used as comparative campus judgments, frequency measures, risk ratings, legal conclusions, or approval claims.</p>
+    </section>
+  `;
+}
+
 function renderImpact() {
   const root = document.querySelector("#impact-root");
   if (!root) return;
@@ -3486,8 +3624,11 @@ function renderDownloads() {
         ${downloadRow("Evidence-Depth Queues JSON", sitePath("/data/evidence-depth-queues.json"), `${state.evidenceDepthQueues.queues.length} review queues`)}
         ${downloadRow("Gold Record Set JSON", sitePath("/data/gold-record-set.json"), `${state.goldRecordSet.records.length} candidate records`)}
         ${downloadRow("Reviewer Challenge Pack JSON", sitePath("/data/reviewer-challenge-pack.json"), `${state.reviewerChallengePack.records.length} challenge records`)}
+        ${downloadRow("Evidence Capsules JSON", sitePath("/data/evidence-capsules.json"), `${state.evidenceCapsules.records.length} source-to-field capsules`)}
+        ${downloadRow("Source Provenance Queues JSON", sitePath("/data/source-provenance-queues.json"), `${state.sourceProvenanceQueues.queues.length} provenance queues`)}
         ${downloadRow("Workflows Page", sitePath("/workflows/"), "Task-based entry points for public use", false)}
         ${downloadRow("Evidence Robustness Page", sitePath("/robustness/"), "Dataset composition and evidence-depth review priorities", false)}
+        ${downloadRow("Evidence Provenance Page", sitePath("/evidence/"), "Source-to-field capsules and import provenance", false)}
         ${downloadRow("Replication Packet", sitePath("/replicate/"), "Commands and release verification artifacts", false)}
         ${downloadRow("Credibility Boundaries", sitePath("/credibility/"), "Review and acknowledgment status limits", false)}
         ${downloadRow("Public Codebook", sitePath("/codebook/"), "Operational definitions for record review", false)}
@@ -3512,6 +3653,8 @@ function renderDownloads() {
         ${downloadRow("Evidence-Depth Queues Schema", sitePath("/schema/evidence-depth-queues.schema.json"), "Evidence-depth queue fields")}
         ${downloadRow("Gold Record Set Schema", sitePath("/schema/gold-record-set.schema.json"), "Gold candidate fields")}
         ${downloadRow("Reviewer Challenge Pack Schema", sitePath("/schema/reviewer-challenge-pack.schema.json"), "Challenge pack fields")}
+        ${downloadRow("Evidence Capsules Schema", sitePath("/schema/evidence-capsules.schema.json"), "Evidence capsule fields")}
+        ${downloadRow("Source Provenance Queues Schema", sitePath("/schema/source-provenance-queues.schema.json"), "Source provenance queue fields")}
         ${downloadRow("Dataset License", sitePath("/DATA_LICENSE.md"), "Reuse terms")}
         ${downloadRow("Code License", sitePath("/LICENSE.md"), "MIT License")}
       </div>
@@ -3548,6 +3691,7 @@ async function init() {
     renderReviewerQueue();
     renderWorkflows();
     renderRobustness();
+    renderEvidence();
     renderImpact();
     renderUpdates();
     renderDownloads();

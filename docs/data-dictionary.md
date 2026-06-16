@@ -276,3 +276,27 @@ The review ledger records review activity separately from canonical event record
 - method: deterministic selection method.
 - records: difficult or ambiguous records selected from evidence-depth queues.
 - challenge_reason_codes: reasons reviewers should inspect the record closely.
+
+## evidence-capsules.json
+
+- snapshot_id: snapshot the capsules are tied to.
+- generated_at: generation date.
+- method: public explanation that capsules are generated from current local metadata.
+- totals: record count and locator-count summary.
+- import_family_counts: counts by derived import family such as Education campus-safety dataset, OCR/government release, annual security report, institutional public statement, or other public source.
+- locator_quality_counts: counts by source locator quality.
+- review_need_counts: counts by source-provenance review need.
+- records: one source-to-field capsule per event record.
+- record.import_family: derived import/provenance family based on source type, tags, and text patterns.
+- record.locator_quality: conservative source locator label such as dataset_file, source_page, or metadata_only.
+- record.source_basis: linked source IDs, source types, source count, and primary source metadata.
+- record.field_evidence: field-level source support rows for school, date, category, affected communities, description, response, legal status, and confidence.
+- record.review_needs: source-provenance follow-up needs such as dataset cell locator review, single-source review, response-depth review, or explicit rationale review.
+
+## source-provenance-queues.json
+
+- snapshot_id: snapshot the queues are tied to.
+- generated_at: generation date.
+- method: deterministic queue-generation note.
+- queues: named source-provenance review queues.
+- queue.records: event rows with import family, locator quality, source count, review needs, event URL, and workspace URL.

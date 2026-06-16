@@ -20,7 +20,9 @@ const [
   robustnessMetrics,
   evidenceDepthQueues,
   goldRecordSet,
-  reviewerChallengePack
+  reviewerChallengePack,
+  evidenceCapsules,
+  sourceProvenanceQueues
 ] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
@@ -38,7 +40,9 @@ const [
   readJson(paths.robustnessMetrics),
   readJson(paths.evidenceDepthQueues),
   readJson(paths.goldRecordSet),
-  readJson(paths.reviewerChallengePack)
+  readJson(paths.reviewerChallengePack),
+  readJson(paths.evidenceCapsules),
+  readJson(paths.sourceProvenanceQueues)
 ]);
 
 const hashedEvents = events.map((event) => ({
@@ -67,6 +71,8 @@ const robustnessMetricsHash = sha256(robustnessMetrics);
 const evidenceDepthQueuesHash = sha256(evidenceDepthQueues);
 const goldRecordSetHash = sha256(goldRecordSet);
 const reviewerChallengePackHash = sha256(reviewerChallengePack);
+const evidenceCapsulesHash = sha256(evidenceCapsules);
+const sourceProvenanceQueuesHash = sha256(sourceProvenanceQueues);
 
 const previousManifest = existsSync(paths.manifest) ? await readJson(paths.manifest) : null;
 
@@ -96,7 +102,9 @@ const manifest = {
     credibility_entries: credibilityStatus.entries.length,
     evidence_depth_queues: evidenceDepthQueues.queues.length,
     gold_record_candidates: goldRecordSet.records.length,
-    reviewer_challenge_records: reviewerChallengePack.records.length
+    reviewer_challenge_records: reviewerChallengePack.records.length,
+    evidence_capsules: evidenceCapsules.records.length,
+    source_provenance_queues: sourceProvenanceQueues.queues.length
   },
   hashes: {
     events: eventsHash,
@@ -116,6 +124,8 @@ const manifest = {
     evidence_depth_queues: evidenceDepthQueuesHash,
     gold_record_set: goldRecordSetHash,
     reviewer_challenge_pack: reviewerChallengePackHash,
+    evidence_capsules: evidenceCapsulesHash,
+    source_provenance_queues: sourceProvenanceQueuesHash,
     full_snapshot: sha256({
       events: eventsHash,
       schools: schoolsHash,
@@ -133,7 +143,9 @@ const manifest = {
       robustness_metrics: robustnessMetricsHash,
       evidence_depth_queues: evidenceDepthQueuesHash,
       gold_record_set: goldRecordSetHash,
-      reviewer_challenge_pack: reviewerChallengePackHash
+      reviewer_challenge_pack: reviewerChallengePackHash,
+      evidence_capsules: evidenceCapsulesHash,
+      source_provenance_queues: sourceProvenanceQueuesHash
     }),
     previous_snapshot: previousSnapshotHash
   }

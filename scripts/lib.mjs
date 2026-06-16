@@ -23,6 +23,8 @@ export const paths = {
   evidenceDepthQueues: path.join(rootDir, "data", "evidence-depth-queues.json"),
   goldRecordSet: path.join(rootDir, "data", "gold-record-set.json"),
   reviewerChallengePack: path.join(rootDir, "data", "reviewer-challenge-pack.json"),
+  evidenceCapsules: path.join(rootDir, "data", "evidence-capsules.json"),
+  sourceProvenanceQueues: path.join(rootDir, "data", "source-provenance-queues.json"),
   sourceAudit: path.join(rootDir, "data", "source-audit.json"),
   sourceAuditLive: path.join(rootDir, "data", "source-audit-live.json"),
   changelog: path.join(rootDir, "data", "changelog.json"),

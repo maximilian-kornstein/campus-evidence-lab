@@ -5,6 +5,7 @@ import { validateReviewLedger } from "./review-samples-lib.mjs";
 import { validateMethodologyExamples } from "./methodology-definitions.mjs";
 import { validateCredibilityStatus, validateReleaseVerification, validateReleases } from "./release-credibility-lib.mjs";
 import { containsProhibitedRobustnessClaim } from "./robustness-metrics-lib.mjs";
+import { hasProhibitedEvidenceClaim } from "./evidence-capsules-lib.mjs";
 
 const allowedCommunities = new Set([
   "Jewish",
@@ -96,6 +97,8 @@ const [
   evidenceDepthQueues,
   goldRecordSet,
   reviewerChallengePack,
+  evidenceCapsules,
+  sourceProvenanceQueues,
   manifest
 ] = await Promise.all([
   readJson(paths.events),
@@ -115,6 +118,8 @@ const [
   readJson(paths.evidenceDepthQueues),
   readJson(paths.goldRecordSet),
   readJson(paths.reviewerChallengePack),
+  readJson(paths.evidenceCapsules),
+  readJson(paths.sourceProvenanceQueues),
   readJson(paths.manifest)
 ]);
 
@@ -453,6 +458,71 @@ for (const record of reviewerChallengePack.records ?? []) {
   if (!eventIds.has(record.event_id)) errors.push(`reviewer-challenge-pack references unknown event ${record.event_id}`);
   if (!Array.isArray(record.challenge_reason_codes) || record.challenge_reason_codes.length === 0) {
     errors.push(`reviewer-challenge-pack ${record.event_id} missing challenge_reason_codes`);
+  }
+}
+
+for (const [label, artifact] of [
+  ["evidence-capsules", evidenceCapsules],
+  ["source-provenance-queues", sourceProvenanceQueues]
+]) {
+  if (artifact.snapshot_id !== manifest.snapshot_id) {
+    errors.push(`${label} snapshot_id must match snapshot manifest`);
+  }
+  assertDate(artifact.generated_at, `${label} generated_at`, errors);
+  if (hasProhibitedEvidenceClaim(JSON.stringify(artifact))) {
+    errors.push(`${label} includes prohibited validation, approval, ranking, frequency, or safety language`);
+  }
+}
+
+if (!evidenceCapsules.totals || evidenceCapsules.totals.records !== events.length) {
+  errors.push("evidence-capsules totals.records must match event count");
+}
+if (!Array.isArray(evidenceCapsules.records) || evidenceCapsules.records.length !== events.length) {
+  errors.push("evidence-capsules must include one capsule per event");
+}
+const capsuleIds = new Set();
+for (const capsule of evidenceCapsules.records ?? []) {
+  if (!eventIds.has(capsule.event_id)) errors.push(`evidence-capsules references unknown event ${capsule.event_id}`);
+  if (capsuleIds.has(capsule.event_id)) errors.push(`evidence-capsules duplicate event ${capsule.event_id}`);
+  capsuleIds.add(capsule.event_id);
+  if (!capsule.import_family?.id || !capsule.locator_quality?.code) {
+    errors.push(`evidence-capsules ${capsule.event_id} missing import family or locator quality`);
+  }
+  if (!capsule.source_basis || !Array.isArray(capsule.source_basis.source_ids)) {
+    errors.push(`evidence-capsules ${capsule.event_id} missing source basis`);
+  } else {
+    for (const sourceId of capsule.source_basis.source_ids) {
+      if (!sourceIds.has(sourceId)) errors.push(`evidence-capsules ${capsule.event_id} references unknown source ${sourceId}`);
+    }
+  }
+  if (!Array.isArray(capsule.field_evidence) || capsule.field_evidence.length === 0) {
+    errors.push(`evidence-capsules ${capsule.event_id} missing field evidence`);
+  }
+  for (const row of capsule.field_evidence ?? []) {
+    if (!row.field || !row.support_level || !row.support_note) {
+      errors.push(`evidence-capsules ${capsule.event_id} has incomplete field evidence row`);
+    }
+    for (const sourceId of row.source_ids ?? []) {
+      if (!sourceIds.has(sourceId)) errors.push(`evidence-capsules ${capsule.event_id} field evidence references unknown source ${sourceId}`);
+    }
+  }
+}
+
+if (!Array.isArray(sourceProvenanceQueues.queues) || sourceProvenanceQueues.queues.length < 5) {
+  errors.push("source-provenance-queues must include at least five queues");
+}
+for (const queue of sourceProvenanceQueues.queues ?? []) {
+  if (!queue.id || !queue.label || !queue.description) {
+    errors.push("source-provenance-queues queue missing id, label, or description");
+  }
+  if (!Array.isArray(queue.records) || queue.records.length > 25) {
+    errors.push(`source-provenance-queues ${queue.id} must include no more than 25 records`);
+  }
+  for (const record of queue.records ?? []) {
+    if (!eventIds.has(record.event_id)) errors.push(`source-provenance-queues ${queue.id} references unknown event ${record.event_id}`);
+    if (!Array.isArray(record.review_needs) || record.review_needs.length === 0) {
+      errors.push(`source-provenance-queues ${queue.id} record ${record.event_id} missing review_needs`);
+    }
   }
 }
 
