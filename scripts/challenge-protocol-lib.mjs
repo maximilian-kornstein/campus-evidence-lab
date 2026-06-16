@@ -156,7 +156,14 @@ function standardsMap(standards) {
 function isNegatedClaim(text, matchIndex) {
   const prefix = text.slice(Math.max(0, matchIndex - 200), matchIndex).toLowerCase();
   const sameSentencePrefix = prefix.slice(Math.max(prefix.lastIndexOf("."), prefix.lastIndexOf(";"), prefix.lastIndexOf(":")) + 1);
-  return /\b(not|nor|no|without|cannot|never)\b/.test(sameSentencePrefix);
+  const negationMatch = /\b(?:not|nor|without|cannot|never)\b/g;
+  const matches = [...sameSentencePrefix.matchAll(negationMatch)];
+  const lastNegation = matches.at(-1);
+  if (!lastNegation) return false;
+
+  const scopedPrefix = sameSentencePrefix.slice(lastNegation.index);
+  if (/\b(?:but|however|though|although|except|yet)\b/.test(scopedPrefix)) return false;
+  return /^(?:not|nor|without|cannot|never)\s+(?:(?:a|an|the|any)\s+)?(?:(?:ranking|score|safety|severity|prevalence|estimate|endorsement|external|audit|validation|validated|legal|finding|truth|claim|measurement|measure|school|best|worst|safest|most|dangerous|submissions)[,\s]*(?:or|and)?\s*){0,20}$/.test(scopedPrefix.trimStart());
 }
 
 function reasonCodesForCapsule(capsule) {

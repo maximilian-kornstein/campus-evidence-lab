@@ -141,6 +141,9 @@ test("hasProhibitedChallengeClaim catches audit, endorsement, score, and prevale
   assert.equal(hasProhibitedChallengeClaim("campus safety score"), true);
   assert.equal(hasProhibitedChallengeClaim("incident severity score"), true);
   assert.equal(hasProhibitedChallengeClaim("prevalence estimate by school"), true);
+  assert.equal(hasProhibitedChallengeClaim("No question this is the safest school ranking."), true);
+  assert.equal(hasProhibitedChallengeClaim("This is not a ranking but it is the safest school."), true);
+  assert.equal(hasProhibitedChallengeClaim("This is not a ranking, safety score, severity score, prevalence estimate, endorsement, or external audit."), false);
   assert.equal(hasProhibitedChallengeClaim("review queue for adversarial source checks"), false);
 });
 
