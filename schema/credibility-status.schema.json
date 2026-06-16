@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/credibility-status.schema.json",
+  "title": "Campus Evidence Lab Credibility Status",
+  "type": "object",
+  "required": ["version", "updated_at", "entries"],
+  "properties": {
+    "version": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "display_name",
+          "scope",
+          "permission_to_display",
+          "endorsement_language_approved",
+          "public_note"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["review_requested", "review_in_progress", "review_completed", "collaboration_completed", "public_acknowledgment_approved"]
+          },
+          "display_name": { "type": ["string", "null"] },
+          "scope": { "type": "string" },
+          "permission_to_display": { "type": "boolean" },
+          "endorsement_language_approved": { "type": "boolean" },
+          "public_note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

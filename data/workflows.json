@@ -1,0 +1,156 @@
+{
+  "version": "0.1.0",
+  "updated_at": "2026-06-16",
+  "workflows": [
+    {
+      "id": "one-school",
+      "title": "One School Dossier",
+      "audience": "journalists, researchers, families, and campus groups",
+      "start_url": "/schools/",
+      "packet_url": "/research-workspace/?title=Campus%20Evidence%20Lab%20School%20Dossier%20Packet&question=What%20public-source%20records%20exist%20for%20this%20school%20in%20the%20current%20snapshot%3F",
+      "steps": [
+        "Open the school dossier and read the use-limit block before interpreting counts.",
+        "Inspect the timeline, response records, legal or OCR items, and related sources.",
+        "Export a Research Workspace packet for the records you intend to cite."
+      ],
+      "supported_claims": ["The archive contains public-source records for this school in the current snapshot."],
+      "requires_followup": ["Claims about safety, frequency, intent, liability, or campus climate require primary-source and institutional follow-up."],
+      "guardrail_links": [
+        { "label": "Public codebook", "href": "/codebook/" },
+        { "label": "Coverage limits", "href": "/coverage/" },
+        { "label": "Methodology", "href": "/methodology/" }
+      ]
+    },
+    {
+      "id": "one-public-record",
+      "title": "One Public Record",
+      "audience": "reporters, reviewers, and source checkers",
+      "start_url": "/events/",
+      "packet_url": "/research-workspace/?title=Campus%20Evidence%20Lab%20Single%20Record%20Packet&question=What%20does%20this%20specific%20public-source%20record%20support%3F",
+      "steps": [
+        "Find the record in Events and open the event detail page.",
+        "Read the Record Audit card, source list, confidence label, and correction path.",
+        "Open the source page and external source before reusing the record."
+      ],
+      "supported_claims": ["A specific public-source record exists and is linked to a current snapshot hash."],
+      "requires_followup": ["Disputed facts, legal conclusions, and institutional intent require source reading and direct follow-up."],
+      "guardrail_links": [
+        { "label": "Public codebook", "href": "/codebook/" },
+        { "label": "Coverage limits", "href": "/coverage/" }
+      ]
+    },
+    {
+      "id": "legal-ocr-trail",
+      "title": "Legal or OCR Trail",
+      "audience": "journalists, legal reviewers, and researchers",
+      "start_url": "/events/?q=OCR",
+      "packet_url": "/research-workspace/?title=Campus%20Evidence%20Lab%20Legal%20OCR%20Packet&question=Which%20public%20legal%20or%20OCR%20records%20support%20this%20trail%3F",
+      "steps": [
+        "Filter Events for OCR, lawsuit, Title VI, Title IX, settlement, resolution, or complaint terms.",
+        "Open each event and compare legal-status wording against linked public sources.",
+        "Export a packet and request comment before making claims beyond the public record."
+      ],
+      "supported_claims": ["The archive identifies public legal or OCR-related documentation currently linked to records."],
+      "requires_followup": ["Procedural posture, liability, findings, settlement meaning, and current status require primary-source legal review."],
+      "guardrail_links": [
+        { "label": "Public codebook", "href": "/codebook/" },
+        { "label": "Coverage limits", "href": "/coverage/" },
+        { "label": "Stress-test memo", "href": "/briefs/brief_2026_06_16_methodology_stress_test/" }
+      ]
+    },
+    {
+      "id": "institutional-response-trail",
+      "title": "Institutional Response Trail",
+      "audience": "reporters, researchers, and campus organizations",
+      "start_url": "/events/?q=institutional%20response",
+      "packet_url": "/research-workspace/?title=Campus%20Evidence%20Lab%20Institutional%20Response%20Packet&question=What%20public%20institutional%20responses%20are%20documented%20for%20this%20question%3F",
+      "steps": [
+        "Search Events or a school dossier for response records.",
+        "Compare response dates and wording against linked source material.",
+        "Export only the response records needed for the narrow question."
+      ],
+      "supported_claims": ["The archive documents public institutional-response language linked to specific records."],
+      "requires_followup": ["Effectiveness, sincerity, completeness, and implementation require additional reporting."],
+      "guardrail_links": [
+        { "label": "Public codebook", "href": "/codebook/" },
+        { "label": "Coverage limits", "href": "/coverage/" }
+      ]
+    },
+    {
+      "id": "source-audit-follow-up",
+      "title": "Source Audit Follow-Up",
+      "audience": "reviewers and data maintainers",
+      "start_url": "/reviewer-queue/",
+      "packet_url": "/reviewer-queue/",
+      "steps": [
+        "Open the Reviewer Queue and locate source-audit follow-up samples.",
+        "Open each source page and external source URL.",
+        "Report dead links, redirects, publisher changes, or better stable sources through the correction workflow."
+      ],
+      "supported_claims": ["The archive exposes source URLs that may need maintenance or replacement."],
+      "requires_followup": ["A failed automated URL check does not prove the source is unavailable; manual review is required."],
+      "guardrail_links": [
+        { "label": "Source audit notes", "href": "/docs/source-audit.md" },
+        { "label": "Coverage limits", "href": "/coverage/" },
+        { "label": "Methodology", "href": "/methodology/" }
+      ]
+    },
+    {
+      "id": "methodology-review-sample",
+      "title": "Methodology Review Sample",
+      "audience": "outside reviewers and internal auditors",
+      "start_url": "/reviewer-queue/",
+      "packet_url": "/research-workspace/?title=Campus%20Evidence%20Lab%20Methodology%20Review%20Packet&question=Which%20records%20or%20fields%20should%20be%20checked%20for%20classification%2C%20source%20support%2C%20or%20responsible-use%20language%3F",
+      "steps": [
+        "Choose a fixed review sample from the Reviewer Queue.",
+        "Check each record against the codebook, source text, and Record Audit card.",
+        "Document findings through the reviewer checklist without treating review as approval."
+      ],
+      "supported_claims": ["A bounded sample can be reviewed for source support, classification, and use-limit quality."],
+      "requires_followup": ["A sample review does not validate the full archive or imply organizational support."],
+      "guardrail_links": [
+        { "label": "Public codebook", "href": "/codebook/" },
+        { "label": "Coverage limits", "href": "/coverage/" },
+        { "label": "Reviewer brief", "href": "/reviewer-brief/" }
+      ]
+    },
+    {
+      "id": "narrow-research-packet",
+      "title": "Narrow Research Packet",
+      "audience": "researchers, students, and analysts",
+      "start_url": "/research-workspace/",
+      "packet_url": "/research-workspace/?title=Campus%20Evidence%20Lab%20Narrow%20Research%20Packet&question=What%20public-source%20records%20support%20this%20narrow%20research%20question%3F",
+      "steps": [
+        "Write a narrow question before selecting records.",
+        "Search and select only records needed for that question.",
+        "Export markdown or JSON with snapshot hash and use limits."
+      ],
+      "supported_claims": ["Selected public-source records can support a narrow documentation question."],
+      "requires_followup": ["Patterns in a selected packet cannot be generalized into frequency claims or school comparisons."],
+      "guardrail_links": [
+        { "label": "Research guide", "href": "/research-guide/" },
+        { "label": "Coverage limits", "href": "/coverage/" },
+        { "label": "Public codebook", "href": "/codebook/" }
+      ]
+    },
+    {
+      "id": "correction-or-duplicate-report",
+      "title": "Correction or Duplicate Report",
+      "audience": "contributors and reviewers",
+      "start_url": "/submit/",
+      "packet_url": "/submit/",
+      "steps": [
+        "Identify the record ID and the field or duplicate relationship to review.",
+        "Find a public source URL supporting the correction or duplicate report.",
+        "Generate a structured packet and submit it through the matching issue template."
+      ],
+      "supported_claims": ["A source-backed correction or duplicate report can be prepared for review."],
+      "requires_followup": ["A submitted packet does not change the public dataset until review is complete."],
+      "guardrail_links": [
+        { "label": "Contributor guide", "href": "/guide/" },
+        { "label": "Coverage limits", "href": "/coverage/" },
+        { "label": "Methodology", "href": "/methodology/" }
+      ]
+    }
+  ]
+}

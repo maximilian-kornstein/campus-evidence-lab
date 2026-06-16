@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/methodology-example.schema.json",
+  "title": "Campus Evidence Lab Methodology Examples",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "type",
+      "title",
+      "category",
+      "affected_communities",
+      "confidence",
+      "verification_status",
+      "source_basis",
+      "methodological_point",
+      "public_claim_limit"
+    ],
+    "properties": {
+      "id": { "type": "string", "pattern": "^example_[a-z0-9_]+$" },
+      "type": {
+        "type": "string",
+        "enum": ["excluded", "downgraded", "limited", "correction_ready", "source_audit_risk", "broad_label_review"]
+      },
+      "title": { "type": "string" },
+      "category": { "type": "string" },
+      "affected_communities": {
+        "type": "array",
+        "items": { "type": "string" },
+        "minItems": 1
+      },
+      "confidence": { "type": "string", "enum": ["High", "Medium", "Low"] },
+      "verification_status": { "type": "string" },
+      "source_basis": { "type": "string" },
+      "methodological_point": { "type": "string" },
+      "public_claim_limit": { "type": "string" }
+    }
+  }
+}

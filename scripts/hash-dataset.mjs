@@ -3,13 +3,42 @@ import { eventForHash, paths, readJson, sha256, writeJson } from "./lib.mjs";
 
 const checkOnly = process.argv.includes("--check");
 
-const [events, schools, sources, briefs, corrections, reviewLog] = await Promise.all([
+const [
+  events,
+  schools,
+  sources,
+  briefs,
+  corrections,
+  reviewLog,
+  reviewSamples,
+  reviewLedger,
+  methodologyExamples,
+  workflows,
+  releases,
+  releaseVerification,
+  credibilityStatus,
+  robustnessMetrics,
+  evidenceDepthQueues,
+  goldRecordSet,
+  reviewerChallengePack
+] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
   readJson(paths.sources),
   readJson(paths.briefs),
   readJson(paths.corrections),
-  readJson(paths.reviewLog)
+  readJson(paths.reviewLog),
+  readJson(paths.reviewSamples),
+  readJson(paths.reviewLedger),
+  readJson(paths.methodologyExamples),
+  readJson(paths.workflows),
+  readJson(paths.releases),
+  readJson(paths.releaseVerification),
+  readJson(paths.credibilityStatus),
+  readJson(paths.robustnessMetrics),
+  readJson(paths.evidenceDepthQueues),
+  readJson(paths.goldRecordSet),
+  readJson(paths.reviewerChallengePack)
 ]);
 
 const hashedEvents = events.map((event) => ({
@@ -27,6 +56,17 @@ const stampedBriefs = briefs.map((brief) => ({
 const briefsHash = sha256(stampedBriefs);
 const correctionsHash = sha256(corrections);
 const reviewLogHash = sha256(reviewLog);
+const reviewSamplesHash = sha256(reviewSamples);
+const reviewLedgerHash = sha256(reviewLedger);
+const methodologyExamplesHash = sha256(methodologyExamples);
+const workflowsHash = sha256(workflows);
+const releasesHash = sha256(releases);
+const releaseVerificationHash = sha256(releaseVerification);
+const credibilityStatusHash = sha256(credibilityStatus);
+const robustnessMetricsHash = sha256(robustnessMetrics);
+const evidenceDepthQueuesHash = sha256(evidenceDepthQueues);
+const goldRecordSetHash = sha256(goldRecordSet);
+const reviewerChallengePackHash = sha256(reviewerChallengePack);
 
 const previousManifest = existsSync(paths.manifest) ? await readJson(paths.manifest) : null;
 
@@ -46,7 +86,17 @@ const manifest = {
     sources: sources.length,
     briefs: briefs.length,
     corrections: corrections.length,
-    review_queues: reviewLog.queues.length
+    review_queues: reviewLog.queues.length,
+    review_samples: reviewSamples.samples.length,
+    review_ledger_entries: reviewLedger.entries.length,
+    methodology_examples: methodologyExamples.length,
+    workflows: workflows.workflows.length,
+    releases: releases.releases.length,
+    release_verification_commands: releaseVerification.commands.length,
+    credibility_entries: credibilityStatus.entries.length,
+    evidence_depth_queues: evidenceDepthQueues.queues.length,
+    gold_record_candidates: goldRecordSet.records.length,
+    reviewer_challenge_records: reviewerChallengePack.records.length
   },
   hashes: {
     events: eventsHash,
@@ -55,13 +105,35 @@ const manifest = {
     briefs: briefsHash,
     corrections: correctionsHash,
     review_log: reviewLogHash,
+    review_samples: reviewSamplesHash,
+    review_ledger: reviewLedgerHash,
+    methodology_examples: methodologyExamplesHash,
+    workflows: workflowsHash,
+    releases: releasesHash,
+    release_verification: releaseVerificationHash,
+    credibility_status: credibilityStatusHash,
+    robustness_metrics: robustnessMetricsHash,
+    evidence_depth_queues: evidenceDepthQueuesHash,
+    gold_record_set: goldRecordSetHash,
+    reviewer_challenge_pack: reviewerChallengePackHash,
     full_snapshot: sha256({
       events: eventsHash,
       schools: schoolsHash,
       sources: sourcesHash,
       briefs: briefsHash,
       corrections: correctionsHash,
-      review_log: reviewLogHash
+      review_log: reviewLogHash,
+      review_samples: reviewSamplesHash,
+      review_ledger: reviewLedgerHash,
+      methodology_examples: methodologyExamplesHash,
+      workflows: workflowsHash,
+      releases: releasesHash,
+      release_verification: releaseVerificationHash,
+      credibility_status: credibilityStatusHash,
+      robustness_metrics: robustnessMetricsHash,
+      evidence_depth_queues: evidenceDepthQueuesHash,
+      gold_record_set: goldRecordSetHash,
+      reviewer_challenge_pack: reviewerChallengePackHash
     }),
     previous_snapshot: previousSnapshotHash
   }

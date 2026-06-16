@@ -43,7 +43,7 @@ const pages = [
       "Records by Source Type",
       "Small charts summarize current public records"
     ],
-    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_13_findings_memo_002_public_institutional_responses/"],
+    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
     dashboardSmoke: true
   },
   {
@@ -61,7 +61,7 @@ const pages = [
   {
     route: "/schools/",
     file: "schools/index.html",
-    checks: ["Tracked Schools", "Search schools", "Most recent update", "Dossier", "Build Citation Packet", "University of Kentucky"],
+    checks: ["Tracked Schools", "Search schools", "Community", "Most recent update", "Dossier", "Build Citation Packet", "University of Kentucky"],
     schoolsSmoke: true
   },
   {
@@ -146,7 +146,7 @@ const pages = [
   {
     route: "/reviewer-queue/",
     file: "reviewer-queue/index.html",
-    checks: ["Reviewer Queue", "Review Priorities", "Low-Confidence Review Sample", "Classification Review Sample", "Source Expansion Sample", "Open checklist", "Build sample packet"]
+    checks: ["Reviewer Queue", "Fixed Review Samples", "Low-confidence 25", "Broad-label 25", "Single-source 25", "Open checklist", "Build sample packet", "Public Ledger"]
   },
   {
     route: "/downloads/",
@@ -534,7 +534,7 @@ async function renderPage(page, index) {
       return;
     }
 
-    for (const controlName of ["q", "state", "sort"]) {
+    for (const controlName of ["q", "state", "community", "sort"]) {
       if (!form.elements[controlName]) {
         errors.push(`${page.file} missing school filter control ${controlName}`);
       }
@@ -542,6 +542,7 @@ async function renderPage(page, index) {
 
     form.elements.q.value = "University of Kentucky";
     form.elements.state.value = "KY";
+    form.elements.community.value = "Religion";
     form.elements.sort.value = "name_asc";
     form.elements.sort.dispatchEvent(new dom.window.Event("change", { bubbles: true, cancelable: true }));
 
@@ -561,7 +562,11 @@ async function renderPage(page, index) {
       }
     }
 
-    if (!dom.window.location.href.includes("q=University+of+Kentucky") || !dom.window.location.href.includes("state=KY")) {
+    if (
+      !dom.window.location.href.includes("q=University+of+Kentucky") ||
+      !dom.window.location.href.includes("state=KY") ||
+      !dom.window.location.href.includes("community=Religion")
+    ) {
       errors.push(`${page.file} did not preserve school filters in URL`);
     }
   }

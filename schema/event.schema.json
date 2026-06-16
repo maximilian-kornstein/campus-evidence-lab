@@ -36,6 +36,29 @@
     "category": { "type": "string" },
     "summary": { "type": "string" },
     "description": { "type": "string" },
+    "classification_rationale": { "type": "string" },
+    "community_rationale": { "type": "string" },
+    "confidence_rationale": { "type": "string" },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "field_support": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["field", "source_ids", "rationale"],
+        "properties": {
+          "field": { "type": "string" },
+          "source_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1
+          },
+          "rationale": { "type": "string" }
+        }
+      }
+    },
     "source_ids": {
       "type": "array",
       "items": { "type": "string" },
@@ -47,6 +70,15 @@
       "minItems": 1
     },
     "institutional_response": { "type": "string" },
+    "response_depth": {
+      "type": "string",
+      "enum": [
+        "direct_institutional_response",
+        "agency_described_institutional_action",
+        "limited_public_response_note",
+        "no_public_response_found"
+      ]
+    },
     "response_date": { "type": ["string", "null"], "format": "date" },
     "legal_status": { "type": "string" },
     "verification_status": { "type": "string" },

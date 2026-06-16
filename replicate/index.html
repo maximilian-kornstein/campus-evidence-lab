@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replicate / Campus Evidence Lab</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+  </head>
+  <body data-page="replicate">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="../">
+          <span class="brand__name">Campus Evidence Lab</span>
+          <span class="brand__tag">Public evidence infrastructure</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="../" data-nav="dashboard">Dashboard</a>
+          <a href="../events/" data-nav="events">Events</a>
+          <a href="../schools/" data-nav="schools">Schools</a>
+          <a href="../methodology/" data-nav="methodology">Methodology</a>
+          <a href="../downloads/" data-nav="downloads">Data</a>
+        </nav>
+      </div>
+    </header>
+    <main class="main prose">
+      <p class="page-kicker">Replication</p>
+      <h1 class="page-title page-title--small">Reproduce the release checks.</h1>
+      <p class="page-intro">This page lists the local commands and artifacts needed to verify the published static release. Passing checks prove local consistency, not completeness or outside validation.</p>
+
+      <h2>Commands</h2>
+      <pre><code>npm ci
+npm run check
+npm run build</code></pre>
+
+      <h2>Artifacts</h2>
+      <ul>
+        <li><a href="../docs/replication.md">Replication packet</a></li>
+        <li><a href="../data/releases.json">Release metadata</a></li>
+        <li><a href="../data/release-verification.json">Release verification</a></li>
+        <li><a href="../data/snapshot-manifest.json">Snapshot manifest</a></li>
+        <li><a href="../RELEASE_NOTES.md">Release notes</a></li>
+      </ul>
+    </main>
+    <footer class="site-footer">Campus Evidence Lab / Replication packet</footer>
+    <script type="module" src="../assets/app.js"></script>
+  </body>
+</html>

@@ -1,3 +1,6 @@
+import { auditProfileForExport, buildAuditProfile } from "./audit-profile.js";
+import { hasSubstantiveInstitutionalResponse, responseDepthDisplayProfile, responseDisplayProfile } from "./record-display.js";
+
 const SITE_BASE = new URL("../", import.meta.url);
 
 function sitePath(target) {
@@ -14,6 +17,17 @@ const DATA_PATHS = {
   briefs: sitePath("/data/briefs.json"),
   corrections: sitePath("/data/corrections.json"),
   reviewLog: sitePath("/data/review-log.json"),
+  reviewSamples: sitePath("/data/review-samples.json"),
+  reviewLedger: sitePath("/data/review-ledger.json"),
+  methodologyExamples: sitePath("/data/methodology-examples.json"),
+  workflows: sitePath("/data/workflows.json"),
+  releases: sitePath("/data/releases.json"),
+  releaseVerification: sitePath("/data/release-verification.json"),
+  credibilityStatus: sitePath("/data/credibility-status.json"),
+  robustnessMetrics: sitePath("/data/robustness-metrics.json"),
+  evidenceDepthQueues: sitePath("/data/evidence-depth-queues.json"),
+  goldRecordSet: sitePath("/data/gold-record-set.json"),
+  reviewerChallengePack: sitePath("/data/reviewer-challenge-pack.json"),
   manifest: sitePath("/data/snapshot-manifest.json"),
   snapshotIndex: sitePath("/data/snapshot-index.json"),
   sourceAudit: sitePath("/data/source-audit.json"),
@@ -30,6 +44,17 @@ const state = {
   briefs: [],
   corrections: [],
   reviewLog: null,
+  reviewSamples: null,
+  reviewLedger: null,
+  methodologyExamples: [],
+  workflows: { workflows: [] },
+  releases: { releases: [] },
+  releaseVerification: null,
+  credibilityStatus: { entries: [] },
+  robustnessMetrics: null,
+  evidenceDepthQueues: { queues: [] },
+  goldRecordSet: { records: [] },
+  reviewerChallengePack: { records: [] },
   snapshotIndex: null,
   sourceAudit: null,
   sourceAuditLive: null,
@@ -54,6 +79,9 @@ const state = {
   schoolFilters: {
     q: "",
     state: "",
+    community: "",
+    recordQ: "",
+    recordCategory: "",
     sort: "records_desc"
   },
   sourceFilters: {
@@ -270,26 +298,19 @@ function recordWeightedFields(record) {
   ];
 }
 
-function normalizedInstitutionalResponse(value) {
-  return String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/[’']/g, "'");
-}
-
 function hasDisplayInstitutionalResponse(record) {
-  const response = normalizedInstitutionalResponse(record.institutional_response);
-  if (!response) return false;
-  if (response.startsWith("the record summarizes ")) return false;
-  if (response.includes("does not independently evaluate investigative, disciplinary, or institutional response outcomes")) return false;
-  if (response.includes("does not independently evaluate the institution's completed response")) return false;
-  return true;
+  return hasSubstantiveInstitutionalResponse(record);
 }
 
 function institutionalResponseSection(record, headingLevel = "h3") {
-  if (!hasDisplayInstitutionalResponse(record)) return "";
-  const response = String(record.institutional_response ?? "").trim();
+  const profile = responseDisplayProfile(record);
+  if (!profile.shouldShow) return "";
+  const responseDepth = responseDepthDisplayProfile(record);
   const details = [
+    `<div class="data-line">
+      <dt>Response depth</dt>
+      <dd>${escapeHtml(responseDepth.label)}</dd>
+    </div>`,
     record.response_date
       ? `<div class="data-line">
           <dt>Response date</dt>
@@ -306,8 +327,8 @@ function institutionalResponseSection(record, headingLevel = "h3") {
     .filter(Boolean)
     .join("");
   return `
-    <${headingLevel} class="section-title section-title--spaced">Public institutional response</${headingLevel}>
-    <p>${escapeHtml(response)}</p>
+    <${headingLevel} class="section-title section-title--spaced">${escapeHtml(profile.heading)}</${headingLevel}>
+    <p>${escapeHtml(profile.response)}</p>
     ${details ? `<dl>${details}</dl>` : ""}
   `;
 }
@@ -349,6 +370,7 @@ function selectedEventExport(record) {
     institutional_response: record.institutional_response,
     legal_status: record.legal_status,
     updated_at: record.updated_at,
+    audit_profile: auditProfileForExport(record, record.sources),
     record_hash: record.record_hash
   };
 }
@@ -488,16 +510,22 @@ function researchPacket(records, title = "Campus Evidence Lab Research Packet", 
     "- Absence from the dataset does not mean absence of incidents or institutional response.",
     "",
     "Selected records:",
-    ...records.flatMap((record, index) => [
-      "",
-      `${index + 1}. ${eventCitation(record)}`,
-      `   Date: ${formatDate(record.date, record.date_precision)}`,
-      `   Communities: ${join(record.affected_communities)}`,
-      `   Category: ${record.category}`,
-      `   Verification: ${record.verification_status}`,
-      `   Sources:`,
-      ...record.sources.map((source) => `   - ${sourceCitation(source)}`)
-    ]),
+    ...records.flatMap((record, index) => {
+      const auditProfile = buildAuditProfile(record, record.sources);
+      return [
+        "",
+        `${index + 1}. ${eventCitation(record)}`,
+        `   Date: ${formatDate(record.date, record.date_precision)}`,
+        `   Communities: ${join(record.affected_communities)}`,
+        `   Category: ${record.category}`,
+        `   Verification: ${record.verification_status}`,
+        `   Source basis: ${auditProfile.sourceBasis}`,
+        `   Classification rationale: ${auditProfile.classificationRationale}`,
+        `   Confidence rationale: ${auditProfile.confidenceRationale}`,
+        `   Sources:`,
+        ...record.sources.map((source) => `   - ${sourceCitation(source)}`)
+      ];
+    }),
     "",
     "Machine-readable selection:",
     "```json",
@@ -508,13 +536,48 @@ function researchPacket(records, title = "Campus Evidence Lab Research Packet", 
 }
 
 async function loadDataset() {
-  const [events, schools, sources, briefs, corrections, reviewLog, manifest, snapshotIndex, sourceAudit, sourceAuditLive, productUpdates, productMilestones] = await Promise.all([
+  const [
+    events,
+    schools,
+    sources,
+    briefs,
+    corrections,
+    reviewLog,
+    reviewSamples,
+    reviewLedger,
+    methodologyExamples,
+    workflows,
+    releases,
+    releaseVerification,
+    credibilityStatus,
+    robustnessMetrics,
+    evidenceDepthQueues,
+    goldRecordSet,
+    reviewerChallengePack,
+    manifest,
+    snapshotIndex,
+    sourceAudit,
+    sourceAuditLive,
+    productUpdates,
+    productMilestones
+  ] = await Promise.all([
     fetchJson(DATA_PATHS.events),
     fetchJson(DATA_PATHS.schools),
     fetchJson(DATA_PATHS.sources),
     fetchJson(DATA_PATHS.briefs),
     fetchJson(DATA_PATHS.corrections),
     fetchJson(DATA_PATHS.reviewLog),
+    fetchJson(DATA_PATHS.reviewSamples),
+    fetchJson(DATA_PATHS.reviewLedger),
+    fetchJson(DATA_PATHS.methodologyExamples),
+    fetchJson(DATA_PATHS.workflows),
+    fetchJson(DATA_PATHS.releases),
+    fetchJson(DATA_PATHS.releaseVerification),
+    fetchJson(DATA_PATHS.credibilityStatus),
+    fetchJson(DATA_PATHS.robustnessMetrics),
+    fetchJson(DATA_PATHS.evidenceDepthQueues),
+    fetchJson(DATA_PATHS.goldRecordSet),
+    fetchJson(DATA_PATHS.reviewerChallengePack),
     fetchJson(DATA_PATHS.manifest),
     fetchJson(DATA_PATHS.snapshotIndex),
     fetchJson(DATA_PATHS.sourceAudit),
@@ -530,6 +593,17 @@ async function loadDataset() {
   state.briefs = briefs;
   state.corrections = corrections;
   state.reviewLog = reviewLog;
+  state.reviewSamples = reviewSamples;
+  state.reviewLedger = reviewLedger;
+  state.methodologyExamples = methodologyExamples;
+  state.workflows = workflows;
+  state.releases = releases;
+  state.releaseVerification = releaseVerification;
+  state.credibilityStatus = credibilityStatus;
+  state.robustnessMetrics = robustnessMetrics;
+  state.evidenceDepthQueues = evidenceDepthQueues;
+  state.goldRecordSet = goldRecordSet;
+  state.reviewerChallengePack = reviewerChallengePack;
   state.snapshotIndex = snapshotIndex;
   state.sourceAudit = sourceAudit;
   state.sourceAuditLive = sourceAuditLive;
@@ -1133,8 +1207,12 @@ function renderEventDetail() {
         ${institutionalResponseSection(record)}
         <dl>
           ${
-            !hasDisplayInstitutionalResponse(record)
+            !responseDisplayProfile(record).shouldShow
               ? `<div class="data-line">
+                  <dt>Response depth</dt>
+                  <dd>${escapeHtml(responseDepthDisplayProfile(record).label)}</dd>
+                </div>
+                <div class="data-line">
                   <dt>Legal status</dt>
                   <dd>${escapeHtml(record.legal_status)}</dd>
                 </div>`
@@ -1153,6 +1231,7 @@ function renderEventDetail() {
             <dd class="mono">${escapeHtml(record.record_hash)}</dd>
           </div>
         </dl>
+        ${recordAuditCard(record)}
       </div>
       <aside>
         <dl>
@@ -1217,7 +1296,9 @@ function renderSchools() {
 
   initializeSchoolFiltersFromUrl();
   let selectedId = new URLSearchParams(window.location.search).get("id") || state.schoolsList[0]?.id;
+  const allRows = state.schoolsList.map((school) => ({ school, stats: schoolStats(school.id) }));
   const states = unique(state.schoolsList.map((school) => [school.state]));
+  const communities = unique(allRows.map(({ stats }) => stats.communities));
   const sortOptions = [
     { value: "relevance", label: "Search relevance" },
     { value: "records_desc", label: "Most records" },
@@ -1225,14 +1306,15 @@ function renderSchools() {
     { value: "latest_desc", label: "Most recent update" }
   ];
   const rows = sortedSchoolRows(
-    state.schoolsList
-    .map((school) => ({ school, stats: schoolStats(school.id) }))
+    allRows
       .filter(({ school }) => {
         const query = state.schoolFilters.q.trim().toLowerCase();
-        if (query && ![school.name, school.city, school.state, school.id].join(" ").toLowerCase().includes(query)) {
+        const schoolCommunities = schoolStats(school.id).communities.join(" ").toLowerCase();
+        if (query && ![school.name, school.city, school.state, school.id, schoolCommunities].join(" ").toLowerCase().includes(query)) {
           return false;
         }
         if (state.schoolFilters.state && school.state !== state.schoolFilters.state) return false;
+        if (state.schoolFilters.community && !schoolStats(school.id).communities.includes(state.schoolFilters.community)) return false;
         return true;
       })
   );
@@ -1249,6 +1331,7 @@ function renderSchools() {
       <form class="toolbar toolbar--compact" id="school-filter-form">
         <input id="school_q" name="q" type="search" value="${escapeHtml(state.schoolFilters.q)}" placeholder="Search schools" aria-label="Search schools">
         <select id="school_state" name="state" aria-label="Filter schools by state">${renderSelectOptions(states, state.schoolFilters.state, "State")}</select>
+        <select id="school_community" name="community" aria-label="Filter schools by community">${renderSelectOptions(communities, state.schoolFilters.community, "Community")}</select>
         <select id="school_sort" name="sort" aria-label="Sort schools">${renderOptionPairs(sortOptions, state.schoolFilters.sort, "Sort")}</select>
       </form>
       <div class="table-wrap">
@@ -1302,6 +1385,9 @@ function initializeSchoolFiltersFromUrl() {
   state.schoolFilters = {
     q: params.get("q") || "",
     state: params.get("state") || "",
+    community: params.get("community") || "",
+    recordQ: params.get("record_q") || "",
+    recordCategory: params.get("record_category") || "",
     sort: params.get("sort") || state.schoolFilters.sort
   };
   state.schoolFiltersInitialized = true;
@@ -1325,6 +1411,9 @@ function updateSchoolsUrl() {
   const params = new URLSearchParams();
   if (state.schoolFilters.q) params.set("q", state.schoolFilters.q);
   if (state.schoolFilters.state) params.set("state", state.schoolFilters.state);
+  if (state.schoolFilters.community) params.set("community", state.schoolFilters.community);
+  if (state.schoolFilters.recordQ) params.set("record_q", state.schoolFilters.recordQ);
+  if (state.schoolFilters.recordCategory) params.set("record_category", state.schoolFilters.recordCategory);
   if (state.schoolFilters.sort !== "records_desc") params.set("sort", state.schoolFilters.sort);
   const query = params.toString();
   window.history.replaceState(null, "", sitePath(query ? `/schools/?${query}` : "/schools/"));
@@ -1335,10 +1424,34 @@ function updateSchoolFilters(event) {
   state.schoolFilters = {
     q: String(formData.get("q") || ""),
     state: String(formData.get("state") || ""),
+    community: String(formData.get("community") || ""),
+    recordQ: state.schoolFilters.recordQ,
+    recordCategory: state.schoolFilters.recordCategory,
     sort: String(formData.get("sort") || "records_desc")
   };
   updateSchoolsUrl();
   withPreservedTextInputState(renderSchools);
+}
+
+function updateSchoolRecordFilters(event) {
+  const formData = new FormData(event.currentTarget);
+  state.schoolFilters = {
+    ...state.schoolFilters,
+    community: String(formData.get("community") || ""),
+    recordQ: String(formData.get("record_q") || ""),
+    recordCategory: String(formData.get("record_category") || "")
+  };
+  updateSchoolsUrl();
+  withPreservedTextInputState(renderSchools);
+}
+
+function schoolEventsHref(schoolId, options = {}) {
+  const params = new URLSearchParams();
+  params.set("school", schoolId);
+  if (options.community) params.set("community", options.community);
+  if (options.category) params.set("category", options.category);
+  if (options.q) params.set("q", options.q);
+  return sitePath(`/events/?${params.toString()}`);
 }
 
 function initializeSourceFiltersFromUrl() {
@@ -1419,6 +1532,23 @@ function updateSourceFilters(event) {
   withPreservedTextInputState(renderSources);
 }
 
+function recordsByNeed(records, predicate) {
+  return records.filter(predicate);
+}
+
+function schoolPacketLink(label, records, question) {
+  if (!records.length) return "";
+  const ids = records
+    .map((record) => record.id)
+    .slice(0, MAX_WORKSPACE_HANDOFF)
+    .join(",");
+  const params = new URLSearchParams();
+  params.set("record_ids", ids);
+  params.set("title", `Campus Evidence Lab ${label}`);
+  params.set("question", question);
+  return sitePath(`/research-workspace/?${params.toString()}`);
+}
+
 function renderSchoolDetail(schoolId) {
   const panel = document.querySelector("#school-detail");
   if (!panel) return;
@@ -1430,13 +1560,61 @@ function renderSchoolDetail(schoolId) {
   }
 
   const stats = schoolStats(schoolId);
-  const sourceIds = unique(stats.records.map((record) => record.source_ids));
+  const communities = unique(stats.records.map((record) => record.affected_communities));
+  const categories = unique(stats.records.map((record) => [record.category]));
+  const filteredRecords = stats.records.filter((record) => {
+    const query = state.schoolFilters.recordQ.trim().toLowerCase();
+    const haystack = [
+      record.summary,
+      record.description,
+      record.legal_status,
+      record.institutional_response,
+      join(record.affected_communities),
+      record.category
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    if (query && !haystack.includes(query)) return false;
+    if (state.schoolFilters.community && !record.affected_communities.includes(state.schoolFilters.community)) return false;
+    if (state.schoolFilters.recordCategory && record.category !== state.schoolFilters.recordCategory) return false;
+    return true;
+  });
+  const sourceIds = unique(filteredRecords.map((record) => record.source_ids));
   const sources = sourceIds.map((id) => state.sources.get(id)).filter(Boolean);
-  const responseRecords = stats.records.filter(hasDisplayInstitutionalResponse);
+  const responseRecords = filteredRecords.filter(hasDisplayInstitutionalResponse);
   const signals = documentationSignals(stats.records);
-  const legalRecords = stats.records.filter((record) =>
+  const legalRecords = filteredRecords.filter((record) =>
     /ocr|legal|lawsuit|title vi|title ix|resolution|settlement|federal|doj|complaint|finding/i.test(`${record.category} ${record.legal_status}`)
   );
+  const reviewNeedRecords = recordsByNeed(stats.records, (record) => reviewNeedLabels(record).length > 0);
+  const dossierPackets = [
+    [
+      "Dossier packet",
+      schoolPacketLink(`${school.name} Dossier Packet`, stats.records, "What public-source records exist for this school in the current snapshot?")
+    ],
+    [
+      "Legal/OCR packet",
+      schoolPacketLink(`${school.name} Legal/OCR Packet`, legalRecords, "Which public legal or OCR records are documented for this school?")
+    ],
+    [
+      "Response packet",
+      schoolPacketLink(`${school.name} Institutional Response Packet`, responseRecords, "Which public institutional responses are documented for this school?")
+    ],
+    [
+      "Review-needs packet",
+      schoolPacketLink(`${school.name} Review Needs Packet`, reviewNeedRecords, "Which records in this school dossier most need source, classification, or use-limit review?")
+    ]
+  ].filter(([, href]) => href);
+  const filteredEventsLink = schoolEventsHref(school.id, {
+    community: state.schoolFilters.community,
+    category: state.schoolFilters.recordCategory,
+    q: state.schoolFilters.recordQ
+  });
+  const jewishLink = communities.includes("Jewish")
+    ? `<a class="button-link" href="${schoolEventsHref(school.id, { community: "Jewish" })}">Open Jewish records in Events</a>`
+    : "";
+  const antisemitismLink = `<a class="button-link" href="${schoolEventsHref(school.id, { q: "antisemitism" })}">Open antisemitism search in Events</a>`;
 
   panel.innerHTML = `
     <div class="detail-grid">
@@ -1445,10 +1623,20 @@ function renderSchoolDetail(schoolId) {
         <h2>${escapeHtml(school.name)} Dossier</h2>
         <p>${stats.count} public-source record${stats.count === 1 ? "" : "s"} in the current dataset. This dossier describes public documentation, not school safety, quality of life, or incident prevalence.</p>
         <div class="utility-bar">
-          <a class="button-link" href="${sitePath(`/events/?school=${encodeURIComponent(school.id)}`)}">Open Filtered Records</a>
+          <a class="button-link" href="${filteredEventsLink}">Open Filtered Records</a>
           <a class="button-link" href="${workspaceUrlForRecords(stats.records)}">Build Citation Packet</a>
           <a class="button-link" href="${sitePath(`/submit/?record_id=${encodeURIComponent(stats.records[0]?.id ?? "")}`)}">Request Correction</a>
         </div>
+        <h3 class="section-title section-title--spaced">Dossier Packets</h3>
+        <div class="utility-bar">
+          ${dossierPackets.map(([label, href]) => `<a class="button-link" href="${href}">${escapeHtml(label)}</a>`).join("")}
+        </div>
+        <h3 class="section-title section-title--spaced">Use This Dossier Responsibly</h3>
+        <ul class="evidence-list">
+          <li>This dossier describes public documentation in the current snapshot, not campus safety or incident frequency.</li>
+          <li>Use source pages and event audit cards before citing records.</li>
+          <li>Use the <a href="${sitePath("/codebook/")}">codebook</a> and <a href="${sitePath("/coverage/")}">coverage limits</a> before making comparisons or broader claims.</li>
+        </ul>
         <dl>
           <div class="data-line">
             <dt>Communities</dt>
@@ -1479,6 +1667,18 @@ function renderSchoolDetail(schoolId) {
               : ""
           }
         </dl>
+        <h3 class="section-title section-title--spaced">Filter this dossier</h3>
+        <p class="section-note">${filteredRecords.length} of ${stats.records.length} records shown. Use community labels or text search for terms like antisemitism, OCR, or Title VI.</p>
+        <form class="toolbar toolbar--compact" id="school-record-filter-form">
+          <input id="school_record_q" name="record_q" type="search" value="${escapeHtml(state.schoolFilters.recordQ)}" placeholder="Search this dossier" aria-label="Search this dossier">
+          <select id="school_record_community" name="community" aria-label="Filter dossier by community">${renderSelectOptions(communities, state.schoolFilters.community, "Community")}</select>
+          <select id="school_record_category" name="record_category" aria-label="Filter dossier by category">${renderSelectOptions(categories, state.schoolFilters.recordCategory, "Category")}</select>
+        </form>
+        <div class="utility-bar">
+          ${jewishLink}
+          ${antisemitismLink}
+          <a class="button-link" href="${filteredEventsLink}">Open current dossier filter in Events</a>
+        </div>
         <h3 class="section-title section-title--spaced">Timeline</h3>
         <div class="table-wrap">
           <table>
@@ -1491,8 +1691,8 @@ function renderSchoolDetail(schoolId) {
               </tr>
             </thead>
             <tbody>
-              ${stats.records
-                .map(
+              ${filteredRecords.length
+                ? filteredRecords.map(
                   (record) => `
                     <tr>
                       <td class="mono">${escapeHtml(formatDate(record.date, record.date_precision))}</td>
@@ -1502,7 +1702,8 @@ function renderSchoolDetail(schoolId) {
                     </tr>
                   `
                 )
-                .join("")}
+                .join("")
+                : `<tr><td colspan="4" class="empty">No records match the current dossier filters.</td></tr>`}
             </tbody>
           </table>
         </div>
@@ -1587,6 +1788,12 @@ function renderSchoolDetail(schoolId) {
       </aside>
     </div>
   `;
+
+  const recordFilterForm = document.querySelector("#school-record-filter-form");
+  if (recordFilterForm) {
+    recordFilterForm.addEventListener("input", updateSchoolRecordFilters);
+    recordFilterForm.addEventListener("change", updateSchoolRecordFilters);
+  }
 }
 
 function renderBriefs() {
@@ -1716,6 +1923,66 @@ function verificationRationale(record) {
   const sourceCount = record.sources?.length ?? record.source_ids?.length ?? 0;
   const sourceTypes = join(record.source_types);
   return `${record.verification_status}; ${sourceCount} public source${sourceCount === 1 ? "" : "s"} reviewed (${sourceTypes}). Confidence reflects source support, not severity.`;
+}
+
+function auditFieldSupportRows(rows) {
+  return rows
+    .map(
+      (row) => `
+        <tr>
+          <td>${escapeHtml(row.field)}</td>
+          <td>${escapeHtml(row.sourceTitles.length ? row.sourceTitles.join(", ") : row.sourceIds.join(", "))}</td>
+          <td>${escapeHtml(row.rationale)}</td>
+        </tr>
+      `
+    )
+    .join("");
+}
+
+function recordAuditCard(record) {
+  const profile = buildAuditProfile(record, record.sources);
+  return `
+    <section class="section section--tight record-audit-card">
+      <div class="section-header">
+        <h3 class="section-title">Record Audit</h3>
+        <p class="section-note">Source basis and classification review</p>
+      </div>
+      <dl>
+        <div class="data-line">
+          <dt>Source basis</dt>
+          <dd>${escapeHtml(profile.sourceBasis)}</dd>
+        </div>
+        <div class="data-line">
+          <dt>Classification rationale</dt>
+          <dd>${escapeHtml(profile.classificationRationale)}</dd>
+        </div>
+        <div class="data-line">
+          <dt>Community rationale</dt>
+          <dd>${escapeHtml(profile.communityRationale)}</dd>
+        </div>
+        <div class="data-line">
+          <dt>Confidence rationale</dt>
+          <dd>${escapeHtml(profile.confidenceRationale)}</dd>
+        </div>
+      </dl>
+      <div class="table-wrap table-wrap--compact">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Source support</th>
+              <th>Review note</th>
+            </tr>
+          </thead>
+          <tbody>${auditFieldSupportRows(profile.fieldSupport)}</tbody>
+        </table>
+      </div>
+      <h4 class="section-title section-title--spaced">Use Limits</h4>
+      <ul class="evidence-list">
+        ${profile.limitations.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ul>
+    </section>
+  `;
 }
 
 function renderBriefDetail(briefId) {
@@ -2449,6 +2716,7 @@ function renderResearchWorkspace() {
   const selectedRecords = params.recordIds.map((id) => state.records.find((record) => record.id === id)).filter(Boolean);
   const candidates = workspaceCandidateRecords(params.q);
   const packet = selectedRecords.length ? researchPacket(selectedRecords, params.title, params.question) : "Select records to generate a citation packet.";
+  const workspaceWorkflows = (state.workflows.workflows ?? []).filter((workflow) => workflow.packet_url.startsWith("/research-workspace/"));
 
   root.innerHTML = `
     <section class="section section--tight">
@@ -2457,18 +2725,16 @@ function renderResearchWorkspace() {
         <p class="section-note">URL-encoded templates</p>
       </div>
       <div class="action-grid">
-        <a class="action-link" href="${sitePath("/research-workspace/?title=Campus%20Evidence%20Lab%20Reporting%20Packet&question=What%20public-source%20records%20support%20this%20reporting%20question%3F")}">
-          <span>Reporting Packet</span>
-          <span>Use for a school, incident, or institutional-response story that needs a local source packet.</span>
-        </a>
-        <a class="action-link" href="${sitePath("/research-workspace/?title=Campus%20Evidence%20Lab%20Methodology%20Review%20Packet&question=Which%20records%20or%20fields%20should%20be%20checked%20for%20classification%2C%20source%20support%2C%20or%20responsible-use%20language%3F")}">
-          <span>Methodology Review Packet</span>
-          <span>Use for outside reviewers or internal audit work focused on classification, source support, or use limits.</span>
-        </a>
-        <a class="action-link" href="${sitePath("/research-workspace/?title=Campus%20Evidence%20Lab%20Research%20Packet&question=What%20documentation%20pattern%20does%20this%20selected%20record%20set%20show%20in%20the%20current%20snapshot%3F")}">
-          <span>Research Packet</span>
-          <span>Use for a narrow snapshot-bound question before moving into research JSON or CSV exports.</span>
-        </a>
+        ${workspaceWorkflows
+          .map(
+            (workflow) => `
+              <a class="action-link" href="${sitePath(workflow.packet_url)}">
+                <span>${escapeHtml(workflow.title)}</span>
+                <span>${escapeHtml(workflow.audience)}</span>
+              </a>
+            `
+          )
+          .join("")}
         <a class="action-link" href="${sitePath("/downloads/")}">
           <span>Open Downloads</span>
           <span>Move to raw files only after deciding whether you need a packet, CSV, research JSON, or full snapshot artifact.</span>
@@ -2653,85 +2919,306 @@ function queueRecordTable(records, emptyText) {
   `;
 }
 
+function reviewSampleTable(sample, recordById) {
+  if (!sample.records.length) return `<p class="empty">No records are currently in this sample.</p>`;
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>School</th>
+            <th>Record</th>
+            <th>Review reasons</th>
+            <th>Packet</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${sample.records
+            .map((row) => {
+              const record = recordById.get(row.event_id);
+              return `
+                <tr>
+                  <td class="mono">${escapeHtml(formatDate(row.date, record?.date_precision ?? "day"))}</td>
+                  <td>${escapeHtml(record?.school?.name ?? row.school_id)}</td>
+                  <td class="summary-cell"><a href="${sitePath(`/events/${encodeURIComponent(row.event_id)}/`)}">${escapeHtml(record?.summary ?? row.event_id)}</a></td>
+                  <td>${escapeHtml(row.reason_codes.join("; "))}</td>
+                  <td><a href="${row.workspace_url}">Packet</a></td>
+                </tr>
+              `;
+            })
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function sampleById(id) {
+  return state.reviewSamples?.samples?.find((sample) => sample.id === id);
+}
+
+function renderWorkflows() {
+  const root = document.querySelector("#workflows-root");
+  if (!root) return;
+  const workflows = state.workflows.workflows ?? [];
+  root.innerHTML = `
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Task Entry Points</h2>
+        <p class="section-note">Workflow links preserve source and use-limit context</p>
+      </div>
+      <div class="principle-grid">
+        ${workflows
+          .map(
+            (workflow) => `
+              <div id="${escapeHtml(workflow.id)}">
+                <h3>${escapeHtml(workflow.title)}</h3>
+                <p>${escapeHtml(workflow.audience)}</p>
+                <p>${escapeHtml(workflow.supported_claims[0])}</p>
+                <p><a href="${sitePath(workflow.start_url)}">Start</a> / <a href="${sitePath(workflow.packet_url)}">Packet</a></p>
+              </div>
+            `
+          )
+          .join("")}
+      </div>
+    </section>
+  `;
+}
+
 function renderReviewerQueue() {
   const root = document.querySelector("#reviewer-queue-root");
   if (!root) return;
 
-  const lowConfidence = state.records.filter((record) => record.confidence === "Low");
-  const singleSource = state.records.filter((record) => record.sources.length <= 1);
-  const broadLabels = state.records.filter((record) =>
-    record.affected_communities.some((community) => ["Race", "Religion", "National origin", "Ethnicity", "Gender"].includes(community))
-  );
-  const missingResponse = state.records.filter((record) => !record.institutional_response);
-  const legalRecords = state.records.filter((record) =>
-    /ocr|legal|lawsuit|title vi|title ix|resolution|settlement|federal|doj|complaint|finding/i.test(`${record.category} ${record.legal_status}`)
-  );
-  const sourceFollowups = (state.sourceAuditLive.entries ?? []).filter(
-    (entry) => entry.live_status !== "ok" || entry.launch_check_status !== "live_checked"
-  );
-  const reviewGroups = [
-    ["Low Confidence", lowConfidence],
-    ["Single Source", singleSource],
-    ["Broad Labels", broadLabels],
-    ["Missing Response Field", missingResponse],
-    ["Legal/OCR Status", legalRecords]
+  const samples = state.reviewSamples?.samples ?? [];
+  const recordById = new Map(state.records.map((record) => [record.id, record]));
+  const ledgerEntries = state.reviewLedger?.entries ?? [];
+  const summarySamples = [
+    sampleById("low-confidence-25"),
+    sampleById("single-source-25"),
+    sampleById("broad-label-25"),
+    sampleById("source-audit-followup-25")
   ];
+  const detailSamples = ["low-confidence-25", "broad-label-25", "single-source-25"].map(sampleById).filter(Boolean);
 
   root.innerHTML = `
     <section class="section section--tight">
       <div class="metric-grid">
-        ${metric(String(lowConfidence.length), "Low-confidence records")}
-        ${metric(String(singleSource.length), "Single-source records")}
-        ${metric(String(broadLabels.length), "Broad-label records")}
-        ${metric(String(sourceFollowups.length), "Source audit follow-ups")}
+        ${metric(String(sampleById("low-confidence-25")?.count ?? 0), "Low-confidence sample")}
+        ${metric(String(sampleById("single-source-25")?.count ?? 0), "Single-source sample")}
+        ${metric(String(sampleById("broad-label-25")?.count ?? 0), "Broad-label sample")}
+        ${metric(String(ledgerEntries.length), "Ledger entries")}
       </div>
     </section>
 
     <section class="section">
       <div class="section-header">
-        <h2 class="section-title">Review Priorities</h2>
-        <p class="section-note">Documentation review work, not school ranking</p>
+        <h2 class="section-title">Fixed Review Samples</h2>
+        <p class="section-note">Deterministic for ${escapeHtml(state.reviewSamples?.snapshot_id ?? state.manifest.snapshot_id)}</p>
       </div>
       <div class="principle-grid">
-        ${reviewGroups
+        ${summarySamples
+          .filter(Boolean)
           .map(
-            ([label, records]) => `
+            (sample) => `
               <div>
-                <h3>${escapeHtml(label)}</h3>
-                <p>${records.length} records. <a href="${workspaceUrlForRecords(records)}">Build sample packet</a> / <a href="${reviewerIssueUrl(`Reviewer checklist: ${label}`, `${label} review sample generated from ${state.manifest.snapshot_id}.`)}">Open checklist</a></p>
+                <h3>${escapeHtml(sample.label)}</h3>
+                <p>${sample.count} records. <a href="${sample.workspace_url}">Build sample packet</a> / <a href="${sample.checklist_url}">Open checklist</a></p>
               </div>
             `
           )
           .join("")}
         <div>
-          <h3>Source Audit Follow-Ups</h3>
-          <p>${sourceFollowups.length} source URL checks need attention in the latest live audit artifact.</p>
+          <h3>Public Ledger</h3>
+          <p>${ledgerEntries.length} published review entries. <a href="${sitePath("/data/review-ledger.json")}">Open ledger JSON</a></p>
+        </div>
+      </div>
+    </section>
+
+    ${detailSamples
+      .map(
+        (sample) => `
+          <section class="section">
+            <div class="section-header">
+              <h2 class="section-title">${escapeHtml(sample.label)}</h2>
+              <p class="section-note">${escapeHtml(sample.description)}</p>
+            </div>
+            ${reviewSampleTable(sample, recordById)}
+          </section>
+        `
+      )
+      .join("")}
+
+    <section class="section section--tight">
+      <div class="section-header">
+        <h2 class="section-title">Review Method</h2>
+        <p class="section-note">${escapeHtml(state.reviewSamples?.method ?? "Review samples are generated from public data artifacts.")}</p>
+      </div>
+      <p><a href="${sitePath("/data/review-samples.json")}">Download review samples JSON</a></p>
+    </section>
+  `;
+}
+
+function metricCount(entry) {
+  if (!entry) return "0";
+  return `${entry.count} (${entry.percent}%)`;
+}
+
+function robustnessRows(values = [], limit = 8) {
+  return values.slice(0, limit).map((entry) => [entry.value, `${entry.count} (${entry.percent}%)`]);
+}
+
+function responseDepthLabel(code) {
+  return {
+    direct_institutional_response: "Direct institutional response",
+    agency_described_institutional_action: "Agency-described institutional action",
+    limited_public_response_note: "Limited public response note",
+    no_public_response_found: "No public response found"
+  }[code] ?? code;
+}
+
+function evidenceDepthQueueTable(queue, recordById) {
+  if (!queue?.records?.length) return `<p class="empty">No records are currently in this queue.</p>`;
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Record</th>
+            <th>School</th>
+            <th>Review reasons</th>
+            <th>Response depth</th>
+            <th>Packet</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${queue.records
+            .slice(0, 10)
+            .map((row) => {
+              const record = recordById.get(row.event_id);
+              return `
+                <tr>
+                  <td class="summary-cell"><a href="${sitePath(`/events/${encodeURIComponent(row.event_id)}/`)}">${escapeHtml(record?.summary ?? row.event_id)}</a></td>
+                  <td>${escapeHtml(record?.school?.name ?? row.school_id)}</td>
+                  <td>${escapeHtml(row.reason_codes.join("; "))}</td>
+                  <td>${escapeHtml(responseDepthLabel(row.response_depth))}</td>
+                  <td><a href="${sitePath(row.packet_url)}">Open</a></td>
+                </tr>
+              `;
+            })
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderRobustness() {
+  const root = document.querySelector("#robustness-root");
+  if (!root) return;
+
+  const metrics = state.robustnessMetrics;
+  if (!metrics) {
+    root.innerHTML = `<p class="empty">Robustness metrics are not available.</p>`;
+    return;
+  }
+
+  const recordById = new Map(state.records.map((record) => [record.id, record]));
+  const queues = state.evidenceDepthQueues.queues ?? [];
+  const priorityQueues = ["single-source-government-dataset", "year-precision-followup", "response-depth-followup", "high-stakes-rationale-followup"]
+    .map((id) => queues.find((queue) => queue.id === id))
+    .filter(Boolean);
+  const responseDepthRows = Object.entries(metrics.response_depth ?? {}).map(([code, entry]) => [
+    responseDepthLabel(code),
+    `${entry.count} (${entry.percent}%)`
+  ]);
+
+  root.innerHTML = `
+    <section class="section section--tight">
+      <div class="metric-grid metric-grid--dashboard">
+        ${metric(String(metrics.totals.events), "Records measured")}
+        ${metric(metricCount(metrics.source_type_concentration.top_value), "Largest source-type share")}
+        ${metric(metricCount(metrics.date_precision.year), "Year-precision records")}
+        ${metric(metricCount(metrics.confidence.Medium), "Medium-confidence records")}
+        ${metric(String(metrics.totals.records_with_explicit_rationales), "Records with explicit rationales")}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Composition Signals</h2>
+        <p class="section-note">Use these to choose what to inspect next, not to compare campuses.</p>
+      </div>
+      <div class="detail-grid">
+        <div>
+          <h3>Source Types</h3>
+          ${countRows(robustnessRows(metrics.source_type_concentration.values), "Source type", "Records")}
+        </div>
+        <div>
+          <h3>Response Depth</h3>
+          ${countRows(responseDepthRows, "Response depth", "Records")}
+        </div>
+      </div>
+      <div class="detail-grid">
+        <div>
+          <h3>Categories</h3>
+          ${countRows(robustnessRows(metrics.category_concentration.values), "Category", "Records")}
+        </div>
+        <div>
+          <h3>Affected Communities</h3>
+          ${countRows(robustnessRows(metrics.community_concentration.values), "Community", "Records")}
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="section-header">
-        <h2 class="section-title">Low-Confidence Review Sample</h2>
-        <p class="section-note">First 25 by current dataset order</p>
+        <h2 class="section-title">Evidence-Depth Review Queues</h2>
+        <p class="section-note">${escapeHtml(state.evidenceDepthQueues.method)}</p>
       </div>
-      ${queueRecordTable(lowConfidence, "No low-confidence records in the current dataset.")}
+      ${priorityQueues
+        .map(
+          (queue) => `
+            <div class="section section--tight">
+              <div class="section-header">
+                <h3 class="section-title">${escapeHtml(queue.label)}</h3>
+                <p class="section-note">${escapeHtml(queue.description)}</p>
+              </div>
+              ${evidenceDepthQueueTable(queue, recordById)}
+            </div>
+          `
+        )
+        .join("")}
     </section>
 
     <section class="section">
       <div class="section-header">
-        <h2 class="section-title">Classification Review Sample</h2>
-        <p class="section-note">Broad labels should be checked against source text</p>
+        <h2 class="section-title">Gold Candidate Set and Challenge Pack</h2>
+        <p class="section-note">Candidate status is a work queue, not outside approval.</p>
       </div>
-      ${queueRecordTable(broadLabels, "No broad-label records in the current dataset.")}
+      <div class="principle-grid">
+        <div>
+          <h3>Gold record candidates</h3>
+          <p>${state.goldRecordSet.records.length} records prioritized for deeper source-text review after existing-metadata enrichment.</p>
+          <p><a href="${sitePath("/data/gold-record-set.json")}">Open gold candidate JSON</a></p>
+        </div>
+        <div>
+          <h3>Reviewer challenge pack</h3>
+          <p>${state.reviewerChallengePack.records.length} records selected to help reviewers find ambiguity, source gaps, or wording that should be tightened.</p>
+          <p><a href="${sitePath("/data/reviewer-challenge-pack.json")}">Open challenge pack JSON</a></p>
+        </div>
+      </div>
     </section>
 
-    <section class="section">
+    <section class="section section--tight">
       <div class="section-header">
-        <h2 class="section-title">Source Expansion Sample</h2>
-        <p class="section-note">Single-source records may benefit from additional public sources</p>
+        <h2 class="section-title">Known Limits</h2>
+        <p class="section-note">Snapshot ${escapeHtml(metrics.snapshot_id)}</p>
       </div>
-      ${queueRecordTable(singleSource, "No single-source records in the current dataset.")}
+      <ul>
+        ${metrics.known_limits.map((limit) => `<li>${escapeHtml(limit)}</li>`).join("")}
+      </ul>
+      <p><a href="${sitePath("/data/robustness-metrics.json")}">Open robustness metrics JSON</a> / <a href="${sitePath("/data/evidence-depth-queues.json")}">Open evidence-depth queues JSON</a></p>
     </section>
   `;
 }
@@ -2988,6 +3475,24 @@ function renderDownloads() {
         ${downloadRow("Briefs RSS", sitePath("/rss.xml"), "Published research feed")}
         ${downloadRow("Corrections JSON", sitePath("/data/corrections.json"), `${state.manifest.totals.corrections} corrections`)}
         ${downloadRow("Review Log JSON", sitePath("/data/review-log.json"), `${state.manifest.totals.review_queues} review queues`)}
+        ${downloadRow("Review Samples JSON", sitePath("/data/review-samples.json"), `${state.manifest.totals.review_samples} deterministic samples`)}
+        ${downloadRow("Review Ledger JSON", sitePath("/data/review-ledger.json"), `${state.manifest.totals.review_ledger_entries} public review entries`)}
+        ${downloadRow("Methodology Examples JSON", sitePath("/data/methodology-examples.json"), `${state.methodologyExamples.length} restraint examples`)}
+        ${downloadRow("Workflow Definitions JSON", sitePath("/data/workflows.json"), `${state.workflows.workflows.length} task workflows`)}
+        ${downloadRow("Release Metadata JSON", sitePath("/data/releases.json"), `${state.releases.releases.length} named releases`)}
+        ${downloadRow("Release Verification JSON", sitePath("/data/release-verification.json"), `${state.releaseVerification?.status ?? "unknown"} local verification`)}
+        ${downloadRow("Credibility Status JSON", sitePath("/data/credibility-status.json"), `${state.credibilityStatus.entries.length} bounded status entries`)}
+        ${downloadRow("Robustness Metrics JSON", sitePath("/data/robustness-metrics.json"), `${state.robustnessMetrics?.totals?.events ?? 0} measured records`)}
+        ${downloadRow("Evidence-Depth Queues JSON", sitePath("/data/evidence-depth-queues.json"), `${state.evidenceDepthQueues.queues.length} review queues`)}
+        ${downloadRow("Gold Record Set JSON", sitePath("/data/gold-record-set.json"), `${state.goldRecordSet.records.length} candidate records`)}
+        ${downloadRow("Reviewer Challenge Pack JSON", sitePath("/data/reviewer-challenge-pack.json"), `${state.reviewerChallengePack.records.length} challenge records`)}
+        ${downloadRow("Workflows Page", sitePath("/workflows/"), "Task-based entry points for public use", false)}
+        ${downloadRow("Evidence Robustness Page", sitePath("/robustness/"), "Dataset composition and evidence-depth review priorities", false)}
+        ${downloadRow("Replication Packet", sitePath("/replicate/"), "Commands and release verification artifacts", false)}
+        ${downloadRow("Credibility Boundaries", sitePath("/credibility/"), "Review and acknowledgment status limits", false)}
+        ${downloadRow("Public Codebook", sitePath("/codebook/"), "Operational definitions for record review", false)}
+        ${downloadRow("Coverage Limits", sitePath("/coverage/"), "Responsible-use boundaries for coverage signals", false)}
+        ${downloadRow("Methodology Stress Test", sitePath("/briefs/brief_2026_06_16_methodology_stress_test/"), "Where the archive can be wrong", false)}
         ${downloadRow("Snapshot Manifest", sitePath("/data/snapshot-manifest.json"), shortHash(state.manifest.hashes.full_snapshot))}
         ${downloadRow("Snapshot Index", sitePath("/data/snapshot-index.json"), `${state.snapshotIndex.snapshot_count} archived snapshots`)}
         ${downloadRow("Archived Snapshot", sitePath(`/data/snapshots/${state.manifest.snapshot_id}.json`), state.manifest.snapshot_id)}
@@ -2997,6 +3502,16 @@ function renderDownloads() {
         ${downloadRow("Source Audit Notes", sitePath("/docs/source-audit.md"), "Pre-launch source checks")}
         ${downloadRow("Correction Schema", sitePath("/schema/correction.schema.json"), "Correction fields")}
         ${downloadRow("Review Log Schema", sitePath("/schema/review-log.schema.json"), "Review workflow fields")}
+        ${downloadRow("Review Ledger Schema", sitePath("/schema/review-ledger.schema.json"), "Public review ledger fields")}
+        ${downloadRow("Methodology Examples Schema", sitePath("/schema/methodology-example.schema.json"), "Methodology example fields")}
+        ${downloadRow("Workflow Schema", sitePath("/schema/workflow.schema.json"), "Workflow definition fields")}
+        ${downloadRow("Release Schema", sitePath("/schema/release.schema.json"), "Release metadata fields")}
+        ${downloadRow("Release Verification Schema", sitePath("/schema/release-verification.schema.json"), "Release verification fields")}
+        ${downloadRow("Credibility Status Schema", sitePath("/schema/credibility-status.schema.json"), "Credibility status fields")}
+        ${downloadRow("Robustness Metrics Schema", sitePath("/schema/robustness-metrics.schema.json"), "Robustness metric fields")}
+        ${downloadRow("Evidence-Depth Queues Schema", sitePath("/schema/evidence-depth-queues.schema.json"), "Evidence-depth queue fields")}
+        ${downloadRow("Gold Record Set Schema", sitePath("/schema/gold-record-set.schema.json"), "Gold candidate fields")}
+        ${downloadRow("Reviewer Challenge Pack Schema", sitePath("/schema/reviewer-challenge-pack.schema.json"), "Challenge pack fields")}
         ${downloadRow("Dataset License", sitePath("/DATA_LICENSE.md"), "Reuse terms")}
         ${downloadRow("Code License", sitePath("/LICENSE.md"), "MIT License")}
       </div>
@@ -3031,6 +3546,8 @@ async function init() {
     renderSubmitWorkflow();
     renderResearchWorkspace();
     renderReviewerQueue();
+    renderWorkflows();
+    renderRobustness();
     renderImpact();
     renderUpdates();
     renderDownloads();

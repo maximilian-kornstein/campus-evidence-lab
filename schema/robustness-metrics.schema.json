@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Campus Evidence Lab Robustness Metrics",
+  "type": "object",
+  "required": ["snapshot_id", "generated_at", "purpose", "totals", "source_type_concentration", "confidence", "date_precision", "community_concentration", "category_concentration", "response_depth", "review_gaps", "known_limits"],
+  "properties": {
+    "snapshot_id": { "type": "string" },
+    "generated_at": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "purpose": { "type": "string", "minLength": 40 },
+    "totals": { "type": "object" },
+    "source_type_concentration": { "type": "object" },
+    "confidence": { "type": "object" },
+    "date_precision": { "type": "object" },
+    "community_concentration": { "type": "object" },
+    "category_concentration": { "type": "object" },
+    "response_depth": { "type": "object" },
+    "review_gaps": { "type": "object" },
+    "known_limits": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  },
+  "additionalProperties": false
+}

@@ -14,6 +14,7 @@
 - source_ids: source records supporting the event.
 - source_types: source categories supporting the event.
 - institutional_response: public institutional response if available.
+- response_depth: optional response-depth label for enriched records. Allowed values are direct_institutional_response, agency_described_institutional_action, limited_public_response_note, and no_public_response_found.
 - response_date: response date if available.
 - legal_status: public legal, OCR, or procedural status.
 - verification_status: type of public support behind the record.
@@ -22,7 +23,16 @@
 - created_at: date added to the dataset.
 - updated_at: latest dataset edit date.
 - record_hash: deterministic hash of the event record.
+- classification_rationale: optional reviewer-written explanation for why the event category is appropriate.
+- community_rationale: optional reviewer-written explanation for why affected-community labels are source-supported.
+- confidence_rationale: optional reviewer-written explanation for why the confidence label reflects source support.
+- limitations: optional record-specific use limits beyond the default no-ranking, no-prevalence, and no-legal-finding limits.
+- field_support: optional source-to-field support rows identifying which source IDs support specific fields and what reviewers should check.
 - changelog: public record-edit history.
+
+## Record audit profiles
+
+Event pages and Research Workspace packets generate an audit profile for every record. If optional rationale fields are absent, the public site derives conservative audit text from existing event fields, linked sources, source types, verification status, and confidence. Derived audit profiles are review aids; they do not add new factual claims beyond the canonical event record and linked public sources.
 
 ## events-research.json and events-research.csv
 
@@ -148,3 +158,121 @@ Each file in `data/snapshots/` is an archived snapshot manifest. The current man
 - queues: public review queues and evidence rules.
 - decision_counts: correction counts by status.
 - service_standard: triage target and publication/correction rules.
+
+## review-samples.json
+
+- version: review sample artifact version.
+- generated_at: generation date.
+- snapshot_id: snapshot the samples are tied to.
+- snapshot_hash: event hash used to seed deterministic sample ordering.
+- method: public explanation that samples are review queues, not rankings or severity scores.
+- samples: named deterministic samples such as random, low-confidence, single-source, broad-label, missing-response, legal/OCR, and source-audit follow-up samples.
+- records: per-sample event rows with reason codes, review questions, packet URLs, and checklist URLs.
+
+## review-ledger.json
+
+- version: review ledger version.
+- updated_at: latest ledger update date.
+- entries: public review work entries tied to sample IDs, statuses, review types, record counts, findings summaries, issue URLs, resulting correction IDs, and resulting event IDs.
+
+The review ledger records review activity separately from canonical event records. This keeps event hashes stable until a review produces an accepted correction or record update.
+
+## methodology-examples.json
+
+- id: stable example identifier.
+- type: methodology example type.
+- title: public example title.
+- category: valid event category used to illustrate the rule.
+- affected_communities: valid affected-community labels used to illustrate the rule.
+- confidence: valid confidence label used to illustrate the rule.
+- verification_status: valid verification status used to illustrate the rule.
+- source_basis: why the example is source-supported, source-limited, or excluded.
+- methodological_point: what rule the example demonstrates.
+- public_claim_limit: what the example must not be used to claim.
+
+## workflows.json
+
+- version: workflow artifact version.
+- updated_at: workflow artifact update date.
+- workflows: task-based user entry points.
+- workflow.id: stable workflow identifier.
+- workflow.title: public workflow title.
+- workflow.audience: intended users.
+- workflow.start_url: page where the workflow starts.
+- workflow.packet_url: packet or task URL for the workflow.
+- workflow.steps: ordered task steps.
+- workflow.supported_claims: claims the workflow can support.
+- workflow.requires_followup: claims that require additional reporting or review.
+- workflow.guardrail_links: methodology, codebook, coverage, or guide links users should inspect.
+
+## releases.json
+
+- id: stable release identifier.
+- name: public release name.
+- date: release date.
+- snapshot_id: dataset snapshot represented by the release.
+- snapshot_hash: full snapshot hash.
+- event_count, school_count, source_count: release totals.
+- release_notes_url: release notes path.
+- replication_url: replication instructions path.
+- verification_commands: commands required to reproduce release checks.
+- known_limits: public limits that travel with the release.
+
+## release-verification.json
+
+- generated_at: date the local verification artifact was generated.
+- snapshot_id: verified snapshot.
+- snapshot_hash: verified full snapshot hash.
+- status: passed or failed.
+- commands: local verification commands and statuses.
+- tool_versions: local tool versions used for verification.
+- notes: public caveats about what verification does and does not prove.
+
+## credibility-status.json
+
+- status: bounded credibility status such as review requested, review in progress, review completed, collaboration completed, or public acknowledgment approved.
+- display_name: public display name only when permission is clear.
+- scope: scope of review or collaboration.
+- permission_to_display: whether public display is approved.
+- endorsement_language_approved: whether endorsement wording is explicitly approved.
+- public_note: caveat-preserving public note.
+
+## robustness-metrics.json
+
+- snapshot_id: snapshot the metrics describe.
+- generated_at: generation date.
+- purpose: public explanation that metrics guide review priorities.
+- totals: event, source, source-count, and explicit-rationale counts.
+- source_type_concentration: source-type distribution for the current dataset.
+- confidence: confidence-label distribution.
+- date_precision: date-precision distribution.
+- community_concentration: affected-community label distribution.
+- category_concentration: category distribution.
+- response_depth: stored public response-depth distribution.
+- review_gaps: counts for follow-up priorities such as single-source records, year-level dates, limited response depth, and missing explicit rationales.
+- known_limits: caveats that travel with the metrics.
+
+## evidence-depth-queues.json
+
+- snapshot_id: snapshot the queues are tied to.
+- generated_at: generation date.
+- method: deterministic queue-generation note.
+- queues: named review-priority queues.
+- queue.records: event rows with source count, source types, response-depth label, reason codes, workspace URL, and packet URL.
+
+## gold-record-set.json
+
+- snapshot_id: snapshot the candidate set is tied to.
+- generated_at: generation date.
+- review_standard: current candidate standard.
+- public_claim_limit: caveat explaining that candidate status is not outside validation.
+- records: records prioritized for deeper source-text review after existing-metadata enrichment.
+- required_before_gold_status: checks required before a candidate can be described as fully reviewed.
+
+## reviewer-challenge-pack.json
+
+- snapshot_id: snapshot the challenge pack is tied to.
+- generated_at: generation date.
+- method: deterministic selection method.
+- records: difficult or ambiguous records selected from evidence-depth queues.
+- challenge_reason_codes: reasons reviewers should inspect the record closely.

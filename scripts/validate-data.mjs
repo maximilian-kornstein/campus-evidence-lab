@@ -1,6 +1,10 @@
 import { access } from "node:fs/promises";
 import path from "node:path";
 import { assertDate, paths, readJson, rootDir, sha256, eventForHash } from "./lib.mjs";
+import { validateReviewLedger } from "./review-samples-lib.mjs";
+import { validateMethodologyExamples } from "./methodology-definitions.mjs";
+import { validateCredibilityStatus, validateReleaseVerification, validateReleases } from "./release-credibility-lib.mjs";
+import { containsProhibitedRobustnessClaim } from "./robustness-metrics-lib.mjs";
 
 const allowedCommunities = new Set([
   "Jewish",
@@ -59,6 +63,12 @@ const allowedVerification = new Set([
 
 const allowedConfidence = new Set(["High", "Medium", "Low"]);
 const allowedDatePrecision = new Set(["day", "month", "year"]);
+const allowedResponseDepth = new Set([
+  "direct_institutional_response",
+  "agency_described_institutional_action",
+  "limited_public_response_note",
+  "no_public_response_found"
+]);
 
 const allowedCorrectionStatus = new Set(["pending", "accepted", "rejected", "needs_more_evidence"]);
 const requiredReviewQueues = new Set([
@@ -68,13 +78,44 @@ const requiredReviewQueues = new Set([
   "school-metadata-corrections"
 ]);
 
-const [events, schools, sources, briefs, corrections, reviewLog] = await Promise.all([
+const [
+  events,
+  schools,
+  sources,
+  briefs,
+  corrections,
+  reviewLog,
+  reviewSamples,
+  reviewLedger,
+  methodologyExamples,
+  workflows,
+  releases,
+  releaseVerification,
+  credibilityStatus,
+  robustnessMetrics,
+  evidenceDepthQueues,
+  goldRecordSet,
+  reviewerChallengePack,
+  manifest
+] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
   readJson(paths.sources),
   readJson(paths.briefs),
   readJson(paths.corrections),
-  readJson(paths.reviewLog)
+  readJson(paths.reviewLog),
+  readJson(paths.reviewSamples),
+  readJson(paths.reviewLedger),
+  readJson(paths.methodologyExamples),
+  readJson(paths.workflows),
+  readJson(paths.releases),
+  readJson(paths.releaseVerification),
+  readJson(paths.credibilityStatus),
+  readJson(paths.robustnessMetrics),
+  readJson(paths.evidenceDepthQueues),
+  readJson(paths.goldRecordSet),
+  readJson(paths.reviewerChallengePack),
+  readJson(paths.manifest)
 ]);
 
 const errors = [];
@@ -137,6 +178,9 @@ for (const event of events) {
   if (!allowedCategories.has(event.category)) errors.push(`Event ${event.id} has invalid category ${event.category}`);
   if (!allowedVerification.has(event.verification_status)) errors.push(`Event ${event.id} has invalid verification_status`);
   if (!allowedConfidence.has(event.confidence)) errors.push(`Event ${event.id} has invalid confidence`);
+  if (event.response_depth !== undefined && !allowedResponseDepth.has(event.response_depth)) {
+    errors.push(`Event ${event.id} has invalid response_depth ${event.response_depth}`);
+  }
   if (!Array.isArray(event.affected_communities) || event.affected_communities.length === 0) {
     errors.push(`Event ${event.id} must include affected_communities`);
   } else {
@@ -149,6 +193,37 @@ for (const event of events) {
   } else {
     for (const sourceId of event.source_ids) {
       if (!sourceIds.has(sourceId)) errors.push(`Event ${event.id} references unknown source ${sourceId}`);
+    }
+  }
+  for (const field of ["classification_rationale", "community_rationale", "confidence_rationale"]) {
+    if (event[field] !== undefined && (!event[field] || event[field].length < 20)) {
+      errors.push(`Event ${event.id} ${field} is too short`);
+    }
+  }
+  if (event.limitations !== undefined) {
+    if (!Array.isArray(event.limitations) || event.limitations.length === 0) {
+      errors.push(`Event ${event.id} limitations must be a non-empty array when present`);
+    } else {
+      for (const [index, limitation] of event.limitations.entries()) {
+        if (!limitation || limitation.length < 20) errors.push(`Event ${event.id} limitations[${index}] is too short`);
+      }
+    }
+  }
+  if (event.field_support !== undefined) {
+    if (!Array.isArray(event.field_support) || event.field_support.length === 0) {
+      errors.push(`Event ${event.id} field_support must be a non-empty array when present`);
+    } else {
+      for (const [index, row] of event.field_support.entries()) {
+        if (!row.field) errors.push(`Event ${event.id} field_support[${index}] missing field`);
+        if (!row.rationale || row.rationale.length < 20) errors.push(`Event ${event.id} field_support[${index}] rationale is too short`);
+        if (!Array.isArray(row.source_ids) || row.source_ids.length === 0) {
+          errors.push(`Event ${event.id} field_support[${index}] must include source_ids`);
+        } else {
+          for (const sourceId of row.source_ids) {
+            if (!sourceIds.has(sourceId)) errors.push(`Event ${event.id} field_support[${index}] references unknown source ${sourceId}`);
+          }
+        }
+      }
     }
   }
   for (const field of ["summary", "description", "institutional_response", "legal_status"]) {
@@ -253,6 +328,132 @@ for (const [status, count] of Object.entries(actualCorrectionCounts)) {
 
 if (!reviewLog.service_standard?.publication_rule || !reviewLog.service_standard?.correction_rule) {
   errors.push("review-log must include publication and correction rules");
+}
+
+if (!reviewSamples.snapshot_id || reviewSamples.snapshot_id !== manifest.snapshot_id) {
+  errors.push("review-samples snapshot_id must match snapshot manifest");
+}
+if (!Array.isArray(reviewSamples.samples) || reviewSamples.samples.length === 0) {
+  errors.push("review-samples must include at least one sample");
+}
+
+const reviewSampleIds = new Set();
+for (const sample of reviewSamples.samples ?? []) {
+  if (!sample.id) errors.push("review-samples sample missing id");
+  if (reviewSampleIds.has(sample.id)) errors.push(`review-samples duplicate sample ${sample.id}`);
+  reviewSampleIds.add(sample.id);
+  if (!sample.label || !sample.description) errors.push(`review-samples sample ${sample.id} missing label or description`);
+  if (!Number.isInteger(sample.limit) || sample.limit < 1) errors.push(`review-samples sample ${sample.id} has invalid limit`);
+  if (!Array.isArray(sample.records)) errors.push(`review-samples sample ${sample.id} records must be an array`);
+  for (const row of sample.records ?? []) {
+    if (!eventIds.has(row.event_id)) errors.push(`review-samples sample ${sample.id} references unknown event ${row.event_id}`);
+    if (!Array.isArray(row.reason_codes) || row.reason_codes.length === 0) {
+      errors.push(`review-samples sample ${sample.id} row ${row.event_id} must include reason_codes`);
+    }
+    if (!row.workspace_url || !row.checklist_url) {
+      errors.push(`review-samples sample ${sample.id} row ${row.event_id} missing review URLs`);
+    }
+  }
+}
+
+errors.push(...validateReviewLedger(reviewLedger, reviewSampleIds));
+errors.push(...validateMethodologyExamples(methodologyExamples));
+
+if (!workflows.version) errors.push("workflows missing version");
+assertDate(workflows.updated_at, "workflows updated_at", errors);
+if (!Array.isArray(workflows.workflows) || workflows.workflows.length < 8) {
+  errors.push("workflows must include the required task entry points");
+}
+for (const workflow of workflows.workflows ?? []) {
+  for (const field of ["id", "title", "audience", "start_url", "packet_url"]) {
+    if (!workflow[field]) errors.push(`Workflow ${workflow.id ?? "unknown"} missing ${field}`);
+  }
+  for (const field of ["steps", "supported_claims", "requires_followup", "guardrail_links"]) {
+    if (!Array.isArray(workflow[field]) || workflow[field].length === 0) {
+      errors.push(`Workflow ${workflow.id ?? "unknown"} ${field} must be a non-empty array`);
+    }
+  }
+  const text = JSON.stringify(workflow).toLowerCase();
+  if (/safest|most dangerous|worst school|best school|endorsed by|approved by|safety score|severity score|school ranking|prevalence estimate/.test(text)) {
+    errors.push(`Workflow ${workflow.id} includes prohibited overclaiming language`);
+  }
+}
+errors.push(...validateReleases(releases));
+errors.push(...validateReleaseVerification(releaseVerification));
+errors.push(...validateCredibilityStatus(credibilityStatus));
+
+for (const [label, artifact] of [
+  ["robustness-metrics", robustnessMetrics],
+  ["evidence-depth-queues", evidenceDepthQueues],
+  ["gold-record-set", goldRecordSet],
+  ["reviewer-challenge-pack", reviewerChallengePack]
+]) {
+  if (artifact.snapshot_id !== manifest.snapshot_id) {
+    errors.push(`${label} snapshot_id must match snapshot manifest`);
+  }
+  assertDate(artifact.generated_at, `${label} generated_at`, errors);
+  if (containsProhibitedRobustnessClaim(JSON.stringify(artifact))) {
+    errors.push(`${label} includes prohibited ranking, prevalence, endorsement, or safety-score language`);
+  }
+}
+
+if (!robustnessMetrics.totals || robustnessMetrics.totals.events !== events.length) {
+  errors.push("robustness-metrics totals.events must match event count");
+}
+for (const field of ["source_type_concentration", "confidence", "date_precision", "community_concentration", "category_concentration", "response_depth", "review_gaps"]) {
+  if (!robustnessMetrics[field] || typeof robustnessMetrics[field] !== "object") {
+    errors.push(`robustness-metrics missing ${field}`);
+  }
+}
+if (!Array.isArray(robustnessMetrics.known_limits) || robustnessMetrics.known_limits.length === 0) {
+  errors.push("robustness-metrics must include known limits");
+}
+
+if (!Array.isArray(evidenceDepthQueues.queues) || evidenceDepthQueues.queues.length < 6) {
+  errors.push("evidence-depth-queues must include at least six queues");
+}
+for (const queue of evidenceDepthQueues.queues ?? []) {
+  if (!queue.id || !queue.label || !queue.description) {
+    errors.push("evidence-depth-queues queue missing id, label, or description");
+  }
+  if (!Array.isArray(queue.records) || queue.records.length === 0 || queue.records.length > 25) {
+    errors.push(`evidence-depth-queues ${queue.id} must include 1-25 records`);
+  }
+  for (const row of queue.records ?? []) {
+    if (!eventIds.has(row.event_id)) errors.push(`evidence-depth-queues ${queue.id} references unknown event ${row.event_id}`);
+    if (!Array.isArray(row.reason_codes) || row.reason_codes.length === 0) {
+      errors.push(`evidence-depth-queues ${queue.id} row ${row.event_id} missing reason_codes`);
+    }
+    if (!row.workspace_url || !row.packet_url) {
+      errors.push(`evidence-depth-queues ${queue.id} row ${row.event_id} missing review URLs`);
+    }
+  }
+}
+
+if (goldRecordSet.review_standard !== "existing_metadata_evidence_depth_review") {
+  errors.push("gold-record-set review_standard must be existing_metadata_evidence_depth_review");
+}
+if (!Array.isArray(goldRecordSet.records) || goldRecordSet.records.length === 0 || goldRecordSet.records.length > 100) {
+  errors.push("gold-record-set must include 1-100 records");
+}
+for (const record of goldRecordSet.records ?? []) {
+  if (!eventIds.has(record.event_id)) errors.push(`gold-record-set references unknown event ${record.event_id}`);
+  if (record.status !== "candidate_enriched_from_existing_metadata") {
+    errors.push(`gold-record-set ${record.event_id} has unsupported status ${record.status}`);
+  }
+  if (!Array.isArray(record.required_before_gold_status) || record.required_before_gold_status.length === 0) {
+    errors.push(`gold-record-set ${record.event_id} missing required_before_gold_status`);
+  }
+}
+
+if (!Array.isArray(reviewerChallengePack.records) || reviewerChallengePack.records.length === 0 || reviewerChallengePack.records.length > 25) {
+  errors.push("reviewer-challenge-pack must include 1-25 records");
+}
+for (const record of reviewerChallengePack.records ?? []) {
+  if (!eventIds.has(record.event_id)) errors.push(`reviewer-challenge-pack references unknown event ${record.event_id}`);
+  if (!Array.isArray(record.challenge_reason_codes) || record.challenge_reason_codes.length === 0) {
+    errors.push(`reviewer-challenge-pack ${record.event_id} missing challenge_reason_codes`);
+  }
 }
 
 if (errors.length > 0) {

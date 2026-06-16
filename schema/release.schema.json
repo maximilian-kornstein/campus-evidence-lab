@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/release.schema.json",
+  "title": "Campus Evidence Lab Releases",
+  "type": "object",
+  "required": ["version", "updated_at", "releases"],
+  "properties": {
+    "version": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date" },
+    "releases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "date",
+          "snapshot_id",
+          "snapshot_hash",
+          "event_count",
+          "school_count",
+          "source_count",
+          "release_notes_url",
+          "replication_url",
+          "verification_commands",
+          "known_limits"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "date": { "type": "string", "format": "date" },
+          "snapshot_id": { "type": "string" },
+          "snapshot_hash": { "type": "string" },
+          "event_count": { "type": "integer", "minimum": 0 },
+          "school_count": { "type": "integer", "minimum": 0 },
+          "source_count": { "type": "integer", "minimum": 0 },
+          "release_notes_url": { "type": "string" },
+          "replication_url": { "type": "string" },
+          "verification_commands": { "type": "array", "items": { "type": "string" } },
+          "known_limits": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

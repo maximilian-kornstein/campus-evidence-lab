@@ -1,5 +1,7 @@
 import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { buildAuditProfile } from "../assets/audit-profile.js";
+import { hasSubstantiveInstitutionalResponse, responseDepthDisplayProfile, responseDisplayProfile } from "../assets/record-display.js";
 import { paths, readJson, rootDir } from "./lib.mjs";
 
 const [events, schools, sources, briefs, manifest] = await Promise.all([
@@ -93,6 +95,54 @@ function dataLine(label, value, className = "") {
   `;
 }
 
+function auditFieldSupportRows(rows) {
+  return rows
+    .map(
+      (row) => `
+        <tr>
+          <td>${escapeHtml(row.field)}</td>
+          <td>${escapeHtml(row.sourceTitles.length ? row.sourceTitles.join(", ") : row.sourceIds.join(", "))}</td>
+          <td>${escapeHtml(row.rationale)}</td>
+        </tr>
+      `
+    )
+    .join("");
+}
+
+function recordAuditCard(event, sources) {
+  const profile = buildAuditProfile(event, sources);
+  return `
+    <section class="section section--tight record-audit-card">
+      <div class="section-header">
+        <h2 class="section-title">Record Audit</h2>
+        <p class="section-note">Source basis and classification review</p>
+      </div>
+      <dl>
+        ${dataLine("Source basis", escapeHtml(profile.sourceBasis))}
+        ${dataLine("Classification rationale", escapeHtml(profile.classificationRationale))}
+        ${dataLine("Community rationale", escapeHtml(profile.communityRationale))}
+        ${dataLine("Confidence rationale", escapeHtml(profile.confidenceRationale))}
+      </dl>
+      <div class="table-wrap table-wrap--compact">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Source support</th>
+              <th>Review note</th>
+            </tr>
+          </thead>
+          <tbody>${auditFieldSupportRows(profile.fieldSupport)}</tbody>
+        </table>
+      </div>
+      <h3 class="section-title section-title--spaced">Use Limits</h3>
+      <ul class="evidence-list">
+        ${profile.limitations.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ul>
+    </section>
+  `;
+}
+
 function countBy(items) {
   const counts = new Map();
   for (const item of items) {
@@ -128,34 +178,24 @@ function countTable(rows, firstLabel, secondLabel = "Records") {
   `;
 }
 
-function normalizedInstitutionalResponse(value) {
-  return String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/[’']/g, "'");
-}
-
 function hasDisplayInstitutionalResponse(event) {
-  const response = normalizedInstitutionalResponse(event.institutional_response);
-  if (!response) return false;
-  if (response.startsWith("the record summarizes ")) return false;
-  if (response.includes("does not independently evaluate investigative, disciplinary, or institutional response outcomes")) return false;
-  if (response.includes("does not independently evaluate the institution's completed response")) return false;
-  return true;
+  return hasSubstantiveInstitutionalResponse(event);
 }
 
 function institutionalResponseSection(event) {
-  if (!hasDisplayInstitutionalResponse(event)) return "";
-  const response = String(event.institutional_response ?? "").trim();
+  const profile = responseDisplayProfile(event);
+  if (!profile.shouldShow) return "";
+  const responseDepth = responseDepthDisplayProfile(event);
   const details = [
+    dataLine("Response depth", escapeHtml(responseDepth.label)),
     event.response_date ? dataLine("Response date", escapeHtml(event.response_date), "mono") : "",
     event.legal_status ? dataLine("Legal status", escapeHtml(event.legal_status)) : ""
   ]
     .filter(Boolean)
     .join("");
   return `
-    <h2 class="section-title section-title--spaced">Public institutional response</h2>
-    <p>${escapeHtml(response)}</p>
+    <h2 class="section-title section-title--spaced">${escapeHtml(profile.heading)}</h2>
+    <p>${escapeHtml(profile.response)}</p>
     ${details ? `<dl>${details}</dl>` : ""}
   `;
 }
@@ -177,6 +217,15 @@ function reviewNeedLabels(event) {
 function workspaceUrlForEvents(records, depth = 0) {
   const ids = records.slice(0, 100).map((event) => event.id).join(",");
   return sitePath(ids ? `/research-workspace/?record_ids=${encodeURIComponent(ids)}` : "/research-workspace/", depth);
+}
+
+function workspaceUrlForEventsWithQuestion(records, title, question, depth = 0) {
+  if (!records.length) return "";
+  const params = new URLSearchParams();
+  params.set("record_ids", records.slice(0, 100).map((event) => event.id).join(","));
+  params.set("title", title);
+  params.set("question", question);
+  return sitePath(`/research-workspace/?${params.toString()}`, depth);
 }
 
 function briefRecordTable(records, emptyText) {
@@ -308,13 +357,15 @@ for (const event of events) {
                 ${dataLine("Location", escapeHtml(event.location))}
                 ${dataLine("Category", escapeHtml(event.category))}
                 ${dataLine("Communities", escapeHtml(event.affected_communities.join(", ")))}
-                ${!hasDisplayInstitutionalResponse(event) ? dataLine("Legal status", escapeHtml(event.legal_status)) : ""}
+                ${!responseDisplayProfile(event).shouldShow ? dataLine("Response depth", escapeHtml(responseDepthDisplayProfile(event).label)) : ""}
+                ${!responseDisplayProfile(event).shouldShow ? dataLine("Legal status", escapeHtml(event.legal_status)) : ""}
                 ${dataLine("Verification", escapeHtml(event.verification_status))}
                 ${dataLine("Confidence", escapeHtml(event.confidence))}
                 ${dataLine("Verification rationale", escapeHtml(verificationRationale(event, eventSources.length)))}
                 ${dataLine("Last updated", escapeHtml(event.updated_at), "mono")}
                 ${dataLine("Record hash", escapeHtml(event.record_hash), "mono")}
               </dl>
+              ${recordAuditCard(event, eventSources)}
             </div>
             <aside>
               <h2 class="section-title">Sources</h2>
@@ -423,7 +474,53 @@ for (const school of schools) {
   const legalEvents = schoolEvents.filter((event) =>
     /ocr|legal|lawsuit|title vi|title ix|resolution|settlement|federal|doj|complaint|finding/i.test(`${event.category} ${event.legal_status}`)
   );
+  const reviewNeedEvents = schoolEvents.filter((event) => reviewNeedLabels(event).length > 0);
+  const dossierPackets = [
+    [
+      "Dossier packet",
+      workspaceUrlForEventsWithQuestion(
+        schoolEvents,
+        `Campus Evidence Lab ${school.name} Dossier Packet`,
+        "What public-source records exist for this school in the current snapshot?",
+        detailDepth
+      )
+    ],
+    [
+      "Legal/OCR packet",
+      workspaceUrlForEventsWithQuestion(
+        legalEvents,
+        `Campus Evidence Lab ${school.name} Legal/OCR Packet`,
+        "Which public legal or OCR records are documented for this school?",
+        detailDepth
+      )
+    ],
+    [
+      "Response packet",
+      workspaceUrlForEventsWithQuestion(
+        responseEvents,
+        `Campus Evidence Lab ${school.name} Institutional Response Packet`,
+        "Which public institutional responses are documented for this school?",
+        detailDepth
+      )
+    ],
+    [
+      "Review-needs packet",
+      workspaceUrlForEventsWithQuestion(
+        reviewNeedEvents,
+        `Campus Evidence Lab ${school.name} Review Needs Packet`,
+        "Which records in this school dossier most need source, classification, or use-limit review?",
+        detailDepth
+      )
+    ]
+  ].filter(([, href]) => href);
   const reviewNeeds = countBy(schoolEvents.flatMap(reviewNeedLabels));
+  const schoolFilterLinks = communities
+    .map(
+      (community) =>
+        `<a class="button-link" href="${sitePath(`/events/?school=${encodeURIComponent(school.id)}&community=${encodeURIComponent(community)}`, detailDepth)}">Open ${escapeHtml(community)} records in Events</a>`
+    )
+    .join("");
+  const antisemitismLink = `<a class="button-link" href="${sitePath(`/events/?school=${encodeURIComponent(school.id)}&q=antisemitism`, detailDepth)}">Open antisemitism search in Events</a>`;
   const schoolDir = path.join(schoolsDir, school.id);
   await mkdir(schoolDir, { recursive: true });
 
@@ -440,6 +537,16 @@ for (const school of schools) {
           <a class="button-link" href="${workspaceUrlForEvents(schoolEvents, detailDepth)}">Build Citation Packet</a>
           <a class="button-link" href="${sitePath(`/submit/?record_id=${encodeURIComponent(schoolEvents[0]?.id ?? "")}`, detailDepth)}">Request Correction</a>
         </div>
+        <h2 class="section-title section-title--spaced">Dossier Packets</h2>
+        <div class="utility-bar">
+          ${dossierPackets.map(([label, href]) => `<a class="button-link" href="${href}">${escapeHtml(label)}</a>`).join("")}
+        </div>
+        <h2 class="section-title section-title--spaced">Use This Dossier Responsibly</h2>
+        <ul class="evidence-list">
+          <li>This dossier describes public documentation in the current snapshot, not campus safety or incident frequency.</li>
+          <li>Use source pages and event audit cards before citing records.</li>
+          <li>Use the <a href="${sitePath("/codebook/", detailDepth)}">codebook</a> and <a href="${sitePath("/coverage/", detailDepth)}">coverage limits</a> before making comparisons or broader claims.</li>
+        </ul>
         <section class="detail-panel">
           <div class="detail-grid">
             <div>
@@ -456,6 +563,12 @@ for (const school of schools) {
                     : ""
                 }
               </dl>
+              <h2 class="section-title section-title--spaced">Filter this dossier</h2>
+              <p class="section-note">School pages are static summaries. Use these focused Events links to narrow by community or keyword before building a packet or citing records.</p>
+              <div class="utility-bar">
+                ${schoolFilterLinks}
+                ${antisemitismLink}
+              </div>
               <h2 class="section-title section-title--spaced">Timeline</h2>
               <div class="table-wrap">
                 <table>

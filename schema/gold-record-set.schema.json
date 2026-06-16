@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Campus Evidence Lab Gold Record Set",
+  "type": "object",
+  "required": ["snapshot_id", "generated_at", "review_standard", "public_claim_limit", "records"],
+  "properties": {
+    "snapshot_id": { "type": "string" },
+    "generated_at": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "review_standard": { "type": "string" },
+    "public_claim_limit": { "type": "string", "minLength": 40 },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event_id", "school_id", "status", "review_score", "response_depth", "reason_codes", "workspace_url", "required_before_gold_status"],
+        "properties": {
+          "event_id": { "type": "string" },
+          "school_id": { "type": "string" },
+          "status": { "type": "string" },
+          "review_score": { "type": "number" },
+          "response_depth": { "type": "string" },
+          "reason_codes": { "type": "array", "items": { "type": "string" } },
+          "workspace_url": { "type": "string" },
+          "required_before_gold_status": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

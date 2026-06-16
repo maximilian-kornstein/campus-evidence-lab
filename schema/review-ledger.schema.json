@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/review-ledger.schema.json",
+  "title": "Campus Evidence Lab Review Ledger",
+  "type": "object",
+  "required": ["version", "updated_at", "entries"],
+  "properties": {
+    "version": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "sample_id",
+          "status",
+          "review_type",
+          "reviewer_display",
+          "reviewed_at",
+          "record_count",
+          "findings_summary",
+          "issue_url",
+          "resulting_correction_ids",
+          "resulting_event_ids"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^review_\\d{4}_\\d{4}$" },
+          "sample_id": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["not_started", "in_progress", "completed", "changes_requested", "superseded"]
+          },
+          "review_type": {
+            "type": "string",
+            "enum": ["internal", "external", "source_audit", "classification_audit", "methodology_audit"]
+          },
+          "reviewer_display": { "type": ["string", "null"] },
+          "reviewed_at": { "type": ["string", "null"], "format": "date" },
+          "record_count": { "type": "integer", "minimum": 0 },
+          "findings_summary": { "type": "string" },
+          "issue_url": { "type": ["string", "null"] },
+          "resulting_correction_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "resulting_event_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

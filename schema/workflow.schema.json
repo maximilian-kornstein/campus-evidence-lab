@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/workflow.schema.json",
+  "title": "Campus Evidence Lab Workflows",
+  "type": "object",
+  "required": ["version", "updated_at", "workflows"],
+  "properties": {
+    "version": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date" },
+    "workflows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "audience",
+          "start_url",
+          "packet_url",
+          "steps",
+          "supported_claims",
+          "requires_followup",
+          "guardrail_links"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "title": { "type": "string" },
+          "audience": { "type": "string" },
+          "start_url": { "type": "string" },
+          "packet_url": { "type": "string" },
+          "steps": { "type": "array", "items": { "type": "string" }, "minItems": 3 },
+          "supported_claims": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "requires_followup": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "guardrail_links": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["label", "href"],
+              "properties": {
+                "label": { "type": "string" },
+                "href": { "type": "string" }
+              }
+            },
+            "minItems": 2
+          }
+        }
+      }
+    }
+  }
+}

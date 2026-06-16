@@ -49,7 +49,7 @@ Reviewer work should stay narrow and documented:
 
 Acknowledgments or partner notes should appear only after documented review or collaboration is complete.
 
-The public trust packet is published at `/trust/`. Outreach language is drafted in `docs/outreach-email.md`; reply handling lives in `docs/reviewer-response-playbook.md`; acknowledgment standards are defined in `docs/partner-acknowledgment-policy.md`.
+The public trust packet is published at `/trust/`. Review workflows are published at `/workflows/`; replication instructions are published at `/replicate/`; credibility boundaries are published at `/credibility/`. Outreach language is drafted in `docs/outreach-email.md`; reply handling lives in `docs/reviewer-response-playbook.md`; acknowledgment standards are defined in `docs/partner-acknowledgment-policy.md`.
 
 ## Pull Request Checklist
 

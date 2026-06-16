@@ -1,6 +1,7 @@
 import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { paths, readJson, rootDir } from "./lib.mjs";
+import { responseDisplayProfile } from "../assets/record-display.js";
 
 const errors = [];
 const siteRoot = process.env.SITE_ROOT ? path.resolve(rootDir, process.env.SITE_ROOT) : rootDir;
@@ -57,22 +58,6 @@ async function fileExists(relativePath) {
   }
 }
 
-function normalizedInstitutionalResponse(value) {
-  return String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/[’']/g, "'");
-}
-
-function hasDisplayInstitutionalResponse(event) {
-  const response = normalizedInstitutionalResponse(event.institutional_response);
-  if (!response) return false;
-  if (response.startsWith("the record summarizes ")) return false;
-  if (response.includes("does not independently evaluate investigative, disciplinary, or institutional response outcomes")) return false;
-  if (response.includes("does not independently evaluate the institution's completed response")) return false;
-  return true;
-}
-
 async function htmlFiles(dir = siteRoot) {
   const entries = await readdir(dir, { withFileTypes: true });
   const files = [];
@@ -120,6 +105,14 @@ for (const route of [
   "research-guide/index.html",
   "research-workspace/index.html",
   "reviewer-queue/index.html",
+  "workflows/index.html",
+  "robustness/index.html",
+  "codebook/index.html",
+  "coverage/index.html",
+  "replicate/index.html",
+  "credibility/index.html",
+  "briefs/brief_2026_06_16_methodology_stress_test/index.html",
+  "briefs/brief_2026_06_16_signature_finding_documentation_over_counts/index.html",
   "downloads/index.html",
   "submit/index.html",
   "about/index.html",
@@ -149,16 +142,41 @@ for (const artifact of [
   "data/snapshot-index.json",
   "data/corrections.json",
   "data/review-log.json",
+  "data/review-samples.json",
+  "data/review-ledger.json",
+  "data/methodology-examples.json",
+  "data/workflows.json",
+  "data/releases.json",
+  "data/release-verification.json",
+  "data/credibility-status.json",
+  "data/robustness-metrics.json",
+  "data/evidence-depth-queues.json",
+  "data/gold-record-set.json",
+  "data/reviewer-challenge-pack.json",
   "data/snapshot-manifest.json",
   `data/snapshots/${manifest.snapshot_id}.json`,
   "schema/correction.schema.json",
   "schema/review-log.schema.json",
+  "schema/review-ledger.schema.json",
+  "schema/methodology-example.schema.json",
+  "schema/workflow.schema.json",
+  "schema/release.schema.json",
+  "schema/release-verification.schema.json",
+  "schema/credibility-status.schema.json",
+  "schema/robustness-metrics.schema.json",
+  "schema/evidence-depth-queues.schema.json",
+  "schema/gold-record-set.schema.json",
+  "schema/reviewer-challenge-pack.schema.json",
+  "docs/codebook.md",
   "docs/content-safety.md",
   "docs/contributing.md",
   "docs/citation.md",
   "docs/review-workflow.md",
   "docs/reviewer-brief.md",
   "docs/source-audit.md",
+  "docs/methodology-stress-test.md",
+  "docs/replication.md",
+  "docs/signature-finding-documentation-over-counts.md",
   "rss.xml",
   "sitemap.xml",
   "RELEASE_NOTES.md",
@@ -219,6 +237,38 @@ for (const methodologyCopy of [
   "Versioning and Audit Policy"
 ]) {
   await mustContain("methodology/index.html", methodologyCopy);
+}
+
+for (const codebookCopy of ["Public Codebook", "not a ranking system", "methodology examples JSON"]) {
+  await mustContain("codebook/index.html", codebookCopy);
+}
+
+for (const coverageCopy of ["Coverage Limits", "does not measure underlying incident prevalence", "Responsible Use"]) {
+  await mustContain("coverage/index.html", coverageCopy);
+}
+
+for (const stressTestCopy of ["Where Campus Evidence Lab Can Be Wrong", "wrong, incomplete, skewed, or misused"]) {
+  await mustContain("briefs/brief_2026_06_16_methodology_stress_test/index.html", stressTestCopy);
+}
+
+for (const workflowCopy of ["Workflows", "Start with a task", "workflows-root"]) {
+  await mustContain("workflows/index.html", workflowCopy);
+}
+
+for (const robustnessCopy of ["Evidence Robustness", "source concentration", "response depth", "robustness-root"]) {
+  await mustContain("robustness/index.html", robustnessCopy);
+}
+
+for (const replicateCopy of ["Replication", "npm run check", "Release verification"]) {
+  await mustContain("replicate/index.html", replicateCopy);
+}
+
+for (const credibilityCopy of ["Credibility Boundaries", "display permission is clear", "credibility status JSON"]) {
+  await mustContain("credibility/index.html", credibilityCopy);
+}
+
+for (const signatureCopy of ["Documentation Over Counts", "not a record count", "classification rationale"]) {
+  await mustContain("briefs/brief_2026_06_16_signature_finding_documentation_over_counts/index.html", signatureCopy);
 }
 
 for (const impactCopy of [
@@ -375,9 +425,23 @@ for (const schoolDossierCopy of [
   await mustContain("schools/university_of_kentucky/index.html", schoolDossierCopy);
 }
 
+for (const schoolDossierFilterCopy of [
+  "Filter this dossier",
+  "Open Jewish records in Events",
+  "Open antisemitism search in Events"
+]) {
+  await mustContain("schools/american_university/index.html", schoolDossierFilterCopy);
+}
+
 for (const sourcesCopy of ["Search sources", "filter by source type", "direct external source URLs", "audit downloads"]) {
   await mustContain("sources/index.html", sourcesCopy);
 }
+
+await mustContain(
+  "sources/src_ed_campus_safety_2025_hate_crime_data_files/index.html",
+  "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip"
+);
+await mustNotContain("sources/src_ed_campus_safety_2025_hate_crime_data_files/index.html", "https://ope.ed.gov/campussafety/#/datafile/list");
 
 for (const aboutCopy of [
   "Mission",
@@ -434,6 +498,11 @@ for (const downloadsCopy of [
   "Changelog",
   "Public product updates page",
   "Release notes",
+  "Robustness metrics",
+  "Evidence-depth queues",
+  "Gold record candidates",
+  "Reviewer challenge pack",
+  "Evidence robustness dashboard",
   "Data dictionary",
   "Citation guidance",
   "Contribution guide",
@@ -452,6 +521,9 @@ for (const releaseCopy of [
   "Dataset Hashes",
   "Research Exports",
   "Source Audit",
+  "Evidence Depth & Robustness",
+  "/data/robustness-metrics.json",
+  "/data/evidence-depth-queues.json",
   "/data/events-research.json",
   "/data/schools-research.json",
   "/data/sources-research.json"
@@ -481,7 +553,7 @@ for (const researchEvent of researchEvents) {
   }
 }
 const researchCsv = await readFile(path.join(siteRoot, "data", "events-research.csv"), "utf8");
-for (const column of ["school_name", "school_state", "source_titles", "source_publishers", "source_urls"]) {
+for (const column of ["school_name", "school_state", "source_titles", "source_publishers", "source_urls", "response_depth"]) {
   if (!researchCsv.split("\n")[0].split(",").includes(column)) {
     errors.push(`events-research.csv missing ${column} column`);
   }
@@ -540,11 +612,13 @@ for (const event of events) {
   ]) {
     await mustContain(detailPath, eventCopy);
   }
-  if (hasDisplayInstitutionalResponse(event)) {
-    await mustContain(detailPath, "Public institutional response");
+  const responseProfile = responseDisplayProfile(event);
+  if (responseProfile.shouldShow) {
+    await mustContain(detailPath, responseProfile.heading);
     if (event.response_date) await mustContain(detailPath, "Response date");
   } else {
     await mustNotContain(detailPath, "Public institutional response");
+    await mustNotContain(detailPath, "Public response note");
   }
   for (const sourceId of event.source_ids) {
     const source = sources.find((item) => item.id === sourceId);
