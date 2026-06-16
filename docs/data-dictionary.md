@@ -26,7 +26,7 @@
 - classification_rationale: optional reviewer-written explanation for why the event category is appropriate.
 - community_rationale: optional reviewer-written explanation for why affected-community labels are source-supported.
 - confidence_rationale: optional reviewer-written explanation for why the confidence label reflects source support.
-- limitations: optional record-specific use limits beyond the default no-ranking, no-prevalence, and no-legal-finding limits.
+- limitations: optional record-specific use limits beyond the default public-claim boundaries.
 - field_support: optional source-to-field support rows identifying which source IDs support specific fields and what reviewers should check.
 - changelog: public record-edit history.
 
@@ -112,6 +112,8 @@ Generated research exports denormalize each source with event-derived references
 - schema_version: dataset schema version.
 - totals: counts by dataset file.
 - hashes: deterministic hashes for dataset files and full snapshot.
+
+Flagship artifacts cite the full source snapshot hash. Their own hashes are tracked in `hashes.flagship_report` and `hashes.gold_record_v1` so reviewers can detect stale public review artifacts without making `full_snapshot` self-referential.
 
 ## snapshot-index.json
 
@@ -265,7 +267,7 @@ The review ledger records review activity separately from canonical event record
 - snapshot_id: snapshot the candidate set is tied to.
 - generated_at: generation date.
 - review_standard: current candidate standard.
-- public_claim_limit: caveat explaining that candidate status is not outside validation.
+- public_claim_limit: caveat explaining that candidate status is only a review-workflow label.
 - records: records prioritized for deeper source-text review after existing-metadata enrichment.
 - required_before_gold_status: checks required before a candidate can be described as fully reviewed.
 
@@ -312,7 +314,7 @@ The review ledger records review activity separately from canonical event record
 
 - snapshot_id: snapshot the queues are tied to.
 - generated_at: date the queue artifact was generated.
-- method: public explanation that queues are review workflow aids, not rankings, severity scores, safety scores, prevalence estimates, legal findings, endorsement, or external audit.
+- method: public explanation that queues are review workflow aids with bounded public-claim limits.
 - queues: deterministic adversarial review queues with reason codes and record links.
 - packets: bounded record-level challenge packets with review questions, acceptable counterevidence, possible outcomes, evidence capsule links, submission packet links, and public claim limits.
 
@@ -323,3 +325,30 @@ The review ledger records review activity separately from canonical event record
 - method: public explanation that initial entries are seeded open packets, not external submissions.
 - statuses: supported challenge status values.
 - entries: challenge packet status rows with event IDs, challenge types, decision summaries, correction links, and public limitations.
+
+## flagship-report.json
+
+- id: stable report identifier.
+- title: public report title.
+- snapshot_id: source snapshot represented by the report.
+- snapshot_hash: full source snapshot hash the report cites.
+- generated_at: generation date.
+- thesis: bounded public evidence infrastructure claim.
+- public_claim_limit: explicit public-claim boundary for the report.
+- recommended_next_reviews: review tasks that should happen before stronger public reuse.
+- audience_paths: public routes for researchers, reviewers, and readers.
+- inputs: event, school, source, and challenge-packet counts used by the report.
+- findings: bounded findings with metric fields, local evidence links, challenge URLs, and use limits.
+
+## gold-record-v1.json
+
+- id: stable gold v1 artifact identifier.
+- snapshot_id: source snapshot represented by the packet set.
+- generated_at: generation date.
+- status: review packet status.
+- public_claim_limit: explicit public-claim boundary for gold v1 packet status.
+- selection_version: deterministic selection algorithm version.
+- selection_criteria: reasons records enter the packet set.
+- coverage_summary: composition of the packet set by category, source type, confidence, date precision, challenge-link status, and state.
+- selection_note: public explanation that order is review-priority order only.
+- records: bounded review packets with event, school, source basis, rationale packet, review questions, correction links, workspace links, and challenge links.

@@ -12,6 +12,7 @@ Campus Evidence Lab is a static-first, public-source archive of campus civil-rig
 
 - Review the methodology for unclear inclusion, exclusion, source hierarchy, verification, confidence, deduplication, privacy, or no-ranking rules.
 - Review 10 sample records and compare school, date, category, affected-community labels, confidence, verification, and source support against the public source basis.
+- Review the gold v1 packet page and identify any packet where the source basis, rationale, response note, or challenge route is still too thin.
 - Review the research guide and identify language that could still invite overclaiming.
 - Review the reviewer queue and suggest better ways to prioritize source, classification, or low-confidence review.
 
@@ -53,6 +54,8 @@ https://maximilian-kornstein.github.io/campus-evidence-lab/research-workspace/?r
 - Research guide: https://maximilian-kornstein.github.io/campus-evidence-lab/research-guide/
 - Trust & Review Packet: https://maximilian-kornstein.github.io/campus-evidence-lab/trust/
 - Reviewer Queue: https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-queue/
+- Flagship Report: https://maximilian-kornstein.github.io/campus-evidence-lab/flagship/
+- Gold v1 Review Packets: https://maximilian-kornstein.github.io/campus-evidence-lab/gold-records/
 - GitHub repository: https://github.com/maximilian-kornstein/campus-evidence-lab
 
 ## Acknowledgment Boundary

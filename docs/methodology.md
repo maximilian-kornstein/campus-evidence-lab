@@ -83,6 +83,15 @@ Confidence describes source support, not severity.
 
 Operational review state is published in `data/review-log.json`. Source and correction intake can run through the repository issue templates without a paid backend.
 
+## Flagship and Gold v1 Review Artifacts
+
+The flagship report and gold v1 packet set are review infrastructure, not external validation.
+
+- `data/flagship-report.json` publishes a bounded thesis about the project as public evidence infrastructure and links each finding to local data or review artifacts.
+- `data/gold-record-v1.json` publishes 25 deterministic review packets with source basis, rationale fields, review questions, workspace links, correction links, and challenge links.
+- Gold v1 means "selected for structured review packet display." It does not mean outside audit, approval, adjudication, or greater importance than other records.
+- The packet set is deliberately bounded. It improves reviewability before scale and should be used to find weaknesses, not to make claims about school safety, prevalence, severity, or institutional quality.
+
 ## Correction Process
 
 Corrections must identify the record ID, the disputed field, and a public source supporting the change. Accepted corrections update `data/corrections.json`, the event changelog, the event record hash, the event dataset hash, and the current snapshot manifest. Rejected or incomplete corrections should preserve a short public rationale in `data/corrections.json`.

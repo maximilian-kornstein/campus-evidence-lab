@@ -72,11 +72,19 @@ Submitted material does not become a public event record until a human reviewer 
 
 - `data/review-log.json`: queue status, accepted evidence, exclusions, service standard, and correction decision totals.
 - `data/corrections.json`: source-backed correction requests and outcomes.
+- `data/flagship-report.json`: bounded public evidence infrastructure report with source-linked findings and next-review recommendations.
+- `data/gold-record-v1.json`: 25 deterministic review packets for high-value record inspection; packet status is only a workflow label.
 - `.github/ISSUE_TEMPLATE/source-submission.yml`: source submission intake template.
 - `.github/ISSUE_TEMPLATE/correction-request.yml`: correction intake template.
 - `.github/ISSUE_TEMPLATE/duplicate-report.yml`: duplicate report intake template.
 - `.github/ISSUE_TEMPLATE/school-metadata-correction.yml`: school metadata correction intake template.
 - `schema/correction.schema.json`: correction record schema.
 - `schema/review-log.schema.json`: review log schema.
+- `schema/flagship-report.schema.json`: flagship report schema.
+- `schema/gold-record-v1.schema.json`: gold v1 review packet schema.
+
+## Gold v1 Review Rule
+
+Gold v1 packets are a bounded first batch for human inspection. Reviewers should use them to check source fit, category language, affected-community labels, confidence rationale, date precision, and response text. Gold v1 must stay inside the published public-claim boundary and should be described only as review packet status.
 
 Contributor-facing instructions are maintained in `docs/contributing.md`.
