@@ -142,6 +142,12 @@ function assertHasEvidenceLink(finding, expectedUrl) {
   );
 }
 
+function assertMissingRationaleIsBounded(value) {
+  assert.match(value, /not explicitly captured/i);
+  assert.match(value, /current metadata/i);
+  assert.match(value, /review/i);
+}
+
 test("buildFlagshipReport creates a bounded thesis with evidence-backed findings", () => {
   const report = buildFlagshipReport({
     events,
@@ -240,7 +246,6 @@ test("buildGoldRecordV1 creates exactly bounded review packets with challenge an
   const recordsByEventId = new Map(gold.records.map((record) => [record.event_id, record]));
   const alphaRecord = recordsByEventId.get("evt_alpha");
   const betaRecord = recordsByEventId.get("evt_beta");
-  const missingRationalePattern = /not explicitly captured|review|current metadata/i;
 
   assert.ok(alphaRecord);
   assert.ok(betaRecord);
@@ -248,9 +253,9 @@ test("buildGoldRecordV1 creates exactly bounded review packets with challenge an
   assert.equal(alphaRecord.rationale_packet.community_rationale, events[0].community_rationale);
   assert.equal(alphaRecord.rationale_packet.confidence_rationale, events[0].confidence_rationale);
 
-  assert.match(betaRecord.rationale_packet.classification_rationale, missingRationalePattern);
-  assert.match(betaRecord.rationale_packet.community_rationale, missingRationalePattern);
-  assert.match(betaRecord.rationale_packet.confidence_rationale, missingRationalePattern);
+  assertMissingRationaleIsBounded(betaRecord.rationale_packet.classification_rationale);
+  assertMissingRationaleIsBounded(betaRecord.rationale_packet.community_rationale);
+  assertMissingRationaleIsBounded(betaRecord.rationale_packet.confidence_rationale);
   assert.equal(betaRecord.rationale_packet.response_note.includes(events[1].institutional_response), true);
 
   const goldWithMissingResponse = buildGoldRecordV1({
