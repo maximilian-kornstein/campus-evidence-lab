@@ -17,7 +17,7 @@ const events = [
     source_ids: ["src_ocr", "src_university"],
     source_types: ["Government release", "University statement"],
     confidence: "High",
-    verification_status: "Verified from multiple public sources",
+    verification_status: "Documented in multiple linked public sources",
     institutional_response: "Alpha University said it would update training and report to OCR.",
     response_date: "2026-01-16",
     classification_rationale:
@@ -35,7 +35,7 @@ const events = [
     source_ids: ["src_dataset"],
     source_types: ["Government dataset"],
     confidence: "Medium",
-    verification_status: "Verified from public source",
+    verification_status: "Documented in linked public source",
     institutional_response:
       "The record summarizes public dataset fields and does not independently evaluate investigative, disciplinary, or institutional response outcomes."
   },
@@ -49,7 +49,7 @@ const events = [
     source_ids: ["src_news"],
     source_types: ["News report"],
     confidence: "Medium",
-    verification_status: "Verified from public source",
+    verification_status: "Documented in linked public source",
     institutional_response: ""
   }
 ];
@@ -110,6 +110,30 @@ const challengeQueues = {
   ]
 };
 
+const requiredFindingIds = [
+  "documentation_over_counts",
+  "source_concentration_requires_review",
+  "precision_is_a_review_dimension",
+  "response_depth_prevents_false_clarity",
+  "adversarial_review_is_infrastructure"
+];
+
+const requiredBoundaryPatterns = [
+  /not .*rank/i,
+  /not .*safety/i,
+  /not .*severity/i,
+  /not .*prevalence/i,
+  /not .*legal/i,
+  /not .*endorsement/i,
+  /not .*external/i
+];
+
+function assertBoundaryLanguage(value) {
+  for (const pattern of requiredBoundaryPatterns) {
+    assert.match(value, pattern);
+  }
+}
+
 test("buildFlagshipReport creates a bounded thesis with evidence-backed findings", () => {
   const report = buildFlagshipReport({
     events,
@@ -123,9 +147,29 @@ test("buildFlagshipReport creates a bounded thesis with evidence-backed findings
   assert.equal(report.id, "flagship_public_evidence_infrastructure_v1");
   assert.equal(report.snapshot_id, "snapshot_test");
   assert.equal(report.thesis.includes("evidence infrastructure"), true);
-  assert.equal(report.findings.length >= 5, true);
+  assert.deepEqual(
+    report.findings.map((finding) => finding.id),
+    requiredFindingIds
+  );
   assert.equal(report.findings.every((finding) => finding.evidence_links.length > 0), true);
   assert.equal(report.findings.every((finding) => finding.challenge_url.startsWith("/challenge/")), true);
+  assert.equal(
+    report.findings.every((finding) => finding.evidence_links.every((link) => link.url.startsWith("/") && link.label && link.note)),
+    true
+  );
+  assert.equal(report.findings.some((finding) => finding.metric?.value === events.length), true);
+  assert.equal(
+    report.findings.some((finding) => finding.metric?.value === robustnessMetrics.review_gaps.year_precision),
+    true
+  );
+  assert.equal(
+    report.findings.some((finding) => finding.metric?.value === challengeQueues.packets.length),
+    true
+  );
+  assertBoundaryLanguage(report.public_claim_limit);
+  for (const finding of report.findings) {
+    assertBoundaryLanguage(finding.use_limit);
+  }
   assert.equal(containsProhibitedFlagshipClaim(JSON.stringify(report)), false);
 });
 
@@ -144,14 +188,47 @@ test("buildGoldRecordV1 creates exactly bounded review packets with challenge an
   assert.equal(gold.records.every((record) => record.status === "gold_v1_review_packet"), true);
   assert.equal(gold.records.every((record) => record.workspace_url.includes("record_ids=")), true);
   assert.equal(gold.records.every((record) => record.event_url.startsWith("/events/")), true);
+  assert.equal(gold.records.every((record) => record.correction_url.includes("record_id=")), true);
   assert.equal(gold.records.every((record) => record.review_questions.length >= 4), true);
-  assert.equal(gold.records.every((record) => record.public_claim_limit.includes("not outside validation")), true);
+  assert.equal(
+    gold.records.every((record) =>
+      ["classification_rationale", "community_rationale", "confidence_rationale", "response_note"].every(
+        (field) => record.rationale_packet[field]
+      )
+    ),
+    true
+  );
+  assert.equal(gold.records.some((record) => record.challenge_url === "/challenge/?packet=evt_beta"), true);
+  assertBoundaryLanguage(gold.public_claim_limit);
+  for (const record of gold.records) {
+    assert.equal(record.public_claim_limit.includes("not outside validation"), true);
+    assertBoundaryLanguage(record.public_claim_limit);
+  }
   assert.equal(containsProhibitedFlagshipClaim(JSON.stringify(gold)), false);
 });
 
 test("containsProhibitedFlagshipClaim rejects ranking, safety, prevalence, and endorsement language", () => {
-  assert.equal(containsProhibitedFlagshipClaim("safest school ranking"), true);
-  assert.equal(containsProhibitedFlagshipClaim("externally validated by reviewers"), true);
-  assert.equal(containsProhibitedFlagshipClaim("prevalence estimate by campus"), true);
-  assert.equal(containsProhibitedFlagshipClaim("public evidence infrastructure review artifact"), false);
+  for (const prohibited of [
+    "safest school ranking",
+    "externally validated by reviewers",
+    "prevalence estimate by campus",
+    "campus safety score",
+    "incident severity score",
+    "best campus for civil rights",
+    "worst school for bias",
+    "approved by reviewers",
+    "endorsed by a federal agency",
+    "legal finding against the institution",
+    "frequency measurement across campuses"
+  ]) {
+    assert.equal(containsProhibitedFlagshipClaim(prohibited), true, prohibited);
+  }
+
+  for (const allowed of [
+    "public evidence infrastructure review artifact",
+    "This report is not a ranking, safety score, severity score, prevalence estimate, legal finding, endorsement, or external audit.",
+    "Gold v1 packet status is not outside validation and only identifies a record for review."
+  ]) {
+    assert.equal(containsProhibitedFlagshipClaim(allowed), false, allowed);
+  }
 });
