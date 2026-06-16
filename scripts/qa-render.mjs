@@ -7,11 +7,13 @@ import { paths, readJson, rootDir } from "./lib.mjs";
 const errors = [];
 const siteRoot = process.env.SITE_ROOT ? path.resolve(rootDir, process.env.SITE_ROOT) : rootDir;
 const appUrl = pathToFileURL(path.join(siteRoot, "assets", "app.js")).href;
-const [events, schools, sources] = await Promise.all([
+const [events, schools, sources, challengeQueues] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
-  readJson(paths.sources)
+  readJson(paths.sources),
+  readJson(paths.challengeQueues)
 ]);
+const firstChallengePacket = challengeQueues.packets?.[0];
 
 const pages = [
   {
@@ -152,6 +154,12 @@ const pages = [
     route: "/downloads/",
     file: "downloads/index.html",
     checks: ["Choose The Right Artifact", "Dataset Status", "Record count", "Last updated", "Schema version", "Latest snapshot hash", "Research Workspace", "Events JSON", "Research Events JSON", "Research Events CSV", "Research Schools JSON", "Research Schools CSV", "Research Sources JSON", "Research Sources CSV", "Source Audit JSON", "Milestones JSON", "Changelog JSON", "Release Notes", "Snapshot Index", "Citation Guidance", "Contribution Guide", "Briefs RSS", "Source Audit Notes", "Corrections JSON", "Review Log JSON"]
+  },
+  {
+    route: firstChallengePacket ? `/challenge/?packet=${encodeURIComponent(firstChallengePacket.event_id)}` : "/challenge/",
+    file: "challenge/index.html",
+    checks: ["Adversarial Review", "Challenge Standards", "Adversarial Queues", "Challenge packets", "Challenge standards JSON", "Challenge queues JSON", "Challenge ledger JSON", "not ranking", "external audit", ...(firstChallengePacket ? [firstChallengePacket.event_id, "Selected challenge packet"] : [])],
+    linkChecks: ["/data/challenge-standards.json", "/data/challenge-queues.json", "/data/challenge-ledger.json"]
   },
   {
     route: "/about/",

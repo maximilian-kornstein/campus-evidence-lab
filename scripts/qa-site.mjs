@@ -112,6 +112,7 @@ for (const route of [
   "coverage/index.html",
   "replicate/index.html",
   "credibility/index.html",
+  "challenge/index.html",
   "briefs/brief_2026_06_16_methodology_stress_test/index.html",
   "briefs/brief_2026_06_16_signature_finding_documentation_over_counts/index.html",
   "downloads/index.html",
@@ -156,6 +157,9 @@ for (const artifact of [
   "data/reviewer-challenge-pack.json",
   "data/evidence-capsules.json",
   "data/source-provenance-queues.json",
+  "data/challenge-standards.json",
+  "data/challenge-queues.json",
+  "data/challenge-ledger.json",
   "data/snapshot-manifest.json",
   `data/snapshots/${manifest.snapshot_id}.json`,
   "schema/correction.schema.json",
@@ -172,6 +176,9 @@ for (const artifact of [
   "schema/reviewer-challenge-pack.schema.json",
   "schema/evidence-capsules.schema.json",
   "schema/source-provenance-queues.schema.json",
+  "schema/challenge-standards.schema.json",
+  "schema/challenge-queues.schema.json",
+  "schema/challenge-ledger.schema.json",
   "docs/codebook.md",
   "docs/content-safety.md",
   "docs/contributing.md",
@@ -274,6 +281,17 @@ for (const replicateCopy of ["Replication", "npm run check", "Release verificati
 
 for (const credibilityCopy of ["Credibility Boundaries", "display permission is clear", "credibility status JSON"]) {
   await mustContain("credibility/index.html", credibilityCopy);
+}
+
+for (const challengeCopy of [
+  "Adversarial Review",
+  "Challenge Standards",
+  "Adversarial Queues",
+  "Challenge standards JSON",
+  "not a ranking",
+  "external audit"
+]) {
+  await mustContain("challenge/index.html", challengeCopy);
 }
 
 for (const signatureCopy of ["Documentation Over Counts", "not a record count", "classification rationale"]) {
@@ -511,6 +529,10 @@ for (const downloadsCopy of [
   "Evidence-depth queues",
   "Gold record candidates",
   "Reviewer challenge pack",
+  "Challenge standards",
+  "Challenge queues and packets",
+  "Challenge ledger",
+  "Adversarial review challenge arena",
   "Evidence robustness dashboard",
   "Evidence capsules",
   "Source provenance queues",
@@ -612,9 +634,14 @@ for (const column of ["related_event_ids", "related_event_count", "related_schoo
   }
 }
 
+const eventPagesWithChallengeLinks = new Set();
 for (const event of events) {
   const detailPath = `events/${event.id}/index.html`;
   await mustExist(detailPath);
+  const detailHtml = await readFile(path.join(siteRoot, detailPath), "utf8");
+  if (detailHtml.includes("Challenge this record")) {
+    eventPagesWithChallengeLinks.add(event.id);
+  }
   await mustContain(detailPath, event.record_hash);
   for (const eventCopy of [
     "External source URL",
@@ -638,6 +665,16 @@ for (const event of events) {
     const source = sources.find((item) => item.id === sourceId);
     if (source) await mustContain(detailPath, source.url);
   }
+}
+
+const challengeQueues = await readSiteJson(path.join(siteRoot, "data", "challenge-queues.json"));
+const packetEventIds = new Set((challengeQueues.packets ?? []).map((packet) => packet.event_id));
+const missingChallengeLinks = [...packetEventIds].filter((eventId) => !eventPagesWithChallengeLinks.has(eventId)).sort();
+const extraChallengeLinks = [...eventPagesWithChallengeLinks].filter((eventId) => !packetEventIds.has(eventId)).sort();
+if (missingChallengeLinks.length || extraChallengeLinks.length) {
+  errors.push(
+    `Challenge packet event links mismatch: missing links for ${missingChallengeLinks.join(", ") || "none"}; unexpected links for ${extraChallengeLinks.join(", ") || "none"}`
+  );
 }
 
 for (const school of schools) {

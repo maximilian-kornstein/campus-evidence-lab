@@ -20,6 +20,16 @@ const legalJudgmentPattern =
 const violationPattern = /\b(violated|violation|violations)\b/i;
 const officialFindingPattern =
   /\b(ocr|department|federal|title vi|title ix|finding|found|determined|stated|agreement|resolution|civil-rights violations)\b/i;
+const prohibitedClaims = [
+  "externally audited",
+  "external audit confirmed",
+  "school ranking",
+  "safety score",
+  "severity score",
+  "prevalence estimate"
+];
+const noOverclaimingContextPattern =
+  /\b(not|no|does not|do not|should not|must not|cannot|without|never|excluded|avoid|claims? not made)\b/i;
 const disallowedSourceHosts = [
   "facebook.com",
   "instagram.com",
@@ -40,6 +50,17 @@ function textForEvent(event) {
   ].join(" ");
 }
 
+function sentencesForText(text) {
+  return String(text ?? "")
+    .split(/(?<=[.!?])\s+|[\n\r]+/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+}
+
+function hasAllowedNoOverclaimingContext(sentence) {
+  return noOverclaimingContextPattern.test(sentence);
+}
+
 for (const event of events) {
   const eventText = textForEvent(event);
 
@@ -55,6 +76,14 @@ for (const event of events) {
     }
     if (legalJudgmentPattern.test(event[field] ?? "")) {
       errors.push(`Event ${event.id} ${field} uses legal judgment language that should be attributed or avoided`);
+    }
+    for (const sentence of sentencesForText(event[field])) {
+      const sentenceLower = sentence.toLowerCase();
+      for (const claim of prohibitedClaims) {
+        if (sentenceLower.includes(claim) && !hasAllowedNoOverclaimingContext(sentence)) {
+          errors.push(`Event ${event.id} ${field} uses prohibited affirmative claim "${claim}": ${sentence}`);
+        }
+      }
     }
   }
 
