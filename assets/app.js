@@ -3402,6 +3402,16 @@ function renderChallenge() {
   const packets = state.challengeQueues.packets ?? [];
   const ledgerEntries = state.challengeLedger.entries ?? [];
   const hasChallengeData = standards.length || queues.length || packets.length || ledgerEntries.length;
+  const selectedPacketId = new URLSearchParams(window.location.search).get("packet") ?? "";
+  const selectedPacket = selectedPacketId ? packets.find((packet) => packet.event_id === selectedPacketId) : null;
+  const featuredPackets = selectedPacket
+    ? [selectedPacket, ...packets.filter((packet) => packet.event_id !== selectedPacketId).slice(0, 7)]
+    : packets.slice(0, 8);
+  const featuredPacketNote = selectedPacket
+    ? `Selected challenge packet ${selectedPacket.event_id} is shown first because it was requested from a record page.`
+    : selectedPacketId
+      ? `Requested challenge packet ${selectedPacketId} is not available in this snapshot; showing the first eight generated packets.`
+      : "First eight generated packets for public-source review.";
 
   root.innerHTML = `
     <section class="section section--tight">
@@ -3499,19 +3509,19 @@ function renderChallenge() {
 
     <section class="section">
       <div class="section-header">
-        <h2 class="section-title">Featured Challenge Packets</h2>
-        <p class="section-note">First eight generated packets for public-source review.</p>
+        <h2 class="section-title">${selectedPacket ? "Selected Challenge Packet" : "Featured Challenge Packets"}</h2>
+        <p class="section-note">${escapeHtml(featuredPacketNote)}</p>
       </div>
       ${
-        packets.length
+        featuredPackets.length
           ? `<div class="action-grid">
-              ${packets
-                .slice(0, 8)
+              ${featuredPackets
                 .map(
                   (packet) => `
                     <div class="action-link">
                       <span><a href="${sitePath(`/schools/${encodeURIComponent(packet.school_id)}/`)}">${escapeHtml(packet.school_name)}</a></span>
                       <span>
+                        Record ${escapeHtml(packet.event_id)}<br>
                         ${escapeHtml(packet.category)} / ${escapeHtml(packet.confidence)} / ${escapeHtml(packet.date_precision)} precision<br>
                         Challenge types: ${escapeHtml((packet.challenge_types ?? []).map(challengeLabel).join("; "))}<br>
                         Questions: ${escapeHtml((packet.review_questions ?? []).slice(0, 2).join(" "))}<br>
