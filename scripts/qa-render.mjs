@@ -13,7 +13,7 @@ const [events, schools, sources, challengeQueues] = await Promise.all([
   readJson(paths.sources),
   readJson(paths.challengeQueues)
 ]);
-const firstChallengePacket = challengeQueues.packets?.[0];
+const selectedChallengePacket = challengeQueues.packets?.[8] ?? challengeQueues.packets?.[0];
 
 const pages = [
   {
@@ -156,9 +156,9 @@ const pages = [
     checks: ["Choose The Right Artifact", "Dataset Status", "Record count", "Last updated", "Schema version", "Latest snapshot hash", "Research Workspace", "Events JSON", "Research Events JSON", "Research Events CSV", "Research Schools JSON", "Research Schools CSV", "Research Sources JSON", "Research Sources CSV", "Source Audit JSON", "Milestones JSON", "Changelog JSON", "Release Notes", "Snapshot Index", "Citation Guidance", "Contribution Guide", "Briefs RSS", "Source Audit Notes", "Corrections JSON", "Review Log JSON"]
   },
   {
-    route: firstChallengePacket ? `/challenge/?packet=${encodeURIComponent(firstChallengePacket.event_id)}` : "/challenge/",
+    route: selectedChallengePacket ? `/challenge/?packet=${encodeURIComponent(selectedChallengePacket.event_id)}` : "/challenge/",
     file: "challenge/index.html",
-    checks: ["Adversarial Review", "Challenge Standards", "Adversarial Queues", "Challenge packets", "Challenge standards JSON", "Challenge queues JSON", "Challenge ledger JSON", "not ranking", "external audit", ...(firstChallengePacket ? [firstChallengePacket.event_id, "Selected challenge packet"] : [])],
+    checks: ["Adversarial Review", "Challenge Standards", "Adversarial Queues", "Challenge packets", "Challenge standards JSON", "Challenge queues JSON", "Challenge ledger JSON", "not ranking", "external audit", ...(selectedChallengePacket ? [selectedChallengePacket.event_id, "Selected challenge packet"] : [])],
     linkChecks: ["/data/challenge-standards.json", "/data/challenge-queues.json", "/data/challenge-ledger.json"]
   },
   {

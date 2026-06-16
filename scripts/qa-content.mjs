@@ -20,16 +20,8 @@ const legalJudgmentPattern =
 const violationPattern = /\b(violated|violation|violations)\b/i;
 const officialFindingPattern =
   /\b(ocr|department|federal|title vi|title ix|finding|found|determined|stated|agreement|resolution|civil-rights violations)\b/i;
-const prohibitedClaims = [
-  "externally audited",
-  "external audit confirmed",
-  "school ranking",
-  "safety score",
-  "severity score",
-  "prevalence estimate"
-];
-const noOverclaimingContextPattern =
-  /\b(not|no|does not|do not|should not|must not|cannot|without|never|excluded|avoid|claims? not made)\b/i;
+const prohibitedClaimPattern =
+  /\b(?:externally audited|external audit(?: confirmed)?|externally validated|outside validated|validated by|approved by|endorsed by|school rankings?|ranking system|rankings?|safety scores?|safety scoring|severity scores?|severity scoring|prevalence estimates?|prevalence measurement|frequency measures?)\b/gi;
 const disallowedSourceHosts = [
   "facebook.com",
   "instagram.com",
@@ -50,15 +42,29 @@ function textForEvent(event) {
   ].join(" ");
 }
 
-function sentencesForText(text) {
-  return String(text ?? "")
-    .split(/(?<=[.!?])\s+|[\n\r]+/)
-    .map((sentence) => sentence.trim())
-    .filter(Boolean);
+function isNegatedClaim(text, matchIndex) {
+  const prefix = text.slice(Math.max(0, matchIndex - 200), matchIndex).toLowerCase();
+  const sameSentencePrefix = prefix.slice(Math.max(prefix.lastIndexOf("."), prefix.lastIndexOf(";"), prefix.lastIndexOf(":")) + 1);
+  const negationMatch = /\b(?:not|no|nor|without|cannot|never|does not|do not|should not|must not)\b/g;
+  const matches = [...sameSentencePrefix.matchAll(negationMatch)];
+  const lastNegation = matches.at(-1);
+  if (!lastNegation) return false;
+
+  const scopedPrefix = sameSentencePrefix.slice(lastNegation.index);
+  if (/\b(?:but|however|though|although|except|yet|just)\b/.test(scopedPrefix)) return false;
+  return /^(?:not|no|nor|without|cannot|never|does not|do not|should not|must not)\s+(?:(?:represent|represents|constitute|constitutes|make|makes|support|supports|claim|claims|describe|describes|provide|provides|convert|converts|turn|turns|read|used|use|be|as)\s+)*(?:(?:a|an|the|any)\s+)?(?:(?:ranking|rankings|system|score|scores|scoring|safety|severity|prevalence|estimate|estimates|measurement|measure|measures|frequency|endorsement|external|audit|audited|validation|validated|school)[,\s]*(?:or|and)?\s*){0,24}$/.test(scopedPrefix.trimStart());
 }
 
-function hasAllowedNoOverclaimingContext(sentence) {
-  return noOverclaimingContextPattern.test(sentence);
+function prohibitedClaimsInText(text) {
+  const content = String(text ?? "");
+  const claims = [];
+  prohibitedClaimPattern.lastIndex = 0;
+  for (const match of content.matchAll(prohibitedClaimPattern)) {
+    if (!isNegatedClaim(content, match.index ?? 0)) {
+      claims.push(match[0]);
+    }
+  }
+  return claims;
 }
 
 for (const event of events) {
@@ -77,13 +83,8 @@ for (const event of events) {
     if (legalJudgmentPattern.test(event[field] ?? "")) {
       errors.push(`Event ${event.id} ${field} uses legal judgment language that should be attributed or avoided`);
     }
-    for (const sentence of sentencesForText(event[field])) {
-      const sentenceLower = sentence.toLowerCase();
-      for (const claim of prohibitedClaims) {
-        if (sentenceLower.includes(claim) && !hasAllowedNoOverclaimingContext(sentence)) {
-          errors.push(`Event ${event.id} ${field} uses prohibited affirmative claim "${claim}": ${sentence}`);
-        }
-      }
+    for (const claim of prohibitedClaimsInText(event[field])) {
+      errors.push(`Event ${event.id} ${field} uses prohibited affirmative claim "${claim}"`);
     }
   }
 

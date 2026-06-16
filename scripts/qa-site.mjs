@@ -74,6 +74,27 @@ async function htmlFiles(dir = siteRoot) {
   return files;
 }
 
+function challengeRecordHrefs(html) {
+  const hrefs = [];
+  const linkPattern = /<a\b([^>]*)>([\s\S]*?)<\/a>/gi;
+  for (const match of html.matchAll(linkPattern)) {
+    const text = match[2].replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+    if (text !== "Challenge this record") continue;
+    const hrefMatch = match[1].match(/\bhref="([^"]+)"/i);
+    hrefs.push(hrefMatch?.[1] ?? "");
+  }
+  return hrefs;
+}
+
+function normalizedChallengeHref(href, eventId) {
+  try {
+    const normalized = new URL(href, `https://campusevidencelab.test/events/${eventId}/index.html`);
+    return `${normalized.pathname}${normalized.search}`;
+  } catch {
+    return "";
+  }
+}
+
 const [events, schools, sources, corrections, reviewLog, manifest] = await Promise.all([
   readSiteJson(sitePaths.events),
   readSiteJson(sitePaths.schools),
@@ -639,8 +660,16 @@ for (const event of events) {
   const detailPath = `events/${event.id}/index.html`;
   await mustExist(detailPath);
   const detailHtml = await readFile(path.join(siteRoot, detailPath), "utf8");
-  if (detailHtml.includes("Challenge this record")) {
+  const challengeHrefs = challengeRecordHrefs(detailHtml);
+  if (challengeHrefs.length) {
     eventPagesWithChallengeLinks.add(event.id);
+  }
+  for (const href of challengeHrefs) {
+    const normalizedHref = normalizedChallengeHref(href, event.id);
+    const expectedHref = `/challenge/?packet=${event.id}`;
+    if (normalizedHref !== expectedHref) {
+      errors.push(`${detailPath} Challenge this record href is ${href || "missing"}; expected ${expectedHref}`);
+    }
   }
   await mustContain(detailPath, event.record_hash);
   for (const eventCopy of [
