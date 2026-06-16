@@ -32,6 +32,8 @@ const staticPaths = [
   "/workflows/",
   "/robustness/",
   "/evidence/",
+  "/flagship/",
+  "/gold-records/",
   "/challenge/",
   "/codebook/",
   "/coverage/",

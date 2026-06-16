@@ -66,7 +66,7 @@ for (const filePath of await htmlFiles()) {
   }
 
   const stylesheetLinks = [...document.querySelectorAll('link[rel="stylesheet"]')].map((link) => link.getAttribute("href") ?? "");
-  if (!stylesheetLinks.some((href) => href.endsWith("assets/styles.css"))) {
+  if (!stylesheetLinks.some((href) => href.split("?")[0].endsWith("assets/styles.css"))) {
     errors.push(`${relativeFile} is missing the shared stylesheet link`);
   }
 

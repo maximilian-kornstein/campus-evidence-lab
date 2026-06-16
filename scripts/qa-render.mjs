@@ -27,6 +27,8 @@ const pages = [
       "Audience Entry Points",
       "Journalist Path",
       "Research Path",
+      "Flagship Report",
+      "Gold v1 Review Packets",
       "Research Entry Points",
       "Search Event Database",
       "Latest Weekly Brief",
@@ -45,7 +47,7 @@ const pages = [
       "Records by Source Type",
       "Small charts summarize current public records"
     ],
-    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
+    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/flagship/", "/gold-records/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
     dashboardSmoke: true
   },
   {
@@ -153,7 +155,17 @@ const pages = [
   {
     route: "/downloads/",
     file: "downloads/index.html",
-    checks: ["Choose The Right Artifact", "Dataset Status", "Record count", "Last updated", "Schema version", "Latest snapshot hash", "Research Workspace", "Events JSON", "Research Events JSON", "Research Events CSV", "Research Schools JSON", "Research Schools CSV", "Research Sources JSON", "Research Sources CSV", "Source Audit JSON", "Milestones JSON", "Changelog JSON", "Release Notes", "Snapshot Index", "Citation Guidance", "Contribution Guide", "Briefs RSS", "Source Audit Notes", "Corrections JSON", "Review Log JSON"]
+    checks: ["Choose The Right Artifact", "Dataset Status", "Record count", "Last updated", "Schema version", "Latest snapshot hash", "Research Workspace", "Events JSON", "Research Events JSON", "Research Events CSV", "Research Schools JSON", "Research Schools CSV", "Research Sources JSON", "Research Sources CSV", "Source Audit JSON", "Milestones JSON", "Changelog JSON", "Release Notes", "Snapshot Index", "Citation Guidance", "Contribution Guide", "Briefs RSS", "Source Audit Notes", "Corrections JSON", "Review Log JSON", "Flagship Report JSON", "Gold Record v1 JSON"]
+  },
+  {
+    route: "/flagship/",
+    file: "flagship/index.html",
+    checks: ["Flagship Report", "The public evidence infrastructure gap", "Bounded findings", "Thesis", "Findings", "Next Reviews", "Audience Paths", "Gold v1 review packets", "not a ranking"]
+  },
+  {
+    route: "/gold-records/",
+    file: "gold-records/index.html",
+    checks: ["Gold Record v1", "Review packets", "Use Limit", "Selection Criteria", "Coverage Summary", "Review Packets", "Gold v1 means review packet status", "not outside validation"]
   },
   {
     route: selectedChallengePacket ? `/challenge/?packet=${encodeURIComponent(selectedChallengePacket.event_id)}` : "/challenge/",
@@ -334,8 +346,8 @@ async function renderPage(page, index) {
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
-    if (actionLinks.length !== 16) {
-      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 16`);
+    if (actionLinks.length !== 18) {
+      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 18`);
     }
     for (const panel of trendPanels) {
       if (panel.getAttribute("role") !== "img" || !panel.getAttribute("aria-label")) {

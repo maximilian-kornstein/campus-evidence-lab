@@ -33,6 +33,8 @@ const DATA_PATHS = {
   challengeStandards: sitePath("/data/challenge-standards.json"),
   challengeQueues: sitePath("/data/challenge-queues.json"),
   challengeLedger: sitePath("/data/challenge-ledger.json"),
+  flagshipReport: sitePath("/data/flagship-report.json"),
+  goldRecordV1: sitePath("/data/gold-record-v1.json"),
   manifest: sitePath("/data/snapshot-manifest.json"),
   snapshotIndex: sitePath("/data/snapshot-index.json"),
   sourceAudit: sitePath("/data/source-audit.json"),
@@ -65,6 +67,8 @@ const state = {
   challengeStandards: { standards: [] },
   challengeQueues: { queues: [], packets: [] },
   challengeLedger: { entries: [] },
+  flagshipReport: { findings: [], audience_paths: [], recommended_next_reviews: [] },
+  goldRecordV1: { records: [], coverage_summary: {}, selection_criteria: [] },
   challengeLoadError: "",
   snapshotIndex: null,
   sourceAudit: null,
@@ -567,6 +571,8 @@ async function loadDataset() {
     reviewerChallengePack,
     evidenceCapsules,
     sourceProvenanceQueues,
+    flagshipReport,
+    goldRecordV1,
     manifest,
     snapshotIndex,
     sourceAudit,
@@ -593,6 +599,8 @@ async function loadDataset() {
     fetchJson(DATA_PATHS.reviewerChallengePack),
     fetchJson(DATA_PATHS.evidenceCapsules),
     fetchJson(DATA_PATHS.sourceProvenanceQueues),
+    fetchJson(DATA_PATHS.flagshipReport),
+    fetchJson(DATA_PATHS.goldRecordV1),
     fetchJson(DATA_PATHS.manifest),
     fetchJson(DATA_PATHS.snapshotIndex),
     fetchJson(DATA_PATHS.sourceAudit),
@@ -621,6 +629,8 @@ async function loadDataset() {
   state.reviewerChallengePack = reviewerChallengePack;
   state.evidenceCapsules = evidenceCapsules;
   state.sourceProvenanceQueues = sourceProvenanceQueues;
+  state.flagshipReport = flagshipReport;
+  state.goldRecordV1 = goldRecordV1;
   state.snapshotIndex = snapshotIndex;
   state.sourceAudit = sourceAudit;
   state.sourceAuditLive = sourceAuditLive;
@@ -846,6 +856,14 @@ function renderDashboard() {
         <a class="action-link" href="${sitePath("/trust/")}">
           <span>Reviewer Path</span>
           <span>Inspect methodology, sample records, and audit artifacts without treating review as endorsement.</span>
+        </a>
+        <a class="action-link" href="${sitePath("/flagship/")}">
+          <span>Flagship Report</span>
+          <span>Read the bounded public evidence infrastructure thesis and inspect the evidence links behind each finding.</span>
+        </a>
+        <a class="action-link" href="${sitePath("/gold-records/")}">
+          <span>Gold v1 Review Packets</span>
+          <span>Inspect the first deterministic review packet set; gold v1 is packet status, not outside validation.</span>
         </a>
         <a class="action-link" href="${sitePath("/downloads/")}">
           <span>Data Path</span>
@@ -3243,6 +3261,16 @@ function renderRobustness() {
           <p>${state.reviewerChallengePack.records.length} records selected to help reviewers find ambiguity, source gaps, or wording that should be tightened.</p>
           <p><a href="${sitePath("/data/reviewer-challenge-pack.json")}">Open challenge pack JSON</a></p>
         </div>
+        <div>
+          <h3>Gold v1 review packets</h3>
+          <p>${state.goldRecordV1.records.length} generated packets expose rationale, source basis, review questions, and challenge links for a bounded first batch.</p>
+          <p><a href="${sitePath("/gold-records/")}">Open gold v1 review packets</a></p>
+        </div>
+        <div>
+          <h3>Flagship report</h3>
+          <p>${state.flagshipReport.findings?.length ?? 0} bounded findings explain why the archive is useful as public evidence infrastructure.</p>
+          <p><a href="${sitePath("/flagship/")}">Open flagship report</a></p>
+        </div>
       </div>
     </section>
 
@@ -3403,12 +3431,16 @@ function renderChallenge() {
   const ledgerEntries = state.challengeLedger.entries ?? [];
   const hasChallengeData = standards.length || queues.length || packets.length || ledgerEntries.length;
   const selectedPacketId = new URLSearchParams(window.location.search).get("packet") ?? "";
+  const selectedRecordId = new URLSearchParams(window.location.search).get("record") ?? "";
   const selectedPacket = selectedPacketId ? packets.find((packet) => packet.event_id === selectedPacketId) : null;
+  const selectedRecord = selectedRecordId ? state.records.find((record) => record.id === selectedRecordId) : null;
   const featuredPackets = selectedPacket
     ? [selectedPacket, ...packets.filter((packet) => packet.event_id !== selectedPacketId).slice(0, 7)]
     : packets.slice(0, 8);
   const featuredPacketNote = selectedPacket
     ? `Selected challenge packet ${selectedPacket.event_id} is shown first because it was requested from a record page.`
+    : selectedRecord
+      ? `Record ${selectedRecord.id} does not have a generated packet in this snapshot; a bounded record-review prompt is shown before generated packets.`
     : selectedPacketId
       ? `Requested challenge packet ${selectedPacketId} is not available in this snapshot; showing the first eight generated packets.`
       : "First eight generated packets for public-source review.";
@@ -3441,6 +3473,38 @@ function renderChallenge() {
           : ""
       }
     </section>
+
+    ${
+      selectedRecord
+        ? `<section class="section">
+            <div class="section-header">
+              <h2 class="section-title">Record Review Prompt</h2>
+              <p class="section-note">This is not a generated challenge packet.</p>
+            </div>
+            <div class="detail-panel">
+              <dl>
+                <div class="data-line">
+                  <dt>Record</dt>
+                  <dd><a href="${sitePath(`/events/${encodeURIComponent(selectedRecord.id)}/`)}">${escapeHtml(selectedRecord.summary)}</a></dd>
+                </div>
+                <div class="data-line">
+                  <dt>School</dt>
+                  <dd><a href="${sitePath(`/schools/${encodeURIComponent(selectedRecord.school_id)}/`)}">${escapeHtml(selectedRecord.school?.name ?? selectedRecord.school_id)}</a></dd>
+                </div>
+                <div class="data-line">
+                  <dt>Review scope</dt>
+                  <dd>Check whether the linked public sources support the category, affected-community labels, date precision, confidence rationale, and stored response text.</dd>
+                </div>
+                <div class="data-line">
+                  <dt>Use limit</dt>
+                  <dd>This prompt is a public-source review aid, not outside validation, ranking, safety score, severity score, prevalence estimate, legal finding, or endorsement.</dd>
+                </div>
+              </dl>
+              <p><a href="${sitePath(`/research-workspace/?record_ids=${encodeURIComponent(selectedRecord.id)}`)}">Open research workspace</a> / <a href="${sitePath(`/submit/?type=correction&record_id=${encodeURIComponent(selectedRecord.id)}`)}">Prepare correction request</a></p>
+            </div>
+          </section>`
+        : ""
+    }
 
     <section class="section">
       <div class="section-header">
@@ -3551,6 +3615,182 @@ function renderChallenge() {
         <li><a href="${sitePath("/evidence/")}">Evidence provenance page</a></li>
         <li><a href="${sitePath("/docs/contributing.md")}">Contribution guide</a></li>
       </ul>
+    </section>
+  `;
+}
+
+function artifactRows(items = []) {
+  return items
+    .map(
+      (item) => `
+        <li>
+          <a href="${sitePath(item.path ?? item.url ?? "#")}">${escapeHtml(item.label ?? item.audience ?? "Artifact")}</a>
+          ${item.use || item.note ? `<br><span class="section-note">${escapeHtml(item.use ?? item.note)}</span>` : ""}
+        </li>
+      `
+    )
+    .join("");
+}
+
+function renderFlagship() {
+  const root = document.querySelector("#flagship-root");
+  if (!root) return;
+
+  const report = state.flagshipReport;
+  const findings = report.findings ?? [];
+  root.innerHTML = `
+    <section class="section section--tight">
+      <div class="metric-grid metric-grid--dashboard">
+        ${metric(String(findings.length), "Bounded findings")}
+        ${metric(String(report.inputs?.events ?? 0), "Input records")}
+        ${metric(String(report.inputs?.sources ?? 0), "Input sources")}
+        ${metric(String(report.inputs?.challenge_packets ?? 0), "Challenge packets")}
+        ${metric(shortHash(report.snapshot_hash), "Source snapshot")}
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="section-header">
+        <h2 class="section-title">Thesis</h2>
+        <p class="section-note">A public-source infrastructure claim, not an endorsement claim.</p>
+      </div>
+      <p class="section-copy">${escapeHtml(report.thesis ?? "")}</p>
+      <p class="section-copy">${escapeHtml(report.public_claim_limit ?? "")}</p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Findings</h2>
+        <p class="section-note">Each finding links back to source data or review artifacts.</p>
+      </div>
+      <div class="action-grid">
+        ${findings
+          .map(
+            (finding) => `
+              <div class="action-link">
+                <span>${escapeHtml(finding.title)}</span>
+                <span>
+                  ${escapeHtml(finding.summary)}<br>
+                  Metric: ${escapeHtml(finding.metric?.label ?? "review metric")} = ${escapeHtml(finding.metric?.value ?? finding.metric?.count ?? "not available")}<br>
+                  Evidence: ${(finding.evidence_links ?? [])
+                    .map((link) => `<a href="${sitePath(link.url)}">${escapeHtml(link.label)}</a>`)
+                    .join(" / ")}<br>
+                  <a href="${sitePath(finding.challenge_url)}">Challenge or review this finding</a>
+                </span>
+              </div>
+            `
+          )
+          .join("")}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Next Reviews</h2>
+        <p class="section-note">Work that should happen before stronger public reuse.</p>
+      </div>
+      <ul class="evidence-list">
+        ${(report.recommended_next_reviews ?? []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ul>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Audience Paths</h2>
+        <p class="section-note">Inspect the project from the smallest useful public artifact.</p>
+      </div>
+      <ul class="source-list">
+        ${artifactRows(report.audience_paths ?? [])}
+        <li><a href="${sitePath("/gold-records/")}">Gold v1 review packets</a><br><span class="section-note">Hand-review candidates and rationale packets, not outside validation.</span></li>
+      </ul>
+    </section>
+  `;
+}
+
+function renderGoldRecords() {
+  const root = document.querySelector("#gold-record-root");
+  if (!root) return;
+
+  const gold = state.goldRecordV1;
+  const coverage = gold.coverage_summary ?? {};
+  const records = gold.records ?? [];
+  root.innerHTML = `
+    <section class="section section--tight">
+      <div class="metric-grid metric-grid--dashboard">
+        ${metric(String(records.length), "Review packets")}
+        ${metric(String(Object.keys(coverage.categories ?? {}).length), "Categories")}
+        ${metric(String(Object.keys(coverage.source_types ?? {}).length), "Source types")}
+        ${metric(String(coverage.challenge_linked?.true ?? 0), "Packet-linked")}
+        ${metric(String(coverage.challenge_linked?.false ?? 0), "Record-review links")}
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="section-header">
+        <h2 class="section-title">Use Limit</h2>
+        <p class="section-note">Gold v1 means review packet status only.</p>
+      </div>
+      <p class="section-copy">${escapeHtml(gold.public_claim_limit ?? "")}</p>
+      <p class="section-copy">${escapeHtml(gold.selection_note ?? "")}</p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Selection Criteria</h2>
+        <p class="section-note">${escapeHtml(gold.selection_version ?? "deterministic selection")}</p>
+      </div>
+      <ul class="evidence-list">
+        ${(gold.selection_criteria ?? []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ul>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Coverage Summary</h2>
+        <p class="section-note">Coverage describes this review set only, not campus prevalence.</p>
+      </div>
+      <div class="trend-grid">
+        ${barChart("Categories", "Gold v1 review packets by category.", objectCountRows(coverage.categories, 8))}
+        ${barChart("Source Types", "Source families represented in the review set.", objectCountRows(coverage.source_types, 8))}
+        ${barChart("Date Precision", "Date precision represented in the review set.", objectCountRows(coverage.date_precision, 8))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Review Packets</h2>
+        <p class="section-note">Open each record, workspace, source, correction path, or challenge route.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Record</th>
+              <th>School</th>
+              <th>Review reason</th>
+              <th>Sources</th>
+              <th>Review links</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${records
+              .map(
+                (record) => `
+                  <tr>
+                    <td class="mono"><a href="${sitePath(record.event_url)}">${escapeHtml(record.event_id)}</a><br><span class="section-note">${escapeHtml(record.category)} / ${escapeHtml(record.confidence)}</span></td>
+                    <td><a href="${sitePath(record.school_url)}">${escapeHtml(record.school_name)}</a><br><span class="section-note">${escapeHtml(record.state ?? "")}</span></td>
+                    <td>${escapeHtml(record.selection_reason)}<br><span class="section-note">${escapeHtml((record.review_questions ?? []).slice(0, 1).join(" "))}</span></td>
+                    <td>${(record.source_basis ?? [])
+                      .map((source) => `<a href="${sitePath(source.source_url)}">${escapeHtml(source.source_type)}</a>`)
+                      .join("<br>")}</td>
+                    <td><a href="${sitePath(record.workspace_url)}">Workspace</a><br><a href="${sitePath(record.challenge_url)}">Challenge</a><br><a href="${sitePath(record.correction_url)}">Correction</a></td>
+                  </tr>
+                `
+              )
+              .join("")}
+          </tbody>
+        </table>
+      </div>
     </section>
   `;
 }
@@ -3821,6 +4061,10 @@ function renderDownloads() {
         ${downloadRow("Challenge Standards JSON", sitePath("/data/challenge-standards.json"), "Challenge standards")}
         ${downloadRow("Challenge Queues JSON", sitePath("/data/challenge-queues.json"), "Challenge queues and packets")}
         ${downloadRow("Challenge Ledger JSON", sitePath("/data/challenge-ledger.json"), "Challenge ledger entries")}
+        ${downloadRow("Flagship Report JSON", sitePath("/data/flagship-report.json"), `${state.flagshipReport.findings?.length ?? 0} bounded findings`)}
+        ${downloadRow("Gold Record v1 JSON", sitePath("/data/gold-record-v1.json"), `${state.goldRecordV1.records?.length ?? 0} review packets`)}
+        ${downloadRow("Flagship Report Page", sitePath("/flagship/"), "Bounded public evidence infrastructure thesis", false)}
+        ${downloadRow("Gold Record v1 Page", sitePath("/gold-records/"), "Review packets and rationale checks", false)}
         ${downloadRow("Challenge Arena", sitePath("/challenge/"), "Public adversarial review workflow", false)}
         ${downloadRow("Evidence Capsules JSON", sitePath("/data/evidence-capsules.json"), `${state.evidenceCapsules.records.length} source-to-field capsules`)}
         ${downloadRow("Source Provenance Queues JSON", sitePath("/data/source-provenance-queues.json"), `${state.sourceProvenanceQueues.queues.length} provenance queues`)}
@@ -3854,6 +4098,8 @@ function renderDownloads() {
         ${downloadRow("Challenge Standards Schema", sitePath("/schema/challenge-standards.schema.json"), "Challenge standard fields")}
         ${downloadRow("Challenge Queues Schema", sitePath("/schema/challenge-queues.schema.json"), "Challenge queue and packet fields")}
         ${downloadRow("Challenge Ledger Schema", sitePath("/schema/challenge-ledger.schema.json"), "Challenge ledger fields")}
+        ${downloadRow("Flagship Report Schema", sitePath("/schema/flagship-report.schema.json"), "Flagship report fields")}
+        ${downloadRow("Gold Record v1 Schema", sitePath("/schema/gold-record-v1.schema.json"), "Gold review packet fields")}
         ${downloadRow("Evidence Capsules Schema", sitePath("/schema/evidence-capsules.schema.json"), "Evidence capsule fields")}
         ${downloadRow("Source Provenance Queues Schema", sitePath("/schema/source-provenance-queues.schema.json"), "Source provenance queue fields")}
         ${downloadRow("Dataset License", sitePath("/DATA_LICENSE.md"), "Reuse terms")}
@@ -3894,6 +4140,8 @@ async function init() {
     renderWorkflows();
     renderRobustness();
     renderEvidence();
+    renderFlagship();
+    renderGoldRecords();
     if (page === "challenge") {
       await loadChallengeData();
       if (document !== initDocument) return;

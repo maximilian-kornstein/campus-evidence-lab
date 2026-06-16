@@ -30,6 +30,8 @@ const publicPaths = [
   "workflows",
   "robustness",
   "evidence",
+  "flagship",
+  "gold-records",
   "challenge",
   "codebook",
   "coverage",
