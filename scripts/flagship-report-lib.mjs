@@ -162,14 +162,21 @@ function isNegated(text, matchIndex, matchText) {
     .toLowerCase()
     .replace(/\s+/g, " ")
     .trim();
-  return /^not\s+(?:(?:a|an)\s+)?(?:ranking|safety scoring|safety score|severity score|prevalence estimate|legal finding|endorsement|external audit|external validation|outside validation)(?:(?:\s*,\s*|\s*,?\s+or\s+|\s*,?\s+and\s+)(?:(?:a|an)\s+)?(?:ranking|safety scoring|safety score|severity score|prevalence estimate|legal finding|endorsement|external audit|external validation|outside validation))*$/i.test(
-    scopedThroughMatch
+  return (
+    /^not\s+(?:(?:a|an)\s+)?(?:independent\s+)?(?:ranking|safety scoring|safety score|severity score|prevalence estimate|legal finding|endorsement|external audit|external validation|outside validation)(?:(?:\s*,\s*|\s*,?\s+or\s+|\s*,?\s+and\s+)(?:(?:a|an)\s+)?(?:independent\s+)?(?:ranking|safety scoring|safety score|severity score|prevalence estimate|legal finding|endorsement|external audit|external validation|outside validation))*$/i.test(
+      scopedThroughMatch
+    ) ||
+    /^not\s+treat\s+.{1,120}\s+as\s+(?:(?:a|an)\s+)?(?:independent\s+)?legal\s+finding$/i.test(scopedThroughMatch)
   );
 }
 
 function sourceTypesForEvent(event, sourcesById) {
   const linkedTypes = compact(event.source_ids).map((sourceId) => sourcesById.get(sourceId)?.source_type).filter(Boolean);
   return linkedTypes.length ? [...new Set(linkedTypes)] : [...new Set(compact(event.source_types))];
+}
+
+function primarySourceType(candidate) {
+  return candidate.sourceTypes[0] ?? "Unspecified source type";
 }
 
 function responseNeedsReview(event) {
@@ -217,7 +224,7 @@ function reviewScore(event, sourcesById, packet) {
 }
 
 function selectedEvents(events, sourcesById, packetsByEventId, limit) {
-  return events
+  const candidates = events
     .map((event, index) => ({
       event,
       index,
@@ -231,8 +238,55 @@ function selectedEvents(events, sourcesById, packetsByEventId, limit) {
         String(a.event.category ?? "").localeCompare(String(b.event.category ?? "")) ||
         String(a.event.school_id ?? "").localeCompare(String(b.event.school_id ?? "")) ||
         a.index - b.index
-    )
-    .slice(0, limit);
+    );
+
+  const availableCategories = new Set(candidates.map((candidate) => candidate.event.category).filter(Boolean));
+  const availableSourceTypes = new Set(candidates.map(primarySourceType).filter(Boolean));
+  const categoryCap = Math.max(1, Math.ceil(limit / Math.max(1, Math.min(availableCategories.size, 5))));
+  const sourceTypeCap = Math.max(1, Math.ceil(limit / Math.max(1, Math.min(availableSourceTypes.size, 5))));
+  const schoolCap = Math.max(1, Math.ceil(limit / Math.max(1, Math.min(new Set(candidates.map((candidate) => candidate.event.school_id)).size, 12))));
+
+  const selected = [];
+  const selectedIds = new Set();
+  const categoryCounts = {};
+  const sourceTypeCounts = {};
+  const schoolCounts = {};
+
+  function canAdd(candidate, caps) {
+    if (selectedIds.has(candidate.event.id)) return false;
+    const category = candidate.event.category ?? "Unspecified category";
+    const sourceType = primarySourceType(candidate);
+    const schoolId = candidate.event.school_id ?? "Unspecified school";
+    return (
+      (categoryCounts[category] ?? 0) < caps.category &&
+      (sourceTypeCounts[sourceType] ?? 0) < caps.sourceType &&
+      (schoolCounts[schoolId] ?? 0) < caps.school
+    );
+  }
+
+  function add(candidate) {
+    selected.push(candidate);
+    selectedIds.add(candidate.event.id);
+    const category = candidate.event.category ?? "Unspecified category";
+    const sourceType = primarySourceType(candidate);
+    const schoolId = candidate.event.school_id ?? "Unspecified school";
+    categoryCounts[category] = (categoryCounts[category] ?? 0) + 1;
+    sourceTypeCounts[sourceType] = (sourceTypeCounts[sourceType] ?? 0) + 1;
+    schoolCounts[schoolId] = (schoolCounts[schoolId] ?? 0) + 1;
+  }
+
+  for (const caps of [
+    { category: categoryCap, sourceType: sourceTypeCap, school: schoolCap },
+    { category: categoryCap * 2, sourceType: sourceTypeCap * 2, school: schoolCap * 2 },
+    { category: limit, sourceType: limit, school: limit }
+  ]) {
+    for (const candidate of candidates) {
+      if (selected.length >= limit) return selected;
+      if (canAdd(candidate, caps)) add(candidate);
+    }
+  }
+
+  return selected;
 }
 
 function countBy(items, getValue) {

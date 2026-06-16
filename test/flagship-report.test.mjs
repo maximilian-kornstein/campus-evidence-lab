@@ -234,6 +234,8 @@ test("buildGoldRecordV1 creates exactly bounded review packets with challenge an
   assert.ok(gold.coverage_summary);
   assert.equal(gold.records.length, 2);
   assert.equal(gold.records[0].event_id, "evt_beta");
+  assert.equal(Object.keys(gold.coverage_summary.categories).length, 2);
+  assert.equal(Object.keys(gold.coverage_summary.source_types).length >= 2, true);
   assert.equal(gold.records.every((record) => record.status === "gold_v1_review_packet"), true);
   assert.equal(gold.records.every((record) => record.workspace_url.includes("record_ids=")), true);
   assert.equal(gold.records.every((record) => record.event_url.startsWith("/events/")), true);
@@ -328,7 +330,9 @@ test("containsProhibitedFlagshipClaim rejects ranking, safety, prevalence, and e
   for (const allowed of [
     "public evidence infrastructure review artifact",
     "This report is not a ranking, safety score, severity score, prevalence estimate, legal finding, endorsement, or external audit.",
-    "Gold v1 packet status is not outside validation and only identifies a record for review."
+    "Gold v1 packet status is not outside validation and only identifies a record for review.",
+    "Campus Evidence Lab does not treat the source label as an independent legal finding.",
+    "Medium confidence describes source support only; it is not a severity score, not a judgment about institutional conduct, not a prevalence estimate, and not independent factual adjudication."
   ]) {
     assert.equal(containsProhibitedFlagshipClaim(allowed), false, allowed);
   }
