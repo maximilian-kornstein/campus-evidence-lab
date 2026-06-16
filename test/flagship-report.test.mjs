@@ -159,8 +159,14 @@ test("buildFlagshipReport creates a bounded thesis with evidence-backed findings
   });
 
   assert.equal(report.id, "flagship_public_evidence_infrastructure_v1");
+  assert.equal(report.title, "The Public Evidence Infrastructure Gap");
   assert.equal(report.snapshot_id, "snapshot_test");
+  assert.equal(report.snapshot_hash, "sha256:test");
   assert.equal(report.thesis.includes("evidence infrastructure"), true);
+  assert.equal(Array.isArray(report.recommended_next_reviews), true);
+  assert.equal(report.recommended_next_reviews.length > 0, true);
+  assert.equal(Array.isArray(report.audience_paths), true);
+  assert.equal(report.audience_paths.length > 0, true);
   assert.deepEqual(
     report.findings.map((finding) => finding.id),
     requiredFindingIds
@@ -222,12 +228,31 @@ test("buildGoldRecordV1 creates exactly bounded review packets with challenge an
   });
 
   assert.equal(gold.snapshot_id, "snapshot_test");
+  assert.equal(gold.selection_version, "gold_v1_review_priority_2026_06_16");
+  assert.equal(Array.isArray(gold.selection_criteria), true);
+  assert.equal(gold.selection_criteria.length > 0, true);
+  assert.ok(gold.coverage_summary);
   assert.equal(gold.records.length, 2);
+  assert.equal(gold.records[0].event_id, "evt_beta");
   assert.equal(gold.records.every((record) => record.status === "gold_v1_review_packet"), true);
   assert.equal(gold.records.every((record) => record.workspace_url.includes("record_ids=")), true);
   assert.equal(gold.records.every((record) => record.event_url.startsWith("/events/")), true);
+  assert.equal(gold.records.every((record) => record.school_url.startsWith("/schools/")), true);
   assert.equal(gold.records.every((record) => record.correction_url.includes("record_id=")), true);
+  assert.equal(gold.records.every((record) => record.challenge_url.startsWith("/challenge/")), true);
+  assert.equal(gold.records.every((record) => Number.isFinite(record.review_score)), true);
+  assert.equal(gold.records.every((record) => record.selection_reason), true);
+  assert.equal(
+    gold.records.every((record) =>
+      record.source_basis.every((source) => source.source_url.startsWith("/sources/") && source.external_url)
+    ),
+    true
+  );
   assert.equal(gold.records.every((record) => record.review_questions.length >= 4), true);
+  assert.equal(
+    gold.records.every((record) => !/truth[- ]score/i.test(record.rationale_packet.confidence_rationale)),
+    true
+  );
   assert.equal(
     gold.records.every((record) =>
       ["classification_rationale", "community_rationale", "confidence_rationale", "response_note"].every(
@@ -291,7 +316,11 @@ test("containsProhibitedFlagshipClaim rejects ranking, safety, prevalence, and e
     "reviewer-validated",
     "representative sample",
     "incidence rate",
-    "comprehensive measurement"
+    "comprehensive measurement",
+    "This is not merely a safety score.",
+    "This is not controversial because it is a safety score.",
+    "This is not a draft and is an external audit.",
+    "This is not only a prevalence estimate."
   ]) {
     assert.equal(containsProhibitedFlagshipClaim(prohibited), true, prohibited);
   }
