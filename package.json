@@ -47,7 +47,8 @@
     "launch:preflight": "node scripts/launch-preflight.mjs",
     "publish:github": "node scripts/publish-github.mjs",
     "verify:public": "node scripts/verify-public.mjs",
-    "deploy:cloudflare": "npm run build && npx wrangler pages deploy dist --project-name campus-evidence-lab"
+    "deploy:cloudflare": "npm run build && npx wrangler pages deploy dist --project-name campus-evidence-lab",
+    "test:challenge-protocol": "node --test test/challenge-protocol.test.mjs"
   },
   "devDependencies": {
     "jsdom": "^29.1.1"
