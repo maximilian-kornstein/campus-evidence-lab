@@ -14,6 +14,14 @@ const SELECTION_CRITERIA = [
   "Source count is included to expose both single-source review needs and multi-source rationale review."
 ];
 
+const REQUIRED_FINDING_IDS = [
+  "documentation_over_counts",
+  "source_concentration_requires_review",
+  "precision_is_a_review_dimension",
+  "response_depth_prevents_false_clarity",
+  "adversarial_review_is_infrastructure"
+];
+
 const PROHIBITED_PATTERNS = [
   /\bsafest\s+(?:school|campus|college|university)\b/i,
   /\bmost\s+dangerous\s+(?:school|campus|college|university)\b/i,
@@ -314,6 +322,28 @@ function coverageSummary(records) {
   };
 }
 
+function sameCounts(actual, expected) {
+  return JSON.stringify(actual ?? {}) === JSON.stringify(expected ?? {});
+}
+
+function assertLocalUrl(value, label, errors) {
+  if (!value || !String(value).startsWith("/")) {
+    errors.push(`${label} must be a local public URL`);
+  }
+}
+
+function assertClaimBoundary(value, label, errors) {
+  const text = String(value ?? "");
+  for (const token of ["ranking", "safety", "severity", "prevalence", "legal", "endorsement", "external"]) {
+    if (!new RegExp(`not .*${token}`, "i").test(text)) {
+      errors.push(`${label} must explicitly say it is not ${token}-based`);
+    }
+  }
+  if (containsProhibitedFlagshipClaim(text)) {
+    errors.push(`${label} contains prohibited flagship overclaim language`);
+  }
+}
+
 export function containsProhibitedFlagshipClaim(value) {
   const text = String(value ?? "");
   for (const pattern of PROHIBITED_PATTERNS) {
@@ -495,4 +525,122 @@ export function buildGoldRecordV1({ events, schools = [], sources = [], challeng
       "Records are selected by deterministic review-priority criteria for packet creation; order is not a ranking, not a safety score, not a severity score, not a prevalence estimate, not a legal finding, not an endorsement, and not external validation.",
     records
   };
+}
+
+export function validateFlagshipArtifacts({ report, gold, events = [], schools = [], sources = [], challengeQueues = {}, robustnessMetrics = {}, manifest = {} }) {
+  const errors = [];
+  const eventIds = new Set(events.map((event) => event.id));
+  const schoolIds = new Set(schools.map((school) => school.id));
+  const sourceIds = new Set(sources.map((source) => source.id));
+  const sourcesById = sourceMap(sources);
+  const packetEventIds = new Set((challengeQueues.packets ?? []).map((packet) => packet.event_id));
+  const expectedSnapshotId = snapshotId(manifest, robustnessMetrics?.snapshot_id);
+
+  if (containsProhibitedFlagshipClaim(JSON.stringify(report))) errors.push("flagship-report contains prohibited ranking, safety, prevalence, endorsement, or external-validation language");
+  if (containsProhibitedFlagshipClaim(JSON.stringify(gold))) errors.push("gold-record-v1 contains prohibited ranking, safety, prevalence, endorsement, or external-validation language");
+
+  if (report.id !== "flagship_public_evidence_infrastructure_v1") errors.push("flagship-report id must be flagship_public_evidence_infrastructure_v1");
+  if (!report.title) errors.push("flagship-report missing title");
+  if (report.snapshot_id !== expectedSnapshotId) errors.push("flagship-report snapshot_id must match snapshot manifest");
+  if ((manifest?.hashes?.full_snapshot ?? null) !== null && report.snapshot_hash !== manifest.hashes.full_snapshot) {
+    errors.push("flagship-report snapshot_hash must match snapshot manifest full_snapshot");
+  }
+  if (report.inputs?.events !== events.length) errors.push("flagship-report inputs.events must match event count");
+  if (report.inputs?.schools !== schools.length) errors.push("flagship-report inputs.schools must match school count");
+  if (report.inputs?.sources !== sources.length) errors.push("flagship-report inputs.sources must match source count");
+  if (report.inputs?.challenge_packets !== (challengeQueues.packets ?? []).length) errors.push("flagship-report inputs.challenge_packets must match challenge packet count");
+  assertClaimBoundary(report.public_claim_limit, "flagship-report public_claim_limit", errors);
+
+  const findingIds = (report.findings ?? []).map((finding) => finding.id);
+  if (JSON.stringify(findingIds) !== JSON.stringify(REQUIRED_FINDING_IDS)) {
+    errors.push("flagship-report findings must use the required deterministic finding IDs");
+  }
+  for (const finding of report.findings ?? []) {
+    for (const field of ["id", "title", "summary", "metric", "challenge_url", "use_limit"]) {
+      if (!finding[field]) errors.push(`flagship-report finding ${finding.id ?? "unknown"} missing ${field}`);
+    }
+    assertLocalUrl(finding.challenge_url, `flagship-report finding ${finding.id} challenge_url`, errors);
+    assertClaimBoundary(finding.use_limit, `flagship-report finding ${finding.id} use_limit`, errors);
+    if (!Array.isArray(finding.evidence_links) || finding.evidence_links.length === 0) {
+      errors.push(`flagship-report finding ${finding.id} missing evidence_links`);
+    }
+    for (const [index, link] of (finding.evidence_links ?? []).entries()) {
+      if (!link.label || !link.note) errors.push(`flagship-report finding ${finding.id} evidence_links[${index}] missing label or note`);
+      assertLocalUrl(link.url, `flagship-report finding ${finding.id} evidence_links[${index}].url`, errors);
+    }
+  }
+
+  const sourceFinding = (report.findings ?? []).find((finding) => finding.id === "source_concentration_requires_review");
+  if (sourceFinding) {
+    const topSourceType = robustnessMetrics?.source_type_concentration?.top_value ?? {};
+    if (sourceFinding.metric?.value !== (topSourceType.value ?? null)) errors.push("flagship-report source concentration finding metric.value is stale");
+    if (sourceFinding.metric?.count !== (topSourceType.count ?? 0)) errors.push("flagship-report source concentration finding metric.count is stale");
+  }
+
+  if (gold.id !== "gold_record_v1_review_packets") errors.push("gold-record-v1 id must be gold_record_v1_review_packets");
+  if (gold.snapshot_id !== expectedSnapshotId) errors.push("gold-record-v1 snapshot_id must match snapshot manifest");
+  if (gold.status !== "review_packets") errors.push("gold-record-v1 status must be review_packets");
+  if (gold.selection_version !== SELECTION_VERSION) errors.push(`gold-record-v1 selection_version must be ${SELECTION_VERSION}`);
+  assertClaimBoundary(gold.public_claim_limit, "gold-record-v1 public_claim_limit", errors);
+  if (!Array.isArray(gold.selection_criteria) || gold.selection_criteria.length !== SELECTION_CRITERIA.length) {
+    errors.push("gold-record-v1 selection_criteria must include the deterministic criteria");
+  }
+  if (!Array.isArray(gold.records) || gold.records.length === 0 || gold.records.length > 25) {
+    errors.push("gold-record-v1 must include 1-25 records");
+  }
+
+  const goldRecordIds = new Set();
+  for (const record of gold.records ?? []) {
+    if (goldRecordIds.has(record.event_id)) errors.push(`gold-record-v1 duplicate event ${record.event_id}`);
+    goldRecordIds.add(record.event_id);
+    if (!eventIds.has(record.event_id)) errors.push(`gold-record-v1 references unknown event ${record.event_id}`);
+    if (!schoolIds.has(record.school_id)) errors.push(`gold-record-v1 ${record.event_id} references unknown school ${record.school_id}`);
+    if (record.id !== `gold_v1_${record.event_id}`) errors.push(`gold-record-v1 ${record.event_id} has invalid id`);
+    if (record.status !== "gold_v1_review_packet") errors.push(`gold-record-v1 ${record.event_id} has unsupported status ${record.status}`);
+    if (!Number.isFinite(record.review_score)) errors.push(`gold-record-v1 ${record.event_id} missing numeric review_score`);
+    if (!record.selection_reason) errors.push(`gold-record-v1 ${record.event_id} missing selection_reason`);
+    if (record.event_url !== eventUrl(record.event_id)) errors.push(`gold-record-v1 ${record.event_id} event_url must match public event route`);
+    if (record.school_url !== schoolUrl(record.school_id)) errors.push(`gold-record-v1 ${record.event_id} school_url must match public school route`);
+    if (!record.workspace_url?.includes(`record_ids=${encodeURIComponent(record.event_id)}`)) errors.push(`gold-record-v1 ${record.event_id} workspace_url must select record_ids`);
+    if (!record.correction_url?.includes(`record_id=${encodeURIComponent(record.event_id)}`)) errors.push(`gold-record-v1 ${record.event_id} correction_url must prefill record_id`);
+    const expectedChallengeUrl = packetEventIds.has(record.event_id) ? `/challenge/?packet=${encodeURIComponent(record.event_id)}` : `/challenge/?record=${encodeURIComponent(record.event_id)}`;
+    if (record.challenge_url !== expectedChallengeUrl) errors.push(`gold-record-v1 ${record.event_id} challenge_url must match packet or record challenge route`);
+    if (!Array.isArray(record.source_basis) || record.source_basis.length === 0) {
+      errors.push(`gold-record-v1 ${record.event_id} missing source_basis`);
+    }
+    for (const source of record.source_basis ?? []) {
+      const canonical = sourcesById.get(source.id);
+      if (!sourceIds.has(source.id)) errors.push(`gold-record-v1 ${record.event_id} references unknown source ${source.id}`);
+      if (source.source_url !== sourceUrl(source.id)) errors.push(`gold-record-v1 ${record.event_id} source ${source.id} source_url must match source route`);
+      if (canonical && source.external_url !== canonical.url) errors.push(`gold-record-v1 ${record.event_id} source ${source.id} external_url must match source URL`);
+      if (!source.title || !source.source_type) errors.push(`gold-record-v1 ${record.event_id} source ${source.id} missing title or source_type`);
+    }
+    for (const field of ["classification_rationale", "community_rationale", "confidence_rationale", "response_note"]) {
+      if (!record.rationale_packet?.[field]) errors.push(`gold-record-v1 ${record.event_id} rationale_packet missing ${field}`);
+    }
+    if (/truth[- ]score/i.test(JSON.stringify(record.rationale_packet ?? {}))) errors.push(`gold-record-v1 ${record.event_id} rationale_packet must not use truth-score language`);
+    if (!Array.isArray(record.review_questions) || record.review_questions.length < 4) errors.push(`gold-record-v1 ${record.event_id} must include review_questions`);
+    assertClaimBoundary(record.public_claim_limit, `gold-record-v1 ${record.event_id} public_claim_limit`, errors);
+  }
+
+  const expectedCoverage = coverageSummary(gold.records ?? []);
+  for (const key of ["categories", "source_types", "confidence", "date_precision", "states", "challenge_linked"]) {
+    if (!sameCounts(gold.coverage_summary?.[key], expectedCoverage[key])) {
+      errors.push(`gold-record-v1 coverage_summary.${key} is stale`);
+    }
+  }
+  if (gold.coverage_summary?.total_records !== (gold.records ?? []).length) {
+    errors.push("gold-record-v1 coverage_summary.total_records is stale");
+  }
+
+  const availableCategories = new Set(events.map((event) => event.category).filter(Boolean));
+  const availableSourceTypes = new Set(events.flatMap((event) => sourceTypesForEvent(event, sourcesById)));
+  if ((gold.records ?? []).length >= 10 && availableCategories.size >= 3 && Object.keys(gold.coverage_summary?.categories ?? {}).length < 3) {
+    errors.push("gold-record-v1 must include at least three categories when the dataset supports it");
+  }
+  if ((gold.records ?? []).length >= 10 && availableSourceTypes.size >= 3 && Object.keys(gold.coverage_summary?.source_types ?? {}).length < 3) {
+    errors.push("gold-record-v1 must include at least three source types when the dataset supports it");
+  }
+
+  return errors;
 }

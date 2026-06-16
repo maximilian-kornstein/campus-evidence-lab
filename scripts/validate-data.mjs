@@ -7,6 +7,7 @@ import { validateCredibilityStatus, validateReleaseVerification, validateRelease
 import { containsProhibitedRobustnessClaim } from "./robustness-metrics-lib.mjs";
 import { hasProhibitedEvidenceClaim } from "./evidence-capsules-lib.mjs";
 import { hasProhibitedChallengeClaim, validateChallengeArtifacts } from "./challenge-protocol-lib.mjs";
+import { validateFlagshipArtifacts } from "./flagship-report-lib.mjs";
 
 const allowedCommunities = new Set([
   "Jewish",
@@ -103,6 +104,8 @@ const [
   challengeStandards,
   challengeQueues,
   challengeLedger,
+  flagshipReport,
+  goldRecordV1,
   manifest
 ] = await Promise.all([
   readJson(paths.events),
@@ -127,6 +130,8 @@ const [
   readJson(paths.challengeStandards),
   readJson(paths.challengeQueues),
   readJson(paths.challengeLedger),
+  readJson(paths.flagshipReport),
+  readJson(paths.goldRecordV1),
   readJson(paths.manifest)
 ]);
 
@@ -547,6 +552,19 @@ if (challengeQueues.queue_count !== (challengeQueues.queues ?? []).length) {
 if (challengeQueues.packet_count !== (challengeQueues.packets ?? []).length) {
   errors.push(`Challenge queues packet_count is ${challengeQueues.packet_count}, expected ${(challengeQueues.packets ?? []).length}`);
 }
+
+errors.push(
+  ...validateFlagshipArtifacts({
+    report: flagshipReport,
+    gold: goldRecordV1,
+    events,
+    schools,
+    sources,
+    challengeQueues,
+    robustnessMetrics,
+    manifest
+  })
+);
 
 if (!Array.isArray(sourceProvenanceQueues.queues) || sourceProvenanceQueues.queues.length < 5) {
   errors.push("source-provenance-queues must include at least five queues");

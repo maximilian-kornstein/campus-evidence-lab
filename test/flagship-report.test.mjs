@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import {
   buildFlagshipReport,
   buildGoldRecordV1,
-  containsProhibitedFlagshipClaim
+  containsProhibitedFlagshipClaim,
+  validateFlagshipArtifacts
 } from "../scripts/flagship-report-lib.mjs";
 
 const events = [
@@ -336,4 +337,65 @@ test("containsProhibitedFlagshipClaim rejects ranking, safety, prevalence, and e
   ]) {
     assert.equal(containsProhibitedFlagshipClaim(allowed), false, allowed);
   }
+});
+
+test("validateFlagshipArtifacts catches stale coverage, missing references, and overclaims", () => {
+  const manifest = { snapshot_id: "snapshot_test", created_at: "2026-06-16", hashes: { full_snapshot: "sha256:test" } };
+  const report = buildFlagshipReport({
+    events,
+    schools,
+    sources,
+    robustnessMetrics,
+    challengeQueues,
+    manifest
+  });
+  const gold = buildGoldRecordV1({
+    events,
+    schools,
+    sources,
+    challengeQueues,
+    manifest,
+    limit: 2
+  });
+
+  assert.deepEqual(
+    validateFlagshipArtifacts({
+      report,
+      gold,
+      events,
+      schools,
+      sources,
+      challengeQueues,
+      robustnessMetrics,
+      manifest
+    }),
+    []
+  );
+
+  const staleCoverage = structuredClone(gold);
+  staleCoverage.coverage_summary.categories.Vandalism = 99;
+  assert.equal(
+    validateFlagshipArtifacts({ report, gold: staleCoverage, events, schools, sources, challengeQueues, robustnessMetrics, manifest }).some((error) =>
+      /coverage_summary\.categories/.test(error)
+    ),
+    true
+  );
+
+  const missingReference = structuredClone(gold);
+  missingReference.records[0].event_id = "evt_missing";
+  assert.equal(
+    validateFlagshipArtifacts({ report, gold: missingReference, events, schools, sources, challengeQueues, robustnessMetrics, manifest }).some((error) =>
+      /unknown event|challenge_url|event_url/i.test(error)
+    ),
+    true
+  );
+
+  const prohibitedClaim = structuredClone(report);
+  prohibitedClaim.findings[0].summary = "This is the safest school ranking.";
+  assert.equal(
+    validateFlagshipArtifacts({ report: prohibitedClaim, gold, events, schools, sources, challengeQueues, robustnessMetrics, manifest }).some((error) =>
+      /prohibited/i.test(error)
+    ),
+    true
+  );
 });
