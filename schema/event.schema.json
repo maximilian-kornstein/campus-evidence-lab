@@ -59,6 +59,33 @@
         }
       }
     },
+    "source_locators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "locator_type", "locator"],
+        "properties": {
+          "source_id": { "type": "string" },
+          "locator_type": {
+            "type": "string",
+            "enum": ["workbook_cell", "page_table", "aggregate_item", "source_item", "document_section"]
+          },
+          "locator": { "type": "string" },
+          "workbook": { "type": "string" },
+          "sheet": { "type": "string" },
+          "row": { "type": "integer", "minimum": 1 },
+          "column": { "type": "string" },
+          "cell": { "type": "string" },
+          "page": { "type": "string" },
+          "table": { "type": "string" },
+          "section": { "type": "string" },
+          "item_date": { "type": "string", "format": "date" },
+          "item_date_precision": { "type": "string", "enum": ["day", "month", "year"] },
+          "item_label": { "type": "string" },
+          "review_note": { "type": "string" }
+        }
+      }
+    },
     "source_ids": {
       "type": "array",
       "items": { "type": "string" },

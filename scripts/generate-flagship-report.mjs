@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { paths, readJson, writeJson } from "./lib.mjs";
 import { buildFlagshipReport, buildGoldRecordV1 } from "./flagship-report-lib.mjs";
 
@@ -19,11 +20,14 @@ const flagshipReport = buildFlagshipReport({
   manifest
 });
 
+const existingGoldRecordV1 = existsSync(paths.goldRecordV1) ? await readJson(paths.goldRecordV1) : null;
+
 const goldRecordV1 = buildGoldRecordV1({
   events,
   schools,
   sources,
   challengeQueues,
+  existingGoldRecordV1,
   manifest,
   limit: 25
 });

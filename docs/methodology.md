@@ -89,7 +89,11 @@ The flagship report and gold v1 packet set are review infrastructure, not extern
 
 - `data/flagship-report.json` publishes a bounded thesis about the project as public evidence infrastructure and links each finding to local data or review artifacts.
 - `data/gold-record-v1.json` publishes 25 deterministic review packets with source basis, rationale fields, review questions, workspace links, correction links, and challenge links.
+- `data/record-quality-audit.json` publishes deterministic pre-review triage for every event record and expanded issue notes for Gold v1 records.
+- `data/record-quality-reviewer-packet.json` packages the highest-priority audit issues, live source-link checks, and reviewer checklist into a bounded challenge packet.
+- `data/gold-v1-certification-status.json` tracks whether each Gold v1 record has cleared internal source-to-record certification gates.
 - Gold v1 means "selected for structured review packet display." It does not mean outside audit, approval, adjudication, or greater importance than other records.
+- Once a Gold v1 cohort is under repair, regeneration preserves that cohort and recomputes its packet fields from current records instead of silently replacing repaired records with newly higher-scoring candidates.
 - The packet set is deliberately bounded. It improves reviewability before scale and should be used to find weaknesses, not to make claims about school safety, prevalence, severity, or institutional quality.
 
 ## Correction Process

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/certification-ledger.schema.json",
+  "title": "Campus Evidence Lab Certification Ledger",
+  "type": "object",
+  "required": [
+    "id",
+    "snapshot_id",
+    "generated_at",
+    "status",
+    "method",
+    "public_claim_limit",
+    "status_definitions",
+    "certification_gates",
+    "totals",
+    "certification_status_counts",
+    "source_family_certification",
+    "open_gate_counts",
+    "batch_001",
+    "records"
+  ],
+  "properties": {
+    "id": { "const": "certification_ledger_v1" },
+    "snapshot_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "status": { "type": "string" },
+    "method": { "type": "string" },
+    "public_claim_limit": { "type": "string" },
+    "status_definitions": { "type": "array" },
+    "certification_gates": { "type": "array" },
+    "totals": { "type": "object" },
+    "certification_status_counts": { "type": "object" },
+    "source_family_certification": { "type": "object" },
+    "open_gate_counts": { "type": "object" },
+    "batch_001": {
+      "type": "object",
+      "required": ["id", "label", "source_family", "limit", "method", "public_claim_limit", "status_counts", "open_gate_counts", "records"],
+      "properties": {
+        "id": { "const": "batch_001_ed_dataset_provenance_pilot" },
+        "label": { "type": "string" },
+        "source_family": { "const": "ed_campus_safety_dataset" },
+        "limit": { "type": "integer", "minimum": 1 },
+        "method": { "type": "string" },
+        "public_claim_limit": { "type": "string" },
+        "status_counts": { "type": "object" },
+        "open_gate_counts": { "type": "object" },
+        "records": { "type": "array" }
+      }
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "event_id",
+          "school_id",
+          "source_family",
+          "certification_status",
+          "review_debt_status",
+          "issue_ids",
+          "open_gates",
+          "gates",
+          "event_url",
+          "workspace_url",
+          "challenge_url",
+          "next_action"
+        ],
+        "properties": {
+          "event_id": { "type": "string" },
+          "school_id": { "type": "string" },
+          "source_family": { "type": "string" },
+          "certification_status": {
+            "enum": ["certified", "not_certified", "blocked", "awaiting_review"]
+          },
+          "certification_basis": {
+            "type": ["string", "null"]
+          },
+          "review_debt_status": { "type": "string" },
+          "issue_ids": { "type": "array", "items": { "type": "string" } },
+          "open_gates": { "type": "array", "items": { "type": "string" } },
+          "gates": { "type": "object" },
+          "event_url": { "type": "string" },
+          "workspace_url": { "type": "string" },
+          "challenge_url": { "type": "string" },
+          "next_action": { "type": "string" }
+        }
+      }
+    }
+  }
+}

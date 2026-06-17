@@ -64,6 +64,17 @@ function explicitFieldSupport(record, sources) {
   }));
 }
 
+function sourceLocatorRows(record, sources) {
+  if (!Array.isArray(record.source_locators) || record.source_locators.length === 0) return [];
+  const titles = sourceTitleMap(sources);
+  return record.source_locators.map((locator) => ({
+    sourceId: locator.source_id,
+    sourceTitle: titles.get(locator.source_id) ?? "",
+    locatorType: locator.locator_type,
+    locator: locator.locator
+  }));
+}
+
 function withSourceTitles(rows, sources) {
   const titles = sourceTitleMap(sources);
   return rows.map((row) => ({
@@ -97,6 +108,7 @@ export function buildAuditProfile(record, sources = []) {
     communityRationale,
     confidenceRationale,
     fieldSupport,
+    sourceLocators: sourceLocatorRows(record, sources),
     limitations: Array.isArray(record.limitations) && record.limitations.length ? record.limitations : defaultLimitations()
   };
 }
@@ -113,6 +125,12 @@ export function auditProfileForExport(record, sources = []) {
       source_ids: row.sourceIds,
       source_titles: row.sourceTitles,
       rationale: row.rationale
+    })),
+    source_locators: profile.sourceLocators.map((row) => ({
+      source_id: row.sourceId,
+      source_title: row.sourceTitle,
+      locator_type: row.locatorType,
+      locator: row.locator
     })),
     limitations: profile.limitations
   };

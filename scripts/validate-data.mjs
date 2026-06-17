@@ -8,6 +8,14 @@ import { containsProhibitedRobustnessClaim } from "./robustness-metrics-lib.mjs"
 import { hasProhibitedEvidenceClaim } from "./evidence-capsules-lib.mjs";
 import { hasProhibitedChallengeClaim, validateChallengeArtifacts } from "./challenge-protocol-lib.mjs";
 import { validateFlagshipArtifacts } from "./flagship-report-lib.mjs";
+import {
+  validateGoldV1CertificationStatus,
+  hasProhibitedRecordAuditClaim,
+  validateRecordQualityAudit,
+  validateRecordQualityReviewerPacket
+} from "./record-quality-audit-lib.mjs";
+import { hasProhibitedExternalReviewClaim, validateExternalReviewPacket } from "./external-review-packet-lib.mjs";
+import { validateCertificationLedger } from "./certification-ledger-lib.mjs";
 
 const allowedCommunities = new Set([
   "Jewish",
@@ -72,6 +80,7 @@ const allowedResponseDepth = new Set([
   "limited_public_response_note",
   "no_public_response_found"
 ]);
+const allowedLocatorTypes = new Set(["workbook_cell", "page_table", "aggregate_item", "source_item", "document_section"]);
 
 const allowedCorrectionStatus = new Set(["pending", "accepted", "rejected", "needs_more_evidence"]);
 const requiredReviewQueues = new Set([
@@ -106,6 +115,12 @@ const [
   challengeLedger,
   flagshipReport,
   goldRecordV1,
+  recordQualityAudit,
+  recordQualityReviewerPacket,
+  goldV1CertificationStatus,
+  reviewDebtLedger,
+  externalReviewPacket,
+  certificationLedger,
   manifest
 ] = await Promise.all([
   readJson(paths.events),
@@ -132,6 +147,12 @@ const [
   readJson(paths.challengeLedger),
   readJson(paths.flagshipReport),
   readJson(paths.goldRecordV1),
+  readJson(paths.recordQualityAudit),
+  readJson(paths.recordQualityReviewerPacket),
+  readJson(paths.goldV1CertificationStatus),
+  readJson(paths.reviewDebtLedger),
+  readJson(paths.externalReviewPacket),
+  readJson(paths.certificationLedger),
   readJson(paths.manifest)
 ]);
 
@@ -238,6 +259,46 @@ for (const event of events) {
         } else {
           for (const sourceId of row.source_ids) {
             if (!sourceIds.has(sourceId)) errors.push(`Event ${event.id} field_support[${index}] references unknown source ${sourceId}`);
+          }
+        }
+      }
+    }
+  }
+  if (event.source_locators !== undefined) {
+    if (!Array.isArray(event.source_locators) || event.source_locators.length === 0) {
+      errors.push(`Event ${event.id} source_locators must be a non-empty array when present`);
+    } else {
+      for (const [index, locator] of event.source_locators.entries()) {
+        if (!locator.source_id || !sourceIds.has(locator.source_id)) {
+          errors.push(`Event ${event.id} source_locators[${index}] references unknown source`);
+        }
+        if (!allowedLocatorTypes.has(locator.locator_type)) {
+          errors.push(`Event ${event.id} source_locators[${index}] has invalid locator_type`);
+        }
+        if (!locator.locator || locator.locator.length < 20) {
+          errors.push(`Event ${event.id} source_locators[${index}] locator is too short`);
+        }
+        if (locator.locator_type === "workbook_cell") {
+          for (const field of ["workbook", "sheet", "row", "column", "cell"]) {
+            if (!locator[field]) errors.push(`Event ${event.id} source_locators[${index}] workbook_cell missing ${field}`);
+          }
+          if (!Number.isInteger(locator.row) || locator.row < 1) {
+            errors.push(`Event ${event.id} source_locators[${index}] workbook_cell row must be a positive integer`);
+          }
+        }
+        if (locator.locator_type === "aggregate_item") {
+          if (!locator.item_date || !locator.item_label) {
+            errors.push(`Event ${event.id} source_locators[${index}] aggregate_item missing item_date or item_label`);
+          } else {
+            assertDate(locator.item_date, `Event ${event.id} source_locators[${index}].item_date`, errors);
+          }
+          if (locator.item_date_precision !== undefined && !allowedDatePrecision.has(locator.item_date_precision)) {
+            errors.push(`Event ${event.id} source_locators[${index}] has invalid item_date_precision`);
+          }
+        }
+        if (["page_table", "source_item", "document_section"].includes(locator.locator_type)) {
+          if (!locator.page && !locator.table && !locator.section && !locator.item_label) {
+            errors.push(`Event ${event.id} source_locators[${index}] page/document locator needs page, table, section, or item_label`);
           }
         }
       }
@@ -565,6 +626,33 @@ errors.push(
     manifest
   })
 );
+
+errors.push(...validateRecordQualityAudit({ audit: recordQualityAudit, events, goldRecordV1, manifest }));
+errors.push(...validateRecordQualityReviewerPacket({ packet: recordQualityReviewerPacket, audit: recordQualityAudit, events, manifest }));
+errors.push(...validateGoldV1CertificationStatus({ status: goldV1CertificationStatus, goldRecordV1, events, manifest }));
+errors.push(
+  ...validateExternalReviewPacket({
+    packet: externalReviewPacket,
+    events,
+    sources,
+    goldStatus: goldV1CertificationStatus,
+    reviewDebtLedger,
+    manifest
+  })
+);
+errors.push(...validateCertificationLedger({ ledger: certificationLedger, events, manifest }));
+if (hasProhibitedRecordAuditClaim(JSON.stringify(recordQualityAudit))) {
+  errors.push("record-quality-audit includes prohibited validation, ranking, safety, frequency, endorsement, or legal-truth language");
+}
+if (hasProhibitedRecordAuditClaim(JSON.stringify(recordQualityReviewerPacket))) {
+  errors.push("record-quality-reviewer-packet includes prohibited validation, ranking, safety, frequency, endorsement, or legal-truth language");
+}
+if (hasProhibitedRecordAuditClaim(JSON.stringify(goldV1CertificationStatus))) {
+  errors.push("gold-v1-certification-status includes prohibited validation, ranking, safety, frequency, endorsement, or legal-truth language");
+}
+if (hasProhibitedExternalReviewClaim(JSON.stringify(externalReviewPacket))) {
+  errors.push("external-review-packet includes prohibited validation, ranking, safety, frequency, endorsement, or legal-truth language");
+}
 
 if (!Array.isArray(sourceProvenanceQueues.queues) || sourceProvenanceQueues.queues.length < 5) {
   errors.push("source-provenance-queues must include at least five queues");

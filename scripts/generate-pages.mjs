@@ -4,13 +4,16 @@ import { buildAuditProfile } from "../assets/audit-profile.js";
 import { hasSubstantiveInstitutionalResponse, responseDepthDisplayProfile, responseDisplayProfile } from "../assets/record-display.js";
 import { paths, readJson, rootDir } from "./lib.mjs";
 
-const [events, schools, sources, briefs, manifest, challengeQueues] = await Promise.all([
+const [events, schools, sources, briefs, manifest, challengeQueues, reviewDebtLedger, externalReviewPacket, certificationLedger] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
   readJson(paths.sources),
   readJson(paths.briefs),
   readJson(paths.manifest),
-  readJson(paths.challengeQueues)
+  readJson(paths.challengeQueues),
+  readJson(paths.reviewDebtLedger),
+  readJson(paths.externalReviewPacket),
+  readJson(paths.certificationLedger)
 ]);
 
 const schoolMap = new Map(schools.map((school) => [school.id, school]));
@@ -20,6 +23,10 @@ const eventsDir = path.join(rootDir, "events");
 const schoolsDir = path.join(rootDir, "schools");
 const briefsDir = path.join(rootDir, "briefs");
 const sourcesDir = path.join(rootDir, "sources");
+const reviewDebtDir = path.join(rootDir, "review-debt");
+const externalReviewDir = path.join(rootDir, "external-review");
+const knownLimitsDir = path.join(rootDir, "known-limits");
+const certificationDir = path.join(rootDir, "certification");
 const detailDepth = 2;
 
 function escapeHtml(value) {
@@ -54,6 +61,9 @@ function nav(depth = 0) {
           <a href="${sitePath("/briefs/", depth)}">Briefs</a>
           <a href="${sitePath("/sources/", depth)}">Sources</a>
           <a href="${sitePath("/quality/", depth)}">Quality</a>
+          <a href="${sitePath("/review-debt/", depth)}">Review Debt</a>
+          <a href="${sitePath("/certification/", depth)}">Certification</a>
+          <a href="${sitePath("/external-review/", depth)}">External Review</a>
           <a href="${sitePath("/methodology/", depth)}">Methodology</a>
           <a href="${sitePath("/impact/", depth)}">Impact</a>
           <a href="${sitePath("/guide/", depth)}">Guide</a>
@@ -111,6 +121,20 @@ function auditFieldSupportRows(rows) {
     .join("");
 }
 
+function auditSourceLocatorRows(rows) {
+  return rows
+    .map(
+      (row) => `
+        <tr>
+          <td>${escapeHtml(row.locatorType)}</td>
+          <td>${escapeHtml(row.sourceTitle || row.sourceId)}</td>
+          <td>${escapeHtml(row.locator)}</td>
+        </tr>
+      `
+    )
+    .join("");
+}
+
 function recordAuditCard(event, sources) {
   const profile = buildAuditProfile(event, sources);
   return `
@@ -137,6 +161,25 @@ function recordAuditCard(event, sources) {
           <tbody>${auditFieldSupportRows(profile.fieldSupport)}</tbody>
         </table>
       </div>
+      ${
+        profile.sourceLocators.length
+          ? `
+            <h3 class="section-title section-title--spaced">Source Locators</h3>
+            <div class="table-wrap table-wrap--compact">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Locator type</th>
+                    <th>Source</th>
+                    <th>Locator</th>
+                  </tr>
+                </thead>
+                <tbody>${auditSourceLocatorRows(profile.sourceLocators)}</tbody>
+              </table>
+            </div>
+          `
+          : ""
+      }
       <h3 class="section-title section-title--spaced">Use Limits</h3>
       <ul class="evidence-list">
         ${profile.limitations.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
@@ -298,6 +341,114 @@ function briefListSection(title, items) {
     <ul class="evidence-list">
       ${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
     </ul>
+  `;
+}
+
+function objectCountRows(counts) {
+  return Object.entries(counts ?? {}).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+}
+
+function ledgerRecordTable(records, depth = 1) {
+  if (!records.length) return `<p class="empty">No records in this queue.</p>`;
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Record</th>
+            <th>School</th>
+            <th>Family</th>
+            <th>Debt status</th>
+            <th>Issues</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${records
+            .map(
+              (record) => `
+                <tr>
+                  <td><a href="${sitePath(record.event_url, depth)}">${escapeHtml(record.event_id)}</a></td>
+                  <td>${escapeHtml(record.school_id)}</td>
+                  <td>${escapeHtml(record.source_family)}</td>
+                  <td>${escapeHtml(record.debt_status)}</td>
+                  <td>${escapeHtml((record.issue_ids ?? []).join(", ") || "No deterministic issue")}</td>
+                </tr>
+              `
+            )
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function externalReviewRecordTable(records, depth = 1) {
+  if (!records.length) return `<p class="empty">No records in this packet.</p>`;
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Record</th>
+            <th>School</th>
+            <th>Source family</th>
+            <th>Gold status</th>
+            <th>Review links</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${records
+            .map(
+              (record) => `
+                <tr>
+                  <td><a href="${sitePath(record.event_url, depth)}">${escapeHtml(record.event_id)}</a></td>
+                  <td>${escapeHtml(record.school_id)}</td>
+                  <td>${escapeHtml(record.source_family)}</td>
+                  <td>${escapeHtml(record.gold_v1_certification_status)}</td>
+                  <td><a href="${sitePath(record.workspace_url, depth)}">Workspace</a> / <a href="${sitePath(record.challenge_url, depth)}">Challenge</a></td>
+                </tr>
+              `
+            )
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function certificationRecordTable(records, depth = 1) {
+  if (!records.length) return `<p class="empty">No records in this set.</p>`;
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Record</th>
+            <th>School</th>
+            <th>Family</th>
+            <th>Status</th>
+            <th>Open gates</th>
+            <th>Next action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${records
+            .map(
+              (record) => `
+                <tr>
+                  <td><a href="${sitePath(record.event_url, depth)}">${escapeHtml(record.event_id)}</a></td>
+                  <td>${escapeHtml(record.school_id)}</td>
+                  <td>${escapeHtml(record.source_family ?? "ed_campus_safety_dataset")}</td>
+                  <td>${escapeHtml(record.certification_status)}</td>
+                  <td>${escapeHtml((record.open_gates ?? []).join(", ") || "None")}</td>
+                  <td>${escapeHtml(record.next_action ?? "Review listed gates.")}</td>
+                </tr>
+              `
+            )
+            .join("")}
+        </tbody>
+      </table>
+    </div>
   `;
 }
 
@@ -758,4 +909,303 @@ for (const brief of briefs) {
   );
 }
 
-console.log(`Generated ${events.length} event pages, ${schools.length} school pages, ${briefs.length} brief pages, and ${sources.length} source pages.`);
+await mkdir(reviewDebtDir, { recursive: true });
+const topDebtRecords = (reviewDebtLedger.records ?? []).slice().sort((a, b) => b.repair_priority - a.repair_priority || a.event_id.localeCompare(b.event_id));
+const queueEntries = Object.values(reviewDebtLedger.queues ?? {});
+await writeFile(
+  path.join(reviewDebtDir, "index.html"),
+  page(
+    "Review Debt",
+    `
+      <p class="page-kicker">Whole-database review debt</p>
+      <h1 class="page-title page-title--small">Every record has an inspectable review-debt status.</h1>
+      <p class="page-intro">This ledger exposes what is strong, weak, blocked, or awaiting source review in the current snapshot. It is deterministic internal triage, not manual certification, outside validation, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.</p>
+      <section class="detail-panel">
+        <div class="detail-grid">
+          <div>
+            <h2 class="section-title">Debt Status Counts</h2>
+            ${countTable(objectCountRows(reviewDebtLedger.debt_status_counts), "Debt Status")}
+            <h2 class="section-title section-title--spaced">Source Family Counts</h2>
+            ${countTable(objectCountRows(reviewDebtLedger.source_family_counts), "Source Family")}
+            <h2 class="section-title section-title--spaced">Top Review Issues</h2>
+            ${countTable(objectCountRows(reviewDebtLedger.issue_counts).slice(0, 20), "Issue")}
+            <h2 class="section-title section-title--spaced">Highest-Priority Rows</h2>
+            ${ledgerRecordTable(topDebtRecords.slice(0, 50))}
+          </div>
+          <aside>
+            <dl>
+              ${dataLine("Snapshot", escapeHtml(reviewDebtLedger.snapshot_id), "mono")}
+              ${dataLine("Records", escapeHtml(reviewDebtLedger.totals.records))}
+              ${dataLine("Source families", escapeHtml(reviewDebtLedger.totals.source_families))}
+              ${dataLine("Blocked", escapeHtml(reviewDebtLedger.totals.blocked))}
+              ${dataLine("High review debt", escapeHtml(reviewDebtLedger.totals.high_review_debt))}
+              ${dataLine("Medium review debt", escapeHtml(reviewDebtLedger.totals.medium_review_debt))}
+              ${dataLine("Ledger JSON", `<a href="${sitePath("/data/review-debt-ledger.json", 1)}">Download artifact</a>`)}
+              ${dataLine("Use limit", escapeHtml(reviewDebtLedger.public_claim_limit))}
+            </dl>
+            <h2 class="section-title section-title--spaced">Status Definitions</h2>
+            <ul class="source-list">
+              ${(reviewDebtLedger.status_definitions ?? [])
+                .map((definition) => `<li><strong>${escapeHtml(definition.status)}</strong><br><span>${escapeHtml(definition.meaning)}</span></li>`)
+                .join("")}
+            </ul>
+          </aside>
+        </div>
+      </section>
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">Deterministic Review Queues</h2>
+          <p class="section-note">Top rows in each queue; full rows are in the JSON artifact</p>
+        </div>
+        ${queueEntries
+          .map(
+            (queue) => `
+              <h3 class="section-title section-title--spaced">${escapeHtml(queue.label)}</h3>
+              <p class="section-note">${escapeHtml(queue.description)}</p>
+              ${ledgerRecordTable((queue.records ?? []).slice(0, 10))}
+            `
+          )
+          .join("")}
+      </section>
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">Safe Repair Policy</h2>
+          <p class="section-note">This wave exposes debt; it does not mass-certify records</p>
+        </div>
+        <p>${escapeHtml(reviewDebtLedger.safe_repair_policy?.rule ?? "")}</p>
+        <ul class="evidence-list">
+          ${(reviewDebtLedger.safe_repair_policy?.deferred_batch_repairs ?? []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+        </ul>
+      </section>
+    `,
+    1
+  )
+);
+
+await mkdir(externalReviewDir, { recursive: true });
+await writeFile(
+  path.join(externalReviewDir, "index.html"),
+  page(
+    "External Review Packet",
+    `
+      <p class="page-kicker">External review packet</p>
+      <h1 class="page-title page-title--small">A source-to-record dossier reviewers can challenge.</h1>
+      <p class="page-intro">This packet packages ${externalReviewPacket.records.length} internally certified Gold v1 records with source-to-record checklists, replication steps, and challenge templates. It is not outside validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.</p>
+      <section class="detail-panel">
+        <div class="detail-grid">
+          <div>
+            <h2 class="section-title">Formal Evidence Dossier</h2>
+            ${externalReviewRecordTable(externalReviewPacket.records ?? [])}
+            <h2 class="section-title section-title--spaced">Challenge Templates</h2>
+            <ul class="source-list">
+              ${(externalReviewPacket.challenge_templates ?? [])
+                .map((template) => `<li><strong>${escapeHtml(template.label)}</strong><br><span>${escapeHtml(template.prompt)}</span></li>`)
+                .join("")}
+            </ul>
+          </div>
+          <aside>
+            <dl>
+              ${dataLine("Snapshot", escapeHtml(externalReviewPacket.snapshot_id), "mono")}
+              ${dataLine("Packet records", escapeHtml(externalReviewPacket.records.length))}
+              ${dataLine("Certified Gold v1 available", escapeHtml(externalReviewPacket.totals.certified_gold_v1_available))}
+              ${dataLine("Gold v1 not certified", escapeHtml(externalReviewPacket.totals.excluded_not_certified_gold_v1))}
+              ${dataLine("Gold v1 blocked", escapeHtml(externalReviewPacket.totals.excluded_blocked_gold_v1))}
+              ${dataLine("Packet JSON", `<a href="${sitePath("/data/external-review-packet.json", 1)}">Download artifact</a>`)}
+              ${dataLine("Replication guide", `<a href="${sitePath("/docs/source-to-record-replication-guide.md", 1)}">Markdown guide</a>`)}
+              ${dataLine("Known limits", `<a href="${sitePath("/known-limits/", 1)}">Open page</a>`)}
+              ${dataLine("Use limit", escapeHtml(externalReviewPacket.public_claim_limit))}
+            </dl>
+          </aside>
+        </div>
+      </section>
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">How To Review A Packet Record</h2>
+          <p class="section-note">Use the same checks on every record before accepting or challenging it</p>
+        </div>
+        <ol class="evidence-list">
+          <li>Open the record page, workspace packet, and source link.</li>
+          <li>Confirm the source locator points to the exact item, page, table, workbook cell, or document section.</li>
+          <li>Compare source wording against school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.</li>
+          <li>File a challenge with source URL, disputed field, current wording, and proposed source-bounded wording when any field is unsupported.</li>
+          <li>Do not convert review results into school rankings, prevalence estimates, safety ratings, severity ratings, endorsement, or legal conclusions.</li>
+        </ol>
+      </section>
+    `,
+    1
+  )
+);
+
+await mkdir(knownLimitsDir, { recursive: true });
+await writeFile(
+  path.join(knownLimitsDir, "index.html"),
+  page(
+    "Known Limits",
+    `
+      <p class="page-kicker">Known limits and unresolved records</p>
+      <h1 class="page-title page-title--small">The unresolved work is public, countable, and batchable.</h1>
+      <p class="page-intro">This page summarizes unresolved review debt from the current snapshot. Counts are review queues and source-to-record work items; they are not findings that records are false, severe, representative, complete, or externally reviewed.</p>
+      <section class="detail-panel">
+        <div class="detail-grid">
+          <div>
+            <h2 class="section-title">Unresolved Review Debt</h2>
+            ${countTable(objectCountRows(externalReviewPacket.known_limits?.unresolved_records ?? {}), "Unresolved Status")}
+            <h2 class="section-title section-title--spaced">Source Families</h2>
+            ${countTable(objectCountRows(externalReviewPacket.known_limits?.source_family_counts ?? {}), "Source Family")}
+            <h2 class="section-title section-title--spaced">Top Issue Counts</h2>
+            ${countTable(objectCountRows(externalReviewPacket.known_limits?.top_issue_counts ?? {}), "Issue")}
+            <h2 class="section-title section-title--spaced">Blocked And Highest-Priority Rows</h2>
+            ${ledgerRecordTable(topDebtRecords.slice(0, 50))}
+          </div>
+          <aside>
+            <dl>
+              ${dataLine("Review debt records", escapeHtml(reviewDebtLedger.totals.records))}
+              ${dataLine("Blocked", escapeHtml(reviewDebtLedger.totals.blocked))}
+              ${dataLine("High review debt", escapeHtml(reviewDebtLedger.totals.high_review_debt))}
+              ${dataLine("Medium review debt", escapeHtml(reviewDebtLedger.totals.medium_review_debt))}
+              ${dataLine("Gold v1 not certified", escapeHtml(externalReviewPacket.known_limits.unresolved_records.not_certified_gold_v1))}
+              ${dataLine("Gold v1 blocked", escapeHtml(externalReviewPacket.known_limits.unresolved_records.blocked_gold_v1))}
+              ${dataLine("Ledger JSON", `<a href="${sitePath("/data/review-debt-ledger.json", 1)}">Download ledger</a>`)}
+              ${dataLine("External packet", `<a href="${sitePath("/external-review/", 1)}">Open packet</a>`)}
+            </dl>
+          </aside>
+        </div>
+      </section>
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">Batch Rule For Scaling Review</h2>
+          <p class="section-note">The project should scale strict review by source-family batches, not by broad claims</p>
+        </div>
+        <ul class="evidence-list">
+          <li>Start with blocked records and source-locator debt.</li>
+          <li>Review dataset-backed records in workbook/sheet/row/column batches.</li>
+          <li>Review ASR records in page/table/statistic-label batches.</li>
+          <li>Review OCR aggregate records by exact item date and item label.</li>
+          <li>Do not call any batch certified until every record clears source locator, date precision, category fit, affected-label boundary, response-depth, and rationale-specificity gates.</li>
+        </ul>
+      </section>
+    `,
+    1
+  )
+);
+
+await mkdir(path.join(certificationDir, "batch-001"), { recursive: true });
+const topCertificationRecords = (certificationLedger.records ?? [])
+  .slice()
+  .sort((a, b) => b.open_gates.length - a.open_gates.length || a.event_id.localeCompare(b.event_id));
+await writeFile(
+  path.join(certificationDir, "index.html"),
+  page(
+    "Certification Ledger",
+    `
+      <p class="page-kicker">Full-database certification system</p>
+      <h1 class="page-title page-title--small">Every record has a certification status and exact open gates.</h1>
+      <p class="page-intro">This ledger distinguishes internally certified records from records that are not certified, blocked, or awaiting review. It does not claim all records are manually reviewed, externally validated, ranked, scored, representative, or legally adjudicated.</p>
+      <section class="detail-panel">
+        <div class="detail-grid">
+          <div>
+            <h2 class="section-title">Certification Status Counts</h2>
+            ${countTable(objectCountRows(certificationLedger.certification_status_counts), "Certification Status")}
+            <h2 class="section-title section-title--spaced">Open Gate Counts</h2>
+            ${countTable(objectCountRows(certificationLedger.open_gate_counts), "Open Gate")}
+            <h2 class="section-title section-title--spaced">Highest Open-Gate Rows</h2>
+            ${certificationRecordTable(topCertificationRecords.slice(0, 50))}
+          </div>
+          <aside>
+            <dl>
+              ${dataLine("Snapshot", escapeHtml(certificationLedger.snapshot_id), "mono")}
+              ${dataLine("Records", escapeHtml(certificationLedger.totals.records))}
+              ${dataLine("Certified", escapeHtml(certificationLedger.totals.certified))}
+              ${dataLine("Not certified", escapeHtml(certificationLedger.totals.not_certified))}
+              ${dataLine("Blocked", escapeHtml(certificationLedger.totals.blocked))}
+              ${dataLine("Awaiting review", escapeHtml(certificationLedger.totals.awaiting_review))}
+              ${dataLine("Ledger JSON", `<a href="${sitePath("/data/certification-ledger.json", 1)}">Download artifact</a>`)}
+              ${dataLine("Rulebook", `<a href="${sitePath("/docs/full-database-certification-rulebook.md", 1)}">Certification rulebook</a>`)}
+              ${dataLine("Playbooks", `<a href="${sitePath("/docs/source-family-review-playbooks.md", 1)}">Source-family playbooks</a>`)}
+              ${dataLine("Batch 001", `<a href="${sitePath("/certification/batch-001/", 1)}">Open pilot</a>`)}
+              ${dataLine("Use limit", escapeHtml(certificationLedger.public_claim_limit))}
+            </dl>
+            <h2 class="section-title section-title--spaced">Status Definitions</h2>
+            <ul class="source-list">
+              ${(certificationLedger.status_definitions ?? [])
+                .map((definition) => `<li><strong>${escapeHtml(definition.status)}</strong><br><span>${escapeHtml(definition.meaning)}</span></li>`)
+                .join("")}
+            </ul>
+          </aside>
+        </div>
+      </section>
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">Source-Family Certification</h2>
+          <p class="section-note">Counts show review state by source family, not institutional quality or campus safety</p>
+        </div>
+        ${Object.entries(certificationLedger.source_family_certification ?? {})
+          .map(
+            ([family, stats]) => `
+              <h3 class="section-title section-title--spaced">${escapeHtml(family)}</h3>
+              ${countTable(objectCountRows(stats.status_counts), "Status")}
+            `
+          )
+          .join("")}
+      </section>
+    `,
+    1
+  )
+);
+
+await writeFile(
+  path.join(certificationDir, "batch-001", "index.html"),
+  page(
+    "Batch 001 Certification Pilot",
+    `
+      <p class="page-kicker">Certification Batch 001</p>
+      <h1 class="page-title page-title--small">ED dataset provenance pilot.</h1>
+      <p class="page-intro">This bounded pilot tests whether ED Campus Safety dataset records have enough workbook, sheet, row, column, and cell provenance for source-to-record certification. It should produce unresolved gates when provenance is missing; that is a credibility feature, not a defect.</p>
+      <section class="detail-panel">
+        <div class="detail-grid">
+          <div>
+            <h2 class="section-title">Batch Status Counts</h2>
+            ${countTable(objectCountRows(certificationLedger.batch_001.status_counts), "Certification Status")}
+            <h2 class="section-title section-title--spaced">Batch Open Gates</h2>
+            ${countTable(objectCountRows(certificationLedger.batch_001.open_gate_counts), "Open Gate")}
+            <h2 class="section-title section-title--spaced">Batch Records</h2>
+            ${certificationRecordTable(
+              (certificationLedger.batch_001.records ?? []).map((record) => ({
+                ...record,
+                source_family: certificationLedger.batch_001.source_family
+              })),
+              2
+            )}
+          </div>
+          <aside>
+            <dl>
+              ${dataLine("Batch", escapeHtml(certificationLedger.batch_001.id), "mono")}
+              ${dataLine("Source family", escapeHtml(certificationLedger.batch_001.source_family))}
+              ${dataLine("Records", escapeHtml(certificationLedger.batch_001.records.length))}
+              ${dataLine("Limit", escapeHtml(certificationLedger.batch_001.limit))}
+              ${dataLine("Ledger JSON", `<a href="${sitePath("/data/certification-ledger.json", 2)}">Download artifact</a>`)}
+              ${dataLine("Use limit", escapeHtml(certificationLedger.batch_001.public_claim_limit))}
+            </dl>
+          </aside>
+        </div>
+      </section>
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">Batch Completion Rule</h2>
+          <p class="section-note">No record is certified unless every gate passes</p>
+        </div>
+        <ul class="evidence-list">
+          <li>Records missing workbook, sheet, row, column, or cell provenance remain awaiting review.</li>
+          <li>Year-level dates remain visible unless a narrower source-supported date is verified.</li>
+          <li>Response-depth labels remain limited unless a direct or agency-described response is sourced.</li>
+          <li>Rationales must be source-specific before certification.</li>
+        </ul>
+      </section>
+    `,
+    2
+  )
+);
+
+console.log(
+  `Generated ${events.length} event pages, ${schools.length} school pages, ${briefs.length} brief pages, ${sources.length} source pages, the review debt dashboard, certification pages, and external review pages.`
+);

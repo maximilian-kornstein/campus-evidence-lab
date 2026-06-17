@@ -13,6 +13,7 @@
 - description: source-backed description using attributed language.
 - source_ids: source records supporting the event.
 - source_types: source categories supporting the event.
+- source_locators: optional source-specific locator rows for high-review records. Locators can identify a workbook/sheet/row/column/cell, public report page/table/section, aggregate item title/date, source item, or document section. These rows improve reviewability; they do not certify the record or add facts beyond the linked public source.
 - institutional_response: public institutional response if available.
 - response_depth: optional response-depth label for enriched records. Allowed values are direct_institutional_response, agency_described_institutional_action, limited_public_response_note, and no_public_response_found.
 - response_date: response date if available.
@@ -30,9 +31,19 @@
 - field_support: optional source-to-field support rows identifying which source IDs support specific fields and what reviewers should check.
 - changelog: public record-edit history.
 
+### source_locators
+
+- source_id: source record the locator belongs to.
+- locator_type: one of workbook_cell, page_table, aggregate_item, source_item, or document_section.
+- locator: human-readable locator text.
+- workbook, sheet, row, column, cell: required workbook-cell details when locator_type is workbook_cell.
+- page, table, section, item_label: page, table, section, or item details for public reports and aggregate source pages.
+- item_date and item_date_precision: source-supported item timing for aggregate source pages when visible.
+- review_note: optional bounded note explaining what the locator supports or what still needs review.
+
 ## Record audit profiles
 
-Event pages and Research Workspace packets generate an audit profile for every record. If optional rationale fields are absent, the public site derives conservative audit text from existing event fields, linked sources, source types, verification status, and confidence. Derived audit profiles are review aids; they do not add new factual claims beyond the canonical event record and linked public sources.
+Event pages and Research Workspace packets generate an audit profile for every record. If optional rationale fields are absent, the public site derives conservative audit text from existing event fields, linked sources, source types, verification status, and confidence. When source_locators are present, audit profiles display them as review aids. Derived audit profiles are review aids; they do not add new factual claims beyond the canonical event record and linked public sources.
 
 ## events-research.json and events-research.csv
 
@@ -114,6 +125,8 @@ Generated research exports denormalize each source with event-derived references
 - hashes: deterministic hashes for dataset files and full snapshot.
 
 Flagship artifacts cite the full source snapshot hash. Their own hashes are tracked in `hashes.flagship_report` and `hashes.gold_record_v1` so reviewers can detect stale public review artifacts without making `full_snapshot` self-referential.
+
+Certification artifacts cite the same source snapshot. Their hashes are tracked separately so reviewers can verify certification-status changes without treating certification status as an event fact.
 
 ## snapshot-index.json
 
@@ -247,6 +260,62 @@ The review ledger records review activity separately from canonical event record
 - totals: event, source, source-count, and explicit-rationale counts.
 - source_type_concentration: source-type distribution for the current dataset.
 - confidence: confidence-label distribution.
+
+## review-debt-ledger.json
+
+- id: artifact identifier, `review_debt_ledger_v1`.
+- snapshot_id: snapshot the ledger describes.
+- generated_at: generation date.
+- status: `whole_database_review_debt_ledger`.
+- method: bounded explanation of how the ledger was generated.
+- public_claim_limit: explicit language preventing certification, endorsement, ranking, prevalence, safety, severity, or legal-truth claims.
+- status_definitions: meanings for blocked, high_review_debt, medium_review_debt, low_review_debt, and lower_priority_review_debt.
+- totals: record count, source-family count, debt-status counts, and queue row totals.
+- debt_status_counts: count of records by debt status.
+- source_family_counts: count of records by source family, such as ed_campus_safety_dataset, annual_security_report, ocr_or_ed_release, university_statement, news_report, or other source families.
+- source_family_debt: per-source-family debt counts and top issue counts.
+- issue_counts: deterministic issue counts inherited from the record-quality audit.
+- safe_repair_policy: applied and deferred batch-repair rules. Empty applied_batch_repairs means no mass record-fact repair was made by the ledger.
+- queues: deterministic priority queues for blocked records, dataset locator debt, ASR/page locator debt, OCR aggregate item debt, label boundary debt, rationale debt, date precision debt, category-fit debt, and response-depth debt.
+- records: one row per event record, including event_id, school_id, source_family, debt_status, public_use_status, issue_ids, debt_reasons, repair_priority, audit_status, highest_severity, review_score, source_types, confidence, date_precision, response_depth, source_count, event_url, and workspace_url.
+
+The review-debt ledger makes review debt inspectable across the whole database. It does not manually certify all records and does not change event facts by itself.
+
+## external-review-packet.json
+
+- id: artifact identifier, `external_review_packet_v1`.
+- snapshot_id: snapshot the packet describes.
+- generated_at: generation date.
+- status: `public_external_review_packet`.
+- method: bounded explanation of packet generation.
+- public_claim_limit: explicit language preventing external-validation, endorsement, ranking, prevalence, safety, severity, or legal-truth claims.
+- selection_standard: source artifact and rule used to select packet records. Records must be certified Gold v1 rows.
+- totals: selected record count, certified Gold v1 records available, and excluded not-certified or blocked Gold v1 counts.
+- review_batches: the current formal review batch and the whole-database batch-scaling rule.
+- challenge_templates: source-backed challenge templates for locator, category, affected labels, date precision, response depth, rationale specificity, inclusion, and counterevidence review.
+- known_limits: unresolved record counts, source-family counts, top issue counts, and caveat language.
+- records: selected packet rows with event_id, school_id, date, date_precision, category, affected_communities, confidence, source_ids, source_types, source_family, Gold v1 certification status, review-debt status, response_depth, source_locators, source_checklist, replication_steps, challenge_url, workspace_url, and event_url.
+
+The external review packet is a strict source-to-record dossier for review. It is not outside validation and does not imply that the full database has been manually certified.
+
+## certification-ledger.json
+
+- id: artifact identifier, `certification_ledger_v1`.
+- snapshot_id: snapshot the ledger describes.
+- generated_at: generation date.
+- status: `full_database_internal_certification_status`.
+- method: bounded explanation of how the ledger was generated from event records, source metadata, review-debt rows, and Gold v1 certification status.
+- public_claim_limit: explicit language preventing external-validation, endorsement, ranking, prevalence, safety, severity, or legal-truth claims.
+- status_definitions: meanings for certified, not_certified, blocked, and awaiting_review.
+- certification_gates: source-to-record gates used for every record.
+- totals: record count, certification-status counts, source-family count, and Batch 001 size.
+- certification_status_counts: count of records by certification status.
+- source_family_certification: per-source-family status counts and open-gate counts.
+- open_gate_counts: whole-database count of unresolved gates.
+- batch_001: bounded ED dataset provenance pilot with selected records, status counts, open gates, and next actions.
+- records: one row per event record, including event_id, school_id, source_family, certification_status, certification_basis, review_debt_status, issue_ids, open_gates, gate detail, event_url, workspace_url, challenge_url, and next_action.
+
+The certification ledger makes source-to-record readiness visible across the whole database. It does not claim that all records are manually reviewed. A record is certified only when every gate passes and an explicit certification basis is present.
 - date_precision: date-precision distribution.
 - community_concentration: affected-community label distribution.
 - category_concentration: category distribution.

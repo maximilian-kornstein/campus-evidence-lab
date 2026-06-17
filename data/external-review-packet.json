@@ -1,0 +1,1090 @@
+{
+  "id": "external_review_packet_v1",
+  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "generated_at": "2026-06-03",
+  "status": "public_external_review_packet",
+  "method": "Formal public evidence dossier generated only from Gold v1 records whose internal certification gates currently pass. It packages source-to-record review steps, challenge templates, known limits, and batch-scaling guidance; it is not outside validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.",
+  "public_claim_limit": "This packet may be used for source-to-record review. It must not be described as third-party review, external validation, institutional quality judgment, school ranking, safety scoring, severity scoring, prevalence measurement, endorsement, or legal finding.",
+  "selection_standard": {
+    "source": "data/gold-v1-certification-status.json",
+    "rule": "Include only records with certification_status=certified; exclude blocked and not_certified records.",
+    "max_records": 25,
+    "selected_records": 17
+  },
+  "totals": {
+    "records": 17,
+    "certified_gold_v1_available": 17,
+    "excluded_not_certified_gold_v1": 7,
+    "excluded_blocked_gold_v1": 1
+  },
+  "review_batches": [
+    {
+      "id": "gold_v1_external_review_batch_001",
+      "label": "Gold v1 External Review Batch 001",
+      "batch_size": 17,
+      "record_ids": [
+        "evt_2024_0001",
+        "evt_2026_0001",
+        "evt_2026_0024",
+        "evt_2026_0040",
+        "evt_2026_0065",
+        "evt_2026_0066",
+        "evt_2026_0078",
+        "evt_2026_0243",
+        "evt_2026_0417",
+        "evt_2026_0450",
+        "evt_2026_0878",
+        "evt_2026_1067",
+        "evt_2026_1156",
+        "evt_2026_1922",
+        "evt_2026_2437",
+        "evt_2026_2553",
+        "evt_2026_3911"
+      ],
+      "review_standard": "Each record must be rechecked from public source locator to database fields before any reviewer conclusion is accepted.",
+      "workspace_url": "/research-workspace/?record_ids=evt_2024_0001%2Cevt_2026_0001%2Cevt_2026_0024%2Cevt_2026_0040%2Cevt_2026_0065%2Cevt_2026_0066%2Cevt_2026_0078%2Cevt_2026_0243%2Cevt_2026_0417%2Cevt_2026_0450%2Cevt_2026_0878%2Cevt_2026_1067%2Cevt_2026_1156%2Cevt_2026_1922%2Cevt_2026_2437%2Cevt_2026_2553%2Cevt_2026_3911"
+    },
+    {
+      "id": "review_debt_batching_rule",
+      "label": "Whole-database Batch Rule",
+      "batch_size": 25,
+      "record_ids": [],
+      "review_standard": "Scale the remaining 4,000-record review in source-family batches from data/review-debt-ledger.json. Do not call a batch certified until every record in that batch clears the same source locator, date, category, affected-label, response-depth, and rationale gates."
+    }
+  ],
+  "challenge_templates": [
+    {
+      "id": "source_locator_challenge",
+      "label": "Source Locator Challenge",
+      "prompt": "Does the linked source URL and locator land on the exact source item, table, page, workbook cell, or document section supporting the record?",
+      "required_evidence": [
+        "record ID",
+        "source URL reviewed",
+        "current locator",
+        "specific missing or stronger locator",
+        "proposed correction"
+      ]
+    },
+    {
+      "id": "category_challenge",
+      "label": "Category Challenge",
+      "prompt": "Does the source wording support the stored category without implying a stronger legal or severity conclusion?",
+      "required_evidence": [
+        "record ID",
+        "source passage or table field",
+        "current category",
+        "proposed category or limit note"
+      ]
+    },
+    {
+      "id": "affected_label_challenge",
+      "label": "Affected-Community Label Challenge",
+      "prompt": "Does the source support each affected-community label at the stored level of specificity?",
+      "required_evidence": [
+        "record ID",
+        "source wording",
+        "current label",
+        "label to remove, narrow, or qualify"
+      ]
+    },
+    {
+      "id": "date_precision_challenge",
+      "label": "Date Precision Challenge",
+      "prompt": "Does the source support the stored day, month, or year precision?",
+      "required_evidence": [
+        "record ID",
+        "source date field or item date",
+        "current date precision",
+        "proposed precision"
+      ]
+    },
+    {
+      "id": "response_depth_challenge",
+      "label": "Response-Depth Challenge",
+      "prompt": "Does the response field distinguish direct institutional response, agency-described action, limited note, and no public response found?",
+      "required_evidence": [
+        "record ID",
+        "source response text",
+        "current response-depth label",
+        "proposed label or wording"
+      ]
+    },
+    {
+      "id": "rationale_specificity_challenge",
+      "label": "Rationale Specificity Challenge",
+      "prompt": "Are classification, community, and confidence rationales specific to the linked public source?",
+      "required_evidence": [
+        "record ID",
+        "rationale field",
+        "source support",
+        "proposed source-bounded rationale"
+      ]
+    },
+    {
+      "id": "inclusion_challenge",
+      "label": "Inclusion Challenge",
+      "prompt": "Does the record satisfy the project inclusion rule for public-source campus civil-rights documentation?",
+      "required_evidence": [
+        "record ID",
+        "public source reviewed",
+        "inclusion concern",
+        "proposed keep/remove/qualify outcome"
+      ]
+    },
+    {
+      "id": "counterevidence_challenge",
+      "label": "Counterevidence Challenge",
+      "prompt": "Does another public source materially contradict, narrow, update, or clarify the current record?",
+      "required_evidence": [
+        "record ID",
+        "counterevidence URL",
+        "conflicting field",
+        "proposed correction or note"
+      ]
+    }
+  ],
+  "known_limits": {
+    "unresolved_records": {
+      "blocked": 1,
+      "high_review_debt": 3908,
+      "medium_review_debt": 74,
+      "not_certified_gold_v1": 7,
+      "blocked_gold_v1": 1
+    },
+    "source_family_counts": {
+      "ed_campus_safety_dataset": 3845,
+      "ocr_or_ed_release": 88,
+      "annual_security_report": 46,
+      "government_release": 9,
+      "university_statement": 6,
+      "campus_public_safety_notice": 4,
+      "government_case_or_letter": 1,
+      "government_guidance": 1
+    },
+    "top_issue_counts": {
+      "missing_explicit_rationales": 3884,
+      "thin_response_note": 3882,
+      "year_precision_public_use_limit": 3882,
+      "dataset_cell_locator_needed": 3835,
+      "broad_affected_community_label": 2838,
+      "category_may_be_too_generic_for_offense": 537,
+      "generic_or_generated_rationale": 91,
+      "page_table_locator_needed": 47,
+      "aggregated_source_item_locator_needed": 24,
+      "day_precision_from_mixed_date_source": 24,
+      "multi_community_label_boundary_review": 10,
+      "guidance_source_category_fit_review": 1
+    },
+    "note": "Known limits are review queues and unresolved source-to-record checks, not findings that records are false, severe, representative, complete, or externally reviewed."
+  },
+  "records": [
+    {
+      "event_id": "evt_2024_0001",
+      "school_id": "brown_university",
+      "date": "2024-07-08",
+      "date_precision": "day",
+      "category": "OCR complaint",
+      "affected_communities": [
+        "Jewish",
+        "Muslim"
+      ],
+      "confidence": "High",
+      "source_ids": [
+        "src_brown_2024_07_08_resolution"
+      ],
+      "source_types": [
+        "University statement"
+      ],
+      "source_family": "university_statement",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "direct_institutional_response",
+      "source_locators": [],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2024_0001/ and the source index entries: src_brown_2024_07_08_resolution.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: no locator stored; do not treat this as a certified external packet row.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2024_0001",
+      "workspace_url": "/research-workspace/?record_ids=evt_2024_0001",
+      "event_url": "/events/evt_2024_0001/"
+    },
+    {
+      "event_id": "evt_2026_0001",
+      "school_id": "emory_university",
+      "date": "2025-01-16",
+      "date_precision": "day",
+      "category": "OCR complaint",
+      "affected_communities": [
+        "Muslim",
+        "Palestinian"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_ocr_whats_new_shared_ancestry_higher_ed"
+      ],
+      "source_types": [
+        "Government release"
+      ],
+      "source_family": "ocr_or_ed_release",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_ocr_whats_new_shared_ancestry_higher_ed",
+          "locator_type": "aggregate_item",
+          "locator": "What's New in OCR item dated January 16, 2025: \"U.S. Department of Education’s Office for Civil Rights Announces Resolution of Complaint Against Emory University in Georgia Alleging Anti-Muslim and anti-Palestinian Discrimination.\"",
+          "item_date": "2025-01-16",
+          "item_date_precision": "day",
+          "item_label": "Emory University anti-Muslim and anti-Palestinian discrimination resolution item",
+          "review_note": "Located in the OCR aggregate page as a dated item with linked resolution letter and agreement."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For OCR or government release records, verify the exact item title/date and distinguish agency-described action from direct institutional response."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_0001/ and the source index entries: src_ed_ocr_whats_new_shared_ancestry_higher_ed.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_ocr_whats_new_shared_ancestry_higher_ed: aggregate_item / What's New in OCR item dated January 16, 2025: \"U.S. Department of Education’s Office for Civil Rights Announces Resolution of Complaint Against Emory University in Georgia Alleging Anti-Muslim and anti-Palestinian Discrimination.\".",
+        "For OCR/government release evidence, verify the item date, item title, and whether the source describes an agency action or direct institutional response.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_0001",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_0001",
+      "event_url": "/events/evt_2026_0001/"
+    },
+    {
+      "event_id": "evt_2026_0024",
+      "school_id": "erie_community_college",
+      "date": "2016-03-01",
+      "date_precision": "month",
+      "category": "Athletic equity",
+      "affected_communities": [
+        "Women"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_ocr_whats_new_shared_ancestry_higher_ed"
+      ],
+      "source_types": [
+        "Government release"
+      ],
+      "source_family": "ocr_or_ed_release",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_ocr_whats_new_shared_ancestry_higher_ed",
+          "locator_type": "aggregate_item",
+          "locator": "What's New in OCR item headed \"Settlement Reached on Title IX Athletics Probe at Buffalo's Erie Community College\" under the March 2016 section.",
+          "item_date": "2016-03-01",
+          "item_date_precision": "month",
+          "item_label": "Erie Community College Title IX athletics settlement item",
+          "review_note": "The public aggregate page gives a March 2016 month heading for this item; the previous day-level 2013 date was not supported by the current aggregate locator."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For OCR or government release records, verify the exact item title/date and distinguish agency-described action from direct institutional response."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_0024/ and the source index entries: src_ed_ocr_whats_new_shared_ancestry_higher_ed.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_ocr_whats_new_shared_ancestry_higher_ed: aggregate_item / What's New in OCR item headed \"Settlement Reached on Title IX Athletics Probe at Buffalo's Erie Community College\" under the March 2016 section..",
+        "For OCR/government release evidence, verify the item date, item title, and whether the source describes an agency action or direct institutional response.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_0024",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_0024",
+      "event_url": "/events/evt_2026_0024/"
+    },
+    {
+      "event_id": "evt_2026_0040",
+      "school_id": "montana_state_university",
+      "date": "2023-01-01",
+      "date_precision": "year",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Gender"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_montana_state_2025_asr_hate_crimes"
+      ],
+      "source_types": [
+        "Annual security report"
+      ],
+      "source_family": "annual_security_report",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_montana_state_2025_asr_hate_crimes",
+          "locator_type": "document_section",
+          "locator": "2025 Annual Security Report HTML section \"HATE CRIMES BY CATEGORY AND BIAS\", Reporting Year 2023, item \"One on-campus student housing vandalism incident, characterized by gender bias.\"",
+          "section": "HATE CRIMES BY CATEGORY AND BIAS",
+          "item_label": "Reporting Year 2023 gender-bias student-housing vandalism item",
+          "review_note": "Located in the public HTML annual security report text under the hate-crimes category-and-bias section."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For ASR records, verify the page, table, statistic label, reporting year, and offense/bias-characterization field."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_0040/ and the source index entries: src_montana_state_2025_asr_hate_crimes.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_montana_state_2025_asr_hate_crimes: document_section / 2025 Annual Security Report HTML section \"HATE CRIMES BY CATEGORY AND BIAS\", Reporting Year 2023, item \"One on-campus student housing vandalism incident, characterized by gender bias.\".",
+        "For ASR evidence, verify the cited page/table/section and the exact row/column or statistic label.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_0040",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_0040",
+      "event_url": "/events/evt_2026_0040/"
+    },
+    {
+      "event_id": "evt_2026_0065",
+      "school_id": "queensborough_community_college",
+      "date": "2023-01-01",
+      "date_precision": "year",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_qcc_2025_asr_hate_crimes"
+      ],
+      "source_types": [
+        "Annual security report"
+      ],
+      "source_family": "annual_security_report",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_qcc_2025_asr_hate_crimes",
+          "locator_type": "page_table",
+          "locator": "2025-QCC-ASR.pdf, PDF page 13, \"Hate Crime and Bias Related Incidents\" narrative, 2023 item for making graffiti evidencing racial bias on campus.",
+          "page": "13",
+          "section": "Hate Crime and Bias Related Incidents",
+          "item_label": "2023 making graffiti evidencing racial bias on campus",
+          "review_note": "Located by PDF text extraction from the public 2025 QCC Annual Security Report."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For ASR records, verify the page, table, statistic label, reporting year, and offense/bias-characterization field."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_0065/ and the source index entries: src_qcc_2025_asr_hate_crimes.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_qcc_2025_asr_hate_crimes: page_table / 2025-QCC-ASR.pdf, PDF page 13, \"Hate Crime and Bias Related Incidents\" narrative, 2023 item for making graffiti evidencing racial bias on campus..",
+        "For ASR evidence, verify the cited page/table/section and the exact row/column or statistic label.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_0065",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_0065",
+      "event_url": "/events/evt_2026_0065/"
+    },
+    {
+      "event_id": "evt_2026_0066",
+      "school_id": "queensborough_community_college",
+      "date": "2024-01-01",
+      "date_precision": "year",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_qcc_2025_asr_hate_crimes"
+      ],
+      "source_types": [
+        "Annual security report"
+      ],
+      "source_family": "annual_security_report",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_qcc_2025_asr_hate_crimes",
+          "locator_type": "page_table",
+          "locator": "2025-QCC-ASR.pdf, PDF page 13, \"Hate Crime and Bias Related Incidents\" narrative, 2024 item for making graffiti evidencing racial bias on campus.",
+          "page": "13",
+          "section": "Hate Crime and Bias Related Incidents",
+          "item_label": "2024 making graffiti evidencing racial bias on campus",
+          "review_note": "Located by PDF text extraction from the public 2025 QCC Annual Security Report."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For ASR records, verify the page, table, statistic label, reporting year, and offense/bias-characterization field."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_0066/ and the source index entries: src_qcc_2025_asr_hate_crimes.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_qcc_2025_asr_hate_crimes: page_table / 2025-QCC-ASR.pdf, PDF page 13, \"Hate Crime and Bias Related Incidents\" narrative, 2024 item for making graffiti evidencing racial bias on campus..",
+        "For ASR evidence, verify the cited page/table/section and the exact row/column or statistic label.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_0066",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_0066",
+      "event_url": "/events/evt_2026_0066/"
+    },
+    {
+      "event_id": "evt_2026_0078",
+      "school_id": "san_jose_state_university",
+      "date": "2022-06-17",
+      "date_precision": "day",
+      "category": "Criminal investigation",
+      "affected_communities": [
+        "Asian"
+      ],
+      "confidence": "High",
+      "source_ids": [
+        "src_sjsu_2022_anti_asian_hate_crime"
+      ],
+      "source_types": [
+        "University statement"
+      ],
+      "source_family": "university_statement",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "direct_institutional_response",
+      "source_locators": [],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_0078/ and the source index entries: src_sjsu_2022_anti_asian_hate_crime.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: no locator stored; do not treat this as a certified external packet row.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_0078",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_0078",
+      "event_url": "/events/evt_2026_0078/"
+    },
+    {
+      "event_id": "evt_2026_0243",
+      "school_id": "albion_college",
+      "date": "2024-01-01",
+      "date_precision": "year",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "source_types": [
+        "Government dataset"
+      ],
+      "source_family": "ed_campus_safety_dataset",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_campus_safety_2025_hate_crime_data_files",
+          "locator_type": "workbook_cell",
+          "locator": "Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 3083 > column INTIM_RAC24 > cell NK3083 (value 1)",
+          "workbook": "Oncampushate222324.xlsx",
+          "sheet": "sheet1",
+          "row": 3083,
+          "column": "INTIM_RAC24",
+          "cell": "NK3083",
+          "review_note": "Matched against the official Department of Education Campus Safety and Security Excel workbook by school name and nonzero hate-crime statistic cell."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For dataset records, verify workbook, sheet, row, column, and cell locator before quoting the record.",
+        "Treat year-level data as reporting-year data unless the source provides an exact incident date."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_0243/ and the source index entries: src_ed_campus_safety_2025_hate_crime_data_files.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_campus_safety_2025_hate_crime_data_files: workbook_cell / Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 3083 > column INTIM_RAC24 > cell NK3083 (value 1).",
+        "For workbook evidence, verify workbook name, sheet, row, column, and cell before relying on the record.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_0243",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_0243",
+      "event_url": "/events/evt_2026_0243/"
+    },
+    {
+      "event_id": "evt_2026_0417",
+      "school_id": "albany_medical_college",
+      "date": "2024-01-01",
+      "date_precision": "year",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "source_types": [
+        "Government dataset"
+      ],
+      "source_family": "ed_campus_safety_dataset",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_campus_safety_2025_hate_crime_data_files",
+          "locator_type": "workbook_cell",
+          "locator": "Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 4108 > column INTIM_RAC24 > cell NK4108 (value 2)",
+          "workbook": "Oncampushate222324.xlsx",
+          "sheet": "sheet1",
+          "row": 4108,
+          "column": "INTIM_RAC24",
+          "cell": "NK4108",
+          "review_note": "Matched against the official Department of Education Campus Safety and Security Excel workbook by school name and nonzero hate-crime statistic cell."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For dataset records, verify workbook, sheet, row, column, and cell locator before quoting the record.",
+        "Treat year-level data as reporting-year data unless the source provides an exact incident date."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_0417/ and the source index entries: src_ed_campus_safety_2025_hate_crime_data_files.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_campus_safety_2025_hate_crime_data_files: workbook_cell / Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 4108 > column INTIM_RAC24 > cell NK4108 (value 2).",
+        "For workbook evidence, verify workbook name, sheet, row, column, and cell before relying on the record.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_0417",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_0417",
+      "event_url": "/events/evt_2026_0417/"
+    },
+    {
+      "event_id": "evt_2026_0450",
+      "school_id": "adams_state_university",
+      "date": "2023-01-01",
+      "date_precision": "year",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "source_types": [
+        "Government dataset"
+      ],
+      "source_family": "ed_campus_safety_dataset",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_campus_safety_2025_hate_crime_data_files",
+          "locator_type": "workbook_cell",
+          "locator": "Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 960 > column INTIM_SEX23 > cell IQ960 (value 1)",
+          "workbook": "Oncampushate222324.xlsx",
+          "sheet": "sheet1",
+          "row": 960,
+          "column": "INTIM_SEX23",
+          "cell": "IQ960",
+          "review_note": "Matched against the official Department of Education Campus Safety and Security Excel workbook by school name and nonzero hate-crime statistic cell."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For dataset records, verify workbook, sheet, row, column, and cell locator before quoting the record.",
+        "Treat year-level data as reporting-year data unless the source provides an exact incident date."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_0450/ and the source index entries: src_ed_campus_safety_2025_hate_crime_data_files.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_campus_safety_2025_hate_crime_data_files: workbook_cell / Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 960 > column INTIM_SEX23 > cell IQ960 (value 1).",
+        "For workbook evidence, verify workbook name, sheet, row, column, and cell before relying on the record.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_0450",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_0450",
+      "event_url": "/events/evt_2026_0450/"
+    },
+    {
+      "event_id": "evt_2026_0878",
+      "school_id": "albion_college",
+      "date": "2023-01-01",
+      "date_precision": "year",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Students with disabilities"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "source_types": [
+        "Government dataset"
+      ],
+      "source_family": "ed_campus_safety_dataset",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_campus_safety_2025_hate_crime_data_files",
+          "locator_type": "workbook_cell",
+          "locator": "Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 3083 > column INTIM_DIS23 > cell IT3083 (value 1)",
+          "workbook": "Oncampushate222324.xlsx",
+          "sheet": "sheet1",
+          "row": 3083,
+          "column": "INTIM_DIS23",
+          "cell": "IT3083",
+          "review_note": "Matched against the official Department of Education Campus Safety and Security Excel workbook by school name and nonzero hate-crime statistic cell."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For dataset records, verify workbook, sheet, row, column, and cell locator before quoting the record.",
+        "Treat year-level data as reporting-year data unless the source provides an exact incident date."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_0878/ and the source index entries: src_ed_campus_safety_2025_hate_crime_data_files.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_campus_safety_2025_hate_crime_data_files: workbook_cell / Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 3083 > column INTIM_DIS23 > cell IT3083 (value 1).",
+        "For workbook evidence, verify workbook name, sheet, row, column, and cell before relying on the record.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_0878",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_0878",
+      "event_url": "/events/evt_2026_0878/"
+    },
+    {
+      "event_id": "evt_2026_1067",
+      "school_id": "adams_state_university",
+      "date": "2022-01-01",
+      "date_precision": "year",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "Race"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "source_types": [
+        "Government dataset"
+      ],
+      "source_family": "ed_campus_safety_dataset",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_campus_safety_2025_hate_crime_data_files",
+          "locator_type": "workbook_cell",
+          "locator": "Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 960 > column AGG_A_RAC22 > cell BQ960 (value 1)",
+          "workbook": "Oncampushate222324.xlsx",
+          "sheet": "sheet1",
+          "row": 960,
+          "column": "AGG_A_RAC22",
+          "cell": "BQ960",
+          "review_note": "Matched against the official Department of Education Campus Safety and Security Excel workbook by school name and nonzero hate-crime statistic cell."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For dataset records, verify workbook, sheet, row, column, and cell locator before quoting the record.",
+        "Treat year-level data as reporting-year data unless the source provides an exact incident date."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_1067/ and the source index entries: src_ed_campus_safety_2025_hate_crime_data_files.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_campus_safety_2025_hate_crime_data_files: workbook_cell / Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 960 > column AGG_A_RAC22 > cell BQ960 (value 1).",
+        "For workbook evidence, verify workbook name, sheet, row, column, and cell before relying on the record.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_1067",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_1067",
+      "event_url": "/events/evt_2026_1067/"
+    },
+    {
+      "event_id": "evt_2026_1156",
+      "school_id": "albion_college",
+      "date": "2022-01-01",
+      "date_precision": "year",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "source_types": [
+        "Government dataset"
+      ],
+      "source_family": "ed_campus_safety_dataset",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_campus_safety_2025_hate_crime_data_files",
+          "locator_type": "workbook_cell",
+          "locator": "Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 3083 > column INTIM_RAC22 > cell DS3083 (value 1)",
+          "workbook": "Oncampushate222324.xlsx",
+          "sheet": "sheet1",
+          "row": 3083,
+          "column": "INTIM_RAC22",
+          "cell": "DS3083",
+          "review_note": "Matched against the official Department of Education Campus Safety and Security Excel workbook by school name and nonzero hate-crime statistic cell."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For dataset records, verify workbook, sheet, row, column, and cell locator before quoting the record.",
+        "Treat year-level data as reporting-year data unless the source provides an exact incident date."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_1156/ and the source index entries: src_ed_campus_safety_2025_hate_crime_data_files.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_campus_safety_2025_hate_crime_data_files: workbook_cell / Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 3083 > column INTIM_RAC22 > cell DS3083 (value 1).",
+        "For workbook evidence, verify workbook name, sheet, row, column, and cell before relying on the record.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_1156",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_1156",
+      "event_url": "/events/evt_2026_1156/"
+    },
+    {
+      "event_id": "evt_2026_1922",
+      "school_id": "albert_einstein_college_of_medicine",
+      "date": "2023-01-01",
+      "date_precision": "year",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "source_types": [
+        "Government dataset"
+      ],
+      "source_family": "ed_campus_safety_dataset",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_campus_safety_2025_hate_crime_data_files",
+          "locator_type": "workbook_cell",
+          "locator": "Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 7638 > column INTIM_REL23 > cell IP7638 (value 1)",
+          "workbook": "Oncampushate222324.xlsx",
+          "sheet": "sheet1",
+          "row": 7638,
+          "column": "INTIM_REL23",
+          "cell": "IP7638",
+          "review_note": "Matched against the official Department of Education Campus Safety and Security Excel workbook by school name and nonzero hate-crime statistic cell."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For dataset records, verify workbook, sheet, row, column, and cell locator before quoting the record.",
+        "Treat year-level data as reporting-year data unless the source provides an exact incident date."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_1922/ and the source index entries: src_ed_campus_safety_2025_hate_crime_data_files.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_campus_safety_2025_hate_crime_data_files: workbook_cell / Crime2025EXCEL.zip > Oncampushate222324.xlsx > sheet1 row 7638 > column INTIM_REL23 > cell IP7638 (value 1).",
+        "For workbook evidence, verify workbook name, sheet, row, column, and cell before relying on the record.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_1922",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_1922",
+      "event_url": "/events/evt_2026_1922/"
+    },
+    {
+      "event_id": "evt_2026_2437",
+      "school_id": "adler_university",
+      "date": "2024-01-01",
+      "date_precision": "year",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Ethnicity"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "source_types": [
+        "Government dataset"
+      ],
+      "source_family": "ed_campus_safety_dataset",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_campus_safety_2025_hate_crime_data_files",
+          "locator_type": "workbook_cell",
+          "locator": "Crime2025EXCEL.zip > Publicpropertyhate222324.xlsx > sheet1 row 1774 > column INTIM_ET24 > cell NQ1774 (value 1)",
+          "workbook": "Publicpropertyhate222324.xlsx",
+          "sheet": "sheet1",
+          "row": 1774,
+          "column": "INTIM_ET24",
+          "cell": "NQ1774",
+          "review_note": "Matched against the official Department of Education Campus Safety and Security Excel workbook by school name and nonzero hate-crime statistic cell."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For dataset records, verify workbook, sheet, row, column, and cell locator before quoting the record.",
+        "Treat year-level data as reporting-year data unless the source provides an exact incident date."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_2437/ and the source index entries: src_ed_campus_safety_2025_hate_crime_data_files.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_campus_safety_2025_hate_crime_data_files: workbook_cell / Crime2025EXCEL.zip > Publicpropertyhate222324.xlsx > sheet1 row 1774 > column INTIM_ET24 > cell NQ1774 (value 1).",
+        "For workbook evidence, verify workbook name, sheet, row, column, and cell before relying on the record.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_2437",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_2437",
+      "event_url": "/events/evt_2026_2437/"
+    },
+    {
+      "event_id": "evt_2026_2553",
+      "school_id": "albert_einstein_college_of_medicine",
+      "date": "2024-01-01",
+      "date_precision": "year",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "source_types": [
+        "Government dataset"
+      ],
+      "source_family": "ed_campus_safety_dataset",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_campus_safety_2025_hate_crime_data_files",
+          "locator_type": "workbook_cell",
+          "locator": "Crime2025EXCEL.zip > Publicpropertyhate222324.xlsx > sheet1 row 7638 > column INTIM_REL24 > cell NL7638 (value 1)",
+          "workbook": "Publicpropertyhate222324.xlsx",
+          "sheet": "sheet1",
+          "row": 7638,
+          "column": "INTIM_REL24",
+          "cell": "NL7638",
+          "review_note": "Matched against the official Department of Education Campus Safety and Security Excel workbook by school name and nonzero hate-crime statistic cell."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For dataset records, verify workbook, sheet, row, column, and cell locator before quoting the record.",
+        "Treat year-level data as reporting-year data unless the source provides an exact incident date."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_2553/ and the source index entries: src_ed_campus_safety_2025_hate_crime_data_files.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_campus_safety_2025_hate_crime_data_files: workbook_cell / Crime2025EXCEL.zip > Publicpropertyhate222324.xlsx > sheet1 row 7638 > column INTIM_REL24 > cell NL7638 (value 1).",
+        "For workbook evidence, verify workbook name, sheet, row, column, and cell before relying on the record.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_2553",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_2553",
+      "event_url": "/events/evt_2026_2553/"
+    },
+    {
+      "event_id": "evt_2026_3911",
+      "school_id": "academy_of_beauty_professionals",
+      "date": "2021-01-01",
+      "date_precision": "year",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "confidence": "Medium",
+      "source_ids": [
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ],
+      "source_types": [
+        "Government dataset"
+      ],
+      "source_family": "ed_campus_safety_dataset",
+      "gold_v1_certification_status": "certified",
+      "debt_status": "lower_priority_review_debt",
+      "response_depth": "limited_public_response_note",
+      "source_locators": [
+        {
+          "source_id": "src_ed_campus_safety_2024_hate_crime_data_files",
+          "locator_type": "workbook_cell",
+          "locator": "Crime2024EXCEL.zip > Oncampushate212223.xlsx > sheet1 row 8076 > column INTIM_RAC21 > cell DS8076 (value 1)",
+          "workbook": "Oncampushate212223.xlsx",
+          "sheet": "sheet1",
+          "row": 8076,
+          "column": "INTIM_RAC21",
+          "cell": "DS8076",
+          "review_note": "Matched against the official Department of Education Campus Safety and Security Excel workbook by school name and nonzero hate-crime statistic cell."
+        }
+      ],
+      "source_checklist": [
+        "Open the event page and record ID before inspecting sources.",
+        "Open each linked public source in a separate tab.",
+        "Confirm the source publisher, title, publication date, and URL match the source index.",
+        "Use the stored source locator before accepting any record field.",
+        "Compare school, date precision, category, affected-community labels, response-depth label, legal/procedural status, and confidence rationale against the source.",
+        "Record any correction as a source-backed challenge, not as an endorsement or broad campus judgment.",
+        "For dataset records, verify workbook, sheet, row, column, and cell locator before quoting the record.",
+        "Treat year-level data as reporting-year data unless the source provides an exact incident date."
+      ],
+      "replication_steps": [
+        "Open /events/evt_2026_3911/ and the source index entries: src_ed_campus_safety_2024_hate_crime_data_files.",
+        "Confirm the event record hash in data/events.json after running npm run hash:data.",
+        "Open the stored source locator: src_ed_campus_safety_2024_hate_crime_data_files: workbook_cell / Crime2024EXCEL.zip > Oncampushate212223.xlsx > sheet1 row 8076 > column INTIM_RAC21 > cell DS8076 (value 1).",
+        "For workbook evidence, verify workbook name, sheet, row, column, and cell before relying on the record.",
+        "Compare the source locator to the stored school, date, category, affected-community labels, response-depth label, legal/procedural status, and rationale fields.",
+        "Open data/gold-v1-certification-status.json and confirm every gate for this record is pass/certified.",
+        "If any field is unsupported, file a challenge or correction with source URL, field name, current value, and proposed source-bounded value."
+      ],
+      "challenge_url": "/challenge/?record=evt_2026_3911",
+      "workspace_url": "/research-workspace/?record_ids=evt_2026_3911",
+      "event_url": "/events/evt_2026_3911/"
+    }
+  ]
+}

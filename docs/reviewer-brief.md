@@ -12,7 +12,12 @@ Campus Evidence Lab is a static-first, public-source archive of campus civil-rig
 
 - Review the methodology for unclear inclusion, exclusion, source hierarchy, verification, confidence, deduplication, privacy, or no-ranking rules.
 - Review 10 sample records and compare school, date, category, affected-community labels, confidence, verification, and source support against the public source basis.
+- Review the external review packet from source locator to database field, using the source-to-record replication guide.
 - Review the gold v1 packet page and identify any packet where the source basis, rationale, response note, or challenge route is still too thin.
+- Use the record-quality audit to find records blocked by source locators, broad labels, thin response text, date precision, generic rationales, or category-fit questions.
+- Use the record-quality reviewer packet when the task is to challenge the highest-priority weak points first.
+- Use the Gold v1 certification status to see which structured records have cleared internal source-to-record gates and which remain blocked or not certified.
+- Use the full certification ledger to see each record's status, open gates, and next action without assuming the full database has been manually certified.
 - Review the research guide and identify language that could still invite overclaiming.
 - Review the reviewer queue and suggest better ways to prioritize source, classification, or low-confidence review.
 
@@ -56,6 +61,21 @@ https://maximilian-kornstein.github.io/campus-evidence-lab/research-workspace/?r
 - Reviewer Queue: https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-queue/
 - Flagship Report: https://maximilian-kornstein.github.io/campus-evidence-lab/flagship/
 - Gold v1 Review Packets: https://maximilian-kornstein.github.io/campus-evidence-lab/gold-records/
+- Record Quality Audit JSON: https://maximilian-kornstein.github.io/campus-evidence-lab/data/record-quality-audit.json
+- Record Quality Audit Notes: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/record-quality-audit.md
+- Record Quality Reviewer Packet JSON: https://maximilian-kornstein.github.io/campus-evidence-lab/data/record-quality-reviewer-packet.json
+- Record Quality Reviewer Packet Notes: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/record-quality-reviewer-packet.md
+- Gold v1 Certification Status JSON: https://maximilian-kornstein.github.io/campus-evidence-lab/data/gold-v1-certification-status.json
+- Gold v1 Certification Status Notes: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/gold-v1-certification-status.md
+- External Review Packet: https://maximilian-kornstein.github.io/campus-evidence-lab/external-review/
+- External Review Packet JSON: https://maximilian-kornstein.github.io/campus-evidence-lab/data/external-review-packet.json
+- Full Certification Ledger: https://maximilian-kornstein.github.io/campus-evidence-lab/certification/
+- Full Certification Ledger JSON: https://maximilian-kornstein.github.io/campus-evidence-lab/data/certification-ledger.json
+- Certification Batch 001 Pilot: https://maximilian-kornstein.github.io/campus-evidence-lab/certification/batch-001/
+- Source-To-Record Replication Guide: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/source-to-record-replication-guide.md
+- Reviewer Challenge Templates: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/reviewer-challenge-templates.md
+- Known Limits and Unresolved Records: https://maximilian-kornstein.github.io/campus-evidence-lab/known-limits/
+- Review Debt Zero Roadmap: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/review-debt-zero-roadmap.md
 - GitHub repository: https://github.com/maximilian-kornstein/campus-evidence-lab
 
 ## Acknowledgment Boundary

@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Campus Evidence Lab Record Quality Audit",
+  "type": "object",
+  "required": [
+    "id",
+    "snapshot_id",
+    "generated_at",
+    "method",
+    "public_claim_limit",
+    "totals",
+    "status_counts",
+    "highest_severity_counts",
+    "issue_counts",
+    "priority_records",
+    "gold_v1_pre_review",
+    "records"
+  ],
+  "properties": {
+    "id": { "type": "string", "const": "record_quality_audit_v1" },
+    "snapshot_id": { "type": "string", "minLength": 1 },
+    "generated_at": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "method": { "type": "string", "minLength": 1 },
+    "public_claim_limit": { "type": "string", "minLength": 1 },
+    "totals": {
+      "type": "object",
+      "required": [
+        "records",
+        "gold_v1_records",
+        "priority_records",
+        "blocked_before_external_packet",
+        "needs_internal_review",
+        "usable_with_review_notes",
+        "lower_priority_for_review"
+      ],
+      "properties": {
+        "records": { "type": "integer", "minimum": 0 },
+        "gold_v1_records": { "type": "integer", "minimum": 0 },
+        "priority_records": { "type": "integer", "minimum": 0 },
+        "blocked_before_external_packet": { "type": "integer", "minimum": 0 },
+        "needs_internal_review": { "type": "integer", "minimum": 0 },
+        "usable_with_review_notes": { "type": "integer", "minimum": 0 },
+        "lower_priority_for_review": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "status_counts": { "type": "object" },
+    "highest_severity_counts": { "type": "object" },
+    "issue_counts": { "type": "object" },
+    "priority_records": {
+      "type": "array",
+      "maxItems": 100,
+      "items": { "$ref": "#/$defs/compact_record" }
+    },
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/compact_record" }
+    },
+    "gold_v1_pre_review": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          { "$ref": "#/$defs/compact_record" },
+          {
+            "type": "object",
+            "required": ["issues", "challenge_url", "reviewer_prompt"],
+            "properties": {
+              "issues": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "$ref": "#/$defs/issue" }
+              },
+              "gold_packet_status": { "type": ["string", "null"] },
+              "gold_selection_reason": { "type": ["string", "null"] },
+              "challenge_url": { "type": "string", "minLength": 1 },
+              "reviewer_prompt": { "type": "string", "minLength": 1 }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "compact_record": {
+      "type": "object",
+      "required": [
+        "event_id",
+        "school_id",
+        "category",
+        "confidence",
+        "date_precision",
+        "source_count",
+        "source_types",
+        "response_depth",
+        "audit_status",
+        "review_score",
+        "highest_severity",
+        "issue_count",
+        "issue_ids",
+        "workspace_url",
+        "event_url"
+      ],
+      "properties": {
+        "event_id": { "type": "string", "minLength": 1 },
+        "school_id": { "type": "string", "minLength": 1 },
+        "category": { "type": "string", "minLength": 1 },
+        "confidence": { "type": "string", "enum": ["High", "Medium", "Low"] },
+        "date_precision": { "type": "string", "enum": ["day", "month", "year"] },
+        "source_count": { "type": "integer", "minimum": 0 },
+        "source_types": { "type": "array", "items": { "type": "string" } },
+        "response_depth": { "type": "string", "minLength": 1 },
+        "audit_status": {
+          "type": "string",
+          "enum": [
+            "blocked_before_external_packet",
+            "needs_internal_review",
+            "usable_with_review_notes",
+            "lower_priority_for_review"
+          ]
+        },
+        "review_score": { "type": "integer", "minimum": 0 },
+        "highest_severity": { "type": "string", "enum": ["blocker", "high", "medium", "low", "none"] },
+        "issue_count": { "type": "integer", "minimum": 0 },
+        "issue_ids": { "type": "array", "items": { "type": "string" } },
+        "workspace_url": { "type": "string", "minLength": 1 },
+        "event_url": { "type": "string", "minLength": 1 }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "required": ["id", "severity", "field", "title", "detail", "next_step"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "severity": { "type": "string", "enum": ["blocker", "high", "medium", "low"] },
+        "field": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "detail": { "type": "string", "minLength": 1 },
+        "next_step": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

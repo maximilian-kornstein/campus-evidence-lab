@@ -301,6 +301,25 @@ test("buildGoldRecordV1 creates exactly bounded review packets with challenge an
   assert.equal(containsProhibitedFlagshipClaim(JSON.stringify(gold)), false);
 });
 
+test("buildGoldRecordV1 preserves an existing Gold v1 cohort when supplied", () => {
+  const gold = buildGoldRecordV1({
+    events,
+    schools,
+    sources,
+    challengeQueues,
+    existingGoldRecordV1: { records: [{ event_id: "evt_alpha" }, { event_id: "evt_gamma" }] },
+    manifest: { snapshot_id: "snapshot_test", created_at: "2026-06-16" },
+    limit: 2
+  });
+
+  assert.deepEqual(
+    gold.records.map((record) => record.event_id),
+    ["evt_alpha", "evt_gamma"]
+  );
+  assert.equal(gold.records.every((record) => Number.isFinite(record.review_score)), true);
+  assert.equal(gold.coverage_summary.total_records, 2);
+});
+
 test("containsProhibitedFlagshipClaim rejects ranking, safety, prevalence, and endorsement language", () => {
   for (const prohibited of [
     "safest school ranking",

@@ -299,6 +299,29 @@ function selectedEvents(events, sourcesById, packetsByEventId, limit) {
   return selected;
 }
 
+function selectedExistingGoldEvents(existingGoldRecordV1, events, sourcesById, packetsByEventId, limit) {
+  const eventById = new Map(events.map((event) => [event.id, event]));
+  const selectedIds = [];
+  const seenIds = new Set();
+
+  for (const record of existingGoldRecordV1?.records ?? []) {
+    const eventId = record?.event_id;
+    if (!eventId || seenIds.has(eventId)) continue;
+    seenIds.add(eventId);
+    selectedIds.push(eventId);
+    if (selectedIds.length >= limit) break;
+  }
+
+  return selectedIds
+    .map((eventId) => eventById.get(eventId))
+    .filter(Boolean)
+    .map((event) => ({
+      event,
+      score: reviewScore(event, sourcesById, packetsByEventId.get(event.id)),
+      sourceTypes: sourceTypesForEvent(event, sourcesById)
+    }));
+}
+
 function countBy(items, getValue) {
   const counts = {};
   for (const item of items) {
@@ -474,11 +497,14 @@ export function buildFlagshipReport({ events, schools = [], sources = [], robust
   };
 }
 
-export function buildGoldRecordV1({ events, schools = [], sources = [], challengeQueues = {}, manifest = {}, limit = 25 }) {
+export function buildGoldRecordV1({ events, schools = [], sources = [], challengeQueues = {}, existingGoldRecordV1 = null, manifest = {}, limit = 25 }) {
   const schoolsById = schoolMap(schools);
   const sourcesById = sourceMap(sources);
   const packetsByEventId = challengePacketMap(challengeQueues);
-  const records = selectedEvents(events, sourcesById, packetsByEventId, limit).map(({ event, score }) => {
+  const selectedGoldEvents = existingGoldRecordV1?.records?.length
+    ? selectedExistingGoldEvents(existingGoldRecordV1, events, sourcesById, packetsByEventId, limit)
+    : selectedEvents(events, sourcesById, packetsByEventId, limit);
+  const records = selectedGoldEvents.map(({ event, score }) => {
     const school = schoolsById.get(event.school_id);
     const packet = packetsByEventId.get(event.id);
     const selectionReasons = reviewGapReasons(event, sourcesById, packet);

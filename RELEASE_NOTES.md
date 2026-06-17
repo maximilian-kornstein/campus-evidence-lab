@@ -6,7 +6,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:24df1ec3100523595dd9af6678d6c971862daf7f4cce218cd42ffc33d85b14db`
+- Full snapshot hash: `sha256:6b61137eeae675375a125cd9eac8e6c6fcccd5b7a7d29f4280753c88eaed7148`
 - Previous snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
 - Archived snapshot: `/data/snapshots/snapshot_2026_06_03_4000_records.json`
 
@@ -31,28 +31,48 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Challenge queues: 7
 - Challenge packets: 75
 - Challenge ledger entries: 25
+- Record quality audit rows: 4000
+- Record quality priority rows: 100
+- Record quality reviewer packet queues: 8
+- Gold v1 certified records: 17
+- Gold v1 blocked records: 1
+- Review debt ledger rows: 4000
+- Review debt source families: 8
+- Review debt blocked records: 1
+- External review packet records: 17
+- External review challenge templates: 8
+- Certification ledger records: 4000
+- Certification ledger certified records: 17
+- Certification ledger awaiting-review records: 3975
+- Certification Batch 001 records: 100
 
 ## Dataset Hashes
 
-- Events: `sha256:e4ba2fe92ae24a720b5fd49f4696d01500286f4488741e347801d622e5133cfc`
+- Events: `sha256:ae75c5a086d166b9bd60259920b7258a018a0080c3495c3152a19d71bb92200b`
 - Schools: `sha256:4b5b7b8c7a74806bfc0b95bc78606c4b8ab3a87a7c18328dbcb47f4cfa40cb88`
 - Sources: `sha256:c14c568ecf70361926fb6014fca817c4171fbe1c9aa36cb007f10d1f68167115`
-- Briefs: `sha256:1022e218cec4189c1efe78beb92fce13db932d61c1c9886da204e61452b11459`
+- Briefs: `sha256:82a5729322ae620502bde04a01f57ee92ea9e40df02274b8ae090611157aac63`
 - Corrections: `sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`
 - Review log: `sha256:bae294cd5953041e2d6602123b1024fc2290d7958c7fde3db6a4bf7d5616e48d`
 - Review samples: `sha256:ca743a05ba72813d5c7ad3891d4dd4ca0a92686676affa4ede7c42c202c9c37b`
 - Review ledger: `sha256:a49363c2db32fb8ff6891f4ed627ba8474e98a9ba12952a6aec67b8cda6f4dc4`
 - Methodology examples: `sha256:c906ed1cfa729480bd4a6b313b602f1f9f394ce5d0f5c82007b3bbca3e466eb8`
 - Workflows: `sha256:a00927c9daa38f6dda1ad6dd44b152e270700aa39a21972b4bd0b7de69b24c26`
-- Robustness metrics: `sha256:0de337b4a07f5e3e539a17f638f52549de872639c6730529fdd85432e6f414ba`
-- Evidence-depth queues: `sha256:5c115d08f4a4d6c13fece375325a36bcfd8f9976686781b40976cbd71db97405`
-- Gold record set: `sha256:958c9cf27dc711cb6a0a219ed8ffdca1458ad1daac170474c247177167d4b7d0`
+- Robustness metrics: `sha256:8bcfd27c2cf96fdf49128c06083ada388dfc0895a6e82d5ca66cb6443d140b9a`
+- Evidence-depth queues: `sha256:b13c629f9b9dc29b0fa5453b3fb2f2f3a56494b6a5cddcd721cc89c1882407fc`
+- Gold record set: `sha256:4421c239abc4562e069d71fa66954deb1863ab978bad2872b4b5d18eb989845d`
 - Reviewer challenge pack: `sha256:05731ef493edcf90f7f79f327aa78218504bdc48ae8ad0c2429273f1a07d3346`
-- Evidence capsules: `sha256:4b41f4f4eb12eacf9e1917f4cee1ff5093b91ebc40ef59d55a4a2f1ca6fed40b`
-- Source provenance queues: `sha256:40a3797410ef404552316e300fc170ae038232733bad13f43adf488813f2a1f1`
+- Evidence capsules: `sha256:bb66cdb49de7fc0f402be903cdf41f557a614d34e6a69ec54b19f47e80818f0f`
+- Source provenance queues: `sha256:3f4b4c0fcb42eb5e6d128907dcb39f3895de9cfff3af32595648c9cc139e4e78`
 - Challenge standards: `sha256:f3c0843e8dcd6789b7e36042ef2c961e349a9cc39a4e5b20b2c38df7fa0414b9`
-- Challenge queues: `sha256:a18eb53e06998f8b3f00cda4821069dd0c4209bd836c90db99b51aeffa174680`
-- Challenge ledger: `sha256:70f336f76fe94e36e61045381f8ec223d978d44c1c5db2e6605235b1e48c8373`
+- Challenge queues: `sha256:88c008aa3196571efedb741d5c75a657c2db4212af586f45c9d5e1959216c2b3`
+- Challenge ledger: `sha256:b3aa61e182f2edd8460e5f20292712515ea5df11b69deb094f8780a53722ec43`
+- Record quality audit: `sha256:fee5e4a405de9227989b5a1e9076e6616b19a236ed375e7498b9f4c77537d487`
+- Record quality reviewer packet: `sha256:54a02a4db95917dd0008b2fc1dfa2beae965ed4db5a400adfa6a1e9ffffc1ea9`
+- Gold v1 certification status: `sha256:caf61104cb533bdd2546c1cfef9f8ac8b73bb424e87c0fb2ac9f256ed1a3e34a`
+- Review debt ledger: `sha256:2c34d10075a737c762b167b2b3551c9738ee494ae94c5268e11ab939e361905c`
+- External review packet: `sha256:48ede2974efcd814abfc555374319d17bbc8efb8e304ef89f3405f2259ab0af4`
+- Certification ledger: `sha256:3d47d5765843b456bd26df0a964eee37f3f9ba04aacf265aea95dac3f87165b0`
 
 ## Evidence Depth & Robustness
 
@@ -63,6 +83,23 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Reviewer challenge pack: `/data/reviewer-challenge-pack.json`
 - Evidence capsules: `/data/evidence-capsules.json`
 - Source provenance queues: `/data/source-provenance-queues.json`
+- Record quality audit: `/data/record-quality-audit.json`
+- Record quality reviewer packet: `/data/record-quality-reviewer-packet.json`
+- Gold v1 certification status: `/data/gold-v1-certification-status.json`
+- Whole-database review debt dashboard: `/review-debt/`
+- Whole-database review debt ledger: `/data/review-debt-ledger.json`
+- External review packet: `/external-review/`
+- External review packet JSON: `/data/external-review-packet.json`
+- Certification ledger: `/certification/`
+- Certification ledger JSON: `/data/certification-ledger.json`
+- Certification Batch 001 pilot: `/certification/batch-001/`
+- Record quality audit current triage: 1 blocked before external packets, 3908 needing internal review, 74 usable with review notes.
+- Reviewer packet source-link review: 0 hard broken sources, 1 locator-risk sources.
+- Gold v1 certification gates: 17 certified, 7 not certified, 1 blocked.
+- Review debt ledger current triage: 1 blocked, 3908 high review debt, 74 medium review debt across 8 source families.
+- External review packet: 17 internally certified Gold v1 records packaged for source-to-record review, with 8 challenge templates.
+- Certification ledger: 17 certified, 7 not certified, 1 blocked, and 3975 awaiting review across all 4000 records.
+- Batch 001 ED dataset pilot: 100 records with 100 awaiting review because source-to-cell provenance must be explicit before certification.
 - These artifacts describe current dataset composition and review priorities; they must not be used as comparative campus judgments, frequency measures, risk ratings, or approval claims.
 
 ## Adversarial Review Protocol
@@ -83,7 +120,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 ## Changelog
 
-- Public changelog entries: 4103
+- Public changelog entries: 4145
 - Changelog artifact: `/data/changelog.json`
 
 ## Source Audit

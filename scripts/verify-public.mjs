@@ -72,6 +72,8 @@ await check("Core pages", async () => {
     ["/research-guide/", "Research Guide"],
     ["/research-workspace/", "Research Workspace"],
     ["/reviewer-queue/", "Reviewer Queue"],
+    ["/external-review/", "External review packet"],
+    ["/known-limits/", "Known limits and unresolved records"],
     ["/downloads/", "Download the public dataset"],
     ["/submit/", "Public sources only"],
     ["/about/", "Mission"],

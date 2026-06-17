@@ -1,0 +1,3146 @@
+{
+  "id": "record_quality_reviewer_packet_v1",
+  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "generated_at": "2026-06-03",
+  "status": "internal_pre_review_packet",
+  "method": "Reviewer packet generated from the record-quality audit and fresh live source-audit results. It prioritizes records for source locator, label, date, response-depth, rationale, and category-fit review without claiming outside validation, ranking, scoring, frequency measurement, or legal adjudication.",
+  "public_claim_limit": "This reviewer packet is a triage aid. It is not third-party review, outside validation, endorsement, ranking, safety scoring, severity scoring, frequency measurement, or a legal finding.",
+  "review_scope": {
+    "records_checked": 4000,
+    "gold_v1_records_checked": 25,
+    "priority_records_checked": 100,
+    "source_urls_checked_live": 25
+  },
+  "audit_summary": {
+    "status_counts": {
+      "needs_internal_review": 3908,
+      "usable_with_review_notes": 74,
+      "lower_priority_for_review": 17,
+      "blocked_before_external_packet": 1
+    },
+    "highest_severity_counts": {
+      "high": 3908,
+      "medium": 74,
+      "none": 17,
+      "blocker": 1
+    },
+    "top_issue_counts": {
+      "missing_explicit_rationales": 3884,
+      "thin_response_note": 3882,
+      "year_precision_public_use_limit": 3882,
+      "dataset_cell_locator_needed": 3835,
+      "broad_affected_community_label": 2838,
+      "category_may_be_too_generic_for_offense": 537,
+      "generic_or_generated_rationale": 91,
+      "page_table_locator_needed": 47,
+      "aggregated_source_item_locator_needed": 24,
+      "day_precision_from_mixed_date_source": 24,
+      "multi_community_label_boundary_review": 10,
+      "guidance_source_category_fit_review": 1
+    }
+  },
+  "source_link_review": {
+    "sources_checked_live": 25,
+    "hard_broken_sources": [],
+    "locator_risk_sources": [
+      {
+        "source_id": "src_towson_2016_hate_bias_update",
+        "live_status": "ok",
+        "http_status": 200,
+        "cited_url": "https://www.towson.edu/news/2016/hatebiasupdate.html",
+        "final_url": "https://www.towson.edu/news/",
+        "referenced_record_count": 1
+      }
+    ],
+    "records_affected_by_broken_sources": [],
+    "records_affected_by_locator_risk": [
+      "evt_2026_0080"
+    ]
+  },
+  "priority_queues": {
+    "blocker_records": {
+      "id": "blocker_records",
+      "label": "Records blocked before external packet use",
+      "description": "Records with source or locator issues that should be repaired before being routed for outside review.",
+      "records": [
+        {
+          "event_id": "evt_2026_0080",
+          "school_id": "towson_university",
+          "audit_status": "blocked_before_external_packet",
+          "review_score": 4,
+          "highest_severity": "blocker",
+          "issue_ids": [
+            "source_redirect_locator_risk"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0080",
+          "event_url": "/events/evt_2026_0080/",
+          "challenge_url": "/challenge/?record=evt_2026_0080"
+        }
+      ]
+    },
+    "gold_v1_records": {
+      "id": "gold_v1_records",
+      "label": "Gold v1 pre-review records",
+      "description": "Gold v1 packets with expanded internal issue notes for reviewer challenge.",
+      "records": [
+        {
+          "event_id": "evt_2026_0022",
+          "school_id": "minot_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 6,
+          "highest_severity": "high",
+          "issue_ids": [
+            "aggregated_source_item_locator_needed",
+            "day_precision_from_mixed_date_source"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0022",
+          "event_url": "/events/evt_2026_0022/",
+          "challenge_url": "/challenge/?record=evt_2026_0022"
+        },
+        {
+          "event_id": "evt_2026_0060",
+          "school_id": "farmingdale_state_college",
+          "audit_status": "usable_with_review_notes",
+          "review_score": 6,
+          "highest_severity": "medium",
+          "issue_ids": [
+            "page_table_locator_needed",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0060",
+          "event_url": "/events/evt_2026_0060/",
+          "challenge_url": "/challenge/?record=evt_2026_0060"
+        },
+        {
+          "event_id": "evt_2026_0062",
+          "school_id": "farmingdale_state_college",
+          "audit_status": "usable_with_review_notes",
+          "review_score": 6,
+          "highest_severity": "medium",
+          "issue_ids": [
+            "page_table_locator_needed",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0062",
+          "event_url": "/events/evt_2026_0062/",
+          "challenge_url": "/challenge/?record=evt_2026_0062"
+        },
+        {
+          "event_id": "evt_2024_0006",
+          "school_id": "university_of_illinois_urbana_champaign",
+          "audit_status": "needs_internal_review",
+          "review_score": 5,
+          "highest_severity": "high",
+          "issue_ids": [
+            "guidance_source_category_fit_review",
+            "multi_community_label_boundary_review"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2024_0006",
+          "event_url": "/events/evt_2024_0006/",
+          "challenge_url": "/challenge/?record=evt_2024_0006"
+        },
+        {
+          "event_id": "evt_2026_0061",
+          "school_id": "farmingdale_state_college",
+          "audit_status": "usable_with_review_notes",
+          "review_score": 4,
+          "highest_severity": "medium",
+          "issue_ids": [
+            "page_table_locator_needed",
+            "year_precision_public_use_limit"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0061",
+          "event_url": "/events/evt_2026_0061/",
+          "challenge_url": "/challenge/?record=evt_2026_0061"
+        },
+        {
+          "event_id": "evt_2026_0080",
+          "school_id": "towson_university",
+          "audit_status": "blocked_before_external_packet",
+          "review_score": 4,
+          "highest_severity": "blocker",
+          "issue_ids": [
+            "source_redirect_locator_risk"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0080",
+          "event_url": "/events/evt_2026_0080/",
+          "challenge_url": "/challenge/?record=evt_2026_0080"
+        },
+        {
+          "event_id": "evt_2026_0004",
+          "school_id": "lehigh_university",
+          "audit_status": "usable_with_review_notes",
+          "review_score": 2,
+          "highest_severity": "medium",
+          "issue_ids": [
+            "multi_community_label_boundary_review"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0004",
+          "event_url": "/events/evt_2026_0004/",
+          "challenge_url": "/challenge/?record=evt_2026_0004"
+        },
+        {
+          "event_id": "evt_2026_0005",
+          "school_id": "johns_hopkins_university",
+          "audit_status": "usable_with_review_notes",
+          "review_score": 2,
+          "highest_severity": "medium",
+          "issue_ids": [
+            "multi_community_label_boundary_review"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0005",
+          "event_url": "/events/evt_2026_0005/",
+          "challenge_url": "/challenge/?record=evt_2026_0005"
+        },
+        {
+          "event_id": "evt_2024_0001",
+          "school_id": "brown_university",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2024_0001",
+          "event_url": "/events/evt_2024_0001/",
+          "challenge_url": "/challenge/?record=evt_2024_0001"
+        },
+        {
+          "event_id": "evt_2026_0001",
+          "school_id": "emory_university",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0001",
+          "event_url": "/events/evt_2026_0001/",
+          "challenge_url": "/challenge/?record=evt_2026_0001"
+        },
+        {
+          "event_id": "evt_2026_0024",
+          "school_id": "erie_community_college",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0024",
+          "event_url": "/events/evt_2026_0024/",
+          "challenge_url": "/challenge/?record=evt_2026_0024"
+        },
+        {
+          "event_id": "evt_2026_0040",
+          "school_id": "montana_state_university",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0040",
+          "event_url": "/events/evt_2026_0040/",
+          "challenge_url": "/challenge/?record=evt_2026_0040"
+        },
+        {
+          "event_id": "evt_2026_0065",
+          "school_id": "queensborough_community_college",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0065",
+          "event_url": "/events/evt_2026_0065/",
+          "challenge_url": "/challenge/?record=evt_2026_0065"
+        },
+        {
+          "event_id": "evt_2026_0066",
+          "school_id": "queensborough_community_college",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0066",
+          "event_url": "/events/evt_2026_0066/",
+          "challenge_url": "/challenge/?record=evt_2026_0066"
+        },
+        {
+          "event_id": "evt_2026_0078",
+          "school_id": "san_jose_state_university",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0078",
+          "event_url": "/events/evt_2026_0078/",
+          "challenge_url": "/challenge/?record=evt_2026_0078"
+        },
+        {
+          "event_id": "evt_2026_0243",
+          "school_id": "albion_college",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0243",
+          "event_url": "/events/evt_2026_0243/",
+          "challenge_url": "/challenge/?record=evt_2026_0243"
+        },
+        {
+          "event_id": "evt_2026_0417",
+          "school_id": "albany_medical_college",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0417",
+          "event_url": "/events/evt_2026_0417/",
+          "challenge_url": "/challenge/?record=evt_2026_0417"
+        },
+        {
+          "event_id": "evt_2026_0450",
+          "school_id": "adams_state_university",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0450",
+          "event_url": "/events/evt_2026_0450/",
+          "challenge_url": "/challenge/?record=evt_2026_0450"
+        },
+        {
+          "event_id": "evt_2026_0878",
+          "school_id": "albion_college",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0878",
+          "event_url": "/events/evt_2026_0878/",
+          "challenge_url": "/challenge/?record=evt_2026_0878"
+        },
+        {
+          "event_id": "evt_2026_1067",
+          "school_id": "adams_state_university",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_1067",
+          "event_url": "/events/evt_2026_1067/",
+          "challenge_url": "/challenge/?record=evt_2026_1067"
+        },
+        {
+          "event_id": "evt_2026_1156",
+          "school_id": "albion_college",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_1156",
+          "event_url": "/events/evt_2026_1156/",
+          "challenge_url": "/challenge/?record=evt_2026_1156"
+        },
+        {
+          "event_id": "evt_2026_1922",
+          "school_id": "albert_einstein_college_of_medicine",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_1922",
+          "event_url": "/events/evt_2026_1922/",
+          "challenge_url": "/challenge/?record=evt_2026_1922"
+        },
+        {
+          "event_id": "evt_2026_2437",
+          "school_id": "adler_university",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_2437",
+          "event_url": "/events/evt_2026_2437/",
+          "challenge_url": "/challenge/?record=evt_2026_2437"
+        },
+        {
+          "event_id": "evt_2026_2553",
+          "school_id": "albert_einstein_college_of_medicine",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_2553",
+          "event_url": "/events/evt_2026_2553/",
+          "challenge_url": "/challenge/?record=evt_2026_2553"
+        },
+        {
+          "event_id": "evt_2026_3911",
+          "school_id": "academy_of_beauty_professionals",
+          "audit_status": "lower_priority_for_review",
+          "review_score": 0,
+          "highest_severity": "none",
+          "issue_ids": [],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_3911",
+          "event_url": "/events/evt_2026_3911/",
+          "challenge_url": "/challenge/?record=evt_2026_3911"
+        }
+      ]
+    },
+    "dataset_locator_records": {
+      "id": "dataset_locator_records",
+      "label": "Dataset locator records",
+      "description": "Dataset-backed records that need workbook, table, row, or cell locator review before quotation.",
+      "records": [
+        {
+          "event_id": "evt_2026_0091",
+          "school_id": "university_of_new_mexico_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0091",
+          "event_url": "/events/evt_2026_0091/",
+          "challenge_url": "/challenge/?record=evt_2026_0091"
+        },
+        {
+          "event_id": "evt_2026_0106",
+          "school_id": "southern_maine_community_college",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0106",
+          "event_url": "/events/evt_2026_0106/",
+          "challenge_url": "/challenge/?record=evt_2026_0106"
+        },
+        {
+          "event_id": "evt_2026_0110",
+          "school_id": "burrell_college_of_osteopathic_medicine",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0110",
+          "event_url": "/events/evt_2026_0110/",
+          "challenge_url": "/challenge/?record=evt_2026_0110"
+        },
+        {
+          "event_id": "evt_2026_0166",
+          "school_id": "baylor_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0166",
+          "event_url": "/events/evt_2026_0166/",
+          "challenge_url": "/challenge/?record=evt_2026_0166"
+        },
+        {
+          "event_id": "evt_2026_0172",
+          "school_id": "west_virginia_university_hospital_departments_of_rad_tech_and_nutrition",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0172",
+          "event_url": "/events/evt_2026_0172/",
+          "challenge_url": "/challenge/?record=evt_2026_0172"
+        },
+        {
+          "event_id": "evt_2026_0177",
+          "school_id": "harding_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0177",
+          "event_url": "/events/evt_2026_0177/",
+          "challenge_url": "/challenge/?record=evt_2026_0177"
+        },
+        {
+          "event_id": "evt_2026_0179",
+          "school_id": "california_state_polytechnic_university_humboldt",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0179",
+          "event_url": "/events/evt_2026_0179/",
+          "challenge_url": "/challenge/?record=evt_2026_0179"
+        },
+        {
+          "event_id": "evt_2026_0224",
+          "school_id": "george_washington_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0224",
+          "event_url": "/events/evt_2026_0224/",
+          "challenge_url": "/challenge/?record=evt_2026_0224"
+        },
+        {
+          "event_id": "evt_2026_0246",
+          "school_id": "the_university_of_montana",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0246",
+          "event_url": "/events/evt_2026_0246/",
+          "challenge_url": "/challenge/?record=evt_2026_0246"
+        },
+        {
+          "event_id": "evt_2026_0259",
+          "school_id": "sam_houston_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0259",
+          "event_url": "/events/evt_2026_0259/",
+          "challenge_url": "/challenge/?record=evt_2026_0259"
+        },
+        {
+          "event_id": "evt_2026_0266",
+          "school_id": "university_of_arkansas_for_medical_sciences",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0266",
+          "event_url": "/events/evt_2026_0266/",
+          "challenge_url": "/challenge/?record=evt_2026_0266"
+        },
+        {
+          "event_id": "evt_2026_0271",
+          "school_id": "florida_institute_of_technology",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0271",
+          "event_url": "/events/evt_2026_0271/",
+          "challenge_url": "/challenge/?record=evt_2026_0271"
+        },
+        {
+          "event_id": "evt_2026_0272",
+          "school_id": "georgia_institute_of_technology_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0272",
+          "event_url": "/events/evt_2026_0272/",
+          "challenge_url": "/challenge/?record=evt_2026_0272"
+        },
+        {
+          "event_id": "evt_2026_0280",
+          "school_id": "naropa_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0280",
+          "event_url": "/events/evt_2026_0280/",
+          "challenge_url": "/challenge/?record=evt_2026_0280"
+        },
+        {
+          "event_id": "evt_2026_0285",
+          "school_id": "depaul_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0285",
+          "event_url": "/events/evt_2026_0285/",
+          "challenge_url": "/challenge/?record=evt_2026_0285"
+        },
+        {
+          "event_id": "evt_2026_0288",
+          "school_id": "louisiana_state_university_health_sciences_center_shreveport",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0288",
+          "event_url": "/events/evt_2026_0288/",
+          "challenge_url": "/challenge/?record=evt_2026_0288"
+        },
+        {
+          "event_id": "evt_2026_0328",
+          "school_id": "the_university_of_tampa",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0328",
+          "event_url": "/events/evt_2026_0328/",
+          "challenge_url": "/challenge/?record=evt_2026_0328"
+        },
+        {
+          "event_id": "evt_2026_0351",
+          "school_id": "rocky_mountain_university_of_health_professions",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0351",
+          "event_url": "/events/evt_2026_0351/",
+          "challenge_url": "/challenge/?record=evt_2026_0351"
+        },
+        {
+          "event_id": "evt_2026_0358",
+          "school_id": "university_of_central_florida",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0358",
+          "event_url": "/events/evt_2026_0358/",
+          "challenge_url": "/challenge/?record=evt_2026_0358"
+        },
+        {
+          "event_id": "evt_2026_0365",
+          "school_id": "grand_valley_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0365",
+          "event_url": "/events/evt_2026_0365/",
+          "challenge_url": "/challenge/?record=evt_2026_0365"
+        },
+        {
+          "event_id": "evt_2026_0371",
+          "school_id": "youngstown_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0371",
+          "event_url": "/events/evt_2026_0371/",
+          "challenge_url": "/challenge/?record=evt_2026_0371"
+        },
+        {
+          "event_id": "evt_2026_0375",
+          "school_id": "university_of_south_carolina_aiken",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0375",
+          "event_url": "/events/evt_2026_0375/",
+          "challenge_url": "/challenge/?record=evt_2026_0375"
+        },
+        {
+          "event_id": "evt_2026_0389",
+          "school_id": "caldwell_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0389",
+          "event_url": "/events/evt_2026_0389/",
+          "challenge_url": "/challenge/?record=evt_2026_0389"
+        },
+        {
+          "event_id": "evt_2026_0396",
+          "school_id": "tennessee_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0396",
+          "event_url": "/events/evt_2026_0396/",
+          "challenge_url": "/challenge/?record=evt_2026_0396"
+        },
+        {
+          "event_id": "evt_2026_0458",
+          "school_id": "lawrence_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0458",
+          "event_url": "/events/evt_2026_0458/",
+          "challenge_url": "/challenge/?record=evt_2026_0458"
+        }
+      ]
+    },
+    "broad_label_records": {
+      "id": "broad_label_records",
+      "label": "Broad affected-label records",
+      "description": "Records whose affected-community labels should be checked against source wording before narrower public use.",
+      "records": [
+        {
+          "event_id": "evt_2026_0091",
+          "school_id": "university_of_new_mexico_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0091",
+          "event_url": "/events/evt_2026_0091/",
+          "challenge_url": "/challenge/?record=evt_2026_0091"
+        },
+        {
+          "event_id": "evt_2026_0106",
+          "school_id": "southern_maine_community_college",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0106",
+          "event_url": "/events/evt_2026_0106/",
+          "challenge_url": "/challenge/?record=evt_2026_0106"
+        },
+        {
+          "event_id": "evt_2026_0110",
+          "school_id": "burrell_college_of_osteopathic_medicine",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0110",
+          "event_url": "/events/evt_2026_0110/",
+          "challenge_url": "/challenge/?record=evt_2026_0110"
+        },
+        {
+          "event_id": "evt_2026_0166",
+          "school_id": "baylor_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0166",
+          "event_url": "/events/evt_2026_0166/",
+          "challenge_url": "/challenge/?record=evt_2026_0166"
+        },
+        {
+          "event_id": "evt_2026_0172",
+          "school_id": "west_virginia_university_hospital_departments_of_rad_tech_and_nutrition",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0172",
+          "event_url": "/events/evt_2026_0172/",
+          "challenge_url": "/challenge/?record=evt_2026_0172"
+        },
+        {
+          "event_id": "evt_2026_0177",
+          "school_id": "harding_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0177",
+          "event_url": "/events/evt_2026_0177/",
+          "challenge_url": "/challenge/?record=evt_2026_0177"
+        },
+        {
+          "event_id": "evt_2026_0179",
+          "school_id": "california_state_polytechnic_university_humboldt",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0179",
+          "event_url": "/events/evt_2026_0179/",
+          "challenge_url": "/challenge/?record=evt_2026_0179"
+        },
+        {
+          "event_id": "evt_2026_0224",
+          "school_id": "george_washington_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0224",
+          "event_url": "/events/evt_2026_0224/",
+          "challenge_url": "/challenge/?record=evt_2026_0224"
+        },
+        {
+          "event_id": "evt_2026_0246",
+          "school_id": "the_university_of_montana",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0246",
+          "event_url": "/events/evt_2026_0246/",
+          "challenge_url": "/challenge/?record=evt_2026_0246"
+        },
+        {
+          "event_id": "evt_2026_0259",
+          "school_id": "sam_houston_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0259",
+          "event_url": "/events/evt_2026_0259/",
+          "challenge_url": "/challenge/?record=evt_2026_0259"
+        },
+        {
+          "event_id": "evt_2026_0266",
+          "school_id": "university_of_arkansas_for_medical_sciences",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0266",
+          "event_url": "/events/evt_2026_0266/",
+          "challenge_url": "/challenge/?record=evt_2026_0266"
+        },
+        {
+          "event_id": "evt_2026_0271",
+          "school_id": "florida_institute_of_technology",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0271",
+          "event_url": "/events/evt_2026_0271/",
+          "challenge_url": "/challenge/?record=evt_2026_0271"
+        },
+        {
+          "event_id": "evt_2026_0272",
+          "school_id": "georgia_institute_of_technology_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0272",
+          "event_url": "/events/evt_2026_0272/",
+          "challenge_url": "/challenge/?record=evt_2026_0272"
+        },
+        {
+          "event_id": "evt_2026_0280",
+          "school_id": "naropa_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0280",
+          "event_url": "/events/evt_2026_0280/",
+          "challenge_url": "/challenge/?record=evt_2026_0280"
+        },
+        {
+          "event_id": "evt_2026_0285",
+          "school_id": "depaul_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0285",
+          "event_url": "/events/evt_2026_0285/",
+          "challenge_url": "/challenge/?record=evt_2026_0285"
+        },
+        {
+          "event_id": "evt_2026_0288",
+          "school_id": "louisiana_state_university_health_sciences_center_shreveport",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0288",
+          "event_url": "/events/evt_2026_0288/",
+          "challenge_url": "/challenge/?record=evt_2026_0288"
+        },
+        {
+          "event_id": "evt_2026_0328",
+          "school_id": "the_university_of_tampa",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0328",
+          "event_url": "/events/evt_2026_0328/",
+          "challenge_url": "/challenge/?record=evt_2026_0328"
+        },
+        {
+          "event_id": "evt_2026_0351",
+          "school_id": "rocky_mountain_university_of_health_professions",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0351",
+          "event_url": "/events/evt_2026_0351/",
+          "challenge_url": "/challenge/?record=evt_2026_0351"
+        },
+        {
+          "event_id": "evt_2026_0358",
+          "school_id": "university_of_central_florida",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0358",
+          "event_url": "/events/evt_2026_0358/",
+          "challenge_url": "/challenge/?record=evt_2026_0358"
+        },
+        {
+          "event_id": "evt_2026_0365",
+          "school_id": "grand_valley_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0365",
+          "event_url": "/events/evt_2026_0365/",
+          "challenge_url": "/challenge/?record=evt_2026_0365"
+        },
+        {
+          "event_id": "evt_2026_0371",
+          "school_id": "youngstown_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0371",
+          "event_url": "/events/evt_2026_0371/",
+          "challenge_url": "/challenge/?record=evt_2026_0371"
+        },
+        {
+          "event_id": "evt_2026_0375",
+          "school_id": "university_of_south_carolina_aiken",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0375",
+          "event_url": "/events/evt_2026_0375/",
+          "challenge_url": "/challenge/?record=evt_2026_0375"
+        },
+        {
+          "event_id": "evt_2026_0389",
+          "school_id": "caldwell_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0389",
+          "event_url": "/events/evt_2026_0389/",
+          "challenge_url": "/challenge/?record=evt_2026_0389"
+        },
+        {
+          "event_id": "evt_2026_0396",
+          "school_id": "tennessee_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0396",
+          "event_url": "/events/evt_2026_0396/",
+          "challenge_url": "/challenge/?record=evt_2026_0396"
+        },
+        {
+          "event_id": "evt_2026_0458",
+          "school_id": "lawrence_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0458",
+          "event_url": "/events/evt_2026_0458/",
+          "challenge_url": "/challenge/?record=evt_2026_0458"
+        }
+      ]
+    },
+    "rationale_records": {
+      "id": "rationale_records",
+      "label": "Rationale review records",
+      "description": "Records with missing or generic rationale fields that need source-specific classification, community, or confidence reasoning.",
+      "records": [
+        {
+          "event_id": "evt_2026_0091",
+          "school_id": "university_of_new_mexico_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0091",
+          "event_url": "/events/evt_2026_0091/",
+          "challenge_url": "/challenge/?record=evt_2026_0091"
+        },
+        {
+          "event_id": "evt_2026_0106",
+          "school_id": "southern_maine_community_college",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0106",
+          "event_url": "/events/evt_2026_0106/",
+          "challenge_url": "/challenge/?record=evt_2026_0106"
+        },
+        {
+          "event_id": "evt_2026_0110",
+          "school_id": "burrell_college_of_osteopathic_medicine",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0110",
+          "event_url": "/events/evt_2026_0110/",
+          "challenge_url": "/challenge/?record=evt_2026_0110"
+        },
+        {
+          "event_id": "evt_2026_0166",
+          "school_id": "baylor_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0166",
+          "event_url": "/events/evt_2026_0166/",
+          "challenge_url": "/challenge/?record=evt_2026_0166"
+        },
+        {
+          "event_id": "evt_2026_0172",
+          "school_id": "west_virginia_university_hospital_departments_of_rad_tech_and_nutrition",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0172",
+          "event_url": "/events/evt_2026_0172/",
+          "challenge_url": "/challenge/?record=evt_2026_0172"
+        },
+        {
+          "event_id": "evt_2026_0177",
+          "school_id": "harding_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0177",
+          "event_url": "/events/evt_2026_0177/",
+          "challenge_url": "/challenge/?record=evt_2026_0177"
+        },
+        {
+          "event_id": "evt_2026_0179",
+          "school_id": "california_state_polytechnic_university_humboldt",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0179",
+          "event_url": "/events/evt_2026_0179/",
+          "challenge_url": "/challenge/?record=evt_2026_0179"
+        },
+        {
+          "event_id": "evt_2026_0224",
+          "school_id": "george_washington_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0224",
+          "event_url": "/events/evt_2026_0224/",
+          "challenge_url": "/challenge/?record=evt_2026_0224"
+        },
+        {
+          "event_id": "evt_2026_0246",
+          "school_id": "the_university_of_montana",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0246",
+          "event_url": "/events/evt_2026_0246/",
+          "challenge_url": "/challenge/?record=evt_2026_0246"
+        },
+        {
+          "event_id": "evt_2026_0259",
+          "school_id": "sam_houston_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0259",
+          "event_url": "/events/evt_2026_0259/",
+          "challenge_url": "/challenge/?record=evt_2026_0259"
+        },
+        {
+          "event_id": "evt_2026_0266",
+          "school_id": "university_of_arkansas_for_medical_sciences",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0266",
+          "event_url": "/events/evt_2026_0266/",
+          "challenge_url": "/challenge/?record=evt_2026_0266"
+        },
+        {
+          "event_id": "evt_2026_0271",
+          "school_id": "florida_institute_of_technology",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0271",
+          "event_url": "/events/evt_2026_0271/",
+          "challenge_url": "/challenge/?record=evt_2026_0271"
+        },
+        {
+          "event_id": "evt_2026_0272",
+          "school_id": "georgia_institute_of_technology_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0272",
+          "event_url": "/events/evt_2026_0272/",
+          "challenge_url": "/challenge/?record=evt_2026_0272"
+        },
+        {
+          "event_id": "evt_2026_0280",
+          "school_id": "naropa_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0280",
+          "event_url": "/events/evt_2026_0280/",
+          "challenge_url": "/challenge/?record=evt_2026_0280"
+        },
+        {
+          "event_id": "evt_2026_0285",
+          "school_id": "depaul_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0285",
+          "event_url": "/events/evt_2026_0285/",
+          "challenge_url": "/challenge/?record=evt_2026_0285"
+        },
+        {
+          "event_id": "evt_2026_0288",
+          "school_id": "louisiana_state_university_health_sciences_center_shreveport",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0288",
+          "event_url": "/events/evt_2026_0288/",
+          "challenge_url": "/challenge/?record=evt_2026_0288"
+        },
+        {
+          "event_id": "evt_2026_0328",
+          "school_id": "the_university_of_tampa",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0328",
+          "event_url": "/events/evt_2026_0328/",
+          "challenge_url": "/challenge/?record=evt_2026_0328"
+        },
+        {
+          "event_id": "evt_2026_0351",
+          "school_id": "rocky_mountain_university_of_health_professions",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0351",
+          "event_url": "/events/evt_2026_0351/",
+          "challenge_url": "/challenge/?record=evt_2026_0351"
+        },
+        {
+          "event_id": "evt_2026_0358",
+          "school_id": "university_of_central_florida",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0358",
+          "event_url": "/events/evt_2026_0358/",
+          "challenge_url": "/challenge/?record=evt_2026_0358"
+        },
+        {
+          "event_id": "evt_2026_0365",
+          "school_id": "grand_valley_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0365",
+          "event_url": "/events/evt_2026_0365/",
+          "challenge_url": "/challenge/?record=evt_2026_0365"
+        },
+        {
+          "event_id": "evt_2026_0371",
+          "school_id": "youngstown_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0371",
+          "event_url": "/events/evt_2026_0371/",
+          "challenge_url": "/challenge/?record=evt_2026_0371"
+        },
+        {
+          "event_id": "evt_2026_0375",
+          "school_id": "university_of_south_carolina_aiken",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0375",
+          "event_url": "/events/evt_2026_0375/",
+          "challenge_url": "/challenge/?record=evt_2026_0375"
+        },
+        {
+          "event_id": "evt_2026_0389",
+          "school_id": "caldwell_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0389",
+          "event_url": "/events/evt_2026_0389/",
+          "challenge_url": "/challenge/?record=evt_2026_0389"
+        },
+        {
+          "event_id": "evt_2026_0396",
+          "school_id": "tennessee_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0396",
+          "event_url": "/events/evt_2026_0396/",
+          "challenge_url": "/challenge/?record=evt_2026_0396"
+        },
+        {
+          "event_id": "evt_2026_0458",
+          "school_id": "lawrence_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0458",
+          "event_url": "/events/evt_2026_0458/",
+          "challenge_url": "/challenge/?record=evt_2026_0458"
+        }
+      ]
+    },
+    "date_precision_records": {
+      "id": "date_precision_records",
+      "label": "Date precision records",
+      "description": "Records where year-level dates or mixed-date sources require clearer date limits.",
+      "records": [
+        {
+          "event_id": "evt_2026_0091",
+          "school_id": "university_of_new_mexico_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0091",
+          "event_url": "/events/evt_2026_0091/",
+          "challenge_url": "/challenge/?record=evt_2026_0091"
+        },
+        {
+          "event_id": "evt_2026_0106",
+          "school_id": "southern_maine_community_college",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0106",
+          "event_url": "/events/evt_2026_0106/",
+          "challenge_url": "/challenge/?record=evt_2026_0106"
+        },
+        {
+          "event_id": "evt_2026_0110",
+          "school_id": "burrell_college_of_osteopathic_medicine",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0110",
+          "event_url": "/events/evt_2026_0110/",
+          "challenge_url": "/challenge/?record=evt_2026_0110"
+        },
+        {
+          "event_id": "evt_2026_0166",
+          "school_id": "baylor_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0166",
+          "event_url": "/events/evt_2026_0166/",
+          "challenge_url": "/challenge/?record=evt_2026_0166"
+        },
+        {
+          "event_id": "evt_2026_0172",
+          "school_id": "west_virginia_university_hospital_departments_of_rad_tech_and_nutrition",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0172",
+          "event_url": "/events/evt_2026_0172/",
+          "challenge_url": "/challenge/?record=evt_2026_0172"
+        },
+        {
+          "event_id": "evt_2026_0177",
+          "school_id": "harding_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0177",
+          "event_url": "/events/evt_2026_0177/",
+          "challenge_url": "/challenge/?record=evt_2026_0177"
+        },
+        {
+          "event_id": "evt_2026_0179",
+          "school_id": "california_state_polytechnic_university_humboldt",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0179",
+          "event_url": "/events/evt_2026_0179/",
+          "challenge_url": "/challenge/?record=evt_2026_0179"
+        },
+        {
+          "event_id": "evt_2026_0224",
+          "school_id": "george_washington_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0224",
+          "event_url": "/events/evt_2026_0224/",
+          "challenge_url": "/challenge/?record=evt_2026_0224"
+        },
+        {
+          "event_id": "evt_2026_0246",
+          "school_id": "the_university_of_montana",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0246",
+          "event_url": "/events/evt_2026_0246/",
+          "challenge_url": "/challenge/?record=evt_2026_0246"
+        },
+        {
+          "event_id": "evt_2026_0259",
+          "school_id": "sam_houston_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0259",
+          "event_url": "/events/evt_2026_0259/",
+          "challenge_url": "/challenge/?record=evt_2026_0259"
+        },
+        {
+          "event_id": "evt_2026_0266",
+          "school_id": "university_of_arkansas_for_medical_sciences",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0266",
+          "event_url": "/events/evt_2026_0266/",
+          "challenge_url": "/challenge/?record=evt_2026_0266"
+        },
+        {
+          "event_id": "evt_2026_0271",
+          "school_id": "florida_institute_of_technology",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0271",
+          "event_url": "/events/evt_2026_0271/",
+          "challenge_url": "/challenge/?record=evt_2026_0271"
+        },
+        {
+          "event_id": "evt_2026_0272",
+          "school_id": "georgia_institute_of_technology_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0272",
+          "event_url": "/events/evt_2026_0272/",
+          "challenge_url": "/challenge/?record=evt_2026_0272"
+        },
+        {
+          "event_id": "evt_2026_0280",
+          "school_id": "naropa_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0280",
+          "event_url": "/events/evt_2026_0280/",
+          "challenge_url": "/challenge/?record=evt_2026_0280"
+        },
+        {
+          "event_id": "evt_2026_0285",
+          "school_id": "depaul_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0285",
+          "event_url": "/events/evt_2026_0285/",
+          "challenge_url": "/challenge/?record=evt_2026_0285"
+        },
+        {
+          "event_id": "evt_2026_0288",
+          "school_id": "louisiana_state_university_health_sciences_center_shreveport",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0288",
+          "event_url": "/events/evt_2026_0288/",
+          "challenge_url": "/challenge/?record=evt_2026_0288"
+        },
+        {
+          "event_id": "evt_2026_0328",
+          "school_id": "the_university_of_tampa",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0328",
+          "event_url": "/events/evt_2026_0328/",
+          "challenge_url": "/challenge/?record=evt_2026_0328"
+        },
+        {
+          "event_id": "evt_2026_0351",
+          "school_id": "rocky_mountain_university_of_health_professions",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0351",
+          "event_url": "/events/evt_2026_0351/",
+          "challenge_url": "/challenge/?record=evt_2026_0351"
+        },
+        {
+          "event_id": "evt_2026_0358",
+          "school_id": "university_of_central_florida",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0358",
+          "event_url": "/events/evt_2026_0358/",
+          "challenge_url": "/challenge/?record=evt_2026_0358"
+        },
+        {
+          "event_id": "evt_2026_0365",
+          "school_id": "grand_valley_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0365",
+          "event_url": "/events/evt_2026_0365/",
+          "challenge_url": "/challenge/?record=evt_2026_0365"
+        },
+        {
+          "event_id": "evt_2026_0371",
+          "school_id": "youngstown_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0371",
+          "event_url": "/events/evt_2026_0371/",
+          "challenge_url": "/challenge/?record=evt_2026_0371"
+        },
+        {
+          "event_id": "evt_2026_0375",
+          "school_id": "university_of_south_carolina_aiken",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0375",
+          "event_url": "/events/evt_2026_0375/",
+          "challenge_url": "/challenge/?record=evt_2026_0375"
+        },
+        {
+          "event_id": "evt_2026_0389",
+          "school_id": "caldwell_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0389",
+          "event_url": "/events/evt_2026_0389/",
+          "challenge_url": "/challenge/?record=evt_2026_0389"
+        },
+        {
+          "event_id": "evt_2026_0396",
+          "school_id": "tennessee_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0396",
+          "event_url": "/events/evt_2026_0396/",
+          "challenge_url": "/challenge/?record=evt_2026_0396"
+        },
+        {
+          "event_id": "evt_2026_0458",
+          "school_id": "lawrence_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0458",
+          "event_url": "/events/evt_2026_0458/",
+          "challenge_url": "/challenge/?record=evt_2026_0458"
+        }
+      ]
+    },
+    "category_fit_records": {
+      "id": "category_fit_records",
+      "label": "Category-fit records",
+      "description": "Records where category language may be broader than the source offense or source type supports.",
+      "records": [
+        {
+          "event_id": "evt_2026_0091",
+          "school_id": "university_of_new_mexico_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0091",
+          "event_url": "/events/evt_2026_0091/",
+          "challenge_url": "/challenge/?record=evt_2026_0091"
+        },
+        {
+          "event_id": "evt_2026_0106",
+          "school_id": "southern_maine_community_college",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0106",
+          "event_url": "/events/evt_2026_0106/",
+          "challenge_url": "/challenge/?record=evt_2026_0106"
+        },
+        {
+          "event_id": "evt_2026_0110",
+          "school_id": "burrell_college_of_osteopathic_medicine",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0110",
+          "event_url": "/events/evt_2026_0110/",
+          "challenge_url": "/challenge/?record=evt_2026_0110"
+        },
+        {
+          "event_id": "evt_2026_0166",
+          "school_id": "baylor_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0166",
+          "event_url": "/events/evt_2026_0166/",
+          "challenge_url": "/challenge/?record=evt_2026_0166"
+        },
+        {
+          "event_id": "evt_2026_0172",
+          "school_id": "west_virginia_university_hospital_departments_of_rad_tech_and_nutrition",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0172",
+          "event_url": "/events/evt_2026_0172/",
+          "challenge_url": "/challenge/?record=evt_2026_0172"
+        },
+        {
+          "event_id": "evt_2026_0177",
+          "school_id": "harding_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0177",
+          "event_url": "/events/evt_2026_0177/",
+          "challenge_url": "/challenge/?record=evt_2026_0177"
+        },
+        {
+          "event_id": "evt_2026_0179",
+          "school_id": "california_state_polytechnic_university_humboldt",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0179",
+          "event_url": "/events/evt_2026_0179/",
+          "challenge_url": "/challenge/?record=evt_2026_0179"
+        },
+        {
+          "event_id": "evt_2026_0224",
+          "school_id": "george_washington_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0224",
+          "event_url": "/events/evt_2026_0224/",
+          "challenge_url": "/challenge/?record=evt_2026_0224"
+        },
+        {
+          "event_id": "evt_2026_0246",
+          "school_id": "the_university_of_montana",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0246",
+          "event_url": "/events/evt_2026_0246/",
+          "challenge_url": "/challenge/?record=evt_2026_0246"
+        },
+        {
+          "event_id": "evt_2026_0259",
+          "school_id": "sam_houston_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0259",
+          "event_url": "/events/evt_2026_0259/",
+          "challenge_url": "/challenge/?record=evt_2026_0259"
+        },
+        {
+          "event_id": "evt_2026_0266",
+          "school_id": "university_of_arkansas_for_medical_sciences",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0266",
+          "event_url": "/events/evt_2026_0266/",
+          "challenge_url": "/challenge/?record=evt_2026_0266"
+        },
+        {
+          "event_id": "evt_2026_0271",
+          "school_id": "florida_institute_of_technology",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0271",
+          "event_url": "/events/evt_2026_0271/",
+          "challenge_url": "/challenge/?record=evt_2026_0271"
+        },
+        {
+          "event_id": "evt_2026_0272",
+          "school_id": "georgia_institute_of_technology_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0272",
+          "event_url": "/events/evt_2026_0272/",
+          "challenge_url": "/challenge/?record=evt_2026_0272"
+        },
+        {
+          "event_id": "evt_2026_0280",
+          "school_id": "naropa_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0280",
+          "event_url": "/events/evt_2026_0280/",
+          "challenge_url": "/challenge/?record=evt_2026_0280"
+        },
+        {
+          "event_id": "evt_2026_0285",
+          "school_id": "depaul_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0285",
+          "event_url": "/events/evt_2026_0285/",
+          "challenge_url": "/challenge/?record=evt_2026_0285"
+        },
+        {
+          "event_id": "evt_2026_0288",
+          "school_id": "louisiana_state_university_health_sciences_center_shreveport",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0288",
+          "event_url": "/events/evt_2026_0288/",
+          "challenge_url": "/challenge/?record=evt_2026_0288"
+        },
+        {
+          "event_id": "evt_2026_0328",
+          "school_id": "the_university_of_tampa",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0328",
+          "event_url": "/events/evt_2026_0328/",
+          "challenge_url": "/challenge/?record=evt_2026_0328"
+        },
+        {
+          "event_id": "evt_2026_0351",
+          "school_id": "rocky_mountain_university_of_health_professions",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0351",
+          "event_url": "/events/evt_2026_0351/",
+          "challenge_url": "/challenge/?record=evt_2026_0351"
+        },
+        {
+          "event_id": "evt_2026_0358",
+          "school_id": "university_of_central_florida",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0358",
+          "event_url": "/events/evt_2026_0358/",
+          "challenge_url": "/challenge/?record=evt_2026_0358"
+        },
+        {
+          "event_id": "evt_2026_0365",
+          "school_id": "grand_valley_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0365",
+          "event_url": "/events/evt_2026_0365/",
+          "challenge_url": "/challenge/?record=evt_2026_0365"
+        },
+        {
+          "event_id": "evt_2026_0371",
+          "school_id": "youngstown_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0371",
+          "event_url": "/events/evt_2026_0371/",
+          "challenge_url": "/challenge/?record=evt_2026_0371"
+        },
+        {
+          "event_id": "evt_2026_0375",
+          "school_id": "university_of_south_carolina_aiken",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0375",
+          "event_url": "/events/evt_2026_0375/",
+          "challenge_url": "/challenge/?record=evt_2026_0375"
+        },
+        {
+          "event_id": "evt_2026_0389",
+          "school_id": "caldwell_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0389",
+          "event_url": "/events/evt_2026_0389/",
+          "challenge_url": "/challenge/?record=evt_2026_0389"
+        },
+        {
+          "event_id": "evt_2026_0396",
+          "school_id": "tennessee_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0396",
+          "event_url": "/events/evt_2026_0396/",
+          "challenge_url": "/challenge/?record=evt_2026_0396"
+        },
+        {
+          "event_id": "evt_2026_0458",
+          "school_id": "lawrence_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0458",
+          "event_url": "/events/evt_2026_0458/",
+          "challenge_url": "/challenge/?record=evt_2026_0458"
+        }
+      ]
+    },
+    "response_depth_records": {
+      "id": "response_depth_records",
+      "label": "Response-depth records",
+      "description": "Records whose response field is thin, bounded, or missing and should not be read as a substantive institutional response.",
+      "records": [
+        {
+          "event_id": "evt_2026_0091",
+          "school_id": "university_of_new_mexico_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0091",
+          "event_url": "/events/evt_2026_0091/",
+          "challenge_url": "/challenge/?record=evt_2026_0091"
+        },
+        {
+          "event_id": "evt_2026_0106",
+          "school_id": "southern_maine_community_college",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0106",
+          "event_url": "/events/evt_2026_0106/",
+          "challenge_url": "/challenge/?record=evt_2026_0106"
+        },
+        {
+          "event_id": "evt_2026_0110",
+          "school_id": "burrell_college_of_osteopathic_medicine",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0110",
+          "event_url": "/events/evt_2026_0110/",
+          "challenge_url": "/challenge/?record=evt_2026_0110"
+        },
+        {
+          "event_id": "evt_2026_0166",
+          "school_id": "baylor_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0166",
+          "event_url": "/events/evt_2026_0166/",
+          "challenge_url": "/challenge/?record=evt_2026_0166"
+        },
+        {
+          "event_id": "evt_2026_0172",
+          "school_id": "west_virginia_university_hospital_departments_of_rad_tech_and_nutrition",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0172",
+          "event_url": "/events/evt_2026_0172/",
+          "challenge_url": "/challenge/?record=evt_2026_0172"
+        },
+        {
+          "event_id": "evt_2026_0177",
+          "school_id": "harding_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0177",
+          "event_url": "/events/evt_2026_0177/",
+          "challenge_url": "/challenge/?record=evt_2026_0177"
+        },
+        {
+          "event_id": "evt_2026_0179",
+          "school_id": "california_state_polytechnic_university_humboldt",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0179",
+          "event_url": "/events/evt_2026_0179/",
+          "challenge_url": "/challenge/?record=evt_2026_0179"
+        },
+        {
+          "event_id": "evt_2026_0224",
+          "school_id": "george_washington_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0224",
+          "event_url": "/events/evt_2026_0224/",
+          "challenge_url": "/challenge/?record=evt_2026_0224"
+        },
+        {
+          "event_id": "evt_2026_0246",
+          "school_id": "the_university_of_montana",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0246",
+          "event_url": "/events/evt_2026_0246/",
+          "challenge_url": "/challenge/?record=evt_2026_0246"
+        },
+        {
+          "event_id": "evt_2026_0259",
+          "school_id": "sam_houston_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0259",
+          "event_url": "/events/evt_2026_0259/",
+          "challenge_url": "/challenge/?record=evt_2026_0259"
+        },
+        {
+          "event_id": "evt_2026_0266",
+          "school_id": "university_of_arkansas_for_medical_sciences",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0266",
+          "event_url": "/events/evt_2026_0266/",
+          "challenge_url": "/challenge/?record=evt_2026_0266"
+        },
+        {
+          "event_id": "evt_2026_0271",
+          "school_id": "florida_institute_of_technology",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0271",
+          "event_url": "/events/evt_2026_0271/",
+          "challenge_url": "/challenge/?record=evt_2026_0271"
+        },
+        {
+          "event_id": "evt_2026_0272",
+          "school_id": "georgia_institute_of_technology_main_campus",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0272",
+          "event_url": "/events/evt_2026_0272/",
+          "challenge_url": "/challenge/?record=evt_2026_0272"
+        },
+        {
+          "event_id": "evt_2026_0280",
+          "school_id": "naropa_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0280",
+          "event_url": "/events/evt_2026_0280/",
+          "challenge_url": "/challenge/?record=evt_2026_0280"
+        },
+        {
+          "event_id": "evt_2026_0285",
+          "school_id": "depaul_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0285",
+          "event_url": "/events/evt_2026_0285/",
+          "challenge_url": "/challenge/?record=evt_2026_0285"
+        },
+        {
+          "event_id": "evt_2026_0288",
+          "school_id": "louisiana_state_university_health_sciences_center_shreveport",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0288",
+          "event_url": "/events/evt_2026_0288/",
+          "challenge_url": "/challenge/?record=evt_2026_0288"
+        },
+        {
+          "event_id": "evt_2026_0328",
+          "school_id": "the_university_of_tampa",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0328",
+          "event_url": "/events/evt_2026_0328/",
+          "challenge_url": "/challenge/?record=evt_2026_0328"
+        },
+        {
+          "event_id": "evt_2026_0351",
+          "school_id": "rocky_mountain_university_of_health_professions",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0351",
+          "event_url": "/events/evt_2026_0351/",
+          "challenge_url": "/challenge/?record=evt_2026_0351"
+        },
+        {
+          "event_id": "evt_2026_0358",
+          "school_id": "university_of_central_florida",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0358",
+          "event_url": "/events/evt_2026_0358/",
+          "challenge_url": "/challenge/?record=evt_2026_0358"
+        },
+        {
+          "event_id": "evt_2026_0365",
+          "school_id": "grand_valley_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0365",
+          "event_url": "/events/evt_2026_0365/",
+          "challenge_url": "/challenge/?record=evt_2026_0365"
+        },
+        {
+          "event_id": "evt_2026_0371",
+          "school_id": "youngstown_state_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0371",
+          "event_url": "/events/evt_2026_0371/",
+          "challenge_url": "/challenge/?record=evt_2026_0371"
+        },
+        {
+          "event_id": "evt_2026_0375",
+          "school_id": "university_of_south_carolina_aiken",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0375",
+          "event_url": "/events/evt_2026_0375/",
+          "challenge_url": "/challenge/?record=evt_2026_0375"
+        },
+        {
+          "event_id": "evt_2026_0389",
+          "school_id": "caldwell_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0389",
+          "event_url": "/events/evt_2026_0389/",
+          "challenge_url": "/challenge/?record=evt_2026_0389"
+        },
+        {
+          "event_id": "evt_2026_0396",
+          "school_id": "tennessee_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0396",
+          "event_url": "/events/evt_2026_0396/",
+          "challenge_url": "/challenge/?record=evt_2026_0396"
+        },
+        {
+          "event_id": "evt_2026_0458",
+          "school_id": "lawrence_technological_university",
+          "audit_status": "needs_internal_review",
+          "review_score": 15,
+          "highest_severity": "high",
+          "issue_ids": [
+            "dataset_cell_locator_needed",
+            "category_may_be_too_generic_for_offense",
+            "broad_affected_community_label",
+            "year_precision_public_use_limit",
+            "thin_response_note",
+            "missing_explicit_rationales"
+          ],
+          "workspace_url": "/research-workspace/?record_ids=evt_2026_0458",
+          "event_url": "/events/evt_2026_0458/",
+          "challenge_url": "/challenge/?record=evt_2026_0458"
+        }
+      ]
+    }
+  },
+  "reviewer_checklist": [
+    "Open the linked source before accepting any record wording.",
+    "Check whether the stored source URL lands on the exact cited item, not only the publisher site.",
+    "For dataset records, confirm workbook, table, row, or cell basis before quotation.",
+    "Check whether category language is a neutral documentation label and not a severity or legal conclusion.",
+    "Check each affected-community label against the source wording and remove or qualify labels that are only contextual.",
+    "Check whether date precision is exact day, month, or year-level only.",
+    "Check whether response-depth language distinguishes direct institutional response, agency-described action, limited public note, and no public response found.",
+    "Replace generic rationale with source-specific rationale only when the public source supports it.",
+    "Submit corrections with record ID, disputed field, source URL, and exact proposed wording."
+  ],
+  "next_internal_actions": [
+    "Repair blocker source locators before sending those records to outside reviewers.",
+    "Use Gold v1 pre-review rows as the first bounded outside reviewer packet.",
+    "Prioritize dataset locator review and explicit rationale review before adding more records.",
+    "Keep all review language framed as source-support review, not campus comparison."
+  ]
+}

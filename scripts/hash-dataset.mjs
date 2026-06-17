@@ -27,7 +27,13 @@ const [
   challengeQueues,
   challengeLedger,
   flagshipReport,
-  goldRecordV1
+  goldRecordV1,
+  recordQualityAudit,
+  recordQualityReviewerPacket,
+  goldV1CertificationStatus,
+  reviewDebtLedger,
+  externalReviewPacket,
+  certificationLedger
 ] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
@@ -52,7 +58,13 @@ const [
   readJson(paths.challengeQueues),
   readJson(paths.challengeLedger),
   readJson(paths.flagshipReport),
-  readJson(paths.goldRecordV1)
+  readJson(paths.goldRecordV1),
+  readJson(paths.recordQualityAudit),
+  readJson(paths.recordQualityReviewerPacket),
+  readJson(paths.goldV1CertificationStatus),
+  readJson(paths.reviewDebtLedger),
+  readJson(paths.externalReviewPacket),
+  readJson(paths.certificationLedger)
 ]);
 
 const hashedEvents = events.map((event) => ({
@@ -88,6 +100,12 @@ const challengeQueuesHash = sha256(challengeQueues);
 const challengeLedgerHash = sha256(challengeLedger);
 const flagshipReportHash = sha256(flagshipReport);
 const goldRecordV1Hash = sha256(goldRecordV1);
+const recordQualityAuditHash = sha256(recordQualityAudit);
+const recordQualityReviewerPacketHash = sha256(recordQualityReviewerPacket);
+const goldV1CertificationStatusHash = sha256(goldV1CertificationStatus);
+const reviewDebtLedgerHash = sha256(reviewDebtLedger);
+const externalReviewPacketHash = sha256(externalReviewPacket);
+const certificationLedgerHash = sha256(certificationLedger);
 
 const previousManifest = existsSync(paths.manifest) ? await readJson(paths.manifest) : null;
 
@@ -125,7 +143,21 @@ const manifest = {
     challenge_packets: challengeQueues.packets.length,
     challenge_ledger_entries: challengeLedger.entries.length,
     flagship_findings: flagshipReport.findings.length,
-    gold_record_v1_packets: goldRecordV1.records.length
+    gold_record_v1_packets: goldRecordV1.records.length,
+    record_quality_audit_records: recordQualityAudit.records.length,
+    record_quality_audit_priority_records: recordQualityAudit.priority_records.length,
+    record_quality_reviewer_packet_queues: Object.keys(recordQualityReviewerPacket.priority_queues ?? {}).length,
+    gold_v1_certified_records: goldV1CertificationStatus.totals.certified,
+    gold_v1_blocked_records: goldV1CertificationStatus.totals.blocked,
+    review_debt_ledger_records: reviewDebtLedger.records.length,
+    review_debt_ledger_source_families: reviewDebtLedger.totals.source_families,
+    review_debt_ledger_blocked_records: reviewDebtLedger.totals.blocked,
+    external_review_packet_records: externalReviewPacket.records.length,
+    external_review_packet_challenge_templates: externalReviewPacket.challenge_templates.length,
+    certification_ledger_records: certificationLedger.records.length,
+    certification_ledger_certified_records: certificationLedger.totals.certified,
+    certification_ledger_awaiting_review_records: certificationLedger.totals.awaiting_review,
+    certification_batch_001_records: certificationLedger.batch_001.records.length
   },
   hashes: {
     events: eventsHash,
@@ -152,7 +184,13 @@ const manifest = {
     challenge_ledger: challengeLedgerHash,
     flagship_report: flagshipReportHash,
     gold_record_v1: goldRecordV1Hash,
-    // Flagship artifacts cite full_snapshot, so their hashes are tracked alongside it rather than folded into it.
+    record_quality_audit: recordQualityAuditHash,
+    record_quality_reviewer_packet: recordQualityReviewerPacketHash,
+    gold_v1_certification_status: goldV1CertificationStatusHash,
+    review_debt_ledger: reviewDebtLedgerHash,
+    external_review_packet: externalReviewPacketHash,
+    certification_ledger: certificationLedgerHash,
+    // Review artifacts that cite or evaluate the core snapshot are tracked alongside it rather than folded into it.
     full_snapshot: sha256({
       events: eventsHash,
       schools: schoolsHash,

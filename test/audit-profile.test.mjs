@@ -86,6 +86,33 @@ test("buildAuditProfile uses explicit rationale fields when present", () => {
   ]);
 });
 
+test("buildAuditProfile includes source locator rows when present", () => {
+  const profile = buildAuditProfile(
+    {
+      ...baseRecord,
+      source_locators: [
+        {
+          source_id: "src_test_2026",
+          locator_type: "page_table",
+          locator: "Annual security report, Hate Crime Statistics table, p. 53",
+          page: "53",
+          table: "Hate Crime Statistics"
+        }
+      ]
+    },
+    [source]
+  );
+
+  assert.deepEqual(profile.sourceLocators, [
+    {
+      sourceId: "src_test_2026",
+      sourceTitle: "University public notice",
+      locatorType: "page_table",
+      locator: "Annual security report, Hate Crime Statistics table, p. 53"
+    }
+  ]);
+});
+
 test("buildAuditProfile omits optional field-support rows when optional fields are blank", () => {
   const profile = buildAuditProfile(
     {
