@@ -33,6 +33,8 @@ const publicPaths = [
   "external-review",
   "known-limits",
   "certification",
+  "ed-provenance",
+  "certification-batches",
   "evidence",
   "flagship",
   "gold-records",

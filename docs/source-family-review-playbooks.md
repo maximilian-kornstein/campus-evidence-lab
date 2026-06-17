@@ -1,6 +1,10 @@
 # Source-Family Review Playbooks
 
+Standard version: `certification_rules_v1`
+
 These playbooks define what reviewers must check before a record can move from `awaiting_review` to `certified`. They are source-to-record standards, not findings about institutional quality or campus safety.
+
+Later changes to source-family review requirements should use a new named standard version rather than silently changing this version.
 
 ## ED Campus Safety Dataset Records
 

@@ -14,7 +14,9 @@ const [
   goldV1CertificationStatus,
   reviewDebtLedger,
   externalReviewPacket,
-  certificationLedger
+  certificationLedger,
+  edDatasetProvenanceAudit,
+  certificationBatches
 ] = await Promise.all([
   readJson(paths.manifest),
   readJson(paths.snapshotIndex),
@@ -27,7 +29,9 @@ const [
   readJson(paths.goldV1CertificationStatus),
   readJson(paths.reviewDebtLedger),
   readJson(paths.externalReviewPacket),
-  readJson(paths.certificationLedger)
+  readJson(paths.certificationLedger),
+  readJson(paths.edDatasetProvenanceAudit),
+  readJson(paths.certificationBatches)
 ]);
 
 const latestBriefs = [...briefs]
@@ -88,6 +92,10 @@ const lines = [
   bullet("Certification ledger certified records", manifest.totals.certification_ledger_certified_records),
   bullet("Certification ledger awaiting-review records", manifest.totals.certification_ledger_awaiting_review_records),
   bullet("Certification Batch 001 records", manifest.totals.certification_batch_001_records),
+  bullet("ED dataset provenance records", manifest.totals.ed_dataset_provenance_records),
+  bullet("ED dataset provenance matched records", manifest.totals.ed_dataset_provenance_matched_records),
+  bullet("ED dataset provenance unmatched records", manifest.totals.ed_dataset_provenance_unmatched_records),
+  bullet("Certification batches", manifest.totals.certification_batches),
   "",
   "## Dataset Hashes",
   "",
@@ -116,6 +124,8 @@ const lines = [
   bullet("Review debt ledger", `\`${manifest.hashes.review_debt_ledger}\``),
   bullet("External review packet", `\`${manifest.hashes.external_review_packet}\``),
   bullet("Certification ledger", `\`${manifest.hashes.certification_ledger}\``),
+  bullet("ED dataset provenance audit", `\`${manifest.hashes.ed_dataset_provenance_audit}\``),
+  bullet("Certification batches", `\`${manifest.hashes.certification_batches}\``),
   "",
   "## Evidence Depth & Robustness",
   "",
@@ -136,6 +146,10 @@ const lines = [
   "- Certification ledger: `/certification/`",
   "- Certification ledger JSON: `/data/certification-ledger.json`",
   "- Certification Batch 001 pilot: `/certification/batch-001/`",
+  "- ED dataset provenance audit: `/ed-provenance/`",
+  "- ED dataset provenance JSON: `/data/ed-dataset-provenance-audit.json`",
+  "- Certification batch manifest: `/certification-batches/`",
+  "- Certification batch manifest JSON: `/data/certification-batches.json`",
   `- Record quality audit current triage: ${recordQualityAudit.totals.blocked_before_external_packet} blocked before external packets, ${recordQualityAudit.totals.needs_internal_review} needing internal review, ${recordQualityAudit.totals.usable_with_review_notes} usable with review notes.`,
   `- Reviewer packet source-link review: ${recordQualityReviewerPacket.source_link_review.hard_broken_sources.length} hard broken sources, ${recordQualityReviewerPacket.source_link_review.locator_risk_sources.length} locator-risk sources.`,
   `- Gold v1 certification gates: ${goldV1CertificationStatus.totals.certified} certified, ${goldV1CertificationStatus.totals.not_certified} not certified, ${goldV1CertificationStatus.totals.blocked} blocked.`,
@@ -143,6 +157,8 @@ const lines = [
   `- External review packet: ${externalReviewPacket.records.length} internally certified Gold v1 records packaged for source-to-record review, with ${externalReviewPacket.challenge_templates.length} challenge templates.`,
   `- Certification ledger: ${certificationLedger.totals.certified} certified, ${certificationLedger.totals.not_certified} not certified, ${certificationLedger.totals.blocked} blocked, and ${certificationLedger.totals.awaiting_review} awaiting review across all ${certificationLedger.totals.records} records.`,
   `- Batch 001 ED dataset pilot: ${certificationLedger.batch_001.records.length} records with ${certificationLedger.batch_001.status_counts.awaiting_review ?? 0} awaiting review because source-to-cell provenance must be explicit before certification.`,
+  `- ED dataset provenance audit: ${edDatasetProvenanceAudit.totals.matched} matched source-cell candidates and ${edDatasetProvenanceAudit.totals.unmatched} unresolved ambiguous rows across ${edDatasetProvenanceAudit.totals.records} ED dataset records.`,
+  `- Certification batches: ${certificationBatches.totals.batches} batches across ${certificationBatches.totals.lanes} review lanes, using ${certificationBatches.certification_standard_version}.`,
   "- These artifacts describe current dataset composition and review priorities; they must not be used as comparative campus judgments, frequency measures, risk ratings, or approval claims.",
   "",
   "## Adversarial Review Protocol",

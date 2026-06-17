@@ -33,7 +33,9 @@ const [
   goldV1CertificationStatus,
   reviewDebtLedger,
   externalReviewPacket,
-  certificationLedger
+  certificationLedger,
+  edDatasetProvenanceAudit,
+  certificationBatches
 ] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
@@ -64,7 +66,9 @@ const [
   readJson(paths.goldV1CertificationStatus),
   readJson(paths.reviewDebtLedger),
   readJson(paths.externalReviewPacket),
-  readJson(paths.certificationLedger)
+  readJson(paths.certificationLedger),
+  readJson(paths.edDatasetProvenanceAudit),
+  readJson(paths.certificationBatches)
 ]);
 
 const hashedEvents = events.map((event) => ({
@@ -106,6 +110,8 @@ const goldV1CertificationStatusHash = sha256(goldV1CertificationStatus);
 const reviewDebtLedgerHash = sha256(reviewDebtLedger);
 const externalReviewPacketHash = sha256(externalReviewPacket);
 const certificationLedgerHash = sha256(certificationLedger);
+const edDatasetProvenanceAuditHash = sha256(edDatasetProvenanceAudit);
+const certificationBatchesHash = sha256(certificationBatches);
 
 const previousManifest = existsSync(paths.manifest) ? await readJson(paths.manifest) : null;
 
@@ -157,7 +163,11 @@ const manifest = {
     certification_ledger_records: certificationLedger.records.length,
     certification_ledger_certified_records: certificationLedger.totals.certified,
     certification_ledger_awaiting_review_records: certificationLedger.totals.awaiting_review,
-    certification_batch_001_records: certificationLedger.batch_001.records.length
+    certification_batch_001_records: certificationLedger.batch_001.records.length,
+    ed_dataset_provenance_records: edDatasetProvenanceAudit.records.length,
+    ed_dataset_provenance_matched_records: edDatasetProvenanceAudit.totals.matched,
+    ed_dataset_provenance_unmatched_records: edDatasetProvenanceAudit.totals.unmatched,
+    certification_batches: certificationBatches.totals.batches
   },
   hashes: {
     events: eventsHash,
@@ -190,6 +200,8 @@ const manifest = {
     review_debt_ledger: reviewDebtLedgerHash,
     external_review_packet: externalReviewPacketHash,
     certification_ledger: certificationLedgerHash,
+    ed_dataset_provenance_audit: edDatasetProvenanceAuditHash,
+    certification_batches: certificationBatchesHash,
     // Review artifacts that cite or evaluate the core snapshot are tracked alongside it rather than folded into it.
     full_snapshot: sha256({
       events: eventsHash,

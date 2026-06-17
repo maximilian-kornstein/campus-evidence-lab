@@ -1,6 +1,10 @@
 # Full-Database Certification Rulebook
 
+Standard version: `certification_rules_v1`
+
 Campus Evidence Lab uses internal source-to-record certification to make record strength inspectable. Certification is not outside validation, institutional endorsement, a school ranking, a safety score, a severity score, a prevalence estimate, or a legal finding.
+
+Later changes to gate definitions, status meanings, or certification thresholds should use a new named version. Do not silently change `certification_rules_v1` after records or batches cite it.
 
 ## Statuses
 
@@ -26,6 +30,8 @@ Every record is checked against these gates:
 ## Certification Standard
 
 A record can be certified only when all gates are `pass` and a certification basis is present. A deterministic scan with no known issue is not enough by itself. Records without a completed certification basis remain `awaiting_review` even if some metadata checks pass.
+
+The goal is not to certify all 4,000 records. The goal is for every record to have a defensible final state: `certified`, `not_certified`, `blocked`, or `awaiting_review` with exact gates and public-use limits.
 
 ## Batch Standard
 

@@ -4,7 +4,19 @@ import { buildAuditProfile } from "../assets/audit-profile.js";
 import { hasSubstantiveInstitutionalResponse, responseDepthDisplayProfile, responseDisplayProfile } from "../assets/record-display.js";
 import { paths, readJson, rootDir } from "./lib.mjs";
 
-const [events, schools, sources, briefs, manifest, challengeQueues, reviewDebtLedger, externalReviewPacket, certificationLedger] = await Promise.all([
+const [
+  events,
+  schools,
+  sources,
+  briefs,
+  manifest,
+  challengeQueues,
+  reviewDebtLedger,
+  externalReviewPacket,
+  certificationLedger,
+  edDatasetProvenanceAudit,
+  certificationBatches
+] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
   readJson(paths.sources),
@@ -13,7 +25,9 @@ const [events, schools, sources, briefs, manifest, challengeQueues, reviewDebtLe
   readJson(paths.challengeQueues),
   readJson(paths.reviewDebtLedger),
   readJson(paths.externalReviewPacket),
-  readJson(paths.certificationLedger)
+  readJson(paths.certificationLedger),
+  readJson(paths.edDatasetProvenanceAudit),
+  readJson(paths.certificationBatches)
 ]);
 
 const schoolMap = new Map(schools.map((school) => [school.id, school]));
@@ -27,6 +41,8 @@ const reviewDebtDir = path.join(rootDir, "review-debt");
 const externalReviewDir = path.join(rootDir, "external-review");
 const knownLimitsDir = path.join(rootDir, "known-limits");
 const certificationDir = path.join(rootDir, "certification");
+const edProvenanceDir = path.join(rootDir, "ed-provenance");
+const certificationBatchesDir = path.join(rootDir, "certification-batches");
 const detailDepth = 2;
 
 function escapeHtml(value) {
@@ -63,6 +79,7 @@ function nav(depth = 0) {
           <a href="${sitePath("/quality/", depth)}">Quality</a>
           <a href="${sitePath("/review-debt/", depth)}">Review Debt</a>
           <a href="${sitePath("/certification/", depth)}">Certification</a>
+          <a href="${sitePath("/certification-batches/", depth)}">Batches</a>
           <a href="${sitePath("/external-review/", depth)}">External Review</a>
           <a href="${sitePath("/methodology/", depth)}">Methodology</a>
           <a href="${sitePath("/impact/", depth)}">Impact</a>
@@ -1203,6 +1220,109 @@ await writeFile(
       </section>
     `,
     2
+  )
+);
+
+await mkdir(edProvenanceDir, { recursive: true });
+const unmatchedEdRows = (edDatasetProvenanceAudit.records ?? []).filter((record) => record.provenance_status === "unmatched");
+await writeFile(
+  path.join(edProvenanceDir, "index.html"),
+  page(
+    "ED Dataset Provenance",
+    `
+      <p class="page-kicker">ED dataset provenance</p>
+      <h1 class="page-title page-title--small">Source-cell reconstruction before manual certification.</h1>
+      <p class="page-intro">This audit maps ED Campus Safety dataset records to official workbook, sheet, row, column, and cell candidates where current record metadata supports a deterministic match. It does not certify records, change event facts, or claim outside validation.</p>
+      <section class="detail-panel">
+        <div class="detail-grid">
+          <div>
+            <h2 class="section-title">Provenance Status Counts</h2>
+            ${countTable(objectCountRows(edDatasetProvenanceAudit.provenance_status_counts), "Status")}
+            <h2 class="section-title section-title--spaced">Workbook Counts</h2>
+            ${countTable(objectCountRows(edDatasetProvenanceAudit.workbook_counts), "Workbook")}
+            <h2 class="section-title section-title--spaced">Scope Counts</h2>
+            ${countTable(objectCountRows(edDatasetProvenanceAudit.scope_counts), "Scope")}
+            <h2 class="section-title section-title--spaced">Unmatched Rows</h2>
+            ${certificationRecordTable(
+              unmatchedEdRows.slice(0, 50).map((record) => ({
+                ...record,
+                source_family: "ed_campus_safety_dataset",
+                certification_status: record.provenance_status,
+                open_gates: [record.unresolved_reason],
+                next_action: "Do not apply a source locator until a reviewer can resolve the ambiguity.",
+                challenge_url: `/challenge/?record=${encodeURIComponent(record.event_id)}`
+              }))
+            )}
+          </div>
+          <aside>
+            <dl>
+              ${dataLine("Snapshot", escapeHtml(edDatasetProvenanceAudit.snapshot_id), "mono")}
+              ${dataLine("ED records", escapeHtml(edDatasetProvenanceAudit.totals.records))}
+              ${dataLine("Matched", escapeHtml(edDatasetProvenanceAudit.totals.matched))}
+              ${dataLine("Unmatched", escapeHtml(edDatasetProvenanceAudit.totals.unmatched))}
+              ${dataLine("Workbooks", escapeHtml(edDatasetProvenanceAudit.totals.workbooks))}
+              ${dataLine("Audit JSON", `<a href="${sitePath("/data/ed-dataset-provenance-audit.json", 1)}">Download artifact</a>`)}
+              ${dataLine("Notes", `<a href="${sitePath("/docs/ed-dataset-provenance-audit.md", 1)}">Read notes</a>`)}
+              ${dataLine("Use limit", escapeHtml(edDatasetProvenanceAudit.public_claim_limit))}
+            </dl>
+          </aside>
+        </div>
+      </section>
+    `,
+    1
+  )
+);
+
+await mkdir(certificationBatchesDir, { recursive: true });
+await writeFile(
+  path.join(certificationBatchesDir, "index.html"),
+  page(
+    "Certification Batches",
+    `
+      <p class="page-kicker">Certification batch manifest</p>
+      <h1 class="page-title page-title--small">The 4,000-record review is divided by source-family lane.</h1>
+      <p class="page-intro">Batches organize strict review. They do not certify records by themselves. A batch is complete only when every record has a final visible status and exact open gates.</p>
+      <section class="detail-panel">
+        <div class="detail-grid">
+          <div>
+            <h2 class="section-title">Review Lanes</h2>
+            ${Object.values(certificationBatches.lanes ?? {})
+              .map(
+                (lane) => `
+                  <h3 class="section-title section-title--spaced">${escapeHtml(lane.label)}</h3>
+                  <p class="section-note">${escapeHtml(lane.completion_rule)}</p>
+                  ${countTable(objectCountRows(lane.status_counts), "Status")}
+                `
+              )
+              .join("")}
+            <h2 class="section-title section-title--spaced">First Batches</h2>
+            <ul class="source-list">
+              ${(certificationBatches.batches ?? [])
+                .slice(0, 25)
+                .map(
+                  (batch) =>
+                    `<li><strong>${escapeHtml(batch.id)}</strong><br><span>${escapeHtml(batch.label)} / ${escapeHtml(batch.records.length)} records / ${escapeHtml(batch.completion_rule)}</span></li>`
+                )
+                .join("")}
+            </ul>
+          </div>
+          <aside>
+            <dl>
+              ${dataLine("Snapshot", escapeHtml(certificationBatches.snapshot_id), "mono")}
+              ${dataLine("Standard", escapeHtml(certificationBatches.certification_standard_version), "mono")}
+              ${dataLine("Records", escapeHtml(certificationBatches.totals.records))}
+              ${dataLine("Lanes", escapeHtml(certificationBatches.totals.lanes))}
+              ${dataLine("Batches", escapeHtml(certificationBatches.totals.batches))}
+              ${dataLine("Batch size", escapeHtml(certificationBatches.batch_size))}
+              ${dataLine("Manifest JSON", `<a href="${sitePath("/data/certification-batches.json", 1)}">Download artifact</a>`)}
+              ${dataLine("Rules", `<a href="${sitePath("/docs/certification-batch-completion-rules.md", 1)}">Completion rules</a>`)}
+              ${dataLine("Use limit", escapeHtml(certificationBatches.public_claim_limit))}
+            </dl>
+          </aside>
+        </div>
+      </section>
+    `,
+    1
   )
 );
 

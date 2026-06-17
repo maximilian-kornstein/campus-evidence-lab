@@ -316,6 +316,32 @@ The external review packet is a strict source-to-record dossier for review. It i
 - records: one row per event record, including event_id, school_id, source_family, certification_status, certification_basis, review_debt_status, issue_ids, open_gates, gate detail, event_url, workspace_url, challenge_url, and next_action.
 
 The certification ledger makes source-to-record readiness visible across the whole database. It does not claim that all records are manually reviewed. A record is certified only when every gate passes and an explicit certification basis is present.
+
+## ed-dataset-provenance-audit.json
+
+- id: artifact identifier, `ed_dataset_provenance_audit_v1`.
+- snapshot_id and generated_at: source snapshot and generation date.
+- status: ED dataset source-cell provenance audit.
+- method and public_claim_limit: bounded explanation and overclaim limits.
+- package_inputs: local official ED zip package paths used for reconstruction.
+- totals: ED dataset record count, matched/unmatched counts, source-family count, and workbook count.
+- provenance_status_counts: matched and unmatched counts.
+- workbook_counts and scope_counts: record distribution by workbook and geography scope.
+- records: one row per ED dataset event with expected workbook, scope, year, code tag, column, count, provenance status, locator when matched, unresolved reason when unmatched, and review URLs.
+
+The ED provenance audit reconstructs source-cell candidates. It does not certify records and does not mutate event records.
+
+## certification-batches.json
+
+- id: artifact identifier, `certification_batches_v1`.
+- snapshot_id and generated_at: source snapshot and generation date.
+- certification_standard_version: currently `certification_rules_v1`.
+- batch_size: maximum records per batch.
+- completion_rule: rule for when a batch is complete.
+- lanes: source-family review lanes with status counts, open-gate counts, and completion rules.
+- batches: deterministic batches with records, statuses, open gates, and review links.
+
+The certification batch manifest organizes strict review work. Batch membership does not certify records.
 - date_precision: date-precision distribution.
 - community_concentration: affected-community label distribution.
 - category_concentration: category distribution.

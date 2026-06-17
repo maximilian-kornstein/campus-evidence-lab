@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/ed-dataset-provenance-audit.schema.json",
+  "title": "Campus Evidence Lab ED Dataset Provenance Audit",
+  "type": "object",
+  "required": [
+    "id",
+    "snapshot_id",
+    "generated_at",
+    "status",
+    "method",
+    "public_claim_limit",
+    "package_inputs",
+    "totals",
+    "provenance_status_counts",
+    "workbook_counts",
+    "scope_counts",
+    "records"
+  ],
+  "properties": {
+    "id": { "const": "ed_dataset_provenance_audit_v1" },
+    "snapshot_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "status": { "type": "string" },
+    "method": { "type": "string" },
+    "public_claim_limit": { "type": "string" },
+    "package_inputs": { "type": "object" },
+    "totals": { "type": "object" },
+    "provenance_status_counts": { "type": "object" },
+    "workbook_counts": { "type": "object" },
+    "scope_counts": { "type": "object" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "event_id",
+          "school_id",
+          "source_id",
+          "workbook",
+          "scope",
+          "source_year",
+          "code_tag",
+          "expected_column",
+          "expected_count",
+          "provenance_status",
+          "locator",
+          "unresolved_reason",
+          "event_url",
+          "workspace_url"
+        ],
+        "properties": {
+          "event_id": { "type": "string" },
+          "school_id": { "type": "string" },
+          "source_id": { "type": ["string", "null"] },
+          "workbook": { "type": ["string", "null"] },
+          "scope": { "type": ["string", "null"] },
+          "source_year": { "type": "string" },
+          "code_tag": { "type": ["string", "null"] },
+          "expected_column": { "type": ["string", "null"] },
+          "expected_count": { "type": ["integer", "null"] },
+          "provenance_status": { "enum": ["matched", "unmatched"] },
+          "locator": { "type": ["object", "null"] },
+          "unresolved_reason": { "type": ["string", "null"] },
+          "event_url": { "type": "string" },
+          "workspace_url": { "type": "string" }
+        }
+      }
+    }
+  }
+}

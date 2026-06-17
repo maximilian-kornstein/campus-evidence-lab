@@ -36,6 +36,8 @@ export const paths = {
   reviewDebtLedger: path.join(rootDir, "data", "review-debt-ledger.json"),
   externalReviewPacket: path.join(rootDir, "data", "external-review-packet.json"),
   certificationLedger: path.join(rootDir, "data", "certification-ledger.json"),
+  edDatasetProvenanceAudit: path.join(rootDir, "data", "ed-dataset-provenance-audit.json"),
+  certificationBatches: path.join(rootDir, "data", "certification-batches.json"),
   sourceAudit: path.join(rootDir, "data", "source-audit.json"),
   sourceAuditLive: path.join(rootDir, "data", "source-audit-live.json"),
   changelog: path.join(rootDir, "data", "changelog.json"),

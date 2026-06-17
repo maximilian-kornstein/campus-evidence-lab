@@ -36,6 +36,8 @@ const staticPaths = [
   "/known-limits/",
   "/certification/",
   "/certification/batch-001/",
+  "/ed-provenance/",
+  "/certification-batches/",
   "/evidence/",
   "/flagship/",
   "/gold-records/",
