@@ -1,6 +1,7 @@
 import { readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { paths, readJson, rootDir } from "./lib.mjs";
+import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registry.mjs";
 
 const baseUrl = (process.env.SITE_URL || "https://campusevidencelab.org").replace(/\/+$/, "");
 const [events, schools, briefs, sources] = await Promise.all([
@@ -38,8 +39,7 @@ const staticPaths = [
   "/certification/batch-001/",
   "/ed-provenance/",
   "/certification-batches/",
-  "/ed-certification-batch-001/",
-  "/ed-certification-batch-002/",
+  ...ED_CERTIFICATION_REVIEW_SPECS.map((spec) => spec.route),
   "/evidence/",
   "/flagship/",
   "/gold-records/",

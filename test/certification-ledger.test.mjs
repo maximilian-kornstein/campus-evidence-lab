@@ -60,6 +60,23 @@ const events = [
       "Confidence is limited to source-to-record support from the reviewed ED source cell and is not a severity, prevalence, safety, or legal claim."
   },
   {
+    id: "evt_dataset_three",
+    school_id: "school_four",
+    source_ids: ["src_dataset"],
+    source_types: ["Government dataset"],
+    category: "Vandalism",
+    affected_communities: ["Religion"],
+    confidence: "Medium",
+    date_precision: "year",
+    response_depth: "limited_public_response_note",
+    classification_rationale:
+      "The ED dataset code is reviewed in a bounded batch process and directly supports this record category when the batch gate passes.",
+    community_rationale:
+      "The ED dataset bias-code suffix is reviewed in a bounded batch process and directly supports the stored affected-community label.",
+    confidence_rationale:
+      "Confidence is limited to source-to-record support from the reviewed ED source cell and is not a severity, prevalence, safety, or legal claim."
+  },
+  {
     id: "evt_gold",
     school_id: "school_two",
     source_ids: ["src_statement"],
@@ -133,6 +150,22 @@ const reviewDebtLedger = {
       repair_priority: 0,
       event_url: "/events/evt_gold/",
       workspace_url: "/research-workspace/?record_ids=evt_gold"
+    },
+    {
+      event_id: "evt_dataset_three",
+      school_id: "school_four",
+      source_family: "ed_campus_safety_dataset",
+      debt_status: "high_review_debt",
+      public_use_status: "internal_review_required_before_reuse",
+      issue_ids: [
+        "dataset_cell_locator_needed",
+        "broad_affected_community_label",
+        "year_precision_public_use_limit",
+        "missing_explicit_rationales"
+      ],
+      repair_priority: 307,
+      event_url: "/events/evt_dataset_three/",
+      workspace_url: "/research-workspace/?record_ids=evt_dataset_three"
     },
     {
       event_id: "evt_blocked",
@@ -291,6 +324,46 @@ const edCertificationBatchReviewTwo = {
   ]
 };
 
+const edCertificationBatchReviewThree = {
+  records: [
+    {
+      event_id: "evt_dataset_three",
+      certification_status: "certified",
+      certification_basis: "ed_certification_batch_003_internal_source_to_record_review",
+      source_locator: {
+        locator_type: "workbook_cell",
+        workbook: "Oncampushate222324.xlsx",
+        sheet: "sheet1",
+        row: 15,
+        column: "VANDAL_REL24",
+        cell: "NU15",
+        locator: "Oncampushate222324.xlsx > sheet1 row 15 > column VANDAL_REL24 > cell NU15"
+      },
+      open_gates: [],
+      gate_reviews: Object.fromEntries(
+        [
+          "source_availability",
+          "source_locator_specificity",
+          "institution_support",
+          "date_precision_support",
+          "category_fit",
+          "affected_label_boundary",
+          "response_depth_classification",
+          "rationale_specificity",
+          "overclaim_risk"
+        ].map((gateId) => [
+          gateId,
+          {
+            status: "pass",
+            detail: `${gateId} passed in ED Batch 003 review.`,
+            required_action: "No deterministic action required for this reviewed gate."
+          }
+        ])
+      )
+    }
+  ]
+};
+
 const goldV1CertificationStatus = {
   records: [
     {
@@ -318,7 +391,7 @@ test("buildCertificationLedger creates one conservative certification row per re
   assert.equal(ledger.totals.records, events.length);
   assert.equal(ledger.records.length, events.length);
   assert.equal(ledger.certification_status_counts.certified, 1);
-  assert.equal(ledger.certification_status_counts.awaiting_review, 2);
+  assert.equal(ledger.certification_status_counts.awaiting_review, 3);
   assert.equal(ledger.certification_status_counts.blocked, 1);
 
   const gold = ledger.records.find((record) => record.event_id === "evt_gold");
@@ -370,7 +443,7 @@ test("buildCertificationLedger consumes multiple ED batch-review artifacts and r
     sources,
     reviewDebtLedger,
     goldV1CertificationStatus,
-    edCertificationBatchReviews: [{ records: [edCertificationBatchReview.records[0]] }, edCertificationBatchReviewTwo],
+    edCertificationBatchReviews: [{ records: [edCertificationBatchReview.records[0]] }, edCertificationBatchReviewTwo, edCertificationBatchReviewThree],
     manifest: { snapshot_id: "snapshot_test", created_at: "2026-06-17" },
     batchLimit: 2
   });
@@ -382,6 +455,11 @@ test("buildCertificationLedger consumes multiple ED batch-review artifacts and r
   assert.equal(secondBatchRecord.certification_status, "certified");
   assert.equal(secondBatchRecord.certification_basis, "ed_certification_batch_002_internal_source_to_record_review");
   assert.equal(secondBatchRecord.source_locator.cell, "NK14");
+
+  const thirdBatchRecord = ledger.records.find((record) => record.event_id === "evt_dataset_three");
+  assert.equal(thirdBatchRecord.certification_status, "certified");
+  assert.equal(thirdBatchRecord.certification_basis, "ed_certification_batch_003_internal_source_to_record_review");
+  assert.equal(thirdBatchRecord.source_locator.cell, "NU15");
 
   assert.throws(
     () =>

@@ -19,6 +19,7 @@ import { validateCertificationLedger } from "./certification-ledger-lib.mjs";
 import { validateEdDatasetProvenanceAudit } from "./ed-dataset-provenance-lib.mjs";
 import { validateCertificationBatches } from "./certification-batches-lib.mjs";
 import { validateEdCertificationBatchReview } from "./ed-certification-batch-review-lib.mjs";
+import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registry.mjs";
 
 const allowedCommunities = new Set([
   "Jewish",
@@ -126,9 +127,7 @@ const [
   certificationLedger,
   edDatasetProvenanceAudit,
   certificationBatches,
-  edCertificationBatchReview,
-  edCertificationBatch002Review,
-  manifest
+  ...edCertificationBatchReviewsAndManifest
 ] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
@@ -162,10 +161,11 @@ const [
   readJson(paths.certificationLedger),
   readJson(paths.edDatasetProvenanceAudit),
   readJson(paths.certificationBatches),
-  readJson(paths.edCertificationBatchReview),
-  readJson(paths.edCertificationBatch002Review),
+  ...ED_CERTIFICATION_REVIEW_SPECS.map((spec) => readJson(paths[spec.dataPathKey])),
   readJson(paths.manifest)
 ]);
+const manifest = edCertificationBatchReviewsAndManifest.at(-1);
+const edCertificationBatchReviews = edCertificationBatchReviewsAndManifest.slice(0, -1);
 
 const errors = [];
 
@@ -654,17 +654,18 @@ errors.push(
 errors.push(...validateCertificationLedger({ ledger: certificationLedger, events, manifest }));
 errors.push(...validateEdDatasetProvenanceAudit({ audit: edDatasetProvenanceAudit, events, manifest }));
 errors.push(...validateCertificationBatches({ batches: certificationBatches, certificationLedger }));
-errors.push(...validateEdCertificationBatchReview({ review: edCertificationBatchReview, events, certificationBatches, manifest }));
-errors.push(
-  ...validateEdCertificationBatchReview({
-    review: edCertificationBatch002Review,
-    events,
-    certificationBatches,
-    sourceBatchId: "ed_dataset_batch_001",
-    reviewBatchId: "ed_certification_batch_002",
-    manifest
-  })
-);
+for (const [index, spec] of ED_CERTIFICATION_REVIEW_SPECS.entries()) {
+  errors.push(
+    ...validateEdCertificationBatchReview({
+      review: edCertificationBatchReviews[index],
+      events,
+      certificationBatches,
+      sourceBatchId: spec.sourceBatchId,
+      reviewBatchId: spec.reviewBatchId,
+      manifest
+    })
+  );
+}
 if (hasProhibitedRecordAuditClaim(JSON.stringify(recordQualityAudit))) {
   errors.push("record-quality-audit includes prohibited validation, ranking, safety, frequency, endorsement, or legal-truth language");
 }

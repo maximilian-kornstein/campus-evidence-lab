@@ -1,6 +1,7 @@
 import { cp, mkdir, rm } from "node:fs/promises";
 import path from "node:path";
 import { rootDir } from "./lib.mjs";
+import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registry.mjs";
 
 const distDir = path.join(rootDir, "dist");
 
@@ -35,8 +36,7 @@ const publicPaths = [
   "certification",
   "ed-provenance",
   "certification-batches",
-  "ed-certification-batch-001",
-  "ed-certification-batch-002",
+  ...ED_CERTIFICATION_REVIEW_SPECS.map((spec) => spec.outputDir),
   "evidence",
   "flagship",
   "gold-records",

@@ -297,9 +297,7 @@ export function buildEdCertificationBatchReview({
     source_batch_id: sourceBatchId,
     status: "bounded_internal_source_to_record_review",
     certification_standard_version: STANDARD_VERSION,
-    selection_method: existingRows?.length
-      ? `Frozen from the existing ED ${reviewLabel(reviewBatchId)} review artifact so repeated generation cannot silently expand the certified set.`
-      : `Initialized from certification batch ${sourceBatchId}; later regenerations freeze this record set.`,
+    selection_method: `Frozen from the existing ED ${reviewLabel(reviewBatchId)} review artifact so repeated generation cannot silently expand the certified set.`,
     method:
       `Deterministic ${reviewLabel(reviewBatchId)} review for ED Campus Safety dataset records. It uses current event fields, the ED source-cell provenance audit, and certification_rules_v1 gates. Matched source cells are necessary but not sufficient for certification.`,
     public_claim_limit:
