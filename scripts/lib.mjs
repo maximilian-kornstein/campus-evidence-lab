@@ -48,6 +48,8 @@ export const paths = {
   edCertificationBatch008Review: path.join(rootDir, "data", "ed-certification-batch-008-review.json"),
   edCertificationBatch009Review: path.join(rootDir, "data", "ed-certification-batch-009-review.json"),
   edCertificationBatch010Review: path.join(rootDir, "data", "ed-certification-batch-010-review.json"),
+  edCertificationBatch011Review: path.join(rootDir, "data", "ed-certification-batch-011-review.json"),
+  edCertificationBatch012Review: path.join(rootDir, "data", "ed-certification-batch-012-review.json"),
   sourceAudit: path.join(rootDir, "data", "source-audit.json"),
   sourceAuditLive: path.join(rootDir, "data", "source-audit-live.json"),
   changelog: path.join(rootDir, "data", "changelog.json"),

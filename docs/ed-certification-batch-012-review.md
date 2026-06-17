@@ -1,23 +1,27 @@
-# ED Certification Batch 010 Review
+# ED Certification Batch 012 Review
 
-`data/ed-certification-batch-010-review.json` is the tenth bounded ED Campus Safety dataset source-to-record certification review.
+`data/ed-certification-batch-012-review.json` is the twelfth bounded ED Campus Safety dataset source-to-record certification review.
 
 Current result:
 
 - records reviewed: 250
-- certified: 250
+- certified: 249
 - not certified: 0
-- blocked: 0
+- blocked: 1
 
-Batch 010 was initialized from the next ED dataset work window exposed by the certification-batch manifest after Batch 009 was applied. The review artifact freezes those 250 event ids so regeneration cannot silently move the review wave to later records.
+Batch 012 was initialized from the next ED dataset work window exposed by the certification-batch manifest after Batch 011 was applied. The review artifact freezes those 250 event ids so regeneration cannot silently move the review wave to later records.
 
 ## Blocked Records
 
-No Batch 010 records are blocked in this review artifact. If later source-to-record checks identify a locator, category, date, label, response-depth, rationale, or overclaim issue, the record must be moved to a visible unresolved status rather than kept certified.
+The blocked record is not certified because the source-cell locator remains ambiguous:
+
+- `evt_2026_3775`: multiple workbook rows matched `eastern_oklahoma_state_college`, `INTIM_REL21`, and count `1`.
+
+This record remains blocked until the locator ambiguity can be resolved without guessing.
 
 ## What This Certifies
 
-For the 250 certified records, certification means:
+For the 249 certified records, certification means:
 
 - the record has a matched official ED workbook cell;
 - the review records workbook, sheet, row, column, and cell detail;
@@ -37,8 +41,6 @@ The review does not claim that an ED workbook cell proves institutional miscondu
 
 ## Freeze Rule
 
-Batch 010 is a named review artifact with its own certification basis: `ed_certification_batch_010_internal_source_to_record_review`.
+Batch 012 is a named review artifact with its own certification basis: `ed_certification_batch_012_internal_source_to_record_review`.
 
-Regenerating the pipeline must update this same reviewed record set. To review another ED batch, create a new named batch-review artifact rather than letting Batch 010 move.
-
-Batch 011 now continues this sequence in `data/ed-certification-batch-011-review.json`.
+Regenerating the pipeline must update this same reviewed record set. To review another ED batch, create a new named batch-review artifact rather than letting Batch 012 move.

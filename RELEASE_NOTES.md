@@ -42,8 +42,8 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - External review packet records: 17
 - External review challenge templates: 8
 - Certification ledger records: 4000
-- Certification ledger certified records: 2482
-- Certification ledger awaiting-review records: 1475
+- Certification ledger certified records: 2978
+- Certification ledger awaiting-review records: 975
 - Certification Batch 001 records: 100
 - ED dataset provenance records: 3845
 - ED dataset provenance matched records: 3802
@@ -76,9 +76,9 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Gold v1 certification status: `sha256:caf61104cb533bdd2546c1cfef9f8ac8b73bb424e87c0fb2ac9f256ed1a3e34a`
 - Review debt ledger: `sha256:2c34d10075a737c762b167b2b3551c9738ee494ae94c5268e11ab939e361905c`
 - External review packet: `sha256:48ede2974efcd814abfc555374319d17bbc8efb8e304ef89f3405f2259ab0af4`
-- Certification ledger: `sha256:7c3f49fb378829fc5029f0a909baf60c5e6e80c4f8ee6539c267fb62eda0c30d`
+- Certification ledger: `sha256:680f59f8541fb2aee58a8ee47cfea18f7838a46613acf9a81f05d67eac3f01d8`
 - ED dataset provenance audit: `sha256:6ab94dcf7e896b38c3394fc138c6ab314df0a664c57073de9c694b92e2002192`
-- Certification batches: `sha256:6d86a6987cd59b403bacfc6c467c48ee0045a9dd6b2d70996ee210c82fe37ef2`
+- Certification batches: `sha256:fc3b6bf6f4183711b9b793f45d729d95967fcc92c9bbccdb07f16d5d219fa546`
 
 ## Evidence Depth & Robustness
 
@@ -108,7 +108,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Gold v1 certification gates: 17 certified, 7 not certified, 1 blocked.
 - Review debt ledger current triage: 1 blocked, 3908 high review debt, 74 medium review debt across 8 source families.
 - External review packet: 17 internally certified Gold v1 records packaged for source-to-record review, with 8 challenge templates.
-- Certification ledger: 2482 certified, 7 not certified, 36 blocked, and 1475 awaiting review across all 4000 records.
+- Certification ledger: 2978 certified, 7 not certified, 40 blocked, and 975 awaiting review across all 4000 records.
 - Batch 001 ED dataset pilot: 100 records with 100 awaiting review because source-to-cell provenance must be explicit before certification.
 - ED dataset provenance audit: 3802 matched source-cell candidates and 43 unresolved ambiguous rows across 3845 ED dataset records.
 - Certification batches: 21 batches across 7 review lanes, using certification_rules_v1.
