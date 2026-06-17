@@ -93,6 +93,30 @@ export const ED_CERTIFICATION_REVIEW_SPECS = [
     pageTitle: "ED Certification Batch 008 Review",
     pageKicker: "Applied ED Batch 008 review",
     previousRoute: "/ed-certification-batch-007/",
+    nextRoute: "/ed-certification-batch-009/"
+  },
+  {
+    reviewBatchId: "ed_certification_batch_009",
+    sourceBatchId: "ed_dataset_batch_001",
+    dataPathKey: "edCertificationBatch009Review",
+    route: "/ed-certification-batch-009/",
+    outputDir: "ed-certification-batch-009",
+    artifactName: "ed-certification-batch-009-review.json",
+    pageTitle: "ED Certification Batch 009 Review",
+    pageKicker: "Applied ED Batch 009 review",
+    previousRoute: "/ed-certification-batch-008/",
+    nextRoute: "/ed-certification-batch-010/"
+  },
+  {
+    reviewBatchId: "ed_certification_batch_010",
+    sourceBatchId: "ed_dataset_batch_001",
+    dataPathKey: "edCertificationBatch010Review",
+    route: "/ed-certification-batch-010/",
+    outputDir: "ed-certification-batch-010",
+    artifactName: "ed-certification-batch-010-review.json",
+    pageTitle: "ED Certification Batch 010 Review",
+    pageKicker: "Applied ED Batch 010 review",
+    previousRoute: "/ed-certification-batch-009/",
     nextRoute: null
   }
 ];

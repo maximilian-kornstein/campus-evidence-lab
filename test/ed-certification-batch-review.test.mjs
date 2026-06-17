@@ -73,13 +73,27 @@ test("ED certification review registry lists applied review artifacts in order",
         dataPathKey: "edCertificationBatch008Review",
         route: "/ed-certification-batch-008/",
         artifactName: "ed-certification-batch-008-review.json"
+      },
+      {
+        reviewBatchId: "ed_certification_batch_009",
+        sourceBatchId: "ed_dataset_batch_001",
+        dataPathKey: "edCertificationBatch009Review",
+        route: "/ed-certification-batch-009/",
+        artifactName: "ed-certification-batch-009-review.json"
+      },
+      {
+        reviewBatchId: "ed_certification_batch_010",
+        sourceBatchId: "ed_dataset_batch_001",
+        dataPathKey: "edCertificationBatch010Review",
+        route: "/ed-certification-batch-010/",
+        artifactName: "ed-certification-batch-010-review.json"
       }
     ]
   );
 });
 
 test("reviewSpecByBatchId resolves configured review specs and rejects unknown ids", () => {
-  assert.equal(reviewSpecByBatchId("ed_certification_batch_008").dataPathKey, "edCertificationBatch008Review");
+  assert.equal(reviewSpecByBatchId("ed_certification_batch_010").dataPathKey, "edCertificationBatch010Review");
   assert.throws(() => reviewSpecByBatchId("missing_review_batch"), /Unknown ED certification review batch/);
 });
 
