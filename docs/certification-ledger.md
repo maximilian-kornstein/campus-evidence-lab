@@ -25,13 +25,13 @@ Each row includes gate detail for:
 
 ## Current Ledger Counts
 
-After applying Gold v1 and the first six frozen ED review artifacts, the ledger currently reports:
+After applying Gold v1 and the first eight frozen ED review artifacts, the ledger currently reports:
 
 - 4,000 total records
-- 1,498 certified
+- 1,990 certified
 - 7 not certified
-- 20 blocked
-- 2,475 awaiting review
+- 28 blocked
+- 1,975 awaiting review
 
 These counts describe internal source-to-record certification status, not external validation or campus quality.
 
@@ -74,6 +74,18 @@ The blocked record is not certified because the workbook locator remains ambiguo
 - 250 records reviewed
 - 242 certified
 - 8 blocked
+
+`data/ed-certification-batch-007-review.json` applies the same gate standard to a seventh frozen ED dataset review wave:
+
+- 250 records reviewed
+- 244 certified
+- 6 blocked
+
+`data/ed-certification-batch-008-review.json` applies the same gate standard to an eighth frozen ED dataset review wave:
+
+- 250 records reviewed
+- 248 certified
+- 2 blocked
 
 Matched source-cell provenance is necessary but not sufficient. ED records still need date precision, category fit, affected-label boundary, response-depth, rationale-specificity, and overclaim-risk gates to pass before certification.
 

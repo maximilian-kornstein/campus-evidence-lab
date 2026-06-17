@@ -51,3 +51,5 @@ The review does not claim that an ED workbook cell proves institutional miscondu
 Batch 006 is a named review artifact with its own certification basis: `ed_certification_batch_006_internal_source_to_record_review`.
 
 Regenerating the pipeline must update this same reviewed record set. To review another ED batch, create a new named batch-review artifact rather than letting Batch 006 move.
+
+Batch 007 now continues this sequence in `data/ed-certification-batch-007-review.json`.

@@ -4,7 +4,7 @@
 
 Batches organize work. They do not certify records by themselves.
 
-The first six applied ED reviews are stored separately in:
+The first eight applied ED reviews are stored separately in:
 
 - `data/ed-certification-batch-001-review.json`
 - `data/ed-certification-batch-002-review.json`
@@ -12,6 +12,8 @@ The first six applied ED reviews are stored separately in:
 - `data/ed-certification-batch-004-review.json`
 - `data/ed-certification-batch-005-review.json`
 - `data/ed-certification-batch-006-review.json`
+- `data/ed-certification-batch-007-review.json`
+- `data/ed-certification-batch-008-review.json`
 
 Each artifact freezes its reviewed record set so repeat generation cannot silently advance a completed review wave into later records.
 
@@ -35,4 +37,4 @@ Batch manifests must not be described as external validation, endorsement, ranki
 
 Batch-review artifacts may create certification basis only when every gate passes under the named rule version. A matched source locator alone is not enough.
 
-Batch 001, Batch 002, Batch 003, Batch 004, Batch 005, and Batch 006 use separate certification bases. Future ED review waves should add new named artifacts rather than rewriting an older wave to cover new records.
+Batch 001, Batch 002, Batch 003, Batch 004, Batch 005, Batch 006, Batch 007, and Batch 008 use separate certification bases. Future ED review waves should add new named artifacts rather than rewriting an older wave to cover new records.
