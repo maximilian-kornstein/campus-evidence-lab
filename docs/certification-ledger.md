@@ -7,7 +7,7 @@
 - `blocked`: a source or locator blocker prevents certification.
 - `awaiting_review`: one or more gates still need source-to-record review.
 
-The ledger is generated from event records, source metadata, record-quality audit rows, the review-debt ledger, Gold v1 certification status, and explicit bounded batch-review artifacts such as ED Certification Batch 001 and ED Certification Batch 002. It is not outside validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.
+The ledger is generated from event records, source metadata, record-quality audit rows, the review-debt ledger, Gold v1 certification status, and explicit bounded batch-review artifacts such as the ED certification review waves. It is not outside validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.
 
 ## Gates
 
@@ -25,13 +25,13 @@ Each row includes gate detail for:
 
 ## Current Ledger Counts
 
-After applying Gold v1 and the first three frozen ED review artifacts, the ledger currently reports:
+After applying Gold v1 and the first four frozen ED review artifacts, the ledger currently reports:
 
 - 4,000 total records
-- 763 certified
+- 1,010 certified
 - 7 not certified
-- 5 blocked
-- 3,225 awaiting review
+- 8 blocked
+- 2,975 awaiting review
 
 These counts describe internal source-to-record certification status, not external validation or campus quality.
 
@@ -52,6 +52,12 @@ The blocked record is not certified because the workbook locator remains ambiguo
 - 0 blocked
 
 `data/ed-certification-batch-003-review.json` applies the same gate standard to a third frozen ED dataset review wave:
+
+- 250 records reviewed
+- 247 certified
+- 3 blocked
+
+`data/ed-certification-batch-004-review.json` applies the same gate standard to a fourth frozen ED dataset review wave:
 
 - 250 records reviewed
 - 247 certified

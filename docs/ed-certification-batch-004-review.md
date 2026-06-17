@@ -1,6 +1,6 @@
-# ED Certification Batch 003 Review
+# ED Certification Batch 004 Review
 
-`data/ed-certification-batch-003-review.json` is the third bounded ED Campus Safety dataset source-to-record certification review.
+`data/ed-certification-batch-004-review.json` is the fourth bounded ED Campus Safety dataset source-to-record certification review.
 
 Current result:
 
@@ -9,15 +9,15 @@ Current result:
 - not certified: 0
 - blocked: 3
 
-Batch 003 was initialized from the next ED dataset work window exposed by the certification-batch manifest after Batch 002 was applied. The review artifact now freezes those 250 event ids so regeneration cannot silently move the review wave to later records.
+Batch 004 was initialized from the next ED dataset work window exposed by the certification-batch manifest after Batch 003 was applied. The review artifact freezes those 250 event ids so regeneration cannot silently move the review wave to later records.
 
 ## Blocked Records
 
 The blocked records are not certified because the source-cell locator remains ambiguous:
 
-- `evt_2026_0232`: multiple workbook rows matched `university_of_the_district_of_columbia`, `INTIM_RAC22`, and count `1`.
-- `evt_2026_0310`: multiple workbook rows matched `vermont_state_university`, `INTIM_RAC24`, and count `1`.
-- `evt_2026_0415`: multiple workbook rows matched `guilford_technical_community_college`, `VANDAL_RAC24`, and count `1`.
+- `evt_2026_0587`: multiple workbook rows matched `portland_community_college`, `INTIM_RAC22`, and count `1`.
+- `evt_2026_0812`: multiple workbook rows matched `washington_state_university`, `INTIM_RAC24`, and count `1`.
+- `evt_2026_0867`: multiple workbook rows matched `college_of_central_florida`, `INTIM_RAC23`, and count `1`.
 
 These records remain blocked until the locator ambiguity can be resolved without guessing.
 
@@ -43,8 +43,6 @@ The review does not claim that an ED workbook cell proves institutional miscondu
 
 ## Freeze Rule
 
-Batch 003 is a named review artifact with its own certification basis: `ed_certification_batch_003_internal_source_to_record_review`.
+Batch 004 is a named review artifact with its own certification basis: `ed_certification_batch_004_internal_source_to_record_review`.
 
-Regenerating the pipeline must update this same reviewed record set. To review another ED batch, create a new named batch-review artifact rather than letting Batch 003 move.
-
-Batch 004 now continues that sequence in `data/ed-certification-batch-004-review.json`.
+Regenerating the pipeline must update this same reviewed record set. To review another ED batch, create a new named batch-review artifact rather than letting Batch 004 move.

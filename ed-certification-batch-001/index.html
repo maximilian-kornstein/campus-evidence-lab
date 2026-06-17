@@ -39,13 +39,13 @@
 
     <main class="main">
 
-      <p class="page-kicker">Applied ED Batch 001 review</p>
-      <h1 class="page-title page-title--small">Source-cell locators are applied, but certification still requires every gate to pass.</h1>
-      <p class="page-intro">This page shows the bounded internal source-to-record review for the first ED dataset certification batch. A matched ED workbook cell is necessary, but not sufficient: category fit, affected-label boundary, date precision, response-depth, rationale specificity, and overclaim-risk gates must also pass.</p>
-      <section class="detail-panel">
-        <div class="detail-grid">
-          <div>
-            <h2 class="section-title">Batch Review Status Counts</h2>
+        <p class="page-kicker">Applied ED Batch 001 review</p>
+        <h1 class="page-title page-title--small">A frozen ED review wave applies source-to-record gates.</h1>
+        <p class="page-intro">This page shows the first bounded internal review wave for ED Campus Safety dataset records. It freezes its own reviewed set, keeps unresolved gates visible, and does not imply that all database records are manually certified.</p>
+        <section class="detail-panel">
+          <div class="detail-grid">
+            <div>
+              <h2 class="section-title">Batch Review Status Counts</h2>
 
     <div class="table-wrap">
       <table>
@@ -71,7 +71,7 @@
       </table>
     </div>
 
-            <h2 class="section-title section-title--spaced">Open Gate Counts</h2>
+              <h2 class="section-title section-title--spaced">Open Gate Counts</h2>
 
     <div class="table-wrap">
       <table>
@@ -97,7 +97,7 @@
       </table>
     </div>
 
-            <h2 class="section-title section-title--spaced">Provenance Status Counts</h2>
+              <h2 class="section-title section-title--spaced">Provenance Status Counts</h2>
 
     <div class="table-wrap">
       <table>
@@ -123,7 +123,7 @@
       </table>
     </div>
 
-            <h2 class="section-title section-title--spaced">Reviewed Records</h2>
+              <h2 class="section-title section-title--spaced">Reviewed Records</h2>
 
     <div class="table-wrap">
       <table>
@@ -2393,9 +2393,9 @@
       </table>
     </div>
 
-          </div>
-          <aside>
-            <dl>
+            </div>
+            <aside>
+              <dl>
 
     <div class="data-line">
       <dt>Snapshot</dt>
@@ -2410,7 +2410,13 @@
 
 
     <div class="data-line">
-      <dt>Batch</dt>
+      <dt>Review batch</dt>
+      <dd class="mono">ed_dataset_batch_001</dd>
+    </div>
+
+
+    <div class="data-line">
+      <dt>Source batch</dt>
       <dd class="mono">ed_dataset_batch_001</dd>
     </div>
 
@@ -2457,8 +2463,9 @@
     </div>
 
 
+
     <div class="data-line">
-      <dt>Batch 002</dt>
+      <dt>Next ED review</dt>
       <dd><a href="../ed-certification-batch-002/">Open next ED review</a></dd>
     </div>
 
@@ -2468,22 +2475,22 @@
       <dd>This artifact is internal source-to-record review. It must not be described as third-party review, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal finding.</dd>
     </div>
 
-            </dl>
-          </aside>
-        </div>
-      </section>
-      <section class="section section--tight">
-        <div class="section-header">
-          <h2 class="section-title">Strict Reading Rule</h2>
-          <p class="section-note">This page improves reviewability; it is not a broader claim about campuses or prevalence</p>
-        </div>
-        <ul class="evidence-list">
-          <li>Certified means the current source-to-record gates passed for this bounded batch-review version.</li>
-          <li>Not certified means at least one reviewed gate did not pass; the exact gate remains visible.</li>
-          <li>Blocked means the record cannot be certified until a source-cell or identity blocker is repaired.</li>
-          <li>The page must not be used as external validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.</li>
-        </ul>
-      </section>
+              </dl>
+            </aside>
+          </div>
+        </section>
+        <section class="section section--tight">
+          <div class="section-header">
+            <h2 class="section-title">Strict Reading Rule</h2>
+            <p class="section-note">This page improves reviewability; it is not a broader claim about campuses or prevalence</p>
+          </div>
+          <ul class="evidence-list">
+            <li>Certified means every current source-to-record gate passed for this named batch-review version.</li>
+            <li>Not certified means at least one reviewed gate did not pass; the exact gate remains visible.</li>
+            <li>Blocked means the record cannot be certified until a source-cell or identity blocker is repaired.</li>
+            <li>The page must not be used as external validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.</li>
+          </ul>
+        </section>
 
     </main>
     <footer class="site-footer">Campus Evidence Lab / Generated from public dataset</footer>

@@ -33,6 +33,24 @@ export const ED_CERTIFICATION_REVIEW_SPECS = [
     pageTitle: "ED Certification Batch 003 Review",
     pageKicker: "Applied ED Batch 003 review",
     previousRoute: "/ed-certification-batch-002/",
+    nextRoute: "/ed-certification-batch-004/"
+  },
+  {
+    reviewBatchId: "ed_certification_batch_004",
+    sourceBatchId: "ed_dataset_batch_001",
+    dataPathKey: "edCertificationBatch004Review",
+    route: "/ed-certification-batch-004/",
+    outputDir: "ed-certification-batch-004",
+    artifactName: "ed-certification-batch-004-review.json",
+    pageTitle: "ED Certification Batch 004 Review",
+    pageKicker: "Applied ED Batch 004 review",
+    previousRoute: "/ed-certification-batch-003/",
     nextRoute: null
   }
 ];
+
+export function reviewSpecByBatchId(reviewBatchId) {
+  const spec = ED_CERTIFICATION_REVIEW_SPECS.find((candidate) => candidate.reviewBatchId === reviewBatchId);
+  if (!spec) throw new Error(`Unknown ED certification review batch: ${reviewBatchId}`);
+  return spec;
+}
