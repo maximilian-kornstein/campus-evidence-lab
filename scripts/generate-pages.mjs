@@ -15,6 +15,7 @@ const [
   reviewDebtLedger,
   externalReviewPacket,
   certificationLedger,
+  sourceFamilyCertificationReview001,
   edDatasetProvenanceAudit,
   certificationBatches,
   ...edCertificationReviews
@@ -28,6 +29,7 @@ const [
   readJson(paths.reviewDebtLedger),
   readJson(paths.externalReviewPacket),
   readJson(paths.certificationLedger),
+  readJson(paths.sourceFamilyCertificationReview001),
   readJson(paths.edDatasetProvenanceAudit),
   readJson(paths.certificationBatches),
   ...ED_CERTIFICATION_REVIEW_SPECS.map((spec) => readJson(paths[spec.dataPathKey]))
@@ -44,6 +46,7 @@ const reviewDebtDir = path.join(rootDir, "review-debt");
 const externalReviewDir = path.join(rootDir, "external-review");
 const knownLimitsDir = path.join(rootDir, "known-limits");
 const certificationDir = path.join(rootDir, "certification");
+const sourceFamilyReview001Dir = path.join(rootDir, "source-family-certification-review-001");
 const edProvenanceDir = path.join(rootDir, "ed-provenance");
 const certificationBatchesDir = path.join(rootDir, "certification-batches");
 const detailDepth = 2;
@@ -136,6 +139,10 @@ function edReviewDataLines(depth) {
   return ED_CERTIFICATION_REVIEW_SPECS.map((spec) =>
     dataLine(edReviewLabel(spec), `<a href="${sitePath(spec.route, depth)}">Open applied review</a>`)
   ).join("");
+}
+
+function sourceFamilyReviewDataLines(depth) {
+  return dataLine("Source-family review 001", `<a href="${sitePath("/source-family-certification-review-001/", depth)}">Open pilot review</a>`);
 }
 
 function edReviewPageIntro(spec) {
@@ -1171,10 +1178,19 @@ await writeFile(
   )
 );
 
-await mkdir(path.join(certificationDir, "batch-001"), { recursive: true });
 const topCertificationRecords = (certificationLedger.records ?? [])
   .slice()
   .sort((a, b) => b.open_gates.length - a.open_gates.length || a.event_id.localeCompare(b.event_id));
+const certificationRecordsById = new Map((certificationLedger.records ?? []).map((record) => [record.event_id, record]));
+const sourceFamilyReview001Rows = (sourceFamilyCertificationReview001.records ?? []).map((record) => ({
+  ...certificationRecordsById.get(record.event_id),
+  ...record,
+  event_url: `/events/${encodeURIComponent(record.event_id)}/`,
+  workspace_url: `/research-workspace/?record_ids=${encodeURIComponent(record.event_id)}`,
+  challenge_url: `/challenge/?record=${encodeURIComponent(record.event_id)}`
+}));
+await mkdir(path.join(certificationDir, "batch-001"), { recursive: true });
+await mkdir(sourceFamilyReview001Dir, { recursive: true });
 await writeFile(
   path.join(certificationDir, "index.html"),
   page(
@@ -1205,6 +1221,7 @@ await writeFile(
               ${dataLine("Rulebook", `<a href="${sitePath("/docs/full-database-certification-rulebook.md", 1)}">Certification rulebook</a>`)}
               ${dataLine("Playbooks", `<a href="${sitePath("/docs/source-family-review-playbooks.md", 1)}">Source-family playbooks</a>`)}
               ${dataLine("Batch 001", `<a href="${sitePath("/certification/batch-001/", 1)}">Open pilot</a>`)}
+              ${sourceFamilyReviewDataLines(1)}
               ${edReviewDataLines(1)}
               ${dataLine("Use limit", escapeHtml(certificationLedger.public_claim_limit))}
             </dl>
@@ -1288,6 +1305,54 @@ await writeFile(
       </section>
     `,
     2
+  )
+);
+
+await writeFile(
+  path.join(sourceFamilyReview001Dir, "index.html"),
+  page(
+    "Source-Family Certification Review 001",
+    `
+      <p class="page-kicker">Non-ED source-family pilot</p>
+      <h1 class="page-title page-title--small">A bounded university-statement certification review.</h1>
+      <p class="page-intro">This pilot applies the certification gates to two non-ED university-statement records. One record is certified; one remains not certified because the verified source text did not support every stored affected-community label at the same specificity.</p>
+      <section class="detail-panel">
+        <div class="detail-grid">
+          <div>
+            <h2 class="section-title">Pilot Status Counts</h2>
+            ${countTable(objectCountRows(sourceFamilyCertificationReview001.status_counts), "Certification Status")}
+            <h2 class="section-title section-title--spaced">Reviewed Records</h2>
+            ${certificationRecordTable(sourceFamilyReview001Rows, 1)}
+          </div>
+          <aside>
+            <dl>
+              ${dataLine("Artifact", escapeHtml(sourceFamilyCertificationReview001.id), "mono")}
+              ${dataLine("Standard", escapeHtml(sourceFamilyCertificationReview001.standard_version), "mono")}
+              ${dataLine("Records", escapeHtml(sourceFamilyCertificationReview001.records.length))}
+              ${dataLine("Certified", escapeHtml(sourceFamilyCertificationReview001.status_counts.certified ?? 0))}
+              ${dataLine("Not certified", escapeHtml(sourceFamilyCertificationReview001.status_counts.not_certified ?? 0))}
+              ${dataLine("Review JSON", `<a href="${sitePath("/data/source-family-certification-review-001.json", 1)}">Download artifact</a>`)}
+              ${dataLine("Reviewer doc", `<a href="${sitePath("/docs/source-family-certification-review-001.md", 1)}">Read notes</a>`)}
+              ${dataLine("Certification ledger", `<a href="${sitePath("/certification/", 1)}">Open ledger</a>`)}
+              ${dataLine("Use limit", escapeHtml(sourceFamilyCertificationReview001.public_claim_limit))}
+            </dl>
+          </aside>
+        </div>
+      </section>
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">Review Boundary</h2>
+          <p class="section-note">Strict source-to-record status, not broad validation</p>
+        </div>
+        <ul class="evidence-list">
+          <li>The pilot covers only the records listed on this page.</li>
+          <li>Certification requires every gate to pass under <code>certification_rules_v1</code>.</li>
+          <li>A record can be reviewed and still remain not certified when a gate does not pass.</li>
+          <li>This pilot is not external validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.</li>
+        </ul>
+      </section>
+    `,
+    1
   )
 );
 
@@ -1449,6 +1514,7 @@ await writeFile(
               ${dataLine("Batch size", escapeHtml(certificationBatches.batch_size))}
               ${dataLine("Manifest JSON", `<a href="${sitePath("/data/certification-batches.json", 1)}">Download artifact</a>`)}
               ${dataLine("Rules", `<a href="${sitePath("/docs/certification-batch-completion-rules.md", 1)}">Completion rules</a>`)}
+              ${sourceFamilyReviewDataLines(1)}
               ${edReviewDataLines(1)}
               ${dataLine("Use limit", escapeHtml(certificationBatches.public_claim_limit))}
             </dl>

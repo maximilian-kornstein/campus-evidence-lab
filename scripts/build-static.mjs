@@ -34,6 +34,7 @@ const publicPaths = [
   "external-review",
   "known-limits",
   "certification",
+  "source-family-certification-review-001",
   "ed-provenance",
   "certification-batches",
   ...ED_CERTIFICATION_REVIEW_SPECS.map((spec) => spec.outputDir),

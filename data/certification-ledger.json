@@ -63,18 +63,18 @@
   ],
   "totals": {
     "records": 4000,
-    "certified": 3809,
-    "not_certified": 7,
+    "certified": 3810,
+    "not_certified": 8,
     "blocked": 44,
-    "awaiting_review": 140,
+    "awaiting_review": 138,
     "source_families": 8,
     "batch_001_records": 100
   },
   "certification_status_counts": {
-    "certified": 3809,
-    "awaiting_review": 140,
+    "certified": 3810,
+    "awaiting_review": 138,
     "blocked": 44,
-    "not_certified": 7
+    "not_certified": 8
   },
   "source_family_certification": {
     "annual_security_report": {
@@ -165,22 +165,24 @@
     "university_statement": {
       "records": 6,
       "status_counts": {
-        "awaiting_review": 3,
-        "certified": 2,
-        "blocked": 1
+        "certified": 3,
+        "awaiting_review": 1,
+        "blocked": 1,
+        "not_certified": 1
       },
       "open_gate_counts": {
-        "rationale_specificity": 3,
+        "affected_label_boundary": 1,
+        "rationale_specificity": 1,
         "source_locator_specificity": 1
       }
     }
   },
   "open_gate_counts": {
-    "rationale_specificity": 183,
+    "rationale_specificity": 181,
     "source_locator_specificity": 115,
     "date_precision_support": 71,
+    "affected_label_boundary": 47,
     "response_depth_classification": 47,
-    "affected_label_boundary": 46,
     "category_fit": 6
   },
   "batch_001": {
@@ -2087,139 +2089,151 @@
       "event_id": "evt_2024_0002",
       "school_id": "drexel_university",
       "source_family": "university_statement",
-      "certification_status": "awaiting_review",
-      "certification_basis": null,
-      "batch_review_status": null,
+      "certification_status": "certified",
+      "certification_basis": "source_family_review_001_internal_source_to_record_review",
+      "batch_review_status": "certified",
       "not_certified_reason": null,
       "blocked_reason": null,
-      "source_locator": null,
+      "source_locator": {
+        "locator_type": "public_statement",
+        "source_id": "src_drexel_2024_08_02_resolution",
+        "publisher": "Drexel University",
+        "item_title": "Drexel Reaches Voluntary Resolution Agreement on Title VI Investigation",
+        "published_date": "2024-08-02",
+        "locator": "Drexel University Office of the President statement titled \"Drexel Reaches Voluntary Resolution Agreement on Title VI Investigation\", dated August 2, 2024."
+      },
       "review_debt_status": "medium_review_debt",
       "issue_ids": [
         "generic_or_generated_rationale"
       ],
-      "open_gates": [
-        "rationale_specificity"
-      ],
+      "open_gates": [],
       "gates": {
         "source_availability": {
           "status": "pass",
-          "detail": "Source availability has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The linked Drexel University statement page was reachable during Wave 17 source review.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
           "status": "pass",
-          "detail": "Source locator specificity has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The record is tied to a specific university statement title, publisher, and publication date.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "institution_support": {
           "status": "pass",
-          "detail": "Institution support has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The statement is published by Drexel University and describes Drexel's OCR investigation and voluntary resolution agreement.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "date_precision_support": {
           "status": "pass",
-          "detail": "Date precision support has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The record date matches the statement publication date of August 2, 2024.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "category_fit": {
           "status": "pass",
-          "detail": "Category fit has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The statement says OCR opened an investigation and that Drexel and OCR resolved it through a voluntary resolution agreement; the category is a documentation label, not an independent legal finding.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "affected_label_boundary": {
           "status": "pass",
-          "detail": "Affected-label boundary has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The statement describes reported harassment based on national origin, specifically shared Jewish ancestry; the stored Jewish affected-community label is bounded to that source wording.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "response_depth_classification": {
           "status": "pass",
-          "detail": "Response-depth classification has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The source is a direct university statement and the stored response text is limited to Drexel's described voluntary-resolution posture and actions.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "review",
-          "detail": "Rationale specificity has unresolved review issue generic_or_generated_rationale.",
-          "required_action": "Replace generic rationale with source-specific wording during hand review."
+          "status": "pass",
+          "detail": "The reviewed source supports specific rationales for category, affected-community boundary, confidence, and response depth without relying on generic metadata alone.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "overclaim_risk": {
           "status": "pass",
-          "detail": "Overclaim risk has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The reviewed row preserves neutral wording and does not assert endorsement, ranking, prevalence, safety scoring, severity scoring, or legal truth.",
+          "required_action": "No deterministic action required for this reviewed gate."
         }
       },
       "event_url": "/events/evt_2024_0002/",
       "workspace_url": "/research-workspace/?record_ids=evt_2024_0002",
       "challenge_url": "/challenge/?record=evt_2024_0002",
-      "next_action": "Review and resolve the listed open gates before certification."
+      "next_action": "No action required for internal certification status; continue normal periodic source checks."
     },
     {
       "event_id": "evt_2024_0003",
       "school_id": "lafayette_college",
       "source_family": "university_statement",
-      "certification_status": "awaiting_review",
+      "certification_status": "not_certified",
       "certification_basis": null,
-      "batch_review_status": null,
-      "not_certified_reason": null,
+      "batch_review_status": "not_certified",
+      "not_certified_reason": "affected_label_boundary: Wave 17 source review verified statement text supporting shared Jewish ancestry, but did not verify the stored Arab affected-community label at the same source-text specificity.",
       "blocked_reason": null,
-      "source_locator": null,
+      "source_locator": {
+        "locator_type": "public_statement",
+        "source_id": "src_lafayette_2024_06_20_resolution",
+        "publisher": "Lafayette College",
+        "item_title": "Lafayette resolves OCR review",
+        "published_date": "2024-06-20",
+        "locator": "Lafayette College News statement titled \"Lafayette resolves OCR review\", dated June 20, 2024."
+      },
       "review_debt_status": "medium_review_debt",
       "issue_ids": [
         "generic_or_generated_rationale"
       ],
       "open_gates": [
-        "rationale_specificity"
+        "affected_label_boundary"
       ],
       "gates": {
         "source_availability": {
           "status": "pass",
-          "detail": "Source availability has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The linked Lafayette College statement page was reachable during Wave 17 source review.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
           "status": "pass",
-          "detail": "Source locator specificity has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The record is tied to a specific college news statement title, publisher, and publication date.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "institution_support": {
           "status": "pass",
-          "detail": "Institution support has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The statement is published by Lafayette College and describes Lafayette's OCR review and voluntary resolution process.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "date_precision_support": {
           "status": "pass",
-          "detail": "Date precision support has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The record date matches the statement publication date of June 20, 2024.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "category_fit": {
           "status": "pass",
-          "detail": "Category fit has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The statement describes an OCR review related to a discrimination complaint and a voluntary resolution; the category is a documentation label, not an independent legal finding.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "affected_label_boundary": {
-          "status": "pass",
-          "detail": "Affected-label boundary has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "status": "review",
+          "detail": "The verified statement text supports shared Jewish ancestry in the complaint description, but this wave did not verify the stored Arab label at the same source-text specificity.",
+          "required_action": "Keep the record not certified unless the affected-community label is narrowed or a source locator supporting every stored label is added."
         },
         "response_depth_classification": {
           "status": "pass",
-          "detail": "Response-depth classification has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The source is a direct college statement and the stored response text is limited to Lafayette's described cooperation and voluntary-resolution steps.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "review",
-          "detail": "Rationale specificity has unresolved review issue generic_or_generated_rationale.",
-          "required_action": "Replace generic rationale with source-specific wording during hand review."
+          "status": "pass",
+          "detail": "The reviewed source supports specific category, confidence, and response-depth rationales, while the affected-community boundary remains visibly unresolved.",
+          "required_action": "No deterministic action required for this reviewed gate."
         },
         "overclaim_risk": {
           "status": "pass",
-          "detail": "Overclaim risk has no deterministic blocker in the current audit inputs.",
-          "required_action": "No deterministic action required; source-to-record certification still depends on certification basis."
+          "detail": "The reviewed row preserves neutral wording and does not assert endorsement, ranking, prevalence, safety scoring, severity scoring, or legal truth.",
+          "required_action": "No deterministic action required for this reviewed gate."
         }
       },
       "event_url": "/events/evt_2024_0003/",
       "workspace_url": "/research-workspace/?record_ids=evt_2024_0003",
       "challenge_url": "/challenge/?record=evt_2024_0003",
-      "next_action": "Review and resolve the listed open gates before certification."
+      "next_action": "Not certified in bounded review: affected_label_boundary: Wave 17 source review verified statement text supporting shared Jewish ancestry, but did not verify the stored Arab affected-community label at the same source-text specificity."
     },
     {
       "event_id": "evt_2024_0004",

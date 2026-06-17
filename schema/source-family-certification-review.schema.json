@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/source-family-certification-review.schema.json",
+  "title": "Campus Evidence Lab Source-Family Certification Review",
+  "type": "object",
+  "required": [
+    "id",
+    "review_batch_id",
+    "label",
+    "standard_version",
+    "generated_at",
+    "status",
+    "method",
+    "public_claim_limit",
+    "source_family_counts",
+    "status_counts",
+    "records"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^source_family_certification_review_[0-9]{3}$"
+    },
+    "review_batch_id": {
+      "type": "string",
+      "pattern": "^source_family_review_[0-9]{3}$"
+    },
+    "label": { "type": "string", "minLength": 1 },
+    "standard_version": { "const": "certification_rules_v1" },
+    "generated_at": { "type": "string" },
+    "status": { "const": "bounded_internal_source_to_record_review" },
+    "method": { "type": "string", "minLength": 40 },
+    "public_claim_limit": { "type": "string", "minLength": 40 },
+    "source_family_counts": { "type": "object" },
+    "status_counts": { "type": "object" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "event_id",
+          "school_id",
+          "source_family",
+          "certification_status",
+          "certification_basis",
+          "not_certified_reason",
+          "blocked_reason",
+          "source_locator",
+          "open_gates",
+          "gate_reviews"
+        ],
+        "properties": {
+          "event_id": { "type": "string" },
+          "school_id": { "type": "string" },
+          "source_family": { "type": "string" },
+          "certification_status": {
+            "enum": ["certified", "not_certified", "blocked"]
+          },
+          "certification_basis": {
+            "type": ["string", "null"]
+          },
+          "not_certified_reason": {
+            "type": ["string", "null"]
+          },
+          "blocked_reason": {
+            "type": ["string", "null"]
+          },
+          "source_locator": {
+            "type": "object",
+            "required": ["locator_type", "source_id", "locator"],
+            "properties": {
+              "locator_type": { "type": "string" },
+              "source_id": { "type": "string" },
+              "locator": { "type": "string", "minLength": 20 }
+            }
+          },
+          "open_gates": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "gate_reviews": {
+            "type": "object",
+            "required": [
+              "source_availability",
+              "source_locator_specificity",
+              "institution_support",
+              "date_precision_support",
+              "category_fit",
+              "affected_label_boundary",
+              "response_depth_classification",
+              "rationale_specificity",
+              "overclaim_risk"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

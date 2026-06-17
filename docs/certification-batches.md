@@ -23,6 +23,10 @@ The first sixteen applied ED reviews are stored separately in:
 - `data/ed-certification-batch-015-review.json`
 - `data/ed-certification-batch-016-review.json`
 
+The first bounded non-ED source-family review is stored separately in:
+
+- `data/source-family-certification-review-001.json`
+
 Each artifact freezes its reviewed record set so repeat generation cannot silently advance a completed review wave into later records.
 
 ## Completion Rule
@@ -45,4 +49,4 @@ Batch manifests must not be described as external validation, endorsement, ranki
 
 Batch-review artifacts may create certification basis only when every gate passes under the named rule version. A matched source locator alone is not enough.
 
-Batch 001 through Batch 016 use separate certification bases. Future source-family review waves should add new named artifacts rather than rewriting an older wave to cover new records.
+Batch 001 through Batch 016 and source-family review 001 use separate certification bases. Future source-family review waves should add new named artifacts rather than rewriting an older wave to cover new records.

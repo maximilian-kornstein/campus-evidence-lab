@@ -37,6 +37,7 @@ const staticPaths = [
   "/known-limits/",
   "/certification/",
   "/certification/batch-001/",
+  "/source-family-certification-review-001/",
   "/ed-provenance/",
   "/certification-batches/",
   ...ED_CERTIFICATION_REVIEW_SPECS.map((spec) => spec.route),

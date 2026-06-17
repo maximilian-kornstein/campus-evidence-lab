@@ -220,16 +220,17 @@ function nextActionForRow(row) {
   return "Review and resolve the listed open gates before certification.";
 }
 
-function certificationRow({ event, sourcesById, debtRow, goldStatus, edBatchReview }) {
+function certificationRow({ event, sourcesById, debtRow, goldStatus, edBatchReview, sourceFamilyReview }) {
+  const batchReview = edBatchReview ?? sourceFamilyReview;
   const issueIds = unique(debtRow?.issue_ids ?? []);
   const gates = Object.fromEntries(
     Object.keys(GATE_DEFINITIONS).map((gateId) => [
       gateId,
-      gateFromBatchReview(gateId, edBatchReview) ?? gateFromIssues(gateId, issueIds, event, sourcesById)
+      gateFromBatchReview(gateId, batchReview) ?? gateFromIssues(gateId, issueIds, event, sourcesById)
     ])
   );
-  const basis = certificationBasis(goldStatus, edBatchReview);
-  const certificationStatus = statusForRow({ gates, goldStatus, edBatchReview, basis });
+  const basis = certificationBasis(goldStatus, batchReview);
+  const certificationStatus = statusForRow({ gates, goldStatus, edBatchReview: batchReview, basis });
   const openGates = Object.entries(gates)
     .filter(([, gate]) => gate.status !== "pass")
     .map(([gateId]) => gateId);
@@ -239,10 +240,10 @@ function certificationRow({ event, sourcesById, debtRow, goldStatus, edBatchRevi
     source_family: debtRow?.source_family ?? sourceFamilyForRecord(event, sourcesById),
     certification_status: certificationStatus,
     certification_basis: basis,
-    batch_review_status: edBatchReview?.certification_status ?? null,
-    not_certified_reason: edBatchReview?.not_certified_reason ?? null,
-    blocked_reason: edBatchReview?.blocked_reason ?? null,
-    source_locator: edBatchReview?.source_locator ?? null,
+    batch_review_status: batchReview?.certification_status ?? null,
+    not_certified_reason: batchReview?.not_certified_reason ?? null,
+    blocked_reason: batchReview?.blocked_reason ?? null,
+    source_locator: batchReview?.source_locator ?? null,
     review_debt_status: debtRow?.debt_status ?? "missing_review_debt_row",
     issue_ids: issueIds,
     open_gates: openGates,
@@ -266,6 +267,20 @@ function edBatchReviewsByEventId({ edCertificationBatchReview, edCertificationBa
     for (const row of artifact.records ?? []) {
       if (rowsByEventId.has(row.event_id)) {
         throw new Error(`duplicate ED batch review row for ${row.event_id}`);
+      }
+      rowsByEventId.set(row.event_id, row);
+    }
+  }
+  return rowsByEventId;
+}
+
+function sourceFamilyReviewsByEventId({ sourceFamilyCertificationReviews }) {
+  const artifacts = Array.isArray(sourceFamilyCertificationReviews) ? sourceFamilyCertificationReviews : [];
+  const rowsByEventId = new Map();
+  for (const artifact of artifacts) {
+    for (const row of artifact.records ?? []) {
+      if (rowsByEventId.has(row.event_id)) {
+        throw new Error(`duplicate source-family review row for ${row.event_id}`);
       }
       rowsByEventId.set(row.event_id, row);
     }
@@ -333,6 +348,7 @@ export function buildCertificationLedger({
   goldV1CertificationStatus = {},
   edCertificationBatchReview = {},
   edCertificationBatchReviews = null,
+  sourceFamilyCertificationReviews = [],
   manifest = {},
   batchLimit = BATCH_001_LIMIT
 }) {
@@ -340,16 +356,21 @@ export function buildCertificationLedger({
   const debtByEventId = new Map((reviewDebtLedger.records ?? []).map((record) => [record.event_id, record]));
   const goldByEventId = new Map((goldV1CertificationStatus.records ?? []).map((record) => [record.event_id, record]));
   const edBatchByEventId = edBatchReviewsByEventId({ edCertificationBatchReview, edCertificationBatchReviews });
+  const sourceFamilyReviewByEventId = sourceFamilyReviewsByEventId({ sourceFamilyCertificationReviews });
   const records = events
-    .map((event) =>
-      certificationRow({
+    .map((event) => {
+      if (edBatchByEventId.has(event.id) && sourceFamilyReviewByEventId.has(event.id)) {
+        throw new Error(`duplicate certification review row for ${event.id}`);
+      }
+      return certificationRow({
         event,
         sourcesById,
         debtRow: debtByEventId.get(event.id),
         goldStatus: goldByEventId.get(event.id),
-        edBatchReview: edBatchByEventId.get(event.id)
-      })
-    )
+        edBatchReview: edBatchByEventId.get(event.id),
+        sourceFamilyReview: sourceFamilyReviewByEventId.get(event.id)
+      });
+    })
     .sort((a, b) => a.event_id.localeCompare(b.event_id));
   const certificationStatusCounts = countValues(records.map((record) => record.certification_status));
 

@@ -476,6 +476,76 @@ test("buildCertificationLedger consumes multiple ED batch-review artifacts and r
   );
 });
 
+test("buildCertificationLedger consumes generic source-family review artifacts without ED-only assumptions", () => {
+  const sourceFamilyReview = {
+    id: "source_family_certification_review_001",
+    records: [
+      {
+        event_id: "evt_gold",
+        source_family: "university_statement",
+        certification_status: "certified",
+        certification_basis: "source_family_review_001_internal_source_to_record_review",
+        source_locator: {
+          locator_type: "public_statement",
+          source_id: "src_statement",
+          locator: "Campus response update, published 2025-02-01"
+        },
+        open_gates: [],
+        gate_reviews: Object.fromEntries(
+          [
+            "source_availability",
+            "source_locator_specificity",
+            "institution_support",
+            "date_precision_support",
+            "category_fit",
+            "affected_label_boundary",
+            "response_depth_classification",
+            "rationale_specificity",
+            "overclaim_risk"
+          ].map((gateId) => [
+            gateId,
+            {
+              status: "pass",
+              detail: `${gateId} passed in source-family review.`,
+              required_action: "No deterministic action required for this reviewed gate."
+            }
+          ])
+        )
+      }
+    ]
+  };
+
+  const ledger = buildCertificationLedger({
+    events,
+    sources,
+    reviewDebtLedger,
+    goldV1CertificationStatus: { records: [] },
+    sourceFamilyCertificationReviews: [sourceFamilyReview],
+    manifest: { snapshot_id: "snapshot_test", created_at: "2026-06-17" },
+    batchLimit: 2
+  });
+
+  const reviewed = ledger.records.find((record) => record.event_id === "evt_gold");
+  assert.equal(reviewed.certification_status, "certified");
+  assert.equal(reviewed.certification_basis, "source_family_review_001_internal_source_to_record_review");
+  assert.equal(reviewed.batch_review_status, "certified");
+  assert.equal(reviewed.source_locator.locator_type, "public_statement");
+
+  assert.throws(
+    () =>
+      buildCertificationLedger({
+        events,
+        sources,
+        reviewDebtLedger,
+        goldV1CertificationStatus: { records: [] },
+        sourceFamilyCertificationReviews: [sourceFamilyReview, sourceFamilyReview],
+        manifest: { snapshot_id: "snapshot_test", created_at: "2026-06-17" },
+        batchLimit: 2
+      }),
+    /duplicate source-family review row/
+  );
+});
+
 test("Batch 001 is bounded to ED dataset records and does not certify missing cell provenance", () => {
   const ledger = buildCertificationLedger({
     events,

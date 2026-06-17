@@ -7,7 +7,7 @@
 - `blocked`: a source or locator blocker prevents certification.
 - `awaiting_review`: one or more gates still need source-to-record review.
 
-The ledger is generated from event records, source metadata, record-quality audit rows, the review-debt ledger, Gold v1 certification status, and explicit bounded batch-review artifacts such as the ED certification review waves. It is not outside validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.
+The ledger is generated from event records, source metadata, record-quality audit rows, the review-debt ledger, Gold v1 certification status, and explicit bounded batch-review artifacts such as the ED certification review waves and source-family certification pilots. It is not outside validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.
 
 ## Gates
 
@@ -25,13 +25,13 @@ Each row includes gate detail for:
 
 ## Current Ledger Counts
 
-After applying Gold v1 and the first sixteen frozen ED review artifacts, the ledger currently reports:
+After applying Gold v1, the first sixteen frozen ED review artifacts, and source-family certification review 001, the ledger currently reports:
 
 - 4,000 total records
-- 3,809 certified
-- 7 not certified
+- 3,810 certified
+- 8 not certified
 - 44 blocked
-- 140 awaiting review
+- 138 awaiting review
 
 These counts describe internal source-to-record certification status, not external validation or campus quality.
 
@@ -138,6 +138,16 @@ The blocked record is not certified because the workbook locator remains ambiguo
 After Batch 016, the ED Campus Safety dataset source family has no awaiting-review rows in the certification ledger. It has 3,802 certified rows and 43 blocked rows. The blocked rows remain unresolved rather than certified.
 
 Matched source-cell provenance is necessary but not sufficient. ED records still need date precision, category fit, affected-label boundary, response-depth, rationale-specificity, and overclaim-risk gates to pass before certification.
+
+## Source-Family Review 001
+
+`data/source-family-certification-review-001.json` applies the same gate standard to a bounded non-ED university-statement pilot:
+
+- 2 records reviewed
+- 1 certified
+- 1 not certified
+
+The not-certified record remains unresolved because the verified source text did not support every stored affected-community label at the same specificity.
 
 ## Public Use
 

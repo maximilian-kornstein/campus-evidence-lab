@@ -3,14 +3,16 @@ import { paths, readJson, writeJson } from "./lib.mjs";
 import { buildCertificationLedger, validateCertificationLedger } from "./certification-ledger-lib.mjs";
 import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registry.mjs";
 
-const [events, sources, reviewDebtLedger, goldV1CertificationStatus, ...edCertificationBatchReviewsAndManifest] = await Promise.all([
-  readJson(paths.events),
-  readJson(paths.sources),
-  readJson(paths.reviewDebtLedger),
-  readJson(paths.goldV1CertificationStatus),
-  ...ED_CERTIFICATION_REVIEW_SPECS.map((spec) => (existsSync(paths[spec.dataPathKey]) ? readJson(paths[spec.dataPathKey]) : { records: [] })),
-  readJson(paths.manifest)
-]);
+const [events, sources, reviewDebtLedger, goldV1CertificationStatus, sourceFamilyCertificationReview001, ...edCertificationBatchReviewsAndManifest] =
+  await Promise.all([
+    readJson(paths.events),
+    readJson(paths.sources),
+    readJson(paths.reviewDebtLedger),
+    readJson(paths.goldV1CertificationStatus),
+    readJson(paths.sourceFamilyCertificationReview001),
+    ...ED_CERTIFICATION_REVIEW_SPECS.map((spec) => (existsSync(paths[spec.dataPathKey]) ? readJson(paths[spec.dataPathKey]) : { records: [] })),
+    readJson(paths.manifest)
+  ]);
 const manifest = edCertificationBatchReviewsAndManifest.at(-1);
 const edCertificationBatchReviews = edCertificationBatchReviewsAndManifest.slice(0, -1);
 
@@ -20,6 +22,7 @@ const certificationLedger = buildCertificationLedger({
   reviewDebtLedger,
   goldV1CertificationStatus,
   edCertificationBatchReviews,
+  sourceFamilyCertificationReviews: [sourceFamilyCertificationReview001],
   manifest,
   batchLimit: 100
 });
