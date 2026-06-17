@@ -45,6 +45,18 @@ export const ED_CERTIFICATION_REVIEW_SPECS = [
     pageTitle: "ED Certification Batch 004 Review",
     pageKicker: "Applied ED Batch 004 review",
     previousRoute: "/ed-certification-batch-003/",
+    nextRoute: "/ed-certification-batch-005/"
+  },
+  {
+    reviewBatchId: "ed_certification_batch_005",
+    sourceBatchId: "ed_dataset_batch_001",
+    dataPathKey: "edCertificationBatch005Review",
+    route: "/ed-certification-batch-005/",
+    outputDir: "ed-certification-batch-005",
+    artifactName: "ed-certification-batch-005-review.json",
+    pageTitle: "ED Certification Batch 005 Review",
+    pageKicker: "Applied ED Batch 005 review",
+    previousRoute: "/ed-certification-batch-004/",
     nextRoute: null
   }
 ];

@@ -1,29 +1,30 @@
-# ED Certification Batch 004 Review
+# ED Certification Batch 005 Review
 
-`data/ed-certification-batch-004-review.json` is the fourth bounded ED Campus Safety dataset source-to-record certification review.
+`data/ed-certification-batch-005-review.json` is the fifth bounded ED Campus Safety dataset source-to-record certification review.
 
 Current result:
 
 - records reviewed: 250
-- certified: 247
+- certified: 246
 - not certified: 0
-- blocked: 3
+- blocked: 4
 
-Batch 004 was initialized from the next ED dataset work window exposed by the certification-batch manifest after Batch 003 was applied. The review artifact freezes those 250 event ids so regeneration cannot silently move the review wave to later records.
+Batch 005 was initialized from the next ED dataset work window exposed by the certification-batch manifest after Batch 004 was applied. The review artifact freezes those 250 event ids so regeneration cannot silently move the review wave to later records.
 
 ## Blocked Records
 
 The blocked records are not certified because the source-cell locator remains ambiguous:
 
-- `evt_2026_0587`: multiple workbook rows matched `portland_community_college`, `INTIM_RAC22`, and count `1`.
-- `evt_2026_0812`: multiple workbook rows matched `washington_state_university`, `INTIM_RAC24`, and count `1`.
-- `evt_2026_0867`: multiple workbook rows matched `college_of_central_florida`, `INTIM_RAC23`, and count `1`.
+- `evt_2026_0969`: multiple workbook rows matched `cuny_hunter_college`, `VANDAL_ET24`, and count `1`.
+- `evt_2026_1082`: multiple workbook rows matched `cox_college`, `AGG_A_SEX24`, and count `1`.
+- `evt_2026_1285`: multiple workbook rows matched `savannah_college_of_art_and_design`, `VANDAL_REL24`, and count `1`.
+- `evt_2026_1335`: multiple workbook rows matched `vermont_state_university`, `VANDAL_GEN23`, and count `1`.
 
 These records remain blocked until the locator ambiguity can be resolved without guessing.
 
 ## What This Certifies
 
-For the 247 certified records, certification means:
+For the 246 certified records, certification means:
 
 - the record has a matched official ED workbook cell;
 - the review records workbook, sheet, row, column, and cell detail;
@@ -43,8 +44,6 @@ The review does not claim that an ED workbook cell proves institutional miscondu
 
 ## Freeze Rule
 
-Batch 004 is a named review artifact with its own certification basis: `ed_certification_batch_004_internal_source_to_record_review`.
+Batch 005 is a named review artifact with its own certification basis: `ed_certification_batch_005_internal_source_to_record_review`.
 
-Regenerating the pipeline must update this same reviewed record set. To review another ED batch, create a new named batch-review artifact rather than letting Batch 004 move.
-
-Batch 005 now continues that sequence in `data/ed-certification-batch-005-review.json`.
+Regenerating the pipeline must update this same reviewed record set. To review another ED batch, create a new named batch-review artifact rather than letting Batch 005 move.
