@@ -38,6 +38,7 @@ export const paths = {
   certificationLedger: path.join(rootDir, "data", "certification-ledger.json"),
   sourceFamilyCertificationReview001: path.join(rootDir, "data", "source-family-certification-review-001.json"),
   governmentReleaseResponseDepthAudit: path.join(rootDir, "data", "government-release-response-depth-audit.json"),
+  governmentReleaseResponseDepthRepairQueue: path.join(rootDir, "data", "government-release-response-depth-repair-queue.json"),
   edDatasetProvenanceAudit: path.join(rootDir, "data", "ed-dataset-provenance-audit.json"),
   certificationBatches: path.join(rootDir, "data", "certification-batches.json"),
   edCertificationBatchReview: path.join(rootDir, "data", "ed-certification-batch-001-review.json"),

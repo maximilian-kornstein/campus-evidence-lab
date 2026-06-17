@@ -1,0 +1,322 @@
+{
+  "id": "government_release_response_depth_repair_queue_v1",
+  "generated_at": "2026-06-17",
+  "status": "pre_application_repair_queue",
+  "method": "Deterministic repair queue generated from the government-release response-depth audit. It proposes exact response-depth and field-support edits for flagged rows before any certification decision.",
+  "public_claim_limit": "This queue is not certification or outside approval; it is a bounded internal work order for source-to-record repair.",
+  "application_rule": "Apply only in a clean source-to-record repair wave, then regenerate hashes, generated public pages, certification ledgers, and validation artifacts.",
+  "proposed_repairs": 9,
+  "blocked_repairs": 0,
+  "issue_counts": {
+    "government_release_direct_response_overstatement_risk": 6,
+    "government_release_missing_response_depth": 3
+  },
+  "records": [
+    {
+      "event_id": "evt_2025_0001",
+      "school_id": "columbia_university",
+      "issue_id": "government_release_direct_response_overstatement_risk",
+      "status": "proposed_repair",
+      "current_response_depth": "direct_institutional_response",
+      "proposed_response_depth": "limited_public_response_note",
+      "institutional_response": "The source announces an OCR investigation. The current record does not summarize Columbia's institutional response beyond the public government action.",
+      "rationale": "The linked source family is government-release-like, while the stored response text says the record does not summarize a direct institutional response beyond public government action.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/response_depth",
+          "current_value": "direct_institutional_response",
+          "value": "limited_public_response_note"
+        },
+        {
+          "op": "replace",
+          "path": "/field_support/Institutional response",
+          "current_value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_02_03_five_universities"
+            ],
+            "rationale": "Response-depth classification is \"direct_institutional_response\" based on the stored public response text."
+          },
+          "value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_02_03_five_universities"
+            ],
+            "rationale": "Response-depth repair queue classifies this as limited_public_response_note because the linked government-release-like source supports a public response note but does not document a direct institutional response."
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "evt_2025_0002",
+      "school_id": "northwestern_university",
+      "issue_id": "government_release_direct_response_overstatement_risk",
+      "status": "proposed_repair",
+      "current_response_depth": "direct_institutional_response",
+      "proposed_response_depth": "limited_public_response_note",
+      "institutional_response": "The source announces an OCR investigation. The current record does not summarize Northwestern's institutional response beyond the public government action.",
+      "rationale": "The linked source family is government-release-like, while the stored response text says the record does not summarize a direct institutional response beyond public government action.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/response_depth",
+          "current_value": "direct_institutional_response",
+          "value": "limited_public_response_note"
+        },
+        {
+          "op": "replace",
+          "path": "/field_support/Institutional response",
+          "current_value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_02_03_five_universities"
+            ],
+            "rationale": "Response-depth classification is \"direct_institutional_response\" based on the stored public response text."
+          },
+          "value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_02_03_five_universities"
+            ],
+            "rationale": "Response-depth repair queue classifies this as limited_public_response_note because the linked government-release-like source supports a public response note but does not document a direct institutional response."
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "evt_2025_0003",
+      "school_id": "portland_state_university",
+      "issue_id": "government_release_direct_response_overstatement_risk",
+      "status": "proposed_repair",
+      "current_response_depth": "direct_institutional_response",
+      "proposed_response_depth": "limited_public_response_note",
+      "institutional_response": "The source announces an OCR investigation. The current record does not summarize Portland State's institutional response beyond the public government action.",
+      "rationale": "The linked source family is government-release-like, while the stored response text says the record does not summarize a direct institutional response beyond public government action.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/response_depth",
+          "current_value": "direct_institutional_response",
+          "value": "limited_public_response_note"
+        },
+        {
+          "op": "replace",
+          "path": "/field_support/Institutional response",
+          "current_value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_02_03_five_universities"
+            ],
+            "rationale": "Response-depth classification is \"direct_institutional_response\" based on the stored public response text."
+          },
+          "value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_02_03_five_universities"
+            ],
+            "rationale": "Response-depth repair queue classifies this as limited_public_response_note because the linked government-release-like source supports a public response note but does not document a direct institutional response."
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "evt_2025_0004",
+      "school_id": "university_of_california_berkeley",
+      "issue_id": "government_release_direct_response_overstatement_risk",
+      "status": "proposed_repair",
+      "current_response_depth": "direct_institutional_response",
+      "proposed_response_depth": "limited_public_response_note",
+      "institutional_response": "The source announces an OCR investigation. The current record does not summarize UC Berkeley's institutional response beyond the public government action.",
+      "rationale": "The linked source family is government-release-like, while the stored response text says the record does not summarize a direct institutional response beyond public government action.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/response_depth",
+          "current_value": "direct_institutional_response",
+          "value": "limited_public_response_note"
+        },
+        {
+          "op": "replace",
+          "path": "/field_support/Institutional response",
+          "current_value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_02_03_five_universities"
+            ],
+            "rationale": "Response-depth classification is \"direct_institutional_response\" based on the stored public response text."
+          },
+          "value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_02_03_five_universities"
+            ],
+            "rationale": "Response-depth repair queue classifies this as limited_public_response_note because the linked government-release-like source supports a public response note but does not document a direct institutional response."
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "evt_2025_0005",
+      "school_id": "university_of_minnesota_twin_cities",
+      "issue_id": "government_release_direct_response_overstatement_risk",
+      "status": "proposed_repair",
+      "current_response_depth": "direct_institutional_response",
+      "proposed_response_depth": "limited_public_response_note",
+      "institutional_response": "The source announces an OCR investigation. The current record does not summarize the university's institutional response beyond the public government action.",
+      "rationale": "The linked source family is government-release-like, while the stored response text says the record does not summarize a direct institutional response beyond public government action.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/response_depth",
+          "current_value": "direct_institutional_response",
+          "value": "limited_public_response_note"
+        },
+        {
+          "op": "replace",
+          "path": "/field_support/Institutional response",
+          "current_value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_02_03_five_universities"
+            ],
+            "rationale": "Response-depth classification is \"direct_institutional_response\" based on the stored public response text."
+          },
+          "value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_02_03_five_universities"
+            ],
+            "rationale": "Response-depth repair queue classifies this as limited_public_response_note because the linked government-release-like source supports a public response note but does not document a direct institutional response."
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "evt_2025_0006",
+      "school_id": "columbia_university",
+      "issue_id": "government_release_missing_response_depth",
+      "status": "proposed_repair",
+      "current_response_depth": null,
+      "proposed_response_depth": "limited_public_response_note",
+      "institutional_response": "The record currently summarizes the public federal finding and accreditor notification; it does not evaluate Columbia's response.",
+      "rationale": "The record has stored response text from a government-release-like source family but no explicit response-depth classification.",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/response_depth",
+          "current_value": null,
+          "value": "limited_public_response_note"
+        },
+        {
+          "op": "add",
+          "path": "/field_support/Institutional response",
+          "current_value": null,
+          "value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_columbia_accreditor"
+            ],
+            "rationale": "Response-depth repair queue classifies this as limited_public_response_note because the linked government-release-like source supports a public response note but does not document a direct institutional response."
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "evt_2025_0007",
+      "school_id": "harvard_university",
+      "issue_id": "government_release_missing_response_depth",
+      "status": "proposed_repair",
+      "current_response_depth": null,
+      "proposed_response_depth": "limited_public_response_note",
+      "institutional_response": "The record currently summarizes the public federal finding and accreditor notification; it does not evaluate Harvard's response.",
+      "rationale": "The record has stored response text from a government-release-like source family but no explicit response-depth classification.",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/response_depth",
+          "current_value": null,
+          "value": "limited_public_response_note"
+        },
+        {
+          "op": "add",
+          "path": "/field_support/Institutional response",
+          "current_value": null,
+          "value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_harvard_accreditor"
+            ],
+            "rationale": "Response-depth repair queue classifies this as limited_public_response_note because the linked government-release-like source supports a public response note but does not document a direct institutional response."
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "evt_2025_0008",
+      "school_id": "haverford_college",
+      "issue_id": "government_release_direct_response_overstatement_risk",
+      "status": "proposed_repair",
+      "current_response_depth": "direct_institutional_response",
+      "proposed_response_depth": "limited_public_response_note",
+      "institutional_response": "The source announces a federal investigation. The current record does not summarize Haverford's institutional response beyond the public government action.",
+      "rationale": "The linked source family is government-release-like, while the stored response text says the record does not summarize a direct institutional response beyond public government action.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/response_depth",
+          "current_value": "direct_institutional_response",
+          "value": "limited_public_response_note"
+        },
+        {
+          "op": "replace",
+          "path": "/field_support/Institutional response",
+          "current_value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_08_20_haverford"
+            ],
+            "rationale": "Response-depth classification is \"direct_institutional_response\" based on the stored public response text."
+          },
+          "value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_08_20_haverford"
+            ],
+            "rationale": "Response-depth repair queue classifies this as limited_public_response_note because the linked government-release-like source supports a public response note but does not document a direct institutional response."
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "evt_2025_0009",
+      "school_id": "university_of_washington",
+      "issue_id": "government_release_missing_response_depth",
+      "status": "proposed_repair",
+      "current_response_depth": null,
+      "proposed_response_depth": "limited_public_response_note",
+      "institutional_response": "The source says the Task Force expected the university to follow up with enforcement actions and policy changes. The record does not evaluate the university's completed response.",
+      "rationale": "The record has stored response text from a government-release-like source family but no explicit response-depth classification.",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/response_depth",
+          "current_value": null,
+          "value": "limited_public_response_note"
+        },
+        {
+          "op": "add",
+          "path": "/field_support/Institutional response",
+          "current_value": null,
+          "value": {
+            "field": "Institutional response",
+            "source_ids": [
+              "src_ed_2025_05_06_university_washington"
+            ],
+            "rationale": "Response-depth repair queue classifies this as limited_public_response_note because the linked government-release-like source supports a public response note but does not document a direct institutional response."
+          }
+        }
+      ]
+    }
+  ]
+}
