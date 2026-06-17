@@ -15,7 +15,8 @@ const [
   externalReviewPacket,
   certificationLedger,
   edDatasetProvenanceAudit,
-  certificationBatches
+  certificationBatches,
+  edCertificationBatchReview
 ] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
@@ -27,7 +28,8 @@ const [
   readJson(paths.externalReviewPacket),
   readJson(paths.certificationLedger),
   readJson(paths.edDatasetProvenanceAudit),
-  readJson(paths.certificationBatches)
+  readJson(paths.certificationBatches),
+  readJson(paths.edCertificationBatchReview)
 ]);
 
 const schoolMap = new Map(schools.map((school) => [school.id, school]));
@@ -43,6 +45,7 @@ const knownLimitsDir = path.join(rootDir, "known-limits");
 const certificationDir = path.join(rootDir, "certification");
 const edProvenanceDir = path.join(rootDir, "ed-provenance");
 const certificationBatchesDir = path.join(rootDir, "certification-batches");
+const edCertificationBatchReviewDir = path.join(rootDir, "ed-certification-batch-001");
 const detailDepth = 2;
 
 function escapeHtml(value) {
@@ -80,6 +83,7 @@ function nav(depth = 0) {
           <a href="${sitePath("/review-debt/", depth)}">Review Debt</a>
           <a href="${sitePath("/certification/", depth)}">Certification</a>
           <a href="${sitePath("/certification-batches/", depth)}">Batches</a>
+          <a href="${sitePath("/ed-certification-batch-001/", depth)}">ED Review</a>
           <a href="${sitePath("/external-review/", depth)}">External Review</a>
           <a href="${sitePath("/methodology/", depth)}">Methodology</a>
           <a href="${sitePath("/impact/", depth)}">Impact</a>
@@ -459,6 +463,42 @@ function certificationRecordTable(records, depth = 1) {
                   <td>${escapeHtml(record.certification_status)}</td>
                   <td>${escapeHtml((record.open_gates ?? []).join(", ") || "None")}</td>
                   <td>${escapeHtml(record.next_action ?? "Review listed gates.")}</td>
+                </tr>
+              `
+            )
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function edBatchReviewRecordTable(records, depth = 1) {
+  if (!records.length) return `<p class="empty">No records in this set.</p>`;
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Record</th>
+            <th>School</th>
+            <th>Status</th>
+            <th>Locator</th>
+            <th>Open gates</th>
+            <th>Reason / next action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${records
+            .map(
+              (record) => `
+                <tr>
+                  <td><a href="${sitePath(record.event_url, depth)}">${escapeHtml(record.event_id)}</a></td>
+                  <td>${escapeHtml(record.school_id)}</td>
+                  <td>${escapeHtml(record.certification_status)}</td>
+                  <td>${escapeHtml(record.source_locator?.cell ?? record.provenance_status ?? "unresolved")}</td>
+                  <td>${escapeHtml((record.open_gates ?? []).join(", ") || "None")}</td>
+                  <td>${escapeHtml(record.blocked_reason ?? record.not_certified_reason ?? record.next_action ?? "Review listed gates.")}</td>
                 </tr>
               `
             )
@@ -1140,6 +1180,7 @@ await writeFile(
               ${dataLine("Rulebook", `<a href="${sitePath("/docs/full-database-certification-rulebook.md", 1)}">Certification rulebook</a>`)}
               ${dataLine("Playbooks", `<a href="${sitePath("/docs/source-family-review-playbooks.md", 1)}">Source-family playbooks</a>`)}
               ${dataLine("Batch 001", `<a href="${sitePath("/certification/batch-001/", 1)}">Open pilot</a>`)}
+              ${dataLine("ED Batch 001 review", `<a href="${sitePath("/ed-certification-batch-001/", 1)}">Open applied review</a>`)}
               ${dataLine("Use limit", escapeHtml(certificationLedger.public_claim_limit))}
             </dl>
             <h2 class="section-title section-title--spaced">Status Definitions</h2>
@@ -1201,6 +1242,7 @@ await writeFile(
               ${dataLine("Records", escapeHtml(certificationLedger.batch_001.records.length))}
               ${dataLine("Limit", escapeHtml(certificationLedger.batch_001.limit))}
               ${dataLine("Ledger JSON", `<a href="${sitePath("/data/certification-ledger.json", 2)}">Download artifact</a>`)}
+              ${dataLine("Applied review", `<a href="${sitePath("/ed-certification-batch-001/", 2)}">Open Batch 001 review</a>`)}
               ${dataLine("Use limit", escapeHtml(certificationLedger.batch_001.public_claim_limit))}
             </dl>
           </aside>
@@ -1220,6 +1262,62 @@ await writeFile(
       </section>
     `,
     2
+  )
+);
+
+await mkdir(edCertificationBatchReviewDir, { recursive: true });
+const edReviewRecords = edCertificationBatchReview.records ?? [];
+await writeFile(
+  path.join(edCertificationBatchReviewDir, "index.html"),
+  page(
+    "ED Certification Batch 001 Review",
+    `
+      <p class="page-kicker">Applied ED Batch 001 review</p>
+      <h1 class="page-title page-title--small">Source-cell locators are applied, but certification still requires every gate to pass.</h1>
+      <p class="page-intro">This page shows the bounded internal source-to-record review for the first ED dataset certification batch. A matched ED workbook cell is necessary, but not sufficient: category fit, affected-label boundary, date precision, response-depth, rationale specificity, and overclaim-risk gates must also pass.</p>
+      <section class="detail-panel">
+        <div class="detail-grid">
+          <div>
+            <h2 class="section-title">Batch Review Status Counts</h2>
+            ${countTable(objectCountRows(edCertificationBatchReview.status_counts), "Certification Status")}
+            <h2 class="section-title section-title--spaced">Open Gate Counts</h2>
+            ${countTable(objectCountRows(edCertificationBatchReview.open_gate_counts), "Open Gate")}
+            <h2 class="section-title section-title--spaced">Provenance Status Counts</h2>
+            ${countTable(objectCountRows(edCertificationBatchReview.provenance_status_counts), "Provenance Status")}
+            <h2 class="section-title section-title--spaced">Reviewed Records</h2>
+            ${edBatchReviewRecordTable(edReviewRecords, 1)}
+          </div>
+          <aside>
+            <dl>
+              ${dataLine("Snapshot", escapeHtml(edCertificationBatchReview.snapshot_id), "mono")}
+              ${dataLine("Standard", escapeHtml(edCertificationBatchReview.certification_standard_version), "mono")}
+              ${dataLine("Batch", escapeHtml(edCertificationBatchReview.review_batch_id), "mono")}
+              ${dataLine("Records", escapeHtml(edCertificationBatchReview.totals.records))}
+              ${dataLine("Certified", escapeHtml(edCertificationBatchReview.totals.certified))}
+              ${dataLine("Not certified", escapeHtml(edCertificationBatchReview.totals.not_certified))}
+              ${dataLine("Blocked", escapeHtml(edCertificationBatchReview.totals.blocked))}
+              ${dataLine("Review JSON", `<a href="${sitePath("/data/ed-certification-batch-001-review.json", 1)}">Download artifact</a>`)}
+              ${dataLine("ED provenance", `<a href="${sitePath("/ed-provenance/", 1)}">Open source-cell audit</a>`)}
+              ${dataLine("Ledger", `<a href="${sitePath("/certification/", 1)}">Open full ledger</a>`)}
+              ${dataLine("Use limit", escapeHtml(edCertificationBatchReview.public_claim_limit))}
+            </dl>
+          </aside>
+        </div>
+      </section>
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">Strict Reading Rule</h2>
+          <p class="section-note">This page improves reviewability; it is not a broader claim about campuses or prevalence</p>
+        </div>
+        <ul class="evidence-list">
+          <li>Certified means the current source-to-record gates passed for this bounded batch-review version.</li>
+          <li>Not certified means at least one reviewed gate did not pass; the exact gate remains visible.</li>
+          <li>Blocked means the record cannot be certified until a source-cell or identity blocker is repaired.</li>
+          <li>The page must not be used as external validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.</li>
+        </ul>
+      </section>
+    `,
+    1
   )
 );
 
@@ -1316,6 +1414,7 @@ await writeFile(
               ${dataLine("Batch size", escapeHtml(certificationBatches.batch_size))}
               ${dataLine("Manifest JSON", `<a href="${sitePath("/data/certification-batches.json", 1)}">Download artifact</a>`)}
               ${dataLine("Rules", `<a href="${sitePath("/docs/certification-batch-completion-rules.md", 1)}">Completion rules</a>`)}
+              ${dataLine("ED Batch 001 review", `<a href="${sitePath("/ed-certification-batch-001/", 1)}">Open applied review</a>`)}
               ${dataLine("Use limit", escapeHtml(certificationBatches.public_claim_limit))}
             </dl>
           </aside>

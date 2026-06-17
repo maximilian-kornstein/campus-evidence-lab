@@ -19,6 +19,7 @@ Required locator:
 Certification blockers:
 
 - no workbook/table/row/cell provenance
+- ambiguous workbook/table/row/cell provenance, including multiple matching rows
 - affected-community label broader than the source field supports
 - date stored as exact when only year-level data is supported
 - rationale copied from generic dataset metadata instead of the specific source fields
@@ -26,6 +27,12 @@ Certification blockers:
 Default response-depth:
 
 - usually `limited_public_response_note` unless a separate source documents a direct or agency-described institutional response.
+
+Batch rule:
+
+- matched workbook-cell provenance is necessary but not sufficient;
+- the reviewed batch record set must be frozen before certification is applied;
+- a new ED review wave should use a new named batch artifact rather than changing the membership of an existing certified batch.
 
 ## Annual Security Report Records
 

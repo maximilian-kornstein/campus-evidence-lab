@@ -180,13 +180,26 @@ function actionForIssue(issueId) {
   );
 }
 
-function certificationBasis(goldStatus) {
+function certificationBasis(goldStatus, edBatchReview) {
   if (goldStatus?.certification_status === "certified") return "gold_v1_internal_source_to_record_review";
+  if (edBatchReview?.certification_status === "certified") return edBatchReview.certification_basis ?? null;
   return null;
 }
 
-function statusForRow({ gates, goldStatus, basis }) {
+function gateFromBatchReview(gateId, edBatchReview) {
+  const reviewedGate = edBatchReview?.gate_reviews?.[gateId];
+  if (!reviewedGate) return null;
+  return {
+    status: reviewedGate.status,
+    detail: reviewedGate.detail,
+    required_action: reviewedGate.required_action
+  };
+}
+
+function statusForRow({ gates, goldStatus, edBatchReview, basis }) {
   const gateValues = Object.values(gates);
+  if (edBatchReview?.certification_status === "blocked") return "blocked";
+  if (edBatchReview?.certification_status === "not_certified") return "not_certified";
   if (gateValues.some((gate) => gate.status === "block") || goldStatus?.certification_status === "blocked") return "blocked";
   if (goldStatus?.certification_status === "not_certified") return "not_certified";
   if (basis && gateValues.every((gate) => gate.status === "pass")) return "certified";
@@ -196,18 +209,27 @@ function statusForRow({ gates, goldStatus, basis }) {
 function nextActionForRow(row) {
   if (row.certification_status === "certified") return "No action required for internal certification status; continue normal periodic source checks.";
   if (row.certification_status === "blocked") return "Repair blocker gate before this record can be certified or routed as a review example.";
-  if (row.certification_status === "not_certified") return "Resolve the listed gate failures in a bounded certification batch before reconsidering.";
+  if (row.certification_status === "not_certified") {
+    return row.not_certified_reason
+      ? `Not certified in bounded review: ${row.not_certified_reason}`
+      : "Resolve the listed gate failures in a bounded certification batch before reconsidering.";
+  }
   if (row.open_gates.includes("source_locator_specificity") && row.source_family === "ed_campus_safety_dataset") {
     return "Add workbook, sheet, row, column, and cell provenance before source-to-record certification.";
   }
   return "Review and resolve the listed open gates before certification.";
 }
 
-function certificationRow({ event, sourcesById, debtRow, goldStatus }) {
+function certificationRow({ event, sourcesById, debtRow, goldStatus, edBatchReview }) {
   const issueIds = unique(debtRow?.issue_ids ?? []);
-  const gates = Object.fromEntries(Object.keys(GATE_DEFINITIONS).map((gateId) => [gateId, gateFromIssues(gateId, issueIds, event, sourcesById)]));
-  const basis = certificationBasis(goldStatus);
-  const certificationStatus = statusForRow({ gates, goldStatus, basis });
+  const gates = Object.fromEntries(
+    Object.keys(GATE_DEFINITIONS).map((gateId) => [
+      gateId,
+      gateFromBatchReview(gateId, edBatchReview) ?? gateFromIssues(gateId, issueIds, event, sourcesById)
+    ])
+  );
+  const basis = certificationBasis(goldStatus, edBatchReview);
+  const certificationStatus = statusForRow({ gates, goldStatus, edBatchReview, basis });
   const openGates = Object.entries(gates)
     .filter(([, gate]) => gate.status !== "pass")
     .map(([gateId]) => gateId);
@@ -217,6 +239,10 @@ function certificationRow({ event, sourcesById, debtRow, goldStatus }) {
     source_family: debtRow?.source_family ?? sourceFamilyForRecord(event, sourcesById),
     certification_status: certificationStatus,
     certification_basis: basis,
+    batch_review_status: edBatchReview?.certification_status ?? null,
+    not_certified_reason: edBatchReview?.not_certified_reason ?? null,
+    blocked_reason: edBatchReview?.blocked_reason ?? null,
+    source_locator: edBatchReview?.source_locator ?? null,
     review_debt_status: debtRow?.debt_status ?? "missing_review_debt_row",
     issue_ids: issueIds,
     open_gates: openGates,
@@ -287,19 +313,22 @@ export function buildCertificationLedger({
   sources = [],
   reviewDebtLedger = {},
   goldV1CertificationStatus = {},
+  edCertificationBatchReview = {},
   manifest = {},
   batchLimit = BATCH_001_LIMIT
 }) {
   const sourcesById = sourceMap(sources);
   const debtByEventId = new Map((reviewDebtLedger.records ?? []).map((record) => [record.event_id, record]));
   const goldByEventId = new Map((goldV1CertificationStatus.records ?? []).map((record) => [record.event_id, record]));
+  const edBatchByEventId = new Map((edCertificationBatchReview.records ?? []).map((record) => [record.event_id, record]));
   const records = events
     .map((event) =>
       certificationRow({
         event,
         sourcesById,
         debtRow: debtByEventId.get(event.id),
-        goldStatus: goldByEventId.get(event.id)
+        goldStatus: goldByEventId.get(event.id),
+        edBatchReview: edBatchByEventId.get(event.id)
       })
     )
     .sort((a, b) => a.event_id.localeCompare(b.event_id));

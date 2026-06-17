@@ -18,6 +18,7 @@ import { hasProhibitedExternalReviewClaim, validateExternalReviewPacket } from "
 import { validateCertificationLedger } from "./certification-ledger-lib.mjs";
 import { validateEdDatasetProvenanceAudit } from "./ed-dataset-provenance-lib.mjs";
 import { validateCertificationBatches } from "./certification-batches-lib.mjs";
+import { validateEdCertificationBatchReview } from "./ed-certification-batch-review-lib.mjs";
 
 const allowedCommunities = new Set([
   "Jewish",
@@ -125,6 +126,7 @@ const [
   certificationLedger,
   edDatasetProvenanceAudit,
   certificationBatches,
+  edCertificationBatchReview,
   manifest
 ] = await Promise.all([
   readJson(paths.events),
@@ -159,6 +161,7 @@ const [
   readJson(paths.certificationLedger),
   readJson(paths.edDatasetProvenanceAudit),
   readJson(paths.certificationBatches),
+  readJson(paths.edCertificationBatchReview),
   readJson(paths.manifest)
 ]);
 
@@ -649,6 +652,7 @@ errors.push(
 errors.push(...validateCertificationLedger({ ledger: certificationLedger, events, manifest }));
 errors.push(...validateEdDatasetProvenanceAudit({ audit: edDatasetProvenanceAudit, events, manifest }));
 errors.push(...validateCertificationBatches({ batches: certificationBatches, certificationLedger }));
+errors.push(...validateEdCertificationBatchReview({ review: edCertificationBatchReview, events, certificationBatches, manifest }));
 if (hasProhibitedRecordAuditClaim(JSON.stringify(recordQualityAudit))) {
   errors.push("record-quality-audit includes prohibited validation, ranking, safety, frequency, endorsement, or legal-truth language");
 }

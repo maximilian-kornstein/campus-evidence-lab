@@ -31,11 +31,15 @@ Every record is checked against these gates:
 
 A record can be certified only when all gates are `pass` and a certification basis is present. A deterministic scan with no known issue is not enough by itself. Records without a completed certification basis remain `awaiting_review` even if some metadata checks pass.
 
+For ED dataset records, matched workbook-cell provenance is necessary but not sufficient. Certification also requires category fit, affected-label boundary, honest date precision, limited response-depth classification, source-specific rationales, and no overclaiming language.
+
 The goal is not to certify all 4,000 records. The goal is for every record to have a defensible final state: `certified`, `not_certified`, `blocked`, or `awaiting_review` with exact gates and public-use limits.
 
 ## Batch Standard
 
 A batch is complete only when every included record has a final visible status and exact open gates. A batch may produce zero newly certified records. That outcome is acceptable when public sources do not support certification.
+
+Applied batch-review artifacts must freeze their reviewed record set. Regeneration may update the same records, but it must not silently move a completed batch window forward and certify additional records under the same batch id.
 
 ## Public-Use Boundary
 

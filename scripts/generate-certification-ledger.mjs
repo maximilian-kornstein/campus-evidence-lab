@@ -1,11 +1,13 @@
+import { existsSync } from "node:fs";
 import { paths, readJson, writeJson } from "./lib.mjs";
 import { buildCertificationLedger, validateCertificationLedger } from "./certification-ledger-lib.mjs";
 
-const [events, sources, reviewDebtLedger, goldV1CertificationStatus, manifest] = await Promise.all([
+const [events, sources, reviewDebtLedger, goldV1CertificationStatus, edCertificationBatchReview, manifest] = await Promise.all([
   readJson(paths.events),
   readJson(paths.sources),
   readJson(paths.reviewDebtLedger),
   readJson(paths.goldV1CertificationStatus),
+  existsSync(paths.edCertificationBatchReview) ? readJson(paths.edCertificationBatchReview) : { records: [] },
   readJson(paths.manifest)
 ]);
 
@@ -14,6 +16,7 @@ const certificationLedger = buildCertificationLedger({
   sources,
   reviewDebtLedger,
   goldV1CertificationStatus,
+  edCertificationBatchReview,
   manifest,
   batchLimit: 100
 });

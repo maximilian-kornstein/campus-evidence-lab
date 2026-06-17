@@ -7,7 +7,7 @@
 - `blocked`: a source or locator blocker prevents certification.
 - `awaiting_review`: one or more gates still need source-to-record review.
 
-The ledger is generated from event records, source metadata, record-quality audit rows, the review-debt ledger, and Gold v1 certification status. It is not outside validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.
+The ledger is generated from event records, source metadata, record-quality audit rows, the review-debt ledger, Gold v1 certification status, and explicit bounded batch-review artifacts such as ED Certification Batch 001. It is not outside validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.
 
 ## Gates
 
@@ -23,9 +23,17 @@ Each row includes gate detail for:
 - rationale specificity
 - overclaim risk
 
-## Batch 001
+## ED Batch 001 Review
 
-Batch 001 is a bounded ED Campus Safety dataset provenance pilot. It intentionally keeps records awaiting review when workbook, sheet, row, column, or cell provenance is missing. This prevents mass certification of dataset-backed records before source-to-cell support is explicit.
+`data/ed-certification-batch-001-review.json` applies source-cell locators to a frozen first ED dataset batch:
+
+- 250 records reviewed
+- 249 certified
+- 1 blocked
+
+The blocked record is not certified because the workbook locator remains ambiguous. Batch 001 is frozen so repeat generation cannot silently certify the next batch.
+
+Matched source-cell provenance is necessary but not sufficient. ED records still need date precision, category fit, affected-label boundary, response-depth, rationale-specificity, and overclaim-risk gates to pass before certification.
 
 ## Public Use
 
