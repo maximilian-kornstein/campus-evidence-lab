@@ -251,6 +251,46 @@ const edCertificationBatchReview = {
   ]
 };
 
+const edCertificationBatchReviewTwo = {
+  records: [
+    {
+      event_id: "evt_dataset_not_certified",
+      certification_status: "certified",
+      certification_basis: "ed_certification_batch_002_internal_source_to_record_review",
+      source_locator: {
+        locator_type: "workbook_cell",
+        workbook: "Oncampushate222324.xlsx",
+        sheet: "sheet1",
+        row: 14,
+        column: "INTIM_RAC24",
+        cell: "NK14",
+        locator: "Oncampushate222324.xlsx > sheet1 row 14 > column INTIM_RAC24 > cell NK14"
+      },
+      open_gates: [],
+      gate_reviews: Object.fromEntries(
+        [
+          "source_availability",
+          "source_locator_specificity",
+          "institution_support",
+          "date_precision_support",
+          "category_fit",
+          "affected_label_boundary",
+          "response_depth_classification",
+          "rationale_specificity",
+          "overclaim_risk"
+        ].map((gateId) => [
+          gateId,
+          {
+            status: "pass",
+            detail: `${gateId} passed in ED Batch 002 review.`,
+            required_action: "No deterministic action required for this reviewed gate."
+          }
+        ])
+      )
+    }
+  ]
+};
+
 const goldV1CertificationStatus = {
   records: [
     {
@@ -322,6 +362,40 @@ test("buildCertificationLedger consumes explicit ED batch-review basis without a
   assert.match(notCertifiedDataset.next_action, /not certified/i);
 
   assert.deepEqual(validateCertificationLedger({ ledger, events, manifest: { snapshot_id: "snapshot_test", created_at: "2026-06-17" } }), []);
+});
+
+test("buildCertificationLedger consumes multiple ED batch-review artifacts and rejects duplicate reviewed events", () => {
+  const ledger = buildCertificationLedger({
+    events,
+    sources,
+    reviewDebtLedger,
+    goldV1CertificationStatus,
+    edCertificationBatchReviews: [{ records: [edCertificationBatchReview.records[0]] }, edCertificationBatchReviewTwo],
+    manifest: { snapshot_id: "snapshot_test", created_at: "2026-06-17" },
+    batchLimit: 2
+  });
+
+  const firstBatchRecord = ledger.records.find((record) => record.event_id === "evt_dataset");
+  assert.equal(firstBatchRecord.certification_basis, "ed_dataset_batch_001_internal_source_to_record_review");
+
+  const secondBatchRecord = ledger.records.find((record) => record.event_id === "evt_dataset_not_certified");
+  assert.equal(secondBatchRecord.certification_status, "certified");
+  assert.equal(secondBatchRecord.certification_basis, "ed_certification_batch_002_internal_source_to_record_review");
+  assert.equal(secondBatchRecord.source_locator.cell, "NK14");
+
+  assert.throws(
+    () =>
+      buildCertificationLedger({
+        events,
+        sources,
+        reviewDebtLedger,
+        goldV1CertificationStatus,
+        edCertificationBatchReviews: [edCertificationBatchReview, edCertificationBatchReview],
+        manifest: { snapshot_id: "snapshot_test", created_at: "2026-06-17" },
+        batchLimit: 2
+      }),
+    /duplicate ED batch review row/
+  );
 });
 
 test("Batch 001 is bounded to ED dataset records and does not certify missing cell provenance", () => {

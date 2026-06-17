@@ -251,3 +251,122 @@ test("buildEdCertificationBatchReview freezes existing Batch 001 record ids acro
     []
   );
 });
+
+test("buildEdCertificationBatchReview supports a second frozen ED review wave with batch-specific basis", () => {
+  const events = [
+    {
+      id: "evt_wave_2_cert",
+      school_id: "school_wave_two",
+      date: "2024-01-01",
+      date_precision: "year",
+      category: "Vandalism",
+      affected_communities: ["Religion"],
+      institutional_response:
+        "The record summarizes a Department of Education Clery/campus-safety dataset cell and does not independently evaluate investigative, disciplinary, or institutional response outcomes.",
+      source_ids: ["src_ed"],
+      tags: ["ed-campus-safety-data", "vandal-rel24"]
+    },
+    {
+      id: "evt_new_manifest",
+      school_id: "school_new",
+      date: "2024-01-01",
+      date_precision: "year",
+      category: "Vandalism",
+      affected_communities: ["Religion"],
+      institutional_response:
+        "The record summarizes a Department of Education Clery/campus-safety dataset cell and does not independently evaluate investigative, disciplinary, or institutional response outcomes.",
+      source_ids: ["src_ed"],
+      tags: ["ed-campus-safety-data", "vandal-rel24"]
+    }
+  ];
+  const certificationBatches = {
+    id: "certification_batches_v1",
+    snapshot_id: "snapshot_test",
+    generated_at: "2026-06-17",
+    batches: [
+      {
+        id: "ed_dataset_batch_001",
+        records: [{ event_id: "evt_new_manifest", school_id: "school_new" }]
+      }
+    ]
+  };
+  const edDatasetProvenanceAudit = {
+    records: [
+      {
+        event_id: "evt_wave_2_cert",
+        school_id: "school_wave_two",
+        code_tag: "vandal-rel24",
+        source_year: "2024",
+        expected_column: "VANDAL_REL24",
+        expected_count: 1,
+        provenance_status: "matched",
+        locator: {
+          workbook: "Oncampushate222324.xlsx",
+          sheet: "sheet1",
+          row: 22,
+          column: "VANDAL_REL24",
+          column_letter: "NU",
+          cell: "NU22",
+          cell_value: "1",
+          locator: "Oncampushate222324.xlsx > sheet1 row 22 > column VANDAL_REL24 > cell NU22"
+        }
+      },
+      {
+        event_id: "evt_new_manifest",
+        school_id: "school_new",
+        code_tag: "vandal-rel24",
+        source_year: "2024",
+        expected_column: "VANDAL_REL24",
+        expected_count: 1,
+        provenance_status: "matched",
+        locator: {
+          workbook: "Oncampushate222324.xlsx",
+          sheet: "sheet1",
+          row: 23,
+          column: "VANDAL_REL24",
+          column_letter: "NU",
+          cell: "NU23",
+          cell_value: "1",
+          locator: "Oncampushate222324.xlsx > sheet1 row 23 > column VANDAL_REL24 > cell NU23"
+        }
+      }
+    ]
+  };
+  const existingReview = {
+    id: "ed_certification_batch_002_review_v1",
+    review_batch_id: "ed_certification_batch_002",
+    records: [{ event_id: "evt_wave_2_cert", school_id: "school_wave_two" }]
+  };
+
+  const review = buildEdCertificationBatchReview({
+    events,
+    certificationBatches,
+    edDatasetProvenanceAudit,
+    existingReview,
+    reviewBatchId: "ed_certification_batch_002",
+    sourceBatchId: "ed_dataset_batch_001",
+    manifest: { snapshot_id: "snapshot_test", created_at: "2026-06-17" }
+  });
+
+  assert.equal(review.id, "ed_certification_batch_002_review_v1");
+  assert.equal(review.review_batch_id, "ed_certification_batch_002");
+  assert.equal(review.source_batch_id, "ed_dataset_batch_001");
+  assert.match(review.selection_method, /^Frozen/);
+  assert.deepEqual(
+    review.records.map((record) => record.event_id),
+    ["evt_wave_2_cert"]
+  );
+  assert.equal(review.records[0].review_batch_id, "ed_certification_batch_002");
+  assert.equal(review.records[0].certification_basis, "ed_certification_batch_002_internal_source_to_record_review");
+  assert.deepEqual(
+    validateEdCertificationBatchReview({
+      review,
+      events,
+      certificationBatches,
+      batchId: "ed_dataset_batch_001",
+      reviewBatchId: "ed_certification_batch_002",
+      manifest: { snapshot_id: "snapshot_test", created_at: "2026-06-17" }
+    }),
+    []
+  );
+});

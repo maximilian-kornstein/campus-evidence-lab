@@ -36,3 +36,5 @@ The review also does not claim that an ED workbook cell proves institutional mis
 Batch 001 is frozen from the existing ED Batch 001 review artifact. Regenerating the pipeline updates the same 250 reviewed records; it must not silently advance to the next 250 records.
 
 To review another ED batch, create a new named batch-review artifact rather than letting Batch 001 move.
+
+Batch 002 now exists separately as `data/ed-certification-batch-002-review.json`. Batch 001 and Batch 002 must remain separate frozen artifacts with separate certification bases.

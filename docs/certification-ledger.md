@@ -7,7 +7,7 @@
 - `blocked`: a source or locator blocker prevents certification.
 - `awaiting_review`: one or more gates still need source-to-record review.
 
-The ledger is generated from event records, source metadata, record-quality audit rows, the review-debt ledger, Gold v1 certification status, and explicit bounded batch-review artifacts such as ED Certification Batch 001. It is not outside validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.
+The ledger is generated from event records, source metadata, record-quality audit rows, the review-debt ledger, Gold v1 certification status, and explicit bounded batch-review artifacts such as ED Certification Batch 001 and ED Certification Batch 002. It is not outside validation, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal adjudication.
 
 ## Gates
 
@@ -23,7 +23,19 @@ Each row includes gate detail for:
 - rationale specificity
 - overclaim risk
 
-## ED Batch 001 Review
+## Current Ledger Counts
+
+After applying Gold v1 and the first two frozen ED review artifacts, the ledger currently reports:
+
+- 4,000 total records
+- 516 certified
+- 7 not certified
+- 2 blocked
+- 3,475 awaiting review
+
+These counts describe internal source-to-record certification status, not external validation or campus quality.
+
+## ED Batch Reviews
 
 `data/ed-certification-batch-001-review.json` applies source-cell locators to a frozen first ED dataset batch:
 
@@ -32,6 +44,12 @@ Each row includes gate detail for:
 - 1 blocked
 
 The blocked record is not certified because the workbook locator remains ambiguous. Batch 001 is frozen so repeat generation cannot silently certify the next batch.
+
+`data/ed-certification-batch-002-review.json` applies the same gate standard to a second frozen ED dataset review wave:
+
+- 250 records reviewed
+- 250 certified
+- 0 blocked
 
 Matched source-cell provenance is necessary but not sufficient. ED records still need date precision, category fit, affected-label boundary, response-depth, rationale-specificity, and overclaim-risk gates to pass before certification.
 

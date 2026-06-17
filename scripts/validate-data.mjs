@@ -127,6 +127,7 @@ const [
   edDatasetProvenanceAudit,
   certificationBatches,
   edCertificationBatchReview,
+  edCertificationBatch002Review,
   manifest
 ] = await Promise.all([
   readJson(paths.events),
@@ -162,6 +163,7 @@ const [
   readJson(paths.edDatasetProvenanceAudit),
   readJson(paths.certificationBatches),
   readJson(paths.edCertificationBatchReview),
+  readJson(paths.edCertificationBatch002Review),
   readJson(paths.manifest)
 ]);
 
@@ -653,6 +655,16 @@ errors.push(...validateCertificationLedger({ ledger: certificationLedger, events
 errors.push(...validateEdDatasetProvenanceAudit({ audit: edDatasetProvenanceAudit, events, manifest }));
 errors.push(...validateCertificationBatches({ batches: certificationBatches, certificationLedger }));
 errors.push(...validateEdCertificationBatchReview({ review: edCertificationBatchReview, events, certificationBatches, manifest }));
+errors.push(
+  ...validateEdCertificationBatchReview({
+    review: edCertificationBatch002Review,
+    events,
+    certificationBatches,
+    sourceBatchId: "ed_dataset_batch_001",
+    reviewBatchId: "ed_certification_batch_002",
+    manifest
+  })
+);
 if (hasProhibitedRecordAuditClaim(JSON.stringify(recordQualityAudit))) {
   errors.push("record-quality-audit includes prohibited validation, ranking, safety, frequency, endorsement, or legal-truth language");
 }

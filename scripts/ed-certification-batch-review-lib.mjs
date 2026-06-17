@@ -1,5 +1,5 @@
-const CERTIFICATION_BASIS = "ed_dataset_batch_001_internal_source_to_record_review";
-const DEFAULT_BATCH_ID = "ed_dataset_batch_001";
+const DEFAULT_SOURCE_BATCH_ID = "ed_dataset_batch_001";
+const DEFAULT_REVIEW_BATCH_ID = "ed_dataset_batch_001";
 const STANDARD_VERSION = "certification_rules_v1";
 
 const BIAS_LABELS = {
@@ -42,6 +42,22 @@ const GATE_ORDER = [
 
 const PROHIBITED_CERTIFICATION_PATTERN =
   /\b(?:safest|most dangerous|worst school|best school|endorsed by|approved by|validated by|outside validated|externally validated|external audit|external validation|safety score|safety scoring|severity score|severity scoring|school ranking|prevalence estimate|estimates prevalence|frequency measurement|frequency measure|legal truth)\b/gi;
+
+function reviewNumber(reviewBatchId) {
+  return String(reviewBatchId ?? "").match(/_(\d{3})$/)?.[1] ?? "001";
+}
+
+function artifactIdForReviewBatch(reviewBatchId) {
+  return `ed_certification_batch_${reviewNumber(reviewBatchId)}_review_v1`;
+}
+
+function certificationBasisForReviewBatch(reviewBatchId) {
+  return `${reviewBatchId}_internal_source_to_record_review`;
+}
+
+function reviewLabel(reviewBatchId) {
+  return `Batch ${reviewNumber(reviewBatchId)}`;
+}
 
 function compact(items) {
   return (items ?? []).filter((item) => item !== null && item !== undefined && String(item).trim() !== "");
@@ -203,7 +219,8 @@ function rationaleFields({ event, provenance }) {
   };
 }
 
-function reviewedRecord({ event, batchRow, provenance }) {
+function reviewedRecord({ event, batchRow, provenance, reviewBatchId }) {
+  const certificationBasis = certificationBasisForReviewBatch(reviewBatchId);
   const gates = gateReviews({ event, batchRow, provenance });
   const certificationStatus = statusForGateReviews(gates);
   const openGates = Object.entries(gates)
@@ -214,10 +231,10 @@ function reviewedRecord({ event, batchRow, provenance }) {
     event_id: batchRow.event_id,
     school_id: event?.school_id ?? batchRow.school_id ?? provenance?.school_id ?? null,
     source_family: "ed_campus_safety_dataset",
-    review_batch_id: DEFAULT_BATCH_ID,
+    review_batch_id: reviewBatchId,
     certification_standard_version: STANDARD_VERSION,
     certification_status: certificationStatus,
-    certification_basis: certificationStatus === "certified" ? CERTIFICATION_BASIS : null,
+    certification_basis: certificationStatus === "certified" ? certificationBasis : null,
     not_certified_reason: certificationStatus === "not_certified" ? firstReason(gates, "review") : null,
     blocked_reason: certificationStatus === "blocked" ? firstReason(gates, "block") : null,
     source_locator: provenance?.provenance_status === "matched" ? provenance.locator : null,
@@ -246,15 +263,18 @@ export function buildEdCertificationBatchReview({
   certificationBatches,
   edDatasetProvenanceAudit,
   manifest = {},
-  batchId = DEFAULT_BATCH_ID,
+  batchId = DEFAULT_SOURCE_BATCH_ID,
+  sourceBatchId = batchId,
+  reviewBatchId = DEFAULT_REVIEW_BATCH_ID,
   existingReview = null
 }) {
-  const batch = (certificationBatches.batches ?? []).find((candidate) => candidate.id === batchId);
-  if (!batch) throw new Error(`Missing certification batch ${batchId}`);
+  const batch = (certificationBatches.batches ?? []).find((candidate) => candidate.id === sourceBatchId);
+  if (!batch) throw new Error(`Missing certification batch ${sourceBatchId}`);
   const eventsById = new Map((events ?? []).map((event) => [event.id, event]));
   const provenanceById = new Map((edDatasetProvenanceAudit.records ?? []).map((record) => [record.event_id, record]));
+  const artifactId = artifactIdForReviewBatch(reviewBatchId);
   const existingRows =
-    existingReview?.id === "ed_certification_batch_001_review_v1" && existingReview?.review_batch_id === batchId
+    existingReview?.id === artifactId && existingReview?.review_batch_id === reviewBatchId
       ? (existingReview.records ?? []).map((record) => ({ event_id: record.event_id, school_id: record.school_id }))
       : null;
   const selectedRows = existingRows?.length ? existingRows : (batch.records ?? []);
@@ -263,23 +283,25 @@ export function buildEdCertificationBatchReview({
       reviewedRecord({
         event: eventsById.get(batchRow.event_id),
         batchRow,
-        provenance: provenanceById.get(batchRow.event_id)
+        provenance: provenanceById.get(batchRow.event_id),
+        reviewBatchId
       })
     )
     .sort((a, b) => a.event_id.localeCompare(b.event_id));
 
   return {
-    id: "ed_certification_batch_001_review_v1",
+    id: artifactId,
     snapshot_id: manifest.snapshot_id ?? certificationBatches.snapshot_id ?? "unversioned",
     generated_at: manifest.created_at ?? certificationBatches.generated_at ?? "2026-06-03",
-    review_batch_id: batchId,
+    review_batch_id: reviewBatchId,
+    source_batch_id: sourceBatchId,
     status: "bounded_internal_source_to_record_review",
     certification_standard_version: STANDARD_VERSION,
     selection_method: existingRows?.length
-      ? "Frozen from the existing ED Batch 001 review artifact so repeated generation cannot silently expand the certified set."
-      : "Initialized from certification batch ed_dataset_batch_001; later regenerations freeze this record set.",
+      ? `Frozen from the existing ED ${reviewLabel(reviewBatchId)} review artifact so repeated generation cannot silently expand the certified set.`
+      : `Initialized from certification batch ${sourceBatchId}; later regenerations freeze this record set.`,
     method:
-      "Deterministic Batch 001 review for ED Campus Safety dataset records. It uses current event fields, the ED source-cell provenance audit, and certification_rules_v1 gates. Matched source cells are necessary but not sufficient for certification.",
+      `Deterministic ${reviewLabel(reviewBatchId)} review for ED Campus Safety dataset records. It uses current event fields, the ED source-cell provenance audit, and certification_rules_v1 gates. Matched source cells are necessary but not sufficient for certification.`,
     public_claim_limit:
       "This artifact is internal source-to-record review. It must not be described as third-party review, endorsement, ranking, prevalence measurement, safety scoring, severity scoring, or legal finding.",
     completion_rule:
@@ -298,21 +320,32 @@ export function buildEdCertificationBatchReview({
   };
 }
 
-export function validateEdCertificationBatchReview({ review, events = [], certificationBatches = {}, manifest = {}, batchId = DEFAULT_BATCH_ID }) {
+export function validateEdCertificationBatchReview({
+  review,
+  events = [],
+  certificationBatches = {},
+  manifest = {},
+  batchId = DEFAULT_SOURCE_BATCH_ID,
+  sourceBatchId = batchId,
+  reviewBatchId = DEFAULT_REVIEW_BATCH_ID
+}) {
   const errors = [];
-  const batch = (certificationBatches.batches ?? []).find((candidate) => candidate.id === batchId);
-  const usesFrozenSelection = /^Frozen from the existing ED Batch 001 review artifact/.test(review.selection_method ?? "");
+  const batch = (certificationBatches.batches ?? []).find((candidate) => candidate.id === sourceBatchId);
+  const usesFrozenSelection = /^Frozen from the existing ED Batch \d+ review artifact/.test(review.selection_method ?? "");
   const batchIds = new Set((batch?.records ?? []).map((record) => record.event_id));
   const reviewIds = new Set((review.records ?? []).map((record) => record.event_id));
   const eventIds = new Set((events ?? []).map((event) => event.id));
+  const artifactId = artifactIdForReviewBatch(reviewBatchId);
+  const expectedBasis = certificationBasisForReviewBatch(reviewBatchId);
 
-  if (review.id !== "ed_certification_batch_001_review_v1") errors.push("ed certification batch review id must be ed_certification_batch_001_review_v1");
+  if (review.id !== artifactId) errors.push(`ed certification batch review id must be ${artifactId}`);
   if (review.snapshot_id !== (manifest.snapshot_id ?? review.snapshot_id)) errors.push("ed certification batch review snapshot_id must match snapshot manifest");
   if (review.generated_at !== (manifest.created_at ?? review.generated_at)) errors.push("ed certification batch review generated_at must match snapshot manifest");
-  if (review.review_batch_id !== batchId) errors.push(`ed certification batch review must target ${batchId}`);
+  if (review.review_batch_id !== reviewBatchId) errors.push(`ed certification batch review must target ${reviewBatchId}`);
+  if (review.source_batch_id !== sourceBatchId) errors.push(`ed certification batch review source_batch_id must be ${sourceBatchId}`);
   if (review.certification_standard_version !== STANDARD_VERSION) errors.push(`ed certification batch review must use ${STANDARD_VERSION}`);
   if (!review.selection_method) errors.push("ed certification batch review missing selection_method");
-  if (!batch && !usesFrozenSelection) errors.push(`ed certification batch review missing source batch ${batchId}`);
+  if (!batch && !usesFrozenSelection) errors.push(`ed certification batch review missing source batch ${sourceBatchId}`);
   if (reviewIds.size !== (review.records ?? []).length || (review.records ?? []).length === 0) {
     errors.push("ed certification batch review must include unique reviewed records");
   }
@@ -332,6 +365,7 @@ export function validateEdCertificationBatchReview({ review, events = [], certif
     if (!["certified", "not_certified", "blocked"].includes(record.certification_status)) {
       errors.push(`ed certification batch review row ${record.event_id} has invalid status`);
     }
+    if (record.review_batch_id !== reviewBatchId) errors.push(`ed certification batch review row ${record.event_id} has wrong review_batch_id`);
     for (const gateId of GATE_ORDER) {
       const gateReview = record.gate_reviews?.[gateId];
       if (!gateReview || !["pass", "review", "block"].includes(gateReview.status) || !gateReview.detail || !gateReview.required_action) {
@@ -339,7 +373,7 @@ export function validateEdCertificationBatchReview({ review, events = [], certif
       }
     }
     if (record.certification_status === "certified") {
-      if (record.certification_basis !== CERTIFICATION_BASIS) errors.push(`ed certification batch review row ${record.event_id} certified without batch basis`);
+      if (record.certification_basis !== expectedBasis) errors.push(`ed certification batch review row ${record.event_id} certified without batch basis`);
       const failingGate = Object.entries(record.gate_reviews ?? {}).find(([, gateReview]) => gateReview.status !== "pass");
       if (failingGate) errors.push(`ed certification batch review row ${record.event_id} certified with non-passing gate ${failingGate[0]}`);
       if (!record.source_locator?.cell) errors.push(`ed certification batch review row ${record.event_id} certified without source cell locator`);

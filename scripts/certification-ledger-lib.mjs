@@ -255,6 +255,24 @@ function certificationRow({ event, sourcesById, debtRow, goldStatus, edBatchRevi
   return row;
 }
 
+function edBatchReviewsByEventId({ edCertificationBatchReview, edCertificationBatchReviews }) {
+  const artifacts = [];
+  if (Array.isArray(edCertificationBatchReviews)) artifacts.push(...edCertificationBatchReviews);
+  else if (edCertificationBatchReviews?.records) artifacts.push(edCertificationBatchReviews);
+  if (edCertificationBatchReview?.records) artifacts.push(edCertificationBatchReview);
+
+  const rowsByEventId = new Map();
+  for (const artifact of artifacts) {
+    for (const row of artifact.records ?? []) {
+      if (rowsByEventId.has(row.event_id)) {
+        throw new Error(`duplicate ED batch review row for ${row.event_id}`);
+      }
+      rowsByEventId.set(row.event_id, row);
+    }
+  }
+  return rowsByEventId;
+}
+
 function sourceFamilyCertification(records) {
   const families = [...new Set(records.map((record) => record.source_family))].sort();
   return Object.fromEntries(
@@ -314,13 +332,14 @@ export function buildCertificationLedger({
   reviewDebtLedger = {},
   goldV1CertificationStatus = {},
   edCertificationBatchReview = {},
+  edCertificationBatchReviews = null,
   manifest = {},
   batchLimit = BATCH_001_LIMIT
 }) {
   const sourcesById = sourceMap(sources);
   const debtByEventId = new Map((reviewDebtLedger.records ?? []).map((record) => [record.event_id, record]));
   const goldByEventId = new Map((goldV1CertificationStatus.records ?? []).map((record) => [record.event_id, record]));
-  const edBatchByEventId = new Map((edCertificationBatchReview.records ?? []).map((record) => [record.event_id, record]));
+  const edBatchByEventId = edBatchReviewsByEventId({ edCertificationBatchReview, edCertificationBatchReviews });
   const records = events
     .map((event) =>
       certificationRow({
