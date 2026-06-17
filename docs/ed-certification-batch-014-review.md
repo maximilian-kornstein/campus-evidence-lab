@@ -1,6 +1,6 @@
-# ED Certification Batch 012 Review
+# ED Certification Batch 014 Review
 
-`data/ed-certification-batch-012-review.json` is the twelfth bounded ED Campus Safety dataset source-to-record certification review.
+`data/ed-certification-batch-014-review.json` is the fourteenth bounded ED Campus Safety dataset source-to-record certification review.
 
 Current result:
 
@@ -9,13 +9,13 @@ Current result:
 - not certified: 0
 - blocked: 1
 
-Batch 012 was initialized from the next ED dataset work window exposed by the certification-batch manifest after Batch 011 was applied. The review artifact freezes those 250 event ids so regeneration cannot silently move the review wave to later records.
+Batch 014 was initialized from the next ED dataset work window exposed by the certification-batch manifest after Batch 013 was applied. The review artifact freezes those 250 event ids so regeneration cannot silently move the review wave to later records.
 
 ## Blocked Records
 
 The blocked record is not certified because the source-cell locator remains ambiguous:
 
-- `evt_2026_3775`: multiple workbook rows matched `eastern_oklahoma_state_college`, `INTIM_REL21`, and count `1`.
+- `evt_2026_1977`: multiple workbook rows matched `tufts_university`, `INTIM_SEX23`, and count `1`.
 
 This record remains blocked until the locator ambiguity can be resolved without guessing.
 
@@ -41,8 +41,6 @@ The review does not claim that an ED workbook cell proves institutional miscondu
 
 ## Freeze Rule
 
-Batch 012 is a named review artifact with its own certification basis: `ed_certification_batch_012_internal_source_to_record_review`.
+Batch 014 is a named review artifact with its own certification basis: `ed_certification_batch_014_internal_source_to_record_review`.
 
-Regenerating the pipeline must update this same reviewed record set. To review another ED batch, create a new named batch-review artifact rather than letting Batch 012 move.
-
-Batch 013 now continues this sequence in `data/ed-certification-batch-013-review.json`.
+Regenerating the pipeline must update this same reviewed record set. To review another ED batch, create a new named batch-review artifact rather than letting Batch 014 move.

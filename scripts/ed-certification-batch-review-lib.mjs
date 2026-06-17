@@ -266,7 +266,8 @@ export function buildEdCertificationBatchReview({
   batchId = DEFAULT_SOURCE_BATCH_ID,
   sourceBatchId = batchId,
   reviewBatchId = DEFAULT_REVIEW_BATCH_ID,
-  existingReview = null
+  existingReview = null,
+  excludedEventIds = new Set()
 }) {
   const batch = (certificationBatches.batches ?? []).find((candidate) => candidate.id === sourceBatchId);
   if (!batch) throw new Error(`Missing certification batch ${sourceBatchId}`);
@@ -277,7 +278,8 @@ export function buildEdCertificationBatchReview({
     existingReview?.id === artifactId && existingReview?.review_batch_id === reviewBatchId
       ? (existingReview.records ?? []).map((record) => ({ event_id: record.event_id, school_id: record.school_id }))
       : null;
-  const selectedRows = existingRows?.length ? existingRows : (batch.records ?? []);
+  const excludedIds = excludedEventIds instanceof Set ? excludedEventIds : new Set(excludedEventIds ?? []);
+  const selectedRows = existingRows?.length ? existingRows : (batch.records ?? []).filter((batchRow) => !excludedIds.has(batchRow.event_id));
   const records = selectedRows
     .map((batchRow) =>
       reviewedRecord({

@@ -2,10 +2,12 @@ import { existsSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { paths, readJson, writeJson } from "./lib.mjs";
 import { buildEdCertificationBatchReview, validateEdCertificationBatchReview } from "./ed-certification-batch-review-lib.mjs";
-import { reviewSpecByBatchId } from "./ed-certification-review-registry.mjs";
+import { ED_CERTIFICATION_REVIEW_SPECS, reviewSpecByBatchId } from "./ed-certification-review-registry.mjs";
 
 export async function generateEdCertificationReview(reviewBatchId) {
   const spec = reviewSpecByBatchId(reviewBatchId);
+  const specIndex = ED_CERTIFICATION_REVIEW_SPECS.findIndex((candidate) => candidate.reviewBatchId === spec.reviewBatchId);
+  const priorReviewSpecs = ED_CERTIFICATION_REVIEW_SPECS.slice(0, specIndex).filter((candidate) => existsSync(paths[candidate.dataPathKey]));
   const [events, certificationBatches, edDatasetProvenanceAudit, existingReview, manifest] = await Promise.all([
     readJson(paths.events),
     readJson(paths.certificationBatches),
@@ -13,12 +15,15 @@ export async function generateEdCertificationReview(reviewBatchId) {
     existsSync(paths[spec.dataPathKey]) ? readJson(paths[spec.dataPathKey]) : null,
     readJson(paths.manifest)
   ]);
+  const priorReviewArtifacts = await Promise.all(priorReviewSpecs.map((candidate) => readJson(paths[candidate.dataPathKey])));
+  const excludedEventIds = new Set(priorReviewArtifacts.flatMap((artifact) => (artifact.records ?? []).map((record) => record.event_id)));
 
   const review = buildEdCertificationBatchReview({
     events,
     certificationBatches,
     edDatasetProvenanceAudit,
     existingReview,
+    excludedEventIds,
     reviewBatchId: spec.reviewBatchId,
     sourceBatchId: spec.sourceBatchId,
     manifest

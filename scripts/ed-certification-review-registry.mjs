@@ -141,6 +141,54 @@ export const ED_CERTIFICATION_REVIEW_SPECS = [
     pageTitle: "ED Certification Batch 012 Review",
     pageKicker: "Applied ED Batch 012 review",
     previousRoute: "/ed-certification-batch-011/",
+    nextRoute: "/ed-certification-batch-013/"
+  },
+  {
+    reviewBatchId: "ed_certification_batch_013",
+    sourceBatchId: "ed_dataset_batch_001",
+    dataPathKey: "edCertificationBatch013Review",
+    route: "/ed-certification-batch-013/",
+    outputDir: "ed-certification-batch-013",
+    artifactName: "ed-certification-batch-013-review.json",
+    pageTitle: "ED Certification Batch 013 Review",
+    pageKicker: "Applied ED Batch 013 review",
+    previousRoute: "/ed-certification-batch-012/",
+    nextRoute: "/ed-certification-batch-014/"
+  },
+  {
+    reviewBatchId: "ed_certification_batch_014",
+    sourceBatchId: "ed_dataset_batch_001",
+    dataPathKey: "edCertificationBatch014Review",
+    route: "/ed-certification-batch-014/",
+    outputDir: "ed-certification-batch-014",
+    artifactName: "ed-certification-batch-014-review.json",
+    pageTitle: "ED Certification Batch 014 Review",
+    pageKicker: "Applied ED Batch 014 review",
+    previousRoute: "/ed-certification-batch-013/",
+    nextRoute: "/ed-certification-batch-015/"
+  },
+  {
+    reviewBatchId: "ed_certification_batch_015",
+    sourceBatchId: "ed_dataset_batch_001",
+    dataPathKey: "edCertificationBatch015Review",
+    route: "/ed-certification-batch-015/",
+    outputDir: "ed-certification-batch-015",
+    artifactName: "ed-certification-batch-015-review.json",
+    pageTitle: "ED Certification Batch 015 Review",
+    pageKicker: "Applied ED Batch 015 review",
+    previousRoute: "/ed-certification-batch-014/",
+    nextRoute: "/ed-certification-batch-016/"
+  },
+  {
+    reviewBatchId: "ed_certification_batch_016",
+    sourceBatchId: "ed_dataset_batch_001",
+    dataPathKey: "edCertificationBatch016Review",
+    route: "/ed-certification-batch-016/",
+    outputDir: "ed-certification-batch-016",
+    artifactName: "ed-certification-batch-016-review.json",
+    pageTitle: "ED Certification Batch 016 Review",
+    pageKicker: "Applied ED Batch 016 review",
+    previousRoute: "/ed-certification-batch-015/",
     nextRoute: null
   }
 ];

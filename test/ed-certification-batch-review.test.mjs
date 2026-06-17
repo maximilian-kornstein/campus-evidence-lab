@@ -101,13 +101,41 @@ test("ED certification review registry lists applied review artifacts in order",
         dataPathKey: "edCertificationBatch012Review",
         route: "/ed-certification-batch-012/",
         artifactName: "ed-certification-batch-012-review.json"
+      },
+      {
+        reviewBatchId: "ed_certification_batch_013",
+        sourceBatchId: "ed_dataset_batch_001",
+        dataPathKey: "edCertificationBatch013Review",
+        route: "/ed-certification-batch-013/",
+        artifactName: "ed-certification-batch-013-review.json"
+      },
+      {
+        reviewBatchId: "ed_certification_batch_014",
+        sourceBatchId: "ed_dataset_batch_001",
+        dataPathKey: "edCertificationBatch014Review",
+        route: "/ed-certification-batch-014/",
+        artifactName: "ed-certification-batch-014-review.json"
+      },
+      {
+        reviewBatchId: "ed_certification_batch_015",
+        sourceBatchId: "ed_dataset_batch_001",
+        dataPathKey: "edCertificationBatch015Review",
+        route: "/ed-certification-batch-015/",
+        artifactName: "ed-certification-batch-015-review.json"
+      },
+      {
+        reviewBatchId: "ed_certification_batch_016",
+        sourceBatchId: "ed_dataset_batch_001",
+        dataPathKey: "edCertificationBatch016Review",
+        route: "/ed-certification-batch-016/",
+        artifactName: "ed-certification-batch-016-review.json"
       }
     ]
   );
 });
 
 test("reviewSpecByBatchId resolves configured review specs and rejects unknown ids", () => {
-  assert.equal(reviewSpecByBatchId("ed_certification_batch_012").dataPathKey, "edCertificationBatch012Review");
+  assert.equal(reviewSpecByBatchId("ed_certification_batch_016").dataPathKey, "edCertificationBatch016Review");
   assert.throws(() => reviewSpecByBatchId("missing_review_batch"), /Unknown ED certification review batch/);
 });
 
@@ -567,4 +595,86 @@ test("buildEdCertificationBatchReview freezes a newly initialized named review i
     }),
     []
   );
+});
+
+test("buildEdCertificationBatchReview excludes prior reviewed rows when initializing a later wave", () => {
+  const events = [
+    {
+      id: "evt_prior_review",
+      school_id: "school_prior",
+      date: "2024-01-01",
+      date_precision: "year",
+      category: "Vandalism",
+      affected_communities: ["Religion"],
+      institutional_response:
+        "The record summarizes a Department of Education Clery/campus-safety dataset cell and does not independently evaluate investigative, disciplinary, or institutional response outcomes.",
+      source_ids: ["src_ed"],
+      tags: ["ed-campus-safety-data", "vandal-rel24"]
+    },
+    {
+      id: "evt_new_review",
+      school_id: "school_new",
+      date: "2024-01-01",
+      date_precision: "year",
+      category: "Vandalism",
+      affected_communities: ["Religion"],
+      institutional_response:
+        "The record summarizes a Department of Education Clery/campus-safety dataset cell and does not independently evaluate investigative, disciplinary, or institutional response outcomes.",
+      source_ids: ["src_ed"],
+      tags: ["ed-campus-safety-data", "vandal-rel24"]
+    }
+  ];
+  const certificationBatches = {
+    id: "certification_batches_v1",
+    snapshot_id: "snapshot_test",
+    generated_at: "2026-06-17",
+    batches: [
+      {
+        id: "ed_dataset_batch_001",
+        records: [
+          { event_id: "evt_prior_review", school_id: "school_prior" },
+          { event_id: "evt_new_review", school_id: "school_new" }
+        ]
+      }
+    ]
+  };
+  const edDatasetProvenanceAudit = {
+    records: [
+      {
+        event_id: "evt_new_review",
+        school_id: "school_new",
+        code_tag: "vandal-rel24",
+        source_year: "2024",
+        expected_column: "VANDAL_REL24",
+        expected_count: 1,
+        provenance_status: "matched",
+        locator: {
+          workbook: "Oncampushate222324.xlsx",
+          sheet: "sheet1",
+          row: 25,
+          column: "VANDAL_REL24",
+          column_letter: "NU",
+          cell: "NU25",
+          cell_value: "1",
+          locator: "Oncampushate222324.xlsx > sheet1 row 25 > column VANDAL_REL24 > cell NU25"
+        }
+      }
+    ]
+  };
+
+  const review = buildEdCertificationBatchReview({
+    events,
+    certificationBatches,
+    edDatasetProvenanceAudit,
+    excludedEventIds: new Set(["evt_prior_review"]),
+    reviewBatchId: "ed_certification_batch_016",
+    sourceBatchId: "ed_dataset_batch_001",
+    manifest: { snapshot_id: "snapshot_test", created_at: "2026-06-17" }
+  });
+
+  assert.deepEqual(
+    review.records.map((record) => record.event_id),
+    ["evt_new_review"]
+  );
+  assert.equal(review.records[0].certification_status, "certified");
 });

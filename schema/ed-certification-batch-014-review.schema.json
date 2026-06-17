@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/ed-certification-batch-014-review.schema.json",
+  "title": "Campus Evidence Lab ED Certification Batch 014 Review",
+  "type": "object",
+  "required": [
+    "id",
+    "snapshot_id",
+    "generated_at",
+    "review_batch_id",
+    "source_batch_id",
+    "status",
+    "certification_standard_version",
+    "selection_method",
+    "method",
+    "public_claim_limit",
+    "completion_rule",
+    "totals",
+    "status_counts",
+    "open_gate_counts",
+    "provenance_status_counts",
+    "records"
+  ],
+  "properties": {
+    "id": { "const": "ed_certification_batch_014_review_v1" },
+    "snapshot_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "review_batch_id": { "const": "ed_certification_batch_014" },
+    "source_batch_id": { "const": "ed_dataset_batch_001" },
+    "status": { "const": "bounded_internal_source_to_record_review" },
+    "certification_standard_version": { "const": "certification_rules_v1" },
+    "selection_method": { "type": "string" },
+    "method": { "type": "string" },
+    "public_claim_limit": { "type": "string" },
+    "completion_rule": { "type": "string" },
+    "totals": { "type": "object" },
+    "status_counts": { "type": "object" },
+    "open_gate_counts": { "type": "object" },
+    "provenance_status_counts": { "type": "object" },
+    "records": { "type": "array" }
+  }
+}

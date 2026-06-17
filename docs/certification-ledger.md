@@ -25,13 +25,13 @@ Each row includes gate detail for:
 
 ## Current Ledger Counts
 
-After applying Gold v1 and the first twelve frozen ED review artifacts, the ledger currently reports:
+After applying Gold v1 and the first sixteen frozen ED review artifacts, the ledger currently reports:
 
 - 4,000 total records
-- 2,978 certified
+- 3,809 certified
 - 7 not certified
-- 40 blocked
-- 975 awaiting review
+- 44 blocked
+- 140 awaiting review
 
 These counts describe internal source-to-record certification status, not external validation or campus quality.
 
@@ -110,6 +110,32 @@ The blocked record is not certified because the workbook locator remains ambiguo
 - 250 records reviewed
 - 249 certified
 - 1 blocked
+
+`data/ed-certification-batch-013-review.json` applies the same gate standard to a thirteenth frozen ED dataset review wave:
+
+- 250 records reviewed
+- 250 certified
+- 0 blocked
+
+`data/ed-certification-batch-014-review.json` applies the same gate standard to a fourteenth frozen ED dataset review wave:
+
+- 250 records reviewed
+- 249 certified
+- 1 blocked
+
+`data/ed-certification-batch-015-review.json` applies the same gate standard to a fifteenth frozen ED dataset review wave:
+
+- 250 records reviewed
+- 248 certified
+- 2 blocked
+
+`data/ed-certification-batch-016-review.json` applies the same gate standard to a sixteenth frozen ED dataset review wave:
+
+- 86 records reviewed
+- 85 certified
+- 1 blocked
+
+After Batch 016, the ED Campus Safety dataset source family has no awaiting-review rows in the certification ledger. It has 3,802 certified rows and 43 blocked rows. The blocked rows remain unresolved rather than certified.
 
 Matched source-cell provenance is necessary but not sufficient. ED records still need date precision, category fit, affected-label boundary, response-depth, rationale-specificity, and overclaim-risk gates to pass before certification.
 
