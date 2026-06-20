@@ -4,6 +4,48 @@
 
 First outreach batch sent on 2026-06-05.
 
+Before drafting any new batch or follow-up, run `outreach/outreach-preflight-checklist.md` and update `outreach/relationship-ledger.csv`. Do not rely on memory, starred mail alone, or a single date label. A contact or organization that has replied, received a packet, scheduled a call, routed the project internally, declined, or has a future draft is not eligible for cold outreach without manual review.
+
+## Current Link Policy
+
+Use the primary domain in all new and revised outreach:
+
+```text
+Public site: https://campusevidencelab.org/
+Research guide: https://campusevidencelab.org/research-guide/
+Press brief: https://campusevidencelab.org/press/
+Journalist guide: https://campusevidencelab.org/journalist-guide/
+Reviewer brief: https://campusevidencelab.org/reviewer-brief/
+```
+
+Do not use the old GitHub Pages URL in new drafts except as a fallback if the primary domain is unavailable.
+
+## Daily Outreach Composition
+
+Starting with future batches, daily outreach capacity is 30 total targets:
+
+- 20 core CEL outreach targets: organizations, journalists, professors, clinics, civil-rights reviewers, student newsrooms, and public-interest reporting/research contacts.
+- 10 protocol-adjacent targets for the coming-soon Campus Evidence Lab open-source crypto protocol.
+
+The 10 protocol-adjacent targets should come from these categories:
+
+- antisemitism research organizations
+- data journalists and investigative reporters
+- journalism innovation labs
+- law school civil-rights clinics
+- professors studying hate, discrimination, extremism, or campus climate
+- civic tech organizations
+- open-source public-interest technologists
+- crypto public-goods builders
+- data provenance / attestation protocol builders
+- nonprofit technology grantmakers
+- AI accountability researchers
+- digital archive and preservation groups
+- student civil-rights organizations
+- university policy researchers
+
+Protocol-adjacent outreach should still be framed carefully: the protocol is coming soon, so the ask should be for advice, fit, routing, collaboration perspective, or protocol-design feedback, not a claim that the protocol is already live.
+
 The contact route is marked as `Unknown or mixed contact route` when the exact form or email is uncertain. This is acceptable for the tracker. Do not backfill details from memory unless the route can be verified from sent mail or a saved form receipt.
 
 `cecr.psu.edu` was listed twice and is currently tracked as one organization with a duplicate-attempt note.
@@ -68,8 +110,8 @@ I wanted to briefly follow up on my note about Campus Evidence Lab, a public-sou
 
 I know trying a new archive may not be realistic. Even one sentence on whether it seems useful for reporting, research, routing, or issue tracking would help me decide what to improve next.
 
-Public MVP: https://maximilian-kornstein.github.io/campus-evidence-lab/
-Research guide: https://maximilian-kornstein.github.io/campus-evidence-lab/research-guide/
+Public site: https://campusevidencelab.org/
+Research guide: https://campusevidencelab.org/research-guide/
 
 Thank you,
 Maximilian Kornstein
@@ -115,7 +157,7 @@ Would someone be willing to review the methodology page, source standards, use-l
 Use this link for future outreach once published:
 
 ```text
-Reviewer brief: https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-brief/
+Reviewer brief: https://campusevidencelab.org/reviewer-brief/
 ```
 
 ## Narrow-Ask Rule
@@ -147,6 +189,8 @@ Move immediately to:
 - send the 10-record packet when useful
 - ask the three narrow review questions
 - log the reply in the tracker
+
+Also mark the person and, when appropriate, the organization as warm in `outreach/relationship-ledger.csv`. Future contact should continue the relationship; it should not restart the cold outreach sequence.
 
 The first positive reply should convert into a documented use or review task, not another broad email.
 

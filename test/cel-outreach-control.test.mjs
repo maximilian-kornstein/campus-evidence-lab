@@ -83,6 +83,39 @@ test("initializes autonomous outreach indexes and uniqueness guards", () => {
   assert(indexes.includes("uniq_followup_thread_sequence"));
 });
 
+test("allows autonomous queue rows to omit optional preflight foreign keys", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+
+  initDb(dbPath);
+
+  const row = sqlite(
+    dbPath,
+    `
+      PRAGMA foreign_keys = ON;
+      INSERT INTO organizations (id, name, domain)
+      VALUES ('org-basic', 'Example Org', 'example.org');
+      INSERT INTO contacts (id, name, email, organization_id, domain)
+      VALUES ('contact-basic', 'Example Person', 'person@example.org', 'org-basic', 'example.org');
+      INSERT INTO campaigns (id, name, target_send_date, campaign_type)
+      VALUES ('campaign-basic', 'Basic Campaign', '2026-07-01', 'usage');
+      INSERT INTO campaign_targets (id, campaign_id, contact_id, organization_id, intended_ask, template_type)
+      VALUES ('target-basic', 'campaign-basic', 'contact-basic', 'org-basic', 'usage permission', 'journalist');
+      INSERT INTO outreach_queue (id, campaign_id, target_id, lane, send_date)
+      VALUES ('queue-basic', 'campaign-basic', 'target-basic', 'usage', '2026-07-01');
+      INSERT INTO followup_queue (id, source_thread_id, sequence_no, due_date)
+      VALUES ('followup-basic', 'thread-basic', 1, '2026-07-08');
+      SELECT
+        (SELECT preflight_run_id IS NULL FROM campaign_targets WHERE id = 'target-basic') || '|' ||
+        (SELECT last_preflight_run_id IS NULL FROM outreach_queue WHERE id = 'queue-basic') || '|' ||
+        (SELECT contact_id IS NULL FROM followup_queue WHERE id = 'followup-basic') || '|' ||
+        (SELECT organization_id IS NULL FROM followup_queue WHERE id = 'followup-basic');
+    `,
+  );
+
+  assert.equal(row, "1|1|1|1");
+});
+
 test("imports relationship ledger into organizations contacts and events", () => {
   const tempDir = makeTempDir();
   const dbPath = path.join(tempDir, "control.sqlite");
@@ -324,6 +357,13 @@ test("imports campaign targets from csv for duplicate preflight", () => {
     "--csv",
     targetsPath,
   ]);
+  runNode([
+    "scripts/cel-outreach-control/import-campaign-targets.mjs",
+    "--db",
+    dbPath,
+    "--csv",
+    targetsPath,
+  ]);
 
   const targets = sqlite(
     dbPath,
@@ -343,6 +383,12 @@ test("imports campaign targets from csv for duplicate preflight", () => {
     "campaign-july-usage|kolodner@hechingerreport.org|hechingerreport.org|needs_preflight",
     "campaign-july-usage|new@example.org|example.org|needs_preflight",
   ]);
+
+  const preflightIds = sqlite(
+    dbPath,
+    "SELECT preflight_run_id IS NULL FROM campaign_targets ORDER BY id;",
+  ).split("\n");
+  assert.deepEqual(preflightIds, ["1", "1"]);
 });
 
 test("runs duplicate guard with checklist-backed preflight evidence", () => {
