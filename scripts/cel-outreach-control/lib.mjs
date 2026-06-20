@@ -65,17 +65,22 @@ export const normalizeDomain = (value) => {
 
 export const sqlString = (value) => `'${String(value ?? "").replaceAll("'", "''")}'`;
 
+const withForeignKeys = (sql) => `PRAGMA foreign_keys = ON;\n${sql}`;
+
 export const runSql = (db, sql) =>
   execFileSync("sqlite3", [db], {
     cwd: repoRoot,
-    input: sql,
+    input: withForeignKeys(sql),
     encoding: "utf8",
+    stdio: ["pipe", "pipe", "pipe"],
   });
 
 export const queryJson = (db, sql) => {
-  const output = execFileSync("sqlite3", ["-json", db, sql], {
+  const output = execFileSync("sqlite3", ["-json", db], {
     cwd: repoRoot,
+    input: withForeignKeys(sql),
     encoding: "utf8",
+    stdio: ["pipe", "pipe", "pipe"],
   }).trim();
   return output ? JSON.parse(output) : [];
 };

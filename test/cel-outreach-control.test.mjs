@@ -5,6 +5,8 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
+import { runSql } from "../scripts/cel-outreach-control/lib.mjs";
+
 const repoRoot = path.resolve(import.meta.dirname, "..");
 
 const runNode = (args, options = {}) =>
@@ -114,6 +116,25 @@ test("allows autonomous queue rows to omit optional preflight foreign keys", () 
   );
 
   assert.equal(row, "1|1|1|1");
+});
+
+test("operational sql helper enforces foreign keys", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+
+  initDb(dbPath);
+
+  assert.throws(
+    () =>
+      runSql(
+        dbPath,
+        `
+          INSERT INTO campaign_targets (id, campaign_id, contact_id, organization_id)
+          VALUES ('target-invalid-fk', 'campaign-missing', 'contact-missing', 'org-missing');
+        `,
+      ),
+    /FOREIGN KEY constraint failed/,
+  );
 });
 
 test("imports relationship ledger into organizations contacts and events", () => {
