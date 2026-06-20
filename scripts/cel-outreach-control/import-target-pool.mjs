@@ -29,7 +29,9 @@ for (const [index, row] of rows.entries()) {
   const email = normalizeEmail(row.email);
   const domain = normalizeDomain(row.domain) || normalizeDomain(email);
   const lane = String(row.lane || "").trim().toLowerCase();
-  const status = String(row.status || "candidate").trim().toLowerCase();
+  const rawStatus = String(row.status ?? "").trim();
+  const statusProvided = rawStatus !== "";
+  const status = statusProvided ? rawStatus.toLowerCase() : "candidate";
 
   if (!["usage", "protocol"].includes(lane)) {
     throw new Error(`Invalid lane for target pool row ${index + 2}: ${lane || "(blank)"}`);
@@ -44,8 +46,23 @@ for (const [index, row] of rows.entries()) {
   }
 
   const contactName = String(row.contact_name || email || domain).trim();
-  const organizationName = String(row.organization || domain || "Unknown organization").trim();
+  const organizationName = String(row.organization || row.organization_name || domain || "Unknown organization").trim();
+  const sourceUrl = String(row.source_url || row.sourceUrl || "").trim();
+  const fitNotes = String(row.fit_notes || row.fitNotes || "").trim();
   const targetPoolId = hashId("target_pool", [email || domain, email ? "" : contactName]);
+  const statusUpdate = statusProvided ? "excluded.status" : "target_pool.status";
+  const updateAssignments = `
+      contact_name = excluded.contact_name,
+      email = excluded.email,
+      organization_name = excluded.organization_name,
+      domain = excluded.domain,
+      lane = excluded.lane,
+      category = excluded.category,
+      source = excluded.source,
+      source_url = excluded.source_url,
+      fit_notes = excluded.fit_notes,
+      status = ${statusUpdate},
+      updated_at = CURRENT_TIMESTAMP`;
 
   sql.push(`
     INSERT INTO target_pool (
@@ -71,23 +88,17 @@ for (const [index, row] of rows.entries()) {
       ${sqlString(lane)},
       ${sqlString(row.category || "")},
       ${sqlString(row.source || "")},
-      ${sqlString(row.source_url || "")},
-      ${sqlString(row.fit_notes || "")},
+      ${sqlString(sourceUrl)},
+      ${sqlString(fitNotes)},
       ${sqlString(status)},
       CURRENT_TIMESTAMP
     )
     ON CONFLICT(id) DO UPDATE SET
-      contact_name = excluded.contact_name,
-      email = excluded.email,
-      organization_name = excluded.organization_name,
-      domain = excluded.domain,
-      lane = excluded.lane,
-      category = excluded.category,
-      source = excluded.source,
-      source_url = excluded.source_url,
-      fit_notes = excluded.fit_notes,
-      status = excluded.status,
-      updated_at = CURRENT_TIMESTAMP;
+      ${updateAssignments}
+    ON CONFLICT(email) WHERE email != '' DO UPDATE SET
+      ${updateAssignments}
+    ON CONFLICT(domain, contact_name) WHERE email = '' AND domain != '' AND contact_name != '' DO UPDATE SET
+      ${updateAssignments};
   `);
 }
 

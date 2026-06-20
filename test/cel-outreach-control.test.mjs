@@ -669,12 +669,12 @@ test("imports autonomous target pool candidates with lane and provenance", () =>
 
   const rows = sqlite(
     dbPath,
-    "SELECT contact_name || '|' || email || '|' || organization_name || '|' || domain || '|' || lane || '|' || status FROM target_pool ORDER BY email;",
+    "SELECT contact_name || '|' || email || '|' || organization_name || '|' || domain || '|' || lane || '|' || category || '|' || source || '|' || source_url || '|' || fit_notes || '|' || status FROM target_pool ORDER BY email;",
   ).split("\n");
 
   assert.deepEqual(rows, [
-    "Protocol Builder|protocol@example.net|Protocol Org|example.net|protocol|candidate",
-    "Usage Editor|usage@example.org|Example News|example.org|usage|candidate",
+    "Protocol Builder|protocol@example.net|Protocol Org|example.net|protocol|data provenance|manual list|https://example.net|Attestation protocol fit|candidate",
+    "Usage Editor|usage@example.org|Example News|example.org|usage|student newsroom|manual list|https://example.org|Campus reporting fit|candidate",
   ]);
 });
 
@@ -770,4 +770,131 @@ test("rejects target pool rows with invalid status", () => {
       ]),
     /Invalid status/,
   );
+});
+
+test("preserves existing target pool status when re-import omits status", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const csvPath = path.join(tempDir, "target-pool.csv");
+  initDb(dbPath);
+  fs.writeFileSync(
+    csvPath,
+    [
+      "contact_name,email,organization,domain,lane,category,source,source_url,fit_notes,status",
+      "Blocked Preserve,blocked-preserve@example.org,Blocked Preserve Org,blocked-preserve.example,usage,student newsroom,manual list,https://blocked-preserve.example,Blocked status,blocked",
+      "Imported Preserve,imported-preserve@example.org,Imported Preserve Org,imported-preserve.example,usage,student newsroom,manual list,https://imported-preserve.example,Imported status,imported",
+      "Exhausted Preserve,exhausted-preserve@example.org,Exhausted Preserve Org,exhausted-preserve.example,protocol,data provenance,manual list,https://exhausted-preserve.example,Exhausted status,exhausted",
+    ].join("\n"),
+  );
+  runNode([
+    "scripts/cel-outreach-control/import-target-pool.mjs",
+    "--db",
+    dbPath,
+    "--csv",
+    csvPath,
+  ]);
+
+  fs.writeFileSync(
+    csvPath,
+    [
+      "contact_name,email,organization,domain,lane,category,source,source_url,fit_notes",
+      "Blocked Preserve,blocked-preserve@example.org,Blocked Preserve Org,blocked-preserve.example,usage,student newsroom,refresh list,https://blocked-preserve.example,Still blocked",
+      "Imported Preserve,imported-preserve@example.org,Imported Preserve Org,imported-preserve.example,usage,student newsroom,refresh list,https://imported-preserve.example,Still imported",
+      "Exhausted Preserve,exhausted-preserve@example.org,Exhausted Preserve Org,exhausted-preserve.example,protocol,data provenance,refresh list,https://exhausted-preserve.example,Still exhausted",
+    ].join("\n"),
+  );
+  runNode([
+    "scripts/cel-outreach-control/import-target-pool.mjs",
+    "--db",
+    dbPath,
+    "--csv",
+    csvPath,
+  ]);
+
+  const rows = sqlite(
+    dbPath,
+    "SELECT email || '|' || status || '|' || source FROM target_pool ORDER BY email;",
+  ).split("\n");
+
+  assert.deepEqual(rows, [
+    "blocked-preserve@example.org|blocked|refresh list",
+    "exhausted-preserve@example.org|exhausted|refresh list",
+    "imported-preserve@example.org|imported|refresh list",
+  ]);
+});
+
+test("updates existing target pool row by email natural key", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const csvPath = path.join(tempDir, "target-pool.csv");
+  initDb(dbPath);
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO target_pool (id, contact_name, email, organization_name, domain, lane, category, source, source_url, fit_notes, status)
+      VALUES ('manual-email-row', 'Old Email Contact', 'natural@example.org', 'Old Org', 'old.example', 'usage', 'old category', 'old source', 'https://old.example', 'old notes', 'blocked');
+    `,
+  );
+  fs.writeFileSync(
+    csvPath,
+    [
+      "contact_name,email,organization_name,domain,lane,category,sourceUrl,fitNotes,status",
+      "Natural Email,natural@example.org,Natural Org,natural.example,protocol,data provenance,https://natural.example,Updated by email,imported",
+    ].join("\n"),
+  );
+
+  runNode([
+    "scripts/cel-outreach-control/import-target-pool.mjs",
+    "--db",
+    dbPath,
+    "--csv",
+    csvPath,
+  ]);
+
+  const rows = sqlite(
+    dbPath,
+    "SELECT id || '|' || contact_name || '|' || organization_name || '|' || domain || '|' || lane || '|' || source_url || '|' || fit_notes || '|' || status FROM target_pool;",
+  ).split("\n");
+
+  assert.deepEqual(rows, [
+    "manual-email-row|Natural Email|Natural Org|natural.example|protocol|https://natural.example|Updated by email|imported",
+  ]);
+});
+
+test("updates existing no-email target pool row by domain and contact natural key", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const csvPath = path.join(tempDir, "target-pool.csv");
+  initDb(dbPath);
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO target_pool (id, contact_name, email, organization_name, domain, lane, category, source, source_url, fit_notes, status)
+      VALUES ('manual-domain-contact-row', 'Domain Contact', '', 'Old Domain Org', 'domain-contact.example', 'usage', 'old category', 'old source', 'https://old-domain.example', 'old notes', 'exhausted');
+    `,
+  );
+  fs.writeFileSync(
+    csvPath,
+    [
+      "contact_name,email,organization_name,domain,lane,category,source,source_url,fit_notes,status",
+      "Domain Contact,,New Domain Org,domain-contact.example,protocol,data provenance,manual refresh,https://domain-contact.example,Updated by domain contact,blocked",
+    ].join("\n"),
+  );
+
+  runNode([
+    "scripts/cel-outreach-control/import-target-pool.mjs",
+    "--db",
+    dbPath,
+    "--csv",
+    csvPath,
+  ]);
+
+  const rows = sqlite(
+    dbPath,
+    "SELECT id || '|' || contact_name || '|' || email || '|' || organization_name || '|' || domain || '|' || lane || '|' || source || '|' || status FROM target_pool;",
+  ).split("\n");
+
+  assert.deepEqual(rows, [
+    "manual-domain-contact-row|Domain Contact||New Domain Org|domain-contact.example|protocol|manual refresh|blocked",
+  ]);
 });
