@@ -644,3 +644,62 @@ test("exports tracker reports for current state and duplicate decisions", () => 
   const warmRelationships = fs.readFileSync(path.join(reportDir, "warm-relationships.csv"), "utf8");
   assert.match(warmRelationships, /Naomi Younger,naomi@amchainitiative\.org,AMCHA Initiative,Call scheduled,Call,2026-07-09/);
 });
+
+test("imports autonomous target pool candidates with lane and provenance", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const csvPath = path.join(tempDir, "target-pool.csv");
+  initDb(dbPath);
+  fs.writeFileSync(
+    csvPath,
+    [
+      "contact_name,email,organization,domain,lane,category,source,source_url,fit_notes",
+      "Usage Editor,usage@example.org,Example News,example.org,usage,student newsroom,manual list,https://example.org,Campus reporting fit",
+      "Protocol Builder,protocol@example.net,Protocol Org,example.net,protocol,data provenance,manual list,https://example.net,Attestation protocol fit",
+    ].join("\n"),
+  );
+
+  runNode([
+    "scripts/cel-outreach-control/import-target-pool.mjs",
+    "--db",
+    dbPath,
+    "--csv",
+    csvPath,
+  ]);
+
+  const rows = sqlite(
+    dbPath,
+    "SELECT contact_name || '|' || email || '|' || organization_name || '|' || domain || '|' || lane || '|' || status FROM target_pool ORDER BY email;",
+  ).split("\n");
+
+  assert.deepEqual(rows, [
+    "Protocol Builder|protocol@example.net|Protocol Org|example.net|protocol|candidate",
+    "Usage Editor|usage@example.org|Example News|example.org|usage|candidate",
+  ]);
+});
+
+test("rejects target pool rows without usage or protocol lane", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const csvPath = path.join(tempDir, "target-pool.csv");
+  initDb(dbPath);
+  fs.writeFileSync(
+    csvPath,
+    [
+      "contact_name,email,organization,domain,lane,category,source,source_url,fit_notes",
+      "Bad Lane,bad@example.org,Bad Org,bad.example,review,unknown,manual list,https://bad.example,Bad lane",
+    ].join("\n"),
+  );
+
+  assert.throws(
+    () =>
+      runNode([
+        "scripts/cel-outreach-control/import-target-pool.mjs",
+        "--db",
+        dbPath,
+        "--csv",
+        csvPath,
+      ]),
+    /Invalid lane/,
+  );
+});
