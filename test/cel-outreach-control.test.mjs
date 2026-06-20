@@ -703,3 +703,71 @@ test("rejects target pool rows without usage or protocol lane", () => {
     /Invalid lane/,
   );
 });
+
+test("imports and updates autonomous target pool status from csv", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const csvPath = path.join(tempDir, "target-pool.csv");
+  initDb(dbPath);
+  fs.writeFileSync(
+    csvPath,
+    [
+      "contact_name,email,organization,domain,lane,category,source,source_url,fit_notes,status",
+      "Blocked Candidate,blocked@example.org,Blocked Org,blocked.example,usage,student newsroom,manual list,https://blocked.example,Not eligible,blocked",
+    ].join("\n"),
+  );
+
+  runNode([
+    "scripts/cel-outreach-control/import-target-pool.mjs",
+    "--db",
+    dbPath,
+    "--csv",
+    csvPath,
+  ]);
+
+  assert.equal(sqlite(dbPath, "SELECT status FROM target_pool WHERE email = 'blocked@example.org';"), "blocked");
+
+  fs.writeFileSync(
+    csvPath,
+    [
+      "contact_name,email,organization,domain,lane,category,source,source_url,fit_notes,status",
+      "Blocked Candidate,blocked@example.org,Blocked Org,blocked.example,usage,student newsroom,manual list,https://blocked.example,Now imported,imported",
+    ].join("\n"),
+  );
+
+  runNode([
+    "scripts/cel-outreach-control/import-target-pool.mjs",
+    "--db",
+    dbPath,
+    "--csv",
+    csvPath,
+  ]);
+
+  assert.equal(sqlite(dbPath, "SELECT status FROM target_pool WHERE email = 'blocked@example.org';"), "imported");
+});
+
+test("rejects target pool rows with invalid status", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const csvPath = path.join(tempDir, "target-pool.csv");
+  initDb(dbPath);
+  fs.writeFileSync(
+    csvPath,
+    [
+      "contact_name,email,organization,domain,lane,category,source,source_url,fit_notes,status",
+      "Bad Status,bad-status@example.org,Bad Status Org,bad-status.example,usage,unknown,manual list,https://bad-status.example,Bad status,queued",
+    ].join("\n"),
+  );
+
+  assert.throws(
+    () =>
+      runNode([
+        "scripts/cel-outreach-control/import-target-pool.mjs",
+        "--db",
+        dbPath,
+        "--csv",
+        csvPath,
+      ]),
+    /Invalid status/,
+  );
+});

@@ -23,14 +23,20 @@ const csvPath = path.resolve(repoRoot, args.csv);
 const rows = parseCsv(fs.readFileSync(csvPath, "utf8"));
 
 const sql = ["BEGIN;"];
+const validStatuses = new Set(["candidate", "imported", "blocked", "exhausted"]);
 
 for (const [index, row] of rows.entries()) {
   const email = normalizeEmail(row.email);
   const domain = normalizeDomain(row.domain) || normalizeDomain(email);
   const lane = String(row.lane || "").trim().toLowerCase();
+  const status = String(row.status || "candidate").trim().toLowerCase();
 
   if (!["usage", "protocol"].includes(lane)) {
     throw new Error(`Invalid lane for target pool row ${index + 2}: ${lane || "(blank)"}`);
+  }
+
+  if (!validStatuses.has(status)) {
+    throw new Error(`Invalid status for target pool row ${index + 2}: ${status || "(blank)"}`);
   }
 
   if (!email && !domain) {
@@ -67,7 +73,7 @@ for (const [index, row] of rows.entries()) {
       ${sqlString(row.source || "")},
       ${sqlString(row.source_url || "")},
       ${sqlString(row.fit_notes || "")},
-      'candidate',
+      ${sqlString(status)},
       CURRENT_TIMESTAMP
     )
     ON CONFLICT(id) DO UPDATE SET
@@ -80,7 +86,7 @@ for (const [index, row] of rows.entries()) {
       source = excluded.source,
       source_url = excluded.source_url,
       fit_notes = excluded.fit_notes,
-      status = CASE WHEN target_pool.status = '' THEN excluded.status ELSE target_pool.status END,
+      status = excluded.status,
       updated_at = CURRENT_TIMESTAMP;
   `);
 }
