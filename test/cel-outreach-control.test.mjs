@@ -1184,6 +1184,61 @@ test("live check allows the current queue draft message id", () => {
   });
 });
 
+test("live check treats raw Gmail sent type as prior sent CEL evidence", () => {
+  const result = evaluateLiveCheck({
+    target: {
+      queueId: "queue-raw-sent",
+      queueDraftMessageId: "draft-current-message",
+    },
+    evidence: [
+      {
+        type: "sent",
+        isCel: true,
+      },
+    ],
+  });
+
+  assert.equal(result.safe, false);
+  assert.deepEqual(result.reasons, ["prior_sent_cel_item"]);
+});
+
+test("live check treats raw Gmail draft type as a draft conflict", () => {
+  const result = evaluateLiveCheck({
+    target: {
+      queueId: "queue-raw-draft-conflict",
+      queueDraftMessageId: "draft-current-message",
+    },
+    evidence: [
+      {
+        type: "draft",
+        messageId: "other",
+        isCel: true,
+      },
+    ],
+  });
+
+  assert.equal(result.safe, false);
+  assert.deepEqual(result.reasons, ["existing_draft_conflict"]);
+});
+
+test("live check keeps raw Gmail current queue draft safe", () => {
+  const result = evaluateLiveCheck({
+    target: {
+      queueId: "queue-raw-draft-current",
+      queueDraftMessageId: "draft-current-message",
+    },
+    evidence: [
+      {
+        type: "draft",
+        messageId: "draft-current-message",
+      },
+    ],
+  });
+
+  assert.equal(result.safe, true);
+  assert.deepEqual(result.reasons, []);
+});
+
 test("apply live check leaves safe queue status unchanged and clears last error", () => {
   const tempDir = makeTempDir();
   const dbPath = path.join(tempDir, "control.sqlite");

@@ -87,7 +87,7 @@ function reasonForEvidence(item = {}) {
   const explicitType = normalizeType(item.type || item.evidenceType || item.evidence_type || item.flagType || item.flag_type);
   if (TYPE_REASON_MAP.has(explicitType)) return TYPE_REASON_MAP.get(explicitType);
 
-  const itemType = normalizeType(item.itemType || item.item_type);
+  const itemType = normalizeType(item.itemType || item.item_type || item.type);
   const labels = normalizeLabels(item.labels);
   const lowerLabels = labels.map((label) => label.toLowerCase());
   const isCel = truthy(item.isCel ?? item.is_cel) || hasCelSignal(item, lowerLabels);
