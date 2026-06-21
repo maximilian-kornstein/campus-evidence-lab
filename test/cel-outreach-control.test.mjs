@@ -5,6 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
+import { evaluateLiveCheck } from "../scripts/cel-outreach-control/live-check.mjs";
 import { runSql } from "../scripts/cel-outreach-control/lib.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
@@ -1100,6 +1101,198 @@ test("fill queue blocks selected candidates rejected by duplicate preflight", ()
   assert.equal(gmailRows, "1");
 });
 
+test("live check blocks unsafe Gmail and relationship evidence with deduplicated reasons", () => {
+  const result = evaluateLiveCheck({
+    target: {
+      queueId: "queue-live-unsafe",
+      queueDraftMessageId: "draft-current-message",
+    },
+    evidence: [
+      {
+        type: "prior_sent_cel_item",
+        messageId: "sent-existing",
+        summary: "CEL outreach was already sent to this contact.",
+      },
+      {
+        type: "prior_sent_cel_item",
+        messageId: "sent-existing-duplicate",
+        summary: "Duplicate signal for the same block reason.",
+      },
+      {
+        type: "existing_draft",
+        messageId: "draft-other-message",
+        summary: "A different CEL draft already exists.",
+      },
+      {
+        type: "inbound_reply_activity",
+        threadId: "thread-reply",
+        summary: "Recipient replied in the relevant thread.",
+      },
+      {
+        type: "starred_thread",
+        threadId: "thread-starred",
+        summary: "Thread is starred for manual review.",
+      },
+      {
+        type: "future_scheduled_item",
+        messageId: "scheduled-future",
+        summary: "Future-looking scheduled CEL item exists.",
+      },
+      {
+        type: "warm_relationship",
+        summary: "Relationship ledger marks the organization warm.",
+      },
+      {
+        type: "blocked_relationship",
+        summary: "Relationship ledger blocks cold outreach.",
+      },
+    ],
+  });
+
+  assert.equal(result.safe, false);
+  assert.deepEqual(result.reasons, [
+    "prior_sent_cel_item",
+    "existing_draft_conflict",
+    "inbound_reply_activity",
+    "starred_or_manual_review_thread",
+    "future_or_scheduled_item",
+    "warm_or_blocked_relationship",
+  ]);
+  assert.match(result.summary, /prior_sent_cel_item/);
+  assert.match(result.summary, /warm_or_blocked_relationship/);
+});
+
+test("live check allows the current queue draft message id", () => {
+  const result = evaluateLiveCheck({
+    target: {
+      queueId: "queue-live-safe",
+      queueDraftMessageId: "draft-current-message",
+    },
+    evidence: [
+      {
+        type: "existing_draft",
+        messageId: "draft-current-message",
+        summary: "The only draft is the draft associated with this queue row.",
+      },
+    ],
+  });
+
+  assert.deepEqual(result, {
+    safe: true,
+    reasons: [],
+    summary: "Live check passed with 1 allowed evidence item(s).",
+  });
+});
+
+test("apply live check leaves safe queue status unchanged and clears last error", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const jsonPath = path.join(tempDir, "live-check-safe.json");
+  initDb(dbPath);
+  seedLiveCheckQueue(dbPath, {
+    queueId: "queue-live-safe",
+    status: "ready_to_send",
+    gmailMessageId: "draft-current-message",
+    idempotencyKey: "queue-live-safe-key",
+    lastError: "previous transient error",
+  });
+  fs.writeFileSync(
+    jsonPath,
+    JSON.stringify({
+      evidence: [
+        {
+          type: "existing_draft",
+          messageId: "draft-current-message",
+          summary: "Current queue draft still exists.",
+        },
+      ],
+    }),
+  );
+
+  runNode([
+    "scripts/cel-outreach-control/apply-live-check.mjs",
+    "--db",
+    dbPath,
+    "--queue-id",
+    "queue-live-safe",
+    "--json",
+    jsonPath,
+  ]);
+
+  const queueRow = sqlite(
+    dbPath,
+    "SELECT status || '|' || (last_live_check_at != '') || '|' || last_error FROM outreach_queue WHERE id = 'queue-live-safe';",
+  );
+  assert.equal(queueRow, "ready_to_send|1|");
+
+  const attempts = sqlite(dbPath, "SELECT count(*) FROM send_attempts WHERE queue_id = 'queue-live-safe';");
+  assert.equal(attempts, "0");
+});
+
+test("apply live check blocks unsafe queue and records blocked send attempt", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const jsonPath = path.join(tempDir, "live-check-unsafe.json");
+  initDb(dbPath);
+  seedLiveCheckQueue(dbPath, {
+    queueId: "queue-live-unsafe",
+    status: "ready_to_send",
+    gmailMessageId: "draft-current-message",
+    idempotencyKey: "queue-live-unsafe-key",
+  });
+  fs.writeFileSync(
+    jsonPath,
+    JSON.stringify({
+      evidence: [
+        {
+          type: "prior_sent_cel_item",
+          messageId: "sent-existing",
+          summary: "Existing sent CEL outreach item.",
+        },
+        {
+          type: "existing_draft",
+          messageId: "draft-other-message",
+          summary: "Different draft exists.",
+        },
+      ],
+    }),
+  );
+
+  runNode([
+    "scripts/cel-outreach-control/apply-live-check.mjs",
+    "--db",
+    dbPath,
+    "--queue-id",
+    "queue-live-unsafe",
+    "--json",
+    jsonPath,
+  ]);
+
+  const queueRow = sqlite(
+    dbPath,
+    "SELECT status || '|' || (last_live_check_at != '') || '|' || last_error FROM outreach_queue WHERE id = 'queue-live-unsafe';",
+  );
+  assert.match(queueRow, /^blocked\|1\|Live check blocked queue: prior_sent_cel_item, existing_draft_conflict/);
+
+  const attemptRow = sqlite(
+    dbPath,
+    `
+      SELECT
+        queue_id || '|' ||
+        idempotency_key || '|' ||
+        result || '|' ||
+        reason || '|' ||
+        live_check_summary
+      FROM send_attempts
+      WHERE queue_id = 'queue-live-unsafe';
+    `,
+  );
+  assert.match(
+    attemptRow,
+    /^queue-live-unsafe\|queue-live-unsafe-key\|blocked\|prior_sent_cel_item,existing_draft_conflict\|Live check blocked queue: prior_sent_cel_item, existing_draft_conflict/,
+  );
+});
+
 function seedTargetPool(dbPath, { usage = 0, protocol = 0 }) {
   const values = [];
   for (const lane of ["usage", "protocol"]) {
@@ -1174,4 +1367,51 @@ function seedExistingQueueRows(dbPath, { sendDate, usage = 0, protocol = 0 }) {
 
   if (statements.length === 0) return;
   sqlite(dbPath, statements.join("\n"));
+}
+
+function seedLiveCheckQueue(
+  dbPath,
+  {
+    queueId,
+    status = "ready_to_send",
+    gmailMessageId = "",
+    idempotencyKey = "",
+    lastError = "",
+  },
+) {
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO organizations (id, name, domain)
+      VALUES ('org-${queueId}', 'Live Check Org', 'live-check.example.org');
+      INSERT INTO contacts (id, name, email, organization_id, domain)
+      VALUES ('contact-${queueId}', 'Live Check Contact', '${queueId}@example.org', 'org-${queueId}', 'live-check.example.org');
+      INSERT INTO campaigns (id, name, target_send_date, campaign_type)
+      VALUES ('campaign-${queueId}', 'Live Check Campaign', '2026-07-06', 'autonomous_outreach');
+      INSERT INTO campaign_targets (id, campaign_id, contact_id, organization_id, approval_status)
+      VALUES ('target-${queueId}', 'campaign-${queueId}', 'contact-${queueId}', 'org-${queueId}', 'approved_for_draft');
+      INSERT INTO outreach_queue (
+        id,
+        campaign_id,
+        target_id,
+        lane,
+        send_date,
+        status,
+        gmail_message_id,
+        idempotency_key,
+        last_error
+      )
+      VALUES (
+        '${queueId}',
+        'campaign-${queueId}',
+        'target-${queueId}',
+        'usage',
+        '2026-07-06',
+        '${status}',
+        '${gmailMessageId}',
+        '${idempotencyKey}',
+        '${lastError}'
+      );
+    `,
+  );
 }
