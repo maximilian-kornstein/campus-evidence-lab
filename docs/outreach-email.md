@@ -24,12 +24,12 @@ Do not default to:
 
 ## Required Links
 
-- Public MVP: https://maximilian-kornstein.github.io/campus-evidence-lab/
-- Reviewer brief: https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-brief/
-- Methodology: https://maximilian-kornstein.github.io/campus-evidence-lab/methodology/
-- Research guide: https://maximilian-kornstein.github.io/campus-evidence-lab/research-guide/
-- Trust packet: https://maximilian-kornstein.github.io/campus-evidence-lab/trust/
-- Reviewer queue: https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-queue/
+- Public MVP: https://campusevidencelab.org/
+- Reviewer brief: https://campusevidencelab.org/reviewer-brief/
+- Methodology: https://campusevidencelab.org/methodology/
+- Research guide: https://campusevidencelab.org/research-guide/
+- Trust packet: https://campusevidencelab.org/trust/
+- Reviewer queue: https://campusevidencelab.org/reviewer-queue/
 
 ## Initial Email: Default Reviewer Version
 
@@ -57,13 +57,13 @@ The smallest useful asks are:
 The most useful feedback would be what feels weakest, overstated, missing, risky, or methodologically immature.
 
 Public MVP:
-https://maximilian-kornstein.github.io/campus-evidence-lab/
+https://campusevidencelab.org/
 
 Reviewer brief:
-https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-brief/
+https://campusevidencelab.org/reviewer-brief/
 
 Methodology:
-https://maximilian-kornstein.github.io/campus-evidence-lab/methodology/
+https://campusevidencelab.org/methodology/
 
 If helpful, I can send a 10-record packet and three narrow review questions.
 
@@ -156,7 +156,7 @@ I wanted to briefly follow up on my note about Campus Evidence Lab.
 I know a full review may not be realistic. Even one sentence on what seems most risky, overstated, missing, or methodologically weak would be useful.
 
 Reviewer brief:
-https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-brief/
+https://campusevidencelab.org/reviewer-brief/
 
 Thank you,
 Maximilian Kornstein
@@ -172,7 +172,7 @@ I wanted to make one final follow-up on Campus Evidence Lab in case the reviewer
 If there is a better person for a narrow methodology or source-audit review, I would be grateful for a redirect.
 
 Reviewer brief:
-https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-brief/
+https://campusevidencelab.org/reviewer-brief/
 
 Thank you,
 Maximilian Kornstein

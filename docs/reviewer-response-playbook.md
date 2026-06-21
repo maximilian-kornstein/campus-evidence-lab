@@ -40,7 +40,7 @@ Reply:
 Understood. Even one sentence on what feels most risky, overstated, or weakest methodologically would be useful.
 
 If easier, the reviewer brief is here:
-https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-brief/
+https://campusevidencelab.org/reviewer-brief/
 ```
 
 Goal:
@@ -58,7 +58,7 @@ Here is the shortest version:
 Campus Evidence Lab is a public-source archive of campus civil-rights records. It is designed to help people inspect documented public records without turning them into rumor, rankings, safety scores, or prevalence claims.
 
 The current reviewer brief is here:
-https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-brief/
+https://campusevidencelab.org/reviewer-brief/
 
 If useful, I can also send a 10-record sample and three narrow review questions.
 ```
@@ -84,10 +84,10 @@ Reply:
 
 ```text
 Thank you. Here is the reviewer brief:
-https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-brief/
+https://campusevidencelab.org/reviewer-brief/
 
 And here is a suggested 10-record sample packet:
-https://maximilian-kornstein.github.io/campus-evidence-lab/research-workspace/?record_ids=evt_2026_0027,evt_2026_0081,evt_2026_0125,evt_2026_0210,evt_2026_0300,evt_2026_0395,evt_2025_0030,evt_2025_0060,evt_2024_0003,evt_2024_0006
+https://campusevidencelab.org/research-workspace/?record_ids=evt_2026_0027,evt_2026_0081,evt_2026_0125,evt_2026_0210,evt_2026_0300,evt_2026_0395,evt_2025_0030,evt_2025_0060,evt_2024_0003,evt_2024_0006
 
 Three narrow questions:
 1. What feels weakest or overstated?
