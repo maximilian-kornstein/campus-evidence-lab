@@ -1348,6 +1348,351 @@ test("apply live check blocks unsafe queue and records blocked send attempt", ()
   );
 });
 
+test("records draft creation and marks queue ready after live check", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  initDb(dbPath);
+  seedAutonomousQueue(dbPath, {
+    queueId: "queue-draft-ready",
+    status: "planned",
+    idempotencyKey: "queue-draft-ready-key",
+    lastError: "previous issue",
+  });
+
+  runNode([
+    "scripts/cel-outreach-control/record-draft-created.mjs",
+    "--db",
+    dbPath,
+    "--queue-id",
+    "queue-draft-ready",
+    "--gmail-draft-id",
+    "draft-1",
+    "--gmail-message-id",
+    "message-1",
+    "--gmail-thread-id",
+    "thread-1",
+  ]);
+
+  let row = sqlite(
+    dbPath,
+    `
+      SELECT status || '|' || gmail_draft_id || '|' || gmail_message_id || '|' || gmail_thread_id || '|' || last_error
+      FROM outreach_queue
+      WHERE id = 'queue-draft-ready';
+    `,
+  );
+  assert.equal(row, "draft_created|draft-1|message-1|thread-1|previous issue");
+
+  runNode([
+    "scripts/cel-outreach-control/mark-queue-ready.mjs",
+    "--db",
+    dbPath,
+    "--queue-id",
+    "queue-draft-ready",
+    "--live-check-at",
+    "2026-07-06T09:00:00-04:00",
+  ]);
+
+  row = sqlite(
+    dbPath,
+    `
+      SELECT status || '|' || last_live_check_at || '|' || last_error
+      FROM outreach_queue
+      WHERE id = 'queue-draft-ready';
+    `,
+  );
+  assert.equal(row, "ready_to_send|2026-07-06T09:00:00-04:00|");
+});
+
+test("record draft creation fails clearly when no eligible queue row is updated", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  initDb(dbPath);
+  seedAutonomousQueue(dbPath, {
+    queueId: "queue-wrong-status",
+    status: "ready_to_send",
+    idempotencyKey: "queue-wrong-status-key",
+  });
+
+  assert.throws(
+    () =>
+      runNode([
+        "scripts/cel-outreach-control/record-draft-created.mjs",
+        "--db",
+        dbPath,
+        "--queue-id",
+        "queue-wrong-status",
+        "--gmail-draft-id",
+        "draft-1",
+        "--gmail-message-id",
+        "message-1",
+        "--gmail-thread-id",
+        "thread-1",
+      ]),
+    /No planned or draft_created outreach_queue row updated for queue-wrong-status/,
+  );
+});
+
+test("prevents duplicate successful send attempts for the same idempotency key", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  initDb(dbPath);
+  seedAutonomousQueue(dbPath, {
+    queueId: "queue-send-once",
+    status: "ready_to_send",
+    gmailDraftId: "draft-send-once",
+    gmailMessageId: "draft-message-send-once",
+    idempotencyKey: "queue-send-once-key",
+  });
+
+  runNode([
+    "scripts/cel-outreach-control/record-send-attempt.mjs",
+    "--db",
+    dbPath,
+    "--queue-id",
+    "queue-send-once",
+    "--result",
+    "sent",
+    "--gmail-message-id",
+    "sent-message-1",
+    "--attempted-at",
+    "2026-07-06T09:15:00-04:00",
+  ]);
+
+  assert.throws(
+    () =>
+      runNode([
+        "scripts/cel-outreach-control/record-send-attempt.mjs",
+        "--db",
+        dbPath,
+        "--queue-id",
+        "queue-send-once",
+        "--result",
+        "sent",
+        "--gmail-message-id",
+        "sent-message-2",
+        "--attempted-at",
+        "2026-07-06T09:16:00-04:00",
+      ]),
+    /already has a successful send attempt/,
+  );
+
+  const row = sqlite(
+    dbPath,
+    `
+      SELECT
+        queue.status || '|' ||
+        queue.gmail_message_id || '|' ||
+        target.draft_status || '|' ||
+        (SELECT count(*) FROM send_attempts WHERE queue_id = 'queue-send-once')
+      FROM outreach_queue queue
+      JOIN campaign_targets target ON target.id = queue.target_id
+      WHERE queue.id = 'queue-send-once';
+    `,
+  );
+  assert.equal(row, "sent|sent-message-1|sent|1");
+});
+
+test("would_send attempts do not change queue status", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  initDb(dbPath);
+  seedAutonomousQueue(dbPath, {
+    queueId: "queue-would-send",
+    status: "ready_to_send",
+    gmailDraftId: "draft-would-send",
+    gmailMessageId: "draft-message-would-send",
+    idempotencyKey: "queue-would-send-key",
+  });
+
+  runNode([
+    "scripts/cel-outreach-control/record-send-attempt.mjs",
+    "--db",
+    dbPath,
+    "--queue-id",
+    "queue-would-send",
+    "--result",
+    "would_send",
+    "--reason",
+    "dry run",
+    "--live-check-summary",
+    "Live check was safe.",
+    "--attempted-at",
+    "2026-07-06T09:20:00-04:00",
+  ]);
+
+  const row = sqlite(
+    dbPath,
+    `
+      SELECT
+        queue.status || '|' ||
+        queue.last_error || '|' ||
+        attempt.result || '|' ||
+        attempt.reason || '|' ||
+        attempt.live_check_summary
+      FROM outreach_queue queue
+      JOIN send_attempts attempt ON attempt.queue_id = queue.id
+      WHERE queue.id = 'queue-would-send';
+    `,
+  );
+  assert.equal(row, "ready_to_send||would_send|dry run|Live check was safe.");
+});
+
+test("send attempt recording rejects queues that are not ready to send", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  initDb(dbPath);
+  seedAutonomousQueue(dbPath, {
+    queueId: "queue-not-ready",
+    status: "planned",
+    idempotencyKey: "queue-not-ready-key",
+  });
+
+  assert.throws(
+    () =>
+      runNode([
+        "scripts/cel-outreach-control/record-send-attempt.mjs",
+        "--db",
+        dbPath,
+        "--queue-id",
+        "queue-not-ready",
+        "--result",
+        "blocked",
+        "--reason",
+        "not ready",
+      ]),
+    /must be ready_to_send before recording send attempts; current status is planned/,
+  );
+
+  const attempts = sqlite(dbPath, "SELECT count(*) FROM send_attempts WHERE queue_id = 'queue-not-ready';");
+  assert.equal(attempts, "0");
+});
+
+test("blocked and error send attempts update queue state", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  initDb(dbPath);
+  seedAutonomousQueue(dbPath, {
+    queueId: "queue-blocked-attempt",
+    status: "ready_to_send",
+    gmailDraftId: "draft-blocked",
+    gmailMessageId: "draft-message-blocked",
+    idempotencyKey: "queue-blocked-attempt-key",
+  });
+  seedAutonomousQueue(dbPath, {
+    queueId: "queue-error-attempt",
+    status: "ready_to_send",
+    gmailDraftId: "draft-error",
+    gmailMessageId: "draft-message-error",
+    idempotencyKey: "queue-error-attempt-key",
+  });
+
+  runNode([
+    "scripts/cel-outreach-control/record-send-attempt.mjs",
+    "--db",
+    dbPath,
+    "--queue-id",
+    "queue-blocked-attempt",
+    "--result",
+    "blocked",
+    "--reason",
+    "live check conflict",
+    "--live-check-summary",
+    "Existing CEL thread found.",
+  ]);
+  runNode([
+    "scripts/cel-outreach-control/record-send-attempt.mjs",
+    "--db",
+    dbPath,
+    "--queue-id",
+    "queue-error-attempt",
+    "--result",
+    "error",
+    "--reason",
+    "gmail API failed",
+  ]);
+
+  const rows = sqlite(
+    dbPath,
+    `
+      SELECT id || '|' || status || '|' || last_error
+      FROM outreach_queue
+      WHERE id IN ('queue-blocked-attempt', 'queue-error-attempt')
+      ORDER BY id;
+    `,
+  ).split("\n");
+
+  assert.deepEqual(rows, [
+    "queue-blocked-attempt|blocked|live check conflict",
+    "queue-error-attempt|error|gmail API failed",
+  ]);
+});
+
+test("automation run script upserts run counts", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  initDb(dbPath);
+
+  runNode([
+    "scripts/cel-outreach-control/automation-run.mjs",
+    "--db",
+    dbPath,
+    "--id",
+    "automation-run-test",
+    "--run-type",
+    "send_due",
+    "--started-at",
+    "2026-07-06T09:00:00-04:00",
+    "--finished-at",
+    "2026-07-06T09:01:00-04:00",
+    "--result",
+    "partial",
+    "--summary",
+    "first pass",
+    "--sent-count",
+    "1",
+    "--blocked-count",
+    "1",
+  ]);
+  runNode([
+    "scripts/cel-outreach-control/automation-run.mjs",
+    "--db",
+    dbPath,
+    "--id",
+    "automation-run-test",
+    "--run-type",
+    "send_due",
+    "--started-at",
+    "2026-07-06T09:00:00-04:00",
+    "--finished-at",
+    "2026-07-06T09:02:00-04:00",
+    "--result",
+    "ok",
+    "--summary",
+    "second pass",
+    "--sent-count",
+    "2",
+    "--blocked-count",
+    "0",
+    "--error-count",
+    "0",
+  ]);
+
+  const row = sqlite(
+    dbPath,
+    `
+      SELECT run_type || '|' || started_at || '|' || finished_at || '|' || result || '|' ||
+        summary || '|' || created_count || '|' || sent_count || '|' || blocked_count || '|' || error_count
+      FROM automation_runs
+      WHERE id = 'automation-run-test';
+    `,
+  );
+  assert.equal(
+    row,
+    "send_due|2026-07-06T09:00:00-04:00|2026-07-06T09:02:00-04:00|ok|second pass|0|2|0|0",
+  );
+});
+
 function seedTargetPool(dbPath, { usage = 0, protocol = 0 }) {
   const values = [];
   for (const lane of ["usage", "protocol"]) {
@@ -1464,6 +1809,81 @@ function seedLiveCheckQueue(
         '2026-07-06',
         '${status}',
         '${gmailMessageId}',
+        '${idempotencyKey}',
+        '${lastError}'
+      );
+    `,
+  );
+}
+
+function seedAutonomousQueue(
+  dbPath,
+  {
+    queueId,
+    status = "planned",
+    gmailDraftId = "",
+    gmailMessageId = "",
+    gmailThreadId = "",
+    idempotencyKey = "",
+    lastError = "",
+  },
+) {
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO organizations (id, name, domain)
+      VALUES ('org-${queueId}', 'Autonomous Org ${queueId}', '${queueId}.example.org');
+      INSERT INTO contacts (id, name, email, organization_id, domain)
+      VALUES ('contact-${queueId}', 'Autonomous Contact ${queueId}', '${queueId}@example.org', 'org-${queueId}', '${queueId}.example.org');
+      INSERT INTO campaigns (id, name, target_send_date, campaign_type)
+      VALUES ('campaign-${queueId}', 'Autonomous Campaign ${queueId}', '2026-07-06', 'autonomous_outreach');
+      INSERT INTO campaign_targets (
+        id,
+        campaign_id,
+        contact_id,
+        organization_id,
+        intended_ask,
+        template_type,
+        approval_status,
+        draft_status
+      )
+      VALUES (
+        'target-${queueId}',
+        'campaign-${queueId}',
+        'contact-${queueId}',
+        'org-${queueId}',
+        'usage permission',
+        'usage',
+        'approved_for_draft',
+        'not_drafted'
+      );
+      INSERT INTO outreach_queue (
+        id,
+        campaign_id,
+        target_id,
+        lane,
+        send_date,
+        send_window_start,
+        send_window_end,
+        status,
+        gmail_draft_id,
+        gmail_message_id,
+        gmail_thread_id,
+        idempotency_key,
+        last_error
+      )
+      VALUES (
+        '${queueId}',
+        'campaign-${queueId}',
+        'target-${queueId}',
+        'usage',
+        '2026-07-06',
+        '09:00',
+        '10:30',
+        '${status}',
+        '${gmailDraftId}',
+        '${gmailMessageId}',
+        '${gmailThreadId}',
         '${idempotencyKey}',
         '${lastError}'
       );
