@@ -80,6 +80,30 @@ Hard stop if Gmail shows:
 
 If an existing CEL draft or scheduled/future item is found, update or delete the existing item only after manual review. Do not create a second draft for the same person, domain, or organization.
 
+## 2A. Check the autonomous control plane
+
+Open the latest local reports under `outreach/control/reports/` and, if needed, inspect `outreach/control/cel-outreach.sqlite` directly.
+
+Hard stop if the autonomous queue or send-attempt history shows any duplicate or active row for the same:
+
+- target
+- Gmail thread
+- recipient email
+- domain
+- organization
+- idempotency key
+
+Hard stop if any of these are true:
+
+- `outreach_queue` already has a `planned`, `draft_created`, `ready_to_send`, or `sent` row for the same target, thread, domain, or organization
+- `send_attempts` already has `result = 'sent'` for the same idempotency key
+- `followup_queue` already has a candidate, draft, ready, sent, blocked, or error row for the same source thread and sequence
+- an autonomous row is `blocked` or `error` for the same target, thread, domain, organization, or idempotency key and has not been manually reviewed
+- `outreach/control/reports/blocked-autonomous-sends.csv` lists the same target, thread, domain, organization, or idempotency key
+- the local Gmail snapshot is missing, incomplete, or more than 24 hours old
+
+Blocked autonomous rows are not replacement capacity. Do not add another target from the same organization, domain, thread, or idempotency context in the same run.
+
 ## 3. Apply the organization-level rule
 
 If one person at an organization is meaningfully engaged, the whole organization becomes `warm` until manually reviewed.

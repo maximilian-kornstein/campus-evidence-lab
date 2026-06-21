@@ -47,3 +47,17 @@ node scripts/cel-outreach-control/import-campaign-targets.mjs --db outreach/cont
 The checklist remains part of the system: every duplicate-guard run stores the checklist path and SHA-256 in `preflight_runs`, so each target decision is tied back to the exact checklist version used.
 
 Before any new batch is drafted, create or refresh `outreach/control/imports/campaign-targets.csv` with the proposed contacts, refresh the Gmail snapshot, import both, run the duplicate guard with `--max-snapshot-age-hours 24`, and only draft rows whose `campaign-targets.csv` report says `approved_for_draft`.
+
+## Autonomous Queue Workflow
+
+Autonomous outreach uses `outreach/control/cel-outreach.sqlite` as the source of truth. Gmail labels are only visibility aids for humans and connector-based automations; they do not approve a row, clear a block, or prove that a send is safe. Local Node scripts do not call Gmail. Automations must use the Gmail connector for live reads, draft creation, labeling, and sends, then persist those results through the local scripts.
+
+Use `outreach/control/automation-runbook.md` as the operating procedure and the prompt files in `outreach/control/automation-prompts/` for recurring jobs:
+
+- `fill-queue.md`: refresh/import state, optionally import `target-pool.csv`, fill the queue with usage <= 20 and protocol <= 10, and export reports. It never drafts.
+- `create-drafts.md`: run live checks, create one labeled draft only if safe, record it, run a second live check, and mark `ready_to_send` only if safe. It never sends.
+- `send-due.md`: defaults to dry-run and records `would_send`; real sends require `REAL_SEND_ENABLED=true`.
+- `followup-scan.md`: refresh/import Gmail state before scanning. It never drafts or sends.
+- `followup-send.md`: defaults to dry-run and blocks replied, warm, duplicate, stale, or unsafe follow-ups.
+
+Before any autonomous send, all gates in the runbook must pass: `approved_for_draft`, `ready_to_send`, non-empty idempotency key, no prior successful send attempt for that idempotency key, Gmail snapshot under 24 hours old, clear live Gmail checks, draft recipient/subject/body matching the queue row, no GitHub Pages CEL URL, and daily caps of usage <= 20 and protocol <= 10. Blocked rows are not replacement capacity during the same sender run; review `blocked-autonomous-sends.csv`, `send-attempts.csv`, `duplicate-flags.csv`, and `automation-runs.csv` instead.
