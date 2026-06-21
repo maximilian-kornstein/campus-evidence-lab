@@ -604,9 +604,25 @@ test("exports tracker reports for current state and duplicate decisions", () => 
     `
       INSERT INTO campaigns (id, name, target_send_date, campaign_type)
       VALUES ('campaign-test', 'Test usage outreach', '2026-07-01', 'usage');
+      INSERT INTO organizations (id, name, domain)
+      VALUES
+        ('org-report-ready', 'Report Ready Org', 'report-ready.example.org'),
+        ('org-report-sent', 'Report Sent Org', 'report-sent.example.org'),
+        ('org-report-blocked', 'Report Blocked Org', 'report-blocked.example.org'),
+        ('org-report-error', 'Report Error Org', 'report-error.example.org');
+      INSERT INTO contacts (id, name, email, organization_id, domain)
+      VALUES
+        ('contact-report-ready', 'Report Ready', 'ready@report-ready.example.org', 'org-report-ready', 'report-ready.example.org'),
+        ('contact-report-sent', 'Report Sent', 'sent@report-sent.example.org', 'org-report-sent', 'report-sent.example.org'),
+        ('contact-report-blocked', 'Report Blocked', 'blocked@report-blocked.example.org', 'org-report-blocked', 'report-blocked.example.org'),
+        ('contact-report-error', 'Report Error', 'error@report-error.example.org', 'org-report-error', 'report-error.example.org');
       INSERT INTO campaign_targets (id, campaign_id, contact_id, organization_id, intended_ask, template_type)
       VALUES
-        ('target-hechinger', 'campaign-test', 'contact_kolodner-hechingerreport-org', 'org_hechingerreport-org', 'usage test', 'journalist');
+        ('target-hechinger', 'campaign-test', 'contact_kolodner-hechingerreport-org', 'org_hechingerreport-org', 'usage test', 'journalist'),
+        ('target-report-ready', 'campaign-test', 'contact-report-ready', 'org-report-ready', 'usage review', 'journalist'),
+        ('target-report-sent', 'campaign-test', 'contact-report-sent', 'org-report-sent', 'usage review', 'journalist'),
+        ('target-report-blocked', 'campaign-test', 'contact-report-blocked', 'org-report-blocked', 'protocol review', 'organization'),
+        ('target-report-error', 'campaign-test', 'contact-report-error', 'org-report-error', 'protocol review', 'organization');
     `,
   );
   runNode([
@@ -616,15 +632,128 @@ test("exports tracker reports for current state and duplicate decisions", () => 
     "--checklist",
     checklistPath,
   ]);
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO outreach_queue (
+        id,
+        campaign_id,
+        target_id,
+        lane,
+        send_date,
+        send_window_start,
+        send_window_end,
+        timezone,
+        status,
+        gmail_draft_id,
+        gmail_message_id,
+        gmail_thread_id,
+        gmail_label,
+        idempotency_key,
+        last_live_check_at,
+        last_error
+      )
+      VALUES
+        ('queue-report-ready', 'campaign-test', 'target-report-ready', 'usage', '2026-07-10', '09:00', '10:00', 'America/New_York', 'ready_to_send', 'draft-ready-1', 'draft-message-ready-1', 'thread-ready-1', 'CEL/Outreach/2026-07-10', 'idempotency-ready-1', '2026-07-10T08:55:00-04:00', ''),
+        ('queue-report-sent', 'campaign-test', 'target-report-sent', 'usage', '2026-07-10', '10:00', '11:00', 'America/New_York', 'sent', '', 'sent-message-1', 'thread-sent-1', 'CEL/Outreach/2026-07-10', 'idempotency-sent-1', '2026-07-10T09:55:00-04:00', ''),
+        ('queue-report-blocked', 'campaign-test', 'target-report-blocked', 'protocol', '2026-07-10', '11:00', '12:00', 'America/New_York', 'blocked', '', '', 'thread-blocked-1', 'CEL/Outreach/2026-07-10', 'idempotency-blocked-1', '2026-07-10T10:55:00-04:00', 'Live check blocked queue: prior_sent_cel_item'),
+        ('queue-report-error', 'campaign-test', 'target-report-error', 'protocol', '2026-07-11', '09:00', '10:00', 'America/New_York', 'error', '', '', 'thread-error-1', 'CEL/Outreach/2026-07-11', 'idempotency-error-1', '2026-07-11T08:55:00-04:00', 'Gmail API failed');
+
+      INSERT INTO send_attempts (
+        id,
+        queue_id,
+        idempotency_key,
+        attempted_at,
+        result,
+        gmail_message_id,
+        reason,
+        live_check_summary
+      )
+      VALUES
+        ('attempt-report-sent', 'queue-report-sent', 'idempotency-sent-1', '2026-07-10T10:15:00-04:00', 'sent', 'sent-message-1', '', 'Live check passed with 1 allowed evidence item(s).'),
+        ('attempt-report-blocked', 'queue-report-blocked', 'idempotency-blocked-1', '2026-07-10T11:15:00-04:00', 'blocked', '', 'prior_sent_cel_item', 'Live check blocked queue: prior_sent_cel_item'),
+        ('attempt-report-error', 'queue-report-error', 'idempotency-error-1', '2026-07-11T09:15:00-04:00', 'error', '', 'gmail API failed', 'Live check passed before send API error.');
+
+      INSERT INTO automation_runs (
+        id,
+        run_type,
+        started_at,
+        finished_at,
+        result,
+        summary,
+        created_count,
+        sent_count,
+        blocked_count,
+        error_count
+      )
+      VALUES (
+        'run-report-send-due',
+        'send_due',
+        '2026-07-10T09:00:00-04:00',
+        '2026-07-10T09:05:00-04:00',
+        'partial',
+        'Sent one row and blocked one row.',
+        0,
+        1,
+        1,
+        0
+      );
+
+      INSERT INTO followup_queue (
+        id,
+        source_thread_id,
+        source_message_id,
+        original_sent_message_id,
+        contact_id,
+        organization_id,
+        sequence_no,
+        due_date,
+        send_window_start,
+        send_window_end,
+        timezone,
+        status,
+        gmail_draft_id,
+        gmail_message_id,
+        idempotency_key,
+        last_thread_check_at,
+        last_error
+      )
+      VALUES (
+        'followup-report-1',
+        'thread-sent-1',
+        'reply-message-1',
+        'sent-message-1',
+        'contact-report-sent',
+        'org-report-sent',
+        1,
+        '2026-07-17',
+        '09:00',
+        '10:00',
+        'America/New_York',
+        'ready_to_send',
+        'followup-draft-1',
+        'followup-message-1',
+        'followup-idempotency-1',
+        '2026-07-16T08:00:00-04:00',
+        ''
+      );
+    `,
+  );
 
   runNode(["scripts/cel-outreach-control/export-reports.mjs", "--db", dbPath, "--out", reportDir]);
 
   const expectedFiles = fs.readdirSync(reportDir).sort();
   assert.deepEqual(expectedFiles, [
+    "automation-runs.csv",
+    "blocked-autonomous-sends.csv",
     "campaign-targets.csv",
+    "daily-capacity.csv",
     "duplicate-flags.csv",
+    "followup-queue.csv",
     "gmail-snapshots.csv",
     "gmail-state.csv",
+    "outreach-queue.csv",
+    "send-attempts.csv",
     "warm-relationships.csv",
   ]);
 
@@ -644,6 +773,66 @@ test("exports tracker reports for current state and duplicate decisions", () => 
 
   const warmRelationships = fs.readFileSync(path.join(reportDir, "warm-relationships.csv"), "utf8");
   assert.match(warmRelationships, /Naomi Younger,naomi@amchainitiative\.org,AMCHA Initiative,Call scheduled,Call,2026-07-09/);
+
+  const outreachQueue = fs.readFileSync(path.join(reportDir, "outreach-queue.csv"), "utf8");
+  assert.match(
+    outreachQueue,
+    /queue_id,campaign_name,target_id,lane,send_date,send_window_start,send_window_end,timezone,status,gmail_draft_id,gmail_message_id,gmail_thread_id,gmail_label,idempotency_key,last_live_check_at,last_error/,
+  );
+  assert.match(
+    outreachQueue,
+    /queue-report-ready,Test usage outreach,target-report-ready,usage,2026-07-10,09:00,10:00,America\/New_York,ready_to_send,draft-ready-1,draft-message-ready-1,thread-ready-1,CEL\/Outreach\/2026-07-10,idempotency-ready-1,2026-07-10T08:55:00-04:00,/,
+  );
+
+  const sendAttempts = fs.readFileSync(path.join(reportDir, "send-attempts.csv"), "utf8");
+  assert.match(
+    sendAttempts,
+    /attempt_id,queue_id,idempotency_key,attempted_at,result,gmail_message_id,reason,live_check_summary/,
+  );
+  assert.match(
+    sendAttempts,
+    /attempt-report-blocked,queue-report-blocked,idempotency-blocked-1,2026-07-10T11:15:00-04:00,blocked,,prior_sent_cel_item,Live check blocked queue: prior_sent_cel_item/,
+  );
+
+  const automationRuns = fs.readFileSync(path.join(reportDir, "automation-runs.csv"), "utf8");
+  assert.match(
+    automationRuns,
+    /run_id,run_type,started_at,finished_at,result,summary,created_count,sent_count,blocked_count,error_count/,
+  );
+  assert.match(
+    automationRuns,
+    /run-report-send-due,send_due,2026-07-10T09:00:00-04:00,2026-07-10T09:05:00-04:00,partial,Sent one row and blocked one row\.,0,1,1,0/,
+  );
+
+  const blockedAutonomousSends = fs.readFileSync(
+    path.join(reportDir, "blocked-autonomous-sends.csv"),
+    "utf8",
+  );
+  assert.match(blockedAutonomousSends, /queue_id,campaign_name,target_id,lane,send_date,status,last_live_check_at,last_error/);
+  assert.match(
+    blockedAutonomousSends,
+    /queue-report-blocked,Test usage outreach,target-report-blocked,protocol,2026-07-10,blocked,2026-07-10T10:55:00-04:00,Live check blocked queue: prior_sent_cel_item/,
+  );
+  assert.match(
+    blockedAutonomousSends,
+    /queue-report-error,Test usage outreach,target-report-error,protocol,2026-07-11,error,2026-07-11T08:55:00-04:00,Gmail API failed/,
+  );
+
+  const dailyCapacity = fs.readFileSync(path.join(reportDir, "daily-capacity.csv"), "utf8");
+  assert.match(dailyCapacity, /send_date,lane,queued_count,sent_count,ready_count,blocked_count/);
+  assert.match(dailyCapacity, /2026-07-10,usage,2,1,1,0/);
+  assert.match(dailyCapacity, /2026-07-10,protocol,1,0,0,1/);
+  assert.match(dailyCapacity, /2026-07-11,protocol,1,0,0,1/);
+
+  const followupQueue = fs.readFileSync(path.join(reportDir, "followup-queue.csv"), "utf8");
+  assert.match(
+    followupQueue,
+    /followup_id,source_thread_id,source_message_id,original_sent_message_id,sequence_no,due_date,send_window_start,send_window_end,timezone,status,gmail_draft_id,gmail_message_id,idempotency_key,last_thread_check_at,last_error/,
+  );
+  assert.match(
+    followupQueue,
+    /followup-report-1,thread-sent-1,reply-message-1,sent-message-1,1,2026-07-17,09:00,10:00,America\/New_York,ready_to_send,followup-draft-1,followup-message-1,followup-idempotency-1,2026-07-16T08:00:00-04:00,/,
+  );
 });
 
 test("imports autonomous target pool candidates with lane and provenance", () => {

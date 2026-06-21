@@ -132,4 +132,193 @@ writeReport(
   `,
 );
 
+writeReport(
+  "outreach-queue.csv",
+  [
+    "queue_id",
+    "campaign_name",
+    "target_id",
+    "lane",
+    "send_date",
+    "send_window_start",
+    "send_window_end",
+    "timezone",
+    "status",
+    "gmail_draft_id",
+    "gmail_message_id",
+    "gmail_thread_id",
+    "gmail_label",
+    "idempotency_key",
+    "last_live_check_at",
+    "last_error",
+  ],
+  `
+    SELECT
+      queue.id AS queue_id,
+      COALESCE(campaign.name, '') AS campaign_name,
+      queue.target_id,
+      queue.lane,
+      queue.send_date,
+      queue.send_window_start,
+      queue.send_window_end,
+      queue.timezone,
+      queue.status,
+      queue.gmail_draft_id,
+      queue.gmail_message_id,
+      queue.gmail_thread_id,
+      queue.gmail_label,
+      queue.idempotency_key,
+      queue.last_live_check_at,
+      queue.last_error
+    FROM outreach_queue queue
+    LEFT JOIN campaigns campaign ON campaign.id = queue.campaign_id
+    ORDER BY queue.send_date, queue.lane, queue.status, queue.id;
+  `,
+);
+
+writeReport(
+  "send-attempts.csv",
+  [
+    "attempt_id",
+    "queue_id",
+    "idempotency_key",
+    "attempted_at",
+    "result",
+    "gmail_message_id",
+    "reason",
+    "live_check_summary",
+  ],
+  `
+    SELECT
+      id AS attempt_id,
+      queue_id,
+      idempotency_key,
+      attempted_at,
+      result,
+      gmail_message_id,
+      reason,
+      live_check_summary
+    FROM send_attempts
+    ORDER BY attempted_at DESC, queue_id, id;
+  `,
+);
+
+writeReport(
+  "automation-runs.csv",
+  [
+    "run_id",
+    "run_type",
+    "started_at",
+    "finished_at",
+    "result",
+    "summary",
+    "created_count",
+    "sent_count",
+    "blocked_count",
+    "error_count",
+  ],
+  `
+    SELECT
+      id AS run_id,
+      run_type,
+      started_at,
+      finished_at,
+      result,
+      summary,
+      created_count,
+      sent_count,
+      blocked_count,
+      error_count
+    FROM automation_runs
+    ORDER BY started_at DESC, run_type, id;
+  `,
+);
+
+writeReport(
+  "blocked-autonomous-sends.csv",
+  [
+    "queue_id",
+    "campaign_name",
+    "target_id",
+    "lane",
+    "send_date",
+    "status",
+    "last_live_check_at",
+    "last_error",
+  ],
+  `
+    SELECT
+      queue.id AS queue_id,
+      COALESCE(campaign.name, '') AS campaign_name,
+      queue.target_id,
+      queue.lane,
+      queue.send_date,
+      queue.status,
+      queue.last_live_check_at,
+      queue.last_error
+    FROM outreach_queue queue
+    LEFT JOIN campaigns campaign ON campaign.id = queue.campaign_id
+    WHERE queue.status IN ('blocked', 'error')
+    ORDER BY queue.send_date, queue.lane, queue.status, queue.id;
+  `,
+);
+
+writeReport(
+  "daily-capacity.csv",
+  ["send_date", "lane", "queued_count", "sent_count", "ready_count", "blocked_count"],
+  `
+    SELECT
+      send_date,
+      lane,
+      COUNT(*) AS queued_count,
+      SUM(CASE WHEN status = 'sent' THEN 1 ELSE 0 END) AS sent_count,
+      SUM(CASE WHEN status = 'ready_to_send' THEN 1 ELSE 0 END) AS ready_count,
+      SUM(CASE WHEN status IN ('blocked', 'error') THEN 1 ELSE 0 END) AS blocked_count
+    FROM outreach_queue
+    GROUP BY send_date, lane
+    ORDER BY send_date, lane;
+  `,
+);
+
+writeReport(
+  "followup-queue.csv",
+  [
+    "followup_id",
+    "source_thread_id",
+    "source_message_id",
+    "original_sent_message_id",
+    "sequence_no",
+    "due_date",
+    "send_window_start",
+    "send_window_end",
+    "timezone",
+    "status",
+    "gmail_draft_id",
+    "gmail_message_id",
+    "idempotency_key",
+    "last_thread_check_at",
+    "last_error",
+  ],
+  `
+    SELECT
+      id AS followup_id,
+      source_thread_id,
+      source_message_id,
+      original_sent_message_id,
+      sequence_no,
+      due_date,
+      send_window_start,
+      send_window_end,
+      timezone,
+      status,
+      gmail_draft_id,
+      gmail_message_id,
+      idempotency_key,
+      last_thread_check_at,
+      last_error
+    FROM followup_queue
+    ORDER BY due_date, status, source_thread_id, sequence_no, id;
+  `,
+);
+
 console.log(`Exported outreach control reports to ${outDir}`);
