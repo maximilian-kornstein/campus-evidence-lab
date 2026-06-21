@@ -1817,6 +1817,124 @@ test("blocked and error send attempts update queue state", () => {
   ]);
 });
 
+test("follow-up scanner queues only eligible unreplied cold CEL sent threads", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  initDb(dbPath);
+  seedFollowupRelationships(dbPath);
+  seedFollowupGmailItems(dbPath);
+
+  runNode([
+    "scripts/cel-outreach-control/fill-followup-queue.mjs",
+    "--db",
+    dbPath,
+    "--now",
+    "2026-07-10T09:00:00-04:00",
+    "--min-age-days",
+    "7",
+    "--timezone",
+    "America/New_York",
+    "--send-window-start",
+    "09:00",
+    "--send-window-end",
+    "10:30",
+  ]);
+
+  const rows = sqlite(
+    dbPath,
+    `
+      SELECT
+        source_thread_id || '|' ||
+        source_message_id || '|' ||
+        original_sent_message_id || '|' ||
+        contact_id || '|' ||
+        organization_id || '|' ||
+        sequence_no || '|' ||
+        due_date || '|' ||
+        send_window_start || '|' ||
+        send_window_end || '|' ||
+        timezone || '|' ||
+        status || '|' ||
+        idempotency_key
+      FROM followup_queue
+      ORDER BY source_thread_id;
+    `,
+  ).split("\n");
+
+  assert.deepEqual(rows, [
+    "thread-safe|sent-safe|sent-safe|contact-safe|org-safe|1|2026-07-08|09:00|10:30|America/New_York|candidate|followup:thread-safe:1",
+  ]);
+
+  const run = sqlite(
+    dbPath,
+    `
+      SELECT run_type || '|' || result || '|' || created_count || '|' || sent_count || '|' || blocked_count || '|' || error_count
+      FROM automation_runs
+      WHERE run_type = 'followup_scan';
+    `,
+  );
+  assert.equal(run, "followup_scan|ok|1|0|0|0");
+});
+
+test("follow-up scanner respects min age and existing sequence one rows", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  initDb(dbPath);
+  seedFollowupRelationships(dbPath);
+  seedFollowupGmailItems(dbPath);
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO followup_queue (
+        id,
+        source_thread_id,
+        source_message_id,
+        original_sent_message_id,
+        sequence_no,
+        due_date,
+        idempotency_key
+      )
+      VALUES (
+        'followup-existing',
+        'thread-safe',
+        'sent-safe',
+        'sent-safe',
+        1,
+        '2026-07-08',
+        'followup:thread-safe:1'
+      );
+    `,
+  );
+
+  runNode([
+    "scripts/cel-outreach-control/fill-followup-queue.mjs",
+    "--db",
+    dbPath,
+    "--now",
+    "2026-07-07T09:00:00-04:00",
+    "--min-age-days",
+    "7",
+    "--timezone",
+    "America/New_York",
+    "--send-window-start",
+    "09:00",
+    "--send-window-end",
+    "10:30",
+  ]);
+
+  const queueRows = sqlite(
+    dbPath,
+    "SELECT source_thread_id || '|' || sequence_no FROM followup_queue ORDER BY source_thread_id;",
+  ).split("\n");
+  assert.deepEqual(queueRows, ["thread-safe|1"]);
+
+  const createdCount = sqlite(
+    dbPath,
+    "SELECT created_count FROM automation_runs WHERE run_type = 'followup_scan';",
+  );
+  assert.equal(createdCount, "0");
+});
+
 test("automation run script upserts run counts", () => {
   const tempDir = makeTempDir();
   const dbPath = path.join(tempDir, "control.sqlite");
@@ -1956,6 +2074,126 @@ function seedExistingQueueRows(dbPath, { sendDate, usage = 0, protocol = 0 }) {
 
   if (statements.length === 0) return;
   sqlite(dbPath, statements.join("\n"));
+}
+
+function seedFollowupRelationships(dbPath) {
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO organizations (id, name, domain, relationship_status, block_level)
+      VALUES
+        ('org-safe', 'Safe Org', 'safe.example.org', 'unknown', ''),
+        ('org-replied', 'Replied Org', 'replied.example.org', 'unknown', ''),
+        ('org-warm', 'Warm Org', 'warm.example.org', 'Packet sent / engaged', 'Hard block cold outreach'),
+        ('org-new', 'New Org', 'new.example.org', 'unknown', '');
+
+      INSERT INTO contacts (id, name, email, organization_id, domain, relationship_status)
+      VALUES
+        ('contact-safe', 'Safe Person', 'safe@safe.example.org', 'org-safe', 'safe.example.org', 'unknown'),
+        ('contact-replied', 'Replied Person', 'replied@replied.example.org', 'org-replied', 'replied.example.org', 'unknown'),
+        ('contact-warm', 'Warm Person', 'warm@warm.example.org', 'org-warm', 'warm.example.org', 'Keep warm'),
+        ('contact-new', 'New Person', 'new@new.example.org', 'org-new', 'new.example.org', 'unknown');
+    `,
+  );
+}
+
+function seedFollowupGmailItems(dbPath) {
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO gmail_items (
+        id,
+        thread_id,
+        item_type,
+        subject,
+        from_email,
+        to_emails,
+        labels,
+        email_ts,
+        snippet,
+        is_cel,
+        person_key,
+        domain_key,
+        organization_key
+      )
+      VALUES
+        (
+          'sent-safe',
+          'thread-safe',
+          'sent',
+          'Campus Evidence Lab packet',
+          'maxkornstein04@gmail.com',
+          '["safe@safe.example.org"]',
+          '["SENT","CEL/Outreach/2026-07-01"]',
+          '2026-07-01T09:00:00-04:00',
+          'Campus Evidence Lab',
+          1,
+          'safe@safe.example.org',
+          'safe.example.org',
+          'safe.example.org'
+        ),
+        (
+          'sent-replied',
+          'thread-replied',
+          'sent',
+          'Campus Evidence Lab packet',
+          'maxkornstein04@gmail.com',
+          '["replied@replied.example.org"]',
+          '["SENT","CEL/Outreach/2026-07-01"]',
+          '2026-07-01T09:00:00-04:00',
+          'Campus Evidence Lab',
+          1,
+          'replied@replied.example.org',
+          'replied.example.org',
+          'replied.example.org'
+        ),
+        (
+          'reply-replied',
+          'thread-replied',
+          'reply',
+          'Re: Campus Evidence Lab packet',
+          'replied@replied.example.org',
+          '["maxkornstein04@gmail.com"]',
+          '["INBOX"]',
+          '2026-07-03T09:00:00-04:00',
+          'Thanks for sending this.',
+          1,
+          'replied@replied.example.org',
+          'replied.example.org',
+          'replied.example.org'
+        ),
+        (
+          'sent-warm',
+          'thread-warm',
+          'sent',
+          'Campus Evidence Lab packet',
+          'maxkornstein04@gmail.com',
+          '["warm@warm.example.org"]',
+          '["SENT","CEL/Outreach/2026-07-01"]',
+          '2026-07-01T09:00:00-04:00',
+          'Campus Evidence Lab',
+          1,
+          'warm@warm.example.org',
+          'warm.example.org',
+          'warm.example.org'
+        ),
+        (
+          'sent-new',
+          'thread-new',
+          'sent',
+          'Campus Evidence Lab packet',
+          'maxkornstein04@gmail.com',
+          '["new@new.example.org"]',
+          '["SENT","CEL/Outreach/2026-07-05"]',
+          '2026-07-05T09:00:00-04:00',
+          'Campus Evidence Lab',
+          1,
+          'new@new.example.org',
+          'new.example.org',
+          'new.example.org'
+        );
+    `,
+  );
 }
 
 function seedLiveCheckQueue(
