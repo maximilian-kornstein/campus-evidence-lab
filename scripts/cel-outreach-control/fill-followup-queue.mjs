@@ -36,7 +36,7 @@ const timezone = requiredArg("timezone");
 const sendWindowStart = requiredArg("send-window-start");
 const sendWindowEnd = requiredArg("send-window-end");
 
-const candidates = latestSentCelItemsByThread()
+const candidates = sentCelThreads()
   .filter((item) => isOldEnough(item))
   .filter((item) => !hasLaterInboundActivity(item))
   .filter((item) => !hasWarmOrBlockedThreadSignal(item))
@@ -51,7 +51,10 @@ const candidates = latestSentCelItemsByThread()
 const sql = ["BEGIN;"];
 for (const item of candidates) {
   const dueDate = formatDateInTimezone(
-    new Date(parseDate(item.email_ts, `email_ts for ${item.id}`).getTime() + minAgeDays * dayMs),
+    new Date(
+      parseDate(item.original.email_ts, `email_ts for ${item.original.id}`).getTime() +
+        minAgeDays * dayMs,
+    ),
     timezone,
   );
   const idempotencyKey = `followup:${item.thread_id}:1`;
@@ -78,7 +81,7 @@ for (const item of candidates) {
       ${sqlString(followupId)},
       ${sqlString(item.thread_id)},
       ${sqlString(item.id)},
-      ${sqlString(item.id)},
+      ${sqlString(item.original.id)},
       ${item.contact?.id ? sqlString(item.contact.id) : "NULL"},
       ${item.organization?.id ? sqlString(item.organization.id) : "NULL"},
       1,
@@ -153,7 +156,7 @@ function requiredArg(name) {
   return value;
 }
 
-function latestSentCelItemsByThread() {
+function sentCelThreads() {
   const rows = queryJson(
     db,
     `
@@ -162,38 +165,50 @@ function latestSentCelItemsByThread() {
       WHERE item_type = 'sent'
         AND is_cel = 1
         AND thread_id != ''
-      ORDER BY thread_id, email_ts DESC, id DESC;
+      ORDER BY thread_id, email_ts ASC, id ASC;
     `,
   );
   const byThread = new Map();
   for (const row of rows) {
-    if (!byThread.has(row.thread_id)) {
-      byThread.set(row.thread_id, row);
+    const existing = byThread.get(row.thread_id);
+    if (!existing) {
+      byThread.set(row.thread_id, { ...row, original: row });
+      continue;
+    }
+    if (compareGmailItems(row, existing) > 0) {
+      byThread.set(row.thread_id, { ...row, original: existing.original });
     }
   }
   return [...byThread.values()];
 }
 
 function isOldEnough(item) {
-  const sentAt = parseDate(item.email_ts, `email_ts for ${item.id}`);
+  const sentAt = parseDate(item.original.email_ts, `email_ts for ${item.original.id}`);
   return now.getTime() - sentAt.getTime() >= minAgeDays * dayMs;
 }
 
 function hasLaterInboundActivity(item) {
-  const sentAt = parseDate(item.email_ts, `email_ts for ${item.id}`);
+  const sentAt = parseDate(item.original.email_ts, `email_ts for ${item.original.id}`);
   const threadItems = queryJson(
     db,
     `
       SELECT id, item_type, labels, from_email, to_emails, email_ts
       FROM gmail_items
       WHERE thread_id = ${sqlString(item.thread_id)}
-        AND id != ${sqlString(item.id)};
+        AND id != ${sqlString(item.original.id)};
     `,
   );
   return threadItems.some((threadItem) => {
     const itemAt = maybeDate(threadItem.email_ts);
     return itemAt && itemAt.getTime() > sentAt.getTime() && isInboundActivity(threadItem);
   });
+}
+
+function compareGmailItems(left, right) {
+  const leftTime = maybeDate(left.email_ts)?.getTime() ?? 0;
+  const rightTime = maybeDate(right.email_ts)?.getTime() ?? 0;
+  if (leftTime !== rightTime) return leftTime - rightTime;
+  return String(left.id || "").localeCompare(String(right.id || ""));
 }
 
 function isInboundActivity(item) {

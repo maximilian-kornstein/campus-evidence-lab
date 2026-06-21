@@ -1862,7 +1862,7 @@ test("follow-up scanner queues only eligible unreplied cold CEL sent threads", (
   ).split("\n");
 
   assert.deepEqual(rows, [
-    "thread-safe|sent-safe|sent-safe|contact-safe|org-safe|1|2026-07-08|09:00|10:30|America/New_York|candidate|followup:thread-safe:1",
+    "thread-safe|sent-safe-later|sent-safe|contact-safe|org-safe|1|2026-07-08|09:00|10:30|America/New_York|candidate|followup:thread-safe:1",
   ]);
 
   const run = sqlite(
@@ -1933,6 +1933,105 @@ test("follow-up scanner respects min age and existing sequence one rows", () => 
     "SELECT created_count FROM automation_runs WHERE run_type = 'followup_scan';",
   );
   assert.equal(createdCount, "0");
+});
+
+test("follow-up scanner excludes threads replied to after original outbound even with later sent mail", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  initDb(dbPath);
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO organizations (id, name, domain, relationship_status, block_level)
+      VALUES ('org-after-reply', 'After Reply Org', 'after-reply.example.org', 'unknown', '');
+      INSERT INTO contacts (id, name, email, organization_id, domain, relationship_status)
+      VALUES ('contact-after-reply', 'After Reply Person', 'person@after-reply.example.org', 'org-after-reply', 'after-reply.example.org', 'unknown');
+
+      INSERT INTO gmail_items (
+        id,
+        thread_id,
+        item_type,
+        subject,
+        from_email,
+        to_emails,
+        labels,
+        email_ts,
+        snippet,
+        is_cel,
+        person_key,
+        domain_key,
+        organization_key
+      )
+      VALUES
+        (
+          'sent-after-reply-original',
+          'thread-after-reply',
+          'sent',
+          'Campus Evidence Lab packet',
+          'maxkornstein04@gmail.com',
+          '["person@after-reply.example.org"]',
+          '["SENT","CEL/Outreach/2026-07-01"]',
+          '2026-07-01T09:00:00-04:00',
+          'Campus Evidence Lab',
+          1,
+          'person@after-reply.example.org',
+          'after-reply.example.org',
+          'after-reply.example.org'
+        ),
+        (
+          'reply-after-reply',
+          'thread-after-reply',
+          'reply',
+          'Re: Campus Evidence Lab packet',
+          'person@after-reply.example.org',
+          '["maxkornstein04@gmail.com"]',
+          '["INBOX"]',
+          '2026-07-02T09:00:00-04:00',
+          'I saw this.',
+          1,
+          'person@after-reply.example.org',
+          'after-reply.example.org',
+          'after-reply.example.org'
+        ),
+        (
+          'sent-after-reply-later',
+          'thread-after-reply',
+          'sent',
+          'Re: Campus Evidence Lab packet',
+          'maxkornstein04@gmail.com',
+          '["person@after-reply.example.org"]',
+          '["SENT","CEL/Outreach/2026-07-03"]',
+          '2026-07-03T09:00:00-04:00',
+          'Following up after reply.',
+          1,
+          'person@after-reply.example.org',
+          'after-reply.example.org',
+          'after-reply.example.org'
+        );
+    `,
+  );
+
+  runNode([
+    "scripts/cel-outreach-control/fill-followup-queue.mjs",
+    "--db",
+    dbPath,
+    "--now",
+    "2026-07-11T09:00:00-04:00",
+    "--min-age-days",
+    "7",
+    "--timezone",
+    "America/New_York",
+    "--send-window-start",
+    "09:00",
+    "--send-window-end",
+    "10:30",
+  ]);
+
+  const queued = sqlite(
+    dbPath,
+    "SELECT count(*) FROM followup_queue WHERE source_thread_id = 'thread-after-reply';",
+  );
+  assert.equal(queued, "0");
 });
 
 test("automation run script upserts run counts", () => {
@@ -2127,6 +2226,21 @@ function seedFollowupGmailItems(dbPath) {
           '["SENT","CEL/Outreach/2026-07-01"]',
           '2026-07-01T09:00:00-04:00',
           'Campus Evidence Lab',
+          1,
+          'safe@safe.example.org',
+          'safe.example.org',
+          'safe.example.org'
+        ),
+        (
+          'sent-safe-later',
+          'thread-safe',
+          'sent',
+          'Re: Campus Evidence Lab packet',
+          'maxkornstein04@gmail.com',
+          '["safe@safe.example.org"]',
+          '["SENT","CEL/Outreach/2026-07-02"]',
+          '2026-07-02T09:00:00-04:00',
+          'Adding a detail.',
           1,
           'safe@safe.example.org',
           'safe.example.org',
