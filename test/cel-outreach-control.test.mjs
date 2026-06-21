@@ -1096,6 +1096,7 @@ test("fills autonomous outreach queue with default usage and protocol caps", () 
   initDb(dbPath);
   fs.writeFileSync(checklistPath, "# Outreach Preflight Checklist\n");
   seedTargetPool(dbPath, { usage: 25, protocol: 15 });
+  seedFreshGmailSnapshot(dbPath);
 
   runNode([
     "scripts/cel-outreach-control/fill-outreach-queue.mjs",
@@ -1137,6 +1138,38 @@ test("fills autonomous outreach queue with default usage and protocol caps", () 
   assert.equal(campaigns, "autonomous_outreach|2026-07-02|1");
 });
 
+test("fill queue blocks when Gmail snapshot evidence is missing", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const checklistPath = path.join(tempDir, "outreach-preflight-checklist.md");
+  initDb(dbPath);
+  fs.writeFileSync(checklistPath, "# Outreach Preflight Checklist\n");
+  seedTargetPool(dbPath, { usage: 1, protocol: 1 });
+
+  assert.throws(
+    () =>
+      runNode([
+        "scripts/cel-outreach-control/fill-outreach-queue.mjs",
+        "--db",
+        dbPath,
+        "--send-date",
+        "2026-07-02",
+        "--send-window-start",
+        "09:00",
+        "--send-window-end",
+        "11:00",
+        "--timezone",
+        "America/New_York",
+        "--checklist",
+        checklistPath,
+      ]),
+    /Gmail snapshot|snapshot/i,
+  );
+
+  const queued = sqlite(dbPath, "SELECT count(*) FROM outreach_queue;");
+  assert.equal(queued, "0");
+});
+
 test("does not let underfilled protocol lane borrow extra usage capacity", () => {
   const tempDir = makeTempDir();
   const dbPath = path.join(tempDir, "control.sqlite");
@@ -1144,6 +1177,7 @@ test("does not let underfilled protocol lane borrow extra usage capacity", () =>
   initDb(dbPath);
   fs.writeFileSync(checklistPath, "# Outreach Preflight Checklist\n");
   seedTargetPool(dbPath, { usage: 30, protocol: 3 });
+  seedFreshGmailSnapshot(dbPath);
 
   runNode([
     "scripts/cel-outreach-control/fill-outreach-queue.mjs",
@@ -1181,6 +1215,7 @@ test("fill queue is idempotent and existing active rows count against lane caps"
   initDb(dbPath);
   fs.writeFileSync(checklistPath, "# Outreach Preflight Checklist\n");
   seedTargetPool(dbPath, { usage: 25, protocol: 12 });
+  seedFreshGmailSnapshot(dbPath);
   seedExistingQueueRows(dbPath, {
     sendDate: "2026-07-04",
     usage: 4,
@@ -1228,6 +1263,7 @@ test("fill queue blocks selected candidates rejected by duplicate preflight", ()
   initDb(dbPath);
   fs.writeFileSync(checklistPath, "# Outreach Preflight Checklist\n");
   seedTargetPool(dbPath, { usage: 2, protocol: 1 });
+  seedFreshGmailSnapshot(dbPath);
   sqlite(
     dbPath,
     `
@@ -1535,6 +1571,48 @@ test("apply live check blocks unsafe queue and records blocked send attempt", ()
     attemptRow,
     /^queue-live-unsafe\|queue-live-unsafe-key\|blocked\|prior_sent_cel_item,existing_draft_conflict\|Live check blocked queue: prior_sent_cel_item, existing_draft_conflict/,
   );
+});
+
+test("apply live check rejects final-state queue rows", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const jsonPath = path.join(tempDir, "live-check-unsafe.json");
+  initDb(dbPath);
+  seedLiveCheckQueue(dbPath, {
+    queueId: "queue-live-sent",
+    status: "sent",
+    gmailMessageId: "sent-message",
+    idempotencyKey: "queue-live-sent-key",
+  });
+  fs.writeFileSync(
+    jsonPath,
+    JSON.stringify({
+      evidence: [{ type: "prior_sent_cel_item", messageId: "sent-existing" }],
+    }),
+  );
+
+  assert.throws(
+    () =>
+      runNode([
+        "scripts/cel-outreach-control/apply-live-check.mjs",
+        "--db",
+        dbPath,
+        "--queue-id",
+        "queue-live-sent",
+        "--json",
+        jsonPath,
+      ]),
+    /cannot apply live check to queue-live-sent with status sent/,
+  );
+
+  const queueRow = sqlite(
+    dbPath,
+    "SELECT status || '|' || last_error FROM outreach_queue WHERE id = 'queue-live-sent';",
+  );
+  assert.equal(queueRow, "sent|");
+
+  const attempts = sqlite(dbPath, "SELECT count(*) FROM send_attempts WHERE queue_id = 'queue-live-sent';");
+  assert.equal(attempts, "0");
 });
 
 test("records draft creation and marks queue ready after live check", () => {
@@ -2139,6 +2217,30 @@ function seedTargetPool(dbPath, { usage = 0, protocol = 0 }) {
         status
       )
       VALUES ${values.join(",")};
+    `,
+  );
+}
+
+function seedFreshGmailSnapshot(dbPath, snapshotAt = new Date().toISOString()) {
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO gmail_snapshot_imports (
+        id,
+        source_path,
+        snapshot_at,
+        source,
+        item_count,
+        label_count
+      )
+      VALUES (
+        'snapshot-fresh',
+        'test-gmail-state.json',
+        '${snapshotAt}',
+        'test',
+        0,
+        1
+      );
     `,
   );
 }

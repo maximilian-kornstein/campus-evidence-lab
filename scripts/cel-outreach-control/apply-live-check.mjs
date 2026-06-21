@@ -42,6 +42,10 @@ const queue = queueRows[0];
 if (!queue) {
   throw new Error(`Queue row not found: ${queueId}`);
 }
+const mutableStatuses = new Set(["planned", "draft_created", "ready_to_send"]);
+if (!mutableStatuses.has(queue.status)) {
+  throw new Error(`cannot apply live check to ${queueId} with status ${queue.status}`);
+}
 
 const evaluation = evaluateLiveCheck({
   ...input,

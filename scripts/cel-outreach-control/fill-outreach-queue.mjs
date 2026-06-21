@@ -24,6 +24,7 @@ const args = parseArgs(process.argv.slice(2), {
   timezone: "America/New_York",
   "usage-cap": "20",
   "protocol-cap": "10",
+  "max-snapshot-age-hours": "24",
 });
 
 const db = path.resolve(repoRoot, args.db);
@@ -32,6 +33,7 @@ const sendDate = requiredArg("send-date");
 const sendWindowStart = requiredArg("send-window-start");
 const sendWindowEnd = requiredArg("send-window-end");
 const timezone = String(args.timezone || "America/New_York").trim();
+const maxSnapshotAgeHours = String(args["max-snapshot-age-hours"] || "24").trim();
 const caps = {
   usage: Number(args["usage-cap"] ?? 20),
   protocol: Number(args["protocol-cap"] ?? 10),
@@ -42,6 +44,8 @@ for (const lane of lanes) {
     throw new Error(`Invalid ${lane} cap: ${args[`${lane}-cap`]}`);
   }
 }
+
+assertFreshGmailSnapshot();
 
 const campaignName = String(
   args["campaign-name"] || `CEL autonomous outreach ${sendDate}`,
@@ -113,6 +117,38 @@ function existingActiveCounts() {
     `,
   );
   return Object.fromEntries(rows.map((row) => [row.lane, Number(row.count)]));
+}
+
+function assertFreshGmailSnapshot() {
+  const maxAgeHours = Number(maxSnapshotAgeHours);
+  if (!Number.isFinite(maxAgeHours) || maxAgeHours <= 0) return;
+
+  const rows = queryJson(
+    db,
+    `
+      SELECT snapshot_at
+      FROM gmail_snapshot_imports
+      ORDER BY imported_at DESC, snapshot_at DESC
+      LIMIT 1;
+    `,
+  );
+  const snapshotAt = rows[0]?.snapshot_at || "";
+  if (!snapshotAt) {
+    throw new Error("Gmail snapshot is missing; refresh and import Gmail state before filling outreach queue.");
+  }
+
+  const snapshotDate = new Date(snapshotAt);
+  const now = new Date();
+  if (Number.isNaN(snapshotDate.getTime())) {
+    throw new Error(`Gmail snapshot timestamp is invalid: ${snapshotAt}`);
+  }
+
+  const ageHours = (now.getTime() - snapshotDate.getTime()) / (1000 * 60 * 60);
+  if (ageHours > maxAgeHours) {
+    throw new Error(
+      `Gmail snapshot is ${ageHours.toFixed(1)} hours old; refresh and import Gmail state before filling outreach queue.`,
+    );
+  }
 }
 
 function selectCandidates(lane, limit) {
@@ -252,6 +288,8 @@ function runDuplicateGuard() {
       db,
       "--checklist",
       checklistPath,
+      "--max-snapshot-age-hours",
+      maxSnapshotAgeHours,
     ],
     {
       cwd: repoRoot,
