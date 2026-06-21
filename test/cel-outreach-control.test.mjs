@@ -898,3 +898,280 @@ test("updates existing no-email target pool row by domain and contact natural ke
     "manual-domain-contact-row|Domain Contact||New Domain Org|domain-contact.example|protocol|manual refresh|blocked",
   ]);
 });
+
+test("fills autonomous outreach queue with default usage and protocol caps", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const checklistPath = path.join(tempDir, "outreach-preflight-checklist.md");
+  initDb(dbPath);
+  fs.writeFileSync(checklistPath, "# Outreach Preflight Checklist\n");
+  seedTargetPool(dbPath, { usage: 25, protocol: 15 });
+
+  runNode([
+    "scripts/cel-outreach-control/fill-outreach-queue.mjs",
+    "--db",
+    dbPath,
+    "--send-date",
+    "2026-07-02",
+    "--send-window-start",
+    "09:00",
+    "--send-window-end",
+    "11:00",
+    "--timezone",
+    "America/New_York",
+    "--checklist",
+    checklistPath,
+  ]);
+
+  const queueCounts = sqlite(
+    dbPath,
+    "SELECT lane || '|' || count(*) FROM outreach_queue GROUP BY lane ORDER BY lane;",
+  ).split("\n");
+  assert.deepEqual(queueCounts, ["protocol|10", "usage|20"]);
+
+  const poolCounts = sqlite(
+    dbPath,
+    "SELECT lane || '|' || status || '|' || count(*) FROM target_pool GROUP BY lane, status ORDER BY lane, status;",
+  ).split("\n");
+  assert.deepEqual(poolCounts, [
+    "protocol|candidate|5",
+    "protocol|imported|10",
+    "usage|candidate|5",
+    "usage|imported|20",
+  ]);
+
+  const campaigns = sqlite(
+    dbPath,
+    "SELECT campaign_type || '|' || target_send_date || '|' || count(*) FROM campaigns GROUP BY campaign_type, target_send_date;",
+  );
+  assert.equal(campaigns, "autonomous_outreach|2026-07-02|1");
+});
+
+test("does not let underfilled protocol lane borrow extra usage capacity", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const checklistPath = path.join(tempDir, "outreach-preflight-checklist.md");
+  initDb(dbPath);
+  fs.writeFileSync(checklistPath, "# Outreach Preflight Checklist\n");
+  seedTargetPool(dbPath, { usage: 30, protocol: 3 });
+
+  runNode([
+    "scripts/cel-outreach-control/fill-outreach-queue.mjs",
+    "--db",
+    dbPath,
+    "--send-date",
+    "2026-07-03",
+    "--send-window-start",
+    "09:00",
+    "--send-window-end",
+    "11:00",
+    "--timezone",
+    "America/New_York",
+    "--checklist",
+    checklistPath,
+  ]);
+
+  const queueCounts = sqlite(
+    dbPath,
+    "SELECT lane || '|' || count(*) FROM outreach_queue GROUP BY lane ORDER BY lane;",
+  ).split("\n");
+  assert.deepEqual(queueCounts, ["protocol|3", "usage|20"]);
+
+  const usagePoolCounts = sqlite(
+    dbPath,
+    "SELECT status || '|' || count(*) FROM target_pool WHERE lane = 'usage' GROUP BY status ORDER BY status;",
+  ).split("\n");
+  assert.deepEqual(usagePoolCounts, ["candidate|10", "imported|20"]);
+});
+
+test("fill queue is idempotent and existing active rows count against lane caps", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const checklistPath = path.join(tempDir, "outreach-preflight-checklist.md");
+  initDb(dbPath);
+  fs.writeFileSync(checklistPath, "# Outreach Preflight Checklist\n");
+  seedTargetPool(dbPath, { usage: 25, protocol: 12 });
+  seedExistingQueueRows(dbPath, {
+    sendDate: "2026-07-04",
+    usage: 4,
+    protocol: 3,
+  });
+
+  const args = [
+    "scripts/cel-outreach-control/fill-outreach-queue.mjs",
+    "--db",
+    dbPath,
+    "--send-date",
+    "2026-07-04",
+    "--send-window-start",
+    "09:00",
+    "--send-window-end",
+    "11:00",
+    "--timezone",
+    "America/New_York",
+    "--checklist",
+    checklistPath,
+  ];
+  runNode(args);
+  runNode(args);
+
+  const queueCounts = sqlite(
+    dbPath,
+    "SELECT lane || '|' || count(*) FROM outreach_queue WHERE send_date = '2026-07-04' GROUP BY lane ORDER BY lane;",
+  ).split("\n");
+  assert.deepEqual(queueCounts, ["protocol|10", "usage|20"]);
+
+  const importedCounts = sqlite(
+    dbPath,
+    "SELECT lane || '|' || count(*) FROM target_pool WHERE status = 'imported' GROUP BY lane ORDER BY lane;",
+  ).split("\n");
+  assert.deepEqual(importedCounts, ["protocol|7", "usage|16"]);
+
+  const runCount = sqlite(dbPath, "SELECT count(*) FROM automation_runs WHERE run_type = 'fill_queue';");
+  assert.equal(runCount, "2");
+});
+
+test("fill queue blocks selected candidates rejected by duplicate preflight", () => {
+  const tempDir = makeTempDir();
+  const dbPath = path.join(tempDir, "control.sqlite");
+  const checklistPath = path.join(tempDir, "outreach-preflight-checklist.md");
+  initDb(dbPath);
+  fs.writeFileSync(checklistPath, "# Outreach Preflight Checklist\n");
+  seedTargetPool(dbPath, { usage: 2, protocol: 1 });
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO gmail_items (id, item_type, to_emails, labels, is_cel)
+      VALUES ('sent-usage-001', 'sent', '["usage001@example.org"]', '["SENT"]', 1);
+    `,
+  );
+
+  runNode([
+    "scripts/cel-outreach-control/fill-outreach-queue.mjs",
+    "--db",
+    dbPath,
+    "--send-date",
+    "2026-07-05",
+    "--send-window-start",
+    "09:00",
+    "--send-window-end",
+    "11:00",
+    "--timezone",
+    "America/New_York",
+    "--checklist",
+    checklistPath,
+  ]);
+
+  const poolStatuses = sqlite(
+    dbPath,
+    "SELECT email || '|' || status FROM target_pool ORDER BY email;",
+  ).split("\n");
+  assert.deepEqual(poolStatuses, [
+    "protocol001@example.org|imported",
+    "usage001@example.org|blocked",
+    "usage002@example.org|imported",
+  ]);
+
+  const queueRows = sqlite(
+    dbPath,
+    `
+      SELECT
+        queue.lane || '|' ||
+        contact.email || '|' ||
+        queue.send_window_start || '|' ||
+        queue.send_window_end || '|' ||
+        queue.timezone || '|' ||
+        queue.status || '|' ||
+        queue.gmail_label || '|' ||
+        (queue.idempotency_key != '') || '|' ||
+        (queue.last_preflight_run_id != '')
+      FROM outreach_queue queue
+      JOIN campaign_targets target ON target.id = queue.target_id
+      JOIN contacts contact ON contact.id = target.contact_id
+      ORDER BY contact.email;
+    `,
+  ).split("\n");
+  assert.deepEqual(queueRows, [
+    "protocol|protocol001@example.org|09:00|11:00|America/New_York|planned|CEL/Outreach/2026-07-05|1|1",
+    "usage|usage002@example.org|09:00|11:00|America/New_York|planned|CEL/Outreach/2026-07-05|1|1",
+  ]);
+
+  const gmailRows = sqlite(dbPath, "SELECT count(*) FROM gmail_items;");
+  assert.equal(gmailRows, "1");
+});
+
+function seedTargetPool(dbPath, { usage = 0, protocol = 0 }) {
+  const values = [];
+  for (const lane of ["usage", "protocol"]) {
+    const count = lane === "usage" ? usage : protocol;
+    for (let index = 1; index <= count; index += 1) {
+      const number = String(index).padStart(3, "0");
+      values.push(`(
+        'target-pool-${lane}-${number}',
+        '${lane} Contact ${number}',
+        '${lane}${number}@example.org',
+        '${lane} Org ${number}',
+        '${lane}-${number}.example.org',
+        '${lane}',
+        'test category',
+        'test source',
+        'https://${lane}-${number}.example.org',
+        '${lane} fit ${number}',
+        'candidate'
+      )`);
+    }
+  }
+
+  if (values.length === 0) return;
+  sqlite(
+    dbPath,
+    `
+      INSERT INTO target_pool (
+        id,
+        contact_name,
+        email,
+        organization_name,
+        domain,
+        lane,
+        category,
+        source,
+        source_url,
+        fit_notes,
+        status
+      )
+      VALUES ${values.join(",")};
+    `,
+  );
+}
+
+function seedExistingQueueRows(dbPath, { sendDate, usage = 0, protocol = 0 }) {
+  const statements = [];
+  const statuses = ["planned", "draft_created", "ready_to_send", "sent"];
+  for (const lane of ["usage", "protocol"]) {
+    const count = lane === "usage" ? usage : protocol;
+    for (let index = 1; index <= count; index += 1) {
+      const number = String(index).padStart(3, "0");
+      const orgId = `org-existing-${lane}-${number}`;
+      const contactId = `contact-existing-${lane}-${number}`;
+      const campaignId = `campaign-existing-${lane}-${number}`;
+      const targetId = `target-existing-${lane}-${number}`;
+      const queueId = `queue-existing-${lane}-${number}`;
+      const status = statuses[(index - 1) % statuses.length];
+      statements.push(`
+        INSERT INTO organizations (id, name, domain)
+        VALUES ('${orgId}', 'Existing ${lane} Org ${number}', 'existing-${lane}-${number}.example.org');
+        INSERT INTO contacts (id, name, email, organization_id, domain)
+        VALUES ('${contactId}', 'Existing ${lane} Contact ${number}', 'existing-${lane}-${number}@example.org', '${orgId}', 'existing-${lane}-${number}.example.org');
+        INSERT INTO campaigns (id, name, target_send_date, campaign_type)
+        VALUES ('${campaignId}', 'Existing ${lane} Campaign ${number}', '${sendDate}', 'autonomous_outreach');
+        INSERT INTO campaign_targets (id, campaign_id, contact_id, organization_id, approval_status)
+        VALUES ('${targetId}', '${campaignId}', '${contactId}', '${orgId}', 'approved_for_draft');
+        INSERT INTO outreach_queue (id, campaign_id, target_id, lane, send_date, status, idempotency_key)
+        VALUES ('${queueId}', '${campaignId}', '${targetId}', '${lane}', '${sendDate}', '${status}', '${queueId}-idempotency');
+      `);
+    }
+  }
+
+  if (statements.length === 0) return;
+  sqlite(dbPath, statements.join("\n"));
+}
