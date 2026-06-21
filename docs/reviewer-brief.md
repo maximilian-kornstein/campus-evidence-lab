@@ -2,7 +2,7 @@
 
 Campus Evidence Lab is seeking critical review of its methodology, source standards, use-limit language, and sample records. Review is not endorsement.
 
-Public MVP: https://maximilian-kornstein.github.io/campus-evidence-lab/
+Public MVP: https://campusevidencelab.org/
 
 ## Project In One Paragraph
 
@@ -43,7 +43,7 @@ Reviewers can choose their own sample, or start with this mixed sample from publ
 - evt_2024_0006: older public-source event sample.
 
 Research workspace packet:
-https://maximilian-kornstein.github.io/campus-evidence-lab/research-workspace/?record_ids=evt_2026_0027,evt_2026_0081,evt_2026_0125,evt_2026_0210,evt_2026_0300,evt_2026_0395,evt_2025_0030,evt_2025_0060,evt_2024_0003,evt_2024_0006
+https://campusevidencelab.org/research-workspace/?record_ids=evt_2026_0027,evt_2026_0081,evt_2026_0125,evt_2026_0210,evt_2026_0300,evt_2026_0395,evt_2025_0030,evt_2025_0060,evt_2024_0003,evt_2024_0006
 
 ## What The Project Does Not Claim
 
@@ -55,27 +55,27 @@ https://maximilian-kornstein.github.io/campus-evidence-lab/research-workspace/?r
 
 ## Useful Links
 
-- Methodology: https://maximilian-kornstein.github.io/campus-evidence-lab/methodology/
-- Research guide: https://maximilian-kornstein.github.io/campus-evidence-lab/research-guide/
-- Trust & Review Packet: https://maximilian-kornstein.github.io/campus-evidence-lab/trust/
-- Reviewer Queue: https://maximilian-kornstein.github.io/campus-evidence-lab/reviewer-queue/
-- Flagship Report: https://maximilian-kornstein.github.io/campus-evidence-lab/flagship/
-- Gold v1 Review Packets: https://maximilian-kornstein.github.io/campus-evidence-lab/gold-records/
-- Record Quality Audit JSON: https://maximilian-kornstein.github.io/campus-evidence-lab/data/record-quality-audit.json
-- Record Quality Audit Notes: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/record-quality-audit.md
-- Record Quality Reviewer Packet JSON: https://maximilian-kornstein.github.io/campus-evidence-lab/data/record-quality-reviewer-packet.json
-- Record Quality Reviewer Packet Notes: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/record-quality-reviewer-packet.md
-- Gold v1 Certification Status JSON: https://maximilian-kornstein.github.io/campus-evidence-lab/data/gold-v1-certification-status.json
-- Gold v1 Certification Status Notes: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/gold-v1-certification-status.md
-- External Review Packet: https://maximilian-kornstein.github.io/campus-evidence-lab/external-review/
-- External Review Packet JSON: https://maximilian-kornstein.github.io/campus-evidence-lab/data/external-review-packet.json
-- Full Certification Ledger: https://maximilian-kornstein.github.io/campus-evidence-lab/certification/
-- Full Certification Ledger JSON: https://maximilian-kornstein.github.io/campus-evidence-lab/data/certification-ledger.json
-- Certification Batch 001 Pilot: https://maximilian-kornstein.github.io/campus-evidence-lab/certification/batch-001/
-- Source-To-Record Replication Guide: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/source-to-record-replication-guide.md
-- Reviewer Challenge Templates: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/reviewer-challenge-templates.md
-- Known Limits and Unresolved Records: https://maximilian-kornstein.github.io/campus-evidence-lab/known-limits/
-- Review Debt Zero Roadmap: https://maximilian-kornstein.github.io/campus-evidence-lab/docs/review-debt-zero-roadmap.md
+- Methodology: https://campusevidencelab.org/methodology/
+- Research guide: https://campusevidencelab.org/research-guide/
+- Trust & Review Packet: https://campusevidencelab.org/trust/
+- Reviewer Queue: https://campusevidencelab.org/reviewer-queue/
+- Flagship Report: https://campusevidencelab.org/flagship/
+- Gold v1 Review Packets: https://campusevidencelab.org/gold-records/
+- Record Quality Audit JSON: https://campusevidencelab.org/data/record-quality-audit.json
+- Record Quality Audit Notes: https://campusevidencelab.org/docs/record-quality-audit.md
+- Record Quality Reviewer Packet JSON: https://campusevidencelab.org/data/record-quality-reviewer-packet.json
+- Record Quality Reviewer Packet Notes: https://campusevidencelab.org/docs/record-quality-reviewer-packet.md
+- Gold v1 Certification Status JSON: https://campusevidencelab.org/data/gold-v1-certification-status.json
+- Gold v1 Certification Status Notes: https://campusevidencelab.org/docs/gold-v1-certification-status.md
+- External Review Packet: https://campusevidencelab.org/external-review/
+- External Review Packet JSON: https://campusevidencelab.org/data/external-review-packet.json
+- Full Certification Ledger: https://campusevidencelab.org/certification/
+- Full Certification Ledger JSON: https://campusevidencelab.org/data/certification-ledger.json
+- Certification Batch 001 Pilot: https://campusevidencelab.org/certification/batch-001/
+- Source-To-Record Replication Guide: https://campusevidencelab.org/docs/source-to-record-replication-guide.md
+- Reviewer Challenge Templates: https://campusevidencelab.org/docs/reviewer-challenge-templates.md
+- Known Limits and Unresolved Records: https://campusevidencelab.org/known-limits/
+- Review Debt Zero Roadmap: https://campusevidencelab.org/docs/review-debt-zero-roadmap.md
 - GitHub repository: https://github.com/maximilian-kornstein/campus-evidence-lab
 
 ## Acknowledgment Boundary

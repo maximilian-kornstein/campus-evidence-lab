@@ -20,7 +20,7 @@ Do not send unless every gate is true for the queue row and the exact Gmail draf
 - The imported Gmail snapshot is less than 24 hours old.
 - Live Gmail checks are clear for the person, recipient email, domain, organization, thread, and current draft.
 - The Gmail draft recipient and subject exactly match the queue row and target context.
-- The Gmail draft body passes the same live safety checks, has no GitHub Pages CEL URL, and contains no `https://maximilian-kornstein.github.io/campus-evidence-lab/` URL.
+- The Gmail draft body passes the same live safety checks and contains no legacy GitHub Pages CEL URL.
 - The daily caps are not exceeded: <=20 usage and <=10 protocol, with usage lane <= 20 and protocol lane <= 10.
 - The Gmail draft being sent is the draft recorded on the queue row.
 

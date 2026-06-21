@@ -1871,7 +1871,7 @@ No autonomous send may occur unless:
 5. local Gmail snapshot is less than 24 hours old
 6. live Gmail checks find no conflict
 7. the Gmail draft recipient and subject match the queue row
-8. the email body does not contain `maximilian-kornstein.github.io/campus-evidence-lab`
+8. the email body does not contain the legacy GitHub Pages CEL URL
 9. daily lane caps remain at or below 20 usage and 10 protocol
 
 ## Gmail Connector Boundary
@@ -1952,7 +1952,7 @@ For each `outreach_queue` row due today with `status = ready_to_send`:
 1. Verify no successful `send_attempts` row exists for the idempotency key.
 2. Read the current Gmail draft by draft id.
 3. Confirm the draft recipient and subject match the queued target.
-4. Confirm the body uses `https://campusevidencelab.org/` and does not contain `maximilian-kornstein.github.io/campus-evidence-lab`.
+4. Confirm the body uses `https://campusevidencelab.org/` and does not contain the legacy GitHub Pages CEL URL.
 5. Run live Gmail searches for exact email, person name, domain, organization, CEL labels, starred mail, drafts, sent mail, relationship labels, and thread replies.
 6. Save live-check evidence to JSON and run `apply-live-check.mjs`.
 7. If blocked, stop for that row.
@@ -2074,7 +2074,7 @@ Expected: one usage row and one protocol row appear in `outreach-queue.csv`.
 Run:
 
 ```bash
-rg -n "maximilian-kornstein.github.io/campus-evidence-lab" outreach docs scripts test \
+rg -n "maximilian-kornstein[.]github[.]io/campus-evidence-lab" outreach docs scripts test \
   --glob '!outreach/control/draft-domain-migration-2026-06-20.md' \
   --glob '!outreach/outreach-preflight-checklist.md' \
   --glob '!docs/superpowers/plans/2026-06-16-flagship-report-gold-v1.md'

@@ -19,7 +19,7 @@ For each candidate row, require:
 - No prior `send_attempts.result = 'sent'` for the idempotency key.
 - Imported Gmail snapshot less than 24 hours old.
 - Daily caps still usage <= 20 and protocol <= 10.
-- No `https://maximilian-kornstein.github.io/campus-evidence-lab/` URL in the subject, body, or source material.
+- No legacy GitHub Pages CEL URL in the subject, body, or source material.
 
 ## Steps Per Row
 

@@ -19,7 +19,7 @@ Block the follow-up if any condition is true:
 - A prior successful send exists for the same follow-up idempotency key.
 - A Gmail draft or scheduled/future-looking item already exists for the same thread, person, domain, or organization.
 - The draft recipient, subject, or body does not match the source thread context.
-- The body contains `https://maximilian-kornstein.github.io/campus-evidence-lab/`.
+- The body contains the legacy GitHub Pages CEL URL.
 - The imported Gmail snapshot is older than 24 hours.
 
 ## Steps Per Due Follow-Up

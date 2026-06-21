@@ -26,7 +26,7 @@ Require every item below before either `would_send` or `sent` is recorded:
 - Gmail draft id/message id/thread id match the queue row.
 - Gmail draft recipient exactly matches the queue target recipient.
 - Gmail draft subject matches the approved subject for the queue row and target context.
-- Gmail draft body matches the approved target context and contains no `https://maximilian-kornstein.github.io/campus-evidence-lab/` URL.
+- Gmail draft body matches the approved target context and contains no legacy GitHub Pages CEL URL.
 - Daily caps remain usage <= 20 and protocol <= 10.
 
 ## Steps Per Due Row
