@@ -23,6 +23,10 @@ const DATA_PATHS = {
 };
 
 const MAX_WORKSPACE_HANDOFF = 100;
+const MAX_EVENT_VISIBLE_ROWS = 100;
+const EVENT_SEARCH_DEBOUNCE_MS = 250;
+
+let eventFilterRenderTimer = null;
 
 const state = {
   records: [],
@@ -235,7 +239,15 @@ function weightedSearch(record, query, weightedFields) {
     text: normalizeSearchText(Array.isArray(value) ? value.join(" ") : value),
     weight
   }));
-  let score = normalizeSearchText(query) && fields.some((field) => field.text.includes(normalizeSearchText(query))) ? 20 : 0;
+  return weightedSearchPrepared(query, fields);
+}
+
+function weightedSearchPrepared(query, fields) {
+  const terms = searchTerms(query);
+  if (!terms.length) return { matches: true, score: 0 };
+
+  const normalizedQuery = normalizeSearchText(query);
+  let score = normalizedQuery && fields.some((field) => field.text.includes(normalizedQuery)) ? 20 : 0;
 
   for (const term of terms) {
     const aliases = aliasesForTerm(term).map(normalizeSearchText);
@@ -268,6 +280,19 @@ function recordWeightedFields(record) {
     [record.verification_status, 6],
     [record.confidence, 4]
   ];
+}
+
+const recordSearchFieldCache = new WeakMap();
+
+function cachedRecordSearchFields(record) {
+  const cached = recordSearchFieldCache.get(record);
+  if (cached) return cached;
+  const fields = recordWeightedFields(record).map(([value, weight]) => ({
+    text: normalizeSearchText(Array.isArray(value) ? value.join(" ") : value),
+    weight
+  }));
+  recordSearchFieldCache.set(record, fields);
+  return fields;
 }
 
 function normalizedInstitutionalResponse(value) {
@@ -435,6 +460,20 @@ function withPreservedTextInputState(render) {
   const snapshot = preservedTextInputState();
   render();
   restoreTextInputState(snapshot);
+}
+
+function focusTaskControl(selector) {
+  const focus = () => {
+    const target = document.querySelector(selector);
+    if (!target || typeof target.focus !== "function") return;
+    target.focus({ preventScroll: true });
+    target.scrollIntoView?.({ block: "center", behavior: "instant" });
+  };
+  if (window.requestAnimationFrame) {
+    window.requestAnimationFrame(focus);
+    return;
+  }
+  window.setTimeout(focus, 0);
 }
 
 async function copyText(value) {
@@ -750,7 +789,7 @@ function renderDashboard() {
         <p class="section-note">Search, brief, methodology, data</p>
       </div>
       <div class="action-grid">
-        <a class="action-link" href="${sitePath("/events/")}">
+        <a class="action-link" href="${sitePath("/events/?focus=search")}">
           <span>Search Event Database</span>
           <span>Filter by school, state, community, category, source type, date, confidence, and verification.</span>
         </a>
@@ -786,7 +825,7 @@ function renderDashboard() {
           <span>Research Guide</span>
           <span>Use the archive responsibly without turning public documentation into school rankings or safety claims.</span>
         </a>
-        <a class="action-link" href="${sitePath("/research-workspace/")}">
+        <a class="action-link" href="${sitePath("/research-workspace/?focus=records")}">
           <span>Research Workspace</span>
           <span>Select records and generate a citation packet with source URLs, snapshot hash, and use limits.</span>
         </a>
@@ -910,7 +949,7 @@ function initializeEventFiltersFromUrl() {
 function filteredRecords() {
   const query = state.filters.q.trim();
   return state.records
-    .map((record) => ({ record, search: weightedSearch(record, query, recordWeightedFields(record)) }))
+    .map((record) => ({ record, search: weightedSearchPrepared(query, cachedRecordSearchFields(record)) }))
     .filter(({ record, search }) => {
     const school = record.school ?? {};
 
@@ -956,6 +995,7 @@ function renderEvents() {
   initializeEventFiltersFromUrl();
   const params = new URLSearchParams(window.location.search);
   state.selectedId = params.get("id") || state.selectedId || state.records[0]?.id;
+  const shouldFocusSearch = params.get("focus") === "search";
 
   const schools = state.schoolsList
     .map((school) => ({ value: school.id, label: school.name }))
@@ -975,6 +1015,13 @@ function renderEvents() {
     { value: "confidence_desc", label: "Confidence high-low" }
   ];
   const results = sortedRecords(filteredRecords());
+  const visibleResults = results.slice(0, MAX_EVENT_VISIBLE_ROWS);
+  const resultStatus =
+    results.length > visibleResults.length
+      ? `Showing first ${visibleResults.length} of ${results.length} matching records. Use filters, exports, or Research Workspace for the full filtered set.`
+      : results.length
+        ? "All matching records are visible."
+        : "No records match the current filters.";
   if (!results.some((record) => record.id === state.selectedId)) {
     state.selectedId = results[0]?.id ?? null;
   }
@@ -997,13 +1044,14 @@ function renderEvents() {
         <input id="date_from" name="date_from" type="date" value="${escapeHtml(state.filters.dateFrom)}" aria-label="Filter from date">
         <input id="date_to" name="date_to" type="date" value="${escapeHtml(state.filters.dateTo)}" aria-label="Filter to date">
         <select id="sort" name="sort" aria-label="Sort records">${renderOptionPairs(sortOptions, state.filters.sort, "Sort")}</select>
+        <button type="submit" id="apply-event-search">Apply Search</button>
       </form>
       <div class="utility-bar" aria-label="Filtered dataset actions">
         <button type="button" id="copy-event-search-link">Copy Share Link</button>
         <button type="button" id="download-filtered-json">Download Filtered JSON</button>
         <button type="button" id="download-filtered-csv">Download Filtered CSV</button>
         <a class="button-link" href="${workspaceUrlForRecords(results)}">Open Research Workspace</a>
-        <span id="event-filter-status" class="section-note" role="status">${results.length > MAX_WORKSPACE_HANDOFF ? `Workspace opens first ${MAX_WORKSPACE_HANDOFF} records` : "Shareable filters are in the URL"}</span>
+        <span id="event-filter-status" class="section-note" role="status">${escapeHtml(resultStatus)} ${results.length > MAX_WORKSPACE_HANDOFF ? `Workspace opens first ${MAX_WORKSPACE_HANDOFF} records.` : "Shareable filters are in the URL."}</span>
       </div>
       <p class="section-note download-inline">Download full dataset: <a href="${sitePath("/data/events.json")}" download>Events JSON</a> / <a href="${sitePath("/data/events.csv")}" download>Events CSV</a> / <a href="${sitePath("/data/events-research.json")}" download>Research JSON</a> / <a href="${sitePath("/data/events-research.csv")}" download>Research CSV</a></p>
     </section>
@@ -1026,7 +1074,7 @@ function renderEvents() {
             </tr>
           </thead>
           <tbody>
-            ${results.length ? results.map((record) => eventRow(record, state.selectedId)).join("") : `<tr><td colspan="10" class="empty">No records match the current filters.</td></tr>`}
+            ${visibleResults.length ? visibleResults.map((record) => eventRow(record, state.selectedId)).join("") : `<tr><td colspan="10" class="empty">No records match the current filters.</td></tr>`}
           </tbody>
         </table>
       </div>
@@ -1036,12 +1084,17 @@ function renderEvents() {
   `;
 
   const form = document.querySelector("#event-filter-form");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    applyEventFilters(event.currentTarget);
+  });
   form.addEventListener("input", updateFilters);
   form.addEventListener("change", updateFilters);
   document.querySelector("#copy-event-search-link").addEventListener("click", copyEventSearchLink);
   document.querySelector("#download-filtered-json").addEventListener("click", () => downloadFilteredEvents("json"));
   document.querySelector("#download-filtered-csv").addEventListener("click", () => downloadFilteredEvents("csv"));
   renderEventDetail();
+  if (shouldFocusSearch) focusTaskControl("#q");
 }
 
 function updateEventsUrl() {
@@ -1065,10 +1118,9 @@ function updateEventsUrl() {
   window.history.replaceState(null, "", sitePath(query ? `/events/?${query}` : "/events/"));
 }
 
-function updateFilters(event) {
-  const form = event.currentTarget;
+function eventFiltersFromForm(form) {
   const formData = new FormData(form);
-  state.filters = {
+  return {
     q: String(formData.get("q") || ""),
     school: String(formData.get("school") || ""),
     state: String(formData.get("state") || ""),
@@ -1081,8 +1133,31 @@ function updateFilters(event) {
     dateTo: String(formData.get("date_to") || ""),
     sort: String(formData.get("sort") || "date_desc")
   };
+}
+
+function scheduleEventFilterRender() {
+  window.clearTimeout(eventFilterRenderTimer);
+  eventFilterRenderTimer = window.setTimeout(() => {
+    eventFilterRenderTimer = null;
+    withPreservedTextInputState(renderEvents);
+  }, EVENT_SEARCH_DEBOUNCE_MS);
+}
+
+function applyEventFilters(form, options = {}) {
+  state.filters = eventFiltersFromForm(form);
   updateEventsUrl();
+  if (options.debounce) {
+    scheduleEventFilterRender();
+    return;
+  }
+  window.clearTimeout(eventFilterRenderTimer);
+  eventFilterRenderTimer = null;
   withPreservedTextInputState(renderEvents);
+}
+
+function updateFilters(event) {
+  const shouldDebounce = event.type === "input" && event.target?.name === "q";
+  applyEventFilters(event.currentTarget, { debounce: shouldDebounce });
 }
 
 async function copyEventSearchLink() {
@@ -2412,6 +2487,7 @@ function workspaceParams() {
   const params = new URLSearchParams(window.location.search);
   return {
     q: params.get("q") || "",
+    focus: params.get("focus") || "",
     title: params.get("title") || "Campus Evidence Lab Research Packet",
     question: params.get("question") || "",
     recordIds: (params.get("record_ids") || "")
@@ -2608,6 +2684,7 @@ function renderResearchWorkspace() {
     };
     downloadTextFile("campus-evidence-lab-research-packet.json", "application/json;charset=utf-8", JSON.stringify(payload, null, 2));
   });
+  if (params.focus === "records") focusTaskControl("#workspace_q");
 }
 
 function reviewerIssueUrl(title, body) {

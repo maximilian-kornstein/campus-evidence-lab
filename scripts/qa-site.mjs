@@ -184,6 +184,18 @@ if (siteRoot === rootDir) {
   }
 }
 
+for (const homepageCopy of [
+  "Public-source civil-rights evidence infrastructure",
+  "Search Records",
+  "events/?focus=search",
+  "Build Reporting Packet",
+  "research-workspace/?focus=records",
+  "Download Data",
+  "Review Methodology"
+]) {
+  await mustContain("index.html", homepageCopy);
+}
+
 for (const submitCopy of [
   "source suggestions",
   "corrections",
@@ -354,7 +366,7 @@ for (const reviewerQueueCopy of [
   await mustContain("reviewer-queue/index.html", reviewerQueueCopy);
 }
 
-for (const eventsCopy of ["source type", "date range", "verification", "sort"]) {
+for (const eventsCopy of ["source type", "date range", "verification", "sort", "Apply Search"]) {
   await mustContain("events/index.html", eventsCopy);
 }
 for (const eventsDownload of ["data/events.json", "data/events.csv", "data/events-research.json", "data/events-research.csv", "Filter URLs are shareable"]) {
