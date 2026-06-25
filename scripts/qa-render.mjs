@@ -55,7 +55,7 @@ const pages = [
       "Records by Source Type",
       "not incident prevalence, school safety, or legal conclusions"
     ],
-    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/flagship/", "/gold-records/", "/protocol/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
+    linkChecks: ["/events/?focus=search", "/methodology/", "/impact/", "/trust/", "/flagship/", "/gold-records/", "/protocol/", "/reviewer-brief/", "/guide/", "/research-guide/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
     dashboardSmoke: true
   },
   {
@@ -351,11 +351,16 @@ async function renderPage(page, index) {
   if (page.dashboardSmoke) {
     const trendPanels = dom.window.document.querySelectorAll(".trend-panel");
     const actionLinks = dom.window.document.querySelectorAll(".action-link");
+    const dashboardHrefs = [...dom.window.document.querySelectorAll("a[href]")].map((link) => link.getAttribute("href"));
+    const packetHref = "/research-workspace/?focus=records&title=Campus%20Evidence%20Lab%20Reporting%20Packet&question=What%20public-source%20records%20support%20this%20reporting%20question%3F";
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
     if (actionLinks.length !== 23) {
       errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 23`);
+    }
+    if (!dashboardHrefs.includes(packetHref)) {
+      errors.push(`${page.file} did not render focused reporting-packet link`);
     }
     for (const panel of trendPanels) {
       if (panel.getAttribute("role") !== "img" || !panel.getAttribute("aria-label")) {
@@ -529,6 +534,15 @@ async function renderPage(page, index) {
       }
     }
 
+    if (!dom.window.document.querySelector("#apply-event-search")) {
+      errors.push(`${page.file} did not render Apply Search action`);
+    }
+
+    const initialEventRows = dom.window.document.querySelectorAll(".record-table--events tbody tr");
+    if (initialEventRows.length > 100) {
+      errors.push(`${page.file} rendered ${initialEventRows.length} initial event rows; expected at most 100`);
+    }
+
     form.elements.q.value = "Case Number 03-25-2099";
     form.elements.school.value = "university_of_kentucky";
     form.elements.source_type.value = "Government letter";
@@ -536,7 +550,7 @@ async function renderPage(page, index) {
     form.elements.date_from.value = "2025-09-01";
     form.elements.date_to.value = "2025-10-31";
     form.elements.sort.value = "confidence_desc";
-    form.elements.sort.dispatchEvent(new dom.window.Event("change", { bubbles: true, cancelable: true }));
+    form.dispatchEvent(new dom.window.Event("submit", { bubbles: true, cancelable: true }));
 
     for (const text of [
       `1 of ${events.length} records`,
