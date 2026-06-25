@@ -30,7 +30,7 @@ const reviewLogHash = sha256(reviewLog);
 
 const previousManifest = existsSync(paths.manifest) ? await readJson(paths.manifest) : null;
 
-const snapshotId = `snapshot_2026_06_03_${hashedEvents.length}_records`;
+const snapshotId = `snapshot_2026_06_25_${hashedEvents.length}_records`;
 const previousSnapshotHash =
   previousManifest?.snapshot_id === snapshotId
     ? previousManifest.hashes.previous_snapshot ?? null
@@ -38,7 +38,7 @@ const previousSnapshotHash =
 
 const manifest = {
   snapshot_id: snapshotId,
-  created_at: "2026-06-03",
+  created_at: "2026-06-25",
   schema_version: "0.1.0",
   totals: {
     events: hashedEvents.length,

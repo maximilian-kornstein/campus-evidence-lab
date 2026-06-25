@@ -1,14 +1,14 @@
 # Release Notes
 
-Generated for `snapshot_2026_06_03_4000_records`.
+Generated for `snapshot_2026_06_25_4000_records`.
 
 ## Snapshot
 
-- Created: `2026-06-03`
+- Created: `2026-06-25`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:350cf2e2797cbfe3241b937126ac3c9faec10c77ea5d1a4034bddfd9ab1f028f`
-- Previous snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
-- Archived snapshot: `/data/snapshots/snapshot_2026_06_03_4000_records.json`
+- Full snapshot hash: `sha256:3c091dc13ee9e27cafff3d35348b9db89b660930957594bf0ffb348ba63be079`
+- Previous snapshot hash: `sha256:3c091dc13ee9e27cafff3d35348b9db89b660930957594bf0ffb348ba63be079`
+- Archived snapshot: `/data/snapshots/snapshot_2026_06_25_4000_records.json`
 
 ## Dataset Counts
 
@@ -21,10 +21,10 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 ## Dataset Hashes
 
-- Events: `sha256:d8a87f47dc9fee5fbad6fa4ff81d509235a92be820bc4861554324a67c2832b6`
+- Events: `sha256:dbfca811038d29065a1969f348ac964efe3e09cca9ada0a1b0cdb1337029b743`
 - Schools: `sha256:4b5b7b8c7a74806bfc0b95bc78606c4b8ab3a87a7c18328dbcb47f4cfa40cb88`
 - Sources: `sha256:6612f537f4743f1f03c7f062bf1da299b78a1da44949ef63b2fe1a69ccb837a1`
-- Briefs: `sha256:479df2df3e4e2b22ab8739c0ce6d06fbac6becb68d37ac8b85d862bbbe381d69`
+- Briefs: `sha256:17c6a20ca35ad75dd482167e5e86370159bc580178ca9359fbf747a69110b6b7`
 - Corrections: `sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`
 - Review log: `sha256:7afd34d27de6a6fff8349b2bc1e210eedf56ddb35748129364dc2ef90e149840`
 
@@ -38,7 +38,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 ## Changelog
 
-- Public changelog entries: 4003
+- Public changelog entries: 6003
 - Changelog artifact: `/data/changelog.json`
 
 ## Source Audit
@@ -46,7 +46,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Audit mode: `metadata`
 - Audited sources: 25
 - Referenced events: 4000
-- Audit hash: `sha256:58ee80fdf3fcc528d194e0cc280527f725ce76cd3b5eed05137c6f2654bbc5af`
+- Audit hash: `sha256:5faedde7168f55dc4e859be8667ef2b6c9716f19ac2b9a2ec88f224f2368c8c8`
 - Audit artifact: `/data/source-audit.json`
 - Live audit artifact: `/data/source-audit-live.json`
 - Live checked sources: 25

@@ -1,6 +1,6 @@
 import { paths, readJson } from "./lib.mjs";
 
-const currentDate = "2026-06-03";
+const currentDate = "2026-06-25";
 const [events, schools, sources, briefs, corrections, manifest] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),

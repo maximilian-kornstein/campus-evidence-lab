@@ -2,7 +2,7 @@ import { paths, readJson, sha256, writeJson } from "./lib.mjs";
 
 const checkOnly = process.argv.includes("--check");
 const checkLive = process.argv.includes("--check-live");
-const currentDate = "2026-06-03";
+const currentDate = "2026-06-25";
 const outputPath = checkLive ? paths.sourceAuditLive : paths.sourceAudit;
 
 const [events, sources] = await Promise.all([
