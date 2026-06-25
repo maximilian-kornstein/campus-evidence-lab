@@ -11,25 +11,52 @@ if (!/^https?:$/.test(baseUrl.protocol)) {
   process.exit(1);
 }
 const publicBase = baseUrl.href.replace(/\/+$/, "");
+const maxFetchAttempts = 4;
+const retryDelayMs = 250;
+const transientStatuses = new Set([429, 500, 502, 503, 504]);
 
 function resolvePath(pathname) {
   return new URL(pathname.replace(/^\/+/, ""), `${publicBase}/`);
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function fetchText(pathname, expectedText = []) {
   const url = resolvePath(pathname);
-  const response = await fetch(url, { redirect: "follow" });
-  if (!response.ok) {
-    throw new Error(`${url.href} returned HTTP ${response.status}`);
-  }
+  let lastError;
 
-  const text = await response.text();
-  for (const expected of expectedText) {
-    if (!text.includes(expected)) {
-      throw new Error(`${url.href} is missing expected text: ${expected}`);
+  for (let attempt = 1; attempt <= maxFetchAttempts; attempt += 1) {
+    try {
+      const response = await fetch(url, { redirect: "follow" });
+      if (!response.ok) {
+        lastError = new Error(`${url.href} returned HTTP ${response.status}`);
+        if (transientStatuses.has(response.status) && attempt < maxFetchAttempts) {
+          await sleep(retryDelayMs * attempt);
+          continue;
+        }
+        throw lastError;
+      }
+
+      const text = await response.text();
+      for (const expected of expectedText) {
+        if (!text.includes(expected)) {
+          throw new Error(`${url.href} is missing expected text: ${expected}`);
+        }
+      }
+      return { url, text };
+    } catch (error) {
+      lastError = error;
+      if (attempt < maxFetchAttempts && error instanceof TypeError) {
+        await sleep(retryDelayMs * attempt);
+        continue;
+      }
+      throw error;
     }
   }
-  return { url, text };
+
+  throw lastError;
 }
 
 async function fetchJson(pathname) {
