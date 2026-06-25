@@ -19,6 +19,9 @@ const pages = [
     file: "index.html",
     checks: [
       String(events.length),
+      "Public-source civil-rights evidence infrastructure",
+      "Search Records",
+      "Build Reporting Packet",
       "Communities represented",
       "States and jurisdictions represented",
       "Campus civil-rights records",
@@ -43,7 +46,7 @@ const pages = [
       "Records by Source Type",
       "Small charts summarize current public records"
     ],
-    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_13_findings_memo_002_public_institutional_responses/"],
+    linkChecks: ["/events/?focus=search", "/methodology/", "/impact/", "/trust/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/?focus=records", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_13_findings_memo_002_public_institutional_responses/"],
     dashboardSmoke: true
   },
   {
@@ -488,6 +491,15 @@ async function renderPage(page, index) {
       }
     }
 
+    if (!dom.window.document.querySelector("#apply-event-search")) {
+      errors.push(`${page.file} did not render Apply Search action`);
+    }
+
+    const initialEventRows = dom.window.document.querySelectorAll(".record-table--events tbody tr");
+    if (initialEventRows.length > 100) {
+      errors.push(`${page.file} rendered ${initialEventRows.length} initial event rows; expected at most 100`);
+    }
+
     form.elements.q.value = "Case Number 03-25-2099";
     form.elements.school.value = "university_of_kentucky";
     form.elements.source_type.value = "Government letter";
@@ -495,7 +507,7 @@ async function renderPage(page, index) {
     form.elements.date_from.value = "2025-09-01";
     form.elements.date_to.value = "2025-10-31";
     form.elements.sort.value = "confidence_desc";
-    form.elements.sort.dispatchEvent(new dom.window.Event("change", { bubbles: true, cancelable: true }));
+    form.dispatchEvent(new dom.window.Event("submit", { bubbles: true, cancelable: true }));
 
     for (const text of [
       `1 of ${events.length} records`,
