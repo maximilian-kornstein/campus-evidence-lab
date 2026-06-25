@@ -513,16 +513,20 @@ function researchPacket(records, title = "Campus Evidence Lab Research Packet", 
   const lines = [
     `# ${title}`,
     "",
-    question ? `Research question: ${question}` : "Research question: not specified",
+    question ? `Reporting or research question: ${question}` : "Reporting or research question: not specified",
+    "",
+    "Methodology note:",
+    "Campus Evidence Lab records summarize public-source documentation. The packet preserves source links, record hashes, snapshot metadata, and conservative use limits so a reporter, researcher, reviewer, or public-interest organization can verify the basis for each record.",
     "",
     `Snapshot: ${state.manifest.snapshot_id}`,
     `Snapshot hash: ${state.manifest.hashes.full_snapshot}`,
     `Records selected: ${records.length}`,
     "",
-    "Use limits:",
+    "Limitations:",
     "- This packet cites public-source documentation, not incident prevalence.",
     "- Record counts are not school rankings, safety scores, or severity scores.",
     "- Absence from the dataset does not mean absence of incidents or institutional response.",
+    "- AI-generated summaries or downstream analysis should not be treated as reviewed unless human-review metadata is present.",
     "",
     "Selected records:",
     ...records.flatMap((record, index) => {
@@ -537,7 +541,7 @@ function researchPacket(records, title = "Campus Evidence Lab Research Packet", 
         `   Source basis: ${auditProfile.sourceBasis}`,
         `   Classification rationale: ${auditProfile.classificationRationale}`,
         `   Confidence rationale: ${auditProfile.confidenceRationale}`,
-        `   Sources:`,
+        `   Source URLs and citations:`,
         ...record.sources.map((source) => `   - ${sourceCitation(source)}`)
       ];
     }),
@@ -760,16 +764,33 @@ function setCurrentNav() {
   }
 }
 
+function commandCenterAction(title, body, href) {
+  return `
+    <a class="action-link action-link--command" href="${sitePath(href)}">
+      <span>${escapeHtml(title)}</span>
+      <span>${escapeHtml(body)}</span>
+    </a>
+  `;
+}
+
+function audiencePath(title, body, href) {
+  return `
+    <a class="audience-path" href="${sitePath(href)}">
+      <strong>${escapeHtml(title)}</strong>
+      <span>${escapeHtml(body)}</span>
+    </a>
+  `;
+}
+
 function renderDashboard() {
   const root = document.querySelector("#dashboard-root");
   if (!root) return;
 
-  const communities = unique(state.records.map((record) => record.affected_communities));
   const schoolsTracked = new Set(state.records.map((record) => record.school_id)).size;
-  const statesRepresented = unique(state.records.map((record) => [record.school?.state]));
-  const latestUpdate = state.records.map((record) => record.updated_at).sort().at(-1);
   const latestBrief = [...state.briefs].sort((a, b) => b.published_date.localeCompare(a.published_date))[0];
   const signals = documentationSignals(state.records);
+  const sourceCollections = state.sources.size;
+  const currentSnapshotHash = state.manifest.hashes.full_snapshot;
   const recentRows = state.records.slice(0, 5).map(dashboardEventRow).join("");
   const recordsByMonth = countBy(state.records, (record) => record.date.slice(0, 7))
     .sort((a, b) => b[0].localeCompare(a[0]))
@@ -783,30 +804,62 @@ function renderDashboard() {
     state.records.flatMap((record) => record.source_types),
     (sourceType) => sourceType
   ).slice(0, 8);
+  const trendChartsSection = `
+    <section class="section" aria-labelledby="trend-charts-title">
+      <div class="section-header">
+        <h2 class="section-title" id="trend-charts-title">Current Documentation Patterns</h2>
+        <p class="section-note">Small charts summarize current public records, not incident prevalence, school safety, or legal conclusions.</p>
+      </div>
+      <div class="trend-grid">
+        ${barChart("Records by Event Month", "Counts by dated public records in the current dataset.", recordsByMonth)}
+        ${barChart("Records by Affected-Community Label", "Labels may mix broad protected categories with narrower source-identified identities; records may have more than one label.", recordsByCommunity)}
+        ${barChart("Records by Source Type", "Source types represented across published records.", recordsBySourceType)}
+      </div>
+    </section>
+  `;
 
   root.innerHTML = `
-    <section class="section section--tight" aria-label="Dataset metrics">
+    <section class="section section--tight command-center" aria-label="Command center">
       <div class="metric-grid metric-grid--dashboard">
         <div class="metric">
-          <span class="metric__value">${state.records.length}</span>
+          <span class="metric__value">${state.records.length.toLocaleString("en-US")}</span>
           <span class="metric__label">Public-source records</span>
         </div>
         <div class="metric">
-          <span class="metric__value">${schoolsTracked}</span>
-          <span class="metric__label">Schools tracked</span>
+          <span class="metric__value">${schoolsTracked.toLocaleString("en-US")}</span>
+          <span class="metric__label">Schools with records</span>
         </div>
         <div class="metric">
-          <span class="metric__value">${communities.length}</span>
-          <span class="metric__label">Communities represented</span>
+          <span class="metric__value">${sourceCollections.toLocaleString("en-US")}</span>
+          <span class="metric__label">Source collections</span>
         </div>
         <div class="metric">
-          <span class="metric__value">${statesRepresented.length}</span>
-          <span class="metric__label">States and jurisdictions represented</span>
+          <span class="metric__value">CSV/JSON</span>
+          <span class="metric__label">Exports and research files</span>
         </div>
         <div class="metric">
-          <span class="metric__value">${latestUpdate ? formatDate(latestUpdate) : "None"}</span>
-          <span class="metric__label">Latest dataset update</span>
+          <span class="metric__value">${shortHash(currentSnapshotHash)}</span>
+          <span class="metric__label">Current snapshot hash</span>
         </div>
+      </div>
+      <div class="command-actions">
+        ${commandCenterAction("Search Records", "Find records by school, community, source type, confidence, and verification status.", "/events/")}
+        ${commandCenterAction("Build Reporting Packet", "Generate selected records, source URLs, limitations, citation language, and snapshot metadata.", "/research-workspace/?title=Campus%20Evidence%20Lab%20Reporting%20Packet&question=What%20public-source%20records%20support%20this%20reporting%20question%3F")}
+        ${commandCenterAction("Download Data", "Use CSV, JSON, research exports, manifest, archived snapshot, and schema files.", "/downloads/")}
+        ${commandCenterAction("Review Methodology", "Inspect inclusion rules, confidence language, correction flow, and responsible-use limits.", "/methodology/")}
+      </div>
+    </section>
+
+    <section class="section section--tight" aria-labelledby="start-here-title">
+      <div class="section-header">
+        <h2 class="section-title" id="start-here-title">Start Here</h2>
+        <p class="section-note">Choose the narrowest useful workflow</p>
+      </div>
+      <div class="audience-grid">
+        ${audiencePath("Journalists", "Search a school, select records, build a reporting packet, and cite the limitations before requesting comment.", "/journalist-guide/")}
+        ${audiencePath("Researchers", "Download snapshot-bound CSV/JSON, read the methodology, and cite the current manifest hash.", "/research-guide/")}
+        ${audiencePath("Contributors", "Submit public sources, corrections, duplicate reports, or school metadata fixes without private evidence.", "/submit/")}
+        ${audiencePath("Reviewers", "Audit sample records, challenge source support, and keep acknowledgment separate from endorsement.", "/reviewer-queue/")}
       </div>
     </section>
 
@@ -830,6 +883,8 @@ function renderDashboard() {
         </div>
       </dl>
     </section>
+
+    ${trendChartsSection}
 
     <section class="section">
       <div class="section-header">
@@ -864,6 +919,10 @@ function renderDashboard() {
         <a class="action-link" href="${sitePath("/gold-records/")}">
           <span>Gold v1 Review Packets</span>
           <span>Inspect the first deterministic review packet set; gold v1 is packet status, not outside validation.</span>
+        </a>
+        <a class="action-link" href="${sitePath("/protocol/")}">
+          <span>CLE Protocol</span>
+          <span>See the evidence-integrity layer: canonical hashes, signed manifests, Merkle proofs, local verification, responsible-use checks, and optional chain adapters.</span>
         </a>
         <a class="action-link" href="${sitePath("/downloads/")}">
           <span>Data Path</span>
@@ -926,18 +985,6 @@ function renderDashboard() {
           <span>Download Data</span>
           <span>Use JSON, CSV, snapshots, changelog, source audit, citation guidance, and schemas.</span>
         </a>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="trend-charts-title">
-      <div class="section-header">
-        <h2 class="section-title" id="trend-charts-title">Trend Charts</h2>
-        <p class="section-note">Small charts summarize current public records, not incident prevalence.</p>
-      </div>
-      <div class="trend-grid">
-        ${barChart("Records by Event Month", "Counts by dated public records in the current dataset.", recordsByMonth)}
-        ${barChart("Records by Affected Community", "Records may represent more than one affected community.", recordsByCommunity)}
-        ${barChart("Records by Source Type", "Source types represented across published records.", recordsBySourceType)}
       </div>
     </section>
 
@@ -2843,8 +2890,8 @@ function renderResearchWorkspace() {
 
     <section class="section section--tight">
       <div class="section-header">
-        <h2 class="section-title">Citation Packet</h2>
-        <p class="section-note">Markdown and JSON are generated locally</p>
+        <h2 class="section-title">Reporting Packet</h2>
+        <p class="section-note">Markdown and JSON are generated locally with methodology note, limitations, citations, and snapshot metadata</p>
       </div>
       <form class="stacked-form" id="workspace-packet-form">
         <label>
@@ -2988,7 +3035,8 @@ function reviewSampleTable(sample, recordById) {
           </tr>
         </thead>
         <tbody>
-          ${sample.records
+          ${[...sample.records]
+            .sort((a, b) => b.date.localeCompare(a.date) || a.event_id.localeCompare(b.event_id))
             .map((row) => {
               const record = recordById.get(row.event_id);
               return `
@@ -4077,6 +4125,8 @@ function renderDownloads() {
         ${downloadRow("Coverage Limits", sitePath("/coverage/"), "Responsible-use boundaries for coverage signals", false)}
         ${downloadRow("Methodology Stress Test", sitePath("/briefs/brief_2026_06_16_methodology_stress_test/"), "Where the archive can be wrong", false)}
         ${downloadRow("Snapshot Manifest", sitePath("/data/snapshot-manifest.json"), shortHash(state.manifest.hashes.full_snapshot))}
+        ${downloadRow("CLE Protocol Page", sitePath("/protocol/"), "Canonical evidence data, hashes, signed manifests, Merkle proofs, local verification, responsible use, and optional proof adapters", false)}
+        ${downloadRow("Snapshot Registry Contract", sitePath("/contracts/SnapshotRegistry.sol"), "Optional adapter prototype for publishing snapshot hashes after local verification", false)}
         ${downloadRow("Snapshot Index", sitePath("/data/snapshot-index.json"), `${state.snapshotIndex.snapshot_count} archived snapshots`)}
         ${downloadRow("Archived Snapshot", sitePath(`/data/snapshots/${state.manifest.snapshot_id}.json`), state.manifest.snapshot_id)}
         ${downloadRow("Data Dictionary", sitePath("/docs/data-dictionary.md"), "Field definitions")}

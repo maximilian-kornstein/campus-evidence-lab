@@ -261,6 +261,17 @@ if (siteRoot === rootDir) {
   }
 }
 
+for (const homepageCopy of [
+  "Public-source civil-rights evidence infrastructure",
+  "Search Records",
+  "Build Reporting Packet",
+  "Download Data",
+  "Review Methodology",
+  "protocol/"
+]) {
+  await mustContain("index.html", homepageCopy);
+}
+
 for (const submitCopy of [
   "source suggestions",
   "corrections",
@@ -289,8 +300,13 @@ for (const contributingCopy of [
 
 for (const methodologyCopy of [
   "Current Scope",
+  "Event Record Unit",
+  "Source Reliability Protocol",
   "Event Category Definitions",
   "Affected Community Definitions",
+  "known taxonomy limitation",
+  "Submit Public Sources",
+  "Update Cadence",
   "No Ranking System",
   "Limitations",
   "Versioning and Audit Policy"
@@ -298,11 +314,11 @@ for (const methodologyCopy of [
   await mustContain("methodology/index.html", methodologyCopy);
 }
 
-for (const codebookCopy of ["Public Codebook", "not a ranking system", "methodology examples JSON"]) {
+for (const codebookCopy of ["Public Codebook", "not a ranking system", "Affected-Community Taxonomy Note", "methodology examples JSON"]) {
   await mustContain("codebook/index.html", codebookCopy);
 }
 
-for (const coverageCopy of ["Coverage Limits", "does not measure underlying incident prevalence", "Responsible Use"]) {
+for (const coverageCopy of ["Coverage Limits", "does not measure underlying incident prevalence", "student-newsroom capacity", "Responsible Use"]) {
   await mustContain("coverage/index.html", coverageCopy);
 }
 
@@ -461,8 +477,8 @@ for (const researchGuideCopy of [
 
 for (const workspaceCopy of [
   "Research Workspace",
-  "Build a source packet from selected records",
-  "citation packet",
+  "Build a reporting packet from selected public records",
+  "methodology note",
   "Nothing is submitted or stored"
 ]) {
   await mustContain("research-workspace/index.html", workspaceCopy);
@@ -568,6 +584,8 @@ for (const downloadsCopy of [
   "Source index",
   "Weekly snapshot downloads",
   "Snapshot manifest",
+  "CLE Protocol page",
+  "Snapshot registry contract",
   "Dataset license",
   "Changelog",
   "Public product updates page",

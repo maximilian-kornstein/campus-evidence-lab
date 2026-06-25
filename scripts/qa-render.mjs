@@ -21,12 +21,20 @@ const pages = [
     file: "index.html",
     checks: [
       String(events.length),
-      "Communities represented",
-      "States and jurisdictions represented",
+      "Source collections",
+      "Current snapshot hash",
       "Campus civil-rights records",
+      "Search Records",
+      "Build Reporting Packet",
       "Audience Entry Points",
+      "Start Here",
+      "Journalists",
+      "Researchers",
+      "Contributors",
+      "Reviewers",
       "Journalist Path",
       "Research Path",
+      "CLE Protocol",
       "Flagship Report",
       "Gold v1 Review Packets",
       "Research Entry Points",
@@ -41,13 +49,13 @@ const pages = [
       "Research Workspace",
       "Reviewer Queue",
       "Download Data",
-      "Trend Charts",
+      "Current Documentation Patterns",
       "Records by Event Month",
-      "Records by Affected Community",
+      "Records by Affected-Community Label",
       "Records by Source Type",
-      "Small charts summarize current public records"
+      "not incident prevalence, school safety, or legal conclusions"
     ],
-    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/flagship/", "/gold-records/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
+    linkChecks: ["/events/", "/methodology/", "/impact/", "/trust/", "/flagship/", "/gold-records/", "/protocol/", "/reviewer-brief/", "/guide/", "/research-guide/", "/research-workspace/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
     dashboardSmoke: true
   },
   {
@@ -144,7 +152,7 @@ const pages = [
   {
     route: "/research-workspace/?record_ids=evt_2026_0027",
     file: "research-workspace/index.html",
-    checks: ["Research Workspace", "Start Here", "Quick Packet Presets", "Record Selection", "Citation Packet", "Selection is encoded in the URL", "Snapshot hash", "University of Kentucky", "evt_2026_0027"],
+    checks: ["Research Workspace", "Start Here", "Quick Packet Presets", "Record Selection", "Reporting Packet", "Selection is encoded in the URL", "Snapshot hash", "University of Kentucky", "evt_2026_0027"],
     workspaceSmoke: true
   },
   {
@@ -346,8 +354,8 @@ async function renderPage(page, index) {
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
-    if (actionLinks.length !== 18) {
-      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 18`);
+    if (actionLinks.length !== 23) {
+      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 23`);
     }
     for (const panel of trendPanels) {
       if (panel.getAttribute("role") !== "img" || !panel.getAttribute("aria-label")) {
@@ -492,7 +500,7 @@ async function renderPage(page, index) {
       errors.push(`${page.file} did not render the research workspace controls`);
       return;
     }
-    for (const text of ["Campus Evidence Lab Research Packet", "Use limits:", "source_urls", "evt_2026_0027"]) {
+    for (const text of ["Campus Evidence Lab Research Packet", "Limitations:", "Methodology note:", "source_urls", "evt_2026_0027"]) {
       if (!output.value.includes(text)) {
         errors.push(`${page.file} workspace packet missing ${text}`);
       }

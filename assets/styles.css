@@ -89,6 +89,11 @@ button:disabled {
   text-decoration: none;
 }
 
+.button-link--primary {
+  background: var(--ink);
+  color: var(--page);
+}
+
 .button-link:hover,
 .button-link:focus-visible {
   outline: 2px solid var(--ink);
@@ -233,6 +238,17 @@ textarea:focus-visible {
   font-size: 13px;
 }
 
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.command-center {
+  margin-top: 52px;
+}
+
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -316,6 +332,50 @@ textarea:focus-visible {
   font-size: 13px;
   line-height: 1.45;
   overflow-wrap: anywhere;
+}
+
+.command-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-left: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.action-link--command {
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.action-link--command,
+.audience-path {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.action-link--static {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+}
+
+.audience-path {
+  display: grid;
+  gap: 10px;
+  min-height: 132px;
+  padding: 18px;
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  text-decoration: none;
+}
+
+.audience-path span {
+  color: var(--muted);
 }
 
 .principle-grid {
@@ -720,6 +780,8 @@ tr.is-selected {
   }
 
   .action-grid,
+  .command-actions,
+  .audience-grid,
   .principle-grid,
   .trend-grid {
     grid-template-columns: 1fr 1fr;
@@ -756,6 +818,8 @@ tr.is-selected {
 
   .metric-grid,
   .action-grid,
+  .command-actions,
+  .audience-grid,
   .principle-grid,
   .trend-grid,
   .toolbar,

@@ -103,6 +103,21 @@ test("buildReviewSamples produces capped named samples with packet and checklist
   assert.ok(low.records[0].checklist_url.includes("reviewer-checklist.yml"));
 });
 
+test("buildReviewSamples lists selected sample records newest first", () => {
+  const samples = buildReviewSamples({
+    records,
+    sourceAuditLive,
+    snapshotId: "snapshot_2026_06_16",
+    snapshotHash: "sha256:abc"
+  });
+
+  const singleSource = samples.samples.find((sample) => sample.id === "single-source-25");
+  assert.deepEqual(
+    singleSource.records.map((record) => record.event_id),
+    ["evt_2026_0003", "evt_2026_0001"]
+  );
+});
+
 test("validateReviewLedger rejects invalid statuses and unknown samples", () => {
   const errors = validateReviewLedger(
     {
