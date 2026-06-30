@@ -5,6 +5,7 @@ import { rootDir } from "./lib.mjs";
 
 const errors = [];
 const siteRoot = process.env.SITE_ROOT ? path.resolve(rootDir, process.env.SITE_ROOT) : rootDir;
+const skippedRootDirs = new Set([".git", ".worktrees", "node_modules"]);
 
 async function fileExists(relativePath) {
   try {
@@ -19,7 +20,7 @@ async function htmlFiles(dir = siteRoot) {
   const entries = await readdir(dir, { withFileTypes: true });
   const files = [];
   for (const entry of entries) {
-    if (entry.name === "node_modules" || entry.name === ".git") continue;
+    if (siteRoot === rootDir && skippedRootDirs.has(entry.name)) continue;
     if (siteRoot === rootDir && entry.name === "dist") continue;
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
@@ -43,7 +44,9 @@ function hasAccessibleName(element, document) {
   return Boolean(element.closest("label"));
 }
 
-for (const filePath of await htmlFiles()) {
+const htmlFileList = await htmlFiles();
+
+for (const filePath of htmlFileList) {
   const relativeFile = path.relative(siteRoot, filePath);
   const html = await readFile(filePath, "utf8");
   const dom = new JSDOM(html);
@@ -148,4 +151,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Accessibility QA passed for ${(await htmlFiles()).length} HTML pages.`);
+console.log(`Accessibility QA passed for ${htmlFileList.length} HTML pages.`);
