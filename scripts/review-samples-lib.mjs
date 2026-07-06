@@ -41,6 +41,10 @@ function sampleSortKey(record, snapshotHash) {
   return createHash("sha256").update(`${snapshotHash}|${record.id}`).digest("hex");
 }
 
+function newestRecordFirst(a, b) {
+  return String(b.date ?? "").localeCompare(String(a.date ?? "")) || String(b.id ?? "").localeCompare(String(a.id ?? ""));
+}
+
 function workspaceUrlForRecordIds(recordIds) {
   const url = new URL("/campus-evidence-lab/research-workspace/", "https://maximilian-kornstein.github.io");
   url.searchParams.set("records", recordIds.join(","));
@@ -71,7 +75,7 @@ function recordSummary(record, sampleId, sampleLabel, snapshotId, sourceAuditLiv
 }
 
 function sampleDefinition(id, label, description, records, snapshotHash, snapshotId, sourceAuditLive, limit = 25) {
-  const selected = stableSample(records, limit, `${snapshotHash}|${id}`);
+  const selected = stableSample(records, limit, `${snapshotHash}|${id}`).sort(newestRecordFirst);
   return {
     id,
     label,
