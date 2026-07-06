@@ -616,6 +616,92 @@ tr.is-selected {
   padding-left: 18px;
 }
 
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+}
+
+.policy-card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-height: 156px;
+  padding: 18px;
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  text-decoration: none;
+}
+
+.policy-card span:first-child {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.policy-card span:last-child {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.policy-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 760px) 300px;
+  gap: 72px;
+  align-items: start;
+}
+
+.policy-prose {
+  max-width: 760px;
+}
+
+.policy-prose h2:first-child {
+  margin-top: 0;
+}
+
+.policy-prose ol,
+.policy-prose ul {
+  padding-left: 22px;
+}
+
+.policy-prose code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.92em;
+}
+
+.policy-sidebar {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line-strong);
+}
+
+.policy-sidebar h2 {
+  margin: 0;
+  padding: 0 0 12px;
+  border-bottom: 1px solid var(--line-strong);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.policy-sidebar a {
+  display: block;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.policy-sidebar a:hover,
+.policy-sidebar a:focus-visible,
+.policy-sidebar a[aria-current="page"] {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .download-list {
   display: grid;
   grid-template-columns: 1fr;
@@ -783,6 +869,7 @@ tr.is-selected {
   .command-actions,
   .audience-grid,
   .principle-grid,
+  .policy-grid,
   .trend-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -794,6 +881,15 @@ tr.is-selected {
   .detail-grid {
     grid-template-columns: 1fr;
     gap: 28px;
+  }
+
+  .policy-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .policy-sidebar {
+    position: static;
   }
 }
 
@@ -821,6 +917,7 @@ tr.is-selected {
   .command-actions,
   .audience-grid,
   .principle-grid,
+  .policy-grid,
   .trend-grid,
   .toolbar,
   .download-row {

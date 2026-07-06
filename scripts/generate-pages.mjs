@@ -1,4 +1,4 @@
-import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { buildAuditProfile } from "../assets/audit-profile.js";
 import { hasSubstantiveInstitutionalResponse, responseDepthDisplayProfile, responseDisplayProfile } from "../assets/record-display.js";
@@ -49,7 +49,66 @@ const certificationDir = path.join(rootDir, "certification");
 const sourceFamilyReview001Dir = path.join(rootDir, "source-family-certification-review-001");
 const edProvenanceDir = path.join(rootDir, "ed-provenance");
 const certificationBatchesDir = path.join(rootDir, "certification-batches");
+const policiesDir = path.join(rootDir, "policies");
+const protocolDir = path.join(rootDir, "protocol");
 const detailDepth = 2;
+
+const POLICY_DOCUMENTS = [
+  {
+    slug: "terms-of-use",
+    title: "Terms Of Use",
+    sourcePath: "docs/policies/terms-of-use.md",
+    summary: "Access, permitted use, prohibited misuse, submissions, warranties, and liability boundaries."
+  },
+  {
+    slug: "privacy-policy",
+    title: "Privacy Policy",
+    sourcePath: "docs/policies/privacy-policy.md",
+    summary: "How public site visits, GitHub activity, submissions, contact, AI assistance, retention, and removal limits are handled."
+  },
+  {
+    slug: "data-license-addendum",
+    title: "Data License Addendum",
+    sourcePath: "docs/policies/data-license-addendum.md",
+    summary: "Dataset reuse, attribution, source-level limits, metadata preservation, corrections, and warranty boundaries."
+  },
+  {
+    slug: "submission-terms",
+    title: "Submission Terms",
+    sourcePath: "docs/policies/submission-terms.md",
+    summary: "Public-source-only submission rules for sources, corrections, duplicates, school metadata, and reviewer notes."
+  },
+  {
+    slug: "corrections-and-right-of-reply-policy",
+    title: "Corrections And Right-Of-Reply Policy",
+    sourcePath: "docs/policies/corrections-and-right-of-reply-policy.md",
+    summary: "How corrections, institutional replies, redactions, takedowns, and public rationales are handled."
+  },
+  {
+    slug: "responsible-use-policy",
+    title: "Responsible Use Policy",
+    sourcePath: "docs/policies/responsible-use-policy.md",
+    summary: "Appropriate and inappropriate uses, source review, review-tier interpretation, citation, and claim phrasing."
+  },
+  {
+    slug: "ai-use-disclosure",
+    title: "AI Use Disclosure",
+    sourcePath: "docs/policies/ai-use-disclosure.md",
+    summary: "Where AI may assist, where it may not, and how human review, auditability, and correction handling apply."
+  },
+  {
+    slug: "takedown-and-redaction-policy",
+    title: "Takedown And Redaction Policy",
+    sourcePath: "docs/policies/takedown-and-redaction-policy.md",
+    summary: "Redaction, takedown, safety, privacy, source-removal, copyright, and public-history limits."
+  },
+  {
+    slug: "reviewer-agreement",
+    title: "Reviewer Agreement",
+    sourcePath: "docs/policies/reviewer-agreement.md",
+    summary: "Reviewer scope, neutrality, conflicts, source checks, review tiers, AI assistance, and documentation expectations."
+  }
+];
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -58,6 +117,82 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function inlineMarkdown(value) {
+  const tokens = [];
+  const escaped = escapeHtml(value).replace(/`([^`]+)`/g, (_, code) => {
+    const token = `@@CODE${tokens.length}@@`;
+    tokens.push(`<code>${code}</code>`);
+    return token;
+  });
+  const emphasized = escaped.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  return tokens.reduce((html, tokenValue, index) => html.replaceAll(`@@CODE${index}@@`, tokenValue), emphasized);
+}
+
+function renderMarkdown(markdown) {
+  const lines = markdown.replace(/\r\n/g, "\n").split("\n");
+  const html = [];
+  const paragraph = [];
+  let listType = null;
+  let listItems = [];
+
+  function flushParagraph() {
+    if (!paragraph.length) return;
+    html.push(`<p>${inlineMarkdown(paragraph.join(" "))}</p>`);
+    paragraph.length = 0;
+  }
+
+  function flushList() {
+    if (!listType) return;
+    html.push(`<${listType}>${listItems.map((item) => `<li>${inlineMarkdown(item)}</li>`).join("")}</${listType}>`);
+    listType = null;
+    listItems = [];
+  }
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    const heading = line.match(/^(#{1,6})\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      flushList();
+      const level = Math.min(heading[1].length, 3);
+      html.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
+      continue;
+    }
+
+    const unordered = line.match(/^[-*]\s+(.+)$/);
+    if (unordered) {
+      flushParagraph();
+      if (listType && listType !== "ul") flushList();
+      listType = "ul";
+      listItems.push(unordered[1]);
+      continue;
+    }
+
+    const ordered = line.match(/^\d+\.\s+(.+)$/);
+    if (ordered) {
+      flushParagraph();
+      if (listType && listType !== "ol") flushList();
+      listType = "ol";
+      listItems.push(ordered[1]);
+      continue;
+    }
+
+    flushList();
+    paragraph.push(line);
+  }
+
+  flushParagraph();
+  flushList();
+
+  return html.join("\n");
 }
 
 function sitePath(target, depth = 0) {
@@ -92,12 +227,27 @@ function nav(depth = 0) {
           <a href="${sitePath("/impact/", depth)}">Impact</a>
           <a href="${sitePath("/guide/", depth)}">Guide</a>
           <a href="${sitePath("/downloads/", depth)}">Data</a>
+          <a href="${sitePath("/policies/", depth)}">Policies</a>
+          <a href="${sitePath("/protocol/", depth)}">Protocol</a>
           <a href="${sitePath("/submit/", depth)}">Submit</a>
           <a href="${sitePath("/about/", depth)}">About</a>
           <a href="${sitePath("/license/", depth)}">License</a>
         </nav>
       </div>
     </header>
+  `;
+}
+
+function policyLibraryLinks(currentSlug = "", depth = 1) {
+  return `
+    <nav class="policy-sidebar" aria-label="Policy Library">
+      <h2>Policy Library</h2>
+      <a${currentSlug ? "" : ' aria-current="page"'} href="${sitePath("/policies/", depth)}">Policy Library</a>
+      ${POLICY_DOCUMENTS.map(
+        (policy) =>
+          `<a${policy.slug === currentSlug ? ' aria-current="page"' : ""} href="${sitePath(`/policies/${policy.slug}/`, depth)}">${escapeHtml(policy.title)}</a>`
+      ).join("\n      ")}
+    </nav>
   `;
 }
 
@@ -544,6 +694,114 @@ function edBatchReviewRecordTable(records, depth = 1) {
 function verificationRationale(event, sourceCount) {
   return `${event.verification_status}; ${sourceCount} public source${sourceCount === 1 ? "" : "s"} reviewed (${event.source_types.join(", ")}). Confidence reflects source support, not severity.`;
 }
+
+await mkdir(policiesDir, { recursive: true });
+for (const entry of await readdir(policiesDir, { withFileTypes: true })) {
+  if (entry.isDirectory()) {
+    await rm(path.join(policiesDir, entry.name), { recursive: true, force: true });
+  }
+}
+
+await writeFile(
+  path.join(policiesDir, "index.html"),
+  page(
+    "Policies",
+    `
+      <p class="page-kicker">Policies</p>
+      <h1 class="page-title page-title--small">Rules for using, correcting, reviewing, and reusing the archive.</h1>
+      <p class="page-intro">These documents define the boundaries around Campus Evidence Lab's public-source records, review tiers, submissions, corrections, AI assistance, takedown process, and dataset reuse.</p>
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">Policy Library</h2>
+          <p class="section-note">Public operating terms for Campus Evidence Lab</p>
+        </div>
+        <div class="policy-grid">
+          ${POLICY_DOCUMENTS.map(
+            (policy) => `
+              <a class="policy-card" href="${sitePath(`/policies/${policy.slug}/`, 1)}">
+                <span>${escapeHtml(policy.title)}</span>
+                <span>${escapeHtml(policy.summary)}</span>
+              </a>
+            `
+          ).join("")}
+        </div>
+      </section>
+    `,
+    1
+  )
+);
+
+for (const policy of POLICY_DOCUMENTS) {
+  const policyMarkdown = await readFile(path.join(rootDir, policy.sourcePath), "utf8");
+  const policyBody = policyMarkdown.replace(/^# .+\n+/, "");
+  const policyDir = path.join(policiesDir, policy.slug);
+  await mkdir(policyDir, { recursive: true });
+  await writeFile(
+    path.join(policyDir, "index.html"),
+    page(
+      policy.title,
+      `
+        <p class="page-kicker">Policy Library</p>
+        <h1 class="page-title page-title--small">${escapeHtml(policy.title)}</h1>
+        <p class="page-intro">${escapeHtml(policy.summary)}</p>
+        <section class="detail-panel policy-layout">
+          <div class="prose policy-prose">
+            ${renderMarkdown(policyBody)}
+          </div>
+          <aside>
+            ${policyLibraryLinks(policy.slug, detailDepth)}
+          </aside>
+        </section>
+      `,
+      detailDepth
+    )
+  );
+}
+
+await mkdir(protocolDir, { recursive: true });
+await writeFile(
+  path.join(protocolDir, "index.html"),
+  page(
+    "CLE Protocol",
+    `
+      <p class="page-kicker">Protocol</p>
+      <h1 class="page-title page-title--small">Local verification before public claims.</h1>
+      <p class="page-intro">The CLE Protocol page explains how canonical data files, hashes, signed manifests, archived snapshots, local verification, and optional proof adapters fit together. It is a verification layer for the public archive, not a blockchain deployment claim.</p>
+      <section class="detail-panel">
+        <div class="detail-grid">
+          <div>
+            <h2 class="section-title">Protocol Components</h2>
+            <ul class="evidence-list">
+              <li>Canonical JSON and CSV artifacts in <code>data/</code>.</li>
+              <li>Record hashes and dataset hashes regenerated from the current source files.</li>
+              <li>Snapshot manifests archived in <code>data/snapshots/</code>.</li>
+              <li>Release verification artifacts that record the commands and limits for each public package.</li>
+              <li>Optional smart-contract or external proof adapters can attest to a snapshot hash without changing the archive's source-of-truth files.</li>
+            </ul>
+            <h2 class="section-title section-title--spaced">Verification Commands</h2>
+            <ul class="evidence-list">
+              <li><code>npm run hash:data</code> regenerates record and snapshot hashes.</li>
+              <li><code>node scripts/hash-dataset.mjs --check</code> checks committed hashes against current data.</li>
+              <li><code>npm run validate:data</code> validates canonical data and schema consistency.</li>
+              <li><code>npm run check</code> runs the broader local release gate.</li>
+            </ul>
+          </div>
+          <aside>
+            <dl>
+              ${dataLine("Current snapshot", escapeHtml(manifest.snapshot_id), "mono")}
+              ${dataLine("Full snapshot hash", escapeHtml(manifest.hashes.full_snapshot), "mono")}
+              ${dataLine("Snapshot manifest", `<a href="${sitePath("/data/snapshot-manifest.json", 1)}">Open JSON</a>`)}
+              ${dataLine("Release verification", `<a href="${sitePath("/data/release-verification.json", 1)}">Open JSON</a>`)}
+              ${dataLine("Snapshot registry contract", `<a href="${sitePath("/contracts/SnapshotRegistry.sol", 1)}">Open contract</a>`)}
+              ${dataLine("Replication guide", `<a href="${sitePath("/replicate/", 1)}">Open replication page</a>`)}
+            </dl>
+          </aside>
+        </div>
+      </section>
+    `,
+    1
+  )
+);
 
 await mkdir(eventsDir, { recursive: true });
 for (const entry of await readdir(eventsDir, { withFileTypes: true })) {

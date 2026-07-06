@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviewer Agreement / Campus Evidence Lab</title>
+    <link rel="stylesheet" href="../../assets/styles.css">
+  </head>
+  <body>
+
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="../../">
+          <span class="brand__name">Campus Evidence Lab</span>
+          <span class="brand__tag">Public evidence infrastructure</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="../../">Dashboard</a>
+          <a href="../../events/">Events</a>
+          <a href="../../schools/">Schools</a>
+          <a href="../../briefs/">Briefs</a>
+          <a href="../../sources/">Sources</a>
+          <a href="../../quality/">Quality</a>
+          <a href="../../review-debt/">Review Debt</a>
+          <a href="../../certification/">Certification</a>
+          <a href="../../certification-batches/">Batches</a>
+          <a href="../../ed-certification-batch-001/">ED Review</a>
+          <a href="../../external-review/">External Review</a>
+          <a href="../../methodology/">Methodology</a>
+          <a href="../../impact/">Impact</a>
+          <a href="../../guide/">Guide</a>
+          <a href="../../downloads/">Data</a>
+          <a href="../../policies/">Policies</a>
+          <a href="../../protocol/">Protocol</a>
+          <a href="../../submit/">Submit</a>
+          <a href="../../about/">About</a>
+          <a href="../../license/">License</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main">
+
+        <p class="page-kicker">Policy Library</p>
+        <h1 class="page-title page-title--small">Reviewer Agreement</h1>
+        <p class="page-intro">Reviewer scope, neutrality, conflicts, source checks, review tiers, AI assistance, and documentation expectations.</p>
+        <section class="detail-panel policy-layout">
+          <div class="prose policy-prose">
+            <h2>1. Purpose and Scope</h2>
+<p>This Reviewer Agreement governs participation as a reviewer for Campus Evidence Lab, a static-first public evidence archive of United States campus-related public-source records. Reviewers assist in verifying, tiering, correcting, and documenting event records, school records, source records, review logs, correction logs, release notes, snapshot manifests, and related exports and generated pages. This agreement applies to anyone who reviews, certifies, tiers, or approves changes to records in the dataset, whether through the public GitHub repository, GitHub issues and pull requests, or the site&#039;s structured submission tools.</p>
+<p>Campus Evidence Lab is not a corporation, law firm, or governing legal body. Reviewers act as contributors to the project and not as agents, employees, or representatives of any entity. Nothing in this agreement creates an employment, partnership, or attorney-client relationship between a reviewer and the project, and no such relationship should be represented to any third party.</p>
+<h2>2. Public-Source-Only Review</h2>
+<p>Reviewers may only rely on public-source material when evaluating, certifying, or advancing a record. Acceptable sources are limited to material that is already publicly accessible and independently verifiable, such as published news coverage, public institutional statements, public court or agency filings, and other material that a member of the public could locate without special access.</p>
+<p>Reviewers must not introduce, rely on, request, or retain:</p>
+<ul><li>private testimony not otherwise public,</li><li>private screenshots or private message contents,</li><li>direct messages or private correspondence,</li><li>doxxing material or information intended to expose a private individual&#039;s identity or location without a public-source basis,</li><li>sensitive personal information not already publicly disclosed in a qualifying public source, or</li><li>unsupported allegations that lack any identifiable public-source basis.</li></ul>
+<p>If a reviewer receives any of the above material through a correction request, submission, or outside communication, the reviewer must not use it to advance, certify, or alter a record&#039;s tier, and should route the matter as described in Section 11.</p>
+<h2>3. Neutrality and Source-Faithful Language</h2>
+<p>Reviewers must evaluate and edit records neutrally. Review work must track what a public source actually states, using source-faithful language rather than a reviewer&#039;s own characterization, inference, or embellishment. Where a source is ambiguous, incomplete, or disputed, the record and any reviewer notes must reflect that ambiguity rather than resolve it through the reviewer&#039;s personal judgment.</p>
+<p>Reviewers must not add editorializing language, speculative motive, or characterizations that go beyond what the cited public source supports. Category labels, affected-community labels, and institutional-response descriptions must be grounded in the source material, not in a reviewer&#039;s personal assessment of the underlying conduct.</p>
+<h2>4. Conflict Disclosure</h2>
+<p>A reviewer must disclose any conflict of interest before reviewing or certifying a record. A conflict of interest includes, without limitation, any current or past affiliation with a school, organization, or individual named in the record, any personal involvement in the underlying event, or any other relationship that could reasonably affect the reviewer&#039;s neutrality.</p>
+<p>Where a conflict exists, the reviewer must not independently certify or advance the record&#039;s tier and must instead flag the conflict so that another reviewer without the conflict can perform the review.</p>
+<h2>5. Prohibited Public Claims</h2>
+<p>Neither the dataset nor any individual record may be described, publicly or in any reviewer communication, as any of the following:</p>
+<ul><li>an endorsement of, or partnership with, any school, organization, or individual;</li><li>a legal finding or legal advice;</li><li>an externally validated result, unless a specific record has in fact undergone external review consistent with Section 6 and is labeled accordingly;</li><li>a ranking of schools or institutions;</li><li>a school safety score;</li><li>a prevalence estimate of campus civil-rights incidents; or</li><li>a severity score of any incident.</li></ul>
+<p>Reviewers must not make or imply any of the above claims in commit messages, issue comments, pull request descriptions, correction responses, or any other project communication, and must correct any such claim if one is discovered in existing project material.</p>
+<h2>6. Review Tiers</h2>
+<p>Records in the dataset may carry one of the following tiers:</p>
+<p><strong>Imported public source.</strong> The record reflects a public source that has been added to the dataset but has not yet undergone reviewer checking. A reviewer may create or update a record at this tier by citing a qualifying public source, but may not represent the record as checked or certified.</p>
+<p><strong>Source-family checked.</strong> The record has been checked against its cited source and, where available, related sources reporting on the same event, for basic consistency (dates, parties, described conduct, and source attribution). A reviewer may certify this tier only after performing the checks described in Section 7.</p>
+<p><strong>Internally certified.</strong> The record has undergone the source-family check described above and has additionally been reviewed for category accuracy, affected-community label accuracy, and institutional-response completeness as described in Sections 8 and 9. A reviewer may certify this tier only after completing those checks and documenting them per Section 12.</p>
+<p><strong>Externally reviewed.</strong> The record has undergone additional review by a party outside the core project reviewer group. A reviewer may not unilaterally assign this tier; it may only be applied once the external review has actually occurred and is documented.</p>
+<p>A reviewer may only certify a tier for which they have personally completed the applicable checks. A reviewer must not advance a record to a higher tier than the checks actually performed support, and must not rely on another reviewer&#039;s unverified assertion that a check was completed.</p>
+<h2>7. Source-to-Record Checks</h2>
+<p>Before certifying a record at the source-family-checked tier or higher, a reviewer must confirm that:</p>
+<ul><li>the record accurately reflects the content of its cited source or sources,</li><li>all dates, named parties, and described conduct in the record match what the source states,</li><li>the source link or citation is functional and points to the specific material relied upon, and</li><li>where multiple sources report on the same event, the record does not omit a material discrepancy between them without noting it.</li></ul>
+<p>Any discrepancy between the record and its source must be corrected or flagged before certification.</p>
+<h2>8. Category and Affected-Community Label Checks</h2>
+<p>Before certifying a record at the internally-certified tier, a reviewer must confirm that any category label and any affected-community label applied to the record is directly supported by the cited public source, rather than inferred from context, assumption, or the reviewer&#039;s own read of the underlying conduct. If a source does not clearly support a given label, the reviewer must remove or qualify the label rather than certify it.</p>
+<h2>9. Institutional Response-Depth Checks</h2>
+<p>Before certifying a record at the internally-certified tier, a reviewer must confirm that any description of a named institution&#039;s response is supported by public source material and accurately reflects the depth and status of that response as reported (for example, whether a source describes an investigation as opened, ongoing, concluded, or unaddressed). Reviewers must not characterize an institutional response more favorably or more critically than the public source supports.</p>
+<p>Named institutions have a correction and right-of-reply path through the channels described in Section 10. Reviewers should ensure that records reflect any public institutional response that is available in a qualifying source at the time of review.</p>
+<h2>10. Correction and Challenge Handling</h2>
+<p>Correction requests, duplicate reports, source submissions, and school metadata corrections may be submitted through GitHub issue templates or the site&#039;s structured submission page. A reviewer handling such a request must:</p>
+<ul><li>evaluate the request on the basis of public-source material only,</li><li>document the basis for accepting, rejecting, or modifying the request,</li><li>update the record&#039;s tier if the correction changes the checks underlying its current certification, and</li><li>respond to institutions exercising a correction or right-of-reply path through the same public channels, in source-faithful and neutral language.</li></ul>
+<p>A reviewer must not resolve a correction request based on private communication, off-channel pressure, or unsupported assertions from any party, including the subject of the record.</p>
+<h2>11. Confidentiality Limits</h2>
+<p>Campus Evidence Lab is designed for public-source work, and reviewers should expect that review activity, correction handling, and record history will generally occur in public channels such as GitHub issues, pull requests, and public release notes. Reviewers should not treat review discussions as confidential by default.</p>
+<p>Where limited non-public coordination is necessary, such as discussing a conflict-of-interest disclosure, an active bad-faith submission, or a safety concern about a specific submitter, reviewers must keep such coordination limited to what is necessary to resolve the issue and must not use it as a basis to introduce non-public-source information into any record. Non-public coordination is not a substitute for public-source verification and does not itself provide a basis for certifying, rejecting, or altering a record&#039;s tier.</p>
+<h2>12. Use of AI</h2>
+<p>AI tools may assist reviewers with extraction, summarization, duplicate detection, and drafting of record text, correction responses, or reviewer notes. AI assistance does not independently publish records and does not substitute for human review at the internally-certified or externally-reviewed tiers. A reviewer who uses AI assistance remains fully responsible for verifying that any AI-assisted output satisfies the source-to-record, category and label, and institutional-response checks described in Sections 7 through 9 before certifying a record.</p>
+<h2>13. Reviewer Documentation</h2>
+<p>Reviewers must document their review work in reviewer notes, commit messages, pull request descriptions, or review logs sufficient to show:</p>
+<ul><li>which sources were checked and relied upon,</li><li>which checks under Sections 7 through 9 were performed and their outcome,</li><li>the tier assigned or changed and the reason for the change,</li><li>any conflict of interest disclosed and how it was handled, and</li><li>the basis for any correction or challenge resolution under Section 10.</li></ul>
+<p>Documentation must be specific enough that another reviewer can understand and, if necessary, re-verify the basis for a certification without needing to contact the original reviewer.</p>
+<h2>14. Removal from Review Work</h2>
+<p>A reviewer may be removed from review work for bad-faith conduct, unsafe conduct, or unsupported review behavior. This includes, without limitation:</p>
+<ul><li>certifying a tier without performing the checks required for that tier,</li><li>introducing private testimony, private screenshots, direct messages, sensitive personal information, or unsupported allegations into a record,</li><li>making or permitting a prohibited public claim described in Section 5,</li><li>failing to disclose a known conflict of interest,</li><li>using non-public coordination to justify a certification instead of public-source verification,</li><li>repeated or serious failure to document review work as required by Section 13, or</li><li>conduct that creates a safety risk to any individual named in, or associated with, a record or correction request.</li></ul>
+<p>Removal from review work does not require prior review activity to be automatically reversed, but any record certified in violation of this agreement is subject to re-review and retiering.</p>
+          </div>
+          <aside>
+
+    <nav class="policy-sidebar" aria-label="Policy Library">
+      <h2>Policy Library</h2>
+      <a href="../../policies/">Policy Library</a>
+      <a href="../../policies/terms-of-use/">Terms Of Use</a>
+      <a href="../../policies/privacy-policy/">Privacy Policy</a>
+      <a href="../../policies/data-license-addendum/">Data License Addendum</a>
+      <a href="../../policies/submission-terms/">Submission Terms</a>
+      <a href="../../policies/corrections-and-right-of-reply-policy/">Corrections And Right-Of-Reply Policy</a>
+      <a href="../../policies/responsible-use-policy/">Responsible Use Policy</a>
+      <a href="../../policies/ai-use-disclosure/">AI Use Disclosure</a>
+      <a href="../../policies/takedown-and-redaction-policy/">Takedown And Redaction Policy</a>
+      <a aria-current="page" href="../../policies/reviewer-agreement/">Reviewer Agreement</a>
+    </nav>
+
+          </aside>
+        </section>
+
+    </main>
+    <footer class="site-footer">Campus Evidence Lab / Generated from public dataset</footer>
+  </body>
+</html>

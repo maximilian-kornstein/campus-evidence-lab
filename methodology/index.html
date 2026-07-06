@@ -24,6 +24,8 @@
           <a href="../impact/" data-nav="impact">Impact</a>
           <a href="../guide/" data-nav="guide">Guide</a>
           <a href="../downloads/" data-nav="downloads">Data</a>
+          <a href="../policies/" data-nav="policies">Policies</a>
+          <a href="../protocol/" data-nav="protocol">Protocol</a>
           <a href="../submit/" data-nav="submit">Submit</a>
           <a href="../about/" data-nav="about">About</a>
           <a href="../license/" data-nav="license">License</a>
@@ -45,6 +47,9 @@
 
       <h2>Current Scope</h2>
       <p>The current dataset covers U.S. campus civil-rights records across religion, race, ethnicity, national origin, sex, pregnancy, disability, and athletic-equity categories. Community labels are assigned only when the public source supports them, and they describe what is documented in the source record rather than an independent project finding.</p>
+
+      <h2>Event Record Unit</h2>
+      <p>The event record is the basic unit of publication. Each event record should describe one public-source-supported matter or source-backed update with enough structured fields for another reviewer to inspect the school, source, date precision, category, affected-community label, response-depth status, confidence, and record hash.</p>
 
       <h2>Inclusion Criteria</h2>
       <ul>
@@ -72,6 +77,9 @@
       <h2>Source Hierarchy</h2>
       <p>Official records and public datasets receive the strongest evidentiary weight. Reliable journalism and campus newspaper reporting can support inclusion when they identify the school, date, event type, and source basis. Advocacy or nonprofit reports require clear methodology and public source support before they can be used.</p>
 
+      <h2>Source Reliability Protocol</h2>
+      <p>The Source Reliability Protocol asks reviewers to identify publisher type, direct URL, publication date, public accessibility, source-to-record fit, locator specificity, and whether the source itself distinguishes allegations, findings, institutional statements, and agency-described actions.</p>
+
       <h2>Deduplication Logic</h2>
       <p>Records should not be duplicated because the same public matter appears in multiple sources. A second source should usually be attached to the existing record unless it documents a distinct date, public action, legal step, institutional response, or source-backed update. Structured public datasets may use scoped deduplication keys such as school, year, geography scope, offense, and bias-code so aggregate cells remain auditable without being merged incorrectly.</p>
 
@@ -92,6 +100,7 @@
 
       <h2>Affected Community Definitions</h2>
       <p>Affected communities are assigned only when supported by public source material. The field identifies the community named in the source record; it does not imply that Campus Evidence Lab independently determined motive, legal liability, or institutional fault. Multiple communities may be listed when a public source identifies more than one affected group.</p>
+      <p>The known taxonomy limitation is that broad source language does not always support narrow community labels. When the source is broad or ambiguous, the record should preserve that uncertainty rather than forcing a narrower label.</p>
 
       <h2>Exclusion Criteria</h2>
       <ul>
@@ -133,6 +142,7 @@
 
       <h2>Correction Process</h2>
       <p>Corrections must identify the record ID, the disputed field, and a public source supporting the change. Accepted corrections update the changelog and produce a new record hash. Rejected corrections should preserve a short rationale in review notes before the project has a formal public review queue.</p>
+      <p><a href="../submit/">Submit Public Sources</a> through the structured intake page when a correction, source addition, duplicate report, or school metadata update can be supported by a public URL.</p>
 
       <h2>Reviewer Standard</h2>
       <p>A reviewer should be able to reproduce the record from public material without private context. Review checks include source availability, source type, date precision, school identity, category choice, affected community label, legal-status wording, privacy risk, duplicate risk, neutral language, and whether confidence describes source support instead of severity.</p>
@@ -155,6 +165,9 @@
 
       <h2>Versioning and Audit Policy</h2>
       <p>Public changes regenerate record hashes, dataset hashes, snapshot manifests, the snapshot index, CSV exports, source audit metadata, and the public changelog. Archived snapshot manifests are listed in <a href="../data/snapshot-index.json">data/snapshot-index.json</a>. Before launch or major publication cycles, maintainers should run the advisory live source audit and manually review any failures.</p>
+
+      <h2>Update Cadence</h2>
+      <p>Update Cadence is snapshot-based rather than continuous. Records can be added, corrected, reclassified, or removed through public review, then published with regenerated hashes, release notes, and snapshot artifacts.</p>
     </main>
     <footer class="site-footer">Campus Evidence Lab / Methodology is part of the product</footer>
     <script type="module" src="../assets/app.js"></script>

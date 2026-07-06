@@ -137,9 +137,20 @@ for (const route of [
   "briefs/brief_2026_06_16_methodology_stress_test/index.html",
   "briefs/brief_2026_06_16_signature_finding_documentation_over_counts/index.html",
   "downloads/index.html",
+  "protocol/index.html",
   "submit/index.html",
   "about/index.html",
-  "license/index.html"
+  "license/index.html",
+  "policies/index.html",
+  "policies/terms-of-use/index.html",
+  "policies/privacy-policy/index.html",
+  "policies/data-license-addendum/index.html",
+  "policies/submission-terms/index.html",
+  "policies/corrections-and-right-of-reply-policy/index.html",
+  "policies/responsible-use-policy/index.html",
+  "policies/ai-use-disclosure/index.html",
+  "policies/takedown-and-redaction-policy/index.html",
+  "policies/reviewer-agreement/index.html"
 ]) {
   await mustExist(route);
 }
@@ -233,6 +244,15 @@ for (const artifact of [
   "docs/reviewer-challenge-templates.md",
   "docs/known-limits-unresolved-records.md",
   "docs/source-audit.md",
+  "docs/policies/terms-of-use.md",
+  "docs/policies/privacy-policy.md",
+  "docs/policies/data-license-addendum.md",
+  "docs/policies/submission-terms.md",
+  "docs/policies/corrections-and-right-of-reply-policy.md",
+  "docs/policies/responsible-use-policy.md",
+  "docs/policies/ai-use-disclosure.md",
+  "docs/policies/takedown-and-redaction-policy.md",
+  "docs/policies/reviewer-agreement.md",
   "docs/methodology-stress-test.md",
   "docs/replication.md",
   "docs/signature-finding-documentation-over-counts.md",
@@ -559,6 +579,40 @@ await mustContain("impact/index.html", "../updates/");
 await mustContain("downloads/index.html", "../data/product-updates.json");
 await mustContain("downloads/index.html", "../updates/");
 
+for (const policyHubCopy of [
+  "Policies",
+  "Terms Of Use",
+  "Privacy Policy",
+  "Data License Addendum",
+  "Submission Terms",
+  "Corrections And Right-Of-Reply Policy",
+  "Responsible Use Policy",
+  "AI Use Disclosure",
+  "Takedown And Redaction Policy",
+  "Reviewer Agreement"
+]) {
+  await mustContain("policies/index.html", policyHubCopy);
+}
+
+for (const [policyPath, policyCopy] of [
+  ["policies/terms-of-use/index.html", "Acceptance of Terms"],
+  ["policies/privacy-policy/index.html", "About Campus Evidence Lab"],
+  ["policies/data-license-addendum/index.html", "Purpose and Relationship to DATA_LICENSE.md"],
+  ["policies/submission-terms/index.html", "Public-Source-Only Submissions"],
+  ["policies/corrections-and-right-of-reply-policy/index.html", "Purpose"],
+  ["policies/responsible-use-policy/index.html", "Purpose and Scope"],
+  ["policies/ai-use-disclosure/index.html", "Permitted AI Assistance"],
+  ["policies/takedown-and-redaction-policy/index.html", "Purpose"],
+  ["policies/reviewer-agreement/index.html", "Purpose and Scope"]
+]) {
+  await mustContain(policyPath, policyCopy);
+  await mustContain(policyPath, "Policy Library");
+  await mustNotContain(policyPath, "Draft policy");
+  await mustNotContain(policyPath, "Draft Policy");
+  await mustNotContain(policyPath, "This draft");
+  await mustNotContain(policyPath, "this draft");
+}
+
 for (const eventResponseCopy of [
   "Public institutional response",
   "Brown said it agreed to continue nondiscrimination training",
@@ -807,6 +861,23 @@ for (const school of schools) {
 for (const brief of briefs) {
   if (!sitemap.includes(`/briefs/${brief.id}/`)) {
     errors.push(`Sitemap missing brief ${brief.id}`);
+  }
+}
+for (const policyUrl of [
+  "/policies/",
+  "/policies/terms-of-use/",
+  "/policies/privacy-policy/",
+  "/policies/data-license-addendum/",
+  "/policies/submission-terms/",
+  "/policies/corrections-and-right-of-reply-policy/",
+  "/policies/responsible-use-policy/",
+  "/policies/ai-use-disclosure/",
+  "/policies/takedown-and-redaction-policy/",
+  "/policies/reviewer-agreement/",
+  "/protocol/"
+]) {
+  if (!sitemap.includes(policyUrl)) {
+    errors.push(`Sitemap missing ${policyUrl}`);
   }
 }
 
