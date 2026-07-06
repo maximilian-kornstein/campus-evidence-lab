@@ -17,6 +17,7 @@ const publicPaths = [
   "briefs",
   "sources",
   "quality",
+  "import-waves",
   "methodology",
   "impact",
   "updates",

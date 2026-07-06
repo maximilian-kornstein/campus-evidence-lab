@@ -51,6 +51,7 @@ const certificationDir = path.join(rootDir, "certification");
 const sourceFamilyReview001Dir = path.join(rootDir, "source-family-certification-review-001");
 const edProvenanceDir = path.join(rootDir, "ed-provenance");
 const certificationBatchesDir = path.join(rootDir, "certification-batches");
+const importWavePagesDir = path.join(rootDir, "import-waves");
 const policiesDir = path.join(rootDir, "policies");
 const protocolDir = path.join(rootDir, "protocol");
 const detailDepth = 2;
@@ -553,6 +554,83 @@ function objectCountRows(counts) {
   return Object.entries(counts ?? {}).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 }
 
+async function readJsonFilesFromDir(dir) {
+  try {
+    const entries = await readdir(dir, { withFileTypes: true });
+    return Promise.all(
+      entries
+        .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((entry) => readJson(path.join(dir, entry.name)))
+    );
+  } catch (error) {
+    if (error?.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+function sourceFamilyLabel(sourceFamily) {
+  if (sourceFamily === "ed_campus_safety_dataset") return "ED Campus Safety";
+  return String(sourceFamily ?? "Unknown source family")
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function importWaveRows(importWaves, depth = 1) {
+  if (!importWaves.length) return `<p class="empty">No import waves have been generated.</p>`;
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Wave</th>
+            <th>Source family</th>
+            <th>Status</th>
+            <th>Attempted</th>
+            <th>Accepted</th>
+            <th>Quarantined</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${importWaves
+            .map(
+              (wave) => `
+                <tr>
+                  <td><a href="${sitePath(`/import-waves/${encodeURIComponent(wave.id)}/`, depth)}">${escapeHtml(wave.id)}</a></td>
+                  <td>${escapeHtml(sourceFamilyLabel(wave.source_family))}</td>
+                  <td>${escapeHtml(wave.status)}</td>
+                  <td>${escapeHtml(wave.attempted_count)}</td>
+                  <td>${escapeHtml(wave.accepted_count)}</td>
+                  <td>${escapeHtml(wave.quarantined_count)}</td>
+                </tr>
+              `
+            )
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function importWaveSampleRows(wave) {
+  if (!wave.sample_record_ids?.length) return `<p class="empty">No sample candidate IDs recorded for this wave.</p>`;
+  return `
+    <div class="table-wrap table-wrap--compact">
+      <table>
+        <thead>
+          <tr>
+            <th>Sample candidate ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${wave.sample_record_ids.map((candidateId) => `<tr><td class="mono">${escapeHtml(candidateId)}</td></tr>`).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
 function ledgerRecordTable(records, depth = 1) {
   if (!records.length) return `<p class="empty">No records in this queue.</p>`;
   return `
@@ -753,6 +831,109 @@ for (const policy of POLICY_DOCUMENTS) {
           <aside>
             ${policyLibraryLinks(policy.slug, detailDepth)}
           </aside>
+        </section>
+      `,
+      detailDepth
+    )
+  );
+}
+
+const importWaveReports = (await readJsonFilesFromDir(paths.importWavesDir)).sort((a, b) => b.generated_at.localeCompare(a.generated_at) || b.id.localeCompare(a.id));
+const importQuarantineByWaveId = new Map((await readJsonFilesFromDir(paths.importQuarantineDir)).map((artifact) => [artifact.wave_id ?? artifact.id, artifact]));
+await rm(importWavePagesDir, { recursive: true, force: true });
+await mkdir(importWavePagesDir, { recursive: true });
+await writeFile(
+  path.join(importWavePagesDir, "index.html"),
+  page(
+    "Import Waves",
+    `
+      <p class="page-kicker">Import Waves</p>
+      <h1 class="page-title page-title--small">Bulk publication is gated before it becomes public data.</h1>
+      <p class="page-intro">Import waves are frozen QA reports for official public-source candidate records. Accepted means the deterministic gates passed for the source family and candidate fields; it is not individual human certification, institutional ranking, prevalence measurement, safety scoring, severity scoring, or a legal finding.</p>
+      <section class="detail-panel">
+        <div class="detail-grid">
+          <div>
+            <h2 class="section-title">Wave Reports</h2>
+            ${importWaveRows(importWaveReports, 1)}
+          </div>
+          <aside>
+            <dl>
+              ${dataLine("Waves", escapeHtml(importWaveReports.length))}
+              ${dataLine("Accepted", escapeHtml(importWaveReports.reduce((sum, wave) => sum + wave.accepted_count, 0)))}
+              ${dataLine("Quarantined", escapeHtml(importWaveReports.reduce((sum, wave) => sum + wave.quarantined_count, 0)))}
+              ${dataLine("QA standard", `<a href="${sitePath("/docs/import-wave-qa-standard.md", 1)}">Open standard</a>`)}
+              ${dataLine("Runbook", `<a href="${sitePath("/docs/import-wave-runbook.md", 1)}">Open runbook</a>`)}
+              ${dataLine("Incident response", `<a href="${sitePath("/docs/publication-incident-response.md", 1)}">Open policy</a>`)}
+            </dl>
+          </aside>
+        </div>
+      </section>
+    `,
+    1
+  )
+);
+
+for (const wave of importWaveReports) {
+  const waveDir = path.join(importWavePagesDir, wave.id);
+  const quarantine = importQuarantineByWaveId.get(wave.id);
+  await mkdir(waveDir, { recursive: true });
+  await writeFile(
+    path.join(waveDir, "index.html"),
+    page(
+      `${wave.id} Import Wave`,
+      `
+        <p class="page-kicker">${escapeHtml(sourceFamilyLabel(wave.source_family))} Import Wave</p>
+        <h1 class="page-title page-title--small">${escapeHtml(wave.id)}</h1>
+        <p class="page-intro">${escapeHtml(sourceFamilyLabel(wave.source_family))} candidates passed through deterministic import-wave QA. Accepted rows cleared source-family eligibility, source locator, institution identity, duplicate, prohibited-field, and public-claim gates; acceptance is not individual human certification.</p>
+        <section class="detail-panel">
+          <div class="detail-grid">
+            <div>
+              <h2 class="section-title">Wave Status</h2>
+              <dl>
+                ${dataLine("Status", escapeHtml(wave.status))}
+                ${dataLine("Source family", escapeHtml(sourceFamilyLabel(wave.source_family)))}
+                ${dataLine("Manifest", escapeHtml(wave.manifest_id), "mono")}
+                ${dataLine("Generated", escapeHtml(wave.generated_at), "mono")}
+                ${dataLine("Command", escapeHtml(wave.command), "mono")}
+                ${dataLine("Dataset hash before", escapeHtml(wave.dataset_hash_before), "mono")}
+                ${dataLine("Dataset hash after", escapeHtml(wave.dataset_hash_after), "mono")}
+              </dl>
+              <h2 class="section-title section-title--spaced">QA Gate Counts</h2>
+              ${countTable(objectCountRows(wave.qa_gate_counts), "Gate", "Count")}
+              <h2 class="section-title section-title--spaced">Sample Candidate IDs</h2>
+              ${importWaveSampleRows(wave)}
+            </div>
+            <aside>
+              <dl>
+                ${dataLine("Attempted", escapeHtml(wave.attempted_count))}
+                ${dataLine("Accepted", escapeHtml(wave.accepted_count))}
+                ${dataLine("Duplicates", escapeHtml(wave.duplicate_count))}
+                ${dataLine("Excluded", escapeHtml(wave.excluded_count))}
+                ${dataLine("Quarantined", escapeHtml(wave.quarantined_count))}
+                ${dataLine("Candidate Artifact", `<a href="${sitePath(`/data/import-candidates/${wave.id}.json`, detailDepth)}">Open JSON</a>`)}
+                ${dataLine("Wave Artifact", `<a href="${sitePath(`/data/import-waves/${wave.id}.json`, detailDepth)}">Open JSON</a>`)}
+                ${dataLine("Quarantine Artifact", `<a href="${sitePath(`/${wave.quarantine_artifact}`, detailDepth)}">Open JSON</a>`)}
+              </dl>
+            </aside>
+          </div>
+        </section>
+        <section class="section section--tight">
+          <div class="section-header">
+            <h2 class="section-title">Quarantine Artifact</h2>
+            <p class="section-note">Rows blocked from publication remain preserved for remediation</p>
+          </div>
+          ${
+            quarantine?.rows?.length
+              ? countTable(objectCountRows(quarantine.reason_counts), "Reason", "Rows")
+              : `<p class="empty">No candidates were quarantined in this wave.</p>`
+          }
+        </section>
+        <section class="section section--tight">
+          <div class="section-header">
+            <h2 class="section-title">Public Claim Limit</h2>
+            <p class="section-note">How to read this wave</p>
+          </div>
+          <p>${escapeHtml(wave.public_claim_limit)}</p>
         </section>
       `,
       detailDepth

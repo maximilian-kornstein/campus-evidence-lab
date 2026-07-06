@@ -105,6 +105,9 @@ for (const route of [
   "briefs/index.html",
   "sources/index.html",
   "quality/index.html",
+  "import-waves/index.html",
+  "import-waves/ed-campus-safety-wave-001/index.html",
+  "import-waves/ed-campus-safety-wave-002/index.html",
   "methodology/index.html",
   "impact/index.html",
   "updates/index.html",
@@ -182,6 +185,9 @@ for (const artifact of [
   "data/import-candidates/ed-campus-safety-wave-001.json",
   "data/import-waves/ed-campus-safety-wave-001.json",
   "data/import-quarantine/ed-campus-safety-wave-001.json",
+  "data/import-candidates/ed-campus-safety-wave-002.json",
+  "data/import-waves/ed-campus-safety-wave-002.json",
+  "data/import-quarantine/ed-campus-safety-wave-002.json",
   "data/review-log.json",
   "data/review-samples.json",
   "data/review-ledger.json",
@@ -560,6 +566,14 @@ for (const schoolDossierFilterCopy of [
 
 for (const sourcesCopy of ["Search sources", "filter by source type", "direct external source URLs", "audit downloads"]) {
   await mustContain("sources/index.html", sourcesCopy);
+}
+
+for (const importWaveCopy of ["Import Waves", "ed-campus-safety-wave-002", "Accepted", "not individual human certification"]) {
+  await mustContain("import-waves/index.html", importWaveCopy);
+}
+
+for (const importWaveDetailCopy of ["ED Campus Safety", "QA Gate Counts", "Quarantine Artifact", "Candidate Artifact", "Public Claim Limit"]) {
+  await mustContain("import-waves/ed-campus-safety-wave-002/index.html", importWaveDetailCopy);
 }
 
 await mustContain(

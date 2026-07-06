@@ -4,11 +4,28 @@ import { paths, readJson, rootDir } from "./lib.mjs";
 import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registry.mjs";
 
 const baseUrl = (process.env.SITE_URL || "https://campusevidencelab.org").replace(/\/+$/, "");
-const [events, schools, briefs, sources] = await Promise.all([
+
+async function readJsonFilesFromDir(dir) {
+  try {
+    const entries = await readdir(dir, { withFileTypes: true });
+    return Promise.all(
+      entries
+        .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((entry) => readJson(path.join(dir, entry.name)))
+    );
+  } catch (error) {
+    if (error?.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+const [events, schools, briefs, sources, importWaves] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
   readJson(paths.briefs),
-  readJson(paths.sources)
+  readJson(paths.sources),
+  readJsonFilesFromDir(paths.importWavesDir)
 ]);
 
 const staticPaths = [
@@ -18,6 +35,7 @@ const staticPaths = [
   "/briefs/",
   "/sources/",
   "/quality/",
+  "/import-waves/",
   "/methodology/",
   "/impact/",
   "/updates/",
@@ -70,7 +88,8 @@ const eventPaths = events.map((event) => `/events/${event.id}/`);
 const schoolPaths = schools.map((school) => `/schools/${school.id}/`);
 const briefPaths = briefs.map((brief) => `/briefs/${brief.id}/`);
 const sourcePaths = sources.map((source) => `/sources/${source.id}/`);
-const urls = [...staticPaths, ...eventPaths, ...schoolPaths, ...briefPaths, ...sourcePaths];
+const importWavePaths = importWaves.map((wave) => `/import-waves/${wave.id}/`);
+const urls = [...staticPaths, ...eventPaths, ...schoolPaths, ...briefPaths, ...sourcePaths, ...importWavePaths];
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
