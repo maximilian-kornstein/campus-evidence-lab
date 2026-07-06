@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/import-wave.schema.json",
+  "title": "Campus Evidence Lab Import Wave Report",
+  "type": "object",
+  "required": [
+    "id",
+    "source_family",
+    "manifest_id",
+    "generated_at",
+    "command",
+    "publishable",
+    "status",
+    "attempted_count",
+    "accepted_count",
+    "duplicate_count",
+    "excluded_count",
+    "quarantined_count",
+    "qa_gate_counts",
+    "sample_record_ids",
+    "accepted_candidate_ids",
+    "source_manifest",
+    "quarantine_artifact",
+    "dataset_hash_before",
+    "dataset_hash_after",
+    "public_claim_limit"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "source_family": { "type": "string", "minLength": 1 },
+    "manifest_id": { "type": "string", "minLength": 1 },
+    "generated_at": { "type": "string", "format": "date" },
+    "command": { "type": "string", "minLength": 1 },
+    "publishable": { "type": "boolean" },
+    "status": { "type": "string", "enum": ["publishable", "blocked"] },
+    "attempted_count": { "type": "integer", "minimum": 0 },
+    "accepted_count": { "type": "integer", "minimum": 0 },
+    "duplicate_count": { "type": "integer", "minimum": 0 },
+    "excluded_count": { "type": "integer", "minimum": 0 },
+    "quarantined_count": { "type": "integer", "minimum": 0 },
+    "qa_gate_counts": { "type": "object" },
+    "sample_record_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "accepted_candidate_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "source_manifest": {
+      "type": "object",
+      "required": ["id", "source_family", "legal_risk_class", "bulk_import_eligible", "default_review_tier"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "source_family": { "type": "string", "minLength": 1 },
+        "legal_risk_class": { "type": "string", "minLength": 1 },
+        "bulk_import_eligible": { "type": "boolean" },
+        "default_review_tier": { "type": "string", "minLength": 1 },
+        "importer_command": { "type": "string" }
+      }
+    },
+    "quarantine_artifact": { "type": "string", "minLength": 1 },
+    "dataset_hash_before": { "type": "string", "minLength": 1 },
+    "dataset_hash_after": { "type": "string", "minLength": 1 },
+    "public_claim_limit": { "type": "string", "minLength": 1 }
+  }
+}

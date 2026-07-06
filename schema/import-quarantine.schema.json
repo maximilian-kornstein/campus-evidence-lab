@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/import-quarantine.schema.json",
+  "title": "Campus Evidence Lab Import Quarantine",
+  "type": "object",
+  "required": [
+    "id",
+    "wave_id",
+    "source_family",
+    "generated_at",
+    "rows",
+    "reason_counts",
+    "public_claim_limit"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "wave_id": { "type": "string", "minLength": 1 },
+    "source_family": { "type": "string", "minLength": 1 },
+    "generated_at": { "type": "string", "format": "date" },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "candidate_id",
+          "manifest_id",
+          "source_family",
+          "source_url",
+          "source_locator",
+          "raw_hash",
+          "reason_codes",
+          "failed_gates",
+          "failed_fields",
+          "remediation_action"
+        ],
+        "properties": {
+          "candidate_id": { "type": "string" },
+          "manifest_id": { "type": "string" },
+          "source_family": { "type": "string" },
+          "source_url": { "type": "string" },
+          "source_locator": { "type": "string" },
+          "raw_hash": { "type": "string" },
+          "reason_codes": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" }
+          },
+          "failed_gates": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" }
+          },
+          "failed_fields": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "remediation_action": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "reason_counts": { "type": "object" },
+    "public_claim_limit": { "type": "string", "minLength": 1 }
+  }
+}

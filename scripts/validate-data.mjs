@@ -1,4 +1,4 @@
-import { access } from "node:fs/promises";
+import { access, readdir } from "node:fs/promises";
 import path from "node:path";
 import { assertDate, paths, readJson, rootDir, sha256, eventForHash } from "./lib.mjs";
 import { validateReviewLedger } from "./review-samples-lib.mjs";
@@ -21,6 +21,7 @@ import { validateCertificationBatches } from "./certification-batches-lib.mjs";
 import { validateEdCertificationBatchReview } from "./ed-certification-batch-review-lib.mjs";
 import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registry.mjs";
 import { validateImportManifestCoverage } from "./import-manifest-lib.mjs";
+import { validateImportWaveArtifacts } from "./import-wave-lib.mjs";
 import { validateReviewTierRecord, REVIEW_TIERS } from "./review-tier-model-lib.mjs";
 
 const allowedCommunities = new Set([
@@ -172,6 +173,17 @@ const manifest = edCertificationBatchReviewsAndManifest.at(-1);
 const edCertificationBatchReviews = edCertificationBatchReviewsAndManifest.slice(0, -1);
 
 const errors = [];
+
+async function readJsonFilesFromDir(dir) {
+  try {
+    const entries = await readdir(dir, { withFileTypes: true });
+    const files = entries.filter((entry) => entry.isFile() && entry.name.endsWith(".json")).map((entry) => path.join(dir, entry.name)).sort();
+    return Promise.all(files.map(async (filePath) => [path.basename(filePath, ".json"), await readJson(filePath)]));
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
+}
 
 function uniqueBy(items, key, label) {
   const seen = new Set();
@@ -433,6 +445,22 @@ for (const [tier, count] of Object.entries(actualReviewTierCounts)) {
 }
 
 errors.push(...validateImportManifestCoverage({ events, sources, manifests: importManifests }));
+
+const importWaves = await readJsonFilesFromDir(paths.importWavesDir);
+const importQuarantineById = new Map(await readJsonFilesFromDir(paths.importQuarantineDir));
+if (importWaves.length === 0) {
+  errors.push("At least one import-wave artifact is required for the accountability scale-up path");
+}
+for (const [waveId, wave] of importWaves) {
+  const quarantine = importQuarantineById.get(waveId);
+  errors.push(...validateImportWaveArtifacts({ wave, quarantine }));
+  if (wave?.source_manifest?.bulk_import_eligible !== true) {
+    errors.push(`import-wave ${waveId} must use a bulk-eligible source manifest`);
+  }
+  if (wave?.source_manifest?.default_review_tier !== "imported_public_source") {
+    errors.push(`import-wave ${waveId} default review tier must be imported_public_source`);
+  }
+}
 
 if (!reviewLog.service_standard?.publication_rule || !reviewLog.service_standard?.correction_rule) {
   errors.push("review-log must include publication and correction rules");

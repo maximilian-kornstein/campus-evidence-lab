@@ -12,6 +12,8 @@ export const paths = {
   briefs: path.join(rootDir, "data", "briefs.json"),
   corrections: path.join(rootDir, "data", "corrections.json"),
   importManifests: path.join(rootDir, "data", "import-manifests.json"),
+  importWavesDir: path.join(rootDir, "data", "import-waves"),
+  importQuarantineDir: path.join(rootDir, "data", "import-quarantine"),
   reviewLog: path.join(rootDir, "data", "review-log.json"),
   reviewSamples: path.join(rootDir, "data", "review-samples.json"),
   reviewLedger: path.join(rootDir, "data", "review-ledger.json"),

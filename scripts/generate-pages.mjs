@@ -4,6 +4,7 @@ import { buildAuditProfile } from "../assets/audit-profile.js";
 import { hasSubstantiveInstitutionalResponse, responseDepthDisplayProfile, responseDisplayProfile } from "../assets/record-display.js";
 import { paths, readJson, rootDir } from "./lib.mjs";
 import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registry.mjs";
+import { sourceFamilyForRecord } from "./import-manifest-lib.mjs";
 import { reviewTierLabel, reviewTierLimit } from "./review-tier-model-lib.mjs";
 
 const [
@@ -979,6 +980,9 @@ for (const school of schools) {
     /ocr|legal|lawsuit|title vi|title ix|resolution|settlement|federal|doj|complaint|finding/i.test(`${event.category} ${event.legal_status}`)
   );
   const reviewNeedEvents = schoolEvents.filter((event) => reviewNeedLabels(event).length > 0);
+  const reviewTierRows = countBy(schoolEvents.map((event) => reviewTierLabel(event.review_tier)));
+  const sourceFamilyRows = countBy(schoolEvents.map((event) => sourceFamilyForRecord(event, sources)));
+  const responseDepthRows = countBy(schoolEvents.map((event) => responseDepthDisplayProfile(event).label));
   const dossierPackets = [
     [
       "Dossier packet",
@@ -1051,6 +1055,26 @@ for (const school of schools) {
           <li>Use source pages and event audit cards before citing records.</li>
           <li>Use the <a href="${sitePath("/codebook/", detailDepth)}">codebook</a> and <a href="${sitePath("/coverage/", detailDepth)}">coverage limits</a> before making comparisons or broader claims.</li>
         </ul>
+        <section class="section section--tight">
+          <div class="section-header">
+            <h2 class="section-title">Institution Accountability Dossier</h2>
+            <p class="section-note">Institution-facing transparency from public evidence and QA state</p>
+          </div>
+          <p>These counts show how the public record set is sourced and reviewed. Imported public-source records are not individually human-certified unless their review tier and linked review artifact say so.</p>
+          <p><a href="${sitePath(`/submit/?record_id=${encodeURIComponent(schoolEvents[0]?.id ?? "")}`, detailDepth)}">Right-of-reply and correction intake</a> accepts source-backed corrections, missing public responses, stronger source locators, and duplicate reports.</p>
+          <div class="detail-grid">
+            <div>
+              <h3 class="section-title section-title--spaced">Review Tier Mix</h3>
+              ${countTable(reviewTierRows.length ? reviewTierRows : [["No records", 0]], "Review Tier")}
+              <h3 class="section-title section-title--spaced">Source Family Mix</h3>
+              ${countTable(sourceFamilyRows.length ? sourceFamilyRows : [["No records", 0]], "Source Family")}
+            </div>
+            <aside>
+              <h3 class="section-title section-title--spaced">Response Depth Mix</h3>
+              ${countTable(responseDepthRows.length ? responseDepthRows : [["No records", 0]], "Response Depth")}
+            </aside>
+          </div>
+        </section>
         <section class="detail-panel">
           <div class="detail-grid">
             <div>
