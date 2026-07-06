@@ -9,6 +9,7 @@ const [
   sources,
   briefs,
   corrections,
+  importManifests,
   reviewLog,
   reviewSamples,
   reviewLedger,
@@ -42,6 +43,7 @@ const [
   readJson(paths.sources),
   readJson(paths.briefs),
   readJson(paths.corrections),
+  readJson(paths.importManifests),
   readJson(paths.reviewLog),
   readJson(paths.reviewSamples),
   readJson(paths.reviewLedger),
@@ -85,6 +87,7 @@ const stampedBriefs = briefs.map((brief) => ({
 }));
 const briefsHash = sha256(stampedBriefs);
 const correctionsHash = sha256(corrections);
+const importManifestsHash = sha256(importManifests);
 const reviewLogHash = sha256(reviewLog);
 const reviewSamplesHash = sha256(reviewSamples);
 const reviewLedgerHash = sha256(reviewLedger);
@@ -131,6 +134,7 @@ const manifest = {
     sources: sources.length,
     briefs: briefs.length,
     corrections: corrections.length,
+    import_manifests: importManifests.length,
     review_queues: reviewLog.queues.length,
     review_samples: reviewSamples.samples.length,
     review_ledger_entries: reviewLedger.entries.length,
@@ -175,6 +179,7 @@ const manifest = {
     sources: sourcesHash,
     briefs: briefsHash,
     corrections: correctionsHash,
+    import_manifests: importManifestsHash,
     review_log: reviewLogHash,
     review_samples: reviewSamplesHash,
     review_ledger: reviewLedgerHash,
@@ -209,6 +214,7 @@ const manifest = {
       sources: sourcesHash,
       briefs: briefsHash,
       corrections: correctionsHash,
+      import_manifests: importManifestsHash,
       review_log: reviewLogHash,
       review_samples: reviewSamplesHash,
       review_ledger: reviewLedgerHash,

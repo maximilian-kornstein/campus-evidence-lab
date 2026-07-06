@@ -20,6 +20,8 @@ import { validateEdDatasetProvenanceAudit } from "./ed-dataset-provenance-lib.mj
 import { validateCertificationBatches } from "./certification-batches-lib.mjs";
 import { validateEdCertificationBatchReview } from "./ed-certification-batch-review-lib.mjs";
 import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registry.mjs";
+import { validateImportManifestCoverage } from "./import-manifest-lib.mjs";
+import { validateReviewTierRecord, REVIEW_TIERS } from "./review-tier-model-lib.mjs";
 
 const allowedCommunities = new Set([
   "Jewish",
@@ -100,6 +102,7 @@ const [
   sources,
   briefs,
   corrections,
+  importManifests,
   reviewLog,
   reviewSamples,
   reviewLedger,
@@ -134,6 +137,7 @@ const [
   readJson(paths.sources),
   readJson(paths.briefs),
   readJson(paths.corrections),
+  readJson(paths.importManifests),
   readJson(paths.reviewLog),
   readJson(paths.reviewSamples),
   readJson(paths.reviewLedger),
@@ -218,6 +222,7 @@ for (const source of sources) {
 }
 
 for (const event of events) {
+  errors.push(...validateReviewTierRecord(event));
   if (!/^evt_\d{4}_\d{4}$/.test(event.id)) errors.push(`Event ${event.id} has invalid ID format`);
   if (!schoolIds.has(event.school_id)) errors.push(`Event ${event.id} references unknown school ${event.school_id}`);
   assertDate(event.date, `Event ${event.id} date`, errors);
@@ -414,6 +419,20 @@ for (const [status, count] of Object.entries(actualCorrectionCounts)) {
     errors.push(`review-log decision_counts.${status} is ${reviewLog.decision_counts?.[status]}, expected ${count}`);
   }
 }
+
+const actualReviewTierCounts = Object.fromEntries(REVIEW_TIERS.map((tier) => [tier, 0]));
+for (const event of events) {
+  if (actualReviewTierCounts[event.review_tier] !== undefined) {
+    actualReviewTierCounts[event.review_tier] += 1;
+  }
+}
+for (const [tier, count] of Object.entries(actualReviewTierCounts)) {
+  if (reviewLog.review_tier_counts?.[tier] !== count) {
+    errors.push(`review-log review_tier_counts.${tier} is ${reviewLog.review_tier_counts?.[tier]}, expected ${count}`);
+  }
+}
+
+errors.push(...validateImportManifestCoverage({ events, sources, manifests: importManifests }));
 
 if (!reviewLog.service_standard?.publication_rule || !reviewLog.service_standard?.correction_rule) {
   errors.push("review-log must include publication and correction rules");

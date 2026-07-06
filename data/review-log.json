@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "updated_at": "2026-06-16",
+  "updated_at": "2026-07-06",
   "queues": [
     {
       "name": "source-submissions",
@@ -98,7 +98,13 @@
   },
   "service_standard": {
     "triage_target_days": 7,
-    "publication_rule": "No submitted record is published until public source review is complete.",
+    "publication_rule": "Approved official structured source-family imports may publish at imported_public_source with visible limits. Submitted open-web, sensitive, or non-manifested material requires human review before publication, and higher review tiers require their documented review gates.",
     "correction_rule": "Accepted corrections update the event changelog, record hash, dataset hash, and correction log."
+  },
+  "review_tier_counts": {
+    "imported_public_source": 190,
+    "source_family_checked": 0,
+    "internally_certified": 3810,
+    "externally_reviewed": 0
   }
 }

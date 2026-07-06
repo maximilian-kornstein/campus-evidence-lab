@@ -1,0 +1,346 @@
+[
+  {
+    "id": "manifest_ed_campus_safety_dataset",
+    "source_family": "ed_campus_safety_dataset",
+    "legal_risk_class": "low_official_structured",
+    "bulk_import_eligible": true,
+    "default_review_tier": "imported_public_source",
+    "source_urls": [
+      "https://ope.ed.gov/campussafety/",
+      "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip"
+    ],
+    "acquisition_date": "2026-07-06",
+    "importer_command": "npm run import:ed-campus-safety-scoped",
+    "field_map": {
+      "school": "institution identifier and institution name",
+      "date": "reported calendar year",
+      "date_precision": "year",
+      "category": "offense or bias category mapped to project category",
+      "affected_communities": "bias category when supplied by the workbook",
+      "source_locator": "workbook, sheet, row, column, and cell"
+    },
+    "duplicate_strategy": "Use stable deterministic event IDs and source-locator keys; reject duplicate school, year, source family, source row, category, and affected-community combinations.",
+    "sampling_plan": "Review importer code before each wave, inspect deterministic samples from the first 50 imported rows, and inspect at least 50 additional rows selected across source sheets and affected-community labels.",
+    "known_limits": [
+      "Official structured source records may describe reported data rather than adjudicated facts.",
+      "Publication at import tier does not imply individual human certification of each row.",
+      "Counts reflect public-source availability and workbook structure, not a prevalence estimate or campus safety score."
+    ],
+    "publishable_fields": [
+      "school",
+      "year",
+      "state",
+      "category",
+      "affected_communities",
+      "source_locator",
+      "source_url"
+    ],
+    "prohibited_fields": [
+      "private names",
+      "private contact details",
+      "direct messages",
+      "private screenshots",
+      "unpublished narrative allegations"
+    ],
+    "exclusion_rules": [
+      "Exclude rows that require private-person credibility judgments.",
+      "Exclude rows that cannot be linked to a public source locator.",
+      "Exclude rows that would require adding sensitive personal information beyond the source file."
+    ]
+  },
+  {
+    "id": "manifest_ocr_or_ed_release",
+    "source_family": "ocr_or_ed_release",
+    "legal_risk_class": "medium_official_document",
+    "bulk_import_eligible": false,
+    "default_review_tier": "imported_public_source",
+    "source_urls": [
+      "https://www.ed.gov/about/news/press-release/us-department-of-education-probes-cases-of-antisemitism-five-universities",
+      "https://www.ed.gov/about/news/press-release/us-department-of-educations-office-civil-rights-sends-letters-60-universities-under-investigation-antisemitic-discrimination-and-harassment",
+      "https://www.ed.gov/about/news/press-release/ed-hhs-and-gsa-initiate-review-of-anti-semitic-activity-university-of-washington",
+      "https://www.ed.gov/about/news/press-release/us-department-of-education-initiates-title-vi-investigation-haverford-college-allegedly-tolerating-anti-semitic-harassment",
+      "https://www.ed.gov/about/news/press-release/us-department-of-education-notifies-columbia-universitys-accreditor-of-columbias-title-vi-violation",
+      "https://www.ed.gov/about/news/press-release/us-departments-of-education-and-health-and-human-services-notify-harvard-universitys-accreditor-of-harvards-title-vi-violation",
+      "https://www.ed.gov/preview-link/node/5060/e58bc9e0-17b9-483a-845a-0df68624a768"
+    ],
+    "acquisition_date": "2026-07-06",
+    "importer_command": "npm run import:ed-letters",
+    "field_map": {
+      "school": "named institution in official release or listed letter",
+      "date": "release date or source item date",
+      "category": "official OCR, Title VI, or Title IX action mapped to project category",
+      "affected_communities": "community named in the official release",
+      "source_locator": "source item label, release URL, or document section"
+    },
+    "duplicate_strategy": "Use source URL, named institution, release date, and action type; merge later updates into changelog instead of creating duplicate records.",
+    "sampling_plan": "Review every source template before reuse and manually inspect any new release format before importing more than one record from it.",
+    "known_limits": [
+      "Official releases can describe allegations, investigations, or agency positions without resolving all underlying facts.",
+      "The source family is not treated as a legal finding by Campus Evidence Lab.",
+      "Bulk import is disabled until each release format has source-item locators and a source-family review gate."
+    ],
+    "publishable_fields": [
+      "school",
+      "date",
+      "category",
+      "affected_communities",
+      "agency action",
+      "source_url",
+      "source_locator"
+    ],
+    "prohibited_fields": [
+      "private names not needed for the public record",
+      "private contact details",
+      "unsupported motive or liability conclusions",
+      "claims beyond the source release"
+    ],
+    "exclusion_rules": [
+      "Exclude releases without a stable public URL or source item label.",
+      "Exclude extracted claims that are not directly supported by the release text.",
+      "Escalate records that require legal interpretation beyond neutral source attribution."
+    ]
+  },
+  {
+    "id": "manifest_annual_security_report",
+    "source_family": "annual_security_report",
+    "legal_risk_class": "medium_official_document",
+    "bulk_import_eligible": false,
+    "default_review_tier": "imported_public_source",
+    "source_urls": [
+      "https://clery.arizona.edu/asr",
+      "https://www.montana.edu/clery/reports/asr/2025/index.html",
+      "https://www.qcc.cuny.edu/publicSafety/docs/2025-QCC-ASR.pdf",
+      "https://www.umass.edu/police/media/175/download",
+      "https://www.villanova.edu/university/public-safety/reports-policies/annual-security-fire-safety-report-2025.html",
+      "https://wit.edu/sites/default/files/2025-09/2025%20Annual%20Security%20and%20Fire%20Safety%20Report%20CY%202022-2023-2024%20%281%29.pdf"
+    ],
+    "acquisition_date": "2026-07-06",
+    "importer_command": "Manual source-family import only until annual-security-report table locators are normalized.",
+    "field_map": {
+      "school": "reporting institution",
+      "date": "reported calendar year or report publication date",
+      "date_precision": "year unless a report row supplies a more precise date",
+      "category": "reported Clery or hate-crime category mapped to project category",
+      "affected_communities": "bias category named in report table",
+      "source_locator": "report URL, page, table, row, or document section"
+    },
+    "duplicate_strategy": "Use school, calendar year, report URL, page or table locator, category, and affected-community label.",
+    "sampling_plan": "Inspect report-specific tables before import and require page or table locators for every imported row.",
+    "known_limits": [
+      "Annual security reports vary by institution format and table structure.",
+      "Some reports publish aggregate statistics rather than item-level incident narratives.",
+      "Records from this family must not be treated as prevalence comparisons between schools."
+    ],
+    "publishable_fields": [
+      "school",
+      "year",
+      "category",
+      "affected_communities",
+      "report title",
+      "source_url",
+      "page or table locator"
+    ],
+    "prohibited_fields": [
+      "private victim names",
+      "private accused-person names",
+      "private contact details",
+      "unpublished incident details"
+    ],
+    "exclusion_rules": [
+      "Exclude tables that cannot be located in the public report.",
+      "Exclude rows whose school, year, or bias category cannot be mapped without guesswork.",
+      "Escalate reports with unusual table structures before import."
+    ]
+  },
+  {
+    "id": "manifest_university_statement",
+    "source_family": "university_statement",
+    "legal_risk_class": "medium_institutional_public_statement",
+    "bulk_import_eligible": false,
+    "default_review_tier": "imported_public_source",
+    "source_urls": [
+      "https://www.brown.edu/news/2024-07-08/resolution-agreement",
+      "https://drexel.edu/president/communications/message/2024/August/Drexel-Reaches-Voluntary-Resolution-Agreement-on-Title-VI-Investigation",
+      "https://news.lafayette.edu/2024/06/20/lafayette-resolves-ocr-review/",
+      "https://www.sjsu.edu/diversity/office/comms/archive/20220617_anti-asian_hate_crime_on_sjsu_campus.php",
+      "https://www.ohio.edu/news/2023/12/reiterating-ohios-commitment-fostering-community-respect",
+      "https://www.towson.edu/news/2016/hatebiasupdate.html"
+    ],
+    "acquisition_date": "2026-07-06",
+    "importer_command": "Manual source-family import only.",
+    "field_map": {
+      "school": "publishing institution",
+      "date": "statement publication date",
+      "category": "institution-described event, response, or policy action",
+      "affected_communities": "community named by the institution",
+      "source_locator": "statement URL and relevant paragraph or section"
+    },
+    "duplicate_strategy": "Use statement URL, school, publication date, and described event or response; merge follow-up statements into changelog when they concern the same record.",
+    "sampling_plan": "Individually inspect each statement before publication at any tier above imported public source.",
+    "known_limits": [
+      "University statements can be partial institutional accounts and may deny, qualify, or omit disputed facts.",
+      "The record should attribute claims to the institution unless independently supported by another source.",
+      "Bulk import is disabled for this family because statements vary in scope and risk."
+    ],
+    "publishable_fields": [
+      "school",
+      "date",
+      "category",
+      "affected_communities",
+      "institutional_response",
+      "source_url",
+      "source_locator"
+    ],
+    "prohibited_fields": [
+      "private names not necessary to understand the public statement",
+      "private contact details",
+      "unsupported allegations beyond the statement",
+      "legal conclusions not stated in the source"
+    ],
+    "exclusion_rules": [
+      "Exclude statements that cannot be attributed to an official institutional page.",
+      "Exclude claims that require resolving a disputed factual issue beyond the statement.",
+      "Escalate records naming private individuals before publication."
+    ]
+  },
+  {
+    "id": "manifest_campus_public_safety_notice",
+    "source_family": "campus_public_safety_notice",
+    "legal_risk_class": "medium_institutional_public_statement",
+    "bulk_import_eligible": false,
+    "default_review_tier": "imported_public_source",
+    "source_urls": [
+      "https://www.farmingdale.edu/university-police/hate-crime-res.shtml"
+    ],
+    "acquisition_date": "2026-07-06",
+    "importer_command": "Manual source-family import only.",
+    "field_map": {
+      "school": "campus public safety office or institution",
+      "date": "notice publication date or reported event date",
+      "category": "public safety category mapped to project category",
+      "affected_communities": "community named by the notice",
+      "source_locator": "notice URL and section"
+    },
+    "duplicate_strategy": "Use notice URL, school, date, and described incident; merge updates from the same notice into the existing record changelog.",
+    "sampling_plan": "Inspect each notice for private names, safety-sensitive details, and attribution before publication.",
+    "known_limits": [
+      "Public safety notices may be preliminary and can contain safety-sensitive context.",
+      "Notices may describe alleged conduct before investigation is complete.",
+      "This family requires manual review before higher-tier publication."
+    ],
+    "publishable_fields": [
+      "school",
+      "date",
+      "category",
+      "affected_communities",
+      "source_url",
+      "source_locator",
+      "public safety attribution"
+    ],
+    "prohibited_fields": [
+      "private names",
+      "private contact details",
+      "precise private residence details",
+      "investigative details not needed for the public record"
+    ],
+    "exclusion_rules": [
+      "Exclude notices that would expose sensitive personal information.",
+      "Exclude claims that are not clearly present in the notice.",
+      "Escalate any notice involving minors, private addresses, or active safety risk."
+    ]
+  },
+  {
+    "id": "manifest_government_case_or_letter",
+    "source_family": "government_case_or_letter",
+    "legal_risk_class": "medium_official_document",
+    "bulk_import_eligible": false,
+    "default_review_tier": "imported_public_source",
+    "source_urls": [
+      "https://www.justice.gov/crt/case-summaries",
+      "https://pres.uky.edu/sites/default/files/2025-10/2025-10-01_legal_ocr_finding_signedagreement.pdf"
+    ],
+    "acquisition_date": "2026-07-06",
+    "importer_command": "Manual source-family import only.",
+    "field_map": {
+      "school": "named institution in official case summary or letter",
+      "date": "letter date, case date, or publication date",
+      "category": "official action mapped to project category",
+      "affected_communities": "community named in the official document",
+      "source_locator": "case summary section, PDF page, document section, or paragraph"
+    },
+    "duplicate_strategy": "Use agency, case or letter identifier, school, document date, and source locator.",
+    "sampling_plan": "Inspect each official document and preserve page or section locators before publication.",
+    "known_limits": [
+      "Government case summaries and letters may use legal terms that should be attributed to the source, not to Campus Evidence Lab.",
+      "Some documents combine findings, agreements, allegations, and required actions in one file.",
+      "Records in this family should avoid legal interpretation beyond neutral source description."
+    ],
+    "publishable_fields": [
+      "school",
+      "date",
+      "agency",
+      "category",
+      "affected_communities",
+      "source_url",
+      "source_locator"
+    ],
+    "prohibited_fields": [
+      "private names not necessary to understand the official document",
+      "private contact details",
+      "legal conclusions not attributed to the source",
+      "claims beyond the official document"
+    ],
+    "exclusion_rules": [
+      "Exclude documents without a stable public source URL.",
+      "Escalate records where the document names private individuals.",
+      "Escalate records that require legal analysis beyond source attribution."
+    ]
+  },
+  {
+    "id": "manifest_government_guidance",
+    "source_family": "government_guidance",
+    "legal_risk_class": "medium_official_document",
+    "bulk_import_eligible": false,
+    "default_review_tier": "imported_public_source",
+    "source_urls": [
+      "https://www.ed.gov/media/document/resolving-hostile-environment-under-title-vi-discrimination-based-race-color-or-national-origin-including-shared-ancestry-or-ethnic-characteristics-2025"
+    ],
+    "acquisition_date": "2026-07-06",
+    "importer_command": "Manual source-family import only.",
+    "field_map": {
+      "school": "named institution when the guidance references one",
+      "date": "guidance publication date",
+      "category": "policy or guidance action mapped to project category",
+      "affected_communities": "community named in the guidance",
+      "source_locator": "guidance URL, page, and section"
+    },
+    "duplicate_strategy": "Use agency, guidance title, publication date, school when any, and document section.",
+    "sampling_plan": "Inspect the guidance context before creating or updating any event record.",
+    "known_limits": [
+      "Government guidance may state agency policy rather than an event-specific factual finding.",
+      "Guidance records should not be used as evidence that a school violated law unless the source itself states an official finding and the record attributes that statement.",
+      "This family is not bulk-import eligible."
+    ],
+    "publishable_fields": [
+      "agency",
+      "date",
+      "guidance title",
+      "category",
+      "affected_communities",
+      "source_url",
+      "source_locator"
+    ],
+    "prohibited_fields": [
+      "private names",
+      "private contact details",
+      "unsupported school-specific conclusions",
+      "legal advice"
+    ],
+    "exclusion_rules": [
+      "Exclude guidance that does not support a campus-specific record or policy-development record.",
+      "Escalate any school-specific interpretation before publication.",
+      "Do not import generalized policy language as if it were an incident record."
+    ]
+  }
+]

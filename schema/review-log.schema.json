@@ -3,7 +3,7 @@
   "$id": "https://campusevidencelab.org/schema/review-log.schema.json",
   "title": "Campus Evidence Lab Review Log",
   "type": "object",
-  "required": ["version", "updated_at", "queues", "decision_counts", "service_standard"],
+  "required": ["version", "updated_at", "queues", "decision_counts", "review_tier_counts", "service_standard"],
   "properties": {
     "version": { "type": "string" },
     "updated_at": { "type": "string", "format": "date" },
@@ -35,6 +35,21 @@
         "accepted": { "type": "integer", "minimum": 0 },
         "rejected": { "type": "integer", "minimum": 0 },
         "needs_more_evidence": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "review_tier_counts": {
+      "type": "object",
+      "required": [
+        "imported_public_source",
+        "source_family_checked",
+        "internally_certified",
+        "externally_reviewed"
+      ],
+      "properties": {
+        "imported_public_source": { "type": "integer", "minimum": 0 },
+        "source_family_checked": { "type": "integer", "minimum": 0 },
+        "internally_certified": { "type": "integer", "minimum": 0 },
+        "externally_reviewed": { "type": "integer", "minimum": 0 }
       }
     },
     "service_standard": {

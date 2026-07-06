@@ -14,7 +14,7 @@ A record can be included when it is:
 - connected to identity-based civil rights, discrimination, harassment, public policy, legal action, or institutional response
 - supported by at least one public source
 - written in neutral, attributed language
-- reviewed before publication
+- assigned a visible review tier before publication
 
 ## Accepted Source Types
 
@@ -76,10 +76,11 @@ Confidence describes source support, not severity.
 
 1. A source is discovered or submitted.
 2. A draft event record is created from public information only.
-3. A reviewer checks the source, school, date, affected community, category, and attribution language.
-4. The reviewer assigns verification status and confidence based on source support.
-5. The record is published only after review.
-6. Record hashes and snapshot hashes are regenerated after approved changes.
+3. The source family is checked against an import manifest or routed to manual review when the source is open-web, sensitive, or not approved for bulk import.
+4. Deterministic validation checks the source, school, date, affected community, category, attribution language, review tier, and prohibited claim language.
+5. Approved official structured imports may publish at the `imported_public_source` tier with visible limits. Higher tiers require the corresponding source-family or human review gate.
+6. The reviewer or importer assigns verification status and confidence based on source support.
+7. Record hashes and snapshot hashes are regenerated after approved changes.
 
 Operational review state is published in `data/review-log.json`. Source and correction intake can run through the repository issue templates without a paid backend.
 
@@ -110,7 +111,7 @@ Records must remain neutral, attributed, and source-backed. Automated content QA
 
 ## AI Use
 
-AI may assist with extraction, summarization, duplicate detection, and weekly brief drafting. AI does not publish records. Human review is required before a record appears in the public dataset.
+AI may assist with extraction, summarization, duplicate detection, and weekly brief drafting. AI does not independently publish records or assign higher review tiers. Publication requires deterministic public-source gates and a visible review tier; human review is required before a record can be described as source-family checked, internally certified, externally reviewed, or submission-reviewed.
 
 ## Integrity
 

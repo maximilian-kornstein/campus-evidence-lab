@@ -66,11 +66,21 @@ Rejected or incomplete corrections should preserve a short public rationale in `
 
 ## Publication Rule
 
-Submitted material does not become a public event record until a human reviewer confirms that the record is supported by public source material and written in neutral, attributed language.
+Submitted material from open-web, journalistic, social, private, sensitive, or otherwise non-manifested sources does not become a public event record until a human reviewer confirms that the record is supported by public source material and written in neutral, attributed language.
+
+Approved official structured source families may publish through deterministic import gates at the `imported_public_source` tier. That tier means the record has a public source basis, schema-valid fields, source-family provenance, and explicit limits; it does not mean the record has been individually human-certified. Records can move to `source_family_checked`, `internally_certified`, or `externally_reviewed` only after the corresponding review gate is completed.
+
+## Review Tiers
+
+- `imported_public_source`: imported from a public source family and passed baseline publication gates.
+- `source_family_checked`: source-family mapping, locator requirements, duplicate checks, and field-support rules passed.
+- `internally_certified`: Campus Evidence Lab completed documented source-to-record certification gates.
+- `externally_reviewed`: an outside reviewer or partner reviewed the record or packet under a named scope.
 
 ## Files
 
 - `data/review-log.json`: queue status, accepted evidence, exclusions, service standard, and correction decision totals.
+- `data/import-manifests.json`: source-family import rules, risk class, default tier, allowed fields, prohibited fields, known limits, and sampling plan.
 - `data/corrections.json`: source-backed correction requests and outcomes.
 - `data/flagship-report.json`: bounded public evidence infrastructure report with source-linked findings and next-review recommendations.
 - `data/gold-record-v1.json`: 25 deterministic review packets for high-value record inspection; packet status is only a workflow label.
@@ -80,6 +90,7 @@ Submitted material does not become a public event record until a human reviewer 
 - `.github/ISSUE_TEMPLATE/school-metadata-correction.yml`: school metadata correction intake template.
 - `schema/correction.schema.json`: correction record schema.
 - `schema/review-log.schema.json`: review log schema.
+- `schema/import-manifest.schema.json`: import manifest schema.
 - `schema/flagship-report.schema.json`: flagship report schema.
 - `schema/gold-record-v1.schema.json`: gold v1 review packet schema.
 

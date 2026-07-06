@@ -178,6 +178,7 @@ for (const artifact of [
   "data/changelog.json",
   "data/snapshot-index.json",
   "data/corrections.json",
+  "data/import-manifests.json",
   "data/review-log.json",
   "data/review-samples.json",
   "data/review-ledger.json",
@@ -204,6 +205,7 @@ for (const artifact of [
   "data/external-review-packet.json",
   "data/snapshot-manifest.json",
   `data/snapshots/${manifest.snapshot_id}.json`,
+  "schema/import-manifest.schema.json",
   "schema/correction.schema.json",
   "schema/review-log.schema.json",
   "schema/review-ledger.schema.json",
@@ -577,6 +579,7 @@ for (const aboutCopy of [
 await mustContain("trust/index.html", "../updates/");
 await mustContain("impact/index.html", "../updates/");
 await mustContain("downloads/index.html", "../data/product-updates.json");
+await mustContain("downloads/index.html", "../data/import-manifests.json");
 await mustContain("downloads/index.html", "../updates/");
 
 for (const policyHubCopy of [

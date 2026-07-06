@@ -4,6 +4,7 @@ import { buildAuditProfile } from "../assets/audit-profile.js";
 import { hasSubstantiveInstitutionalResponse, responseDepthDisplayProfile, responseDisplayProfile } from "../assets/record-display.js";
 import { paths, readJson, rootDir } from "./lib.mjs";
 import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registry.mjs";
+import { reviewTierLabel, reviewTierLimit } from "./review-tier-model-lib.mjs";
 
 const [
   events,
@@ -692,7 +693,7 @@ function edBatchReviewRecordTable(records, depth = 1) {
 }
 
 function verificationRationale(event, sourceCount) {
-  return `${event.verification_status}; ${sourceCount} public source${sourceCount === 1 ? "" : "s"} reviewed (${event.source_types.join(", ")}). Confidence reflects source support, not severity.`;
+  return `${event.verification_status}; ${sourceCount} public source${sourceCount === 1 ? "" : "s"} linked (${event.source_types.join(", ")}). Confidence reflects source support, not severity.`;
 }
 
 await mkdir(policiesDir, { recursive: true });
@@ -861,6 +862,8 @@ for (const event of events) {
                 ${!responseDisplayProfile(event).shouldShow ? dataLine("Legal status", escapeHtml(event.legal_status)) : ""}
                 ${dataLine("Verification", escapeHtml(event.verification_status))}
                 ${dataLine("Confidence", escapeHtml(event.confidence))}
+                ${dataLine("Review tier", escapeHtml(reviewTierLabel(event.review_tier)))}
+                ${dataLine("Review tier limit", escapeHtml(reviewTierLimit(event.review_tier)))}
                 ${dataLine("Verification rationale", escapeHtml(verificationRationale(event, eventSources.length)))}
                 ${dataLine("Last updated", escapeHtml(event.updated_at), "mono")}
                 ${dataLine("Record hash", escapeHtml(event.record_hash), "mono")}

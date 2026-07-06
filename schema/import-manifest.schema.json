@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/import-manifest.schema.json",
+  "title": "Campus Evidence Lab Import Manifest",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "source_family",
+      "legal_risk_class",
+      "bulk_import_eligible",
+      "default_review_tier",
+      "source_urls",
+      "acquisition_date",
+      "importer_command",
+      "field_map",
+      "duplicate_strategy",
+      "sampling_plan",
+      "known_limits",
+      "publishable_fields",
+      "prohibited_fields",
+      "exclusion_rules"
+    ],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "source_family": { "type": "string", "minLength": 1 },
+      "legal_risk_class": {
+        "type": "string",
+        "enum": [
+          "low_official_structured",
+          "medium_official_document",
+          "medium_institutional_public_statement",
+          "manual_only_open_web",
+          "excluded_private_or_sensitive"
+        ]
+      },
+      "bulk_import_eligible": { "type": "boolean" },
+      "default_review_tier": {
+        "type": "string",
+        "enum": [
+          "imported_public_source",
+          "source_family_checked",
+          "internally_certified",
+          "externally_reviewed"
+        ]
+      },
+      "source_urls": {
+        "type": "array",
+        "minItems": 1,
+        "items": { "type": "string", "format": "uri" }
+      },
+      "acquisition_date": { "type": "string", "format": "date" },
+      "importer_command": { "type": "string", "minLength": 1 },
+      "field_map": { "type": "object" },
+      "duplicate_strategy": { "type": "string", "minLength": 1 },
+      "sampling_plan": { "type": "string", "minLength": 1 },
+      "known_limits": {
+        "type": "array",
+        "minItems": 1,
+        "items": { "type": "string", "minLength": 1 }
+      },
+      "publishable_fields": {
+        "type": "array",
+        "minItems": 1,
+        "items": { "type": "string", "minLength": 1 }
+      },
+      "prohibited_fields": {
+        "type": "array",
+        "minItems": 1,
+        "items": { "type": "string", "minLength": 1 }
+      },
+      "exclusion_rules": {
+        "type": "array",
+        "minItems": 1,
+        "items": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

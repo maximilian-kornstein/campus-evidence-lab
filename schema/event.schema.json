@@ -16,6 +16,7 @@
     "institutional_response",
     "verification_status",
     "confidence",
+    "review_tier",
     "tags",
     "created_at",
     "updated_at",
@@ -110,6 +111,15 @@
     "legal_status": { "type": "string" },
     "verification_status": { "type": "string" },
     "confidence": { "type": "string" },
+    "review_tier": {
+      "type": "string",
+      "enum": [
+        "imported_public_source",
+        "source_family_checked",
+        "internally_certified",
+        "externally_reviewed"
+      ]
+    },
     "tags": {
       "type": "array",
       "items": { "type": "string" }
