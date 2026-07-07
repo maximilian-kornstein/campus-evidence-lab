@@ -1,4 +1,6 @@
-import { paths, readJson } from "./lib.mjs";
+import { readdir } from "node:fs/promises";
+import path from "node:path";
+import { paths, readJson, rootDir } from "./lib.mjs";
 
 const currentDate = "2026-06-03";
 const [events, schools, sources, briefs, corrections, manifest] = await Promise.all([
@@ -28,6 +30,17 @@ function exactDate(value) {
 
 function increment(map, key) {
   map.set(key, (map.get(key) ?? 0) + 1);
+}
+
+async function readJsonFilesFromDir(dir) {
+  try {
+    const entries = await readdir(dir, { withFileTypes: true });
+    const files = entries.filter((entry) => entry.isFile() && entry.name.endsWith(".json")).map((entry) => path.join(dir, entry.name));
+    return Promise.all(files.map((filePath) => readJson(filePath)));
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
 }
 
 for (const event of events) {
@@ -137,7 +150,11 @@ for (const source of sources) {
   }
 }
 
-const referencedSchools = new Set(events.map((event) => event.school_id));
+const importCandidateFiles = await readJsonFilesFromDir(path.join(rootDir, "data", "import-candidates"));
+const referencedSchools = new Set([
+  ...events.map((event) => event.school_id),
+  ...importCandidateFiles.flatMap((rows) => (Array.isArray(rows) ? rows.map((row) => row.school_id).filter(Boolean) : []))
+]);
 for (const school of schools) {
   if (!referencedSchools.has(school.id)) {
     errors.push(`School ${school.id} is not referenced by any event`);

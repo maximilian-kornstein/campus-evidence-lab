@@ -13,6 +13,7 @@ const bulkManifest = {
   legal_risk_class: "low_official_structured",
   bulk_import_eligible: true,
   default_review_tier: "imported_public_source",
+  default_record_lane: "aggregate_safety_stat",
   source_urls: ["https://ope.ed.gov/campussafety/"],
   acquisition_date: "2026-07-06",
   importer_command: "npm run import:ed-campus-safety-scoped",
@@ -76,10 +77,28 @@ test("validateImportWaveCandidates accepts bulk-eligible official structured can
   assert.equal(result.publishable, true);
   assert.equal(result.accepted.length, 1);
   assert.equal(result.accepted[0].review_tier, "imported_public_source");
+  assert.equal(result.accepted[0].record_lane, "aggregate_safety_stat");
   assert.deepEqual(result.quarantine, []);
   assert.equal(result.wave.accepted_count, 1);
   assert.equal(result.wave.quarantined_count, 0);
+  assert.equal(result.wave.record_lane, "aggregate_safety_stat");
   assert.equal(result.wave.source_manifest.id, "manifest_ed_campus_safety_dataset");
+  assert.equal(result.wave.source_manifest.default_record_lane, "aggregate_safety_stat");
+});
+
+test("validateImportWaveCandidates rejects unsupported record lanes", () => {
+  const result = validateImportWaveCandidates({
+    waveId: "ed-campus-safety-wave-001",
+    candidates: [candidate({ candidate_id: "cand_bad_lane", record_lane: "incident" })],
+    manifests: [bulkManifest],
+    schools,
+    existingEvents: []
+  });
+
+  assert.equal(result.publishable, false);
+  assert.equal(result.accepted.length, 0);
+  assert.equal(result.quarantine.length, 1);
+  assert.equal(result.quarantine[0].reason_codes.includes("invalid_record_lane"), true);
 });
 
 test("validateImportWaveCandidates quarantines missing locators, private fields, and overclaims", () => {

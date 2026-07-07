@@ -1,4 +1,5 @@
 import { isAllowedReviewTier } from "./review-tier-model-lib.mjs";
+import { IMPORT_RECORD_LANES } from "./import-wave-lib.mjs";
 
 export const IMPORT_LEGAL_RISK_CLASSES = [
   "low_official_structured",
@@ -10,6 +11,7 @@ export const IMPORT_LEGAL_RISK_CLASSES = [
 
 const IMPORT_LEGAL_RISK_SET = new Set(IMPORT_LEGAL_RISK_CLASSES);
 const MANUAL_ONLY_RISK_CLASSES = new Set(["manual_only_open_web", "excluded_private_or_sensitive"]);
+const IMPORT_RECORD_LANE_SET = new Set(IMPORT_RECORD_LANES);
 
 function compact(items) {
   return items.filter((item) => item !== null && item !== undefined && String(item).trim() !== "");
@@ -115,6 +117,14 @@ export function validateImportManifests(manifests = []) {
 
     if (manifest?.bulk_import_eligible && manifest.default_review_tier !== "imported_public_source") {
       errors.push(`${label} default_review_tier must be imported_public_source for bulk import eligibility`);
+    }
+
+    if (manifest?.default_record_lane !== undefined && !IMPORT_RECORD_LANE_SET.has(manifest.default_record_lane)) {
+      errors.push(`${label} has invalid default_record_lane ${manifest.default_record_lane}`);
+    }
+
+    if (manifest?.bulk_import_eligible && !IMPORT_RECORD_LANE_SET.has(manifest?.default_record_lane)) {
+      errors.push(`${label} must include a valid default_record_lane for bulk import eligibility`);
     }
 
     if (manifest?.bulk_import_eligible && MANUAL_ONLY_RISK_CLASSES.has(manifest?.legal_risk_class)) {

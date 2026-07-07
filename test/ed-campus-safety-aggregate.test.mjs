@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  buildEdCampusSafetySchoolsFromSourceRows,
   buildEdCampusSafetyAggregateCandidates,
   columnLetter,
   edCampusSafetyAggregateRowsFromSheet
@@ -13,6 +14,7 @@ const manifest = {
   legal_risk_class: "low_official_structured",
   bulk_import_eligible: true,
   default_review_tier: "imported_public_source",
+  default_record_lane: "aggregate_safety_stat",
   source_urls: ["https://ope.ed.gov/campussafety/"],
   acquisition_date: "2026-07-06",
   importer_command: "node scripts/export-ed-campus-safety-aggregate-wave-candidates.mjs",
@@ -43,6 +45,7 @@ test("columnLetter converts zero-based indexes to Excel column labels", () => {
 
 test("edCampusSafetyAggregateRowsFromSheet extracts positive VAWA aggregate cells", () => {
   const rows = edCampusSafetyAggregateRowsFromSheet({
+    profileId: "ed_vawa_2025",
     workbookName: "Oncampusvawa222324.xls",
     sheetRows: [
       ["UNITID_P", "INSTNM", "OPEID", "BRANCH", "Address", "City", "State", "ZIP", "sector_cd", "Sector_desc", "men_total", "women_total", "Total", "DOMEST24", "DATING24", "FILTER24"],
@@ -57,10 +60,79 @@ test("edCampusSafetyAggregateRowsFromSheet extracts positive VAWA aggregate cell
   assert.equal(rows[0].statistic, "Domestic violence");
   assert.equal(rows[0].count, 2);
   assert.equal(rows[0].cell, "N2");
+  assert.equal(rows[0].record_lane, "aggregate_safety_stat");
+});
+
+test("edCampusSafetyAggregateRowsFromSheet extracts sex-offense crime aggregate cells without VAWA labels", () => {
+  const rows = edCampusSafetyAggregateRowsFromSheet({
+    profileId: "ed_sex_offense_crime_2025",
+    workbookName: "Oncampuscrime222324.xls",
+    sheetRows: [
+      ["UNITID_P", "INSTNM", "OPEID", "BRANCH", "Address", "City", "State", "ZIP", "sector_cd", "Sector_desc", "men_total", "women_total", "Total", "MURD24", "RAPE24", "FONDL24", "INCES24", "STATR24", "FILTER24"],
+      [217156001, "Brown University", "00340100", "Main Campus", "1 Prospect St", "Providence", "RI", "02912", 2, "Private nonprofit", 4000, 5000, 9000, 0, 2, 1, "", 1, 1]
+    ]
+  });
+
+  assert.deepEqual(
+    rows.map((row) => row.statistic),
+    ["Rape", "Fondling", "Statutory rape"]
+  );
+  assert.equal(rows[0].category, "Official aggregate safety statistic");
+  assert.deepEqual(rows[0].affected_communities, ["Campus community"]);
+  assert.equal(rows[0].record_lane, "aggregate_safety_stat");
+});
+
+test("buildEdCampusSafetySchoolsFromSourceRows expands unknown ED institutions and preserves unitid identity", () => {
+  const sourceRows = [
+    {
+      unitid: "217156001",
+      institution_name: "Brown University",
+      city: "Providence",
+      state: "RI",
+      zip: "02912",
+      school_id: "brown_university"
+    },
+    {
+      unitid: "999999001",
+      institution_name: "Example Training College",
+      city: "Austin",
+      state: "TX",
+      zip: "78701",
+      school_id: "example_training_college"
+    },
+    {
+      unitid: "999999002",
+      institution_name: "Example Training College",
+      city: "Dallas",
+      state: "TX",
+      zip: "75201",
+      school_id: "example_training_college"
+    }
+  ];
+
+  const { schools: expanded, added_count } = buildEdCampusSafetySchoolsFromSourceRows({
+    schools: [
+      {
+        id: "brown_university",
+        name: "Brown University",
+        city: "Providence",
+        state: "RI",
+        country: "US",
+        source_identifiers: { ed_unitids: ["217156001"] }
+      }
+    ],
+    sourceRows
+  });
+
+  assert.equal(added_count, 2);
+  assert.equal(expanded.find((school) => school.id === "brown_university").source_identifiers.ed_unitids.includes("217156001"), true);
+  assert.equal(expanded.some((school) => school.id === "example_training_college"), true);
+  assert.equal(expanded.some((school) => school.id === "example_training_college_999999002"), true);
 });
 
 test("buildEdCampusSafetyAggregateCandidates emits neutral publishable candidates for known schools", () => {
   const sourceRows = edCampusSafetyAggregateRowsFromSheet({
+    profileId: "ed_vawa_2025",
     workbookName: "Oncampusvawa222324.xls",
     sheetRows: [
       ["UNITID_P", "INSTNM", "OPEID", "BRANCH", "Address", "City", "State", "ZIP", "sector_cd", "Sector_desc", "men_total", "women_total", "Total", "DOMEST24", "DATING24", "FILTER24"],
@@ -80,11 +152,14 @@ test("buildEdCampusSafetyAggregateCandidates emits neutral publishable candidate
   assert.equal(mappingQuarantine.length, 1);
   assert.equal(candidates[0].source_family, "ed_campus_safety_dataset");
   assert.equal(candidates[0].school_id, "brown_university");
+  assert.equal(candidates[0].record_lane, "aggregate_safety_stat");
   assert.equal(candidates[0].date, "2024-01-01");
   assert.equal(candidates[0].date_precision, "year");
-  assert.deepEqual(candidates[0].affected_communities, ["Gender"]);
+  assert.equal(candidates[0].category, "Official aggregate safety statistic");
+  assert.deepEqual(candidates[0].affected_communities, ["Campus community"]);
   assert.match(candidates[0].summary, /VAWA aggregate statistic/);
   assert.doesNotMatch(candidates[0].summary, /ranking|score|prevalence|legal finding/i);
+  assert.doesNotMatch(candidates[0].import_notes, /ranking|score|prevalence|legal finding|human certification/i);
 
   const result = validateImportWaveCandidates({
     waveId: "ed-campus-safety-vawa-wave-001",
@@ -99,4 +174,5 @@ test("buildEdCampusSafetyAggregateCandidates emits neutral publishable candidate
 
   assert.equal(result.publishable, true);
   assert.equal(result.accepted.length, 1);
+  assert.equal(result.accepted[0].record_lane, "aggregate_safety_stat");
 });

@@ -13,6 +13,7 @@ const officialDatasetManifest = {
   legal_risk_class: "low_official_structured",
   bulk_import_eligible: true,
   default_review_tier: "imported_public_source",
+  default_record_lane: "aggregate_safety_stat",
   source_urls: ["https://ope.ed.gov/campussafety/"],
   acquisition_date: "2026-07-06",
   importer_command: "npm run import:ed-campus-safety-scoped",
@@ -40,6 +41,7 @@ const officialOcrResolutionManifest = {
   legal_risk_class: "medium_official_document",
   bulk_import_eligible: true,
   default_review_tier: "imported_public_source",
+  default_record_lane: "civil_rights_case",
   source_urls: ["https://ocrcas.ed.gov/ocr-search", "https://www.ed.gov/laws-and-policy/civil-rights-laws/office-civil-rights-ocr-reading-room"],
   acquisition_date: "2026-07-07",
   importer_command: "node scripts/discover-ocr-resolution-search.mjs && node scripts/export-ocr-resolution-wave-candidates.mjs",
@@ -201,6 +203,17 @@ test("validateImportManifests rejects unsafe bulk import settings", () => {
 
   assert.equal(errors.some((error) => error.includes("manual_only_open_web cannot be bulk_import_eligible")), true);
   assert.equal(errors.some((error) => error.includes("default_review_tier must be imported_public_source")), true);
+});
+
+test("validateImportManifests rejects invalid bulk record lanes", () => {
+  const errors = validateImportManifests([
+    {
+      ...officialDatasetManifest,
+      default_record_lane: "incident"
+    }
+  ]);
+
+  assert.equal(errors.some((error) => error.includes("invalid default_record_lane incident")), true);
 });
 
 test("validateImportManifestCoverage requires every event source family to have a manifest", () => {

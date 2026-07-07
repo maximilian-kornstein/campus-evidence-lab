@@ -48,7 +48,8 @@ const allowedCommunities = new Set([
   "Palestinian",
   "Arab",
   "Age",
-  "Boy Scouts of America Equal Access Act"
+  "Boy Scouts of America Equal Access Act",
+  "Campus community"
 ]);
 
 const allowedCategories = new Set([
@@ -68,7 +69,8 @@ const allowedCategories = new Set([
   "Pregnancy discrimination",
   "Disability access",
   "Athletic equity",
-  "Other source-backed civil rights event"
+  "Other source-backed civil rights event",
+  "Official aggregate safety statistic"
 ]);
 
 const allowedVerification = new Set([

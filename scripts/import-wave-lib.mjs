@@ -22,6 +22,7 @@ export const IMPORT_WAVE_REASON_CODES = [
   "missing_manifest",
   "bulk_import_not_allowed",
   "source_family_mismatch",
+  "invalid_record_lane",
   "missing_source_url",
   "invalid_source_url",
   "missing_source_locator",
@@ -33,6 +34,27 @@ export const IMPORT_WAVE_REASON_CODES = [
   "prohibited_private_field",
   "prohibited_public_claim"
 ];
+
+export const IMPORT_RECORD_LANES = [
+  "aggregate_safety_stat",
+  "civil_rights_case",
+  "institution_context_metric",
+  "financial_oversight_metric"
+];
+
+const IMPORT_RECORD_LANE_SET = new Set(IMPORT_RECORD_LANES);
+
+const SOURCE_FAMILY_DEFAULT_RECORD_LANES = {
+  ed_campus_safety_dataset: "aggregate_safety_stat",
+  annual_security_report: "aggregate_safety_stat",
+  ocr_open_investigation: "civil_rights_case",
+  ocr_resolution_document: "civil_rights_case",
+  ocr_or_ed_release: "civil_rights_case",
+  government_case_or_letter: "civil_rights_case",
+  university_statement: "civil_rights_case",
+  campus_public_safety_notice: "civil_rights_case",
+  government_guidance: "institution_context_metric"
+};
 
 function requiredString(value) {
   return typeof value === "string" && value.trim().length > 0;
@@ -78,8 +100,20 @@ function sourceLocatorText(value) {
   return "";
 }
 
+function recordLaneForCandidate(candidate, manifest) {
+  return (
+    candidate?.record_lane ||
+    candidate?.row_lane ||
+    manifest?.default_record_lane ||
+    SOURCE_FAMILY_DEFAULT_RECORD_LANES[manifest?.source_family] ||
+    SOURCE_FAMILY_DEFAULT_RECORD_LANES[candidate?.source_family] ||
+    ""
+  );
+}
+
 export function candidateDuplicateKey(candidate) {
   return compact([
+    normalize(recordLaneForCandidate(candidate, null)),
     normalize(candidate?.source_family),
     normalize(candidate?.school_id ?? candidate?.institution_name),
     normalize(candidate?.date),
@@ -147,6 +181,7 @@ function missingRequiredFields(candidate) {
 
 function remediationFor(reasonCodes) {
   if (reasonCodes.includes("bulk_import_not_allowed")) return "Keep this source family in manual or semi-automated review until bulk eligibility is upgraded.";
+  if (reasonCodes.includes("invalid_record_lane")) return "Assign one of the approved record lanes before publication.";
   if (reasonCodes.includes("missing_source_locator")) return "Add a row, cell, page, table, item, or document-section locator before publication.";
   if (reasonCodes.includes("unknown_school")) return "Resolve institution identity to a known school record before publication.";
   if (reasonCodes.includes("prohibited_private_field")) return "Remove private or sensitive fields before any public artifact is generated.";
@@ -160,6 +195,7 @@ function normalizeAcceptedCandidate(candidate, manifest, resolvedSchoolId) {
     candidate_id: candidate.candidate_id,
     manifest_id: manifest.id,
     source_family: candidate.source_family,
+    record_lane: recordLaneForCandidate(candidate, manifest),
     source_url: candidate.source_url,
     source_locator: candidate.source_locator,
     school_id: resolvedSchoolId,
@@ -181,6 +217,7 @@ function quarantineRow({ candidate, reasonCodes, failedFields = [] }) {
     candidate_id: candidate?.candidate_id ?? "",
     manifest_id: candidate?.manifest_id ?? "",
     source_family: candidate?.source_family ?? "",
+    record_lane: recordLaneForCandidate(candidate, null),
     source_url: candidate?.source_url ?? "",
     source_locator: sourceLocatorText(candidate?.source_locator),
     raw_hash: candidate?.raw_source_hash ?? "",
@@ -201,6 +238,12 @@ function waveSourceFamily(candidates, manifest) {
   return families.length === 1 ? families[0] : manifest?.source_family ?? "mixed";
 }
 
+function waveRecordLane(candidates, manifest) {
+  const lanes = [...new Set(candidates.map((candidate) => recordLaneForCandidate(candidate, manifest)).filter(Boolean))];
+  if (lanes.length === 1) return lanes[0];
+  return recordLaneForCandidate({}, manifest) || "mixed";
+}
+
 function summarizeManifest(manifest) {
   if (!manifest) return null;
   return {
@@ -209,6 +252,7 @@ function summarizeManifest(manifest) {
     legal_risk_class: manifest.legal_risk_class,
     bulk_import_eligible: Boolean(manifest.bulk_import_eligible),
     default_review_tier: manifest.default_review_tier,
+    default_record_lane: recordLaneForCandidate({}, manifest),
     importer_command: manifest.importer_command
   };
 }
@@ -243,6 +287,8 @@ export function validateImportWaveCandidates({
     if (!manifest) reasonCodes.add("missing_manifest");
     if (manifest && !manifest.bulk_import_eligible) reasonCodes.add("bulk_import_not_allowed");
     if (manifest && candidate?.source_family !== manifest.source_family) reasonCodes.add("source_family_mismatch");
+    const recordLane = recordLaneForCandidate(candidate, manifest);
+    if (manifest && !IMPORT_RECORD_LANE_SET.has(recordLane)) reasonCodes.add("invalid_record_lane");
 
     if (!requiredString(candidate?.source_url)) {
       reasonCodes.add("missing_source_url");
@@ -296,6 +342,7 @@ export function validateImportWaveCandidates({
   const wave = {
     id: waveId,
     source_family: sourceFamily,
+    record_lane: waveRecordLane(candidates, manifest),
     manifest_id: manifest?.id ?? candidates[0]?.manifest_id ?? "",
     generated_at: generatedAt,
     command,
@@ -361,6 +408,9 @@ export function validateImportWaveArtifacts({ wave, accepted = [], quarantine } 
   }
 
   if (wave.status && !["publishable", "blocked"].includes(wave.status)) errors.push(`import-wave ${wave.id} has invalid status ${wave.status}`);
+  if (wave.record_lane !== undefined && wave.record_lane !== "mixed" && !IMPORT_RECORD_LANE_SET.has(wave.record_lane)) {
+    errors.push(`import-wave ${wave.id ?? "unknown"} has invalid record_lane ${wave.record_lane}`);
+  }
   if (typeof wave.publishable !== "boolean") errors.push(`import-wave ${wave.id ?? "unknown"} missing publishable boolean`);
   if (!wave.source_manifest?.id) errors.push(`import-wave ${wave.id ?? "unknown"} missing source_manifest`);
   if (!wave.qa_gate_counts || typeof wave.qa_gate_counts !== "object") errors.push(`import-wave ${wave.id ?? "unknown"} missing qa_gate_counts`);
@@ -404,6 +454,9 @@ export function validateImportWaveArtifacts({ wave, accepted = [], quarantine } 
   }
   if (accepted.length && accepted.some((row) => row.review_tier !== "imported_public_source")) {
     errors.push(`import-wave ${wave.id} accepted bulk rows must use imported_public_source review tier`);
+  }
+  if (accepted.length && accepted.some((row) => row.record_lane !== undefined && !IMPORT_RECORD_LANE_SET.has(row.record_lane))) {
+    errors.push(`import-wave ${wave.id} accepted rows include invalid record_lane`);
   }
   if (wave.publishable && rows.length) errors.push(`import-wave ${wave.id} cannot be publishable with quarantined rows`);
 
