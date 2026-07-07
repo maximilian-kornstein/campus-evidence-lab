@@ -4,6 +4,7 @@ export const ED_CAMPUS_SAFETY_MANIFEST_ID = "manifest_ed_campus_safety_dataset";
 export const ED_CAMPUS_SAFETY_SOURCE_FAMILY = "ed_campus_safety_dataset";
 export const ED_CAMPUS_SAFETY_2025_ZIP_URL = "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip";
 export const ED_CAMPUS_SAFETY_2024_ZIP_URL = "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip";
+export const ED_CAMPUS_SAFETY_2023_ZIP_URL = "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2023EXCEL.zip";
 export const ED_CAMPUS_SAFETY_RECORD_LANE = "aggregate_safety_stat";
 export const ED_CAMPUS_SAFETY_CATEGORY = "Official aggregate safety statistic";
 export const ED_CAMPUS_SAFETY_COMMUNITY = "Campus community";
@@ -125,6 +126,132 @@ export const ED_CAMPUS_SAFETY_PROFILES = {
     statistic_label_plural: "VAWA aggregate statistics",
     summary_subject: "VAWA",
     aggregate_stat_subtype: "vawa_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_sex_offense_crime_2021: {
+    id: "ed_sex_offense_crime_2021",
+    source_url: ED_CAMPUS_SAFETY_2024_ZIP_URL,
+    workbook_pattern: /crime212223\.xls$/i,
+    statistic_map: SEX_OFFENSE_CRIME_STATISTICS,
+    year_suffixes: ["21"],
+    candidate_prefix: "cand_ed_crime",
+    statistic_label: "sex-offense aggregate statistic",
+    statistic_label_plural: "sex-offense aggregate statistics",
+    summary_subject: "Clery sex-offense",
+    aggregate_stat_subtype: "reported_crime_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_clery_crime_non_sex_2021: {
+    id: "ed_clery_crime_non_sex_2021",
+    source_url: ED_CAMPUS_SAFETY_2024_ZIP_URL,
+    workbook_pattern: /crime212223\.xls$/i,
+    statistic_map: NON_SEX_CLERY_CRIME_STATISTICS,
+    year_suffixes: ["21"],
+    candidate_prefix: "cand_ed_clery_crime",
+    statistic_label: "reported crime aggregate statistic",
+    statistic_label_plural: "reported crime aggregate statistics",
+    summary_subject: "Clery non-sex crime",
+    aggregate_stat_subtype: "reported_crime_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_arrest_2021: {
+    id: "ed_arrest_2021",
+    source_url: ED_CAMPUS_SAFETY_2024_ZIP_URL,
+    workbook_pattern: /arrest212223\.xls$/i,
+    statistic_map: ARREST_STATISTICS,
+    year_suffixes: ["21"],
+    candidate_prefix: "cand_ed_arrest",
+    statistic_label: "arrest aggregate statistic",
+    statistic_label_plural: "arrest aggregate statistics",
+    summary_subject: "Clery arrest",
+    aggregate_stat_subtype: "arrest_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_discipline_2021: {
+    id: "ed_discipline_2021",
+    source_url: ED_CAMPUS_SAFETY_2024_ZIP_URL,
+    workbook_pattern: /discipline212223\.xls$/i,
+    statistic_map: DISCIPLINE_STATISTICS,
+    year_suffixes: ["21"],
+    candidate_prefix: "cand_ed_discipline",
+    statistic_label: "disciplinary-referral aggregate statistic",
+    statistic_label_plural: "disciplinary-referral aggregate statistics",
+    summary_subject: "Clery disciplinary-referral",
+    aggregate_stat_subtype: "disciplinary_referral_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_vawa_2020: {
+    id: "ed_vawa_2020",
+    source_url: ED_CAMPUS_SAFETY_2023_ZIP_URL,
+    workbook_pattern: /vawa202122\.xls$/i,
+    statistic_map: VAWA_STATISTICS,
+    year_suffixes: ["20"],
+    candidate_prefix: "cand_ed_vawa",
+    statistic_label: "VAWA aggregate statistic",
+    statistic_label_plural: "VAWA aggregate statistics",
+    summary_subject: "VAWA",
+    aggregate_stat_subtype: "vawa_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_sex_offense_crime_2020: {
+    id: "ed_sex_offense_crime_2020",
+    source_url: ED_CAMPUS_SAFETY_2023_ZIP_URL,
+    workbook_pattern: /crime202122\.xls$/i,
+    statistic_map: SEX_OFFENSE_CRIME_STATISTICS,
+    year_suffixes: ["20"],
+    candidate_prefix: "cand_ed_crime",
+    statistic_label: "sex-offense aggregate statistic",
+    statistic_label_plural: "sex-offense aggregate statistics",
+    summary_subject: "Clery sex-offense",
+    aggregate_stat_subtype: "reported_crime_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_clery_crime_non_sex_2020: {
+    id: "ed_clery_crime_non_sex_2020",
+    source_url: ED_CAMPUS_SAFETY_2023_ZIP_URL,
+    workbook_pattern: /crime202122\.xls$/i,
+    statistic_map: NON_SEX_CLERY_CRIME_STATISTICS,
+    year_suffixes: ["20"],
+    candidate_prefix: "cand_ed_clery_crime",
+    statistic_label: "reported crime aggregate statistic",
+    statistic_label_plural: "reported crime aggregate statistics",
+    summary_subject: "Clery non-sex crime",
+    aggregate_stat_subtype: "reported_crime_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_arrest_2020: {
+    id: "ed_arrest_2020",
+    source_url: ED_CAMPUS_SAFETY_2023_ZIP_URL,
+    workbook_pattern: /arrest202122\.xls$/i,
+    statistic_map: ARREST_STATISTICS,
+    year_suffixes: ["20"],
+    candidate_prefix: "cand_ed_arrest",
+    statistic_label: "arrest aggregate statistic",
+    statistic_label_plural: "arrest aggregate statistics",
+    summary_subject: "Clery arrest",
+    aggregate_stat_subtype: "arrest_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_discipline_2020: {
+    id: "ed_discipline_2020",
+    source_url: ED_CAMPUS_SAFETY_2023_ZIP_URL,
+    workbook_pattern: /discipline202122\.xls$/i,
+    statistic_map: DISCIPLINE_STATISTICS,
+    year_suffixes: ["20"],
+    candidate_prefix: "cand_ed_discipline",
+    statistic_label: "disciplinary-referral aggregate statistic",
+    statistic_label_plural: "disciplinary-referral aggregate statistics",
+    summary_subject: "Clery disciplinary-referral",
+    aggregate_stat_subtype: "disciplinary_referral_stat",
     category: ED_CAMPUS_SAFETY_CATEGORY,
     affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
   }

@@ -132,6 +132,38 @@ test("edCampusSafetyAggregateRowsFromSheet extracts disciplinary-referral aggreg
   assert.equal(rows[0].summary_subject, "Clery disciplinary-referral");
 });
 
+test("edCampusSafetyAggregateRowsFromSheet extracts 2021 historical non-VAWA aggregate cells", () => {
+  const rows = edCampusSafetyAggregateRowsFromSheet({
+    profileId: "ed_arrest_2021",
+    workbookName: "Oncampusarrest212223.xls",
+    sheetRows: [
+      ["UNITID_P", "INSTNM", "OPEID", "BRANCH", "Address", "City", "State", "ZIP", "Total", "WEAPON21", "DRUG21", "LIQUOR22"],
+      [217156001, "Brown University", "00340100", "Main Campus", "1 Prospect St", "Providence", "RI", "02912", 9000, 1, 2, 3]
+    ]
+  });
+
+  assert.deepEqual(rows.map((row) => row.statistic), ["Weapons law arrests", "Drug law arrests"]);
+  assert.equal(rows[0].source_url, "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip");
+  assert.equal(rows[0].year, "2021");
+  assert.equal(rows[0].aggregate_stat_subtype, "arrest_stat");
+});
+
+test("edCampusSafetyAggregateRowsFromSheet extracts 2020 historical aggregate cells from the 2023 package", () => {
+  const rows = edCampusSafetyAggregateRowsFromSheet({
+    profileId: "ed_clery_crime_non_sex_2020",
+    workbookName: "Oncampuscrime202122.xls",
+    sheetRows: [
+      ["UNITID_P", "INSTNM", "OPEID", "BRANCH", "Address", "City", "State", "ZIP", "Total", "MURD20", "RAPE20", "ROBBE20", "BURGLA21"],
+      [217156001, "Brown University", "00340100", "Main Campus", "1 Prospect St", "Providence", "RI", "02912", 9000, 1, 2, 3, 4]
+    ]
+  });
+
+  assert.deepEqual(rows.map((row) => row.statistic), ["Murder/non-negligent manslaughter", "Robbery"]);
+  assert.equal(rows[0].source_url, "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2023EXCEL.zip");
+  assert.equal(rows[0].year, "2020");
+  assert.equal(rows[0].aggregate_stat_subtype, "reported_crime_stat");
+});
+
 test("buildEdCampusSafetySchoolsFromSourceRows expands unknown ED institutions and preserves unitid identity", () => {
   const sourceRows = [
     {
