@@ -20,6 +20,7 @@ const [
   sourceFamilyCertificationReview001,
   edDatasetProvenanceAudit,
   certificationBatches,
+  institutionImportWaveSummary,
   ...edCertificationReviews
 ] = await Promise.all([
   readJson(paths.events),
@@ -34,6 +35,7 @@ const [
   readJson(paths.sourceFamilyCertificationReview001),
   readJson(paths.edDatasetProvenanceAudit),
   readJson(paths.certificationBatches),
+  readJson(paths.institutionImportWaveSummary),
   ...ED_CERTIFICATION_REVIEW_SPECS.map((spec) => readJson(paths[spec.dataPathKey]))
 ]);
 
@@ -52,6 +54,7 @@ const sourceFamilyReview001Dir = path.join(rootDir, "source-family-certification
 const edProvenanceDir = path.join(rootDir, "ed-provenance");
 const certificationBatchesDir = path.join(rootDir, "certification-batches");
 const importWavePagesDir = path.join(rootDir, "import-waves");
+const accountabilityRoomDir = path.join(rootDir, "accountability-room");
 const policiesDir = path.join(rootDir, "policies");
 const protocolDir = path.join(rootDir, "protocol");
 const detailDepth = 2;
@@ -216,6 +219,7 @@ function nav(depth = 0) {
         </a>
         <nav class="nav" aria-label="Primary navigation">
           <a href="${sitePath("/", depth)}">Dashboard</a>
+          <a href="${sitePath("/accountability-room/", depth)}">Accountability</a>
           <a href="${sitePath("/events/", depth)}">Events</a>
           <a href="${sitePath("/schools/", depth)}">Schools</a>
           <a href="${sitePath("/briefs/", depth)}">Briefs</a>
@@ -268,7 +272,7 @@ function page(title, body, depth = 0, stripTrailingWhitespace = true) {
     <main class="main">
       ${body}
     </main>
-    <footer class="site-footer">Campus Evidence Lab / Generated from public dataset</footer>
+    <footer class="site-footer">Campus Evidence Lab / Public-source records / Import-wave QA / Corrections and right-of-reply</footer>
   </body>
 </html>
 `;
@@ -554,6 +558,10 @@ function objectCountRows(counts) {
   return Object.entries(counts ?? {}).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 }
 
+function formatNumber(value) {
+  return Number(value ?? 0).toLocaleString("en-US");
+}
+
 async function readJsonFilesFromDir(dir) {
   try {
     const entries = await readdir(dir, { withFileTypes: true });
@@ -571,10 +579,50 @@ async function readJsonFilesFromDir(dir) {
 
 function sourceFamilyLabel(sourceFamily) {
   if (sourceFamily === "ed_campus_safety_dataset") return "ED Campus Safety";
+  if (sourceFamily === "ocr_open_investigation") return "OCR Open Investigation";
   return String(sourceFamily ?? "Unknown source family")
     .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+}
+
+function recordLaneLabel(recordLane) {
+  if (recordLane === "aggregate_safety_stat") return "Aggregate safety stat";
+  if (recordLane === "civil_rights_case") return "Civil rights case";
+  return String(recordLane ?? "Unknown lane")
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function aggregateSubtypeLabel(subtype) {
+  if (subtype === "reported_crime_stat") return "Reported crime stats";
+  if (subtype === "vawa_stat") return "VAWA stats";
+  if (subtype === "arrest_stat") return "Arrest stats";
+  if (subtype === "disciplinary_referral_stat") return "Disciplinary referral stats";
+  if (subtype === "not_applicable") return "Not applicable";
+  return String(subtype ?? "Unknown subtype")
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function labeledCountRows(counts, labeler) {
+  return objectCountRows(counts).map(([label, count]) => [labeler(label), count]);
+}
+
+function importSummaryForSchool(schoolId) {
+  return (
+    institutionImportWaveSummary.schools?.[schoolId] ?? {
+      school_id: schoolId,
+      accepted_candidate_count: 0,
+      source_family_counts: {},
+      record_lane_counts: {},
+      aggregate_stat_subtype_counts: {},
+      import_wave_ids: [],
+      latest_record_year: ""
+    }
+  );
 }
 
 function importWaveRows(importWaves, depth = 1) {
@@ -840,6 +888,115 @@ for (const policy of POLICY_DOCUMENTS) {
 
 const importWaveReports = (await readJsonFilesFromDir(paths.importWavesDir)).sort((a, b) => b.generated_at.localeCompare(a.generated_at) || b.id.localeCompare(a.id));
 const importQuarantineByWaveId = new Map((await readJsonFilesFromDir(paths.importQuarantineDir)).map((artifact) => [artifact.wave_id ?? artifact.id, artifact]));
+
+const accountabilityInstitutionRows = schools
+  .map((school) => {
+    const schoolEvents = events.filter((event) => event.school_id === school.id);
+    const summary = importSummaryForSchool(school.id);
+    return {
+      school,
+      eventCount: schoolEvents.length,
+      acceptedCandidateCount: summary.accepted_candidate_count,
+      sourceFamilies: Object.keys(summary.source_family_counts).map(sourceFamilyLabel)
+    };
+  })
+  .sort((a, b) => b.eventCount - a.eventCount || b.acceptedCandidateCount - a.acceptedCandidateCount || a.school.name.localeCompare(b.school.name))
+  .slice(0, 40);
+
+await mkdir(accountabilityRoomDir, { recursive: true });
+await writeFile(
+  path.join(accountabilityRoomDir, "index.html"),
+  page(
+    "Accountability Room",
+    `
+      <p class="page-kicker">Institution accountability briefings</p>
+      <h1 class="page-title page-title--small">Accountability Room</h1>
+      <p class="page-intro">Open an institution briefing across ${formatNumber(schools.length)} generated institution pages that separates 4,000 public event records from ${formatNumber(institutionImportWaveSummary.accepted_candidate_count)} accepted import-wave QA candidates. The room shows source basis, limits, response evidence, and correction paths without turning records into institutional scores.</p>
+      <p class="limit-line">No rankings. No safety scores. No legal findings.</p>
+      <div class="hero-actions accountability-actions" aria-label="Accountability Room actions">
+        <a class="button-link button-link--primary" href="${sitePath("/schools/", 1)}">Open an Institution</a>
+        <a class="button-link" href="${sitePath("/import-waves/", 1)}">Inspect Import Waves</a>
+        <a class="button-link" href="${sitePath("/methodology/", 1)}">Review Methodology</a>
+        <a class="button-link" href="${sitePath("/submit/", 1)}">Correction / Right of Reply</a>
+      </div>
+      <section class="section section--tight briefing-shell" aria-label="Current accountability scope">
+        <div class="briefing-grid">
+          <div class="briefing-metric">
+            <span class="metric__value">${formatNumber(events.length)}</span>
+            <span class="metric__label">public event records</span>
+          </div>
+          <div class="briefing-metric">
+            <span class="metric__value">${formatNumber(institutionImportWaveSummary.accepted_candidate_count)}</span>
+            <span class="metric__label">accepted import-wave QA candidates</span>
+          </div>
+          <div class="briefing-metric">
+            <span class="metric__value">${formatNumber(schools.length)}</span>
+            <span class="metric__label">generated institution pages</span>
+          </div>
+          <div class="briefing-metric">
+            <span class="metric__value">${formatNumber(institutionImportWaveSummary.source_family_counts.ed_campus_safety_dataset ?? 0)}</span>
+            <span class="metric__label">ED Campus Safety rows</span>
+          </div>
+          <div class="briefing-metric">
+            <span class="metric__value">${formatNumber(institutionImportWaveSummary.source_family_counts.ocr_open_investigation ?? 0)}</span>
+            <span class="metric__label">OCR Open Investigation rows</span>
+          </div>
+          <div class="briefing-metric">
+            <span class="metric__value">${formatNumber(institutionImportWaveSummary.institution_count)}</span>
+            <span class="metric__label">institutions with accepted QA rows</span>
+          </div>
+        </div>
+      </section>
+      <section class="section section--tight briefing-columns">
+        <div>
+          <div class="section-header">
+            <h2 class="section-title">Open an Institution</h2>
+            <p class="section-note">Sorted by public event records, then accepted QA rows; this is not a ranking.</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Institution</th>
+                  <th>Public event records</th>
+                  <th>Accepted QA candidates</th>
+                  <th>Source families</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${accountabilityInstitutionRows
+                  .map(
+                    ({ school, eventCount, acceptedCandidateCount, sourceFamilies }) => `
+                      <tr>
+                        <td><a href="${sitePath(`/schools/${encodeURIComponent(school.id)}/`, 1)}">${escapeHtml(school.name)}</a><br><span class="section-note">${escapeHtml([school.city, school.state].filter(Boolean).join(", "))}</span></td>
+                        <td>${formatNumber(eventCount)}</td>
+                        <td>${formatNumber(acceptedCandidateCount)}</td>
+                        <td>${escapeHtml(sourceFamilies.join(", ") || "No accepted import-wave rows")}</td>
+                      </tr>
+                    `
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <aside class="briefing-callout">
+          <h2 class="section-title">How To Read This Room</h2>
+          <ul class="evidence-list">
+            <li>Public event records are source-backed event pages with review-tier metadata.</li>
+            <li>Accepted import-wave QA candidates are official-source rows that passed deterministic gates; acceptance is not individual human certification.</li>
+            <li>Counts describe public documentation in the current snapshot, not campus safety, prevalence, severity, or legal responsibility.</li>
+            <li>Correction and right-of-reply paths are part of the accountability surface.</li>
+          </ul>
+          <h2 class="section-title section-title--spaced">Source-Family Mix</h2>
+          ${countTable(labeledCountRows(institutionImportWaveSummary.source_family_counts, sourceFamilyLabel), "Source Family", "Accepted QA Candidates")}
+        </aside>
+      </section>
+    `,
+    1
+  )
+);
+
 await rm(importWavePagesDir, { recursive: true, force: true });
 await mkdir(importWavePagesDir, { recursive: true });
 await writeFile(
@@ -1210,6 +1367,19 @@ for (const school of schools) {
     )
     .join("");
   const antisemitismLink = `<a class="button-link" href="${sitePath(`/events/?school=${encodeURIComponent(school.id)}&q=antisemitism`, detailDepth)}">Open antisemitism search in Events</a>`;
+  const importSummary = importSummaryForSchool(school.id);
+  const acceptedQaCount = importSummary.accepted_candidate_count;
+  const acceptedQaText = `${formatNumber(acceptedQaCount)} accepted official-source QA candidate${acceptedQaCount === 1 ? "" : "s"}`;
+  const importSourceFamilyRows = labeledCountRows(importSummary.source_family_counts, sourceFamilyLabel);
+  const importRecordLaneRows = labeledCountRows(importSummary.record_lane_counts, recordLaneLabel);
+  const importAggregateSubtypeRows = labeledCountRows(importSummary.aggregate_stat_subtype_counts, aggregateSubtypeLabel);
+  const combinedSourceFamilies = [
+    ...new Set([
+      ...sourceFamilyRows.map(([label]) => sourceFamilyLabel(label)),
+      ...importSourceFamilyRows.map(([label]) => label)
+    ])
+  ].sort();
+  const publicRecordBrief = `${schoolEvents.length} public event record${schoolEvents.length === 1 ? "" : "s"} and ${acceptedQaText} are linked to this institution in the current snapshot. This room describes public-source documentation, not campus safety, incident prevalence, severity, or legal responsibility.`;
   const schoolDir = path.join(schoolsDir, school.id);
   await mkdir(schoolDir, { recursive: true });
 
@@ -1218,170 +1388,230 @@ for (const school of schools) {
     page(
       school.name,
       `
-        <p class="page-kicker">${escapeHtml(school.state)} / ${escapeHtml(school.city)}</p>
-        <h1 class="page-title page-title--small">${escapeHtml(school.name)} Dossier</h1>
-        <p class="page-intro">${schoolEvents.length} source-backed record${schoolEvents.length === 1 ? "" : "s"} in the current dataset. This dossier is generated from public event records and does not rank the institution, score safety, or estimate incident prevalence.</p>
-        <div class="utility-bar">
-          <a class="button-link" href="${sitePath(`/events/?school=${encodeURIComponent(school.id)}`, detailDepth)}">Open Filtered Records</a>
-          <a class="button-link" href="${workspaceUrlForEvents(schoolEvents, detailDepth)}">Build Citation Packet</a>
-          <a class="button-link" href="${sitePath(`/submit/?record_id=${encodeURIComponent(schoolEvents[0]?.id ?? "")}`, detailDepth)}">Request Correction</a>
+        <p class="page-kicker">${escapeHtml(school.state)} / ${escapeHtml(school.city)} / Accountability Room</p>
+        <h1 class="page-title page-title--small">${escapeHtml(school.name)} Accountability Room</h1>
+        <p class="page-intro">${escapeHtml(publicRecordBrief)}</p>
+        <p class="limit-line">No rankings. No safety scores. No legal findings.</p>
+        <div class="hero-actions accountability-actions" aria-label="Institution accountability actions">
+          <a class="button-link button-link--primary" href="${sitePath(`/events/?school=${encodeURIComponent(school.id)}`, detailDepth)}">Open Records</a>
+          <a class="button-link" href="${workspaceUrlForEvents(schoolEvents, detailDepth)}">Build Source Packet</a>
+          <a class="button-link" href="${sitePath(`/submit/?record_id=${encodeURIComponent(schoolEvents[0]?.id ?? "")}`, detailDepth)}">Correction / Right of Reply</a>
+          <a class="button-link" href="#source-packet">Inspect Source Basis</a>
         </div>
-        <h2 class="section-title section-title--spaced">Dossier Packets</h2>
-        <div class="utility-bar">
-          ${dossierPackets.map(([label, href]) => `<a class="button-link" href="${href}">${escapeHtml(label)}</a>`).join("")}
-        </div>
-        <h2 class="section-title section-title--spaced">Use This Dossier Responsibly</h2>
-        <ul class="evidence-list">
-          <li>This dossier describes public documentation in the current snapshot, not campus safety or incident frequency.</li>
-          <li>Use source pages and event audit cards before citing records.</li>
-          <li>Use the <a href="${sitePath("/codebook/", detailDepth)}">codebook</a> and <a href="${sitePath("/coverage/", detailDepth)}">coverage limits</a> before making comparisons or broader claims.</li>
-        </ul>
-        <section class="section section--tight">
-          <div class="section-header">
-            <h2 class="section-title">Institution Accountability Dossier</h2>
-            <p class="section-note">Institution-facing transparency from public evidence and QA state</p>
-          </div>
-          <p>These counts show how the public record set is sourced and reviewed. Imported public-source records are not individually human-certified unless their review tier and linked review artifact say so.</p>
-          <p><a href="${sitePath(`/submit/?record_id=${encodeURIComponent(schoolEvents[0]?.id ?? "")}`, detailDepth)}">Right-of-reply and correction intake</a> accepts source-backed corrections, missing public responses, stronger source locators, and duplicate reports.</p>
-          <div class="detail-grid">
-            <div>
-              <h3 class="section-title section-title--spaced">Review Tier Mix</h3>
-              ${countTable(reviewTierRows.length ? reviewTierRows : [["No records", 0]], "Review Tier")}
-              <h3 class="section-title section-title--spaced">Source Family Mix</h3>
-              ${countTable(sourceFamilyRows.length ? sourceFamilyRows : [["No records", 0]], "Source Family")}
+        <section class="section section--tight briefing-shell" aria-label="Institution accountability summary">
+          <div class="briefing-grid">
+            <div class="briefing-metric">
+              <span class="metric__value">${formatNumber(schoolEvents.length)}</span>
+              <span class="metric__label">public event records</span>
             </div>
-            <aside>
-              <h3 class="section-title section-title--spaced">Response Depth Mix</h3>
-              ${countTable(responseDepthRows.length ? responseDepthRows : [["No records", 0]], "Response Depth")}
-            </aside>
+            <div class="briefing-metric">
+              <span class="metric__value">${formatNumber(acceptedQaCount)}</span>
+              <span class="metric__label">accepted official-source QA candidates</span>
+            </div>
+            <div class="briefing-metric">
+              <span class="metric__value">${formatNumber(combinedSourceFamilies.length)}</span>
+              <span class="metric__label">source families represented</span>
+            </div>
+            <div class="briefing-metric">
+              <span class="metric__value">${formatNumber(responseEvents.length)}</span>
+              <span class="metric__label">records with public response evidence</span>
+            </div>
+            <div class="briefing-metric">
+              <span class="metric__value">${escapeHtml(importSummary.latest_record_year || "None")}</span>
+              <span class="metric__label">latest accepted QA record year</span>
+            </div>
+            <div class="briefing-metric">
+              <span class="metric__value">${escapeHtml(manifest.hashes.full_snapshot.slice(0, 18))}...</span>
+              <span class="metric__label">snapshot hash prefix</span>
+            </div>
           </div>
         </section>
-        <section class="detail-panel">
-          <div class="detail-grid">
-            <div>
-              <dl>
-                ${dataLine("Records", escapeHtml(schoolEvents.length))}
-                ${dataLine("Communities", escapeHtml(communities.join(", ") || "None"))}
-                ${dataLine("Categories", escapeHtml(categories.join(", ") || "None"))}
-                ${dataLine("Latest update", escapeHtml(latestUpdate || "None"), "mono")}
-                ${dataLine("Dataset snapshot", escapeHtml(manifest.hashes.full_snapshot), "mono")}
-                ${dataLine("Use limit", "Do not read this dossier as a ranking, safety score, legal finding, or complete incident history.")}
-                ${
-                  school.website
-                    ? dataLine("Website", `<a href="${escapeHtml(school.website)}" target="_blank" rel="noreferrer">${escapeHtml(school.website)}</a>`)
-                    : ""
-                }
-              </dl>
-              <h2 class="section-title section-title--spaced">Filter this dossier</h2>
-              <p class="section-note">School pages are static summaries. Use these focused Events links to narrow by community or keyword before building a packet or citing records.</p>
-              <div class="utility-bar">
-                ${schoolFilterLinks}
-                ${antisemitismLink}
-              </div>
-              <h2 class="section-title section-title--spaced">Timeline</h2>
-              <div class="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Category</th>
-                      <th>Record</th>
-                      <th>Sources</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${schoolEvents
+        <section class="section section--tight briefing-columns">
+          <div>
+            <div class="section-header">
+              <h2 class="section-title">What the public record says</h2>
+              <p class="section-note">Current snapshot only; counts are documentation, not institutional quality</p>
+            </div>
+            <dl>
+              ${dataLine("Public event records", escapeHtml(formatNumber(schoolEvents.length)))}
+              ${dataLine("Accepted official-source QA candidates", escapeHtml(formatNumber(acceptedQaCount)))}
+              ${dataLine("Communities", escapeHtml(communities.join(", ") || "None recorded"))}
+              ${dataLine("Categories", escapeHtml(categories.join(", ") || "None recorded"))}
+              ${dataLine("Source families", escapeHtml(combinedSourceFamilies.join(", ") || "No source family rows recorded"))}
+              ${dataLine("Latest update", escapeHtml(latestUpdate || "None"), "mono")}
+              ${
+                school.website
+                  ? dataLine("Institution website", `<a href="${escapeHtml(school.website)}" target="_blank" rel="noreferrer">${escapeHtml(school.website)}</a>`)
+                  : ""
+              }
+            </dl>
+            <h3 class="section-title section-title--spaced">Timeline</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Record</th>
+                    <th>Sources</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${schoolEvents.length
+                    ? schoolEvents
+                        .map(
+                          (event) => `
+                            <tr>
+                              <td class="mono">${escapeHtml(event.date)}</td>
+                              <td>${escapeHtml(event.category)}</td>
+                              <td><a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a></td>
+                              <td>${event.source_ids.length}</td>
+                            </tr>
+                          `
+                        )
+                        .join("")
+                    : `<tr><td colspan="4">No public event records are recorded for this institution in the current dataset.</td></tr>`}
+                </tbody>
+              </table>
+            </div>
+            <h3 class="section-title section-title--spaced">Official Aggregate / Case Rows</h3>
+            ${acceptedQaCount ? countTable(importRecordLaneRows, "Accepted QA Lane", "Rows") : `<p class="empty">No accepted import-wave QA candidates are linked to this institution in the current summary artifact.</p>`}
+            ${importAggregateSubtypeRows.length ? countTable(importAggregateSubtypeRows, "Aggregate Subtype", "Rows") : ""}
+          </div>
+          <aside class="briefing-callout">
+            <h2 class="section-title">Reading Rule</h2>
+            <ul class="evidence-list">
+              <li>This room describes public documentation in the current snapshot.</li>
+              <li>Accepted import-wave QA candidates passed deterministic source and field gates; they are not individually human-certified unless a linked review artifact says so.</li>
+              <li>Do not use this page as a ranking, safety score, prevalence estimate, severity score, legal conclusion, or complete incident history.</li>
+            </ul>
+            <h2 class="section-title section-title--spaced">Open Focused Views</h2>
+            <div class="utility-bar">
+              ${schoolFilterLinks}
+              ${antisemitismLink}
+            </div>
+          </aside>
+        </section>
+        <section class="section section--tight briefing-columns">
+          <div>
+            <div class="section-header">
+              <h2 class="section-title">Institution response</h2>
+              <p class="section-note">Public response evidence in the current dataset</p>
+            </div>
+            ${
+              responseEvents.length
+                ? `<div class="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Record</th>
+                          <th>Public response</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        ${responseEvents
+                          .map(
+                            (event) => `
+                              <tr>
+                                <td class="mono">${escapeHtml(event.date)}</td>
+                                <td><a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a></td>
+                                <td>${escapeHtml(String(event.institutional_response ?? "").trim())}</td>
+                              </tr>
+                            `
+                          )
+                          .join("")}
+                      </tbody>
+                    </table>
+                  </div>`
+                : `<p class="empty">No public institutional response is recorded in the current dataset for this institution.</p>`
+            }
+            <h3 class="section-title section-title--spaced">Response Depth Mix</h3>
+            ${countTable(responseDepthRows.length ? responseDepthRows : [["No records", 0]], "Response Depth")}
+          </div>
+          <aside class="briefing-callout">
+            <h2 class="section-title">Right-of-Reply Path</h2>
+            <p><a href="${sitePath(`/submit/?record_id=${encodeURIComponent(schoolEvents[0]?.id ?? "")}`, detailDepth)}">Correction / right-of-reply intake</a> accepts source-backed corrections, missing public responses, stronger source locators, duplicate reports, and institution response submissions.</p>
+          </aside>
+        </section>
+        <section class="section section--tight briefing-columns">
+          <div>
+            <div class="section-header">
+              <h2 class="section-title">Unresolved limits</h2>
+              <p class="section-note">What this room should not be used to claim</p>
+            </div>
+            <ul class="evidence-list">
+              <li>Counts are public documentation counts, not incident frequency or campus safety measures.</li>
+              <li>Missing rows can reflect source availability, import scope, institution identity matching, or current project coverage.</li>
+              <li>Quarantined or unresolved import rows remain outside public assertions until their gates are repaired.</li>
+              <li>Use the codebook and coverage limits before comparing institutions or making broader claims.</li>
+            </ul>
+            <h3 class="section-title section-title--spaced">Dossier Review Needs</h3>
+            ${countTable(reviewNeeds.length ? reviewNeeds : [["No priority review flags", 0]], "Review Need")}
+          </div>
+          <aside class="briefing-callout">
+            <h2 class="section-title">Public Legal/OCR Items</h2>
+            ${
+              legalEvents.length
+                ? `<ul class="source-list">
+                    ${legalEvents
                       .map(
                         (event) => `
-                          <tr>
-                            <td class="mono">${escapeHtml(event.date)}</td>
-                            <td>${escapeHtml(event.category)}</td>
-                            <td><a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a></td>
-                            <td>${event.source_ids.length}</td>
-                          </tr>
+                          <li>
+                            <a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a>
+                            <br><span class="section-note">${escapeHtml(event.legal_status || "Status not recorded")}</span>
+                          </li>
                         `
                       )
                       .join("")}
-                  </tbody>
-                </table>
-              </div>
-              <h2 class="section-title section-title--spaced">Institutional Responses</h2>
-              ${
-                responseEvents.length
-                  ? `<div class="table-wrap">
-                      <table>
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Record</th>
-                            <th>Public response</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          ${responseEvents
-                            .map(
-                              (event) => `
-                                <tr>
-                                  <td class="mono">${escapeHtml(event.date)}</td>
-                                  <td><a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a></td>
-                                  <td>${escapeHtml(String(event.institutional_response ?? "").trim())}</td>
-                                </tr>
-                              `
-                            )
-                            .join("")}
-                        </tbody>
-                      </table>
-                    </div>`
-                  : `<p class="empty">No public institutional response is recorded for this school in the current dataset.</p>`
-              }
-              <h2 class="section-title section-title--spaced">Public Legal/OCR Items</h2>
-              ${
-                legalEvents.length
-                  ? `<div class="table-wrap">
-                      <table>
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Record</th>
-                            <th>Status</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          ${legalEvents
-                            .map(
-                              (event) => `
-                                <tr>
-                                  <td class="mono">${escapeHtml(event.date)}</td>
-                                  <td><a href="${sitePath(`/events/${encodeURIComponent(event.id)}/`, detailDepth)}">${escapeHtml(event.summary)}</a></td>
-                                  <td>${escapeHtml(event.legal_status || "Not recorded")}</td>
-                                </tr>
-                              `
-                            )
-                            .join("")}
-                        </tbody>
-                      </table>
-                    </div>`
-                  : `<p class="empty">No public legal or OCR item is recorded for this school in the current dataset.</p>`
-              }
+                  </ul>`
+                : `<p class="empty">No public legal or OCR item is recorded in the current dataset for this institution.</p>`
+            }
+          </aside>
+        </section>
+        <section class="section section--tight briefing-columns" id="source-packet">
+          <div>
+            <div class="section-header">
+              <h2 class="section-title">Source packet</h2>
+              <p class="section-note">Sources, review tiers, import-wave lanes, and snapshot hash</p>
             </div>
-            <aside>
-              <h2 class="section-title">Dossier Review Needs</h2>
-              ${countTable(reviewNeeds.length ? reviewNeeds : [["No priority review flags", 0]], "Review Need")}
-              <h2 class="section-title">Related Sources</h2>
-              <ul class="source-list">
-                ${schoolSources
-                  .map(
-                    (source) => `
-                      <li>
-                        <a href="${sitePath(`/sources/${encodeURIComponent(source.id)}/`, detailDepth)}">${escapeHtml(source.title)}</a>
-                        <br><span class="section-note">${escapeHtml(source.publisher)} / ${escapeHtml(source.source_type)}</span>
-                      </li>
-                    `
-                  )
-                  .join("")}
-              </ul>
-            </aside>
+            <h3 class="section-title section-title--spaced">Dossier Packets</h3>
+            <div class="utility-bar">
+              ${dossierPackets.map(([label, href]) => `<a class="button-link" href="${href}">${escapeHtml(label)}</a>`).join("")}
+            </div>
+            <h3 class="section-title section-title--spaced">Review Tier Mix</h3>
+            ${countTable(reviewTierRows.length ? reviewTierRows : [["No public event records", 0]], "Review Tier")}
+            <h3 class="section-title section-title--spaced">Source Family Mix</h3>
+            ${countTable(importSourceFamilyRows.length ? importSourceFamilyRows : sourceFamilyRows.length ? sourceFamilyRows : [["No source family rows", 0]], "Source Family", "Rows")}
+            <dl>
+              ${dataLine("Dataset snapshot", escapeHtml(manifest.hashes.full_snapshot), "mono")}
+              ${dataLine("Import waves represented", escapeHtml(importSummary.import_wave_ids.length ? formatNumber(importSummary.import_wave_ids.length) : "None"))}
+            </dl>
           </div>
+          <aside>
+            <h2 class="section-title">Related Sources</h2>
+            <ul class="source-list">
+              ${schoolSources.length
+                ? schoolSources
+                    .map(
+                      (source) => `
+                        <li>
+                          <a href="${sitePath(`/sources/${encodeURIComponent(source.id)}/`, detailDepth)}">${escapeHtml(source.title)}</a>
+                          <br><span class="section-note">${escapeHtml(source.publisher)} / ${escapeHtml(source.source_type)}</span>
+                        </li>
+                      `
+                    )
+                    .join("")
+                : `<li>No public event source pages are linked to this institution in the current dataset.</li>`}
+            </ul>
+          </aside>
+        </section>
+        <section class="section section--tight">
+          <div class="section-header">
+            <h2 class="section-title">Correction / right of reply</h2>
+            <p class="section-note">Public-source corrections and institution replies remain part of the record</p>
+          </div>
+          <p><a href="${sitePath(`/submit/?record_id=${encodeURIComponent(schoolEvents[0]?.id ?? "")}`, detailDepth)}">Submit a correction, source locator, duplicate report, or right-of-reply item</a>. Include public source URLs and avoid private testimony, private screenshots, direct messages, or sensitive personal information.</p>
         </section>
       `,
       detailDepth,

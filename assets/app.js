@@ -35,6 +35,7 @@ const DATA_PATHS = {
   challengeLedger: sitePath("/data/challenge-ledger.json"),
   flagshipReport: sitePath("/data/flagship-report.json"),
   goldRecordV1: sitePath("/data/gold-record-v1.json"),
+  institutionImportWaveSummary: sitePath("/data/institution-import-wave-summary.json"),
   manifest: sitePath("/data/snapshot-manifest.json"),
   snapshotIndex: sitePath("/data/snapshot-index.json"),
   sourceAudit: sitePath("/data/source-audit.json"),
@@ -73,6 +74,7 @@ const state = {
   challengeLedger: { entries: [] },
   flagshipReport: { findings: [], audience_paths: [], recommended_next_reviews: [] },
   goldRecordV1: { records: [], coverage_summary: {}, selection_criteria: [] },
+  institutionImportWaveSummary: { accepted_candidate_count: 0, institution_count: 0, source_family_counts: {}, record_lane_counts: {}, schools: {} },
   challengeLoadError: "",
   snapshotIndex: null,
   sourceAudit: null,
@@ -616,6 +618,7 @@ async function loadDataset() {
     sourceProvenanceQueues,
     flagshipReport,
     goldRecordV1,
+    institutionImportWaveSummary,
     manifest,
     snapshotIndex,
     sourceAudit,
@@ -644,6 +647,7 @@ async function loadDataset() {
     fetchJson(DATA_PATHS.sourceProvenanceQueues),
     fetchJson(DATA_PATHS.flagshipReport),
     fetchJson(DATA_PATHS.goldRecordV1),
+    fetchJson(DATA_PATHS.institutionImportWaveSummary),
     fetchJson(DATA_PATHS.manifest),
     fetchJson(DATA_PATHS.snapshotIndex),
     fetchJson(DATA_PATHS.sourceAudit),
@@ -674,6 +678,7 @@ async function loadDataset() {
   state.sourceProvenanceQueues = sourceProvenanceQueues;
   state.flagshipReport = flagshipReport;
   state.goldRecordV1 = goldRecordV1;
+  state.institutionImportWaveSummary = institutionImportWaveSummary;
   state.snapshotIndex = snapshotIndex;
   state.sourceAudit = sourceAudit;
   state.sourceAuditLive = sourceAuditLive;
@@ -826,9 +831,11 @@ function renderDashboard() {
   if (!root) return;
 
   const schoolsTracked = new Set(state.records.map((record) => record.school_id)).size;
+  const generatedInstitutionPages = state.schoolsList.length;
+  const acceptedQaCandidates = state.institutionImportWaveSummary.accepted_candidate_count ?? 0;
+  const institutionsWithAcceptedQa = state.institutionImportWaveSummary.institution_count ?? 0;
   const latestBrief = [...state.briefs].sort((a, b) => b.published_date.localeCompare(a.published_date))[0];
   const signals = documentationSignals(state.records);
-  const sourceCollections = state.sources.size;
   const currentSnapshotHash = state.manifest.hashes.full_snapshot;
   const recentRows = state.records.slice(0, 5).map(dashboardEventRow).join("");
   const recordsByMonth = countBy(state.records, (record) => record.date.slice(0, 7))
@@ -862,26 +869,32 @@ function renderDashboard() {
       <div class="metric-grid metric-grid--dashboard">
         <div class="metric">
           <span class="metric__value">${state.records.length.toLocaleString("en-US")}</span>
-          <span class="metric__label">Public-source records</span>
+          <span class="metric__label">Public event records</span>
+        </div>
+        <div class="metric">
+          <span class="metric__value">${acceptedQaCandidates.toLocaleString("en-US")}</span>
+          <span class="metric__label">Accepted import-wave QA candidates</span>
+        </div>
+        <div class="metric">
+          <span class="metric__value">${generatedInstitutionPages.toLocaleString("en-US")}</span>
+          <span class="metric__label">Generated institution pages</span>
         </div>
         <div class="metric">
           <span class="metric__value">${schoolsTracked.toLocaleString("en-US")}</span>
-          <span class="metric__label">Schools with records</span>
-        </div>
-        <div class="metric">
-          <span class="metric__value">${sourceCollections.toLocaleString("en-US")}</span>
-          <span class="metric__label">Source collections</span>
-        </div>
-        <div class="metric">
-          <span class="metric__value">CSV/JSON</span>
-          <span class="metric__label">Exports and research files</span>
+          <span class="metric__label">Institutions with public event records</span>
         </div>
         <div class="metric">
           <span class="metric__value">${shortHash(currentSnapshotHash)}</span>
           <span class="metric__label">Current snapshot hash</span>
         </div>
+        <div class="metric">
+          <span class="metric__value">${institutionsWithAcceptedQa.toLocaleString("en-US")}</span>
+          <span class="metric__label">Institutions with accepted QA rows</span>
+        </div>
       </div>
+      <p class="limit-line">No rankings. No safety scores. No legal findings.</p>
       <div class="command-actions">
+        ${commandCenterAction("Accountability Room", "Open institution briefings that separate public event records from accepted official-source QA rows.", "/accountability-room/")}
         ${commandCenterAction("Search Records", "Find records by school, community, source type, confidence, and verification status.", "/events/?focus=search")}
         ${commandCenterAction("Build Reporting Packet", "Generate selected records, source URLs, limitations, citation language, and snapshot metadata.", "/research-workspace/?focus=records&title=Campus%20Evidence%20Lab%20Reporting%20Packet&question=What%20public-source%20records%20support%20this%20reporting%20question%3F")}
         ${commandCenterAction("Download Data", "Use CSV, JSON, research exports, manifest, archived snapshot, and schema files.", "/downloads/")}

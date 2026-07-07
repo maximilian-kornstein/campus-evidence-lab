@@ -5,7 +5,7 @@ import { rootDir } from "./lib.mjs";
 
 const errors = [];
 const siteRoot = process.env.SITE_ROOT ? path.resolve(rootDir, process.env.SITE_ROOT) : rootDir;
-const skippedRootDirs = new Set([".git", ".worktrees", "node_modules"]);
+const skippedRootDirs = new Set([".git", ".superpowers", ".worktrees", "node_modules"]);
 
 async function fileExists(relativePath) {
   try {

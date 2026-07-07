@@ -21,9 +21,14 @@ const pages = [
     file: "index.html",
     checks: [
       String(events.length),
+      "Accountability Room",
+      "150,000 accepted import-wave QA candidates",
+      "4,000 public event records",
+      "No rankings. No safety scores. No legal findings.",
       "Source collections",
       "Current snapshot hash",
-      "Campus civil-rights records",
+      "Public event records",
+      "Generated institution pages",
       "Search Records",
       "Build Reporting Packet",
       "Audience Entry Points",
@@ -55,8 +60,14 @@ const pages = [
       "Records by Source Type",
       "not incident prevalence, school safety, or legal conclusions"
     ],
-    linkChecks: ["/events/?focus=search", "/methodology/", "/impact/", "/trust/", "/flagship/", "/gold-records/", "/protocol/", "/reviewer-brief/", "/guide/", "/research-guide/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
+    linkChecks: ["/accountability-room/", "/events/?focus=search", "/methodology/", "/impact/", "/trust/", "/flagship/", "/gold-records/", "/protocol/", "/reviewer-brief/", "/guide/", "/research-guide/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
     dashboardSmoke: true
+  },
+  {
+    route: "/accountability-room/",
+    file: "accountability-room/index.html",
+    checks: ["Accountability Room", "150,000 accepted import-wave QA candidates", "4,000 public event records", "5,470 generated institution pages", "No rankings. No safety scores. No legal findings.", "Open an Institution", "ED Campus Safety", "OCR Open Investigation"],
+    linkChecks: ["../schools/", "../import-waves/", "../methodology/", "../submit/"]
   },
   {
     route: "/events/",
@@ -81,6 +92,12 @@ const pages = [
     file: "schools/index.html",
     checks: ["Brown University Dossier", "Institutional Responses", "Brown said it agreed to continue nondiscrimination training"],
     absentChecks: ["does not independently evaluate investigative, disciplinary, or institutional response outcomes."]
+  },
+  {
+    route: "/schools/brown_university/",
+    file: "schools/brown_university/index.html",
+    checks: ["Brown University Accountability Room", "What the public record says", "Institution response", "Unresolved limits", "Source packet", "Correction / right of reply", "accepted official-source QA candidates", "No rankings. No safety scores. No legal findings."],
+    linkChecks: ["../../accountability-room/", "../../events/?school=brown_university"]
   },
   {
     route: "/briefs/",
@@ -356,8 +373,8 @@ async function renderPage(page, index) {
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
-    if (actionLinks.length !== 23) {
-      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 23`);
+    if (actionLinks.length !== 24) {
+      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 24`);
     }
     if (!dashboardHrefs.includes(packetHref)) {
       errors.push(`${page.file} did not render focused reporting-packet link`);

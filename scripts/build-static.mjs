@@ -12,6 +12,7 @@ const publicPaths = [
   "docs",
   "schema",
   "contracts",
+  "accountability-room",
   "events",
   "schools",
   "briefs",

@@ -1,4 +1,6 @@
-import { paths, readJson } from "./lib.mjs";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { paths, readJson, rootDir } from "./lib.mjs";
 
 const [events, sources] = await Promise.all([
   readJson(paths.events),
@@ -51,12 +53,32 @@ function isNegatedClaim(text, matchIndex) {
   if (!lastNegation) return false;
 
   const scopedPrefix = sameSentencePrefix.slice(lastNegation.index);
-  if (/\b(?:but|however|though|although|except|yet|just)\b/.test(scopedPrefix)) return false;
+  if (/\b(?:but|however|though|although|except|yet|just|only|merely)\b/.test(scopedPrefix)) return false;
+  const normalizedScopedPrefix = scopedPrefix.replace(/\s+/g, " ").trimStart();
+  if (
+    /^(?:not|no|nor|without|cannot|never|does not|do not|should not|must not)\b/.test(normalizedScopedPrefix) &&
+    normalizedScopedPrefix.length <= 180
+  ) {
+    return true;
+  }
   return /^(?:not|no|nor|without|cannot|never|does not|do not|should not|must not)\s+(?:(?:represent|represents|constitute|constitutes|make|makes|support|supports|claim|claims|describe|describes|provide|provides|convert|converts|turn|turns|read|used|use|be|as)\s+)*(?:(?:a|an|the|any|third[- ]party)\s+)?(?:(?:ranking|rankings|rating|ratings|system|score|scores|scoring|risk|safety|severity|prevalence|estimate|estimates|measurement|measure|measures|frequency|endorsement|external|audit|audited|validation|validated|school|independently|externally)[,\s]*(?:or|and)?\s*){0,24}$/.test(scopedPrefix.trimStart());
 }
 
+function textForClaimScan(text) {
+  return String(text ?? "")
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;|&#160;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, "\"")
+    .replace(/&#39;/g, "'");
+}
+
 function prohibitedClaimsInText(text) {
-  const content = String(text ?? "");
+  const content = textForClaimScan(text);
   const claims = [];
   prohibitedClaimPattern.lastIndex = 0;
   for (const match of content.matchAll(prohibitedClaimPattern)) {
@@ -110,6 +132,45 @@ for (const source of sources) {
   const hostname = url.hostname.replace(/^www\./, "");
   if (disallowedSourceHosts.some((host) => hostname === host || hostname.endsWith(`.${host}`))) {
     errors.push(`Source ${source.id} uses social-media host ${hostname}; social-only sources are excluded from MVP publication`);
+  }
+}
+
+const publicHtmlChecks = [
+  {
+    file: "index.html",
+    required: ["150,000 accepted import-wave QA candidates", "4,000 public event records", "No rankings. No safety scores. No legal findings."]
+  },
+  {
+    file: path.join("accountability-room", "index.html"),
+    required: ["Accountability Room", "150,000 accepted import-wave QA candidates", "No rankings. No safety scores. No legal findings."]
+  },
+  {
+    file: path.join("schools", "brown_university", "index.html"),
+    required: ["Brown University Accountability Room", "accepted official-source QA candidates", "No rankings. No safety scores. No legal findings."]
+  },
+  {
+    file: path.join("press", "index.html"),
+    required: ["150,000 accepted import-wave QA candidates", "5,470 generated institution pages"]
+  },
+  {
+    file: path.join("about", "index.html"),
+    required: ["deterministic QA gates for accepted import-wave candidates"]
+  },
+  {
+    file: path.join("methodology", "index.html"),
+    required: ["Import-Wave QA Candidate Unit", "Acceptance is not individual human certification"]
+  }
+];
+
+for (const check of publicHtmlChecks) {
+  const html = await readFile(path.join(rootDir, check.file), "utf8");
+  if (/947 schools/i.test(html)) errors.push(`${check.file} contains stale 947-school language`);
+  if (/Human review required/i.test(html)) errors.push(`${check.file} contains unqualified human-review-required language`);
+  for (const text of check.required) {
+    if (!html.includes(text)) errors.push(`${check.file} missing required accountability copy: ${text}`);
+  }
+  for (const claim of prohibitedClaimsInText(html)) {
+    errors.push(`${check.file} uses prohibited affirmative claim "${claim}"`);
   }
 }
 

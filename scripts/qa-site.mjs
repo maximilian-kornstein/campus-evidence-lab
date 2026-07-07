@@ -100,6 +100,7 @@ const researchSources = await readSiteJson(sitePaths.sourcesResearch);
 
 for (const route of [
   "index.html",
+  "accountability-room/index.html",
   "events/index.html",
   "schools/index.html",
   "briefs/index.html",
@@ -186,6 +187,7 @@ for (const artifact of [
   "data/snapshot-index.json",
   "data/corrections.json",
   "data/import-manifests.json",
+  "data/institution-import-wave-summary.json",
   "data/import-candidates/ed-campus-safety-wave-001.json",
   "data/import-waves/ed-campus-safety-wave-001.json",
   "data/import-quarantine/ed-campus-safety-wave-001.json",
@@ -317,13 +319,16 @@ if (siteRoot === rootDir) {
 }
 
 for (const homepageCopy of [
-  "Public-source civil-rights evidence infrastructure",
+  "Public evidence infrastructure",
+  "Accountability Room",
+  "accountability-room/",
+  "4,000 public event records",
+  "150,000 accepted import-wave QA candidates",
   "Search Records",
   "events/?focus=search",
   "Build Reporting Packet",
   "research-workspace/?focus=records",
   "Download Data",
-  "Review Methodology",
   "protocol/"
 ]) {
   await mustContain("index.html", homepageCopy);
@@ -358,6 +363,7 @@ for (const contributingCopy of [
 for (const methodologyCopy of [
   "Current Scope",
   "Event Record Unit",
+  "Import-Wave QA Candidate Unit",
   "Source Reliability Protocol",
   "Event Category Definitions",
   "Affected Community Definitions",
@@ -563,21 +569,31 @@ for (const schoolsCopy of ["Search schools", "filter by state", "most recent upd
 }
 
 for (const schoolDossierCopy of [
-  "University of Kentucky Dossier",
-  "Build Citation Packet",
+  "University of Kentucky Accountability Room",
+  "Build Source Packet",
   "Dossier Review Needs",
-  "Use limit",
-  "does not rank the institution"
+  "accepted official-source QA candidates",
+  "No rankings. No safety scores. No legal findings."
 ]) {
   await mustContain("schools/university_of_kentucky/index.html", schoolDossierCopy);
 }
 
 for (const schoolDossierFilterCopy of [
-  "Filter this dossier",
+  "Open Focused Views",
   "Open Jewish records in Events",
   "Open antisemitism search in Events"
 ]) {
   await mustContain("schools/american_university/index.html", schoolDossierFilterCopy);
+}
+
+for (const accountabilityCopy of [
+  "Accountability Room",
+  "150,000 accepted import-wave QA candidates",
+  "4,000 public event records",
+  "No rankings. No safety scores. No legal findings.",
+  "Open an Institution"
+]) {
+  await mustContain("accountability-room/index.html", accountabilityCopy);
 }
 
 for (const sourcesCopy of ["Search sources", "filter by source type", "direct external source URLs", "audit downloads"]) {
@@ -881,7 +897,7 @@ for (const school of schools) {
   const schoolPath = `schools/${school.id}/index.html`;
   await mustExist(schoolPath);
   await mustContain(schoolPath, `events/?school=${school.id}`);
-  for (const schoolCopy of ["Timeline", "Institutional Responses", "Public Legal/OCR Items", "Related Sources", "Dataset snapshot"]) {
+  for (const schoolCopy of ["Timeline", "Institution response", "Public Legal/OCR Items", "Related Sources", "Dataset snapshot"]) {
     await mustContain(schoolPath, schoolCopy);
   }
 }
@@ -925,6 +941,7 @@ for (const brief of briefs) {
   }
 }
 for (const policyUrl of [
+  "/accountability-room/",
   "/policies/",
   "/policies/terms-of-use/",
   "/policies/privacy-policy/",

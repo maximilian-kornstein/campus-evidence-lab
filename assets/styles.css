@@ -245,6 +245,51 @@ textarea:focus-visible {
   margin-top: 28px;
 }
 
+.accountability-actions {
+  margin-top: 22px;
+}
+
+.limit-line {
+  display: inline-block;
+  margin: 22px 0 0;
+  padding: 9px 0;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.briefing-shell {
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+}
+
+.briefing-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.briefing-metric {
+  min-width: 0;
+  min-height: 126px;
+  padding: 16px;
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.briefing-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 44px;
+  align-items: start;
+}
+
+.briefing-callout {
+  border-top: 1px solid var(--line-strong);
+  padding-top: 18px;
+}
+
 .command-center {
   margin-top: 52px;
 }
@@ -257,7 +302,7 @@ textarea:focus-visible {
 }
 
 .metric-grid--dashboard {
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
 }
 
 .metric {
@@ -336,7 +381,7 @@ textarea:focus-visible {
 
 .command-actions {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   border-left: 1px solid var(--line-strong);
   border-bottom: 1px solid var(--line-strong);
 }
@@ -865,6 +910,15 @@ tr.is-selected {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .briefing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .briefing-columns {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
   .action-grid,
   .command-actions,
   .audience-grid,
@@ -921,6 +975,10 @@ tr.is-selected {
   .trend-grid,
   .toolbar,
   .download-row {
+    grid-template-columns: 1fr;
+  }
+
+  .briefing-grid {
     grid-template-columns: 1fr;
   }
 
