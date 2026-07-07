@@ -27,7 +27,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          SITE_URL: https://campusevidencelab.org
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
