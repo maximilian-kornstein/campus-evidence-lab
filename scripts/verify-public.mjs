@@ -11,9 +11,14 @@ if (!/^https?:$/.test(baseUrl.protocol)) {
   process.exit(1);
 }
 const publicBase = baseUrl.href.replace(/\/+$/, "");
-const maxFetchAttempts = 4;
+const configuredMaxFetchAttempts = Number(process.env.PUBLIC_VERIFY_MAX_FETCH_ATTEMPTS ?? 4);
+const maxFetchAttempts = Number.isInteger(configuredMaxFetchAttempts) && configuredMaxFetchAttempts > 0 ? configuredMaxFetchAttempts : 4;
 const retryDelayMs = 250;
 const transientStatuses = new Set([429, 500, 502, 503, 504]);
+const configuredFetchTimeoutMs = Number(process.env.PUBLIC_VERIFY_FETCH_TIMEOUT_MS ?? 15000);
+const fetchTimeoutMs = Number.isFinite(configuredFetchTimeoutMs) && configuredFetchTimeoutMs > 0 ? configuredFetchTimeoutMs : 15000;
+const configuredDetailConcurrency = Number(process.env.PUBLIC_VERIFY_DETAIL_CONCURRENCY ?? 4);
+const detailConcurrency = Number.isInteger(configuredDetailConcurrency) && configuredDetailConcurrency > 0 ? configuredDetailConcurrency : 4;
 
 function resolvePath(pathname) {
   return new URL(pathname.replace(/^\/+/, ""), `${publicBase}/`);
@@ -23,17 +28,27 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function retryDelayForResponse(response, attempt) {
+  const retryAfter = response.headers.get("retry-after");
+  const retryAfterSeconds = retryAfter && /^\d+$/.test(retryAfter) ? Number(retryAfter) : 0;
+  if (retryAfterSeconds > 0) return retryAfterSeconds * 1000;
+  if (response.status === 429) return 2000 * attempt;
+  return retryDelayMs * attempt;
+}
+
 async function fetchText(pathname, expectedText = []) {
   const url = resolvePath(pathname);
   let lastError;
 
   for (let attempt = 1; attempt <= maxFetchAttempts; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), fetchTimeoutMs);
     try {
-      const response = await fetch(url, { redirect: "follow" });
+      const response = await fetch(url, { redirect: "follow", signal: controller.signal });
       if (!response.ok) {
         lastError = new Error(`${url.href} returned HTTP ${response.status}`);
         if (transientStatuses.has(response.status) && attempt < maxFetchAttempts) {
-          await sleep(retryDelayMs * attempt);
+          await sleep(retryDelayForResponse(response, attempt));
           continue;
         }
         throw lastError;
@@ -47,12 +62,15 @@ async function fetchText(pathname, expectedText = []) {
       }
       return { url, text };
     } catch (error) {
-      lastError = error;
-      if (attempt < maxFetchAttempts && error instanceof TypeError) {
+      const normalizedError = error?.name === "AbortError" ? new Error(`${url.href} timed out after ${fetchTimeoutMs}ms`) : error;
+      lastError = normalizedError;
+      if (attempt < maxFetchAttempts && (normalizedError instanceof TypeError || /timed out after/i.test(normalizedError.message ?? ""))) {
         await sleep(retryDelayMs * attempt);
         continue;
       }
-      throw error;
+      throw normalizedError;
+    } finally {
+      clearTimeout(timeout);
     }
   }
 
@@ -66,6 +84,18 @@ async function fetchJson(pathname) {
   } catch {
     throw new Error(`${url.href} did not return valid JSON`);
   }
+}
+
+async function mapWithConcurrency(items, limit, task) {
+  let index = 0;
+  const workers = Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (index < items.length) {
+      const item = items[index];
+      index += 1;
+      await task(item);
+    }
+  });
+  await Promise.all(workers);
 }
 
 const checks = [];
@@ -180,33 +210,33 @@ await check("All generated detail pages", async () => {
   const { json: briefs } = await fetchJson("/data/briefs.json");
   const { text: sitemap } = await fetchText("/sitemap.xml");
 
-  for (const event of events) {
+  await mapWithConcurrency(events, detailConcurrency, async (event) => {
     await fetchText(`/events/${event.id}/`, [event.record_hash, "External source URL"]);
     if (!sitemap.includes(`${publicBase}/events/${event.id}/`)) {
       throw new Error(`Sitemap is missing event ${event.id}`);
     }
-  }
+  });
 
-  for (const school of schools) {
+  await mapWithConcurrency(schools, detailConcurrency, async (school) => {
     await fetchText(`/schools/${school.id}/`, ["Dataset snapshot"]);
     if (!sitemap.includes(`${publicBase}/schools/${school.id}/`)) {
       throw new Error(`Sitemap is missing school ${school.id}`);
     }
-  }
+  });
 
-  for (const source of sources) {
+  await mapWithConcurrency(sources, detailConcurrency, async (source) => {
     await fetchText(`/sources/${source.id}/`, ["Source URL", source.url]);
     if (!sitemap.includes(`${publicBase}/sources/${source.id}/`)) {
       throw new Error(`Sitemap is missing source ${source.id}`);
     }
-  }
+  });
 
-  for (const brief of briefs) {
+  await mapWithConcurrency(briefs, detailConcurrency, async (brief) => {
     await fetchText(`/briefs/${brief.id}/`, ["Dataset Downloads", brief.snapshot_hash]);
     if (!sitemap.includes(`${publicBase}/briefs/${brief.id}/`)) {
       throw new Error(`Sitemap is missing brief ${brief.id}`);
     }
-  }
+  });
 });
 
 for (const result of checks) {

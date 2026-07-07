@@ -137,3 +137,31 @@ test("public verifier retries transient 503 responses", async () => {
     await new Promise((resolve) => server.close(resolve));
   }
 });
+
+test("public verifier times out hanging responses", async () => {
+  const server = http.createServer(() => {
+    // Intentionally leave the response open to exercise verifier timeouts.
+  });
+
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+
+  try {
+    const baseUrl = `http://127.0.0.1:${server.address().port}`;
+    let error;
+    try {
+      await execFileAsync(process.execPath, ["scripts/verify-public.mjs", baseUrl], {
+        cwd: repoRoot,
+        encoding: "utf8",
+        env: { ...process.env, PUBLIC_VERIFY_FETCH_TIMEOUT_MS: "50", PUBLIC_VERIFY_MAX_FETCH_ATTEMPTS: "1" },
+        timeout: 1500,
+      });
+    } catch (caught) {
+      error = caught;
+    }
+
+    assert.ok(error, "Expected verifier to fail for a hanging response");
+    assert.match(`${error.stdout}\n${error.stderr}`, /timed out after 50ms/);
+  } finally {
+    await new Promise((resolve) => server.close(resolve));
+  }
+});
