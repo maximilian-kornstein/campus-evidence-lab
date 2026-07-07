@@ -71,7 +71,7 @@ function recordSummary(record, sampleId, sampleLabel, snapshotId, sourceAuditLiv
 }
 
 function sampleDefinition(id, label, description, records, snapshotHash, snapshotId, sourceAuditLive, limit = 25) {
-  const selected = stableSample(records, limit, `${snapshotHash}|${id}`);
+  const selected = stableSample(records, limit, `${snapshotHash}|${id}`).sort((a, b) => b.date.localeCompare(a.date) || a.id.localeCompare(b.id));
   return {
     id,
     label,

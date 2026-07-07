@@ -44,6 +44,28 @@ Each submission is screened for:
 - source reliability
 - duplicate coverage in the existing dataset
 
+## Reviewer Standard Checklist
+
+A reviewer should be able to reproduce the record from public material without private context. Before publication or correction acceptance, review checks include:
+
+- source availability
+- source type
+- date precision
+- school identity
+- category choice
+- affected community label
+- legal-status wording
+- privacy risk
+- duplicate risk
+- neutral language
+- whether confidence describes source support instead of severity
+
+The reviewer should treat counts as a documentation signal, not a prevalence, ranking, safety, hostility, or legal-liability signal. If a source cannot support a required field, the record should remain unpublished or use an explicit limited-value field instead of inference.
+
+## Deduplication Review
+
+Records should not be duplicated because the same public matter appears in multiple sources. A second source should usually be attached to the existing record unless it documents a distinct date, public action, legal step, institutional response, or source-backed update. Structured public datasets may use scoped deduplication keys such as school, year, geography scope, offense, and bias code so aggregate cells remain auditable without being merged incorrectly.
+
 ## Review Decision
 
 The permitted correction statuses are:

@@ -30,6 +30,17 @@ test("all affected-community labels in the dataset have public codebook definiti
   }
 });
 
+test("Volokh scope clarifications are represented in public definitions", async () => {
+  assert.ok(COMMUNITY_DEFINITIONS["Sexual orientation"], "Missing Sexual orientation definition");
+  assert.ok(COMMUNITY_DEFINITIONS["Gender identity"], "Missing Gender identity definition");
+
+  const methodology = await readFile(new URL("../methodology/index.html", import.meta.url), "utf8");
+  assert.match(methodology, /not a comprehensive First Amendment or student-speech archive/i);
+  assert.match(methodology, /Political belief, viewpoint, or ideology is not a standalone affected-community category/i);
+  assert.match(methodology, /Zionist, anti-Zionist, Israeli, Palestinian, Jewish, Muslim, Arab/i);
+  assert.match(methodology, /false, unfounded, withdrawn, fabricated, or a hoax/i);
+});
+
 test("all source types in the dataset have public codebook definitions", () => {
   const sourceTypes = new Set(sources.map((source) => source.source_type));
   for (const sourceType of sourceTypes) {

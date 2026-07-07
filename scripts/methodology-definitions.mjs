@@ -32,6 +32,7 @@ export const COMMUNITY_DEFINITIONS = {
   Black: definition("Black", "an affected-community label for records where Black people or Black identity are named or directly described"),
   Ethnicity: definition("Ethnicity", "a broad affected-community label for source-backed ethnicity-related records that cannot be narrowed safely"),
   Gender: definition("Gender", "a broad affected-community label for source-backed gender or sex-related records that cannot be narrowed safely"),
+  "Gender identity": definition("Gender identity", "an affected-community label for records where gender identity, transgender identity, or related identity is named or directly described"),
   Indigenous: definition("Indigenous", "an affected-community label for records where Indigenous people or identity are named or directly described"),
   Israeli: definition("Israeli", "an affected-community label for records where Israeli people, nationality, or identity are named or directly described"),
   Jewish: definition("Jewish", "an affected-community label for records where Jewish people or Jewish identity are named or directly described"),
@@ -44,6 +45,7 @@ export const COMMUNITY_DEFINITIONS = {
   "Pregnant students": definition("Pregnant students", "an affected-community label for records involving pregnant students or pregnancy-related educational access"),
   Race: definition("Race", "a broad affected-community label for source-backed race-related records that cannot be narrowed safely"),
   Religion: definition("Religion", "a broad affected-community label for source-backed religion-related records that cannot be narrowed safely"),
+  "Sexual orientation": definition("Sexual orientation", "an affected-community label for records where sexual orientation is named or directly described"),
   "Students with disabilities": definition("Students with disabilities", "an affected-community label for records involving students with disabilities or disability access"),
   Women: definition("Women", "an affected-community label for records involving women or sex-equity access as described by public sources")
 };

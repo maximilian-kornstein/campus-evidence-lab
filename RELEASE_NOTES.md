@@ -6,7 +6,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:6b61137eeae675375a125cd9eac8e6c6fcccd5b7a7d29f4280753c88eaed7148`
+- Full snapshot hash: `sha256:10f517ec49b42e68ab1a0977aaeb052a63f3b4393e57a7bfea6eacbc7c0f823e`
 - Previous snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
 - Archived snapshot: `/data/snapshots/snapshot_2026_06_03_4000_records.json`
 
@@ -58,7 +58,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 - Briefs: `sha256:82a5729322ae620502bde04a01f57ee92ea9e40df02274b8ae090611157aac63`
 - Corrections: `sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`
 - Review log: `sha256:bae294cd5953041e2d6602123b1024fc2290d7958c7fde3db6a4bf7d5616e48d`
-- Review samples: `sha256:ca743a05ba72813d5c7ad3891d4dd4ca0a92686676affa4ede7c42c202c9c37b`
+- Review samples: `sha256:8bd1288f8fdf6f30dc8e708ef57d789dd645cc976eae94575e05d556f5a57858`
 - Review ledger: `sha256:a49363c2db32fb8ff6891f4ed627ba8474e98a9ba12952a6aec67b8cda6f4dc4`
 - Methodology examples: `sha256:c906ed1cfa729480bd4a6b313b602f1f9f394ce5d0f5c82007b3bbca3e466eb8`
 - Workflows: `sha256:a00927c9daa38f6dda1ad6dd44b152e270700aa39a21972b4bd0b7de69b24c26`

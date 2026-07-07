@@ -29,9 +29,15 @@ For each category: use only when the public source directly supports the label; 
 
 Affected-community labels identify the community named or directly described by public sources. They do not mean Campus Evidence Lab independently found motive, bias, harm, legal liability, or institutional fault.
 
-Current labels include Arab, Asian, Black, Ethnicity, Gender, Indigenous, Israeli, Jewish, LGBTQ+, Latino, Muslim, National origin, Native, Palestinian, Pregnant students, Race, Religion, Students with disabilities, and Women.
+Current labels include Arab, Asian, Black, Ethnicity, Gender, Gender identity, Indigenous, Israeli, Jewish, LGBTQ+, Latino, Muslim, National origin, Native, Palestinian, Pregnant students, Race, Religion, Sexual orientation, Students with disabilities, and Women.
 
 Use narrower labels when public sources support them. Use broad labels such as Race, Religion, National origin, Ethnicity, or Gender only when a narrower label would be unsupported. Do not infer community from context, politics, names, location, or assumptions.
+
+Current taxonomy limitation: the public dataset uses one affected-community field that mixes broad protected-category labels and narrower source-identified identities. Reviewers should treat the field as source-identification, not legal classification. The intended next refinement is a two-tier model: broad protected area plus narrower affected identity when supported by source text.
+
+Sexual orientation and gender identity may overlap with sex-discrimination law, but reviewers should break them out as separate documentation labels when the public source supports that distinction. Use LGBTQ+ only when the source itself uses a broader grouped label or when a narrower sexual-orientation or gender-identity label would not be reproducible from the source.
+
+Political belief, viewpoint, and ideology are not standalone affected-community labels in the MVP. Do not convert Zionist, anti-Zionist, Israel-policy, Palestinian-advocacy, or other ideological language into Jewish, Israeli, Palestinian, Muslim, Arab, national-origin, or religion labels unless public sources support that protected-community framing. Ambiguous cases should be routed for broad-label review with a visible limitation.
 
 ## Verification status
 
@@ -68,6 +74,8 @@ Institutional-response fields should show public response text when available. I
 ## Exclusion rules
 
 Exclude private testimony, private screenshots, direct messages, unverified social media-only claims, sensitive personal information, unsupported legal conclusions, and records without public source support.
+
+If public sources later state that an allegation was false, unfounded, withdrawn, fabricated, or a hoax, update the record rather than preserving the allegation unqualified. Attach the corrective public source, attribute each source's posture, update confidence or verification if needed, and record the change in the changelog. If the corrected public record cannot be described neutrally from public sources, leave it unpublished.
 
 ## Common mistakes
 

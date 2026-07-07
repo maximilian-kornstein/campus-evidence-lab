@@ -113,6 +113,7 @@ for (const route of [
   "acknowledgments/index.html",
   "reviewer-brief/index.html",
   "journalist-guide/index.html",
+  "researcher-start/index.html",
   "guide/index.html",
   "research-guide/index.html",
   "research-workspace/index.html",
@@ -262,9 +263,11 @@ if (siteRoot === rootDir) {
 }
 
 for (const homepageCopy of [
-  "Public-source civil-rights evidence infrastructure",
+  "Public-source postsecondary civil-rights evidence infrastructure",
   "Search Records",
   "events/?focus=search",
+  "Researcher Start",
+  "researcher-start/",
   "Build Reporting Packet",
   "research-workspace/?focus=records",
   "Download Data",

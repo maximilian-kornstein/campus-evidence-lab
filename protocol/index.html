@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLE Protocol / Campus Evidence Lab</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+  </head>
+  <body data-page="protocol">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="../">
+          <span class="brand__name">Campus Evidence Lab</span>
+          <span class="brand__tag">Public evidence infrastructure</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="../" data-nav="dashboard">Dashboard</a>
+          <a href="../events/" data-nav="events">Events</a>
+          <a href="../schools/" data-nav="schools">Schools</a>
+          <a href="../briefs/" data-nav="briefs">Briefs</a>
+          <a href="../sources/" data-nav="sources">Sources</a>
+          <a href="../quality/" data-nav="quality">Quality</a>
+          <a href="../methodology/" data-nav="methodology">Methodology</a>
+          <a href="../impact/" data-nav="impact">Impact</a>
+          <a href="../guide/" data-nav="guide">Guide</a>
+          <a href="../downloads/" data-nav="downloads">Data</a>
+          <a href="../protocol/" data-nav="protocol">Protocol</a>
+          <a href="../submit/" data-nav="submit">Submit</a>
+          <a href="../about/" data-nav="about">About</a>
+          <a href="../license/" data-nav="license">License</a>
+        </nav>
+      </div>
+    </header>
+    <main class="main">
+      <p class="page-kicker">Evidence integrity layer</p>
+      <h1 class="page-title page-title--small">CLE Protocol</h1>
+      <p class="page-intro">CLE Protocol is the civil-rights evidence integrity layer under Campus Evidence Lab: a public standard for canonical records, deterministic hashes, signed snapshot manifests, Merkle inclusion proofs, local verification tools, responsible-use limits, and optional proof adapters.</p>
+
+      <section class="section section--tight">
+        <div class="section-header">
+          <h2 class="section-title">Principle</h2>
+          <p class="section-note">Verification first; blockchain is optional</p>
+        </div>
+        <p class="section-copy">Campus Evidence Lab remains a public-source research archive. CLE Protocol describes the technical layer that lets users verify records, methodology, corrections, packets, and dataset snapshots without trusting the site blindly.</p>
+        <p class="section-copy"><strong>Blockchain is optional.</strong> The protocol must work through local files, signed manifests, GitHub releases, and reproducible hashes before any chain adapter is used.</p>
+        <p class="section-copy"><strong>Do not put sensitive incident data on-chain.</strong> Optional public proof adapters are for dataset Merkle roots, snapshot manifest hashes, methodology version hashes, correction-log hashes, source-bundle hashes, reviewer attestation hashes, and evidence-packet hashes.</p>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Protocol Architecture</h2>
+          <p class="section-note">Local verification before chain integration</p>
+        </div>
+        <div class="action-grid">
+          <div class="action-link action-link--static">
+            <span>Canonical Evidence Data</span>
+            <span>Shared schemas and deterministic canonical JSON for records, sources, corrections, packets, snapshots, methodology versions, and release metadata.</span>
+          </div>
+          <div class="action-link action-link--static">
+            <span>Deterministic Hashes</span>
+            <span>Stable record hashes, source-bundle hashes, correction-log hashes, packet hashes, manifest hashes, and full dataset hashes that can be reproduced locally.</span>
+          </div>
+          <div class="action-link action-link--static">
+            <span>Signed Releases</span>
+            <span>Each release should publish a signed manifest with schema version, record count, source count, methodology version, known limits, hashes, timestamp, and archived files.</span>
+          </div>
+          <div class="action-link action-link--static">
+            <span>Merkle Proofs</span>
+            <span>Dataset snapshots should expose a Merkle root and record-level inclusion proofs so a user can prove a record appeared in a specific snapshot.</span>
+          </div>
+          <div class="action-link action-link--static">
+            <span>Evidence Packets</span>
+            <span>Journalist and researcher packets bundle summaries, timelines, source URLs, citations, methodology notes, limitations, correction history, and verification metadata.</span>
+          </div>
+          <div class="action-link action-link--static">
+            <span>Responsible-Use Layer</span>
+            <span>Policy-as-code checks should warn when outputs imply prevalence, ranking, severity, unsupported comparison, or AI-reviewed claims without human-review metadata.</span>
+          </div>
+          <div class="action-link action-link--static">
+            <span>Local Verifier</span>
+            <span>Developer tools should verify manifests, records, packets, and inclusion proofs from local files before relying on any external timestamping or blockchain service.</span>
+          </div>
+          <div class="action-link action-link--static">
+            <span>Proof Adapters</span>
+            <span>Optional adapters can publish or check manifest hashes through Git tags, GitHub releases, timestamping services, IPFS-like content addressing, or a minimal chain registry.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Developer Utility</h2>
+          <p class="section-note">Target interface for later protocol tooling</p>
+        </div>
+        <pre class="packet-output" aria-label="Future CLE Protocol command examples">cle verify snapshot snapshot-manifest.json
+cle verify record evt_2026_0027 --snapshot snapshot.json
+cle prove record evt_2026_0027 --snapshot snapshot.json
+cle packet build --school "Example University"
+cle policy check chart.json
+cle snapshot compare latest previous</pre>
+        <p class="section-copy">These commands are a roadmap for the developer platform. They are not required for the first static protocol page, but they define what the protocol should make possible.</p>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Current Proof Prototype</h2>
+          <p class="section-note">Optional adapter; no token</p>
+        </div>
+        <p class="section-copy">The Solidity registry is not the core protocol. It is one possible adapter for publishing snapshot hashes after local verification and signed manifests already work.</p>
+        <dl>
+          <div class="data-line">
+            <dt>Contract</dt>
+            <dd><a href="../contracts/SnapshotRegistry.sol">SnapshotRegistry.sol</a></dd>
+          </div>
+          <div class="data-line">
+            <dt>Stores</dt>
+            <dd>Snapshot ID, snapshot hash, metadata URI, publisher, and publication timestamp.</dd>
+          </div>
+          <div class="data-line">
+            <dt>Does not store</dt>
+            <dd>Private evidence, sensitive incident details, ranking signals, payments, moderation decisions, source text, or token governance.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Use Boundaries</h2>
+          <p class="section-note">Credibility depends on restraint</p>
+        </div>
+        <ul>
+          <li>No token, no token sale, and no token governance.</li>
+          <li>No legal advice or legal conclusions by Campus Evidence Lab.</li>
+          <li>No school rankings, safety scores, severity scores, or prevalence estimates.</li>
+          <li>No private or sensitive evidence on-chain.</li>
+          <li>Local verification must remain useful even if no blockchain adapter is used.</li>
+          <li>AI may assist research drafting, duplicate detection, extraction, and citation formatting; human review controls publication and verification status.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Verification Paths</h2>
+          <p class="section-note">Use the smallest artifact that answers the question</p>
+        </div>
+        <div class="action-grid">
+          <a class="action-link" href="../downloads/">
+            <span>Verify Current Snapshot</span>
+            <span>Open manifest, archived snapshot, snapshot index, release metadata, CSV, JSON, schemas, and published hashes.</span>
+          </a>
+          <a class="action-link" href="../research-workspace/">
+            <span>Build Evidence Packet</span>
+            <span>Select records and generate a local packet with source URLs, limitations, citation language, and snapshot hash.</span>
+          </a>
+          <a class="action-link" href="../methodology/">
+            <span>Review Methodology</span>
+            <span>Inspect source standards, confidence language, correction handling, and responsible-use rules.</span>
+          </a>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">Campus Evidence Lab / Protocol proofs support evidence integrity</footer>
+    <script type="module" src="../assets/app.js"></script>
+  </body>
+</html>
