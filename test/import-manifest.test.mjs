@@ -34,6 +34,33 @@ const officialDatasetManifest = {
   exclusion_rules: ["Exclude rows that require private-person credibility judgments."]
 };
 
+const officialOcrResolutionManifest = {
+  id: "manifest_ocr_resolution_document",
+  source_family: "ocr_resolution_document",
+  legal_risk_class: "medium_official_document",
+  bulk_import_eligible: true,
+  default_review_tier: "imported_public_source",
+  source_urls: ["https://ocrcas.ed.gov/ocr-search", "https://www.ed.gov/laws-and-policy/civil-rights-laws/office-civil-rights-ocr-reading-room"],
+  acquisition_date: "2026-07-07",
+  importer_command: "node scripts/discover-ocr-resolution-search.mjs && node scripts/export-ocr-resolution-wave-candidates.mjs",
+  field_map: {
+    school: "postsecondary institution named in OCR resolution search",
+    date: "resolved date",
+    category: "OCR resolution document",
+    affected_communities: "civil-rights domain from OCR source family",
+    source_locator: "OCR reference number and public resolution-document links"
+  },
+  duplicate_strategy: "Use OCR reference number and resolved date as stable duplicate keys.",
+  sampling_plan: "Inspect discovery counts, document-link samples, mapping quarantine, and at least 50 accepted rows per wave.",
+  known_limits: [
+    "OCR resolution documents describe agency case resolution materials and must not be summarized as Campus Evidence Lab legal findings.",
+    "Publication at import tier does not imply human certification of each row."
+  ],
+  publishable_fields: ["school", "state", "resolved_date", "ocr_reference", "source_locator"],
+  prohibited_fields: ["private names", "private contact details", "complainant names", "respondent names", "unsupported liability conclusions"],
+  exclusion_rules: ["Quarantine rows whose institution cannot be resolved to a known postsecondary school before publication."]
+};
+
 const events = [
   {
     id: "evt_2026_0001",
@@ -127,9 +154,37 @@ test("sourceFamilyForRecord identifies OCR open-investigation table rows", () =>
   );
 });
 
+test("sourceFamilyForRecord identifies OCR resolution document rows before generic OCR releases", () => {
+  assert.equal(
+    sourceFamilyForRecord(
+      {
+        id: "evt_ocr_resolution_001",
+        source_ids: ["src_ocr_resolution"],
+        source_types: ["Government case summary"],
+        description:
+          "The OCR Recent Resolution Search listed OCR reference 01242116 with public Letter and Agreement PDF links from ocrcas.ed.gov/sites/default/files/ocr-letters-and-agreements/01242116-a.pdf."
+      },
+      [
+        {
+          id: "src_ocr_resolution",
+          title: "Office for Civil Rights Recent Resolution Search",
+          publisher: "U.S. Department of Education Office for Civil Rights",
+          source_type: "Government case summary",
+          url: "https://ocrcas.ed.gov/ocr-search?f%5B0%5D=it%3APost%20Secondary"
+        }
+      ]
+    ),
+    "ocr_resolution_document"
+  );
+});
+
 test("validateImportManifests accepts low-risk official structured bulk manifests", () => {
   assert.deepEqual(validateImportManifests([officialDatasetManifest]), []);
   assert.equal(IMPORT_LEGAL_RISK_CLASSES.includes("low_official_structured"), true);
+});
+
+test("validateImportManifests accepts OCR resolution documents as bulk-eligible official documents with strict limits", () => {
+  assert.deepEqual(validateImportManifests([officialOcrResolutionManifest]), []);
 });
 
 test("validateImportManifests rejects unsafe bulk import settings", () => {

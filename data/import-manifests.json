@@ -100,6 +100,56 @@
     ]
   },
   {
+    "id": "manifest_ocr_resolution_document",
+    "source_family": "ocr_resolution_document",
+    "legal_risk_class": "medium_official_document",
+    "bulk_import_eligible": true,
+    "default_review_tier": "imported_public_source",
+    "source_urls": [
+      "https://ocrcas.ed.gov/ocr-search",
+      "https://www.ed.gov/laws-and-policy/civil-rights-laws/office-civil-rights-ocr-reading-room"
+    ],
+    "acquisition_date": "2026-07-07",
+    "importer_command": "node scripts/discover-ocr-resolution-search.mjs && node scripts/export-ocr-resolution-wave-candidates.mjs",
+    "field_map": {
+      "school": "Postsecondary institution named in OCR Recent Resolution Search and resolved to a known school record",
+      "date": "resolved date listed in OCR search",
+      "date_precision": "day",
+      "category": "OCR resolution-document record mapped to a non-finding project category",
+      "affected_communities": "civil-rights domain indicated by the OCR source family when the search row does not expose a narrower issue facet",
+      "source_locator": "OCR reference number, resolved date, institution, state, and public letter/agreement document links"
+    },
+    "duplicate_strategy": "Use OCR reference number as the primary stable key; duplicate candidate rows with the same school, resolved date, category, and OCR reference are quarantined deterministically.",
+    "sampling_plan": "Review OCR result counts, inspect first and last page samples, inspect document links for at least 50 accepted rows, inspect all mapping-quarantine reason counts, and confirm public wording says resolution document rather than finding or violation.",
+    "known_limits": [
+      "OCR resolution documents describe agency case resolution materials; they do not by themselves mean Campus Evidence Lab has made a legal finding.",
+      "A resolution agreement may expressly avoid admission of liability, and imported public-source records must not be presented as violations, rankings, prevalence estimates, safety scores, or severity scores.",
+      "Imported public-source records from this family are not individual human certification of each row."
+    ],
+    "publishable_fields": [
+      "school",
+      "state",
+      "resolved date",
+      "OCR reference number",
+      "document type",
+      "source_url",
+      "source_locator"
+    ],
+    "prohibited_fields": [
+      "private names",
+      "private contact details",
+      "complainant names",
+      "respondent names",
+      "unsupported liability conclusions",
+      "claims that a resolution document proves a violation when the source does not say that"
+    ],
+    "exclusion_rules": [
+      "Quarantine postsecondary rows whose institution cannot be resolved to a known school before publication.",
+      "Quarantine rows without at least one public OCR document link.",
+      "Quarantine rows whose public text implies a violation, legal finding, ranking, safety score, severity score, or prevalence estimate."
+    ]
+  },
+  {
     "id": "manifest_ocr_or_ed_release",
     "source_family": "ocr_or_ed_release",
     "legal_risk_class": "medium_official_document",

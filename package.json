@@ -10,7 +10,7 @@
     "test:methodology": "node --test test/methodology-definitions.test.mjs",
     "test:review-tier-model": "node --test test/review-tier-model.test.mjs",
     "test:import-manifest": "node --test test/import-manifest.test.mjs",
-    "test:import-wave": "node --test test/import-wave.test.mjs test/institution-dossier.test.mjs test/ed-campus-safety-candidate-export.test.mjs test/ocr-open-investigations.test.mjs test/import-wave-pages.test.mjs",
+    "test:import-wave": "node --test test/import-wave.test.mjs test/institution-dossier.test.mjs test/ed-campus-safety-candidate-export.test.mjs test/ed-campus-safety-aggregate.test.mjs test/ocr-open-investigations.test.mjs test/ocr-resolution-search.test.mjs test/import-wave-pages.test.mjs",
     "test:workflows": "node --test test/workflows.test.mjs",
     "test:release-credibility": "node --test test/release-credibility.test.mjs",
     "test:robustness": "node --test test/robustness-metrics.test.mjs",
@@ -52,7 +52,9 @@
     "import:ed-letters": "node scripts/import-ed-letters.mjs",
     "import:ocr-higher-ed": "node scripts/import-ocr-higher-ed.mjs",
     "discover:ocr-open-investigations": "node scripts/discover-ocr-open-investigations.mjs",
+    "discover:ocr-resolution-search": "node scripts/discover-ocr-resolution-search.mjs",
     "export:ocr-open-investigations": "node scripts/export-ocr-open-investigation-wave-candidates.mjs",
+    "export:ed-campus-safety-aggregate": "node scripts/export-ed-campus-safety-aggregate-wave-candidates.mjs",
     "import:ed-campus-safety-additional": "node scripts/import-ed-campus-safety-additional-cells.mjs",
     "import:ed-campus-safety-scoped": "node scripts/import-ed-campus-safety-scoped-workbook-cells.mjs",
     "prepare:data": "npm run hash:data && npm run review-samples:data && npm run robustness:data && npm run evidence:capsules && npm run challenge:protocol && npm run hash:data && npm run flagship:data && npm run record-quality:audit && npm run external-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-002-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-003-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-004-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-005-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-006-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-007-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-008-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-009-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-010-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-011-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-012-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-013-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-014-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-015-review:data && npm run certification:data && npm run certification-batches:data && npm run ed-certification-batch-016-review:data && npm run certification:data && npm run certification-batches:data && npm run hash:data && npm run csv:data && npm run audit:sources && npm run changelog:data && npm run snapshots:data && npm run rss:data && npm run robots:data && npm run release-notes:data && npm run pages:data && npm run sitemap:data",
@@ -89,6 +91,7 @@
     "government-release-response-depth:repair-queue": "node scripts/generate-government-release-response-depth-repair-queue.mjs"
   },
   "devDependencies": {
-    "jsdom": "^29.1.1"
+    "jsdom": "^29.1.1",
+    "xlsx": "^0.18.5"
   }
 }

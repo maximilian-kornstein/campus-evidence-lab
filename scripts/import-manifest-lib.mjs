@@ -52,6 +52,10 @@ export function sourceFamilyForRecord(record, sources = []) {
     return "ocr_open_investigation";
   }
 
+  if (/ocrcas\.ed\.gov\/ocr-search|office for civil rights recent resolution search|ocr-letters-and-agreements|ocr resolution documents?/.test(text)) {
+    return "ocr_resolution_document";
+  }
+
   if (types.includes("Government dataset") || /ope\.ed\.gov\/campussafety|campus safety and security data analysis cutting tool|crime20\d{2}excel|hate-crime-statistics workbook/.test(text)) {
     return "ed_campus_safety_dataset";
   }
