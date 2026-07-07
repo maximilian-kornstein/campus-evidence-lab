@@ -21,6 +21,7 @@ const [
   edDatasetProvenanceAudit,
   certificationBatches,
   institutionImportWaveSummary,
+  accountabilitySignals,
   ...edCertificationReviews
 ] = await Promise.all([
   readJson(paths.events),
@@ -36,11 +37,13 @@ const [
   readJson(paths.edDatasetProvenanceAudit),
   readJson(paths.certificationBatches),
   readJson(paths.institutionImportWaveSummary),
+  readJson(paths.accountabilitySignals),
   ...ED_CERTIFICATION_REVIEW_SPECS.map((spec) => readJson(paths[spec.dataPathKey]))
 ]);
 
 const schoolMap = new Map(schools.map((school) => [school.id, school]));
 const sourceMap = new Map(sources.map((source) => [source.id, source]));
+const accountabilitySignalsBySchool = new Map((accountabilitySignals.institutions ?? []).map((row) => [row.school_id, row]));
 const challengePacketEventIds = new Set((challengeQueues.packets ?? []).map((packet) => packet.event_id));
 const eventsDir = path.join(rootDir, "events");
 const schoolsDir = path.join(rootDir, "schools");
@@ -55,6 +58,7 @@ const edProvenanceDir = path.join(rootDir, "ed-provenance");
 const certificationBatchesDir = path.join(rootDir, "certification-batches");
 const importWavePagesDir = path.join(rootDir, "import-waves");
 const accountabilityRoomDir = path.join(rootDir, "accountability-room");
+const proofDir = path.join(rootDir, "proof");
 const policiesDir = path.join(rootDir, "policies");
 const protocolDir = path.join(rootDir, "protocol");
 const detailDepth = 2;
@@ -220,6 +224,7 @@ function nav(depth = 0) {
         <nav class="nav" aria-label="Primary navigation">
           <a href="${sitePath("/", depth)}">Dashboard</a>
           <a href="${sitePath("/accountability-room/", depth)}">Accountability</a>
+          <a href="${sitePath("/proof/", depth)}">Proof</a>
           <a href="${sitePath("/events/", depth)}">Events</a>
           <a href="${sitePath("/schools/", depth)}">Schools</a>
           <a href="${sitePath("/briefs/", depth)}">Briefs</a>
@@ -625,6 +630,60 @@ function importSummaryForSchool(schoolId) {
   );
 }
 
+function renderAccountabilitySignalsPanel(signalRow, depth = 1) {
+  if (!signalRow) return "";
+
+  const signalItems = signalRow.signals?.length
+    ? signalRow.signals
+        .map(
+          (signal) => `
+            <li>
+              <strong>${escapeHtml(signal.label)}</strong>
+              <br><span class="section-note">${escapeHtml(signal.detail)}</span>
+              ${Number.isFinite(signal.count) ? `<br><span class="mono">${escapeHtml(formatNumber(signal.count))}</span>` : ""}
+            </li>
+          `
+        )
+        .join("")
+    : `<li>No generated signal rows are available for this institution in the current snapshot.</li>`;
+  const sourceFamilyRows = labeledCountRows(signalRow.source_family_counts ?? {}, sourceFamilyLabel);
+  const laneRows = labeledCountRows(signalRow.record_lane_counts ?? {}, recordLaneLabel);
+  const apiPath = signalRow.routes?.api ?? `/api/v1/institutions/${encodeURIComponent(signalRow.school_id)}.json`;
+  const citationPath = signalRow.routes?.citation_packet ?? `/api/v1/citation-packets/${encodeURIComponent(signalRow.school_id)}.json`;
+  const correctionPath = signalRow.routes?.correction ?? "/submit/";
+
+  return `
+    <section class="section section--tight briefing-shell" aria-label="Accountability Signals">
+      <div class="section-header">
+        <h2 class="section-title">Accountability Signals</h2>
+        <p class="section-note">Machine-readable institution posture for the current public snapshot</p>
+      </div>
+      <p>Accountability Signals describe source basis, response evidence, correction posture, and unresolved limits. They are not rankings, safety scores, severity scores, prevalence estimates, or legal findings.</p>
+      <div class="briefing-columns">
+        <div>
+          <ul class="evidence-list">
+            ${signalItems}
+          </ul>
+          <div class="utility-bar">
+            <a class="button-link" href="${sitePath(apiPath, depth)}">Open Institution API</a>
+            <a class="button-link" href="${sitePath(citationPath, depth)}">Open Citation Packet</a>
+            <a class="button-link" href="${sitePath(correctionPath, depth)}">Correction / Right of Reply</a>
+          </div>
+        </div>
+        <aside class="briefing-callout">
+          <h3 class="section-title">Signal Basis</h3>
+          ${sourceFamilyRows.length ? countTable(sourceFamilyRows, "Source Family", "Rows") : `<p class="empty">No accepted source-family rows are linked in the signal artifact.</p>`}
+          ${laneRows.length ? countTable(laneRows, "Record Lane", "Rows") : ""}
+          <h3 class="section-title section-title--spaced">Public Use Limits</h3>
+          <ul class="evidence-list">
+            ${(signalRow.public_use_limits ?? []).map((limit) => `<li>${escapeHtml(limit)}</li>`).join("")}
+          </ul>
+        </aside>
+      </div>
+    </section>
+  `;
+}
+
 function importWaveRows(importWaves, depth = 1) {
   if (!importWaves.length) return `<p class="empty">No import waves have been generated.</p>`;
   return `
@@ -990,6 +1049,72 @@ await writeFile(
           </ul>
           <h2 class="section-title section-title--spaced">Source-Family Mix</h2>
           ${countTable(labeledCountRows(institutionImportWaveSummary.source_family_counts, sourceFamilyLabel), "Source Family", "Accepted QA Candidates")}
+        </aside>
+      </section>
+    `,
+    1
+  )
+);
+
+const proofInstitution =
+  accountabilitySignalsBySchool.get("brown_university") ??
+  accountabilitySignals.institutions?.find((row) => row.public_event_count > 0 && row.accepted_candidate_count > 0) ??
+  accountabilitySignals.institutions?.[0];
+
+await rm(proofDir, { recursive: true, force: true });
+await mkdir(proofDir, { recursive: true });
+await writeFile(
+  path.join(proofDir, "index.html"),
+  page(
+    "Proof Path",
+    `
+      <p class="page-kicker">Proof Path</p>
+      <h1 class="page-title page-title--small">Public accountability infrastructure, not a ranking.</h1>
+      <p class="page-intro">This path gives a reader the shortest route from public institution briefings to machine-readable evidence artifacts, import-wave QA reports, and local verification commands. Current public artifacts include ${formatNumber(accountabilitySignals.totals?.accepted_import_wave_qa_candidates ?? institutionImportWaveSummary.accepted_candidate_count)} accepted import-wave QA candidates and ${formatNumber(accountabilitySignals.totals?.public_event_records ?? events.length)} public event records.</p>
+      <section class="section section--tight briefing-shell" aria-label="Current proof surface">
+        <div class="briefing-grid">
+          <div class="briefing-metric">
+            <span class="metric__value">${formatNumber(accountabilitySignals.totals?.accepted_import_wave_qa_candidates ?? institutionImportWaveSummary.accepted_candidate_count)}</span>
+            <span class="metric__label">accepted import-wave QA candidates</span>
+          </div>
+          <div class="briefing-metric">
+            <span class="metric__value">${formatNumber(accountabilitySignals.totals?.public_event_records ?? events.length)}</span>
+            <span class="metric__label">public event records</span>
+          </div>
+          <div class="briefing-metric">
+            <span class="metric__value">${formatNumber(accountabilitySignals.totals?.institutions ?? schools.length)}</span>
+            <span class="metric__label">institution briefing pages</span>
+          </div>
+          <div class="briefing-metric">
+            <span class="metric__value">${formatNumber(importWaveReports.length)}</span>
+            <span class="metric__label">frozen import-wave reports</span>
+          </div>
+        </div>
+      </section>
+      <section class="section section--tight briefing-columns">
+        <div>
+          <div class="section-header">
+            <h2 class="section-title">Open These First</h2>
+            <p class="section-note">A compact path through the public evidence system</p>
+          </div>
+          <ol class="evidence-list">
+            <li><a href="${sitePath("/accountability-room/", 1)}">Accountability Room</a>: browse institution briefings with source basis, limits, and response paths.</li>
+            <li><a href="${sitePath(proofInstitution?.routes?.school ?? "/schools/", 1)}">${escapeHtml(proofInstitution?.name ?? "Institution briefing")}</a>: inspect one institution-level briefing with Accountability Signals.</li>
+            <li><a href="${sitePath("/import-waves/", 1)}">Import Waves</a>: inspect accepted, duplicate, excluded, and quarantined counts from official-source imports.</li>
+            <li><a href="${sitePath("/api/v1/index.json", 1)}">api/v1/index.json</a>: open the public API index and discover institution endpoints, citation packets, source families, and snapshot metadata.</li>
+            <li><a href="${sitePath("/submit/", 1)}">Correction / right of reply</a>: submit source-backed corrections, stronger locators, duplicate reports, or institution response evidence.</li>
+          </ol>
+        </div>
+        <aside class="briefing-callout">
+          <h2 class="section-title">Terminal Research Path</h2>
+          <p>Researchers can run local checks against the same public artifacts without using a hosted model or private service.</p>
+          <dl>
+            ${dataLine("Institution command", `<code>npm run researcher:institution -- brown_university</code>`)}
+            ${dataLine("Citation packet", `<code>npm run researcher:citation -- brown_university</code>`)}
+            ${dataLine("API integrity check", `<code>npm run researcher:api-check</code>`)}
+          </dl>
+          <h2 class="section-title section-title--spaced">Reading Rule</h2>
+          <p>This page proves the infrastructure path: source targeting, deterministic QA, public limits, correction intake, and machine-readable reuse.</p>
         </aside>
       </section>
     `,
@@ -1426,6 +1551,7 @@ for (const school of schools) {
             </div>
           </div>
         </section>
+        ${renderAccountabilitySignalsPanel(accountabilitySignalsBySchool.get(school.id), detailDepth)}
         <section class="section section--tight briefing-columns">
           <div>
             <div class="section-header">

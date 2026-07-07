@@ -31,6 +31,7 @@ const [events, schools, briefs, sources, importWaves] = await Promise.all([
 const staticPaths = [
   "/",
   "/accountability-room/",
+  "/proof/",
   "/events/",
   "/schools/",
   "/briefs/",

@@ -8,11 +8,13 @@ const distDir = path.join(rootDir, "dist");
 const publicPaths = [
   "index.html",
   "assets",
+  "api",
   "data",
   "docs",
   "schema",
   "contracts",
   "accountability-room",
+  "proof",
   "events",
   "schools",
   "briefs",

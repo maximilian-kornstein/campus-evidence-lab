@@ -53,3 +53,24 @@ test("accountability room CSS avoids decorative generated-UI patterns", async ()
   const radii = [...css.matchAll(/border-radius:\s*(\d+)px/g)].map((match) => Number(match[1]));
   assert.ok(radii.every((radius) => radius <= 8), `Expected border radii <= 8px, saw ${radii.join(", ")}`);
 });
+
+test("institution pages expose accountability signals and API citation packet links", async () => {
+  const html = await readFile(path.join(rootDir, "schools", "brown_university", "index.html"), "utf8");
+
+  assert.match(html, /Accountability Signals/);
+  assert.match(html, /not rankings, safety scores, severity scores, prevalence estimates, or legal findings/i);
+  assert.match(html, /api\/v1\/institutions\/brown_university\.json/);
+  assert.match(html, /api\/v1\/citation-packets\/brown_university\.json/);
+  assert.doesNotMatch(html, /high risk|Safety score:|Severity score:|Grade:/i);
+});
+
+test("proof path shows real infrastructure artifacts without investor or hype framing", async () => {
+  const html = await readFile(path.join(rootDir, "proof", "index.html"), "utf8");
+
+  assert.match(html, /Public accountability infrastructure, not a ranking/);
+  assert.match(html, /150,000 accepted import-wave QA candidates/);
+  assert.match(html, /api\/v1\/index\.json/);
+  assert.match(html, /npm run researcher:institution/);
+  assert.match(html, /Correction \/ right of reply/);
+  assert.doesNotMatch(html, /investor|impress Tyler|high risk|Safety score:/i);
+});

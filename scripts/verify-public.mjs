@@ -82,11 +82,14 @@ async function check(label, task) {
 await check("Core pages", async () => {
   for (const [path, text] of [
     ["/", "Campus Evidence Lab"],
+    ["/accountability-room/", "Accountability Room"],
+    ["/proof/", "Public accountability infrastructure, not a ranking"],
     ["/events/", "Search source-backed campus records"],
     ["/schools/", "Search schools"],
     ["/briefs/", "Dataset notes and analysis memos"],
     ["/sources/", "source index"],
     ["/quality/", "Quality"],
+    ["/import-waves/", "Import Waves"],
     ["/methodology/", "No Ranking System"],
     ["/impact/", "Proof of infrastructure"],
     ["/updates/", "Public product updates"],
@@ -112,9 +115,32 @@ await check("Core pages", async () => {
 
 await check("Release artifacts", async () => {
   await fetchText("/RELEASE_NOTES.md", ["Live audit artifact", "Research Exports"]);
-  await fetchText("/sitemap.xml", [`<loc>${publicBase}/</loc>`, `${publicBase}/events/`]);
+  await fetchText("/sitemap.xml", [`<loc>${publicBase}/</loc>`, `${publicBase}/events/`, `${publicBase}/proof/`]);
   await fetchText("/rss.xml", ["Campus Evidence Lab Briefs", `<link>${publicBase}/briefs/</link>`]);
   await fetchText("/robots.txt", [`Sitemap: ${publicBase}/sitemap.xml`]);
+});
+
+await check("Accountability infrastructure", async () => {
+  await fetchText("/accountability-room/", ["Accountability Room", "accepted import-wave QA candidates"]);
+  await fetchText("/proof/", ["Public accountability infrastructure, not a ranking", "api/v1/index.json", "npm run researcher:institution"]);
+
+  const { json: index } = await fetchJson("/api/v1/index.json");
+  const { json: snapshot } = await fetchJson("/api/v1/snapshot.json");
+  const { json: institutionsIndex } = await fetchJson("/api/v1/institutions/index.json");
+  const { json: sourceFamilies } = await fetchJson("/api/v1/source-families.json");
+  const { json: importWaves } = await fetchJson("/api/v1/import-waves.json");
+  const { json: brownInstitution } = await fetchJson("/api/v1/institutions/brown_university.json");
+  const { json: brownCitationPacket } = await fetchJson("/api/v1/citation-packets/brown_university.json");
+
+  if (index.api_version !== "v1") throw new Error("API index must use v1");
+  if (snapshot.snapshot_id !== index.snapshot_id) throw new Error("API snapshot_id mismatch");
+  if (institutionsIndex.snapshot_id !== index.snapshot_id) throw new Error("API institutions index snapshot_id mismatch");
+  if (!Array.isArray(institutionsIndex.institutions) || !institutionsIndex.institutions.length) throw new Error("API institutions index is empty");
+  if (!Array.isArray(sourceFamilies.source_families) || !sourceFamilies.source_families.length) throw new Error("API source-family index is empty");
+  if (!Array.isArray(importWaves.import_waves) || !importWaves.import_waves.length) throw new Error("API import-wave index is empty");
+  if (brownInstitution.school_id !== "brown_university") throw new Error("Brown institution API endpoint is malformed");
+  if (brownInstitution.routes?.api !== "/api/v1/institutions/brown_university.json") throw new Error("Brown institution API self-route is missing");
+  if (brownCitationPacket.school_id !== "brown_university") throw new Error("Brown citation packet is malformed");
 });
 
 await check("Datasets", async () => {

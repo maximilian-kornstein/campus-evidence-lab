@@ -1,0 +1,89 @@
+{
+  "api_version": "v1",
+  "generated_at": "2026-06-03",
+  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "school_id": "pennsylvania_state_university_penn_state_wilkes_barre",
+  "name": "Pennsylvania State University-Penn State Wilkes-Barre",
+  "city": "Dallas",
+  "state": "PA",
+  "public_event_count": 1,
+  "accepted_candidate_count": 3,
+  "source_family_counts": {
+    "Government dataset": 1,
+    "ed_campus_safety_dataset": 3
+  },
+  "record_lane_counts": {
+    "aggregate_safety_stat": 3
+  },
+  "import_wave_ids": [
+    "ed-campus-safety-sex-offense-wave-07",
+    "ed-campus-safety-vawa-wave-05",
+    "ed-campus-safety-wave-004"
+  ],
+  "accountability_signals": [
+    {
+      "id": "source_backed_event_records",
+      "label": "source-backed event records present",
+      "detail": "Public event records exist for this institution.",
+      "count": 1
+    },
+    {
+      "id": "accepted_official_source_qa_candidates",
+      "label": "accepted official-source QA candidates present",
+      "detail": "Official-source rows passed deterministic import-wave QA for this institution.",
+      "count": 3
+    },
+    {
+      "id": "multiple_official_source_families",
+      "label": "multiple official source families represented",
+      "detail": "More than one public source family is represented."
+    },
+    {
+      "id": "no_response_evidence_in_current_snapshot",
+      "label": "current snapshot has no institution response evidence",
+      "detail": "Response evidence is limited to what appears in the current public snapshot."
+    },
+    {
+      "id": "correction_path_available",
+      "label": "correction and right-of-reply path available",
+      "detail": "Correction and right-of-reply paths remain available for public-source updates.",
+      "count": 0
+    }
+  ],
+  "response_evidence": {
+    "status": "no_response_evidence_in_current_snapshot",
+    "label": "current snapshot has no institution response evidence",
+    "response_depth_counts": {
+      "missing_response_depth": 1
+    }
+  },
+  "correction_posture": {
+    "status": "correction_path_available",
+    "label": "correction and right-of-reply path available",
+    "correction_count": 0
+  },
+  "unresolved_limits": [
+    "Accountability Signals describe source basis, response evidence, correction posture, and unresolved limits.",
+    "They are not rankings, safety scores, severity scores, prevalence estimates, or legal findings.",
+    "Accepted import-wave QA candidates are not individual human certification of every row.",
+    "No institution response evidence appears in the current snapshot; this does not claim no response exists outside the dataset."
+  ],
+  "public_use_limits": [
+    "Accountability Signals describe source basis, response evidence, correction posture, and unresolved limits.",
+    "They are not rankings, safety scores, severity scores, prevalence estimates, or legal findings.",
+    "Accepted import-wave QA candidates are not individual human certification of every row."
+  ],
+  "event_ids": [
+    "evt_2026_1886"
+  ],
+  "source_ids": [
+    "src_ed_campus_safety_2025_hate_crime_data_files"
+  ],
+  "routes": {
+    "school": "/schools/pennsylvania_state_university_penn_state_wilkes_barre/",
+    "accountability_room": "/schools/pennsylvania_state_university_penn_state_wilkes_barre/",
+    "api": "/api/v1/institutions/pennsylvania_state_university_penn_state_wilkes_barre.json",
+    "citation_packet": "/api/v1/citation-packets/pennsylvania_state_university_penn_state_wilkes_barre.json",
+    "correction": "/submit/"
+  }
+}

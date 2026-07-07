@@ -16,6 +16,8 @@ export const paths = {
   importWavesDir: path.join(rootDir, "data", "import-waves"),
   importQuarantineDir: path.join(rootDir, "data", "import-quarantine"),
   institutionImportWaveSummary: path.join(rootDir, "data", "institution-import-wave-summary.json"),
+  accountabilitySignals: path.join(rootDir, "data", "accountability-signals.json"),
+  apiV1Dir: path.join(rootDir, "data", "api", "v1"),
   reviewLog: path.join(rootDir, "data", "review-log.json"),
   reviewSamples: path.join(rootDir, "data", "review-samples.json"),
   reviewLedger: path.join(rootDir, "data", "review-ledger.json"),

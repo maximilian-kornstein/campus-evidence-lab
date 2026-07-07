@@ -1,0 +1,101 @@
+{
+  "api_version": "v1",
+  "generated_at": "2026-06-03",
+  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "school_id": "montgomery_college",
+  "name": "Montgomery College",
+  "city": "Rockville",
+  "state": "MD",
+  "public_event_count": 5,
+  "accepted_candidate_count": 18,
+  "source_family_counts": {
+    "Government dataset": 4,
+    "Government release": 1,
+    "ed_campus_safety_dataset": 18
+  },
+  "record_lane_counts": {
+    "aggregate_safety_stat": 18
+  },
+  "import_wave_ids": [
+    "ed-campus-safety-arrest-wave-04",
+    "ed-campus-safety-arrest-wave-09",
+    "ed-campus-safety-clery-crime-wave-08",
+    "ed-campus-safety-sex-offense-wave-01",
+    "ed-campus-safety-sex-offense-wave-04",
+    "ed-campus-safety-vawa-2021-wave-02",
+    "ed-campus-safety-vawa-wave-03",
+    "ed-campus-safety-wave-003",
+    "ed-campus-safety-wave-004"
+  ],
+  "accountability_signals": [
+    {
+      "id": "source_backed_event_records",
+      "label": "source-backed event records present",
+      "detail": "Public event records exist for this institution.",
+      "count": 5
+    },
+    {
+      "id": "accepted_official_source_qa_candidates",
+      "label": "accepted official-source QA candidates present",
+      "detail": "Official-source rows passed deterministic import-wave QA for this institution.",
+      "count": 18
+    },
+    {
+      "id": "multiple_official_source_families",
+      "label": "multiple official source families represented",
+      "detail": "More than one public source family is represented."
+    },
+    {
+      "id": "limited_public_response_notes_present",
+      "label": "limited public response notes present",
+      "detail": "Response evidence is limited to what appears in the current public snapshot."
+    },
+    {
+      "id": "correction_path_available",
+      "label": "correction and right-of-reply path available",
+      "detail": "Correction and right-of-reply paths remain available for public-source updates.",
+      "count": 0
+    }
+  ],
+  "response_evidence": {
+    "status": "limited_public_response_notes_present",
+    "label": "limited public response notes present",
+    "response_depth_counts": {
+      "missing_response_depth": 4,
+      "limited_public_response_note": 1
+    }
+  },
+  "correction_posture": {
+    "status": "correction_path_available",
+    "label": "correction and right-of-reply path available",
+    "correction_count": 0
+  },
+  "unresolved_limits": [
+    "Accountability Signals describe source basis, response evidence, correction posture, and unresolved limits.",
+    "They are not rankings, safety scores, severity scores, prevalence estimates, or legal findings.",
+    "Accepted import-wave QA candidates are not individual human certification of every row."
+  ],
+  "public_use_limits": [
+    "Accountability Signals describe source basis, response evidence, correction posture, and unresolved limits.",
+    "They are not rankings, safety scores, severity scores, prevalence estimates, or legal findings.",
+    "Accepted import-wave QA candidates are not individual human certification of every row."
+  ],
+  "event_ids": [
+    "evt_2026_0013",
+    "evt_2026_0877",
+    "evt_2026_1258",
+    "evt_2026_1504",
+    "evt_2026_1613"
+  ],
+  "source_ids": [
+    "src_ed_campus_safety_2025_hate_crime_data_files",
+    "src_ed_ocr_whats_new_shared_ancestry_higher_ed"
+  ],
+  "routes": {
+    "school": "/schools/montgomery_college/",
+    "accountability_room": "/schools/montgomery_college/",
+    "api": "/api/v1/institutions/montgomery_college.json",
+    "citation_packet": "/api/v1/citation-packets/montgomery_college.json",
+    "correction": "/submit/"
+  }
+}

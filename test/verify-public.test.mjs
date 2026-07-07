@@ -10,11 +10,14 @@ const repoRoot = path.resolve(import.meta.dirname, "..");
 
 const corePages = new Map([
   ["/", "Campus Evidence Lab"],
+  ["/accountability-room/", "Accountability Room\n150,000 accepted import-wave QA candidates"],
+  ["/proof/", "Public accountability infrastructure, not a ranking\napi/v1/index.json\nnpm run researcher:institution"],
   ["/events/", "Search source-backed campus records"],
   ["/schools/", "Search schools"],
   ["/briefs/", "Dataset notes and analysis memos"],
   ["/sources/", "source index"],
   ["/quality/", "Quality"],
+  ["/import-waves/", "Import Waves"],
   ["/methodology/", "No Ranking System"],
   ["/impact/", "Proof of infrastructure"],
   ["/updates/", "Public product updates"],
@@ -27,6 +30,8 @@ const corePages = new Map([
   ["/research-guide/", "Research Guide"],
   ["/research-workspace/", "Research Workspace"],
   ["/reviewer-queue/", "Reviewer Queue"],
+  ["/external-review/", "External review packet"],
+  ["/known-limits/", "Known limits and unresolved records"],
   ["/downloads/", "Download the public dataset"],
   ["/submit/", "Public sources only"],
   ["/about/", "Mission"],
@@ -53,7 +58,7 @@ test("public verifier retries transient 503 responses", async () => {
     const sitemapEvents = events.map((event) => `${baseUrl}/events/${event.id}/`).join("\n");
     const routes = new Map([
       ["/RELEASE_NOTES.md", { body: "Live audit artifact\nResearch Exports" }],
-      ["/sitemap.xml", { body: `<loc>${baseUrl}/</loc>\n${baseUrl}/events/\n${sitemapEvents}\n${baseUrl}/schools/school-one/\n${baseUrl}/sources/source-one/\n${baseUrl}/briefs/brief-one/` }],
+      ["/sitemap.xml", { body: `<loc>${baseUrl}/</loc>\n${baseUrl}/proof/\n${baseUrl}/api/v1/index.json\n${baseUrl}/events/\n${sitemapEvents}\n${baseUrl}/schools/school-one/\n${baseUrl}/sources/source-one/\n${baseUrl}/briefs/brief-one/` }],
       ["/rss.xml", { body: `Campus Evidence Lab Briefs\n<link>${baseUrl}/briefs/</link>` }],
       ["/robots.txt", { body: `Sitemap: ${baseUrl}/sitemap.xml` }],
       ["/data/events.json", jsonResponse(events)],
@@ -66,6 +71,21 @@ test("public verifier retries transient 503 responses", async () => {
       ["/data/product-milestones.json", jsonResponse({ entries: [], entry_count: 0 })],
       ["/data/source-audit.json", jsonResponse({ mode: "metadata" })],
       ["/data/source-audit-live.json", jsonResponse({ mode: "live", entries: [] })],
+      ["/api/v1/index.json", jsonResponse({ api_version: "v1", snapshot_id: "snapshot-test", endpoints: ["/api/v1/institutions/{school_id}.json"] })],
+      ["/api/v1/snapshot.json", jsonResponse({ api_version: "v1", snapshot_id: "snapshot-test", totals: { accepted_import_wave_qa_candidates: 150000 } })],
+      ["/api/v1/institutions/index.json", jsonResponse({ api_version: "v1", snapshot_id: "snapshot-test", institutions: [{ school_id: "brown_university", name: "Brown University" }] })],
+      ["/api/v1/source-families.json", jsonResponse({ api_version: "v1", snapshot_id: "snapshot-test", source_families: [{ source_family: "ed_campus_safety_dataset" }] })],
+      ["/api/v1/import-waves.json", jsonResponse({ api_version: "v1", snapshot_id: "snapshot-test", import_waves: [{ id: "wave-1" }] })],
+      [
+        "/api/v1/institutions/brown_university.json",
+        jsonResponse({
+          api_version: "v1",
+          snapshot_id: "snapshot-test",
+          school_id: "brown_university",
+          routes: { api: "/api/v1/institutions/brown_university.json", citation_packet: "/api/v1/citation-packets/brown_university.json" },
+        }),
+      ],
+      ["/api/v1/citation-packets/brown_university.json", jsonResponse({ api_version: "v1", snapshot_id: "snapshot-test", school_id: "brown_university", events: [], sources: [] })],
       ["/schools/school-one/", { body: "Dataset snapshot" }],
       ["/sources/source-one/", { body: "Source URL https://example.org/source" }],
       ["/briefs/brief-one/", { body: "Dataset Downloads snapshot-one" }],
@@ -111,6 +131,7 @@ test("public verifier retries transient 503 responses", async () => {
     });
 
     assert.match(stdout, /Public verification passed/);
+    assert.match(stdout, /PASS Accountability infrastructure/);
     assert.equal(eventDetailAttempts, events.length + 1);
   } finally {
     await new Promise((resolve) => server.close(resolve));
