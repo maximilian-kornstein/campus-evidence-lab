@@ -111,6 +111,10 @@ function recordLaneForCandidate(candidate, manifest) {
   );
 }
 
+function aggregateStatSubtypeForCandidate(candidate) {
+  return candidate?.aggregate_stat_subtype || "";
+}
+
 export function candidateDuplicateKey(candidate) {
   return compact([
     normalize(recordLaneForCandidate(candidate, null)),
@@ -204,6 +208,7 @@ function normalizeAcceptedCandidate(candidate, manifest, resolvedSchoolId) {
     date_precision: candidate.date_precision,
     category: candidate.category,
     affected_communities: candidate.affected_communities,
+    ...(candidate.aggregate_stat_subtype ? { aggregate_stat_subtype: candidate.aggregate_stat_subtype } : {}),
     summary: candidate.summary,
     raw_source_hash: candidate.raw_source_hash,
     import_notes: candidate.import_notes,
@@ -221,6 +226,7 @@ function quarantineRow({ candidate, reasonCodes, failedFields = [] }) {
     source_url: candidate?.source_url ?? "",
     source_locator: sourceLocatorText(candidate?.source_locator),
     raw_hash: candidate?.raw_source_hash ?? "",
+    aggregate_stat_subtype: aggregateStatSubtypeForCandidate(candidate),
     reason_codes: [...reasonCodes].sort(),
     failed_gates: [...reasonCodes].sort(),
     failed_fields: failedFields.sort(),
@@ -242,6 +248,13 @@ function waveRecordLane(candidates, manifest) {
   const lanes = [...new Set(candidates.map((candidate) => recordLaneForCandidate(candidate, manifest)).filter(Boolean))];
   if (lanes.length === 1) return lanes[0];
   return recordLaneForCandidate({}, manifest) || "mixed";
+}
+
+function waveAggregateStatSubtype(candidates) {
+  const subtypes = [...new Set(candidates.map(aggregateStatSubtypeForCandidate).filter(Boolean))];
+  if (subtypes.length === 1) return subtypes[0];
+  if (subtypes.length > 1) return "mixed";
+  return "";
 }
 
 function summarizeManifest(manifest) {
@@ -343,6 +356,7 @@ export function validateImportWaveCandidates({
     id: waveId,
     source_family: sourceFamily,
     record_lane: waveRecordLane(candidates, manifest),
+    ...(waveAggregateStatSubtype(candidates) ? { aggregate_stat_subtype: waveAggregateStatSubtype(candidates) } : {}),
     manifest_id: manifest?.id ?? candidates[0]?.manifest_id ?? "",
     generated_at: generatedAt,
     command,

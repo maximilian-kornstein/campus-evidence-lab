@@ -61,6 +61,7 @@ test("edCampusSafetyAggregateRowsFromSheet extracts positive VAWA aggregate cell
   assert.equal(rows[0].count, 2);
   assert.equal(rows[0].cell, "N2");
   assert.equal(rows[0].record_lane, "aggregate_safety_stat");
+  assert.equal(rows[0].aggregate_stat_subtype, "vawa_stat");
 });
 
 test("edCampusSafetyAggregateRowsFromSheet extracts sex-offense crime aggregate cells without VAWA labels", () => {
@@ -80,6 +81,55 @@ test("edCampusSafetyAggregateRowsFromSheet extracts sex-offense crime aggregate 
   assert.equal(rows[0].category, "Official aggregate safety statistic");
   assert.deepEqual(rows[0].affected_communities, ["Campus community"]);
   assert.equal(rows[0].record_lane, "aggregate_safety_stat");
+  assert.equal(rows[0].aggregate_stat_subtype, "reported_crime_stat");
+});
+
+test("edCampusSafetyAggregateRowsFromSheet extracts non-sex Clery crime aggregate cells", () => {
+  const rows = edCampusSafetyAggregateRowsFromSheet({
+    profileId: "ed_clery_crime_non_sex_2025",
+    workbookName: "Oncampuscrime222324.xls",
+    sheetRows: [
+      ["UNITID_P", "INSTNM", "OPEID", "BRANCH", "Address", "City", "State", "ZIP", "Total", "MURD24", "RAPE24", "ROBBE24", "AGG_A24", "BURGLA24", "FILTER24"],
+      [217156001, "Brown University", "00340100", "Main Campus", "1 Prospect St", "Providence", "RI", "02912", 9000, 1, 2, 3, "", 4, 1]
+    ]
+  });
+
+  assert.deepEqual(
+    rows.map((row) => row.statistic),
+    ["Murder/non-negligent manslaughter", "Robbery", "Burglary"]
+  );
+  assert.equal(rows[0].aggregate_stat_subtype, "reported_crime_stat");
+  assert.equal(rows[0].category, "Official aggregate safety statistic");
+});
+
+test("edCampusSafetyAggregateRowsFromSheet extracts arrest aggregate cells", () => {
+  const rows = edCampusSafetyAggregateRowsFromSheet({
+    profileId: "ed_arrest_2025",
+    workbookName: "Oncampusarrest222324.xls",
+    sheetRows: [
+      ["UNITID_P", "INSTNM", "OPEID", "BRANCH", "Address", "City", "State", "ZIP", "Total", "WEAPON24", "DRUG24", "LIQUOR24"],
+      [217156001, "Brown University", "00340100", "Main Campus", "1 Prospect St", "Providence", "RI", "02912", 9000, 1, "", 2]
+    ]
+  });
+
+  assert.deepEqual(rows.map((row) => row.statistic), ["Weapons law arrests", "Liquor law arrests"]);
+  assert.equal(rows[0].aggregate_stat_subtype, "arrest_stat");
+  assert.equal(rows[0].summary_subject, "Clery arrest");
+});
+
+test("edCampusSafetyAggregateRowsFromSheet extracts disciplinary-referral aggregate cells", () => {
+  const rows = edCampusSafetyAggregateRowsFromSheet({
+    profileId: "ed_discipline_2025",
+    workbookName: "Oncampusdiscipline222324.xls",
+    sheetRows: [
+      ["UNITID_P", "INSTNM", "OPEID", "BRANCH", "Address", "City", "State", "ZIP", "Total", "WEAPON24", "DRUG24", "LIQUOR24"],
+      [217156001, "Brown University", "00340100", "Main Campus", "1 Prospect St", "Providence", "RI", "02912", 9000, "", 3, 2]
+    ]
+  });
+
+  assert.deepEqual(rows.map((row) => row.statistic), ["Drug law disciplinary referrals", "Liquor law disciplinary referrals"]);
+  assert.equal(rows[0].aggregate_stat_subtype, "disciplinary_referral_stat");
+  assert.equal(rows[0].summary_subject, "Clery disciplinary-referral");
 });
 
 test("buildEdCampusSafetySchoolsFromSourceRows expands unknown ED institutions and preserves unitid identity", () => {
@@ -153,6 +203,7 @@ test("buildEdCampusSafetyAggregateCandidates emits neutral publishable candidate
   assert.equal(candidates[0].source_family, "ed_campus_safety_dataset");
   assert.equal(candidates[0].school_id, "brown_university");
   assert.equal(candidates[0].record_lane, "aggregate_safety_stat");
+  assert.equal(candidates[0].aggregate_stat_subtype, "vawa_stat");
   assert.equal(candidates[0].date, "2024-01-01");
   assert.equal(candidates[0].date_precision, "year");
   assert.equal(candidates[0].category, "Official aggregate safety statistic");
@@ -175,4 +226,5 @@ test("buildEdCampusSafetyAggregateCandidates emits neutral publishable candidate
   assert.equal(result.publishable, true);
   assert.equal(result.accepted.length, 1);
   assert.equal(result.accepted[0].record_lane, "aggregate_safety_stat");
+  assert.equal(result.accepted[0].aggregate_stat_subtype, "vawa_stat");
 });

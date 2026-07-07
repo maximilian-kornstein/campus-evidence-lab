@@ -55,7 +55,10 @@ function sourceRowsFromZip(zipPath, profileId) {
     );
 }
 
-const profileIds = readArg("--profiles", "ed_vawa_2025,ed_sex_offense_crime_2025,ed_vawa_2021")
+const profileIds = readArg(
+  "--profiles",
+  "ed_vawa_2025,ed_sex_offense_crime_2025,ed_vawa_2021,ed_clery_crime_non_sex_2025,ed_discipline_2025,ed_arrest_2025"
+)
   .split(",")
   .map((profileId) => profileId.trim())
   .filter(Boolean);

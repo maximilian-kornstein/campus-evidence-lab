@@ -58,6 +58,7 @@ function candidate(overrides = {}) {
     date_precision: "year",
     category: "Vandalism",
     affected_communities: ["Religion"],
+    aggregate_stat_subtype: "hate_crime_stat",
     summary: "Official ED Campus Safety dataset row reports one hate-crime entry for Brown University.",
     raw_source_hash: "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     import_notes: "Imported from official structured public dataset.",
@@ -78,10 +79,12 @@ test("validateImportWaveCandidates accepts bulk-eligible official structured can
   assert.equal(result.accepted.length, 1);
   assert.equal(result.accepted[0].review_tier, "imported_public_source");
   assert.equal(result.accepted[0].record_lane, "aggregate_safety_stat");
+  assert.equal(result.accepted[0].aggregate_stat_subtype, "hate_crime_stat");
   assert.deepEqual(result.quarantine, []);
   assert.equal(result.wave.accepted_count, 1);
   assert.equal(result.wave.quarantined_count, 0);
   assert.equal(result.wave.record_lane, "aggregate_safety_stat");
+  assert.equal(result.wave.aggregate_stat_subtype, "hate_crime_stat");
   assert.equal(result.wave.source_manifest.id, "manifest_ed_campus_safety_dataset");
   assert.equal(result.wave.source_manifest.default_record_lane, "aggregate_safety_stat");
 });
@@ -185,6 +188,7 @@ test("runImportWave returns valid wave and quarantine artifacts", () => {
   assert.equal(artifacts.wave.accepted_count, 1);
   assert.equal(artifacts.wave.quarantined_count, 1);
   assert.equal(artifacts.quarantine.rows[0].reason_codes.includes("unknown_school"), true);
+  assert.equal(artifacts.quarantine.rows[0].aggregate_stat_subtype, "hate_crime_stat");
 });
 
 test("runImportWave preserves excluded source-row counts and artifacts", () => {

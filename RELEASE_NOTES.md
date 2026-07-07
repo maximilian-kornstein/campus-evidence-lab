@@ -6,14 +6,14 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:3d039046b2399a9752aeb10a916964b7753a810b170b22c878fc42d5968286d3`
+- Full snapshot hash: `sha256:e3d02e26bee2e3b69d78984d872ddd0e2fe4d7aabb1b3270e8d202064173de24`
 - Previous snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
 - Archived snapshot: `/data/snapshots/snapshot_2026_06_03_4000_records.json`
 
 ## Dataset Counts
 
 - Events: 4000
-- Schools: 3274
+- Schools: 4806
 - Sources: 25
 - Briefs: 34
 - Corrections: 0
@@ -53,7 +53,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 ## Dataset Hashes
 
 - Events: `sha256:708879b8cc0d36c88dc8543d18575ec3b5b33cda0cf463d2375a6427979183dd`
-- Schools: `sha256:2fc014e61930da71b4fcf3322ea3671375f887345487d58267a5388895f675a8`
+- Schools: `sha256:0fbac9259a3ec40f83edbd2b66636468aeaccc47ab577665c371b075df1c7601`
 - Sources: `sha256:c14c568ecf70361926fb6014fca817c4171fbe1c9aa36cb007f10d1f68167115`
 - Briefs: `sha256:e48ad50219531f292512095552e2d0d9850742f33f2897ac848c933fe2d2d443`
 - Corrections: `sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`

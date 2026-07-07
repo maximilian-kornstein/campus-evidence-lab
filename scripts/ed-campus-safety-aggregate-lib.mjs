@@ -21,6 +21,28 @@ const SEX_OFFENSE_CRIME_STATISTICS = {
   STATR: "Statutory rape"
 };
 
+const NON_SEX_CLERY_CRIME_STATISTICS = {
+  MURD: "Murder/non-negligent manslaughter",
+  NEGL_M: "Negligent manslaughter",
+  ROBBE: "Robbery",
+  AGG_A: "Aggravated assault",
+  BURGLA: "Burglary",
+  VEHIC: "Motor vehicle theft",
+  ARSON: "Arson"
+};
+
+const ARREST_STATISTICS = {
+  WEAPON: "Weapons law arrests",
+  DRUG: "Drug law arrests",
+  LIQUOR: "Liquor law arrests"
+};
+
+const DISCIPLINE_STATISTICS = {
+  WEAPON: "Weapons law disciplinary referrals",
+  DRUG: "Drug law disciplinary referrals",
+  LIQUOR: "Liquor law disciplinary referrals"
+};
+
 export const ED_CAMPUS_SAFETY_PROFILES = {
   ed_vawa_2025: {
     id: "ed_vawa_2025",
@@ -32,6 +54,7 @@ export const ED_CAMPUS_SAFETY_PROFILES = {
     statistic_label: "VAWA aggregate statistic",
     statistic_label_plural: "VAWA aggregate statistics",
     summary_subject: "VAWA",
+    aggregate_stat_subtype: "vawa_stat",
     category: ED_CAMPUS_SAFETY_CATEGORY,
     affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
   },
@@ -45,6 +68,49 @@ export const ED_CAMPUS_SAFETY_PROFILES = {
     statistic_label: "sex-offense aggregate statistic",
     statistic_label_plural: "sex-offense aggregate statistics",
     summary_subject: "Clery sex-offense",
+    aggregate_stat_subtype: "reported_crime_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_clery_crime_non_sex_2025: {
+    id: "ed_clery_crime_non_sex_2025",
+    source_url: ED_CAMPUS_SAFETY_2025_ZIP_URL,
+    workbook_pattern: /crime222324\.xls$/i,
+    statistic_map: NON_SEX_CLERY_CRIME_STATISTICS,
+    year_suffixes: ["22", "23", "24"],
+    candidate_prefix: "cand_ed_clery_crime",
+    statistic_label: "reported crime aggregate statistic",
+    statistic_label_plural: "reported crime aggregate statistics",
+    summary_subject: "Clery non-sex crime",
+    aggregate_stat_subtype: "reported_crime_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_arrest_2025: {
+    id: "ed_arrest_2025",
+    source_url: ED_CAMPUS_SAFETY_2025_ZIP_URL,
+    workbook_pattern: /arrest222324\.xls$/i,
+    statistic_map: ARREST_STATISTICS,
+    year_suffixes: ["22", "23", "24"],
+    candidate_prefix: "cand_ed_arrest",
+    statistic_label: "arrest aggregate statistic",
+    statistic_label_plural: "arrest aggregate statistics",
+    summary_subject: "Clery arrest",
+    aggregate_stat_subtype: "arrest_stat",
+    category: ED_CAMPUS_SAFETY_CATEGORY,
+    affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
+  },
+  ed_discipline_2025: {
+    id: "ed_discipline_2025",
+    source_url: ED_CAMPUS_SAFETY_2025_ZIP_URL,
+    workbook_pattern: /discipline222324\.xls$/i,
+    statistic_map: DISCIPLINE_STATISTICS,
+    year_suffixes: ["22", "23", "24"],
+    candidate_prefix: "cand_ed_discipline",
+    statistic_label: "disciplinary-referral aggregate statistic",
+    statistic_label_plural: "disciplinary-referral aggregate statistics",
+    summary_subject: "Clery disciplinary-referral",
+    aggregate_stat_subtype: "disciplinary_referral_stat",
     category: ED_CAMPUS_SAFETY_CATEGORY,
     affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
   },
@@ -58,6 +124,7 @@ export const ED_CAMPUS_SAFETY_PROFILES = {
     statistic_label: "VAWA aggregate statistic",
     statistic_label_plural: "VAWA aggregate statistics",
     summary_subject: "VAWA",
+    aggregate_stat_subtype: "vawa_stat",
     category: ED_CAMPUS_SAFETY_CATEGORY,
     affected_communities: [ED_CAMPUS_SAFETY_COMMUNITY]
   }
@@ -246,6 +313,7 @@ export function edCampusSafetyAggregateRowsFromSheet({ profileId = "ed_vawa_2025
         statistic_label: profile.statistic_label,
         statistic_label_plural: profile.statistic_label_plural,
         summary_subject: profile.summary_subject,
+        aggregate_stat_subtype: profile.aggregate_stat_subtype,
         category: profile.category,
         affected_communities: [...profile.affected_communities],
         year: `20${match[2]}`,
@@ -304,6 +372,7 @@ function candidateForRow({ row, school, waveId }) {
     affected_communities: row.affected_communities,
     summary: `ED Campus Safety data listed ${countText} for ${row.institution_name} in ${row.year}: ${row.statistic}.`,
     raw_source_hash: sha256({ row, source_locator: sourceLocator }),
+    aggregate_stat_subtype: row.aggregate_stat_subtype,
     import_notes:
       `Imported from official ED Campus Safety and Security aggregate ${profile.summary_subject} data. ` +
       "This source row is an aggregate public statistic for source-backed institutional context."
@@ -318,6 +387,7 @@ function mappingQuarantineRow(row) {
     source_url: row.source_url,
     source_locator: sourceLocatorForRow(row),
     raw_hash: sha256({ row }),
+    aggregate_stat_subtype: row.aggregate_stat_subtype,
     reason_codes: ["unknown_school"],
     failed_gates: ["unknown_school"],
     remediation_action: "Resolve institution identity to a known school record before publication.",
