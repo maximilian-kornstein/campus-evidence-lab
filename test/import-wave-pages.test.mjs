@@ -35,3 +35,42 @@ test("ed campus safety wave 003 publishes 750 accepted candidates", async () => 
   assert.match(detail, /QA Gate Counts/);
   assert.match(detail, /not individual human certification/i);
 });
+
+test("ed campus safety waves 004 through 006 finish the remaining 2792 QA candidates", async () => {
+  const expectedCounts = {
+    "ed-campus-safety-wave-004": 1000,
+    "ed-campus-safety-wave-005": 1000,
+    "ed-campus-safety-wave-006": 792
+  };
+  const index = await readFile(path.join(rootDir, "import-waves", "index.html"), "utf8");
+  let totalAccepted = 0;
+
+  for (const waveId of [
+    "ed-campus-safety-wave-001",
+    "ed-campus-safety-wave-002",
+    "ed-campus-safety-wave-003",
+    ...Object.keys(expectedCounts)
+  ]) {
+    const wave = JSON.parse(await readFile(path.join(rootDir, "data", "import-waves", `${waveId}.json`), "utf8"));
+    totalAccepted += wave.accepted_count;
+  }
+
+  for (const [waveId, expectedCount] of Object.entries(expectedCounts)) {
+    const detail = await readFile(path.join(rootDir, "import-waves", waveId, "index.html"), "utf8");
+    const candidates = JSON.parse(await readFile(path.join(rootDir, "data", "import-candidates", `${waveId}.json`), "utf8"));
+    const wave = JSON.parse(await readFile(path.join(rootDir, "data", "import-waves", `${waveId}.json`), "utf8"));
+    const quarantine = JSON.parse(await readFile(path.join(rootDir, "data", "import-quarantine", `${waveId}.json`), "utf8"));
+
+    assert.match(index, new RegExp(waveId));
+    assert.equal(candidates.length, expectedCount);
+    assert.equal(wave.status, "publishable");
+    assert.equal(wave.attempted_count, expectedCount);
+    assert.equal(wave.accepted_count, expectedCount);
+    assert.equal(wave.quarantined_count, 0);
+    assert.equal(quarantine.rows.length, 0);
+    assert.match(detail, /QA Gate Counts/);
+    assert.match(detail, /not individual human certification/i);
+  }
+
+  assert.equal(totalAccepted, 3795);
+});

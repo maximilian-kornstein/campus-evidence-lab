@@ -109,6 +109,9 @@ for (const route of [
   "import-waves/ed-campus-safety-wave-001/index.html",
   "import-waves/ed-campus-safety-wave-002/index.html",
   "import-waves/ed-campus-safety-wave-003/index.html",
+  "import-waves/ed-campus-safety-wave-004/index.html",
+  "import-waves/ed-campus-safety-wave-005/index.html",
+  "import-waves/ed-campus-safety-wave-006/index.html",
   "methodology/index.html",
   "impact/index.html",
   "updates/index.html",
@@ -192,6 +195,15 @@ for (const artifact of [
   "data/import-candidates/ed-campus-safety-wave-003.json",
   "data/import-waves/ed-campus-safety-wave-003.json",
   "data/import-quarantine/ed-campus-safety-wave-003.json",
+  "data/import-candidates/ed-campus-safety-wave-004.json",
+  "data/import-waves/ed-campus-safety-wave-004.json",
+  "data/import-quarantine/ed-campus-safety-wave-004.json",
+  "data/import-candidates/ed-campus-safety-wave-005.json",
+  "data/import-waves/ed-campus-safety-wave-005.json",
+  "data/import-quarantine/ed-campus-safety-wave-005.json",
+  "data/import-candidates/ed-campus-safety-wave-006.json",
+  "data/import-waves/ed-campus-safety-wave-006.json",
+  "data/import-quarantine/ed-campus-safety-wave-006.json",
   "data/review-log.json",
   "data/review-samples.json",
   "data/review-ledger.json",
@@ -572,13 +584,29 @@ for (const sourcesCopy of ["Search sources", "filter by source type", "direct ex
   await mustContain("sources/index.html", sourcesCopy);
 }
 
-for (const importWaveCopy of ["Import Waves", "ed-campus-safety-wave-002", "ed-campus-safety-wave-003", "Accepted", "not individual human certification"]) {
+for (const importWaveCopy of [
+  "Import Waves",
+  "ed-campus-safety-wave-002",
+  "ed-campus-safety-wave-003",
+  "ed-campus-safety-wave-004",
+  "ed-campus-safety-wave-005",
+  "ed-campus-safety-wave-006",
+  "Accepted",
+  "not individual human certification"
+]) {
   await mustContain("import-waves/index.html", importWaveCopy);
 }
 
 for (const importWaveDetailCopy of ["ED Campus Safety", "QA Gate Counts", "Quarantine Artifact", "Candidate Artifact", "Public Claim Limit"]) {
-  await mustContain("import-waves/ed-campus-safety-wave-002/index.html", importWaveDetailCopy);
-  await mustContain("import-waves/ed-campus-safety-wave-003/index.html", importWaveDetailCopy);
+  for (const waveId of [
+    "ed-campus-safety-wave-002",
+    "ed-campus-safety-wave-003",
+    "ed-campus-safety-wave-004",
+    "ed-campus-safety-wave-005",
+    "ed-campus-safety-wave-006"
+  ]) {
+    await mustContain(`import-waves/${waveId}/index.html`, importWaveDetailCopy);
+  }
 }
 
 await mustContain(
