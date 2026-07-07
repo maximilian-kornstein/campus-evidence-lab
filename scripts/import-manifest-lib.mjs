@@ -48,6 +48,10 @@ export function sourceFamilyForRecord(record, sources = []) {
 
   if (types.includes("Annual security report")) return "annual_security_report";
 
+  if (/ocrcas\.ed\.gov\/open-investigations|open-investigations table|pending cases currently under investigation/.test(text)) {
+    return "ocr_open_investigation";
+  }
+
   if (types.includes("Government dataset") || /ope\.ed\.gov\/campussafety|campus safety and security data analysis cutting tool|crime20\d{2}excel|hate-crime-statistics workbook/.test(text)) {
     return "ed_campus_safety_dataset";
   }

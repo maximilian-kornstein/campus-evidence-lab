@@ -9,24 +9,35 @@ function readArg(name) {
   return process.argv[index + 1] ?? "";
 }
 
+function compact(items) {
+  return items.filter((item) => item !== null && item !== undefined && String(item).trim() !== "");
+}
+
 const candidatesPath = readArg("--candidates");
 const waveId = readArg("--wave-id");
+const exclusionsPath = readArg("--exclusions");
 
 if (!candidatesPath || !waveId) {
-  console.error("Usage: node scripts/import-wave-runner.mjs --candidates <path> --wave-id <wave-id>");
+  console.error("Usage: node scripts/import-wave-runner.mjs --candidates <path> --wave-id <wave-id> [--exclusions <path>]");
   process.exit(1);
 }
 
 const fullCandidatesPath = path.resolve(rootDir, candidatesPath);
-const [candidates, manifests, schools, existingEvents, snapshotManifest] = await Promise.all([
+const [candidates, manifests, schools, existingEvents, snapshotManifest, exclusions] = await Promise.all([
   readJson(fullCandidatesPath),
   readJson(path.join(rootDir, "data", "import-manifests.json")),
   readJson(path.join(rootDir, "data", "schools.json")),
   readJson(path.join(rootDir, "data", "events.json")),
-  readJson(path.join(rootDir, "data", "snapshot-manifest.json"))
+  readJson(path.join(rootDir, "data", "snapshot-manifest.json")),
+  exclusionsPath ? readJson(path.resolve(rootDir, exclusionsPath)) : Promise.resolve(null)
 ]);
 
-const command = `node scripts/import-wave-runner.mjs --candidates ${candidatesPath} --wave-id ${waveId}`;
+const command = compact([
+  "node scripts/import-wave-runner.mjs",
+  `--candidates ${candidatesPath}`,
+  `--wave-id ${waveId}`,
+  exclusionsPath ? `--exclusions ${exclusionsPath}` : ""
+]).join(" ");
 const artifacts = runImportWave({
   waveId,
   candidates,
@@ -35,7 +46,9 @@ const artifacts = runImportWave({
   existingEvents,
   command,
   datasetHashBefore: snapshotManifest.hashes?.full_snapshot ?? "",
-  datasetHashAfter: snapshotManifest.hashes?.full_snapshot ?? ""
+  datasetHashAfter: snapshotManifest.hashes?.full_snapshot ?? "",
+  excludedCount: Array.isArray(exclusions?.rows) ? exclusions.rows.length : 0,
+  exclusionArtifact: exclusionsPath
 });
 const errors = validateImportWaveArtifacts(artifacts);
 

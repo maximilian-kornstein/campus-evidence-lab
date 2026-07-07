@@ -7,6 +7,7 @@ Bulk import eligibility depends on source type, source locator strength, claim r
 | Source family | Bulk status | Default review tier | Reason |
 | --- | --- | --- | --- |
 | `ed_campus_safety_dataset` | Eligible | `imported_public_source` | Official structured public data with stable workbook or row-level provenance paths. |
+| `ocr_open_investigation` | Eligible | `imported_public_source` | Official structured OCR table with institution, institution type, discrimination type, and open date; public wording must state open investigation, not finding. |
 | `government_guidance` | Not bulk eligible | `source_family_checked` | Public and official, but individual items often need document-section interpretation. |
 | `government_case_or_letter` | Not bulk eligible | `source_family_checked` | Official, but legal/procedural status and institutional identity need source-specific review. |
 | `ocr_or_ed_release` | Not bulk eligible | `source_family_checked` | Official releases and aggregate pages require item-level locator checks before scaled publication. |
@@ -19,6 +20,10 @@ Bulk import eligibility depends on source type, source locator strength, claim r
 ## First Target
 
 The first scale target is `ed_campus_safety_dataset`. It should be imported in waves with source locator, school identity, date precision, duplicate, prohibited-field, and overclaim gates.
+
+## Second Target
+
+The second scale target is `ocr_open_investigation`. It may be imported in waves only after preserving the full OCR source table as a discovery artifact. Postsecondary rows may proceed to QA candidates; elementary-secondary rows must be preserved as exclusions and kept out of university accountability publication.
 
 ## Upgrade Rule
 

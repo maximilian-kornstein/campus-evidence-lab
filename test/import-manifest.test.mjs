@@ -103,6 +103,30 @@ test("sourceFamilyForRecord prioritizes publisher source type before OCR keyword
   );
 });
 
+test("sourceFamilyForRecord identifies OCR open-investigation table rows", () => {
+  assert.equal(
+    sourceFamilyForRecord(
+      {
+        id: "evt_ocr_open_001",
+        source_ids: ["src_ocr_open_investigations"],
+        source_types: ["Government dataset"],
+        description:
+          "The Department of Education Office for Civil Rights open-investigations table listed an open investigation for a postsecondary institution."
+      },
+      [
+        {
+          id: "src_ocr_open_investigations",
+          title: "Pending Cases Currently Under Investigation at Elementary-Secondary and Post-Secondary Schools",
+          publisher: "U.S. Department of Education Office for Civil Rights",
+          source_type: "Government dataset",
+          url: "https://ocrcas.ed.gov/open-investigations"
+        }
+      ]
+    ),
+    "ocr_open_investigation"
+  );
+});
+
 test("validateImportManifests accepts low-risk official structured bulk manifests", () => {
   assert.deepEqual(validateImportManifests([officialDatasetManifest]), []);
   assert.equal(IMPORT_LEGAL_RISK_CLASSES.includes("low_official_structured"), true);

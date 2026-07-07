@@ -46,7 +46,9 @@ const allowedCommunities = new Set([
   "Women",
   "Pregnant students",
   "Palestinian",
-  "Arab"
+  "Arab",
+  "Age",
+  "Boy Scouts of America Equal Access Act"
 ]);
 
 const allowedCategories = new Set([

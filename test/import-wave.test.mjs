@@ -168,6 +168,26 @@ test("runImportWave returns valid wave and quarantine artifacts", () => {
   assert.equal(artifacts.quarantine.rows[0].reason_codes.includes("unknown_school"), true);
 });
 
+test("runImportWave preserves excluded source-row counts and artifacts", () => {
+  const artifacts = runImportWave({
+    waveId: "ocr-open-investigations-wave-001",
+    candidates: [candidate()],
+    manifests: [bulkManifest],
+    schools,
+    existingEvents: [],
+    command: "node scripts/import-wave-runner.mjs --candidates data/import-candidates/ocr-open-investigations-wave-001.json --wave-id ocr-open-investigations-wave-001 --exclusions data/import-exclusions/ocr-open-investigations-wave-001.json",
+    generatedAt: "2026-07-07",
+    datasetHashBefore: "sha256:before",
+    datasetHashAfter: "sha256:after",
+    excludedCount: 42,
+    exclusionArtifact: "data/import-exclusions/ocr-open-investigations-wave-001.json"
+  });
+
+  assert.equal(artifacts.wave.excluded_count, 42);
+  assert.equal(artifacts.wave.exclusion_artifact, "data/import-exclusions/ocr-open-investigations-wave-001.json");
+  assert.deepEqual(validateImportWaveArtifacts(artifacts), []);
+});
+
 test("validateImportWaveCandidates handles 40000 generated candidates without changing review tier semantics", () => {
   const candidates = Array.from({ length: 40000 }, (_, index) =>
     candidate({

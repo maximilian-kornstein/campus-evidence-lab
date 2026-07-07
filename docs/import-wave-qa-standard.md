@@ -1,10 +1,12 @@
 # Import Wave QA Standard
 
-Import waves are bounded attempts to add or evaluate records from a named source family. A wave is publishable only when the source family is bulk-eligible, the candidate rows pass deterministic quality gates, and quarantine output is preserved.
+Import waves are bounded attempts to add or evaluate records from a named source family. A wave is publishable only when the source family is bulk-eligible, the candidate rows pass deterministic quality gates, exclusion output is preserved when applicable, and quarantine output is preserved.
 
 ## Bulk-Eligible Sources
 
 Bulk publication starts with official structured public sources, especially ED Campus Safety dataset sources already classified as `low_official_structured`.
+
+The OCR open-investigations table is bulk-eligible only for postsecondary accountability rows that preserve OCR's claim boundary: inclusion means OCR opened an investigation, not that OCR made a decision or finding. Elementary-secondary OCR rows must be preserved as excluded source rows and kept out of university accountability waves.
 
 Annual security reports, OCR or ED PDFs/releases, institutional statements, campus public-safety notices, government case letters, and open web sources are not bulk-publishable until their extraction path has stronger source-locator and claim-risk gates.
 
@@ -37,6 +39,7 @@ Accepted rows must pass these gates:
 - duplicate key is deterministic;
 - prohibited private or sensitive fields are absent;
 - public text avoids rankings, safety scores, prevalence estimates, severity scores, legal findings, or human-certification overclaims.
+- OCR open-investigation text avoids violation, liability, or finding language unless a separate source explicitly supports it.
 
 ## Quarantine Reasons
 
@@ -61,7 +64,7 @@ Rows must be quarantined, not published, when they fail a gate. Standard reason 
 
 A wave is publishable only when every accepted row passes all gates and every rejected row appears in quarantine or exclusion counts.
 
-The first live wave for a source family should stay conservative. Subsequent waves can grow only when the prior wave produced stable accepted/quarantined counts and no publication incident.
+The first live wave for a source family should stay conservative. Subsequent waves can grow only when the prior wave produced stable accepted, excluded, and quarantined counts and no publication incident.
 
 ## Sampling
 

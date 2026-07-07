@@ -21,6 +21,12 @@ Use the source-specific importer to create candidates, then run:
 node scripts/import-wave-runner.mjs --candidates data/import-candidates/<wave-id>.json --wave-id <wave-id>
 ```
 
+When a source-specific exporter preserves excluded source rows, include:
+
+```bash
+node scripts/import-wave-runner.mjs --candidates data/import-candidates/<wave-id>.json --wave-id <wave-id> --exclusions data/import-exclusions/<wave-id>.json
+```
+
 The runner writes:
 
 - `data/import-waves/<wave-id>.json`;
@@ -33,6 +39,7 @@ A wave may be approved only when:
 - accepted rows are all from a bulk-eligible manifest;
 - no accepted row has a prohibited private or sensitive field;
 - accepted rows have source locators;
+- source-specific exclusions are preserved when applicable;
 - duplicate handling is deterministic;
 - quarantine rows are preserved with reason codes;
 - review tier for accepted bulk rows is `imported_public_source`;

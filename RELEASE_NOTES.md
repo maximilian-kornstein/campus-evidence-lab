@@ -6,7 +6,7 @@ Generated for `snapshot_2026_06_03_4000_records`.
 
 - Created: `2026-06-03`
 - Schema version: `0.1.0`
-- Full snapshot hash: `sha256:6cb642f8c3784278771aaa75c227aa5453906a99ea92a2d7280b97b2c0394a79`
+- Full snapshot hash: `sha256:a7281c73bb1dd59a2ea54f2bbc50404a3d6661498686114988abf8dc25ca4a54`
 - Previous snapshot hash: `sha256:fba8f7ae7a7150a57e27a9018081a8d6fa37891cb5eb69d8e773fe396ea0ed8f`
 - Archived snapshot: `/data/snapshots/snapshot_2026_06_03_4000_records.json`
 

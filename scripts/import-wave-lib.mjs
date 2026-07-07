@@ -222,7 +222,9 @@ export function validateImportWaveCandidates({
   command = "",
   generatedAt = new Date().toISOString().slice(0, 10),
   datasetHashBefore = "",
-  datasetHashAfter = ""
+  datasetHashAfter = "",
+  excludedCount = 0,
+  exclusionArtifact = ""
 } = {}) {
   const manifestsById = new Map(manifests.map((manifest) => [manifest.id, manifest]));
   const existingKeys = new Set(existingEvents.map(existingEventDuplicateKey).filter(Boolean));
@@ -302,7 +304,7 @@ export function validateImportWaveCandidates({
     attempted_count: candidates.length,
     accepted_count: accepted.length,
     duplicate_count: duplicateCount,
-    excluded_count: 0,
+    excluded_count: Number.isInteger(excludedCount) && excludedCount > 0 ? excludedCount : 0,
     quarantined_count: quarantine.length,
     qa_gate_counts: qaGateCounts,
     sample_record_ids: accepted.slice(0, 25).map((row) => row.candidate_id),
@@ -314,6 +316,7 @@ export function validateImportWaveCandidates({
     public_claim_limit:
       "Import-wave acceptance means deterministic publication gates passed for imported public-source records. It is not individual human certification, external validation, ranking, prevalence measurement, safety scoring, severity scoring, or a legal finding."
   };
+  if (wave.excluded_count > 0 || exclusionArtifact) wave.exclusion_artifact = exclusionArtifact;
 
   return {
     publishable,
@@ -366,6 +369,12 @@ export function validateImportWaveArtifacts({ wave, accepted = [], quarantine } 
   if (!hasRequiredArtifactString(wave.command)) errors.push(`import-wave ${wave.id ?? "unknown"} missing command`);
   if (!hasRequiredArtifactString(wave.dataset_hash_before)) errors.push(`import-wave ${wave.id ?? "unknown"} missing dataset_hash_before`);
   if (!hasRequiredArtifactString(wave.dataset_hash_after)) errors.push(`import-wave ${wave.id ?? "unknown"} missing dataset_hash_after`);
+  if (wave.excluded_count > 0 && !hasRequiredArtifactString(wave.exclusion_artifact)) {
+    errors.push(`import-wave ${wave.id ?? "unknown"} missing exclusion_artifact for excluded rows`);
+  }
+  if (wave.exclusion_artifact !== undefined && !hasRequiredArtifactString(wave.exclusion_artifact)) {
+    errors.push(`import-wave ${wave.id ?? "unknown"} has invalid exclusion_artifact`);
+  }
 
   const rows = quarantine?.rows ?? [];
   if (!Array.isArray(rows)) {

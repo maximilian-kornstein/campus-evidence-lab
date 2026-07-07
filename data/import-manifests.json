@@ -50,6 +50,56 @@
     ]
   },
   {
+    "id": "manifest_ocr_open_investigation",
+    "source_family": "ocr_open_investigation",
+    "legal_risk_class": "medium_official_document",
+    "bulk_import_eligible": true,
+    "default_review_tier": "imported_public_source",
+    "source_urls": [
+      "https://ocrcas.ed.gov/open-investigations",
+      "https://www.ed.gov/laws-and-policy/civil-rights-laws/office-civil-rights-ocr-reading-room"
+    ],
+    "acquisition_date": "2026-07-07",
+    "importer_command": "node scripts/discover-ocr-open-investigations.mjs && node scripts/export-ocr-open-investigation-wave-candidates.mjs",
+    "field_map": {
+      "school": "OCR institution name resolved to a known postsecondary school when possible",
+      "date": "open investigation date",
+      "date_precision": "day",
+      "category": "OCR type of discrimination mapped to a non-finding project category",
+      "affected_communities": "civil-rights class indicated by OCR type of discrimination",
+      "source_locator": "OCR table row with state, institution, institution type, discrimination type, and open date"
+    },
+    "duplicate_strategy": "Use stable row hashes across state, institution, institution type, discrimination type, and open investigation date; duplicate rows are quarantined deterministically.",
+    "sampling_plan": "Review discovery counts, inspect first and last page samples, inspect at least 50 accepted PSE rows, inspect all quarantine reason counts, and confirm public wording says open investigation rather than finding.",
+    "known_limits": [
+      "The OCR open-investigations table identifies investigations OCR has opened; it does not mean OCR has made a decision about the case.",
+      "Elementary-secondary institution rows are preserved as excluded source rows and are not published in university accountability waves.",
+      "Imported public-source records from this family are not individual human certification, legal findings, rankings, prevalence estimates, safety scores, or severity scores."
+    ],
+    "publishable_fields": [
+      "school",
+      "state",
+      "open investigation date",
+      "type of discrimination",
+      "institution type",
+      "source_url",
+      "source_locator"
+    ],
+    "prohibited_fields": [
+      "private names",
+      "private contact details",
+      "complainant names",
+      "respondent names",
+      "unsupported liability conclusions",
+      "claims that OCR made a finding when the source only lists an open investigation"
+    ],
+    "exclusion_rules": [
+      "Exclude non-postsecondary institution rows from university accountability waves.",
+      "Quarantine postsecondary rows whose institution cannot be resolved to a known school before publication.",
+      "Quarantine rows whose public text implies a violation, legal finding, ranking, safety score, severity score, or prevalence estimate."
+    ]
+  },
+  {
     "id": "manifest_ocr_or_ed_release",
     "source_family": "ocr_or_ed_release",
     "legal_risk_class": "medium_official_document",
