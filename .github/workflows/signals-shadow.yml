@@ -15,6 +15,9 @@ concurrency:
 jobs:
   shadow:
     runs-on: ubuntu-latest
+    env:
+      SIGNALS_WORKER_URL: ${{ secrets.SIGNALS_WORKER_URL }}
+      SIGNALS_ADMIN_TOKEN: ${{ secrets.SIGNALS_ADMIN_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,11 +30,8 @@ jobs:
       - run: npm run test:signals
       - run: npm run signals:dry-run > signals-dry-run.json
       - name: Sync shadow runtime when configured
-        if: ${{ secrets.SIGNALS_WORKER_URL != '' && secrets.SIGNALS_ADMIN_TOKEN != '' }}
+        if: ${{ env.SIGNALS_WORKER_URL != '' && env.SIGNALS_ADMIN_TOKEN != '' }}
         run: npm run signals:sync -- --apply
-        env:
-          SIGNALS_WORKER_URL: ${{ secrets.SIGNALS_WORKER_URL }}
-          SIGNALS_ADMIN_TOKEN: ${{ secrets.SIGNALS_ADMIN_TOKEN }}
       - uses: actions/upload-artifact@v4
         with:
           name: cel-signals-shadow-${{ github.run_id }}
