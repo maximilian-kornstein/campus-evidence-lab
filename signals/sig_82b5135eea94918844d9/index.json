@@ -1,0 +1,221 @@
+{
+  "id": "sig_82b5135eea94918844d9",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_593d5e17fa50118969ad",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ce0c252f81aa6583dbea",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/wentworth_institute_of_technology/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "wentworth_institute_of_technology"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 12 certified ED cells, the documented category totals are Harassment or threat (13), Vandalism (6)."
+  },
+  "institution": {
+    "id": "wentworth_institute_of_technology",
+    "name": "Wentworth Institute of Technology",
+    "city": "Boston",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_1525",
+    "evt_2026_1761",
+    "evt_2026_1893",
+    "evt_2026_2037",
+    "evt_2026_2069",
+    "evt_2026_2090",
+    "evt_2026_2515",
+    "evt_2026_2671",
+    "evt_2026_3099",
+    "evt_2026_3538",
+    "evt_2026_3624",
+    "evt_2026_3668"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Wentworth Institute of Technology: Across 12 certified ED cells, the documented category totals are Harassment or threat (13), Vandalism (6).",
+      "supporting_record_ids": [
+        "evt_2026_1525",
+        "evt_2026_1761",
+        "evt_2026_1893",
+        "evt_2026_2037",
+        "evt_2026_2069",
+        "evt_2026_2090",
+        "evt_2026_2515",
+        "evt_2026_2671",
+        "evt_2026_3099",
+        "evt_2026_3538",
+        "evt_2026_3624",
+        "evt_2026_3668"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 19,
+    "certified_cell_count": 12,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1525",
+        "record_hash": "sha256:a130f096ce822d20d8547b926df9a7a2a0ba9efbac1383b1f0fbff3401463851",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3074",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1761",
+        "record_hash": "sha256:4bd4c7a126ef38c6c9d20705c01f24189f39f00ade9c276b5e63f4651fff7b00",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX3074",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1893",
+        "record_hash": "sha256:8425bdcfc417f3519d918bad5e4108154677f2425deccddcde619016b1342662",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3074",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2037",
+        "record_hash": "sha256:3e54bda41dc49ea625416fab049133eb98da6901c61bd47ecaa75cbbe93c0f03",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3074",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2069",
+        "record_hash": "sha256:d7affb619a83215cdd3a06b2cd590c611f9b920b3f56f5c0d0164ac001434cd2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV3074",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_2090",
+        "record_hash": "sha256:8788f3e5cc6a24abbd73b861ae5f309163a8b9b5fd9602781b0b486d0ab25b99",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3074",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2515",
+        "record_hash": "sha256:4ec118cf0b255049b246667b39245b09f3d4e04d64cf39d89594eb52f54bff82",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3074",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2671",
+        "record_hash": "sha256:6beb656af0b5e1c289f909f5fae49463e2c50b8f5fe44c9e8e0cf2f587cd58f4",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV3074",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3099",
+        "record_hash": "sha256:6060385e765f704768c3a177430009c4afda48092e0c264e6b515e289ee149cb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3074",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3538",
+        "record_hash": "sha256:c04e1bcd8ed4e81b0e60c89e367462fb15d11a86a82e555a9c001552194130e9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3074",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3624",
+        "record_hash": "sha256:68150ccc7f089b48b7d73e79f2ba9e0380ad16d21209d6dfd2267badff7baee3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV3074",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_3668",
+        "record_hash": "sha256:6dff469c6a8ae2eb4a6d81fe6db68606bebfdfe08e96e8e9952e5670d7d48fb3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3074",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=wentworth_institute_of_technology&signal_id=sig_82b5135eea94918844d9",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_82b5135eea94918844d9/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Wentworth Institute of Technology. Across 12 certified ED cells, the documented category totals are Harassment or threat (13), Vandalism (6). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_82b5135eea94918844d9/",
+    "proactive_reply": "Relevant certified public-data context for Wentworth Institute of Technology: https://campusevidencelab.org/signals/sig_82b5135eea94918844d9/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

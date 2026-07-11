@@ -1,0 +1,265 @@
+{
+  "id": "sig_1a83bd38dd1b790a0306",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e27c3c3d75090f138536",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_02607b20458a5ae49d8b",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/saint_michael_s_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "saint_michael_s_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 15 certified ED cells, the reported geography totals are on-campus (17), residence-hall (10)."
+  },
+  "institution": {
+    "id": "saint_michael_s_college",
+    "name": "Saint Michael's College",
+    "city": "COLCHESTER",
+    "state": "VT"
+  },
+  "record_ids": [
+    "evt_2026_0169",
+    "evt_2026_0766",
+    "evt_2026_0979",
+    "evt_2026_1175",
+    "evt_2026_1307",
+    "evt_2026_1390",
+    "evt_2026_1448",
+    "evt_2026_1517",
+    "evt_2026_2965",
+    "evt_2026_3151",
+    "evt_2026_3288",
+    "evt_2026_3531",
+    "evt_2026_3575",
+    "evt_2026_3600",
+    "evt_2026_3786"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Saint Michael's College: Across 15 certified ED cells, the reported geography totals are on-campus (17), residence-hall (10).",
+      "supporting_record_ids": [
+        "evt_2026_0169",
+        "evt_2026_0766",
+        "evt_2026_0979",
+        "evt_2026_1175",
+        "evt_2026_1307",
+        "evt_2026_1390",
+        "evt_2026_1448",
+        "evt_2026_1517",
+        "evt_2026_2965",
+        "evt_2026_3151",
+        "evt_2026_3288",
+        "evt_2026_3531",
+        "evt_2026_3575",
+        "evt_2026_3600",
+        "evt_2026_3786"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 27,
+    "certified_cell_count": 15,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0169",
+        "record_hash": "sha256:f29d325aa9d2630c40678b1f6a8cb3dc19ea14487f40a1eb635ac34aa26e63cd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK6539",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_0766",
+        "record_hash": "sha256:e71e7624f824a48d2c3f7cf02e417e008dd06daec56ff88aa9d81defed03d36a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM6539",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0979",
+        "record_hash": "sha256:09fb31c3f24153fb541d6dc35c2cd1b0758bfe78289617e5ff33d7662daddddd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT6539",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1175",
+        "record_hash": "sha256:1bf96efab15ff93ce5ff247881c0c11d1a16643a7e470e06ec51a385087d5b08",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL6539",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1307",
+        "record_hash": "sha256:94122638dcc1457ca175c70eb8aa3d2ae4f527aaf4571b101617aca86cd42743",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV6539",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1390",
+        "record_hash": "sha256:b5b80445ffec4634fc94a6950ca8a256e46c124fa6166987aeeabd44555795e0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6539",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1448",
+        "record_hash": "sha256:06705cacdc7ab18fda57c9585f590a77e4462aa64a63a2df3aca6377ce80a9d5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6539",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1517",
+        "record_hash": "sha256:b056917235ed8b25efcf9d8dbd3219e2fa7276f49a136eb83e2a5b072e4140fc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED6539",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2965",
+        "record_hash": "sha256:3037741b078c3748fc82d5978128ce136e34a6668fb384880ba5ac2f5d5308c7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK6539",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_3151",
+        "record_hash": "sha256:fa437243b78199fefa1b7c318cffc1fb3a48395da2b02e0920bf600988f3ada9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM6539",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3288",
+        "record_hash": "sha256:f496f0c0a9daeb199b5deecd7f3ef362713b1ebafdbb4c5a0cc0397c2ea6d8ee",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV6539",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3531",
+        "record_hash": "sha256:1598750321e4bfa070d7fc0b2b4f0ab0488c65b4b6279f5144dfefaf10b1c5a9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6539",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3575",
+        "record_hash": "sha256:2bac152c869326a82cb33878b3275a6e9600d666aa46606b0fd16b80ce1b7239",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6539",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3600",
+        "record_hash": "sha256:4429b0e89607807ff6b687858822cb43d987f7fe6aa02de5571d37677726d36a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED6539",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3786",
+        "record_hash": "sha256:d2a08fcd542c0807158796b69ec69b175d992f8e589be0088cda224f0d270fae",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED6683",
+        "column": "VANDAL_SEX21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=saint_michael_s_college&signal_id=sig_1a83bd38dd1b790a0306",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_1a83bd38dd1b790a0306/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Saint Michael's College. Across 15 certified ED cells, the reported geography totals are on-campus (17), residence-hall (10). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_1a83bd38dd1b790a0306/",
+    "proactive_reply": "Relevant certified public-data context for Saint Michael's College: https://campusevidencelab.org/signals/sig_1a83bd38dd1b790a0306/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,173 @@
+{
+  "id": "sig_a4d6f62564f08fd3a530",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_913290a3685fbd108df6",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_5da92b3fd0edb9ecb770",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/the_university_of_texas_at_austin/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "the_university_of_texas_at_austin"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the reported geography totals are on-campus (5), noncampus (2), residence-hall (1)."
+  },
+  "institution": {
+    "id": "the_university_of_texas_at_austin",
+    "name": "The University of Texas at Austin",
+    "city": "Austin",
+    "state": "TX"
+  },
+  "record_ids": [
+    "evt_2026_1939",
+    "evt_2026_1971",
+    "evt_2026_2000",
+    "evt_2026_2025",
+    "evt_2026_2048",
+    "evt_2026_2819",
+    "evt_2026_2849",
+    "evt_2026_3208"
+  ],
+  "bounded_claims": [
+    {
+      "text": "The University of Texas at Austin: Across 8 certified ED cells, the reported geography totals are on-campus (5), noncampus (2), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_1939",
+        "evt_2026_1971",
+        "evt_2026_2000",
+        "evt_2026_2025",
+        "evt_2026_2048",
+        "evt_2026_2819",
+        "evt_2026_2849",
+        "evt_2026_3208"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1939",
+        "record_hash": "sha256:fd5be83ed24130cb39a83f77b5c856e56eeebe0797d4d465d8740532f839c252",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6344",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1971",
+        "record_hash": "sha256:931fff9d8b6ca0d98188a6f9449c1650366d63b31814d31c1ac68ce68e368a4c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV6344",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2000",
+        "record_hash": "sha256:b67724e7c5ff4a4a1ed74c1f45d9ba4d813e1ece18c509bbfe5f43ec0b00b658",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6344",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2025",
+        "record_hash": "sha256:559d6c06d093ef8d128167abea3e93a8229957b2c85decddbbc513110207af35",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ6344",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2048",
+        "record_hash": "sha256:e5db3069cc69fa4b0fdfb6e4079042b9703e2ce0150c1b8826359bd0c003984c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6344",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2819",
+        "record_hash": "sha256:a83efb3bd7685aa1558ecbbfe737ecef34d45d9d703a26562027360eef2db51c",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU6344",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2849",
+        "record_hash": "sha256:4ab782fbd3d4ae771e671c5af1ed72a6b30b010a8804df3030795c71f392e334",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IC6344",
+        "column": "SIM_A_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3208",
+        "record_hash": "sha256:9c391dd0f483acec9a603101f290e03c7c5827d2a9ebb27d2d16fc9c6c788bff",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6344",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=the_university_of_texas_at_austin&signal_id=sig_a4d6f62564f08fd3a530",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_a4d6f62564f08fd3a530/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: The University of Texas at Austin. Across 8 certified ED cells, the reported geography totals are on-campus (5), noncampus (2), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_a4d6f62564f08fd3a530/",
+    "proactive_reply": "Relevant certified public-data context for The University of Texas at Austin: https://campusevidencelab.org/signals/sig_a4d6f62564f08fd3a530/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

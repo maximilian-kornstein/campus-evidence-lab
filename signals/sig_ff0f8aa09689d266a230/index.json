@@ -1,0 +1,161 @@
+{
+  "id": "sig_ff0f8aa09689d266a230",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_aa0141b25248cbfdab5b",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_41f2ebb535bb17987a99",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_california_riverside/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_california_riverside"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the reported geography totals are on-campus (7), noncampus (1), public-property (1)."
+  },
+  "institution": {
+    "id": "university_of_california_riverside",
+    "name": "University of California-Riverside",
+    "city": "Riverside",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0268",
+    "evt_2026_1851",
+    "evt_2026_2187",
+    "evt_2026_2289",
+    "evt_2026_2345",
+    "evt_2026_2643",
+    "evt_2026_2841"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of California-Riverside: Across 7 certified ED cells, the reported geography totals are on-campus (7), noncampus (1), public-property (1).",
+      "supporting_record_ids": [
+        "evt_2026_0268",
+        "evt_2026_1851",
+        "evt_2026_2187",
+        "evt_2026_2289",
+        "evt_2026_2345",
+        "evt_2026_2643",
+        "evt_2026_2841"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0268",
+        "record_hash": "sha256:ea10a333b4fcb1d4854d4040978adbd03a50605a34403706f00d60960732f9b8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR475",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1851",
+        "record_hash": "sha256:5e7168ce9314e94bd0faa0a5754f5ed9863131bd2fef639c14321415e6b91b55",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK475",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2187",
+        "record_hash": "sha256:db15eb3fc2f86197891276347f9606bcd36ae0607ccb54f6945b74ed6c43743f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT475",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2289",
+        "record_hash": "sha256:65122bd8749ebd4a4361adee8053118c545609885305a251eba8b284a21cf6de",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD475",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2345",
+        "record_hash": "sha256:6b1b15a373a8dd06f918107276ac59af456e19c1dc24913480aa5b430b710aa5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE475",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2643",
+        "record_hash": "sha256:2985c0ef330732351716a33e784c5b98f88c70d6e24baf01424be1a8c72f5570",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ475",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2841",
+        "record_hash": "sha256:43e32d09e030724c5af72a53735b5fd01447173ce34a8468913ca2332be81553",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LK475",
+        "column": "AGG_A_SEX24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_california_riverside&signal_id=sig_ff0f8aa09689d266a230",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ff0f8aa09689d266a230/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of California-Riverside. Across 7 certified ED cells, the reported geography totals are on-campus (7), noncampus (1), public-property (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ff0f8aa09689d266a230/",
+    "proactive_reply": "Relevant certified public-data context for University of California-Riverside: https://campusevidencelab.org/signals/sig_ff0f8aa09689d266a230/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

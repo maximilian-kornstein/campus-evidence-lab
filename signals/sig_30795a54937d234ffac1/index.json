@@ -1,0 +1,157 @@
+{
+  "id": "sig_30795a54937d234ffac1",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_245694e9531a25461f3f",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_5be17a58b23108d2c43b",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/delaware_valley_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "delaware_valley_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the source-supported affected-community totals are Race (6), Ethnicity (4), Gender (1)."
+  },
+  "institution": {
+    "id": "delaware_valley_university",
+    "name": "Delaware Valley University",
+    "city": "DOYLESTOWN",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0420",
+    "evt_2026_1168",
+    "evt_2026_2047",
+    "evt_2026_3261",
+    "evt_2026_3703",
+    "evt_2026_3824"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Delaware Valley University: Across 6 certified ED cells, the source-supported affected-community totals are Race (6), Ethnicity (4), Gender (1).",
+      "supporting_record_ids": [
+        "evt_2026_0420",
+        "evt_2026_1168",
+        "evt_2026_2047",
+        "evt_2026_3261",
+        "evt_2026_3703",
+        "evt_2026_3824"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0420",
+        "record_hash": "sha256:34d4d3890d3a4ca38df5061dec1af18add3ecd56a04e546cf408ef3d95c51f07",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NW5346",
+        "column": "VANDAL_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1168",
+        "record_hash": "sha256:970669149b1f29c3b17a010f82bb5cb9a2c7353c8b721834a1c184e038899613",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD5346",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2047",
+        "record_hash": "sha256:5a5eaa08645e49461949de6dd3cc41330a9f13c6b7c7bc98f8e26a3c5875e481",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB5346",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3261",
+        "record_hash": "sha256:12d585cce35c773f3de28926f064debcc061a2296c2e1cf1194c2d271fdb37d0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD5346",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3703",
+        "record_hash": "sha256:50d5155e5cc623365d4c48301e8006448aeaeaaebd5bb409ef2da8463300645d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB5346",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3824",
+        "record_hash": "sha256:d2fb365647d855ee78c878b86a1375c492ce51c3965598d694787eb6ad763fb8",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB5485",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=delaware_valley_university&signal_id=sig_30795a54937d234ffac1",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_30795a54937d234ffac1/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Delaware Valley University. Across 6 certified ED cells, the source-supported affected-community totals are Race (6), Ethnicity (4), Gender (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_30795a54937d234ffac1/",
+    "proactive_reply": "Relevant certified public-data context for Delaware Valley University: https://campusevidencelab.org/signals/sig_30795a54937d234ffac1/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

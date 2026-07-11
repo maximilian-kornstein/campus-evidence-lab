@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/schema/signal.schema.json",
+  "title": "CEL Signal",
+  "type": "object",
+  "required": ["id", "status", "policy_version", "trigger", "institution", "record_ids", "bounded_claims", "unknowns", "sources", "claim_limit", "correction_url", "canonical_url", "distribution_copy"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^sig_[a-f0-9]{20}$" },
+    "status": { "enum": ["shadow", "approved", "published", "paused", "withdrawn"] },
+    "policy_version": { "const": "cel-signals-v1" },
+    "signal_type": { "enum": ["source_context", "dataset_context"] },
+    "record_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "bounded_claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["text", "supporting_record_ids", "supporting_source_ids"],
+        "properties": {
+          "text": { "type": "string", "minLength": 1 },
+          "supporting_record_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "supporting_source_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        }
+      }
+    },
+    "unknowns": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "sources": { "type": "array", "minItems": 1 },
+    "claim_limit": { "type": "string", "minLength": 1 },
+    "correction_url": { "type": "string" },
+    "canonical_url": { "type": "string" },
+    "distribution_copy": { "type": "object" },
+    "calculation": {
+      "type": "object",
+      "required": ["method", "inputs"],
+      "properties": {
+        "method": { "type": "string", "minLength": 1 },
+        "inputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["record_id", "workbook", "sheet", "cell", "year", "value"],
+            "properties": {
+              "record_id": { "type": "string" },
+              "workbook": { "type": "string" },
+              "sheet": { "type": "string" },
+              "cell": { "type": "string", "pattern": "^[A-Z]+[1-9][0-9]*$" },
+              "year": { "type": ["integer", "string"] },
+              "value": { "type": ["number", "string"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

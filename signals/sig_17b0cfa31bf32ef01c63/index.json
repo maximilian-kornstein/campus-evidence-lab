@@ -1,0 +1,137 @@
+{
+  "id": "sig_17b0cfa31bf32ef01c63",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_12edd379f306f46ca7a2",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6071b83e75b28a9c0305",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/bradley_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "bradley_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "bradley_university",
+    "name": "Bradley University",
+    "city": "PEORIA",
+    "state": "IL"
+  },
+  "record_ids": [
+    "evt_2026_0188",
+    "evt_2026_0828",
+    "evt_2026_1399",
+    "evt_2026_2615",
+    "evt_2026_2982"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Bradley University: Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0188",
+        "evt_2026_0828",
+        "evt_2026_1399",
+        "evt_2026_2615",
+        "evt_2026_2982"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0188",
+        "record_hash": "sha256:95870ba0766caf9369642df49d24138531808d3c33721dd50d43a8445ce45cf3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1793",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0828",
+        "record_hash": "sha256:61ee3ec73970dc1e304c7413dea2899ee1b4387317c92281732effd7df86f4ca",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NW1793",
+        "column": "VANDAL_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1399",
+        "record_hash": "sha256:222ad7ae171cf890115652ff6701bd293a03c9b4b2eff6c64de28b040696ef75",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA1793",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2615",
+        "record_hash": "sha256:c362ba81bfacd10a169c2634191d2847f272e83946924ad79095ff716b2518bb",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV1793",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2982",
+        "record_hash": "sha256:39e285fa41c1fc9f1f7cce4461379c9ad84bd972b67ee6ee97414817862095f3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1793",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=bradley_university&signal_id=sig_17b0cfa31bf32ef01c63",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_17b0cfa31bf32ef01c63/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Bradley University. Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_17b0cfa31bf32ef01c63/",
+    "proactive_reply": "Relevant certified public-data context for Bradley University: https://campusevidencelab.org/signals/sig_17b0cfa31bf32ef01c63/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

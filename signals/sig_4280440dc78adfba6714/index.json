@@ -1,0 +1,145 @@
+{
+  "id": "sig_4280440dc78adfba6714",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_08227415ec55e85b29bc",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_eec0d8ab40f1b17cf513",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/washington_and_lee_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "washington_and_lee_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (1), Other source-backed civil rights event (1)."
+  },
+  "institution": {
+    "id": "washington_and_lee_university",
+    "name": "Washington and Lee University",
+    "city": "LEXINGTON",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_0559",
+    "evt_2026_0897",
+    "evt_2026_1494",
+    "evt_2026_1696",
+    "evt_2026_3830"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Washington and Lee University: Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (1), Other source-backed civil rights event (1).",
+      "supporting_record_ids": [
+        "evt_2026_0559",
+        "evt_2026_0897",
+        "evt_2026_1494",
+        "evt_2026_1696",
+        "evt_2026_3830"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0559",
+        "record_hash": "sha256:53ddf3e2df47fbf4f801b8e045aebac9b80d60616598e97863ee26ccf57b68b2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM6748",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0897",
+        "record_hash": "sha256:6b3ec6c7c53f054ba5ef9e1dc02a868f07bc50770d48c9032ba76027316e1929",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND6748",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1494",
+        "record_hash": "sha256:cdb39930e38813c7e580593606d87b94bb08562c8520b79eab61b5d6d080beed",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NW6748",
+        "column": "VANDAL_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1696",
+        "record_hash": "sha256:ae084509864ffc93865b837205aa55dcfbe20bcf90923d2567793c336d9b285d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV6748",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3830",
+        "record_hash": "sha256:a0623d20f5811b50e7dc0ff39d09f5298c93646552a701255b17fc0eb8de3561",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB6883",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=washington_and_lee_university&signal_id=sig_4280440dc78adfba6714",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4280440dc78adfba6714/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Washington and Lee University. Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (1), Other source-backed civil rights event (… Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_4280440dc78adfba6714/",
+    "proactive_reply": "Relevant certified public-data context for Washington and Lee University: https://campusevidencelab.org/signals/sig_4280440dc78adfba6714/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,197 @@
+{
+  "id": "sig_dc2e7e15fbc9f7c130da",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_0fdab565f73012e4310d",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_b330555b36a62b07a54c",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_colorado_denver_anschutz_medical_campus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_colorado_denver_anschutz_medical_campus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 10 certified ED cells, the documented category totals are Harassment or threat (6), Other source-backed civil rights event (2), Vandalism (2)."
+  },
+  "institution": {
+    "id": "university_of_colorado_denver_anschutz_medical_campus",
+    "name": "University of Colorado Denver/Anschutz Medical Campus",
+    "city": "DENVER",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0357",
+    "evt_2026_0947",
+    "evt_2026_1368",
+    "evt_2026_1649",
+    "evt_2026_1730",
+    "evt_2026_1773",
+    "evt_2026_1813",
+    "evt_2026_2536",
+    "evt_2026_2630",
+    "evt_2026_3565"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Colorado Denver/Anschutz Medical Campus: Across 10 certified ED cells, the documented category totals are Harassment or threat (6), Other source-backed civil rights event (2), Vandalism (2).",
+      "supporting_record_ids": [
+        "evt_2026_0357",
+        "evt_2026_0947",
+        "evt_2026_1368",
+        "evt_2026_1649",
+        "evt_2026_1730",
+        "evt_2026_1773",
+        "evt_2026_1813",
+        "evt_2026_2536",
+        "evt_2026_2630",
+        "evt_2026_3565"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 10,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0357",
+        "record_hash": "sha256:8dd69a87cf03c64483d5926e5d3bb6e3292fecafa4ee088f27c83576b277160d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ969",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0947",
+        "record_hash": "sha256:a9626fefecbc8536e96c53b1810c4d783ba6ac5483ee8c6e49a1462ddebe501c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ969",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1368",
+        "record_hash": "sha256:4067aa3572f3ce50b1b0098fb5e573c705cc3c2ea5d30a18c01a511fde2523cc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "FG969",
+        "column": "FOND_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1649",
+        "record_hash": "sha256:8f382ed08bbdb2b822e6d1445101d70ee9f254f34cd0ec8caca17e5b493f9dd8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS969",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1730",
+        "record_hash": "sha256:fe0588596d35d226dccd86dbc88235af51eab346bfeb4f2a9440b37a3d382e11",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV969",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1773",
+        "record_hash": "sha256:3a05188d25948399ec125081767d8e3e3ebea6cf758b61d42af5f2e00144da89",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP969",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1813",
+        "record_hash": "sha256:56a3601c7923302bd6140a3a60c0f3f86cf5e442564027f29dfc1c49bad5e22d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ969",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2536",
+        "record_hash": "sha256:7e8e4752c821371791beb4ab58512c681ab03fb5846447afdad531bc3afe4d4d",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO969",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2630",
+        "record_hash": "sha256:3921cf2e503cca3bb632c59a69b942b0121580543a694b9129ba09cfb9ad3d1d",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ969",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3565",
+        "record_hash": "sha256:a0aa91916cc32b0bec2fe569d5375bc9bd05a2b518744f3c01d2b2f6df6e0e12",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "FG969",
+        "column": "FOND_GID23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_colorado_denver_anschutz_medical_campus&signal_id=sig_dc2e7e15fbc9f7c130da",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_dc2e7e15fbc9f7c130da/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Colorado Denver/Anschutz Medical Campus. Across 10 certified ED cells, the documented category totals are Harassment or threat (6), Other source-backed civil righ… Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_dc2e7e15fbc9f7c130da/",
+    "proactive_reply": "Relevant certified public-data context for University of Colorado Denver/Anschutz Medical Campus: https://campusevidencelab.org/signals/sig_dc2e7e15fbc9f7c130da/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,173 @@
+{
+  "id": "sig_627c6e26a3018f7a15a8",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_0a6e77d1776d60486cf7",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_f8b602d3fd9ef3b91e6c",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/kean_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "kean_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the reported geography totals are on-campus (8), residence-hall (2)."
+  },
+  "institution": {
+    "id": "kean_university",
+    "name": "Kean University",
+    "city": "UNION",
+    "state": "NJ"
+  },
+  "record_ids": [
+    "evt_2026_0462",
+    "evt_2026_1354",
+    "evt_2026_1509",
+    "evt_2026_1673",
+    "evt_2026_1778",
+    "evt_2026_1869",
+    "evt_2026_3172",
+    "evt_2026_3404"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Kean University: Across 8 certified ED cells, the reported geography totals are on-campus (8), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0462",
+        "evt_2026_1354",
+        "evt_2026_1509",
+        "evt_2026_1673",
+        "evt_2026_1778",
+        "evt_2026_1869",
+        "evt_2026_3172",
+        "evt_2026_3404"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0462",
+        "record_hash": "sha256:627614933cd13712cd7aef03b4c523bb067a1d2d83f3e3c758c18abcbf9c2592",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT3965",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1354",
+        "record_hash": "sha256:c611c0c0f98e014773d7cd55cd7983093e29dfeb009572d09773f39100d82fbe",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3965",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1509",
+        "record_hash": "sha256:669d3b0e773f0596eb73c678ea718526f3f511d92abc7521f9ec309714585535",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY3965",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1673",
+        "record_hash": "sha256:be64cbdd8dbbd3cdc09d8bd02b7295c5041d807c4531c0527d52a1f799631bc2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3965",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1778",
+        "record_hash": "sha256:3561aa3a2c46731f79d5a8e636958027ee5c97eadf8c2a51987ac6d7fc69c240",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA3965",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1869",
+        "record_hash": "sha256:00aeb2f589a4a675906390fb3ebc5e1a73095615150bbf5b4677f863321652af",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3965",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3172",
+        "record_hash": "sha256:da5a5847fd066c4c1a0d8777663bce298e7b583ffd15e6d04cfa44d6911ce17e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3965",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3404",
+        "record_hash": "sha256:f7f50e6dd0bf8e80a841eee6eb42735867c49a8e3f45283b34606c76ddb1b8d4",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA3965",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=kean_university&signal_id=sig_627c6e26a3018f7a15a8",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_627c6e26a3018f7a15a8/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Kean University. Across 8 certified ED cells, the reported geography totals are on-campus (8), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_627c6e26a3018f7a15a8/",
+    "proactive_reply": "Relevant certified public-data context for Kean University: https://campusevidencelab.org/signals/sig_627c6e26a3018f7a15a8/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

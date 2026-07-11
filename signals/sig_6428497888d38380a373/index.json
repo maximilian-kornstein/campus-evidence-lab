@@ -1,0 +1,125 @@
+{
+  "id": "sig_6428497888d38380a373",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_0b3489bcb015f4c885a7",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_a31227a408411e022474",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/cuny_queensborough_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "cuny_queensborough_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (4)."
+  },
+  "institution": {
+    "id": "cuny_queensborough_community_college",
+    "name": "CUNY Queensborough Community College",
+    "city": "Bayside",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1128",
+    "evt_2026_1554",
+    "evt_2026_2212",
+    "evt_2026_2282"
+  ],
+  "bounded_claims": [
+    {
+      "text": "CUNY Queensborough Community College: Across 4 certified ED cells, the reported geography totals are on-campus (4).",
+      "supporting_record_ids": [
+        "evt_2026_1128",
+        "evt_2026_1554",
+        "evt_2026_2212",
+        "evt_2026_2282"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1128",
+        "record_hash": "sha256:a31037cb1846a1f48ea7c2663729a98a5d2a5e4eea436e486d02b4bd09663967",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4213",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1554",
+        "record_hash": "sha256:b2d398d377c8383ce1a36de613f321f686aca8e73c8e2d382e7c0b749f123f7f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4213",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2212",
+        "record_hash": "sha256:07e4b46cfa92304327f0e297b18f514c0d1cca8fa9f0548cbd1cdf83d1eb2d23",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX4213",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2282",
+        "record_hash": "sha256:eea40fa42ea5cad4d127093eda4b5233d5ec79938093980c4fb06b614da5d5ad",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4213",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=cuny_queensborough_community_college&signal_id=sig_6428497888d38380a373",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6428497888d38380a373/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: CUNY Queensborough Community College. Across 4 certified ED cells, the reported geography totals are on-campus (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6428497888d38380a373/",
+    "proactive_reply": "Relevant certified public-data context for CUNY Queensborough Community College: https://campusevidencelab.org/signals/sig_6428497888d38380a373/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

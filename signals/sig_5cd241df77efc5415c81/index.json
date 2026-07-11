@@ -1,0 +1,161 @@
+{
+  "id": "sig_5cd241df77efc5415c81",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c472c3ac5fe147693845",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8b350bdf06ccb26a757c",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/florida_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "florida_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the reported geography totals are on-campus (4), residence-hall (2), noncampus (1)."
+  },
+  "institution": {
+    "id": "florida_state_university",
+    "name": "Florida State University",
+    "city": "TALLAHASSEE",
+    "state": "FL"
+  },
+  "record_ids": [
+    "evt_2026_0428",
+    "evt_2026_0990",
+    "evt_2026_1183",
+    "evt_2026_1342",
+    "evt_2026_2771",
+    "evt_2026_3126",
+    "evt_2026_3315"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Florida State University: Across 7 certified ED cells, the reported geography totals are on-campus (4), residence-hall (2), noncampus (1).",
+      "supporting_record_ids": [
+        "evt_2026_0428",
+        "evt_2026_0990",
+        "evt_2026_1183",
+        "evt_2026_1342",
+        "evt_2026_2771",
+        "evt_2026_3126",
+        "evt_2026_3315"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0428",
+        "record_hash": "sha256:6ec476404b7a44b94f9593c3aad4dddd808d309db237ec593b7439ee5b6cc5af",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IG1263",
+        "column": "LAR_T_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0990",
+        "record_hash": "sha256:55468662fbb0e09fd4144b39b39b30ab6400f5a448b22f4a77af2b97cb0713ca",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ1263",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1183",
+        "record_hash": "sha256:38c2755c708caee91bff61ca2d6104e08c3ff9bc156bc6a02090f57f8a75792d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA1263",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1342",
+        "record_hash": "sha256:ff947d6d4b88d8357e0f08c2e14fb88503980890dbcdba6bfcc4c0505caccc45",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DC1263",
+        "column": "SIM_A_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2771",
+        "record_hash": "sha256:89e6a1170d27782eb685913bbe619c290f254905e3240a03157e1b32ca226919",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS1263",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3126",
+        "record_hash": "sha256:377c1edb028f0a5d7d60a1ecec91ec1abc10a5b8e36b6d4a497d82d58f49ea1e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IG1263",
+        "column": "LAR_T_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3315",
+        "record_hash": "sha256:9c89ef5aee666e711ab6fbefddc3654099f5dbbe35c0aedaf2cd5ef26b0770d7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DC1263",
+        "column": "SIM_A_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=florida_state_university&signal_id=sig_5cd241df77efc5415c81",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5cd241df77efc5415c81/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Florida State University. Across 7 certified ED cells, the reported geography totals are on-campus (4), residence-hall (2), noncampus (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_5cd241df77efc5415c81/",
+    "proactive_reply": "Relevant certified public-data context for Florida State University: https://campusevidencelab.org/signals/sig_5cd241df77efc5415c81/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,137 @@
+{
+  "id": "sig_407931230785c9072933",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_b5fc1f3e7e979a891d39",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_3f5aeea0b317fe5709e6",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/missouri_state_university_springfield/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "missouri_state_university_springfield"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (7), residence-hall (3)."
+  },
+  "institution": {
+    "id": "missouri_state_university_springfield",
+    "name": "Missouri State University-Springfield",
+    "city": "SPRINGFIELD",
+    "state": "MO"
+  },
+  "record_ids": [
+    "evt_2026_0088",
+    "evt_2026_1121",
+    "evt_2026_1351",
+    "evt_2026_2915",
+    "evt_2026_2989"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Missouri State University-Springfield: Across 5 certified ED cells, the reported geography totals are on-campus (7), residence-hall (3).",
+      "supporting_record_ids": [
+        "evt_2026_0088",
+        "evt_2026_1121",
+        "evt_2026_1351",
+        "evt_2026_2915",
+        "evt_2026_2989"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0088",
+        "record_hash": "sha256:0e529dfe48e259192991af6e5ee95850a6bd1ea22d9f173136c15b8bca36ece9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3692",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_1121",
+        "record_hash": "sha256:005a169259b070bf9f0a5cee753357ed206d82af3a3b6d1ab741f212bf28567f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3692",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1351",
+        "record_hash": "sha256:4ea0e5ff330f3a4d810f9f1184225a585bd354bbdc23dea2ce6dce7706dfd80f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT3692",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2915",
+        "record_hash": "sha256:1ec9f0125e26508c74fdf6b9e28160eac3dda590dc9d44dc0f7ea810f8e46027",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3692",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2989",
+        "record_hash": "sha256:5b601d0d4c06f8ad1db464c802f543522b502bf4cada868d06eab788f9bf15b8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3692",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=missouri_state_university_springfield&signal_id=sig_407931230785c9072933",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_407931230785c9072933/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Missouri State University-Springfield. Across 5 certified ED cells, the reported geography totals are on-campus (7), residence-hall (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_407931230785c9072933/",
+    "proactive_reply": "Relevant certified public-data context for Missouri State University-Springfield: https://campusevidencelab.org/signals/sig_407931230785c9072933/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

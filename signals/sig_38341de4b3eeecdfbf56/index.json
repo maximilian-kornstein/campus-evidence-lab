@@ -1,0 +1,173 @@
+{
+  "id": "sig_38341de4b3eeecdfbf56",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_1b9a85251f6ed726a852",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_557f08524b5803a23ed1",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/orange_coast_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "orange_coast_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the documented category totals are Harassment or threat (7), Vandalism (3)."
+  },
+  "institution": {
+    "id": "orange_coast_college",
+    "name": "Orange Coast College",
+    "city": "COSTA MESA",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0426",
+    "evt_2026_1698",
+    "evt_2026_2275",
+    "evt_2026_2333",
+    "evt_2026_2379",
+    "evt_2026_2869",
+    "evt_2026_3463",
+    "evt_2026_3622"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Orange Coast College: Across 8 certified ED cells, the documented category totals are Harassment or threat (7), Vandalism (3).",
+      "supporting_record_ids": [
+        "evt_2026_0426",
+        "evt_2026_1698",
+        "evt_2026_2275",
+        "evt_2026_2333",
+        "evt_2026_2379",
+        "evt_2026_2869",
+        "evt_2026_3463",
+        "evt_2026_3622"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0426",
+        "record_hash": "sha256:825fe3b5032bf8a0bb5d1e567d1e70cd44123abcac2b6de29b76364e94bf5cc7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT749",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1698",
+        "record_hash": "sha256:41f0ed43e76bbaff4cc0b4753a0ad94af59f78aede94396b4ed5ebd298a95761",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL749",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2275",
+        "record_hash": "sha256:dea309d261289b6c4f6c43bcf42d0d0fd7d07112970841a4b9d82a6030f02960",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM749",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2333",
+        "record_hash": "sha256:0eb6bf356c2f35bc6eb0bc99d6435b91198b736d27595d3a35bef90fbd683e1e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU749",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2379",
+        "record_hash": "sha256:53961c6465803eba82a2d0ae67f16d5963c9f60d49277cc07e1ab1909433c5b2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS749",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2869",
+        "record_hash": "sha256:2bcf1a42ca5a4bf23b13af978f03bba7f0202aea571629a502709a4d32a7c9f7",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV750",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3463",
+        "record_hash": "sha256:88488381e61cb79a65f2a48bf12d93ecafbe6ccf2b0e424059470276ca375bc2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB749",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3622",
+        "record_hash": "sha256:064449fa54d2dc7f0e6bfe09a7b91681f4563085bba543b908a1c62683c8c9be",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU749",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=orange_coast_college&signal_id=sig_38341de4b3eeecdfbf56",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_38341de4b3eeecdfbf56/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Orange Coast College. Across 8 certified ED cells, the documented category totals are Harassment or threat (7), Vandalism (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_38341de4b3eeecdfbf56/",
+    "proactive_reply": "Relevant certified public-data context for Orange Coast College: https://campusevidencelab.org/signals/sig_38341de4b3eeecdfbf56/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

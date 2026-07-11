@@ -1,0 +1,137 @@
+{
+  "id": "sig_f1fb5c3e12c73f18461e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_082d20390823281a4635",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_07a62f4c204170263756",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/bennington_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "bennington_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the source-supported affected-community totals are LGBTQ+ (3), Religion (2)."
+  },
+  "institution": {
+    "id": "bennington_college",
+    "name": "Bennington College",
+    "city": "Bennington",
+    "state": "VT"
+  },
+  "record_ids": [
+    "evt_2026_0400",
+    "evt_2026_1099",
+    "evt_2026_1277",
+    "evt_2026_2464",
+    "evt_2026_3119"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Bennington College: Across 5 certified ED cells, the source-supported affected-community totals are LGBTQ+ (3), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_0400",
+        "evt_2026_1099",
+        "evt_2026_1277",
+        "evt_2026_2464",
+        "evt_2026_3119"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0400",
+        "record_hash": "sha256:f3cd2f2a79414c4b39f2a964d3d77cf3a2e66791de293a6a28ec3bf43323f42a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS6528",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1099",
+        "record_hash": "sha256:5da226aa39bb656e3fa7b46f2089ea6e7b4aba984f9582deeb20afa4828b278a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP6528",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1277",
+        "record_hash": "sha256:d838ab1b0c0b064cb183eb75e7f06c049531e80f6c2394b225e19dc8bfecc31d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW6528",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2464",
+        "record_hash": "sha256:62352d1d7f3c19845dc87be9b0e8f6f6b561213ee533ae6425c6cf26c2957d04",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP6528",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3119",
+        "record_hash": "sha256:e602cdbfbe04bc01a4f7ec9519accfb5889ecc97e46f49ea8833be08a5194813",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS6528",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=bennington_college&signal_id=sig_f1fb5c3e12c73f18461e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f1fb5c3e12c73f18461e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Bennington College. Across 5 certified ED cells, the source-supported affected-community totals are LGBTQ+ (3), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_f1fb5c3e12c73f18461e/",
+    "proactive_reply": "Relevant certified public-data context for Bennington College: https://campusevidencelab.org/signals/sig_f1fb5c3e12c73f18461e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

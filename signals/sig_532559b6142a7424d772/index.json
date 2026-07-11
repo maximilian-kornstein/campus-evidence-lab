@@ -1,0 +1,229 @@
+{
+  "id": "sig_532559b6142a7424d772",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_3fe4e5d3c60fb2ba9c4b",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_9c8a1e95030a74063d50",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_nebraska_lincoln/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_nebraska_lincoln"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 12 certified ED cells, the reported geography totals are on-campus (16), public-property (1), residence-hall (1)."
+  },
+  "institution": {
+    "id": "university_of_nebraska_lincoln",
+    "name": "University of Nebraska-Lincoln",
+    "city": "Lincoln",
+    "state": "NE"
+  },
+  "record_ids": [
+    "evt_2026_0089",
+    "evt_2026_0702",
+    "evt_2026_1005",
+    "evt_2026_1085",
+    "evt_2026_1161",
+    "evt_2026_1197",
+    "evt_2026_1231",
+    "evt_2026_1264",
+    "evt_2026_1297",
+    "evt_2026_2450",
+    "evt_2026_2949",
+    "evt_2026_3857"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Nebraska-Lincoln: Across 12 certified ED cells, the reported geography totals are on-campus (16), public-property (1), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0089",
+        "evt_2026_0702",
+        "evt_2026_1005",
+        "evt_2026_1085",
+        "evt_2026_1161",
+        "evt_2026_1197",
+        "evt_2026_1231",
+        "evt_2026_1264",
+        "evt_2026_1297",
+        "evt_2026_2450",
+        "evt_2026_2949",
+        "evt_2026_3857"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 18,
+    "certified_cell_count": 12,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0089",
+        "record_hash": "sha256:1b257bf648fa7d61054f5a1870f858519c81e6d1e2a557e70de1e1b71dd65e2c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3816",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_0702",
+        "record_hash": "sha256:603a6b3b097c9c1edf013dc97625e720ba362557fb88dfa87261663716ae532b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT3816",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1005",
+        "record_hash": "sha256:f2ac099eddb776703a2905676357d1c40913070d6bb2151f2bfa0fc32d616e71",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3816",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1085",
+        "record_hash": "sha256:986338e608cd84957ba52bfe452dd48a9b6fc3a1fdc8542926bad970ad74f98a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP3816",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1161",
+        "record_hash": "sha256:fe283a2affcab28521fb2efb5586431732ff7d835279c80a2a74d318a212606b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX3816",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1197",
+        "record_hash": "sha256:dce2a1b1789c9a31ab91eb17cff0fb80ec16205e3d8fd1afd275df4c96e10d0f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS3816",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1231",
+        "record_hash": "sha256:6fe710b413cbc9d0fd0b56953af1497a68e5a9ab44ad145c0d3bccbb05d5d1e0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV3816",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1264",
+        "record_hash": "sha256:40df6c2df818039f18bbd2bc9c56acc22a343fb10324bc77598b71ce4a481f16",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3816",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1297",
+        "record_hash": "sha256:aa67fbd4ead6ed6b28df98e9cc2456f680e79bee9d201d800fce2264beb8d865",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU3816",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2450",
+        "record_hash": "sha256:05a6b5e219e3524687a769a6d6a3fc3054ed90eb5708986ec64a59a4d5af43b1",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3816",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2949",
+        "record_hash": "sha256:c45f7b07ac815739a5f17b89a693138783a810b950bf281aa34986c80acd88de",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP3816",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3857",
+        "record_hash": "sha256:223a4a4273623cd2d364b864ab4df71652d2728a0857b74f68d0dc168d74c69b",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC3914",
+        "column": "VANDAL_REL21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_nebraska_lincoln&signal_id=sig_532559b6142a7424d772",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_532559b6142a7424d772/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Nebraska-Lincoln. Across 12 certified ED cells, the reported geography totals are on-campus (16), public-property (1), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_532559b6142a7424d772/",
+    "proactive_reply": "Relevant certified public-data context for University of Nebraska-Lincoln: https://campusevidencelab.org/signals/sig_532559b6142a7424d772/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,209 @@
+{
+  "id": "sig_1a5c74780ad9c6af75b8",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_9baf3f7ce5039a769c2c",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8c8aec20a50492c50d56",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/drexel_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "drexel_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 11 certified ED cells, the reported geography totals are on-campus (10), residence-hall (4), public-property (1)."
+  },
+  "institution": {
+    "id": "drexel_university",
+    "name": "Drexel University",
+    "city": "Philadelphia",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0710",
+    "evt_2026_1491",
+    "evt_2026_1938",
+    "evt_2026_2097",
+    "evt_2026_2147",
+    "evt_2026_2183",
+    "evt_2026_2556",
+    "evt_2026_3285",
+    "evt_2026_3597",
+    "evt_2026_3691",
+    "evt_2026_3729"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Drexel University: Across 11 certified ED cells, the reported geography totals are on-campus (10), residence-hall (4), public-property (1).",
+      "supporting_record_ids": [
+        "evt_2026_0710",
+        "evt_2026_1491",
+        "evt_2026_1938",
+        "evt_2026_2097",
+        "evt_2026_2147",
+        "evt_2026_2183",
+        "evt_2026_2556",
+        "evt_2026_3285",
+        "evt_2026_3597",
+        "evt_2026_3691",
+        "evt_2026_3729"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 15,
+    "certified_cell_count": 11,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0710",
+        "record_hash": "sha256:501cae5d5ae21474817dbc2f8638b60559532b038b6945cfb87d4c59750bae64",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU5353",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1491",
+        "record_hash": "sha256:1e3f135c7315d4b7c8d521734f1871e40a6baf547e876faeccdc9f6c879aa838",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ5353",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1938",
+        "record_hash": "sha256:153a17f1913b389d15554647d281d44df34cc9c1c1f2a5e133cec72d483163c1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5353",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2097",
+        "record_hash": "sha256:efa1184a501b7004442007ceee25c8877c187e1f2b135536b3da1bce0cbf9b0f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5353",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2147",
+        "record_hash": "sha256:b2de8618200cbc8d606c5d647dbc03cfd8a8deac7c9f89fddfb824507fe66df6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HO5353",
+        "column": "ARSON_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2183",
+        "record_hash": "sha256:6729c980880af88fdc320f889f468b1650cb277f0e591631f11f9c0e73a223e3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ET5353",
+        "column": "RAPE_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2556",
+        "record_hash": "sha256:72abe809361dcdcdc95b481b86070a3b400d656f321bea0c572bacdf8cf45249",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW5353",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3285",
+        "record_hash": "sha256:89b994ab7a9e5e66ab784bd1c60467d409cb5abb92c0b6317cd83e79aeca92b0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HO5353",
+        "column": "ARSON_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3597",
+        "record_hash": "sha256:df298f030696d26ee117acec1fbea943bb326e90510f2d2bf681fdac6890e7cd",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ET5353",
+        "column": "RAPE_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3691",
+        "record_hash": "sha256:76f183983959c088a9ec682d84f99e73b116b177880d3f72d09e2155c8300dd0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5353",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3729",
+        "record_hash": "sha256:bd7ba4ae7aa2b26abce395f99eb2a845d00cea996f00bc56c6e7c9aceff27ff5",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5353",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=drexel_university&signal_id=sig_1a5c74780ad9c6af75b8",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_1a5c74780ad9c6af75b8/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Drexel University. Across 11 certified ED cells, the reported geography totals are on-campus (10), residence-hall (4), public-property (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_1a5c74780ad9c6af75b8/",
+    "proactive_reply": "Relevant certified public-data context for Drexel University: https://campusevidencelab.org/signals/sig_1a5c74780ad9c6af75b8/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

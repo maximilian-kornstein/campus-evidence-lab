@@ -1,0 +1,125 @@
+{
+  "id": "sig_9bd464c2a096ec6985ba",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_7f03b016a707b14ebebf",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_29bc326e300b762d51ba",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/las_positas_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "las_positas_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "las_positas_college",
+    "name": "Las Positas College",
+    "city": "LIVERMORE",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1339",
+    "evt_2026_1648",
+    "evt_2026_2271",
+    "evt_2026_2331"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Las Positas College: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_1339",
+        "evt_2026_1648",
+        "evt_2026_2271",
+        "evt_2026_2331"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1339",
+        "record_hash": "sha256:155160bdaa566f13fdb9a9f3aec8aa6f4fe2f6e0ac5f5db2561350ff2cd9f072",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT7443",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1648",
+        "record_hash": "sha256:21abd7d22aefdc9d62cac0614d7c5b11531bd9e552f287caf676f03c95eae59e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU7443",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2271",
+        "record_hash": "sha256:3b3d98b4acaf96fcce1885fc3568126a58c8a55ca884ca865d7e685c0db842a0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP7443",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2331",
+        "record_hash": "sha256:4ecc3746b578dc3661dd8813fbba818797ab642e7eff73779d358fd55d0f0d71",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY7443",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=las_positas_college&signal_id=sig_9bd464c2a096ec6985ba",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_9bd464c2a096ec6985ba/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Las Positas College. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_9bd464c2a096ec6985ba/",
+    "proactive_reply": "Relevant certified public-data context for Las Positas College: https://campusevidencelab.org/signals/sig_9bd464c2a096ec6985ba/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

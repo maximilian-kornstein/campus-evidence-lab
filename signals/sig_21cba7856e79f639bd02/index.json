@@ -1,0 +1,125 @@
+{
+  "id": "sig_21cba7856e79f639bd02",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f00e6c9cb76006852ab1",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8760b9b7af1f371b5143",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_california_san_diego/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_california_san_diego"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (4), noncampus (1)."
+  },
+  "institution": {
+    "id": "university_of_california_san_diego",
+    "name": "University of California San Diego",
+    "city": "San Diego",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0946",
+    "evt_2026_2089",
+    "evt_2026_2357",
+    "evt_2026_2878"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of California San Diego: Across 4 certified ED cells, the reported geography totals are on-campus (4), noncampus (1).",
+      "supporting_record_ids": [
+        "evt_2026_0946",
+        "evt_2026_2089",
+        "evt_2026_2357",
+        "evt_2026_2878"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0946",
+        "record_hash": "sha256:1f3b0a9d26677ab98be52776265bdd9b8a5aca1eb8d57e9f538ca071f3b51794",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK477",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2089",
+        "record_hash": "sha256:52fbf5e9ef2a9f6875099b16d8d62c06e3b3ba5d429432b1bb9c5cfc092c23c1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP477",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2357",
+        "record_hash": "sha256:760ca31d71ba06c5bf4bbdf79f9a209da62116ceda215abbfabf7d41791ddb63",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY477",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2878",
+        "record_hash": "sha256:f7dc82e5fb1d3d1bb42ba893c242adae12ff4d9ba820b895ed338e24505676ae",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU477",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_california_san_diego&signal_id=sig_21cba7856e79f639bd02",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_21cba7856e79f639bd02/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of California San Diego. Across 4 certified ED cells, the reported geography totals are on-campus (4), noncampus (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_21cba7856e79f639bd02/",
+    "proactive_reply": "Relevant certified public-data context for University of California San Diego: https://campusevidencelab.org/signals/sig_21cba7856e79f639bd02/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

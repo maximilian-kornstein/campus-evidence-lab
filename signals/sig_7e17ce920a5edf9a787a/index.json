@@ -1,0 +1,125 @@
+{
+  "id": "sig_7e17ce920a5edf9a787a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_1363d32e4903c9f534c2",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_bed4ef80172205a4af96",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/pomona_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "pomona_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "pomona_college",
+    "name": "Pomona College",
+    "city": "Claremont",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0863",
+    "evt_2026_2315",
+    "evt_2026_2974",
+    "evt_2026_3663"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Pomona College: Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0863",
+        "evt_2026_2315",
+        "evt_2026_2974",
+        "evt_2026_3663"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0863",
+        "record_hash": "sha256:36f4e60f7dd1c8236c1dae7b06cd425fcfa71f0529c95f33120c1959305af419",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV794",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2315",
+        "record_hash": "sha256:90cf0ceee88c4bb5d01cb929299bc37f19e7d330f3c820acbb345d3892ee132d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EI794",
+        "column": "VANDAL_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2974",
+        "record_hash": "sha256:9408b9d825ebe8bc3e01e7163ce26e01007044d658d16b8c6a350426dfa62a09",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV794",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3663",
+        "record_hash": "sha256:b3b96431468dddc5e701b822f7f45033a737d6b5b45458078214ca7d38f3959a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EI794",
+        "column": "VANDAL_NAT22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=pomona_college&signal_id=sig_7e17ce920a5edf9a787a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7e17ce920a5edf9a787a/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Pomona College. Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7e17ce920a5edf9a787a/",
+    "proactive_reply": "Relevant certified public-data context for Pomona College: https://campusevidencelab.org/signals/sig_7e17ce920a5edf9a787a/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

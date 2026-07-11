@@ -1,0 +1,173 @@
+{
+  "id": "sig_5a8068f9da33f973040d",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_6ff623a78974fe7a7e85",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_b6fee2925c24aef8119d",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_wisconsin_eau_claire/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_wisconsin_eau_claire"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the documented category totals are Vandalism (5), Other source-backed civil rights event (2), Harassment or threat (1)."
+  },
+  "institution": {
+    "id": "university_of_wisconsin_eau_claire",
+    "name": "University of Wisconsin-Eau Claire",
+    "city": "Eau Claire",
+    "state": "WI"
+  },
+  "record_ids": [
+    "evt_2026_0402",
+    "evt_2026_0813",
+    "evt_2026_1246",
+    "evt_2026_1365",
+    "evt_2026_2797",
+    "evt_2026_3212",
+    "evt_2026_3334",
+    "evt_2026_3533"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Wisconsin-Eau Claire: Across 8 certified ED cells, the documented category totals are Vandalism (5), Other source-backed civil rights event (2), Harassment or threat (1).",
+      "supporting_record_ids": [
+        "evt_2026_0402",
+        "evt_2026_0813",
+        "evt_2026_1246",
+        "evt_2026_1365",
+        "evt_2026_2797",
+        "evt_2026_3212",
+        "evt_2026_3334",
+        "evt_2026_3533"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0402",
+        "record_hash": "sha256:08bff3909d1c5be293f6df4f17bc7ecaff3a5b7be9ef07d834001923523a6a5e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND7056",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0813",
+        "record_hash": "sha256:a2207f9bb79ba09bd230f8e2bd590249212f703508607bb130243a6d9b2b6d42",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ7056",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1246",
+        "record_hash": "sha256:2ad13d80c82a76a495b1c7073a5fe74692df4b9fafef614407af9a50a0a2436a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV7056",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1365",
+        "record_hash": "sha256:31a9e07c91f437f5452eb4d29aa21f50c120989f20d761601a244aea24990c54",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU7056",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2797",
+        "record_hash": "sha256:66b7965c60973735c2ada6d31414ac4a318413a69327551ab03756d9cdc8db7e",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV7056",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3212",
+        "record_hash": "sha256:67c528ae46d541e3661bd5bad5b077994be8b86ac4ec18a8cca1810ac42e2e6c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND7056",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3334",
+        "record_hash": "sha256:831b390c41e06e4b62131087b95345c732a925a574d7c7582704beffb1cd2e3d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ7056",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3533",
+        "record_hash": "sha256:9125559f71637339005ca5ebcf2bacec194f521d63f6de91ac10758c2acfd6d5",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV7056",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_wisconsin_eau_claire&signal_id=sig_5a8068f9da33f973040d",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5a8068f9da33f973040d/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Wisconsin-Eau Claire. Across 8 certified ED cells, the documented category totals are Vandalism (5), Other source-backed civil rights event (2), Harassment or thr… Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_5a8068f9da33f973040d/",
+    "proactive_reply": "Relevant certified public-data context for University of Wisconsin-Eau Claire: https://campusevidencelab.org/signals/sig_5a8068f9da33f973040d/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,149 @@
+{
+  "id": "sig_c485fdd9f436ea343fcc",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e864a0e6785027821d4f",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_0db4f136b731bf069bba",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/waldorf_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "waldorf_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (1)."
+  },
+  "institution": {
+    "id": "waldorf_university",
+    "name": "Waldorf University",
+    "city": "FOREST CITY",
+    "state": "IA"
+  },
+  "record_ids": [
+    "evt_2026_0360",
+    "evt_2026_0781",
+    "evt_2026_1032",
+    "evt_2026_1185",
+    "evt_2026_3160",
+    "evt_2026_3295"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Waldorf University: Across 6 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (1).",
+      "supporting_record_ids": [
+        "evt_2026_0360",
+        "evt_2026_0781",
+        "evt_2026_1032",
+        "evt_2026_1185",
+        "evt_2026_3160",
+        "evt_2026_3295"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0360",
+        "record_hash": "sha256:f6a4fe22bb8559332aecb334d70bbac6a079db22eb1116b96bb87bb1fc401440",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR2350",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0781",
+        "record_hash": "sha256:6c3338b9a8de8cd4d75dc6cb759f83f0a33bb89324b7b17db1c8b80661c4c835",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ2350",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1032",
+        "record_hash": "sha256:72ee3e71d3d6ff8dfe2980a003022aad4424b216fa43a1408f62e4e7ddefd420",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU2350",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1185",
+        "record_hash": "sha256:58abaec6e9ce4a4551738356d1e9dc67e5978348c96b6c207a0e8065753c07bc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2350",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3160",
+        "record_hash": "sha256:e6062f578b81e6f50fc79ead11f93a621086fa5ed564e96666e4f05c8fc39619",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU2350",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3295",
+        "record_hash": "sha256:5c6e6339370ff19a387a84f41edcae96af11a73108811d9a1bf76d5be2b5fc91",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2350",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=waldorf_university&signal_id=sig_c485fdd9f436ea343fcc",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_c485fdd9f436ea343fcc/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Waldorf University. Across 6 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_c485fdd9f436ea343fcc/",
+    "proactive_reply": "Relevant certified public-data context for Waldorf University: https://campusevidencelab.org/signals/sig_c485fdd9f436ea343fcc/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

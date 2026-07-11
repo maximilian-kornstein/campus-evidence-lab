@@ -1,0 +1,185 @@
+{
+  "id": "sig_da7462f3158f846ab52a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_85b9afa17aee00eecf14",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_9a7e1eb189afaacc0fa5",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/villanova_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "villanova_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the documented category totals are Harassment or threat (9), Vandalism (2)."
+  },
+  "institution": {
+    "id": "villanova_university",
+    "name": "Villanova University",
+    "city": "Villanova",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0847",
+    "evt_2026_1535",
+    "evt_2026_1960",
+    "evt_2026_2105",
+    "evt_2026_2153",
+    "evt_2026_2186",
+    "evt_2026_2606",
+    "evt_2026_2663",
+    "evt_2026_3572"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Villanova University: Across 9 certified ED cells, the documented category totals are Harassment or threat (9), Vandalism (2).",
+      "supporting_record_ids": [
+        "evt_2026_0847",
+        "evt_2026_1535",
+        "evt_2026_1960",
+        "evt_2026_2105",
+        "evt_2026_2153",
+        "evt_2026_2186",
+        "evt_2026_2606",
+        "evt_2026_2663",
+        "evt_2026_3572"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0847",
+        "record_hash": "sha256:2aa04e5cd7621fd20dc5ce39523302b48e8deafbcb54f13812f0d9c99a43062c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM5586",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1535",
+        "record_hash": "sha256:cf1f83592afdb2341b51aa80bca09cc604b41020265cbbc4f59abe9121ac72bd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5586",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1960",
+        "record_hash": "sha256:923e38327618ec975b12f6bf7c20541b22a6db1858c6cd89914f79918ffbe4cf",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA5586",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2105",
+        "record_hash": "sha256:f3ec5f570642bf2ab83f85b83c95607dc690af01ba54be0b0b476d70e76aa0dd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU5586",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2153",
+        "record_hash": "sha256:fa1a77eca81328a57affb2f9e770fab69543393f81a740d3f463d3f81173c232",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5586",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2186",
+        "record_hash": "sha256:f2a650142aa1a0c6de751d0bc685467d2eb06c86f17efd70427db88c3479e44d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5586",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2606",
+        "record_hash": "sha256:4f83dbe7239a022d42e7b4160b5716e62dd2099da6bbdf3cb32688f0d82aace1",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5586",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2663",
+        "record_hash": "sha256:c72205f75152685f65c051a32590da35994f6afd6ed85b7db83ce002d4d26ef7",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5586",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3572",
+        "record_hash": "sha256:1c548aab05f28ec0f0215c0b2618098ea2edb87e4745aa16baf346539a11564b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM5586",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=villanova_university&signal_id=sig_da7462f3158f846ab52a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_da7462f3158f846ab52a/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Villanova University. Across 9 certified ED cells, the documented category totals are Harassment or threat (9), Vandalism (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_da7462f3158f846ab52a/",
+    "proactive_reply": "Relevant certified public-data context for Villanova University: https://campusevidencelab.org/signals/sig_da7462f3158f846ab52a/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

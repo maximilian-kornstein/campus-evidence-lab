@@ -1,0 +1,137 @@
+{
+  "id": "sig_e5a9406471f796d88997",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_18f0efe0187424bb4fd1",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6a34805cc17be75bfa27",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/riverland_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "riverland_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (7), residence-hall (1)."
+  },
+  "institution": {
+    "id": "riverland_community_college",
+    "name": "Riverland Community College",
+    "city": "Albert Lea",
+    "state": "MN"
+  },
+  "record_ids": [
+    "evt_2026_0413",
+    "evt_2026_1193",
+    "evt_2026_1293",
+    "evt_2026_1378",
+    "evt_2026_3066"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Riverland Community College: Across 5 certified ED cells, the reported geography totals are on-campus (7), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0413",
+        "evt_2026_1193",
+        "evt_2026_1293",
+        "evt_2026_1378",
+        "evt_2026_3066"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0413",
+        "record_hash": "sha256:b681db83339faa9df3e3055c34fb0cc355f07bf9d4e31e1cd284dcc577dd9ad8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3319",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1193",
+        "record_hash": "sha256:29bd1870fe62e553181e3350f13212c90a0f790ef211960bbdcc9ba217fcc313",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ3319",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_1293",
+        "record_hash": "sha256:24ddeb1ec87b64700ce9e02ca5330b7e465b97567abca060a2d7360ad6c3dc92",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3318",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1378",
+        "record_hash": "sha256:4d8925bcaeb6656ee8216dc90c45d2e8b2757ec68920750985d5c7bb7e36cf80",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3319",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3066",
+        "record_hash": "sha256:9c840696aea4297e57f6e87ab928186cca4471514ede86eba014bd906476d1e9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3318",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=riverland_community_college&signal_id=sig_e5a9406471f796d88997",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e5a9406471f796d88997/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Riverland Community College. Across 5 certified ED cells, the reported geography totals are on-campus (7), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e5a9406471f796d88997/",
+    "proactive_reply": "Relevant certified public-data context for Riverland Community College: https://campusevidencelab.org/signals/sig_e5a9406471f796d88997/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

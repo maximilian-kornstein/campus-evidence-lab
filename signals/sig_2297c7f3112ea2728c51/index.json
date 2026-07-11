@@ -1,0 +1,137 @@
+{
+  "id": "sig_2297c7f3112ea2728c51",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_87373fdfaae962061d88",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_3eeac97420eaa2f54d86",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/depaul_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "depaul_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the source-supported affected-community totals are Race (4), Religion (2), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "depaul_university",
+    "name": "DePaul University",
+    "city": "CHICAGO",
+    "state": "IL"
+  },
+  "record_ids": [
+    "evt_2026_0285",
+    "evt_2026_0737",
+    "evt_2026_1345",
+    "evt_2026_2665",
+    "evt_2026_2690"
+  ],
+  "bounded_claims": [
+    {
+      "text": "DePaul University: Across 5 certified ED cells, the source-supported affected-community totals are Race (4), Religion (2), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_0285",
+        "evt_2026_0737",
+        "evt_2026_1345",
+        "evt_2026_2665",
+        "evt_2026_2690"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0285",
+        "record_hash": "sha256:dc7bc1f47819d50c750b800aa79be626737b371a6fdd1af596a1afdf6a1ee79d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LI1835",
+        "column": "AGG_A_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0737",
+        "record_hash": "sha256:a6a92de47d21b9e0ecf266a1cbde1df3e22905acc941464c3d728f2df938fe46",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LJ1835",
+        "column": "AGG_A_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1345",
+        "record_hash": "sha256:e25380ea29e1f1bcaeadc41dec23688640f89d8432b680170ba31f335380a4af",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1835",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2665",
+        "record_hash": "sha256:1676cd566e32da93a084efcaafba7450cde433ea73af8f0b81a7a519afd7f931",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LI1836",
+        "column": "AGG_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2690",
+        "record_hash": "sha256:1d1cd085001f0aa5ba7fb037474f540466684654ad0c3528db1df877a5df23a8",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DC1835",
+        "column": "SIM_A_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=depaul_university&signal_id=sig_2297c7f3112ea2728c51",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_2297c7f3112ea2728c51/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: DePaul University. Across 5 certified ED cells, the source-supported affected-community totals are Race (4), Religion (2), LGBTQ+ (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_2297c7f3112ea2728c51/",
+    "proactive_reply": "Relevant certified public-data context for DePaul University: https://campusevidencelab.org/signals/sig_2297c7f3112ea2728c51/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

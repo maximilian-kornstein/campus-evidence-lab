@@ -1,0 +1,161 @@
+{
+  "id": "sig_9646e47d7e7216e081c5",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_acea4ee8ea655ef2f21f",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_a9c278fed83797801a90",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/lincoln_memorial_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "lincoln_memorial_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Race (5), Gender (2), LGBTQ+ (1), National origin (1)."
+  },
+  "institution": {
+    "id": "lincoln_memorial_university",
+    "name": "Lincoln Memorial University",
+    "city": "HARROGATE",
+    "state": "TN"
+  },
+  "record_ids": [
+    "evt_2026_0211",
+    "evt_2026_0715",
+    "evt_2026_0935",
+    "evt_2026_1095",
+    "evt_2026_1331",
+    "evt_2026_1359",
+    "evt_2026_2558"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Lincoln Memorial University: Across 7 certified ED cells, the source-supported affected-community totals are Race (5), Gender (2), LGBTQ+ (1), National origin (1).",
+      "supporting_record_ids": [
+        "evt_2026_0211",
+        "evt_2026_0715",
+        "evt_2026_0935",
+        "evt_2026_1095",
+        "evt_2026_1331",
+        "evt_2026_1359",
+        "evt_2026_2558"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0211",
+        "record_hash": "sha256:edc2cc712b0ff51c03cf5259933f11907b445eb60a498e4bb113807b35cfdc7a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN5847",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0715",
+        "record_hash": "sha256:8feaf9b8b1a32d62791e7501d33b6750f5ecea09082079e450254e4cb97493dd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5847",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0935",
+        "record_hash": "sha256:176657edeb971bdd6b147e686b57909a4d4eae0f69cbc367eb0b8df025a21b8d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5847",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1095",
+        "record_hash": "sha256:84b1136808ec4ebe4a07c0362b895804157f22d9d68c18e263ce3941920a6d97",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ5847",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1331",
+        "record_hash": "sha256:76c998dedd59fc9fd7ad56a4296620da2e045300da8feb4660a162b6907e87b9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ5847",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1359",
+        "record_hash": "sha256:629d7dca8dd8e0b5342bd57f66538f627716d40b2150029a22b6d47d4cd59f77",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5847",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2558",
+        "record_hash": "sha256:86dbbba22e82dcf2c53488fac23d9464edd1060fc9ad3037dceae5388882d5ad",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5847",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=lincoln_memorial_university&signal_id=sig_9646e47d7e7216e081c5",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_9646e47d7e7216e081c5/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Lincoln Memorial University. Across 7 certified ED cells, the source-supported affected-community totals are Race (5), Gender (2), LGBTQ+ (1), National origin (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_9646e47d7e7216e081c5/",
+    "proactive_reply": "Relevant certified public-data context for Lincoln Memorial University: https://campusevidencelab.org/signals/sig_9646e47d7e7216e081c5/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

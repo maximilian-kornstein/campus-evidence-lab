@@ -1,0 +1,161 @@
+{
+  "id": "sig_3c8b0746dbebc4d546ed",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e1ee103a0e41f46a5521",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8e3e8f2e725be4e9df36",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/kent_state_university_at_kent/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "kent_state_university_at_kent"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "kent_state_university_at_kent",
+    "name": "Kent State University at Kent",
+    "city": "Kent",
+    "state": "OH"
+  },
+  "record_ids": [
+    "evt_2026_0301",
+    "evt_2026_0800",
+    "evt_2026_1269",
+    "evt_2026_1466",
+    "evt_2026_1620",
+    "evt_2026_1708",
+    "evt_2026_3036"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Kent State University at Kent: Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0301",
+        "evt_2026_0800",
+        "evt_2026_1269",
+        "evt_2026_1466",
+        "evt_2026_1620",
+        "evt_2026_1708",
+        "evt_2026_3036"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0301",
+        "record_hash": "sha256:79a16e3993c5f738f31b84cad321984a5cfc207806b8f04781675da3e398f30a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV4966",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0800",
+        "record_hash": "sha256:3fa88f985d249da15e68afd8aaefc5e507f8e206e886e598d89dbd57540fe21a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC4966",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1269",
+        "record_hash": "sha256:6d93594102498217854d9c282ea4564ad40f3370aeb6003f01a31726ad02fe60",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4966",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1466",
+        "record_hash": "sha256:f19f187891fb0e838d33c47afe07bb814f226bfcedfc0289ca39bf49e631f1d5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4966",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1620",
+        "record_hash": "sha256:c39a9e533667ab3c52935d8ef7e3bd53a34623ba189963be36b76921de26c60f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4966",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1708",
+        "record_hash": "sha256:737ee761abfe833f4b37ddc33519eef39901668e438c0e1103c5739b3ea6bb79",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4966",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3036",
+        "record_hash": "sha256:bc66f301a29b8fa5c3127f539f0bd18a035c39ba0aef70757cb18462e0ebd89d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC4966",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=kent_state_university_at_kent&signal_id=sig_3c8b0746dbebc4d546ed",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3c8b0746dbebc4d546ed/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Kent State University at Kent. Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3c8b0746dbebc4d546ed/",
+    "proactive_reply": "Relevant certified public-data context for Kent State University at Kent: https://campusevidencelab.org/signals/sig_3c8b0746dbebc4d546ed/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

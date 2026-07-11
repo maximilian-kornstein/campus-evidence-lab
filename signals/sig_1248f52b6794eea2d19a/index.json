@@ -1,0 +1,205 @@
+{
+  "id": "sig_1248f52b6794eea2d19a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_cf3a9a126960a7babc64",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_873b753fe030d676c87c",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_wisconsin_stevens_point/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_wisconsin_stevens_point"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 10 certified ED cells, the documented category totals are Vandalism (12), Harassment or threat (2)."
+  },
+  "institution": {
+    "id": "university_of_wisconsin_stevens_point",
+    "name": "University of Wisconsin-Stevens Point",
+    "city": "STEVENS POINT",
+    "state": "WI"
+  },
+  "record_ids": [
+    "evt_2026_0497",
+    "evt_2026_0981",
+    "evt_2026_1392",
+    "evt_2026_1497",
+    "evt_2026_2502",
+    "evt_2026_3121",
+    "evt_2026_3374",
+    "evt_2026_3563",
+    "evt_2026_3589",
+    "evt_2026_3833"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Wisconsin-Stevens Point: Across 10 certified ED cells, the documented category totals are Vandalism (12), Harassment or threat (2).",
+      "supporting_record_ids": [
+        "evt_2026_0497",
+        "evt_2026_0981",
+        "evt_2026_1392",
+        "evt_2026_1497",
+        "evt_2026_2502",
+        "evt_2026_3121",
+        "evt_2026_3374",
+        "evt_2026_3563",
+        "evt_2026_3589",
+        "evt_2026_3833"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 14,
+    "certified_cell_count": 10,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0497",
+        "record_hash": "sha256:b164c0a3f75d3d11891ba204581c028a6e778ac42caa6a83e938978595a9694d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ7081",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0981",
+        "record_hash": "sha256:a4c8dc16e95d145e86e725fc4bf81c23609f69fadaab26051b122fabf46d8f1a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF7081",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1392",
+        "record_hash": "sha256:af1a4d55735a8a02816d5e577efac27567e9a235d565f5df0292df7bcee86b39",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB7081",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1497",
+        "record_hash": "sha256:2399ba3f1a62d7dc0752206f76024811dc382555209be1e63d1a0c70be820a86",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED7081",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2502",
+        "record_hash": "sha256:e0956beb29d343f17501b26d1548fca2b14f0e9c35b67d1f28137f09c0f799bc",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM7081",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3121",
+        "record_hash": "sha256:60264377b358b626f90f25652f445b1bccb02ebcda6dacd0ae1b0ebfa0e14c91",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ7081",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3374",
+        "record_hash": "sha256:998ce42f2b4b3e479f8e4695c73aae86dd181c11cb14f49d22107b7f9f4318b8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF7081",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3563",
+        "record_hash": "sha256:6f1acc6d3bf8ff48dfc70f907e1eb402eca02dfc15da4043c224e08278e09f11",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB7081",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3589",
+        "record_hash": "sha256:e50dc03768adb18577d1d1684323e2ba01d205f49ff906f2a0b8c265bec206be",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED7081",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3833",
+        "record_hash": "sha256:a1462730232674e06f0e20de1c2e912ac071fc6b053ef4a0ef9c650664abbc0d",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB7221",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_wisconsin_stevens_point&signal_id=sig_1248f52b6794eea2d19a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_1248f52b6794eea2d19a/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Wisconsin-Stevens Point. Across 10 certified ED cells, the documented category totals are Vandalism (12), Harassment or threat (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_1248f52b6794eea2d19a/",
+    "proactive_reply": "Relevant certified public-data context for University of Wisconsin-Stevens Point: https://campusevidencelab.org/signals/sig_1248f52b6794eea2d19a/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

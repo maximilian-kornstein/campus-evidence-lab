@@ -1,0 +1,137 @@
+{
+  "id": "sig_29e949cb42ef0428a58d",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_a108ea58c5fd1d33d632",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8ddcff6bcca5eae363de",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/ball_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "ball_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (1), Religion (1)."
+  },
+  "institution": {
+    "id": "ball_state_university",
+    "name": "Ball State University",
+    "city": "MUNCIE",
+    "state": "IN"
+  },
+  "record_ids": [
+    "evt_2026_0275",
+    "evt_2026_0872",
+    "evt_2026_1222",
+    "evt_2026_1318",
+    "evt_2026_2616"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Ball State University: Across 5 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (1), Religion (1).",
+      "supporting_record_ids": [
+        "evt_2026_0275",
+        "evt_2026_0872",
+        "evt_2026_1222",
+        "evt_2026_1318",
+        "evt_2026_2616"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0275",
+        "record_hash": "sha256:a194714fe6049d171bfe1aba9344d65688a2d1e3db78f5536832f1a05c3a37e3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT2065",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0872",
+        "record_hash": "sha256:b08fe4b74412585449a0cc7f12d1e5932f0613d97a1f0c6d13c94a7d438369b4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX2065",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1222",
+        "record_hash": "sha256:865fff2fedaecc48fdaabdabb499fcb94c7f646189f50e4f494ceb52c7c7cdec",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY2065",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1318",
+        "record_hash": "sha256:7678e333b7e4325958f87ca406d484d81a6bd1247b8cef683446059923bbcfae",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB2065",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2616",
+        "record_hash": "sha256:c8713ef0e7ce30045fc8aa49b82467ec68b9b4803ba45331ec9b9b07f8b0ed32",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY2065",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=ball_state_university&signal_id=sig_29e949cb42ef0428a58d",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_29e949cb42ef0428a58d/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Ball State University. Across 5 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (1), Religion (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_29e949cb42ef0428a58d/",
+    "proactive_reply": "Relevant certified public-data context for Ball State University: https://campusevidencelab.org/signals/sig_29e949cb42ef0428a58d/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

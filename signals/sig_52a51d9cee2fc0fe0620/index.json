@@ -1,0 +1,197 @@
+{
+  "id": "sig_52a51d9cee2fc0fe0620",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_254e0032cd5f16bb68f4",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_80cdc64795e3a3a5407a",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/colorado_state_university_fort_collins/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "colorado_state_university_fort_collins"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 10 certified ED cells, the reported geography totals are on-campus (9), residence-hall (4)."
+  },
+  "institution": {
+    "id": "colorado_state_university_fort_collins",
+    "name": "Colorado State University-Fort Collins",
+    "city": "Fort Collins",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0130",
+    "evt_2026_0775",
+    "evt_2026_1249",
+    "evt_2026_1452",
+    "evt_2026_1608",
+    "evt_2026_1699",
+    "evt_2026_1759",
+    "evt_2026_3241",
+    "evt_2026_3519",
+    "evt_2026_3613"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Colorado State University-Fort Collins: Across 10 certified ED cells, the reported geography totals are on-campus (9), residence-hall (4).",
+      "supporting_record_ids": [
+        "evt_2026_0130",
+        "evt_2026_0775",
+        "evt_2026_1249",
+        "evt_2026_1452",
+        "evt_2026_1608",
+        "evt_2026_1699",
+        "evt_2026_1759",
+        "evt_2026_3241",
+        "evt_2026_3519",
+        "evt_2026_3613"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 13,
+    "certified_cell_count": 10,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0130",
+        "record_hash": "sha256:79eaee4f9f9a243daed7aff5f77d7931e8bc20962e56a5215f19f6912e22b52e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL982",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0775",
+        "record_hash": "sha256:921dd48d65f8d55b274dfc34eac357670424532438974f15c254f3818817d500",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NO982",
+        "column": "INTIM_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1249",
+        "record_hash": "sha256:4bc78b0baa211ed2c7fed18660f102fc1ac7be2003a0c0d0db4ad953402a6de2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MW982",
+        "column": "SIM_A_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1452",
+        "record_hash": "sha256:51c77568d3d24695eaa960bca35f110c9f68f68e9c3636a28cf4fc3f242a0951",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX982",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1608",
+        "record_hash": "sha256:324b27c25350b42be97ecac3de6d385bc3f231881b1a38cb4e85786ec9516875",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO982",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1699",
+        "record_hash": "sha256:67a92df0cf1856244d9e1fac14195a28b99e929dc8f0038a1ed388adf92c048f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ982",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1759",
+        "record_hash": "sha256:c27cb699895626152dda265ea4690e08f648b407fe4cef93b71eb37404496239",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF982",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3241",
+        "record_hash": "sha256:312cf1b28398aefe107b4790d68057f595e5f7d55ce0f31d191781e39147cf17",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NO982",
+        "column": "INTIM_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3519",
+        "record_hash": "sha256:0fce21aa099870341a2b1da6c35087b43bbfb3a33125895528004e3208f57957",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX982",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3613",
+        "record_hash": "sha256:5201c853c3c14e058527f56bb89c83e718c9e714543e71be719bb41184b2464e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF982",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=colorado_state_university_fort_collins&signal_id=sig_52a51d9cee2fc0fe0620",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_52a51d9cee2fc0fe0620/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Colorado State University-Fort Collins. Across 10 certified ED cells, the reported geography totals are on-campus (9), residence-hall (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_52a51d9cee2fc0fe0620/",
+    "proactive_reply": "Relevant certified public-data context for Colorado State University-Fort Collins: https://campusevidencelab.org/signals/sig_52a51d9cee2fc0fe0620/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

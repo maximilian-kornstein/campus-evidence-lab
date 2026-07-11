@@ -1,0 +1,161 @@
+{
+  "id": "sig_9f933e52ef7fc7c485c8",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_20b9436c1383427c5b90",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_b21f879f6a475dd1c1cc",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/widener_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "widener_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 5 reported statistics across 5 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "widener_university",
+    "name": "Widener University",
+    "city": "WILMINGTON",
+    "state": "DE"
+  },
+  "record_ids": [
+    "evt_2026_0183",
+    "evt_2026_1012",
+    "evt_2026_1557",
+    "evt_2026_1970",
+    "evt_2026_2108",
+    "evt_2026_3206",
+    "evt_2026_3688"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Widener University: Certified ED workbook cells document 5 reported statistics across 5 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0183",
+        "evt_2026_1012",
+        "evt_2026_1557",
+        "evt_2026_1970",
+        "evt_2026_2108",
+        "evt_2026_3206",
+        "evt_2026_3688"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0183",
+        "record_hash": "sha256:74fa00b33b64c231ec7bb66bf6c500c3a5a0161acf8a4cfa9685a21ea8047328",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5601",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1012",
+        "record_hash": "sha256:d3c78390646b01cc774e2054a5220a8afae1af7f923de76c94253a750629df9e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL5600",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1557",
+        "record_hash": "sha256:5cee66b4d39fb63fd864c082c7a77e7ed042cc9402169b32d382a7333d28083a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT5600",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1970",
+        "record_hash": "sha256:c4c878a87eb8a6cbd56d29d88e8f0ddc31a102f179004afe0e59c6fb2c5d3bb8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV5600",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2108",
+        "record_hash": "sha256:d0a2b182cfc28ba7a8adc73459cfeec5d76701c85ac261e47df90165abe98b11",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ5600",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3206",
+        "record_hash": "sha256:f28ec0dc887cea4361f9cc33c4ceab96f5a19bdd38dad5248bef291bad0c928a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL5600",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3688",
+        "record_hash": "sha256:1571d76ed157bf70c3621580fe140468a9afd6aec1515cc1cc74c7382fa9759d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT5600",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=widener_university&signal_id=sig_9f933e52ef7fc7c485c8",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_9f933e52ef7fc7c485c8/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Widener University. Certified ED workbook cells document 5 reported statistics across 5 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_9f933e52ef7fc7c485c8/",
+    "proactive_reply": "Relevant certified public-data context for Widener University: https://campusevidencelab.org/signals/sig_9f933e52ef7fc7c485c8/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

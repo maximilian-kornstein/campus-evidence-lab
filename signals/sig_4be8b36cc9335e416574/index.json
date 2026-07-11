@@ -1,0 +1,137 @@
+{
+  "id": "sig_4be8b36cc9335e416574",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d0e3a3f82f01e6d087d4",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_35320749432814631ca0",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_new_haven/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_new_haven"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (3), public-property (1), residence-hall (1)."
+  },
+  "institution": {
+    "id": "university_of_new_haven",
+    "name": "University of New Haven",
+    "city": "WEST HAVEN",
+    "state": "CT"
+  },
+  "record_ids": [
+    "evt_2026_0223",
+    "evt_2026_0907",
+    "evt_2026_1028",
+    "evt_2026_2431",
+    "evt_2026_3186"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of New Haven: Across 5 certified ED cells, the reported geography totals are on-campus (3), public-property (1), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0223",
+        "evt_2026_0907",
+        "evt_2026_1028",
+        "evt_2026_2431",
+        "evt_2026_3186"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0223",
+        "record_hash": "sha256:367024926a9238489cc9171b3fa9115c7584fe236353725c5ef18d28daf40988",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1089",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0907",
+        "record_hash": "sha256:89371b6aaca77eb2dbc60ef0d98bfd5fa2ebe9a928eb592cf479fffb0f5a2c14",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV1089",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1028",
+        "record_hash": "sha256:e2c6c858322c39b01da0fda772faffa12da606c2aebe60f4bbcd531a8e8230c7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA1089",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2431",
+        "record_hash": "sha256:679720b94c22be94f98d39c666a0790d9b42c89ce5db9e5f93eca44704399cd5",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT1089",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3186",
+        "record_hash": "sha256:931ed007071859f189c142b02770b0e7b0d4b0ddffa2b9027207055eee9c1848",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1089",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_new_haven&signal_id=sig_4be8b36cc9335e416574",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4be8b36cc9335e416574/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of New Haven. Across 5 certified ED cells, the reported geography totals are on-campus (3), public-property (1), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_4be8b36cc9335e416574/",
+    "proactive_reply": "Relevant certified public-data context for University of New Haven: https://campusevidencelab.org/signals/sig_4be8b36cc9335e416574/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

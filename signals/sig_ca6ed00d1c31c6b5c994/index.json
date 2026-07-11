@@ -1,0 +1,137 @@
+{
+  "id": "sig_ca6ed00d1c31c6b5c994",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_15cdae312605845027ca",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8c645900364b9cad330a",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_dayton/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_dayton"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (6), residence-hall (1)."
+  },
+  "institution": {
+    "id": "university_of_dayton",
+    "name": "University of Dayton",
+    "city": "DAYTON",
+    "state": "OH"
+  },
+  "record_ids": [
+    "evt_2026_0619",
+    "evt_2026_1050",
+    "evt_2026_1675",
+    "evt_2026_1766",
+    "evt_2026_3570"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Dayton: Across 5 certified ED cells, the reported geography totals are on-campus (6), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0619",
+        "evt_2026_1050",
+        "evt_2026_1675",
+        "evt_2026_1766",
+        "evt_2026_3570"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0619",
+        "record_hash": "sha256:f863f98ca1d3c4da48b25045ce2ea5cf616051dccc706487134514a90df4024f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IH4918",
+        "column": "LAR_T_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1050",
+        "record_hash": "sha256:ec414da50d0e40ff36ce63e235db6667d51b0c8d5dcf47276710cc3b4e3572ce",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DL4918",
+        "column": "LAR_T_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1675",
+        "record_hash": "sha256:15a8ae5012ac78770decbcc7bb8e000d7659c7528b5ca05f18c4054b1bcbcabe",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BZ4918",
+        "column": "BURGLA_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1766",
+        "record_hash": "sha256:6b2f7bf440bef5a0867c300e2bcef2ff51860d4b69c41f5b2b2abfd17e47aab9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4918",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3570",
+        "record_hash": "sha256:d17565e8bf95dd50b53be1c593fb6a4aed163c9efce0153c2e6f60752caa4be3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BZ4918",
+        "column": "BURGLA_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_dayton&signal_id=sig_ca6ed00d1c31c6b5c994",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ca6ed00d1c31c6b5c994/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Dayton. Across 5 certified ED cells, the reported geography totals are on-campus (6), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ca6ed00d1c31c6b5c994/",
+    "proactive_reply": "Relevant certified public-data context for University of Dayton: https://campusevidencelab.org/signals/sig_ca6ed00d1c31c6b5c994/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

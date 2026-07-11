@@ -1,0 +1,217 @@
+{
+  "id": "sig_ac55aca9cd999f1af0ac",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c2ed48a8e55c2148fe82",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_5863ba3026fb8b691c16",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/east_carolina_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "east_carolina_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "east_carolina_university",
+    "name": "East Carolina University",
+    "city": "GREENVILLE",
+    "state": "NC"
+  },
+  "record_ids": [
+    "evt_2026_0368",
+    "evt_2026_0794",
+    "evt_2026_1084",
+    "evt_2026_1263",
+    "evt_2026_1407",
+    "evt_2026_1463",
+    "evt_2026_3170",
+    "evt_2026_3255",
+    "evt_2026_3301",
+    "evt_2026_3344",
+    "evt_2026_3814"
+  ],
+  "bounded_claims": [
+    {
+      "text": "East Carolina University: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0368",
+        "evt_2026_0794",
+        "evt_2026_1084",
+        "evt_2026_1263",
+        "evt_2026_1407",
+        "evt_2026_1463",
+        "evt_2026_3170",
+        "evt_2026_3255",
+        "evt_2026_3301",
+        "evt_2026_3344",
+        "evt_2026_3814"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 11,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0368",
+        "record_hash": "sha256:cd9d82a9d51c1e55004ed2a0b04062e14000007451c5f24f679de8c7a9caf10f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV4623",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0794",
+        "record_hash": "sha256:822414f487dba38e18c96a02cb8c6303919a1ee1f729a726259bfe9e9bf4694c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4623",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1084",
+        "record_hash": "sha256:bdb8e96dd17181c5cde634c23e427de9a5e64c1ed606f2a91d653c529a21e8db",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4623",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1263",
+        "record_hash": "sha256:7522ecd6fedeae6364bb8aad9e07edffa71bc130a82a4be91d32fb10915cead9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4623",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1407",
+        "record_hash": "sha256:d20f677963784e671effb211ff64b83539cc852c9456bc3f2ef788f7c05bb3c5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4623",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1463",
+        "record_hash": "sha256:8c874368f9df3ba23d86cfdb3f03dc856179c9a9bc226e9fb5fde6bd02463d77",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA4623",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3170",
+        "record_hash": "sha256:ffb07144730504596d6671e8ea01865acbf17c501db227f7d5d668d79d5bc900",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV4623",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3255",
+        "record_hash": "sha256:7e6a0f54f6ddc100c23c0f2220cc70fad4145527ed84cad297d8f320b48d24bd",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4623",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3301",
+        "record_hash": "sha256:afd04c9748244d1fd4a3e5d9c2af5669ad8b5f1190e7c0711f20994c76687c5b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4623",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3344",
+        "record_hash": "sha256:71072cfb65f1c8c4a84d534f91a6e559f8078feb030f7782b4451ea55e1b25ba",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4623",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3814",
+        "record_hash": "sha256:8bf8b008e25da9cb4a28e7c47c09ffb19d858fc2797601a5f99a5f35db4accf5",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4739",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=east_carolina_university&signal_id=sig_ac55aca9cd999f1af0ac",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ac55aca9cd999f1af0ac/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: East Carolina University. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ac55aca9cd999f1af0ac/",
+    "proactive_reply": "Relevant certified public-data context for East Carolina University: https://campusevidencelab.org/signals/sig_ac55aca9cd999f1af0ac/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

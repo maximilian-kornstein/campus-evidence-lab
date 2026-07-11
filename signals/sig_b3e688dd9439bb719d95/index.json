@@ -1,0 +1,209 @@
+{
+  "id": "sig_b3e688dd9439bb719d95",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e1a6071d5bd3cb6bcccb",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_a2f372193b77e2a2214c",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/syracuse_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "syracuse_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 11 certified ED cells, the documented category totals are Harassment or threat (10), Vandalism (4)."
+  },
+  "institution": {
+    "id": "syracuse_university",
+    "name": "Syracuse University",
+    "city": "SYRACUSE",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_2239",
+    "evt_2026_2298",
+    "evt_2026_2394",
+    "evt_2026_2410",
+    "evt_2026_2418",
+    "evt_2026_2422",
+    "evt_2026_2846",
+    "evt_2026_3429",
+    "evt_2026_3433",
+    "evt_2026_3437",
+    "evt_2026_3441"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Syracuse University: Across 11 certified ED cells, the documented category totals are Harassment or threat (10), Vandalism (4).",
+      "supporting_record_ids": [
+        "evt_2026_2239",
+        "evt_2026_2298",
+        "evt_2026_2394",
+        "evt_2026_2410",
+        "evt_2026_2418",
+        "evt_2026_2422",
+        "evt_2026_2846",
+        "evt_2026_3429",
+        "evt_2026_3433",
+        "evt_2026_3437",
+        "evt_2026_3441"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 14,
+    "certified_cell_count": 11,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2239",
+        "record_hash": "sha256:66f4d44516a8531146f823338768d734f4892f058ab611c6b4501d86a54a03ad",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR4476",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2298",
+        "record_hash": "sha256:94165dca4296bc4022a8913bab03e8c6e6e34bbc0b8ec769cd9145b1ad3fc49a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MZ4476",
+        "column": "SIM_A_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2394",
+        "record_hash": "sha256:a61341889262c187c200057d7b4cf9f6159d780ce251556dad50ee9ee980a975",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE4476",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2410",
+        "record_hash": "sha256:7f3d458ee05e43c3b5bb0fb07ea72ba774c7137d51aea42f9ea12518ffaac913",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ4476",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2418",
+        "record_hash": "sha256:2f050b64c7cfc48ca9c19ed3ea64373f46b817a6b50abb0a57dc1e7e1471b6ec",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4476",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2422",
+        "record_hash": "sha256:44ba573084d31df0fe92107a68e89bf3cfdc7693bb1920e11fe56ab5c5e464cb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DY4476",
+        "column": "INTIM_ET22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_2846",
+        "record_hash": "sha256:379242bca010d420c97fc13a8d8d9325438960a7fadf199816746e2e0bdec34a",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4476",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3429",
+        "record_hash": "sha256:8e5c0b080049e4b607752639fa1bf3604548d2ebfd2818e02dd2371a8252d558",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV4476",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3433",
+        "record_hash": "sha256:c8a8cd8d0c178ea465ae973b105896d656ae1a71cb58477497a475be3137bcaf",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ4476",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3437",
+        "record_hash": "sha256:08412edb04024a49d04b1354a7acda8c23542d5411ae48a2339ec6f2befab52e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4476",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3441",
+        "record_hash": "sha256:f403bdc7aa1db9183da98612a0b074e5895e950d93404fbf15592b522d0d2e59",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4476",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=syracuse_university&signal_id=sig_b3e688dd9439bb719d95",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b3e688dd9439bb719d95/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Syracuse University. Across 11 certified ED cells, the documented category totals are Harassment or threat (10), Vandalism (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_b3e688dd9439bb719d95/",
+    "proactive_reply": "Relevant certified public-data context for Syracuse University: https://campusevidencelab.org/signals/sig_b3e688dd9439bb719d95/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

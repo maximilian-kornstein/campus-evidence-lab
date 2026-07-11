@@ -1,0 +1,169 @@
+{
+  "id": "sig_1fa5ca3a7ca7f87822ff",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_87d1a83016afbebac6bd",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_875d96514a0409608054",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/colorado_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "colorado_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the reported geography totals are on-campus (9), residence-hall (1)."
+  },
+  "institution": {
+    "id": "colorado_college",
+    "name": "Colorado College",
+    "city": "COLORADO SPRINGS",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0119",
+    "evt_2026_0729",
+    "evt_2026_1215",
+    "evt_2026_1476",
+    "evt_2026_1629",
+    "evt_2026_3015",
+    "evt_2026_3795"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Colorado College: Across 7 certified ED cells, the reported geography totals are on-campus (9), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0119",
+        "evt_2026_0729",
+        "evt_2026_1215",
+        "evt_2026_1476",
+        "evt_2026_1629",
+        "evt_2026_3015",
+        "evt_2026_3795"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0119",
+        "record_hash": "sha256:50d0e9522a0de3918ceafaefe4f40d85abe3ef47705ceccfaa44fe17afd9f822",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU975",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0729",
+        "record_hash": "sha256:ad1611dbe641d5597bbf23bbf94864e20b1af1210d7198c2d5a96089ae555d2f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR975",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1215",
+        "record_hash": "sha256:a3246e48145751ec804dade69a7ce9be7d4cbc353db2d0abce80f3f4ee24eeef",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ975",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1476",
+        "record_hash": "sha256:80aed1127a1696b169da4d8acc6a798c7e35ec87fb41266f0e0186c54a63a4e5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU975",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1629",
+        "record_hash": "sha256:64e821d4d6b2706e7d67e14d939fb3af93b317d583e96c8b0624914a535740a9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ975",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3015",
+        "record_hash": "sha256:09c8539b963e8054d8877615a48c0f197057756003ec4a4d0ec966b6d03b2dc7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR975",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3795",
+        "record_hash": "sha256:3d79f0a7e70dcf5987ebfdd2f6ec72a6ea7d3d733631e798d90a2c83c1acb805",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA979",
+        "column": "SIM_A_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=colorado_college&signal_id=sig_1fa5ca3a7ca7f87822ff",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_1fa5ca3a7ca7f87822ff/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Colorado College. Across 7 certified ED cells, the reported geography totals are on-campus (9), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_1fa5ca3a7ca7f87822ff/",
+    "proactive_reply": "Relevant certified public-data context for Colorado College: https://campusevidencelab.org/signals/sig_1fa5ca3a7ca7f87822ff/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sig_ac338e91912dbcae40df",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_dd3f91e66a793d2bcfed",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_248c8707c2be3d306e09",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/state_university_of_new_york_at_cortland/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "state_university_of_new_york_at_cortland"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (4), residence-hall (1)."
+  },
+  "institution": {
+    "id": "state_university_of_new_york_at_cortland",
+    "name": "State University of New York at Cortland",
+    "city": "CORTLAND",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1657",
+    "evt_2026_2116",
+    "evt_2026_2227",
+    "evt_2026_3555"
+  ],
+  "bounded_claims": [
+    {
+      "text": "State University of New York at Cortland: Across 4 certified ED cells, the reported geography totals are on-campus (4), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_1657",
+        "evt_2026_2116",
+        "evt_2026_2227",
+        "evt_2026_3555"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1657",
+        "record_hash": "sha256:15a95c3cbc0b0d93192d54e6f9043ab1ca1fb1e31d2556e0506485258e55d853",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK4448",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2116",
+        "record_hash": "sha256:32d0c63d7e0a3eff070cedca36b92a1f215ba48560b9e103502e9cff67fdcfb5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU4448",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2227",
+        "record_hash": "sha256:048e7e02b504b409f3919d96a96f0f2e6809b6fa619777e25c69239e35ed4bd2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4448",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3555",
+        "record_hash": "sha256:2be26e11c8bbbd9cee2cd79d2836642197295adc0c29f5338a28113537563973",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK4448",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=state_university_of_new_york_at_cortland&signal_id=sig_ac338e91912dbcae40df",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ac338e91912dbcae40df/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: State University of New York at Cortland. Across 4 certified ED cells, the reported geography totals are on-campus (4), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ac338e91912dbcae40df/",
+    "proactive_reply": "Relevant certified public-data context for State University of New York at Cortland: https://campusevidencelab.org/signals/sig_ac338e91912dbcae40df/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

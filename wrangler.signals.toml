@@ -1,0 +1,11 @@
+name = "cel-signals"
+main = "cloudflare/signals/worker.mjs"
+compatibility_date = "2026-06-03"
+
+[[d1_databases]]
+binding = "SIGNALS_DB"
+database_name = "cel-signals"
+database_id = "be5fb222-c141-40bd-bf83-1c55d916fcb2"
+
+[triggers]
+crons = ["7,37 13-23 * * *"]

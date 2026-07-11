@@ -1,0 +1,161 @@
+{
+  "id": "sig_4daca440e64da8457f92",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_59e4d0d5bd7c9ab51aee",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_fa7a4a20dbe8af3d3568",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/northern_technical_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "northern_technical_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2), Religion (2)."
+  },
+  "institution": {
+    "id": "northern_technical_college",
+    "name": "Northern Technical College",
+    "city": "north little rock",
+    "state": "AR"
+  },
+  "record_ids": [
+    "evt_2026_0127",
+    "evt_2026_0726",
+    "evt_2026_0903",
+    "evt_2026_1024",
+    "evt_2026_2427",
+    "evt_2026_2503",
+    "evt_2026_2564"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Northern Technical College: Across 7 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_0127",
+        "evt_2026_0726",
+        "evt_2026_0903",
+        "evt_2026_1024",
+        "evt_2026_2427",
+        "evt_2026_2503",
+        "evt_2026_2564"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0127",
+        "record_hash": "sha256:0abdb04a68d4666a7601a75fa4f7a6ab98dc272a2264295099390c0b5d592088",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT9737",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0726",
+        "record_hash": "sha256:d5e033fa4419ad8315ef9931792f0d6f9522e9169f45be8c7c91cebeef5c79dd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU9737",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0903",
+        "record_hash": "sha256:af4217d3c6c693bac815ea6e5e2bc36ff27da907b035d09a947bb90d7b4c9b86",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV9737",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1024",
+        "record_hash": "sha256:92b277bda549cb9b09d5d803c5e3e7938149580436aa52ec2169f236595042c4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX9737",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2427",
+        "record_hash": "sha256:e5c50cbabd6b6924a7df5eeef76f479ac7011994973a8da68fd72f1d34f39ad9",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT9737",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2503",
+        "record_hash": "sha256:0bd6991a149e0b54336bfae2738a64fc6096c357a02ed0cf779b7dd3354b0878",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU9737",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2564",
+        "record_hash": "sha256:4cd3075f0b0eb779fceb719b1e48ae10071430669c162060b68642ab91c3eda6",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV9737",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=northern_technical_college&signal_id=sig_4daca440e64da8457f92",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4daca440e64da8457f92/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Northern Technical College. Across 7 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_4daca440e64da8457f92/",
+    "proactive_reply": "Relevant certified public-data context for Northern Technical College: https://campusevidencelab.org/signals/sig_4daca440e64da8457f92/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

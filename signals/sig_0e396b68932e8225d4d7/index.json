@@ -1,0 +1,133 @@
+{
+  "id": "sig_0e396b68932e8225d4d7",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_b37dec5e84d40f4a0a76",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_5ffeab3786a58e2a8924",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_redlands/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_redlands"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Religion (5), Race (3), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "university_of_redlands",
+    "name": "University of Redlands",
+    "city": "REDLANDS",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1877",
+    "evt_2026_2193",
+    "evt_2026_3602",
+    "evt_2026_3746"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Redlands: Across 4 certified ED cells, the source-supported affected-community totals are Religion (5), Race (3), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_1877",
+        "evt_2026_2193",
+        "evt_2026_3602",
+        "evt_2026_3746"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1877",
+        "record_hash": "sha256:236b5b05328e68f20ee8adf6c1c38dc2a5fed020f037c89f4324eaf78b38b9df",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV804",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2193",
+        "record_hash": "sha256:e33cfbe289bec445940cc028e7c4e743f2ca66d5bc7d5e301827ac38f8c5cb39",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX804",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3602",
+        "record_hash": "sha256:4eebd35b72297be48a3313a5acca2a87bf60d58b10da0f26026fea3f6f118113",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX804",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3746",
+        "record_hash": "sha256:874996e8c52c80440a69448dd6947e1e735b8fca86b8cec6cb9a75425d27286d",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC806",
+        "column": "VANDAL_REL21",
+        "year": "2021",
+        "value": 5
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_redlands&signal_id=sig_0e396b68932e8225d4d7",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_0e396b68932e8225d4d7/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Redlands. Across 4 certified ED cells, the source-supported affected-community totals are Religion (5), Race (3), LGBTQ+ (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_0e396b68932e8225d4d7/",
+    "proactive_reply": "Relevant certified public-data context for University of Redlands: https://campusevidencelab.org/signals/sig_0e396b68932e8225d4d7/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

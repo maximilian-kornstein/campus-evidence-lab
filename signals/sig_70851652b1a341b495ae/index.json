@@ -1,0 +1,125 @@
+{
+  "id": "sig_70851652b1a341b495ae",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_50045931e6aa23e85dfa",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_5f2e9d3afdeafc70c855",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/calvin_theological_seminary/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "calvin_theological_seminary"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "calvin_theological_seminary",
+    "name": "Calvin Theological Seminary",
+    "city": "GRAND RAPIDS",
+    "state": "MI"
+  },
+  "record_ids": [
+    "evt_2026_0291",
+    "evt_2026_0790",
+    "evt_2026_1119",
+    "evt_2026_2913"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Calvin Theological Seminary: Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0291",
+        "evt_2026_0790",
+        "evt_2026_1119",
+        "evt_2026_2913"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0291",
+        "record_hash": "sha256:aa86245cd135e1ceb391498bfa1d665a5d81a3f77380b9fd685a445358ad70d7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ3102",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0790",
+        "record_hash": "sha256:20984ebc59f8eab47a0212f4d94ab1f862e51c3f007837ef559df11c4080c6ac",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3102",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1119",
+        "record_hash": "sha256:132abe7c41945fe24d0e1f8c747c41888c64c336bf853b65520810b130143d81",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB3102",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2913",
+        "record_hash": "sha256:ee787524cfcbdf57495fafb89d33e9c54dd8db2b927d3def311664219cd199c5",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ3102",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=calvin_theological_seminary&signal_id=sig_70851652b1a341b495ae",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_70851652b1a341b495ae/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Calvin Theological Seminary. Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_70851652b1a341b495ae/",
+    "proactive_reply": "Relevant certified public-data context for Calvin Theological Seminary: https://campusevidencelab.org/signals/sig_70851652b1a341b495ae/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

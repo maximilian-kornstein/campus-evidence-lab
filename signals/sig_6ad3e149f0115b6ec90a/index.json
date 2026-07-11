@@ -1,0 +1,253 @@
+{
+  "id": "sig_6ad3e149f0115b6ec90a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_88c0f9f0ba271e0ed23d",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1a39a685c16c9e9b5196",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/emory_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "emory_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 14 certified ED cells, the source-supported affected-community totals are Race (12), Religion (3), LGBTQ+ (2), National origin (2)."
+  },
+  "institution": {
+    "id": "emory_university",
+    "name": "Emory University",
+    "city": "Atlanta",
+    "state": "GA"
+  },
+  "record_ids": [
+    "evt_2026_0686",
+    "evt_2026_1252",
+    "evt_2026_1371",
+    "evt_2026_1429",
+    "evt_2026_1477",
+    "evt_2026_1522",
+    "evt_2026_1566",
+    "evt_2026_1609",
+    "evt_2026_2509",
+    "evt_2026_2569",
+    "evt_2026_2826",
+    "evt_2026_2853",
+    "evt_2026_3752",
+    "evt_2026_3919"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Emory University: Across 14 certified ED cells, the source-supported affected-community totals are Race (12), Religion (3), LGBTQ+ (2), National origin (2).",
+      "supporting_record_ids": [
+        "evt_2026_0686",
+        "evt_2026_1252",
+        "evt_2026_1371",
+        "evt_2026_1429",
+        "evt_2026_1477",
+        "evt_2026_1522",
+        "evt_2026_1566",
+        "evt_2026_1609",
+        "evt_2026_2509",
+        "evt_2026_2569",
+        "evt_2026_2826",
+        "evt_2026_2853",
+        "evt_2026_3752",
+        "evt_2026_3919"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 19,
+    "certified_cell_count": 14,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0686",
+        "record_hash": "sha256:7101957cad08013d3e4af55f4011f2bb27a0a19c2c5cceb47241844a30fb30ee",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR1619",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1252",
+        "record_hash": "sha256:90c52749d64af5a1db789bc1dca810a64ea3019513df1e4f88541e959ecaf088",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1619",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1371",
+        "record_hash": "sha256:edcd056e11b8a9d7816445c0c17745aaa181cf80511009ffbe5056abebeba8ee",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL1619",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1429",
+        "record_hash": "sha256:9e1d2d1c6c2b825e2923a627a462bde7cbb5ed51e6118bd3c6cf8dc535555068",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP1619",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1477",
+        "record_hash": "sha256:2cfdc35aeceaf0c8beb4eb3a66b019fa476ff88ce9b411e16436ff84a9ee3b8e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA1620",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1522",
+        "record_hash": "sha256:2418637fb832c57115eed8001561f2ffa63a3eea9809a9240f4a8e855ca94c92",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB1620",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1566",
+        "record_hash": "sha256:08f3e69de3a26eb7e6e1eebc835dc25ac8931494ddc583607877a6228db13720",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1620",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1609",
+        "record_hash": "sha256:9f6666f9ad51531deee74e6c2b01a77845a12e8231bfccf3f9d410b3cb52de2f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED1619",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2509",
+        "record_hash": "sha256:b5b0c4f8200f80af880fe4dd7646de1f8ac264b0d91554537aeb2cab12948151",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW1620",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2569",
+        "record_hash": "sha256:0599ae4b9f8f6c014f6e524f371d3cdca5ef94b21431cc7b1439adfa980335e0",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED1619",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2826",
+        "record_hash": "sha256:5acedaf0bc19cddfd3cc4c1135b548ed9f4333865937f36c2423e6eb05bf3ce2",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LG1619",
+        "column": "ROBBE_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2853",
+        "record_hash": "sha256:a96aa650c402cf9ebb545ec1076d625c5b553b6492f0ab6cbaca1e3538c0c878",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT1619",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3752",
+        "record_hash": "sha256:770791d6f49a1faa9ec3089ebdd79825c735b08c3aa85e0787d0a9e2bc7840c4",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1626",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3919",
+        "record_hash": "sha256:c64da701662c302f9562bfd0ae066ecca7ece39e04d0cd52584f4344a03518f1",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB1626",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=emory_university&signal_id=sig_6ad3e149f0115b6ec90a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6ad3e149f0115b6ec90a/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Emory University. Across 14 certified ED cells, the source-supported affected-community totals are Race (12), Religion (3), LGBTQ+ (2), National origin (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6ad3e149f0115b6ec90a/",
+    "proactive_reply": "Relevant certified public-data context for Emory University: https://campusevidencelab.org/signals/sig_6ad3e149f0115b6ec90a/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

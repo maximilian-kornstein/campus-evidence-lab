@@ -1,0 +1,149 @@
+{
+  "id": "sig_e3251e331a826cb3bed7",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_3bc2177813c0deb2300d",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_df1f6e148c82dd516104",
+    "title": "2023 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/carnegie_mellon_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "carnegie_mellon_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 6 reported statistics across 4 distinct cells for 2023."
+  },
+  "institution": {
+    "id": "carnegie_mellon_university",
+    "name": "Carnegie Mellon University",
+    "city": "PITTSBURGH",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_1092",
+    "evt_2026_1579",
+    "evt_2026_1980",
+    "evt_2026_2156",
+    "evt_2026_2222",
+    "evt_2026_2624"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Carnegie Mellon University: Certified ED workbook cells document 6 reported statistics across 4 distinct cells for 2023.",
+      "supporting_record_ids": [
+        "evt_2026_1092",
+        "evt_2026_1579",
+        "evt_2026_1980",
+        "evt_2026_2156",
+        "evt_2026_2222",
+        "evt_2026_2624"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1092",
+        "record_hash": "sha256:17c87c5727cf500e42b9537ba2e21804a8513e63025b9dff31eeba780112283a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV5328",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1579",
+        "record_hash": "sha256:fee7cba790b46ed5302413cfc50587d2dc644c20277cd507a3e6a653b5e61238",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR5328",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1980",
+        "record_hash": "sha256:99ad7ad7f157514b9a40191a735fa0033583f463537d4ede0d31f8767b148074",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE5328",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2156",
+        "record_hash": "sha256:7850800aed898b8947c456706198ee2b35e22dfde2808d86a2e9329924b523a4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5328",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2222",
+        "record_hash": "sha256:768e3783aaf837430392394e32f03c182f533624dc705eb7706a1c6fb0c2f3b7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED5328",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2624",
+        "record_hash": "sha256:11900bc65ec2c0d97bfb9d40e6b10f768f667f4ef6c24bedde5c94a01b7c6fc2",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5328",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=carnegie_mellon_university&signal_id=sig_e3251e331a826cb3bed7",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e3251e331a826cb3bed7/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Carnegie Mellon University. Certified ED workbook cells document 6 reported statistics across 4 distinct cells for 2023. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e3251e331a826cb3bed7/",
+    "proactive_reply": "Relevant certified public-data context for Carnegie Mellon University: https://campusevidencelab.org/signals/sig_e3251e331a826cb3bed7/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

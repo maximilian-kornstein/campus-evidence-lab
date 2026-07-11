@@ -1,0 +1,133 @@
+{
+  "id": "sig_0bc292414b7138d7f559",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_a7fc7a66904b4354125a",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_46e8dcab3cd1c324b856",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/texas_tech_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "texas_tech_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Race (4), Ethnicity (2), Religion (2)."
+  },
+  "institution": {
+    "id": "texas_tech_university",
+    "name": "Texas Tech University",
+    "city": "LUBBOCK",
+    "state": "TX"
+  },
+  "record_ids": [
+    "evt_2026_0976",
+    "evt_2026_1580",
+    "evt_2026_3350",
+    "evt_2026_3783"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Texas Tech University: Across 4 certified ED cells, the source-supported affected-community totals are Race (4), Ethnicity (2), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_0976",
+        "evt_2026_1580",
+        "evt_2026_3350",
+        "evt_2026_3783"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0976",
+        "record_hash": "sha256:350f0c8c4af811b762535a22b88e61c9fa8bd5de31a844968705134c596865e6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6373",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1580",
+        "record_hash": "sha256:5c949f825b6e0246a9d8deb0a43ec4fe7077e12a0bfd300100ec9171198c02f0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6373",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3350",
+        "record_hash": "sha256:405f911967da5d0e31a659b8fe43637be6bc34b78dbd09b2f37046d1d013f802",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6373",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3783",
+        "record_hash": "sha256:bdb0920ccc9050a4d0d55374072f66789735ff4b1b4048002f28fe7786acf574",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "BQ6516",
+        "column": "AGG_A_RAC21",
+        "year": "2021",
+        "value": 4
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=texas_tech_university&signal_id=sig_0bc292414b7138d7f559",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_0bc292414b7138d7f559/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Texas Tech University. Across 4 certified ED cells, the source-supported affected-community totals are Race (4), Ethnicity (2), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_0bc292414b7138d7f559/",
+    "proactive_reply": "Relevant certified public-data context for Texas Tech University: https://campusevidencelab.org/signals/sig_0bc292414b7138d7f559/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

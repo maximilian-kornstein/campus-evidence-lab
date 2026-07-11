@@ -1,0 +1,125 @@
+{
+  "id": "sig_b76ba091c49291098ee1",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c58a209d40ee55ed5ea9",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_d8a06bfd4558e2c0cc71",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/western_new_england_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "western_new_england_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2)."
+  },
+  "institution": {
+    "id": "western_new_england_university",
+    "name": "Western New England University",
+    "city": "SPRINGFIELD",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0503",
+    "evt_2026_1224",
+    "evt_2026_3132",
+    "evt_2026_3401"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Western New England University: Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0503",
+        "evt_2026_1224",
+        "evt_2026_3132",
+        "evt_2026_3401"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0503",
+        "record_hash": "sha256:941f579d24d568a811fced859a4bbfb5e97e86f9bb91bdf7d71263faa25642d6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3075",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1224",
+        "record_hash": "sha256:83f244ce0f718fc5c927a6d24ffccc5db2f4269cb3b1da8978ef68b609d959ef",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ3075",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3132",
+        "record_hash": "sha256:53b7a219425f0212d06d29c0d125beb15342ed8d9520868849e264629718a6b7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3075",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3401",
+        "record_hash": "sha256:4243f3e84ac69b50aa4547d79106509c940a6f9bb76e017db635fd0bf651eaf1",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ3075",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=western_new_england_university&signal_id=sig_b76ba091c49291098ee1",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b76ba091c49291098ee1/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Western New England University. Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_b76ba091c49291098ee1/",
+    "proactive_reply": "Relevant certified public-data context for Western New England University: https://campusevidencelab.org/signals/sig_b76ba091c49291098ee1/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

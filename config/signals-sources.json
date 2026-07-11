@@ -1,0 +1,44 @@
+{
+  "policy": "free-sources-only",
+  "sources": [
+    {
+      "id": "ed_press_releases",
+      "adapter": "html_links",
+      "url": "https://www.ed.gov/about/news/press-release",
+      "url_pattern": "^/about/news/press-release/",
+      "include_pattern": "civil rights|higher education|college|university|title vi|title ix",
+      "limit": 100,
+      "kind": "government_release",
+      "topics": ["civil-rights", "higher-education"],
+      "cost": "free",
+      "enabled": true
+    },
+    {
+      "id": "gdelt_campus_accountability",
+      "adapter": "gdelt",
+      "query": "(university OR college) (\"civil rights\" OR \"Title VI\" OR \"Title IX\" OR \"hate crime\" OR discrimination)",
+      "limit": 100,
+      "topics": ["civil-rights", "higher-education"],
+      "cost": "free",
+      "enabled": true
+    },
+    {
+      "id": "bluesky_campus_civil_rights",
+      "adapter": "bluesky_search",
+      "query": "campus civil rights university",
+      "limit": 50,
+      "topics": ["civil-rights", "higher-education"],
+      "cost": "free",
+      "enabled": true
+    },
+    {
+      "id": "bluesky_ocr_higher_ed",
+      "adapter": "bluesky_search",
+      "query": "Office for Civil Rights university",
+      "limit": 50,
+      "topics": ["ocr", "higher-education"],
+      "cost": "free",
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "id": "sig_6a8dc0652165d6d41213",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_6b08eedd7e3741d3ad4f",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_0e2405d41c9f5e9b7c67",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/saint_louis_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "saint_louis_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (3), public-property (3)."
+  },
+  "institution": {
+    "id": "saint_louis_university",
+    "name": "Saint Louis University",
+    "city": "SAINT LOUIS",
+    "state": "MO"
+  },
+  "record_ids": [
+    "evt_2026_0245",
+    "evt_2026_0792",
+    "evt_2026_2446",
+    "evt_2026_2548",
+    "evt_2026_2600"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Saint Louis University: Across 5 certified ED cells, the reported geography totals are on-campus (3), public-property (3).",
+      "supporting_record_ids": [
+        "evt_2026_0245",
+        "evt_2026_0792",
+        "evt_2026_2446",
+        "evt_2026_2548",
+        "evt_2026_2600"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0245",
+        "record_hash": "sha256:28fe5d52e6c96be0ae1735a7362fc3168fda3d5c3cf2c052c6b7ca665992bc14",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR3658",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0792",
+        "record_hash": "sha256:4e61c377f33bdf1d3c2093a1909e7b726f83900749862fb476075003f5bd71f9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA3658",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2446",
+        "record_hash": "sha256:4c6ecb996b4714cda82966126eb54b2eecd9dcd814fd0a7c298e569a269c5140",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL3658",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2548",
+        "record_hash": "sha256:ddc45ad2cc36a59e278b0e6dfa590b21b0a44f523762062a5f567fa6649ba363",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT3658",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2600",
+        "record_hash": "sha256:1fdf464293ca013f9cc621967ceeb56694bb78cbe646426cbd051693548d1441",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX3658",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=saint_louis_university&signal_id=sig_6a8dc0652165d6d41213",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6a8dc0652165d6d41213/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Saint Louis University. Across 5 certified ED cells, the reported geography totals are on-campus (3), public-property (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6a8dc0652165d6d41213/",
+    "proactive_reply": "Relevant certified public-data context for Saint Louis University: https://campusevidencelab.org/signals/sig_6a8dc0652165d6d41213/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

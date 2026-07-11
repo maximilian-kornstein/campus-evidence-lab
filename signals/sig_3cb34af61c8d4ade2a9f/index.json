@@ -1,0 +1,193 @@
+{
+  "id": "sig_3cb34af61c8d4ade2a9f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_23cb505dc22c2f5a6500",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_3c0eb1290cb45edc70b6",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/middlebury_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "middlebury_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the source-supported affected-community totals are Religion (8), LGBTQ+ (1), Race (1)."
+  },
+  "institution": {
+    "id": "middlebury_college",
+    "name": "Middlebury College",
+    "city": "Middlebury",
+    "state": "VT"
+  },
+  "record_ids": [
+    "evt_2026_0719",
+    "evt_2026_1138",
+    "evt_2026_1495",
+    "evt_2026_1539",
+    "evt_2026_2561",
+    "evt_2026_3181",
+    "evt_2026_3310",
+    "evt_2026_3392",
+    "evt_2026_3872"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Middlebury College: Across 9 certified ED cells, the source-supported affected-community totals are Religion (8), LGBTQ+ (1), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_0719",
+        "evt_2026_1138",
+        "evt_2026_1495",
+        "evt_2026_1539",
+        "evt_2026_2561",
+        "evt_2026_3181",
+        "evt_2026_3310",
+        "evt_2026_3392",
+        "evt_2026_3872"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0719",
+        "record_hash": "sha256:8e4e0da55f2e089ee48928641084e1c1fce4e9d438d03e2a4bbd301d1ef7067d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU6533",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1138",
+        "record_hash": "sha256:5c4b4de8ae2f83cc79edcf9115c87cb367f54e55253847352fb2a40b3e29ad7b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT6533",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1495",
+        "record_hash": "sha256:0fa6bd41321f8cdc21fe29495116b743adb8b9d0cee5210b4ab68b29a6f3a269",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT6533",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1539",
+        "record_hash": "sha256:5508cf791b087aafa085bb87f94581bd72b9f68422cdc515279eb880ab4e5bec",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC6533",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2561",
+        "record_hash": "sha256:b9a90e83a8a4f399179e7feadc3a604396735b7898b9bf91694eee2fd505c200",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA6533",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3181",
+        "record_hash": "sha256:cd789cba2bf1b3ba0ae6c24f29f7c1d9ba1c6cc4b19f4547b470e5b070cb62a2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU6533",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3310",
+        "record_hash": "sha256:2ffcdc8c004543fa6220f0197e507635e809ed3a1ba8b5ddb12ec154db7a7646",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT6533",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3392",
+        "record_hash": "sha256:fba7f7abdb83b9d60858e60be2a6cbd7dfa04158f827f4f0670be3ec701eb05a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC6533",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3872",
+        "record_hash": "sha256:12bc626cd4a3a47720a4518d11a958f13242b8c82dc1625764531b7b1ff3d8db",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW6677",
+        "column": "INTIM_GID21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=middlebury_college&signal_id=sig_3cb34af61c8d4ade2a9f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3cb34af61c8d4ade2a9f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Middlebury College. Across 9 certified ED cells, the source-supported affected-community totals are Religion (8), LGBTQ+ (1), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3cb34af61c8d4ade2a9f/",
+    "proactive_reply": "Relevant certified public-data context for Middlebury College: https://campusevidencelab.org/signals/sig_3cb34af61c8d4ade2a9f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

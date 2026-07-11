@@ -1,0 +1,137 @@
+{
+  "id": "sig_54e112fee507078982a6",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d3b41c771362c59e1ad2",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e545d2eb0ff6abf486e5",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/highlands_college_of_montana_tech/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "highlands_college_of_montana_tech"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Vandalism (8)."
+  },
+  "institution": {
+    "id": "highlands_college_of_montana_tech",
+    "name": "Highlands College of Montana Tech",
+    "city": "Butte",
+    "state": "MT"
+  },
+  "record_ids": [
+    "evt_2026_0149",
+    "evt_2026_0793",
+    "evt_2026_1003",
+    "evt_2026_1195",
+    "evt_2026_2448"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Highlands College of Montana Tech: Across 5 certified ED cells, the documented category totals are Vandalism (8).",
+      "supporting_record_ids": [
+        "evt_2026_0149",
+        "evt_2026_0793",
+        "evt_2026_1003",
+        "evt_2026_1195",
+        "evt_2026_2448"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0149",
+        "record_hash": "sha256:b30ce5271050e4fd470ca3f01d5ccf85fc3c28b881986ee600d5f36857f66d11",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT3730",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0793",
+        "record_hash": "sha256:ac3c76f2807c4561ce5a26b3ebe5363883b6fc11f7b31064dbb95a2e90b9d74d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ3730",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1003",
+        "record_hash": "sha256:45f791f3406ad4cfb10718d66ab44e742888e166917f3ec0942ac28f2f31fd11",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX3730",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1195",
+        "record_hash": "sha256:083a124f258be4b2a839ab41b0390d0b29e78f1897adb9e2b5c2bbf5a34ebe3e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3730",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2448",
+        "record_hash": "sha256:342c04f92de63875d84dd9a7cedc8eac019a54335fcf57c853fca7738212e5f0",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT3730",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=highlands_college_of_montana_tech&signal_id=sig_54e112fee507078982a6",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_54e112fee507078982a6/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Highlands College of Montana Tech. Across 5 certified ED cells, the documented category totals are Vandalism (8). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_54e112fee507078982a6/",
+    "proactive_reply": "Relevant certified public-data context for Highlands College of Montana Tech: https://campusevidencelab.org/signals/sig_54e112fee507078982a6/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sig_038d17498943edf9128f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_3aca49373b7683b606ba",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_0b627037ef946293aaa2",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/coastal_alabama_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "coastal_alabama_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Race (4), LGBTQ+ (2)."
+  },
+  "institution": {
+    "id": "coastal_alabama_community_college",
+    "name": "Coastal Alabama Community College",
+    "city": "Bay Minette",
+    "state": "AL"
+  },
+  "record_ids": [
+    "evt_2026_0173",
+    "evt_2026_0771",
+    "evt_2026_2893",
+    "evt_2026_3011"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Coastal Alabama Community College: Across 4 certified ED cells, the source-supported affected-community totals are Race (4), LGBTQ+ (2).",
+      "supporting_record_ids": [
+        "evt_2026_0173",
+        "evt_2026_0771",
+        "evt_2026_2893",
+        "evt_2026_3011"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0173",
+        "record_hash": "sha256:20e270787449c73529a6732ed4bd63ad6bf5a4190c884cebad041b47650c81d0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK31",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0771",
+        "record_hash": "sha256:fe03a85b6ddf39e48fd7400470d1b9f3e6cb12395748f16d299369fa82b4267c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ31",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2893",
+        "record_hash": "sha256:06d34379d85ac4af5c5dfe12669f6d2b905944e7e6b089f7989eb17232d09224",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK31",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3011",
+        "record_hash": "sha256:7066d28b71e901f8b7c4cda6ecde191d943b8d8a31bd3a7e02cc0565f6c23224",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ31",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=coastal_alabama_community_college&signal_id=sig_038d17498943edf9128f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_038d17498943edf9128f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Coastal Alabama Community College. Across 4 certified ED cells, the source-supported affected-community totals are Race (4), LGBTQ+ (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_038d17498943edf9128f/",
+    "proactive_reply": "Relevant certified public-data context for Coastal Alabama Community College: https://campusevidencelab.org/signals/sig_038d17498943edf9128f/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,161 @@
+{
+  "id": "sig_0f1410f229943601fffa",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e2578fcf7db7552a4527",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_78d0f991973434e36719",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/james_madison_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "james_madison_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the reported geography totals are on-campus (6), noncampus (3), residence-hall (3)."
+  },
+  "institution": {
+    "id": "james_madison_university",
+    "name": "James Madison University",
+    "city": "HARRISONBURG",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_0309",
+    "evt_2026_0938",
+    "evt_2026_1389",
+    "evt_2026_1516",
+    "evt_2026_2820",
+    "evt_2026_3006",
+    "evt_2026_3331"
+  ],
+  "bounded_claims": [
+    {
+      "text": "James Madison University: Across 7 certified ED cells, the reported geography totals are on-campus (6), noncampus (3), residence-hall (3).",
+      "supporting_record_ids": [
+        "evt_2026_0309",
+        "evt_2026_0938",
+        "evt_2026_1389",
+        "evt_2026_1516",
+        "evt_2026_2820",
+        "evt_2026_3006",
+        "evt_2026_3331"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0309",
+        "record_hash": "sha256:b08432b1b1f726e5eccc19b337ddbf545c324fed1fd27f948aed4c40030b0720",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ6601",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0938",
+        "record_hash": "sha256:512932104b6cc1621b6d5ad32c69d345b93e73f28592bfb6b81efacb77d3d6e7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6601",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1389",
+        "record_hash": "sha256:973256d1a04c309b29f38017ef1b4323206457c84dc213927be1098d871d3a89",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IC6601",
+        "column": "SIM_A_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1516",
+        "record_hash": "sha256:129ff4252c9a7e17461947ac029af6999113c822e6b57a7e54eaae60fe80a3f9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT6601",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2820",
+        "record_hash": "sha256:7545a1670d21eb0078d1b450d0207326b7bef2e748c501594e1d4e19b7386929",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6601",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_3006",
+        "record_hash": "sha256:38a97e5c155215c454b8a2f4634869f5824e6bd694e320d9272d8236f820a17f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ6601",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3331",
+        "record_hash": "sha256:fa1912c9b4f1a62215ae18992812a02e34500c203cb6685bd9df7eb9f9a1bb8d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6601",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=james_madison_university&signal_id=sig_0f1410f229943601fffa",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_0f1410f229943601fffa/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: James Madison University. Across 7 certified ED cells, the reported geography totals are on-campus (6), noncampus (3), residence-hall (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_0f1410f229943601fffa/",
+    "proactive_reply": "Relevant certified public-data context for James Madison University: https://campusevidencelab.org/signals/sig_0f1410f229943601fffa/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

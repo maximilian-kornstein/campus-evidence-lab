@@ -1,0 +1,197 @@
+{
+  "id": "sig_0f3c6bbb50bf2c9025c0",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_7a51051639875a7c909a",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_327a4c564c0be1cf8ba8",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_puget_sound/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_puget_sound"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 10 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), Religion (4), Gender (2), Race (1)."
+  },
+  "institution": {
+    "id": "university_of_puget_sound",
+    "name": "University of Puget Sound",
+    "city": "TACOMA",
+    "state": "WA"
+  },
+  "record_ids": [
+    "evt_2026_0311",
+    "evt_2026_1391",
+    "evt_2026_1540",
+    "evt_2026_1680",
+    "evt_2026_1771",
+    "evt_2026_1837",
+    "evt_2026_1902",
+    "evt_2026_3238",
+    "evt_2026_3333",
+    "evt_2026_3393"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Puget Sound: Across 10 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), Religion (4), Gender (2), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_0311",
+        "evt_2026_1391",
+        "evt_2026_1540",
+        "evt_2026_1680",
+        "evt_2026_1771",
+        "evt_2026_1837",
+        "evt_2026_1902",
+        "evt_2026_3238",
+        "evt_2026_3333",
+        "evt_2026_3393"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 10,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0311",
+        "record_hash": "sha256:826986af61e10b747ee02ae9a6acc445db4fe16288fc964ded357a10ac7f3bcb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX6823",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1391",
+        "record_hash": "sha256:8addefec9e9a198029b6e2a1f4a7174cb284fe5ef669663a4443a4dc6ec3608d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR6823",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1540",
+        "record_hash": "sha256:066e124e5492288bc580b05b06a74ad75cb886da3b3c28eb5a411de55578faf7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6823",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1680",
+        "record_hash": "sha256:e00fee2efec56ada6eb1a412c064e041269849fa94f8d166f9a96aadf190c58e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6823",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1771",
+        "record_hash": "sha256:163293ee86749985f79ddccab6bea6723787319f16f130cac8b97265eb3cd72a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT6823",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1837",
+        "record_hash": "sha256:80f7b4cc970147ff859d6b33d872c962a9b37fd1fd6ce0a7a60bcce39e6f8496",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC6823",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1902",
+        "record_hash": "sha256:5c181b2a11ba36d8028c67837aabc58dcf219ee08a07ce97d1914478f3467c6c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED6823",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3238",
+        "record_hash": "sha256:2d1e4a0c65bdffeb499d74e880e8d49bafa23512af873ef97c5bcdbcddbc3f7b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR6823",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3333",
+        "record_hash": "sha256:8f7b1fa6104c93cfdc90a4ec02b07c93736e4b48e7f7e6ffb5fd306a56ee4a04",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC6823",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3393",
+        "record_hash": "sha256:f19ffb1220bdc9e81daaf1d1659342f452477e8d68f33471267d9811493eaae0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED6823",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_puget_sound&signal_id=sig_0f3c6bbb50bf2c9025c0",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_0f3c6bbb50bf2c9025c0/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Puget Sound. Across 10 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), Religion (4), Gender (2), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_0f3c6bbb50bf2c9025c0/",
+    "proactive_reply": "Relevant certified public-data context for University of Puget Sound: https://campusevidencelab.org/signals/sig_0f3c6bbb50bf2c9025c0/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

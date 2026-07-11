@@ -1,0 +1,145 @@
+{
+  "id": "sig_7da2ac08592bdccc7116",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f0d3227ee24947e4356d",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_a81b54b060368c68ef5f",
+    "title": "2022 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/southeastern_louisiana_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "southeastern_louisiana_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2022."
+  },
+  "institution": {
+    "id": "southeastern_louisiana_university",
+    "name": "Southeastern Louisiana University",
+    "city": "HAMMOND",
+    "state": "LA"
+  },
+  "record_ids": [
+    "evt_2026_0334",
+    "evt_2026_0916",
+    "evt_2026_2909",
+    "evt_2026_3888",
+    "evt_2026_3924"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Southeastern Louisiana University: Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2022.",
+      "supporting_record_ids": [
+        "evt_2026_0334",
+        "evt_2026_0916",
+        "evt_2026_2909",
+        "evt_2026_3888",
+        "evt_2026_3924"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0334",
+        "record_hash": "sha256:cd856e14e3c4ae2762c9c26994c9dfaec75e6b37121601605129f104155312cd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS2724",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0916",
+        "record_hash": "sha256:a0c9e8c357abc799e23d8f93a448ef901b3671775da983b79f42d4f547b86b8a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "X2724",
+        "column": "RAPE_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2909",
+        "record_hash": "sha256:9aba3d528ba9f4409146f248c8cf6e448a602e470a054d63d0dcf6b54d2fd600",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS2724",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3888",
+        "record_hash": "sha256:feaeb9be2d5dd9ee2b1eca60d6341b6ae9c91ed07c11a462f7294d816f962ce9",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS2743",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3924",
+        "record_hash": "sha256:02398ed0beae619f587009c3f246e372c7c13318a2639be27e0264c22c5d84f0",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB2743",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=southeastern_louisiana_university&signal_id=sig_7da2ac08592bdccc7116",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7da2ac08592bdccc7116/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Southeastern Louisiana University. Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2022. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7da2ac08592bdccc7116/",
+    "proactive_reply": "Relevant certified public-data context for Southeastern Louisiana University: https://campusevidencelab.org/signals/sig_7da2ac08592bdccc7116/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

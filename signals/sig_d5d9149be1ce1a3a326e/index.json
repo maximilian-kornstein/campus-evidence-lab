@@ -1,0 +1,193 @@
+{
+  "id": "sig_d5d9149be1ce1a3a326e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_1d98c9405df8990e93f6",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_20ce8e478e82a3ff9d6b",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/northwest_missouri_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "northwest_missouri_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the documented category totals are Harassment or threat (11)."
+  },
+  "institution": {
+    "id": "northwest_missouri_state_university",
+    "name": "Northwest Missouri State University",
+    "city": "MARYVILLE",
+    "state": "MO"
+  },
+  "record_ids": [
+    "evt_2026_0147",
+    "evt_2026_0962",
+    "evt_2026_1261",
+    "evt_2026_1551",
+    "evt_2026_2946",
+    "evt_2026_3136",
+    "evt_2026_3278",
+    "evt_2026_3322",
+    "evt_2026_3855"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Northwest Missouri State University: Across 9 certified ED cells, the documented category totals are Harassment or threat (11).",
+      "supporting_record_ids": [
+        "evt_2026_0147",
+        "evt_2026_0962",
+        "evt_2026_1261",
+        "evt_2026_1551",
+        "evt_2026_2946",
+        "evt_2026_3136",
+        "evt_2026_3278",
+        "evt_2026_3322",
+        "evt_2026_3855"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0147",
+        "record_hash": "sha256:0ebdabd8d9c4cf693d66897707c9c9905c51c83b2e2851cf7977ad42cee7ef32",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM3627",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0962",
+        "record_hash": "sha256:429a49de4780901dff29d672f4d3176074eb9f340a8cac608192f898327d30fd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV3627",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1261",
+        "record_hash": "sha256:33dff898a0c901b0787718a4d4bdf0a59286d0eeb87a40db4ad09da99ce5c9e3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3627",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1551",
+        "record_hash": "sha256:42f38b30b6a859c61155d41d8578509d4a991f6dc46ce6b94b7c4324aeeb40dc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU3627",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2946",
+        "record_hash": "sha256:1fa92aea7cf60b71648a2465755f1f2b75bd9819b6d0952265b6ad4922d64fe7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM3627",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3136",
+        "record_hash": "sha256:cacc241ee434a73068ba10d013b8b56c2d9a3366e1e10641786b94f05d5c687b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV3627",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3278",
+        "record_hash": "sha256:a617cf09694b157542d47f7036dfdfd4d49ce013e7acf21a087adca88760373b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3627",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3322",
+        "record_hash": "sha256:97832a379c8d4a0a17708589b56f3591a3227d5b039e81857ea8e2259b7a4d36",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU3627",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3855",
+        "record_hash": "sha256:7008b17feac81489f5026e063b7c0528e6bdbade63a2269cbfa4cd121fa5914d",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU3710",
+        "column": "INTIM_SEX21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=northwest_missouri_state_university&signal_id=sig_d5d9149be1ce1a3a326e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_d5d9149be1ce1a3a326e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Northwest Missouri State University. Across 9 certified ED cells, the documented category totals are Harassment or threat (11). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_d5d9149be1ce1a3a326e/",
+    "proactive_reply": "Relevant certified public-data context for Northwest Missouri State University: https://campusevidencelab.org/signals/sig_d5d9149be1ce1a3a326e/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}
