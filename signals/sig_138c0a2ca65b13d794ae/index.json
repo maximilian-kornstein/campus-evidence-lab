@@ -1,0 +1,157 @@
+{
+  "id": "sig_138c0a2ca65b13d794ae",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_df821df7ca2ed58b6801",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_9668113bbca84bd3660b",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/lamar_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "lamar_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (2)."
+  },
+  "institution": {
+    "id": "lamar_university",
+    "name": "Lamar University",
+    "city": "BEAUMONT",
+    "state": "TX"
+  },
+  "record_ids": [
+    "evt_2026_0665",
+    "evt_2026_1558",
+    "evt_2026_1755",
+    "evt_2026_3148",
+    "evt_2026_3598",
+    "evt_2026_3869"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Lamar University: Across 6 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (2).",
+      "supporting_record_ids": [
+        "evt_2026_0665",
+        "evt_2026_1558",
+        "evt_2026_1755",
+        "evt_2026_3148",
+        "evt_2026_3598",
+        "evt_2026_3869"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0665",
+        "record_hash": "sha256:670de83c36382701152a03e152448550edea4abbc6b2f5077cfef66a2eda9862",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6160",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1558",
+        "record_hash": "sha256:04948c1d29158587caa2f8e64dbc665195521c2d97320a91ca2abb9abb46a4eb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ6160",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1755",
+        "record_hash": "sha256:d83d9db0484079a85d99585581d205edb899c9d7ffeb6d7fb3271610502678b0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EE6160",
+        "column": "VANDAL_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3148",
+        "record_hash": "sha256:a844675c56f471575409e986c4cfb3ef4c21ce5b0dc5502b7e4771f44f9f2083",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6160",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3598",
+        "record_hash": "sha256:f8e21ab2264d71a6726fb2a161e4aefb8b25f44f6be9be2e04af2b2ad53cfcda",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EE6160",
+        "column": "VANDAL_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3869",
+        "record_hash": "sha256:5d1db404911a61137fcec8b0f270468833cf5c0c562e58a0a659a050ada19db1",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS6303",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=lamar_university&signal_id=sig_138c0a2ca65b13d794ae",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_138c0a2ca65b13d794ae/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Lamar University. Across 6 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_138c0a2ca65b13d794ae/",
+    "proactive_reply": "Relevant certified public-data context for Lamar University: https://campusevidencelab.org/signals/sig_138c0a2ca65b13d794ae/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

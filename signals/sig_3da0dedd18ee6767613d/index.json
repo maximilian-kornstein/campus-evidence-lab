@@ -1,0 +1,149 @@
+{
+  "id": "sig_3da0dedd18ee6767613d",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e927ff8b96493a8c6123",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ea844582501fb275dc41",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/wake_forest_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "wake_forest_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the reported geography totals are on-campus (5), noncampus (2)."
+  },
+  "institution": {
+    "id": "wake_forest_university",
+    "name": "Wake Forest University",
+    "city": "Winston-Salem",
+    "state": "NC"
+  },
+  "record_ids": [
+    "evt_2026_0533",
+    "evt_2026_1044",
+    "evt_2026_1230",
+    "evt_2026_1353",
+    "evt_2026_2814",
+    "evt_2026_2845"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Wake Forest University: Across 6 certified ED cells, the reported geography totals are on-campus (5), noncampus (2).",
+      "supporting_record_ids": [
+        "evt_2026_0533",
+        "evt_2026_1044",
+        "evt_2026_1230",
+        "evt_2026_1353",
+        "evt_2026_2814",
+        "evt_2026_2845"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0533",
+        "record_hash": "sha256:c90211017fc734beb41bd1108cb1992219585ef3943215d4e06094ab5f858419",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL4767",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1044",
+        "record_hash": "sha256:6de296c4068cc89b47d39016a8ac752cfc02528c155b78fcdbd904d7b4f16e5b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV4767",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1230",
+        "record_hash": "sha256:07a6043ba159710a977886710511362c310bdf1a03ec3a142eda5b1433e5257a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4767",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1353",
+        "record_hash": "sha256:ac1f9e270cb4ec0dee921013cbae84390f3d7c0b5e13c58d279e5a0a461ee66e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ4767",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2814",
+        "record_hash": "sha256:02b57261af2194074fbdae40bbef803fade4cf0fd26ce22210ca404c043aa8b1",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK4768",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2845",
+        "record_hash": "sha256:e9a288ac0e9ce9aa237937f8a24d969a2ee64234a0021e7fb87221e754846b80",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4768",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=wake_forest_university&signal_id=sig_3da0dedd18ee6767613d",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3da0dedd18ee6767613d/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Wake Forest University. Across 6 certified ED cells, the reported geography totals are on-campus (5), noncampus (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3da0dedd18ee6767613d/",
+    "proactive_reply": "Relevant certified public-data context for Wake Forest University: https://campusevidencelab.org/signals/sig_3da0dedd18ee6767613d/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

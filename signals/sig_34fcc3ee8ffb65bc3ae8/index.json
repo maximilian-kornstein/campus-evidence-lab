@@ -1,0 +1,181 @@
+{
+  "id": "sig_34fcc3ee8ffb65bc3ae8",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_57bf5a8f4a0eb7b93499",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_51190384a56f616ce118",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/middle_tennessee_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "middle_tennessee_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the reported geography totals are on-campus (8), residence-hall (2)."
+  },
+  "institution": {
+    "id": "middle_tennessee_state_university",
+    "name": "Middle Tennessee State University",
+    "city": "MURFREESBORO",
+    "state": "TN"
+  },
+  "record_ids": [
+    "evt_2026_0349",
+    "evt_2026_0807",
+    "evt_2026_1015",
+    "evt_2026_1171",
+    "evt_2026_1273",
+    "evt_2026_3003",
+    "evt_2026_3080",
+    "evt_2026_3868"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Middle Tennessee State University: Across 8 certified ED cells, the reported geography totals are on-campus (8), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0349",
+        "evt_2026_0807",
+        "evt_2026_1015",
+        "evt_2026_1171",
+        "evt_2026_1273",
+        "evt_2026_3003",
+        "evt_2026_3080",
+        "evt_2026_3868"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0349",
+        "record_hash": "sha256:be217287018e686cb2674a3c5037c511920b4b3b8c52ef751bc981b2185b7c90",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI5871",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0807",
+        "record_hash": "sha256:4b7cbe9e9fc55c2da453654c31489893f1a046cd8d42fe4003671c4604acf23e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5871",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1015",
+        "record_hash": "sha256:dd3ef1218a0ca05b173141b3dcf81717539afd7b81411f2f46e5eb283f0ff7b0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5871",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1171",
+        "record_hash": "sha256:b362d148ab21237a07a809b8affd88765a6720ce51ea0a5556a7429410861993",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5871",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1273",
+        "record_hash": "sha256:61aa95d9ea19705ba037617a5ae8d9677a2d7c1cb6edaf08fb99b3d9377b32ba",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5871",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3003",
+        "record_hash": "sha256:e6de60e8bc07454929ec070dedc343ae47ae2c298c07dfade631e9c0a2bd79ee",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5871",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3080",
+        "record_hash": "sha256:701ebfdc4ec0d2969b3c93c6cccaa597759faa009dcfc69e424d60a8212d11d9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5871",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3868",
+        "record_hash": "sha256:c2d99f67f3a830d4b059d164ce63d3a969040c22b95143a5388b3f95cb8261c2",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB6020",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=middle_tennessee_state_university&signal_id=sig_34fcc3ee8ffb65bc3ae8",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_34fcc3ee8ffb65bc3ae8/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Middle Tennessee State University. Across 8 certified ED cells, the reported geography totals are on-campus (8), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_34fcc3ee8ffb65bc3ae8/",
+    "proactive_reply": "Relevant certified public-data context for Middle Tennessee State University: https://campusevidencelab.org/signals/sig_34fcc3ee8ffb65bc3ae8/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

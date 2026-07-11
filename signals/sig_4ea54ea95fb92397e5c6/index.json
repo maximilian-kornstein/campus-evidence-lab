@@ -1,0 +1,161 @@
+{
+  "id": "sig_4ea54ea95fb92397e5c6",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d5044a64590b42848208",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_66154e349e6b4f47e3c8",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/university_of_arkansas/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_arkansas"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 6 reported statistics across 5 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "university_of_arkansas",
+    "name": "University of Arkansas",
+    "city": "FAYETTEVILLE",
+    "state": "AR"
+  },
+  "record_ids": [
+    "evt_2026_0101",
+    "evt_2026_0772",
+    "evt_2026_0944",
+    "evt_2026_2799",
+    "evt_2026_2840",
+    "evt_2026_2972",
+    "evt_2026_3051"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Arkansas: Certified ED workbook cells document 6 reported statistics across 5 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0101",
+        "evt_2026_0772",
+        "evt_2026_0944",
+        "evt_2026_2799",
+        "evt_2026_2840",
+        "evt_2026_2972",
+        "evt_2026_3051"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0101",
+        "record_hash": "sha256:7ca37d72ab72286bcf8a4889522480f39b32dfd41dde7121ceb8954a177317a6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT302",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0772",
+        "record_hash": "sha256:f2c5a133cbbd882f53ff1a47d75ee96c0543d6e9ea382728e19cbfd2c38bf2c1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV302",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0944",
+        "record_hash": "sha256:0401a4715343955fedf06e70dc098ac7215698ec1f2487731eb5a6f17f96cf63",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GS302",
+        "column": "AGG_A_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2799",
+        "record_hash": "sha256:2fcf4a97be8c353f527f07b560e3f300be3f1908861dad693f6d332196212220",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK302",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2840",
+        "record_hash": "sha256:a36139fed9cba16007668ee32c14d942997de679ce24c35167e259129eab0d36",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM302",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2972",
+        "record_hash": "sha256:956cb80aed084ee10fff048a389717f4679267bfebd57cd0261ce8c2df863d1e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT302",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3051",
+        "record_hash": "sha256:4398187db589b0087ac819b96f9e735addf8abb613b0273c224daad87708ce7b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GS302",
+        "column": "AGG_A_ET23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_arkansas&signal_id=sig_4ea54ea95fb92397e5c6",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4ea54ea95fb92397e5c6/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Arkansas. Certified ED workbook cells document 6 reported statistics across 5 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_4ea54ea95fb92397e5c6/",
+    "proactive_reply": "Relevant certified public-data context for University of Arkansas: https://campusevidencelab.org/signals/sig_4ea54ea95fb92397e5c6/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

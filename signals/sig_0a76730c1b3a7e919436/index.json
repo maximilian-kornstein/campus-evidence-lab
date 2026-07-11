@@ -1,0 +1,161 @@
+{
+  "id": "sig_0a76730c1b3a7e919436",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_b216c2ddf4afd9b35a5b",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8ed8ef339f0de1c5f896",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/moraine_valley_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "moraine_valley_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the documented category totals are Harassment or threat (9), Vandalism (1)."
+  },
+  "institution": {
+    "id": "moraine_valley_community_college",
+    "name": "Moraine Valley Community College",
+    "city": "PALOS HILLS",
+    "state": "IL"
+  },
+  "record_ids": [
+    "evt_2026_0331",
+    "evt_2026_0954",
+    "evt_2026_1827",
+    "evt_2026_1879",
+    "evt_2026_1955",
+    "evt_2026_1986",
+    "evt_2026_2012"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Moraine Valley Community College: Across 7 certified ED cells, the documented category totals are Harassment or threat (9), Vandalism (1).",
+      "supporting_record_ids": [
+        "evt_2026_0331",
+        "evt_2026_0954",
+        "evt_2026_1827",
+        "evt_2026_1879",
+        "evt_2026_1955",
+        "evt_2026_1986",
+        "evt_2026_2012"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0331",
+        "record_hash": "sha256:b9634a7e1b17eb3582673890094eb6f25a1cf2564706f5fe4948eb6d5925ecc1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN1957",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0954",
+        "record_hash": "sha256:9fbf30290019000e3812d8e7a5958e7731d227a32e42943da76f37222351228b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ1957",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1827",
+        "record_hash": "sha256:2bf134ea85cf409c200ad5d66cf1eebfccf5dd1cee8d87a9a70d48ef38cc2466",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL1957",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1879",
+        "record_hash": "sha256:b5c8b05e26b1a35d3bffbd4e914a8b09298f58ad46665b2639e77b13942cc3dc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1957",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1955",
+        "record_hash": "sha256:fdbd0d0c1df4628960453127e9f4674440c40da887a3784f7d1e56dd930acc26",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR1957",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1986",
+        "record_hash": "sha256:545d83cd0d09a4aa17b6515cd1e49491cfdf92463989218da53ea8ebe1a587eb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO1957",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2012",
+        "record_hash": "sha256:385c6b43b9b093b970d01a94ee8b810628f8f53772a13920aff34957bd9c1fc6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT1957",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=moraine_valley_community_college&signal_id=sig_0a76730c1b3a7e919436",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_0a76730c1b3a7e919436/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Moraine Valley Community College. Across 7 certified ED cells, the documented category totals are Harassment or threat (9), Vandalism (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_0a76730c1b3a7e919436/",
+    "proactive_reply": "Relevant certified public-data context for Moraine Valley Community College: https://campusevidencelab.org/signals/sig_0a76730c1b3a7e919436/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

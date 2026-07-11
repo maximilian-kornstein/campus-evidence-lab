@@ -49,6 +49,7 @@ test("initializes outreach control database with required tables", () => {
     "organizations",
     "preflight_runs",
     "relationship_events",
+    "signals_partner_events",
   ]);
 });
 

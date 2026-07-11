@@ -1,0 +1,301 @@
+{
+  "id": "sig_504d5022575885fb56a0",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_0e5a4aa6d0b4aa4aab72",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8334457e345ae97aa9ac",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_maryland_college_park/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_maryland_college_park"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 18 certified ED cells, the reported geography totals are on-campus (18), residence-hall (8)."
+  },
+  "institution": {
+    "id": "university_of_maryland_college_park",
+    "name": "University of Maryland-College Park",
+    "city": "COLLEGE PARK",
+    "state": "MD"
+  },
+  "record_ids": [
+    "evt_2026_0242",
+    "evt_2026_0999",
+    "evt_2026_1348",
+    "evt_2026_1592",
+    "evt_2026_1670",
+    "evt_2026_1719",
+    "evt_2026_1762",
+    "evt_2026_1803",
+    "evt_2026_1842",
+    "evt_2026_1868",
+    "evt_2026_1894",
+    "evt_2026_3064",
+    "evt_2026_3133",
+    "evt_2026_3195",
+    "evt_2026_3223",
+    "evt_2026_3250",
+    "evt_2026_3276",
+    "evt_2026_3760"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Maryland-College Park: Across 18 certified ED cells, the reported geography totals are on-campus (18), residence-hall (8).",
+      "supporting_record_ids": [
+        "evt_2026_0242",
+        "evt_2026_0999",
+        "evt_2026_1348",
+        "evt_2026_1592",
+        "evt_2026_1670",
+        "evt_2026_1719",
+        "evt_2026_1762",
+        "evt_2026_1803",
+        "evt_2026_1842",
+        "evt_2026_1868",
+        "evt_2026_1894",
+        "evt_2026_3064",
+        "evt_2026_3133",
+        "evt_2026_3195",
+        "evt_2026_3223",
+        "evt_2026_3250",
+        "evt_2026_3276",
+        "evt_2026_3760"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 26,
+    "certified_cell_count": 18,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0242",
+        "record_hash": "sha256:e671c8149b7189c51e7503ef4a474ba7b88d8d0f8bb05fbb1573afceb41b18cb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA2849",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0999",
+        "record_hash": "sha256:d17be930c7c39b2d3dbcf1c4b42ac06687a09baf3816c9271174458537eae98a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NO2849",
+        "column": "INTIM_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1348",
+        "record_hash": "sha256:491591dac47f9c364c9b9ac3eb9bbf23445081e7342784e443de58a2afc71990",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2849",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1592",
+        "record_hash": "sha256:795fb453b9b9dc1819e69b87945df624a3838936078e74a11112c82b256702ae",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI2849",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1670",
+        "record_hash": "sha256:1e1cafc90b98d81299aa65043f1e1038feb4f0d902d4bac022a21116b995fe2a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE2849",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1719",
+        "record_hash": "sha256:4ff50851104b8c493096b9ee174d30e65879c037500218d8b634a8f1a08249c7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2849",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1762",
+        "record_hash": "sha256:6a38378769b6aabab8b149495fbd841671ae3a36abf2fc7be4d48add9045b592",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP2849",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1803",
+        "record_hash": "sha256:1e825f8c2b6aee4740a517a22e17fe30a99bbffb8cb6f968271e69b1baa350d7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ2849",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1842",
+        "record_hash": "sha256:a5cf5bb963a8b6e30729fe3abbf0ad18c2c5c6cdc392484607d0d0c053480e71",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX2849",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1868",
+        "record_hash": "sha256:b11050eb2ac0524565d21cf36445088c7f4626f571dc0f0b8959ebb66db958d5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ2849",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1894",
+        "record_hash": "sha256:063e5386a159f32bf65fbeac6a0b55e4e55556ce4c21eb88ee1ad069a2374467",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS2849",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3064",
+        "record_hash": "sha256:8d23684d0ffa24615463e8ba2d756a5945ae882a365a12a83ab1e4aef07208ae",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2849",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3133",
+        "record_hash": "sha256:4d3a71daa1a1793d9709b8ddb937bc00e1d762547996eec6ffa8bfc0536c9690",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI2849",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3195",
+        "record_hash": "sha256:087c07f8bf8c8c9eb8b4b12a3e9df6a665af1e58cd6911780b921be8b38fda45",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA2849",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3223",
+        "record_hash": "sha256:e9d01418423dfd3996d8fb5cef4275b911f8d61c53033d7774f70c269048d1f3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE2849",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_3250",
+        "record_hash": "sha256:4e208f9b79a0ddadd004e423adfd26eb7a083e9d38318c614e1a967089954176",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP2849",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3276",
+        "record_hash": "sha256:4ff8f810c762e20c7b06dd213dab0e32c28bb05406590036a6cab176e2a73486",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX2849",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3760",
+        "record_hash": "sha256:9d944280795780207877dd4e0d839a56bc544755375bba84ed8f99624f828401",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC2868",
+        "column": "VANDAL_REL21",
+        "year": "2021",
+        "value": 3
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_maryland_college_park&signal_id=sig_504d5022575885fb56a0",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_504d5022575885fb56a0/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Maryland-College Park. Across 18 certified ED cells, the reported geography totals are on-campus (18), residence-hall (8). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_504d5022575885fb56a0/",
+    "proactive_reply": "Relevant certified public-data context for University of Maryland-College Park: https://campusevidencelab.org/signals/sig_504d5022575885fb56a0/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

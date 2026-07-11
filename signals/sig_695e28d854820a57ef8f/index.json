@@ -1,0 +1,197 @@
+{
+  "id": "sig_695e28d854820a57ef8f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_52f99b1d03bc25130d61",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1ee01f898c55004d5f3e",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/suny_college_of_agriculture_and_technology_at_cobleskill/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "suny_college_of_agriculture_and_technology_at_cobleskill"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 10 certified ED cells, the reported geography totals are on-campus (5), residence-hall (5)."
+  },
+  "institution": {
+    "id": "suny_college_of_agriculture_and_technology_at_cobleskill",
+    "name": "SUNY College of Agriculture and Technology at Cobleskill",
+    "city": "COBLESKILL",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_2230",
+    "evt_2026_2292",
+    "evt_2026_2334",
+    "evt_2026_2362",
+    "evt_2026_2382",
+    "evt_2026_3569",
+    "evt_2026_3665",
+    "evt_2026_3705",
+    "evt_2026_3722",
+    "evt_2026_3724"
+  ],
+  "bounded_claims": [
+    {
+      "text": "SUNY College of Agriculture and Technology at Cobleskill: Across 10 certified ED cells, the reported geography totals are on-campus (5), residence-hall (5).",
+      "supporting_record_ids": [
+        "evt_2026_2230",
+        "evt_2026_2292",
+        "evt_2026_2334",
+        "evt_2026_2362",
+        "evt_2026_2382",
+        "evt_2026_3569",
+        "evt_2026_3665",
+        "evt_2026_3705",
+        "evt_2026_3722",
+        "evt_2026_3724"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 10,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2230",
+        "record_hash": "sha256:9f1ee1679c3284b05d093cab252543a8210040ec0ff774f1f86e5f1088c497fe",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC4433",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2292",
+        "record_hash": "sha256:92ea0eae12b1691d5561dac6eff09e39fca190297d45353599e19ba6fb88ad16",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4433",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2334",
+        "record_hash": "sha256:93011a57eb6864850a301c21a44e0483772bdb799146ca2640a16ada95002ec5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4433",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2362",
+        "record_hash": "sha256:a065c51a0965d7f1f2436976fb1a3f3cc5eae24a25deb1476aa2f9f86a739452",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ4433",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2382",
+        "record_hash": "sha256:2eb4702ce8c0a576faac01a33a000c78ed5786dc597c01aa60bc1e431beac96e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4433",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3569",
+        "record_hash": "sha256:c11d59ce2aced9312ca8f23472d2507dff829e87904c081949453bf9d3f95cfa",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC4433",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3665",
+        "record_hash": "sha256:69251f0ab1406b4e1d2fb980d63fb270e32d298d22e687b6edb14939344ad97a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4433",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3705",
+        "record_hash": "sha256:559c65667c902fc144b9658fc755135487d8074c7def0ae5dcfd93fc37194486",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4433",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3722",
+        "record_hash": "sha256:0ee60408003d9de9c4380cb6d754d066a19eea1e1483bedae2eee7fbcc4d6040",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ4433",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3724",
+        "record_hash": "sha256:08d7ad33297a6d1d349b48ab3c1593c10c73fdf7dc634875b1e1fdc95777e2aa",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4433",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=suny_college_of_agriculture_and_technology_at_cobleskill&signal_id=sig_695e28d854820a57ef8f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_695e28d854820a57ef8f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: SUNY College of Agriculture and Technology at Cobleskill. Across 10 certified ED cells, the reported geography totals are on-campus (5), residence-hall (5). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_695e28d854820a57ef8f/",
+    "proactive_reply": "Relevant certified public-data context for SUNY College of Agriculture and Technology at Cobleskill: https://campusevidencelab.org/signals/sig_695e28d854820a57ef8f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

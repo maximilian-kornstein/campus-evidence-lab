@@ -1,0 +1,145 @@
+{
+  "id": "sig_c565f616a693d29a7a16",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_7d293fd841cff56622d9",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_86de6536848634537d81",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/post_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "post_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (3), residence-hall (2)."
+  },
+  "institution": {
+    "id": "post_university",
+    "name": "Post University",
+    "city": "Waterbury",
+    "state": "CT"
+  },
+  "record_ids": [
+    "evt_2026_0270",
+    "evt_2026_0821",
+    "evt_2026_3091",
+    "evt_2026_3156",
+    "evt_2026_3796"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Post University: Across 5 certified ED cells, the reported geography totals are on-campus (3), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0270",
+        "evt_2026_0821",
+        "evt_2026_3091",
+        "evt_2026_3156",
+        "evt_2026_3796"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0270",
+        "record_hash": "sha256:ba6ad513b1a1c56c05c9280fd51d979747e045549ea723bca89a91c6e0e52776",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ1096",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0821",
+        "record_hash": "sha256:4cef479c70452af91225511b9086af6b163daa1f95af15e72ca7f559a3907689",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW1096",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3091",
+        "record_hash": "sha256:5dc7a8b836ae4d5ddfc615050d4396200c52751c76494295367c57187f4c772d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ1096",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3156",
+        "record_hash": "sha256:6a3082f9cdcc627d6ea04b316772bf7092829355b8cefa41223262e558240bae",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW1096",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3796",
+        "record_hash": "sha256:429cb3c8f155778319048312f016388ae4edc6c027b251f408d03b24a3a054b7",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EH1099",
+        "column": "VANDAL_ET21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=post_university&signal_id=sig_c565f616a693d29a7a16",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_c565f616a693d29a7a16/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Post University. Across 5 certified ED cells, the reported geography totals are on-campus (3), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_c565f616a693d29a7a16/",
+    "proactive_reply": "Relevant certified public-data context for Post University: https://campusevidencelab.org/signals/sig_c565f616a693d29a7a16/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,149 @@
+{
+  "id": "sig_1f6dfd54d9b71bcefd3e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_a5c03948293fc52d174b",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_06bd22e760762f71b84b",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_at_albany/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_at_albany"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the reported geography totals are on-campus (5), residence-hall (1)."
+  },
+  "institution": {
+    "id": "university_at_albany",
+    "name": "University at Albany",
+    "city": "ALBANY",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1831",
+    "evt_2026_2143",
+    "evt_2026_2248",
+    "evt_2026_2366",
+    "evt_2026_2384",
+    "evt_2026_3687"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University at Albany: Across 6 certified ED cells, the reported geography totals are on-campus (5), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_1831",
+        "evt_2026_2143",
+        "evt_2026_2248",
+        "evt_2026_2366",
+        "evt_2026_2384",
+        "evt_2026_3687"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1831",
+        "record_hash": "sha256:b64c5b25c1285b8632f857cface46270fa15a8f9428c1a69882bb6853b02f94d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC4436",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2143",
+        "record_hash": "sha256:2046e63908b82ff2250787b5ba7014f4c1538f406b7c02862170c4fbbb802459",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT4436",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2248",
+        "record_hash": "sha256:9501a17135fdd81548051c3a2af656732a49f1fb89d8aff6609880c739542caa",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4436",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2366",
+        "record_hash": "sha256:e8589d6de692b50cda6eb7dd7740655d496455a738435f2f8ca19f4ef966ffb5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GO4436",
+        "column": "AGG_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2384",
+        "record_hash": "sha256:ec271855e0cb3dec999b25149660ec8726980fb794b70a324d9b2585b085d8fc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4436",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3687",
+        "record_hash": "sha256:07f854474784ba6f27dd75ca0ae40889155e3e6e9904edb0549a5455a6913a09",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4436",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_at_albany&signal_id=sig_1f6dfd54d9b71bcefd3e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_1f6dfd54d9b71bcefd3e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University at Albany. Across 6 certified ED cells, the reported geography totals are on-campus (5), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_1f6dfd54d9b71bcefd3e/",
+    "proactive_reply": "Relevant certified public-data context for University at Albany: https://campusevidencelab.org/signals/sig_1f6dfd54d9b71bcefd3e/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

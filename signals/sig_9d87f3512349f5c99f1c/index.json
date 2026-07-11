@@ -1,0 +1,137 @@
+{
+  "id": "sig_9d87f3512349f5c99f1c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_1c57dbe211c689e9ac52",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_bb2af3d882230c49250a",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/touro_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "touro_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "touro_university",
+    "name": "Touro University",
+    "city": "Central Islip",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_2038",
+    "evt_2026_2622",
+    "evt_2026_2703",
+    "evt_2026_2750",
+    "evt_2026_2759"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Touro University: Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_2038",
+        "evt_2026_2622",
+        "evt_2026_2703",
+        "evt_2026_2750",
+        "evt_2026_2759"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2038",
+        "record_hash": "sha256:6321a4b191a633de18e9fdbff3484e49cf53206f9485e46df9c31f1c9c044fa8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ4499",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2622",
+        "record_hash": "sha256:8b993b068c19f5dc1a3517e21a1a9245b11b77bef68b7fddd21ffa7da1f266ae",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL4500",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2703",
+        "record_hash": "sha256:a7a98c10968e31d2008e363cd08ed2996a3804dbc906d4e8c12ea2b939ff70df",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT4497",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2750",
+        "record_hash": "sha256:1c8d25547b07df96ad294869ce9046e05726e0015f02076e51323253ed1786df",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4491",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2759",
+        "record_hash": "sha256:b151fde807cc27a80021443b134700b3a1d90f20bb11a9feb199f1bffef60f4c",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4500",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=touro_university&signal_id=sig_9d87f3512349f5c99f1c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_9d87f3512349f5c99f1c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Touro University. Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_9d87f3512349f5c99f1c/",
+    "proactive_reply": "Relevant certified public-data context for Touro University: https://campusevidencelab.org/signals/sig_9d87f3512349f5c99f1c/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

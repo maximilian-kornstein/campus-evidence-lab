@@ -1,0 +1,137 @@
+{
+  "id": "sig_7b338cc111f8da55fecf",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_5741ddadb7d984181436",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_b11c053c755dfaa1295c",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/san_francisco_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "san_francisco_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (1)."
+  },
+  "institution": {
+    "id": "san_francisco_state_university",
+    "name": "San Francisco State University",
+    "city": "San Francisco",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1772",
+    "evt_2026_2172",
+    "evt_2026_2281",
+    "evt_2026_2800",
+    "evt_2026_3375"
+  ],
+  "bounded_claims": [
+    {
+      "text": "San Francisco State University: Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (1).",
+      "supporting_record_ids": [
+        "evt_2026_1772",
+        "evt_2026_2172",
+        "evt_2026_2281",
+        "evt_2026_2800",
+        "evt_2026_3375"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1772",
+        "record_hash": "sha256:23d69ed0f68c32c2451416e20768d2f9a59a54fdfef1712bbfc49883ec2ed425",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX839",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2172",
+        "record_hash": "sha256:5aa5a7466ac6a38f48b98aeab794c618de90d7e3346fdc33e815ddc76b7cc435",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA839",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2281",
+        "record_hash": "sha256:5eeb277ed8f8ddcb00bf88ff57bae02d39e4d77e82271eadae2f8059ff0b976a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED839",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2800",
+        "record_hash": "sha256:76e99127e969d4632e107ff9365bf3b9351796eb1003fa58efc29ce62e8131aa",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU839",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3375",
+        "record_hash": "sha256:125123512efb0a48c150331c5ac00822676dd08e8be6a503d00e3e0852a7223f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED839",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=san_francisco_state_university&signal_id=sig_7b338cc111f8da55fecf",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7b338cc111f8da55fecf/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: San Francisco State University. Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7b338cc111f8da55fecf/",
+    "proactive_reply": "Relevant certified public-data context for San Francisco State University: https://campusevidencelab.org/signals/sig_7b338cc111f8da55fecf/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sig_ba9a826c914fb4a60aac",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_df346a1ea870ce05d9cf",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_875355763c659d1899b0",
+    "title": "2023 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/university_of_portland/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_portland"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 8 reported statistics across 4 distinct cells for 2023."
+  },
+  "institution": {
+    "id": "university_of_portland",
+    "name": "University of Portland",
+    "city": "PORTLAND",
+    "state": "OR"
+  },
+  "record_ids": [
+    "evt_2026_0512",
+    "evt_2026_2456",
+    "evt_2026_2790",
+    "evt_2026_3175"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Portland: Certified ED workbook cells document 8 reported statistics across 4 distinct cells for 2023.",
+      "supporting_record_ids": [
+        "evt_2026_0512",
+        "evt_2026_2456",
+        "evt_2026_2790",
+        "evt_2026_3175"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0512",
+        "record_hash": "sha256:9380a41c17dc69fa2bd6937725d43909c7359ab94010f0ea1b72673aa5b8e0f8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5266",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2456",
+        "record_hash": "sha256:e81007fba9e4981bf162c1a30fc7ebb0e31507053a9b40c7fa678ec095cc1996",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5266",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2790",
+        "record_hash": "sha256:b6c3b57c114b3eeb20abbb8782278479472fea0c41f9c594155ea692520197f2",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5266",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3175",
+        "record_hash": "sha256:f21a385dca71922b292b9f4ff2656c768b21cc01771f2a75a45bfd7a28be120f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5266",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_portland&signal_id=sig_ba9a826c914fb4a60aac",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ba9a826c914fb4a60aac/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Portland. Certified ED workbook cells document 8 reported statistics across 4 distinct cells for 2023. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ba9a826c914fb4a60aac/",
+    "proactive_reply": "Relevant certified public-data context for University of Portland: https://campusevidencelab.org/signals/sig_ba9a826c914fb4a60aac/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

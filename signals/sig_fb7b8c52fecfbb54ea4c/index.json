@@ -1,0 +1,125 @@
+{
+  "id": "sig_fb7b8c52fecfbb54ea4c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_3b94d0dc2792935250bd",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_37e98d9f865216c554b0",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/st_mary_s_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "st_mary_s_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 6 reported statistics across 4 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "st_mary_s_university",
+    "name": "St. Mary's University",
+    "city": "SAN ANTONIO",
+    "state": "TX"
+  },
+  "record_ids": [
+    "evt_2026_0350",
+    "evt_2026_0853",
+    "evt_2026_2461",
+    "evt_2026_3308"
+  ],
+  "bounded_claims": [
+    {
+      "text": "St. Mary's University: Certified ED workbook cells document 6 reported statistics across 4 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0350",
+        "evt_2026_0853",
+        "evt_2026_2461",
+        "evt_2026_3308"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0350",
+        "record_hash": "sha256:16786f6c6eda89cc4f85fd875378c0994728b3db1a13fb23535b32c31fa65568",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU6272",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0853",
+        "record_hash": "sha256:a14183299b5b1f6b7616962787ee5ad8adce4717e4b218236b14f3e552353a25",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR6272",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2461",
+        "record_hash": "sha256:9b3c178aa92c93244e347a0f9c9b2d25201411f3e011ea2a33d230b73f901e4b",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU6272",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3308",
+        "record_hash": "sha256:4887629dacef6502fa5854bc55de5c435afa22502497096e90316af11aca1fef",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR6272",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=st_mary_s_university&signal_id=sig_fb7b8c52fecfbb54ea4c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_fb7b8c52fecfbb54ea4c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: St. Mary's University. Certified ED workbook cells document 6 reported statistics across 4 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_fb7b8c52fecfbb54ea4c/",
+    "proactive_reply": "Relevant certified public-data context for St. Mary's University: https://campusevidencelab.org/signals/sig_fb7b8c52fecfbb54ea4c/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,145 @@
+{
+  "id": "sig_66ee6aef1a02e2ef7d5c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_08227415ec55e85b29bc",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_51503e5135f006547521",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/washington_and_lee_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "washington_and_lee_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (6)."
+  },
+  "institution": {
+    "id": "washington_and_lee_university",
+    "name": "Washington and Lee University",
+    "city": "LEXINGTON",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_0559",
+    "evt_2026_0897",
+    "evt_2026_1494",
+    "evt_2026_1696",
+    "evt_2026_3830"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Washington and Lee University: Across 5 certified ED cells, the reported geography totals are on-campus (6).",
+      "supporting_record_ids": [
+        "evt_2026_0559",
+        "evt_2026_0897",
+        "evt_2026_1494",
+        "evt_2026_1696",
+        "evt_2026_3830"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0559",
+        "record_hash": "sha256:2ee689cda78cdae79a150c702471c2af2f221887d03a1d14fa289aec2c1a899c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM6748",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0897",
+        "record_hash": "sha256:c1cdf84d9084be5f2c344493bf9ed113d7574cef42db8c18a70f4aa74d282e91",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND6748",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1494",
+        "record_hash": "sha256:74b9eb06e718ad66418b2c3322a21de3ca2a51730747cc7bf6def2b5964d1dcf",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NW6748",
+        "column": "VANDAL_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1696",
+        "record_hash": "sha256:2b9f985af3940630bea1756cdeada105921fbca7143b660dd721dfa70b1dd554",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV6748",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3830",
+        "record_hash": "sha256:65a8a1c700903016d829213418f6473b4b090cac35b4d58c8d1b5e4bfbefbd23",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB6883",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=washington_and_lee_university&signal_id=sig_66ee6aef1a02e2ef7d5c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_66ee6aef1a02e2ef7d5c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Washington and Lee University. Across 5 certified ED cells, the reported geography totals are on-campus (6). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_66ee6aef1a02e2ef7d5c/",
+    "proactive_reply": "Relevant certified public-data context for Washington and Lee University: https://campusevidencelab.org/signals/sig_66ee6aef1a02e2ef7d5c/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

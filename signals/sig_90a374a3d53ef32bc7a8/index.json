@@ -1,0 +1,149 @@
+{
+  "id": "sig_90a374a3d53ef32bc7a8",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_5db099b83491de625721",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_9258a1ce05650d004aaa",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/western_colorado_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "western_colorado_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the documented category totals are Vandalism (6), Harassment or threat (4)."
+  },
+  "institution": {
+    "id": "western_colorado_university",
+    "name": "Western Colorado University",
+    "city": "GUNNISON",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0404",
+    "evt_2026_1143",
+    "evt_2026_1587",
+    "evt_2026_3090",
+    "evt_2026_3292",
+    "evt_2026_3396"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Western Colorado University: Across 6 certified ED cells, the documented category totals are Vandalism (6), Harassment or threat (4).",
+      "supporting_record_ids": [
+        "evt_2026_0404",
+        "evt_2026_1143",
+        "evt_2026_1587",
+        "evt_2026_3090",
+        "evt_2026_3292",
+        "evt_2026_3396"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0404",
+        "record_hash": "sha256:9e16d343e302cfe6b649898a5e502a07e563fa83e7ef57d1c98ec47552008928",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA1045",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1143",
+        "record_hash": "sha256:b2287ee0ec6eb5d33025e1d50c549c677186d47366d565dde3bd0dc84ae58d9c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1045",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1587",
+        "record_hash": "sha256:609f349f09697db81697506ab29167458c87a7528347a3d40924cb3dd9fd9b2f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA1045",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3090",
+        "record_hash": "sha256:c3f458ba4591609f667591b0508a585960068b0c3d74d723a417a10d328c41eb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA1045",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_3292",
+        "record_hash": "sha256:f4cc9dfcd2935296ae2f02d8197bd15fc22586c9393386a3569c87f994520088",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1045",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3396",
+        "record_hash": "sha256:a0244e0b5867c448258ab081404b7711d273af6ffdefd719e268764736b49d17",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA1045",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=western_colorado_university&signal_id=sig_90a374a3d53ef32bc7a8",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_90a374a3d53ef32bc7a8/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Western Colorado University. Across 6 certified ED cells, the documented category totals are Vandalism (6), Harassment or threat (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_90a374a3d53ef32bc7a8/",
+    "proactive_reply": "Relevant certified public-data context for Western Colorado University: https://campusevidencelab.org/signals/sig_90a374a3d53ef32bc7a8/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

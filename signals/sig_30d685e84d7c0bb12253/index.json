@@ -1,0 +1,161 @@
+{
+  "id": "sig_30d685e84d7c0bb12253",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_97ca0f57ee40aa59cec1",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_4c28f9ac8dfad296e3cc",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/cox_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "cox_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Race (9), Gender (1), LGBTQ+ (1), Religion (1)."
+  },
+  "institution": {
+    "id": "cox_college",
+    "name": "Cox College",
+    "city": "SPRINGFIELD",
+    "state": "MO"
+  },
+  "record_ids": [
+    "evt_2026_0107",
+    "evt_2026_0699",
+    "evt_2026_1323",
+    "evt_2026_1437",
+    "evt_2026_1595",
+    "evt_2026_1616",
+    "evt_2026_1636"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Cox College: Across 7 certified ED cells, the source-supported affected-community totals are Race (9), Gender (1), LGBTQ+ (1), Religion (1).",
+      "supporting_record_ids": [
+        "evt_2026_0107",
+        "evt_2026_0699",
+        "evt_2026_1323",
+        "evt_2026_1437",
+        "evt_2026_1595",
+        "evt_2026_1616",
+        "evt_2026_1636"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0107",
+        "record_hash": "sha256:1ef8275987a47f2c945acf97ba2918b24285154cf61d8fc6cab5eff3bda549e5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3506",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0699",
+        "record_hash": "sha256:aaffcd90a20d565850465a44ddbec0e333412c116375c01a035bbece98d9f424",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LI3506",
+        "column": "AGG_A_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1323",
+        "record_hash": "sha256:83b0a41a75a1d4152bd09607e42d97e6a22664d77c769ccbccbcc66c1988c242",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN3507",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1437",
+        "record_hash": "sha256:5dba1595f6531f436c4157c646ea86a46dfe66e9ea01dc3ba07d4ac932a48ed9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL3506",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1595",
+        "record_hash": "sha256:5937c8852ee15d7095e917e2977c9dde3b8fbd5cb361c546aa320101ac6f4acf",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GM3507",
+        "column": "AGG_A_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1616",
+        "record_hash": "sha256:5fec4b2d88121f1f44b2b9e01ad678894c97ec093622bc48593ad74380b1dc7d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3507",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1636",
+        "record_hash": "sha256:67d0e26c975eb9a2296ea8912e80e00f2ec2c1c64f54194401c23e6660965327",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3507",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=cox_college&signal_id=sig_30d685e84d7c0bb12253",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_30d685e84d7c0bb12253/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Cox College. Across 7 certified ED cells, the source-supported affected-community totals are Race (9), Gender (1), LGBTQ+ (1), Religion (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_30d685e84d7c0bb12253/",
+    "proactive_reply": "Relevant certified public-data context for Cox College: https://campusevidencelab.org/signals/sig_30d685e84d7c0bb12253/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

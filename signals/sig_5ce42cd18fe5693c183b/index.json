@@ -1,0 +1,209 @@
+{
+  "id": "sig_5ce42cd18fe5693c183b",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c3f4807d129c1449b122",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1567b0f65629f38040fb",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/ohio_university_main_campus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "ohio_university_main_campus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 11 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (5), Religion (3)."
+  },
+  "institution": {
+    "id": "ohio_university_main_campus",
+    "name": "Ohio University-Main Campus",
+    "city": "ATHENS",
+    "state": "OH"
+  },
+  "record_ids": [
+    "evt_2026_0253",
+    "evt_2026_0845",
+    "evt_2026_1300",
+    "evt_2026_1511",
+    "evt_2026_1752",
+    "evt_2026_1780",
+    "evt_2026_1806",
+    "evt_2026_3174",
+    "evt_2026_3347",
+    "evt_2026_3595",
+    "evt_2026_3635"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Ohio University-Main Campus: Across 11 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (5), Religion (3).",
+      "supporting_record_ids": [
+        "evt_2026_0253",
+        "evt_2026_0845",
+        "evt_2026_1300",
+        "evt_2026_1511",
+        "evt_2026_1752",
+        "evt_2026_1780",
+        "evt_2026_1806",
+        "evt_2026_3174",
+        "evt_2026_3347",
+        "evt_2026_3595",
+        "evt_2026_3635"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 13,
+    "certified_cell_count": 11,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0253",
+        "record_hash": "sha256:f581b86258cce53c48f54ca0e05642bdbca3909722dec2367c5f01a3eddd288e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU5031",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0845",
+        "record_hash": "sha256:36fdc2936cedd80bc513592c32d5b8668a18db6724d0f19c073858b388ab4665",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX5031",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1300",
+        "record_hash": "sha256:40934856e64991ab5e75fdf6de53b7d27ba5cde7bafe08c563b94e1b7db286fd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT5031",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1511",
+        "record_hash": "sha256:830bf47abf88ec10c966ef14dc884ebbe417276ce3f1309bfba236afee0607fb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5031",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1752",
+        "record_hash": "sha256:a4355e47f510918aeed5e4c972b2a1e5390b35567b6639f96b06e04379ef5323",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5031",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1780",
+        "record_hash": "sha256:ce4256d53d20ba4f1d9639011097690e7c0cfece3bb33cae750c98d98bcdb6f8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5031",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1806",
+        "record_hash": "sha256:e377cd380d9a31383188c4285b652e38e95db371ff0be993b61ee36527ce351d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED5031",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3174",
+        "record_hash": "sha256:c7f195a08a831e37d666df4c3ad060574bd6b26f63ac4c86fa5aa7be44a31350",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5031",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3347",
+        "record_hash": "sha256:5bc7b444fc22a9595705876b57b4404078bcd2db1afd97563506aeef1e1d8658",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5031",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3595",
+        "record_hash": "sha256:254ff817149ded4bb8c255e317d6e3af953754542d9701841a5a80c02449229e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5031",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3635",
+        "record_hash": "sha256:5eb4a1b321996ae388a34b50fb0bf03aa92db54ddf598f7044719768542c40d2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED5031",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=ohio_university_main_campus&signal_id=sig_5ce42cd18fe5693c183b",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5ce42cd18fe5693c183b/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Ohio University-Main Campus. Across 11 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (5), Religion (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_5ce42cd18fe5693c183b/",
+    "proactive_reply": "Relevant certified public-data context for Ohio University-Main Campus: https://campusevidencelab.org/signals/sig_5ce42cd18fe5693c183b/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

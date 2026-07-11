@@ -1,0 +1,137 @@
+{
+  "id": "sig_789a6835714c586afb88",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_086a6947fedaddec01d5",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_c3aaaedea1f143f8117c",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/williams_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "williams_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the source-supported affected-community totals are Race (4), Religion (3)."
+  },
+  "institution": {
+    "id": "williams_college",
+    "name": "Williams College",
+    "city": "WILLIAMSTOWN",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0143",
+    "evt_2026_1038",
+    "evt_2026_1841",
+    "evt_2026_2809",
+    "evt_2026_3553"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Williams College: Across 5 certified ED cells, the source-supported affected-community totals are Race (4), Religion (3).",
+      "supporting_record_ids": [
+        "evt_2026_0143",
+        "evt_2026_1038",
+        "evt_2026_1841",
+        "evt_2026_2809",
+        "evt_2026_3553"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0143",
+        "record_hash": "sha256:5921ce4e7300069e69b7cd1a012747830073000b7fc189e9f85a9e10f01fddf6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3078",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1038",
+        "record_hash": "sha256:cb2ad1a4d4d69bf2f53be7ce1c43e7311fc23c9be244bd3a931d1cf93d0ebd42",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT3078",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1841",
+        "record_hash": "sha256:fbc54fcacecdf9c1f71859cd73f22b993e4f33349665fbb067ebcc088a9a0a04",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3078",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2809",
+        "record_hash": "sha256:14bbaf46628a633e78fab7016f0d08d3f994d6be1ed327695e8b502a4496aee4",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HN3078",
+        "column": "ARSON_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3553",
+        "record_hash": "sha256:50f72f34f019c61dad837c4d6e175e2549ec51d995be281abf1ee0e96854a00e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT3078",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=williams_college&signal_id=sig_789a6835714c586afb88",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_789a6835714c586afb88/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Williams College. Across 5 certified ED cells, the source-supported affected-community totals are Race (4), Religion (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_789a6835714c586afb88/",
+    "proactive_reply": "Relevant certified public-data context for Williams College: https://campusevidencelab.org/signals/sig_789a6835714c586afb88/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

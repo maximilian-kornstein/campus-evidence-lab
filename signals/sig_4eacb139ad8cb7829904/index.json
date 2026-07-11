@@ -1,0 +1,149 @@
+{
+  "id": "sig_4eacb139ad8cb7829904",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e5ab0ec6dc2a999a0948",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_42d0f24ddaa304ffcefb",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/berklee_college_of_music/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "berklee_college_of_music"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), National origin (2), Religion (2)."
+  },
+  "institution": {
+    "id": "berklee_college_of_music",
+    "name": "Berklee College of Music",
+    "city": "BOSTON",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0325",
+    "evt_2026_0694",
+    "evt_2026_2545",
+    "evt_2026_2699",
+    "evt_2026_2714",
+    "evt_2026_2723"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Berklee College of Music: Across 6 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), National origin (2), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_0325",
+        "evt_2026_0694",
+        "evt_2026_2545",
+        "evt_2026_2699",
+        "evt_2026_2714",
+        "evt_2026_2723"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0325",
+        "record_hash": "sha256:c7042eacd9dd0f245e7330def7de7f8a7d59bc1a9b05e1626ead552306a3a579",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MU2911",
+        "column": "SIM_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0694",
+        "record_hash": "sha256:b7d367c9516ffa93a3284ac305ab1a80135b474f15ffb157937fdcfe1406cfd1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV2911",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2545",
+        "record_hash": "sha256:859f9cc3e540ad9f34dfbebe2653f14d7406cf0fce5ad83866960dfd4060fb7a",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU2911",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2699",
+        "record_hash": "sha256:fc220062413853134fa2f5c12777e91b687868190ef2e1efae0e47df4610cbdb",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GT2911",
+        "column": "AGG_A_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2714",
+        "record_hash": "sha256:914afe49a93869805d84e0468720bdc2f5a68f11241dc74c9a307d38663d5365",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE2911",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2723",
+        "record_hash": "sha256:9842ce7987a539acdbd43f1ee0af3d10f5c31f1b964af60d7ca9766b494a173b",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC2911",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=berklee_college_of_music&signal_id=sig_4eacb139ad8cb7829904",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4eacb139ad8cb7829904/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Berklee College of Music. Across 6 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), National origin (2), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_4eacb139ad8cb7829904/",
+    "proactive_reply": "Relevant certified public-data context for Berklee College of Music: https://campusevidencelab.org/signals/sig_4eacb139ad8cb7829904/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

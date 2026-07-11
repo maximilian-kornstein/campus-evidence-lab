@@ -1,0 +1,221 @@
+{
+  "id": "sig_fcf05ceb20873c9f5bcc",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_593d5e17fa50118969ad",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_26f0e54cc303660de932",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/wentworth_institute_of_technology/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "wentworth_institute_of_technology"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 12 certified ED cells, the source-supported affected-community totals are Gender (8), Race (6), LGBTQ+ (2), Religion (2)."
+  },
+  "institution": {
+    "id": "wentworth_institute_of_technology",
+    "name": "Wentworth Institute of Technology",
+    "city": "Boston",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_1525",
+    "evt_2026_1761",
+    "evt_2026_1893",
+    "evt_2026_2037",
+    "evt_2026_2069",
+    "evt_2026_2090",
+    "evt_2026_2515",
+    "evt_2026_2671",
+    "evt_2026_3099",
+    "evt_2026_3538",
+    "evt_2026_3624",
+    "evt_2026_3668"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Wentworth Institute of Technology: Across 12 certified ED cells, the source-supported affected-community totals are Gender (8), Race (6), LGBTQ+ (2), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_1525",
+        "evt_2026_1761",
+        "evt_2026_1893",
+        "evt_2026_2037",
+        "evt_2026_2069",
+        "evt_2026_2090",
+        "evt_2026_2515",
+        "evt_2026_2671",
+        "evt_2026_3099",
+        "evt_2026_3538",
+        "evt_2026_3624",
+        "evt_2026_3668"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 19,
+    "certified_cell_count": 12,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1525",
+        "record_hash": "sha256:fbc65f761a268ae6f44ca74485f8f48c07018f0f6c36c0af16f3b1fc265a3d58",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3074",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1761",
+        "record_hash": "sha256:29c25b930c534edc7e54a5eed84ac92ce867e6b34c47b59c03ec3b8c5b2f275e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX3074",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1893",
+        "record_hash": "sha256:03305a169d7ad97fe49db5e0c88915f4c0334303bc470d440eb869a31fa4df03",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3074",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2037",
+        "record_hash": "sha256:f9d9b4f5539afcb6232ced27a109e0b8bb772ba2cab2b814d73e2533ab6cb802",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3074",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2069",
+        "record_hash": "sha256:f1e678d021f0cabba9c6d6f31b71b7110d867cd971cf4d3e76167994f48a7992",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV3074",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_2090",
+        "record_hash": "sha256:64c0e04428322b63b75a70be353265b653542adec8717fe83ccf7dfae08d922e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3074",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2515",
+        "record_hash": "sha256:27ad6ab0de8fbdfe65c4ea1a409d11e426a042858113961c737bab41138012ff",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3074",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2671",
+        "record_hash": "sha256:f260ddc5992bb56dffbf85da5d0de1e2e80147e9536e867a8cfb2ea0fc9bbf6a",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV3074",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3099",
+        "record_hash": "sha256:f0c1663d927f7b4e624486dc1a9ff64199349af68873d0aa729ecd4061d1d985",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3074",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3538",
+        "record_hash": "sha256:1a5e3c7359b3e971140fc35414c75b72d6f730b0b2bafde340d3671657c1ddd1",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3074",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3624",
+        "record_hash": "sha256:74450437bdeaef273ef9ea0a1f7fc9292ef24c8ada380b283fb8e4fa8f62e2e9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV3074",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_3668",
+        "record_hash": "sha256:f5ed3af1e08986af8b0e6ddee4b4c027cbcdec48d4cb9afde1ee2949ebb08126",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3074",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=wentworth_institute_of_technology&signal_id=sig_fcf05ceb20873c9f5bcc",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_fcf05ceb20873c9f5bcc/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Wentworth Institute of Technology. Across 12 certified ED cells, the source-supported affected-community totals are Gender (8), Race (6), LGBTQ+ (2), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_fcf05ceb20873c9f5bcc/",
+    "proactive_reply": "Relevant certified public-data context for Wentworth Institute of Technology: https://campusevidencelab.org/signals/sig_fcf05ceb20873c9f5bcc/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sig_95c35a516c2c1928f394",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f6bbb79f921daecbdb46",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_88c9b9be72c3fa80abc7",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/new_york_film_academy/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "new_york_film_academy"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the documented category totals are Harassment or threat (4), Other source-backed civil rights event (1)."
+  },
+  "institution": {
+    "id": "new_york_film_academy",
+    "name": "New York Film Academy",
+    "city": "Burbank",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_2062",
+    "evt_2026_2226",
+    "evt_2026_2305",
+    "evt_2026_2565"
+  ],
+  "bounded_claims": [
+    {
+      "text": "New York Film Academy: Across 4 certified ED cells, the documented category totals are Harassment or threat (4), Other source-backed civil rights event (1).",
+      "supporting_record_ids": [
+        "evt_2026_2062",
+        "evt_2026_2226",
+        "evt_2026_2305",
+        "evt_2026_2565"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2062",
+        "record_hash": "sha256:a3d6fa3469e2758b76af7e1575b42640afafcb19b614bf135098500063b83022",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP9027",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2226",
+        "record_hash": "sha256:373985f097ffb59fc182def3958dcb4a8e9094f74f572cbb27ec15428e7e7175",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IH9027",
+        "column": "LAR_T_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2305",
+        "record_hash": "sha256:28cc5092633f9dd83b87e5b7a8c30bc5fe1e5aa01f76b60ba96a66ed741af87a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT9027",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2565",
+        "record_hash": "sha256:f198f3087c8317d70aac4d8a5e1cb1f55ffe99a0459b68abfb337f97289996de",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS9027",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=new_york_film_academy&signal_id=sig_95c35a516c2c1928f394",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_95c35a516c2c1928f394/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: New York Film Academy. Across 4 certified ED cells, the documented category totals are Harassment or threat (4), Other source-backed civil rights event (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_95c35a516c2c1928f394/",
+    "proactive_reply": "Relevant certified public-data context for New York Film Academy: https://campusevidencelab.org/signals/sig_95c35a516c2c1928f394/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

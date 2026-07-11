@@ -1,0 +1,125 @@
+{
+  "id": "sig_d63dbc4ce76bb74dd983",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_b9c2352ed725d07d1b18",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8694abb28028c281043d",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/juniata_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "juniata_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the documented category totals are Harassment or threat (2), Vandalism (2), Other source-backed civil rights event (1)."
+  },
+  "institution": {
+    "id": "juniata_college",
+    "name": "Juniata College",
+    "city": "HUNTINGDON",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0513",
+    "evt_2026_1782",
+    "evt_2026_2171",
+    "evt_2026_2836"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Juniata College: Across 4 certified ED cells, the documented category totals are Harassment or threat (2), Vandalism (2), Other source-backed civil rights event (1).",
+      "supporting_record_ids": [
+        "evt_2026_0513",
+        "evt_2026_1782",
+        "evt_2026_2171",
+        "evt_2026_2836"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0513",
+        "record_hash": "sha256:02e0051187c9f01e4167166cc01b4be596e804ca02d42fddfc1e3176095d3466",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5409",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1782",
+        "record_hash": "sha256:9bae1d8d8f13c7468d50123c0a4dcdb7522307d862f4f12e43773ad471099dfb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED5409",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2171",
+        "record_hash": "sha256:ec0c34968df0a0d1c1d0454b5631ddda7ad166a5f7451d132a45399884f4770c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DL5409",
+        "column": "LAR_T_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2836",
+        "record_hash": "sha256:241768dac85cf2cc962176318546747ba5855698a1afe3de48b6ebf05e7c9d3b",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU5409",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=juniata_college&signal_id=sig_d63dbc4ce76bb74dd983",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_d63dbc4ce76bb74dd983/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Juniata College. Across 4 certified ED cells, the documented category totals are Harassment or threat (2), Vandalism (2), Other source-backed civil rights event (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_d63dbc4ce76bb74dd983/",
+    "proactive_reply": "Relevant certified public-data context for Juniata College: https://campusevidencelab.org/signals/sig_d63dbc4ce76bb74dd983/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

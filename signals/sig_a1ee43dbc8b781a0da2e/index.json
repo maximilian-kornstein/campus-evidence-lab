@@ -1,0 +1,205 @@
+{
+  "id": "sig_a1ee43dbc8b781a0da2e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_72107ea730330a7cb66c",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1cf5ae81815fdf063371",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/gallaudet_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "gallaudet_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 10 certified ED cells, the reported geography totals are on-campus (15), residence-hall (5)."
+  },
+  "institution": {
+    "id": "gallaudet_university",
+    "name": "Gallaudet University",
+    "city": "WASHINGTON",
+    "state": "DC"
+  },
+  "record_ids": [
+    "evt_2026_0132",
+    "evt_2026_0777",
+    "evt_2026_0949",
+    "evt_2026_1108",
+    "evt_2026_1250",
+    "evt_2026_1369",
+    "evt_2026_2977",
+    "evt_2026_3056",
+    "evt_2026_3125",
+    "evt_2026_3797"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Gallaudet University: Across 10 certified ED cells, the reported geography totals are on-campus (15), residence-hall (5).",
+      "supporting_record_ids": [
+        "evt_2026_0132",
+        "evt_2026_0777",
+        "evt_2026_0949",
+        "evt_2026_1108",
+        "evt_2026_1250",
+        "evt_2026_1369",
+        "evt_2026_2977",
+        "evt_2026_3056",
+        "evt_2026_3125",
+        "evt_2026_3797"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 20,
+    "certified_cell_count": 10,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0132",
+        "record_hash": "sha256:94586de3eacad8e0655a709fde3a6a23f1227035e3aaec14304b51fb16ff34d5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ1145",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 6
+      },
+      {
+        "event_id": "evt_2026_0777",
+        "record_hash": "sha256:df90e7091b166f8cc524e724108ff4ef485d40d3bc7a4ea9e9d18c42c1bbbcfa",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NO1145",
+        "column": "INTIM_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0949",
+        "record_hash": "sha256:977b3a2bab699806f4d8e1ed6c884a78d670196c7071f98f8dd296ef1567b957",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP1145",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1108",
+        "record_hash": "sha256:0befa8bcbaea497a46a63c437f576cd82f94c0a974a21457a85b90e9dbd5c14a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT1145",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1250",
+        "record_hash": "sha256:dce8bc4118754fe0257ec7667b4e42837cc0e0dd25edc6bdb076b017e9e0cc44",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DX1145",
+        "column": "INTIM_DIS22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1369",
+        "record_hash": "sha256:27fbc6a5273cb2aa72b11d629d4946bbc8f0cf57b8011433ef3dd9ab0bf93dde",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU1145",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2977",
+        "record_hash": "sha256:a1f6deab73b8ca74244c93a7f2e5d6a7f2807c229ac4f8a8fbd1932c387ffeac",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NO1145",
+        "column": "INTIM_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3056",
+        "record_hash": "sha256:4eb3d253b567b0f3fafc8231ff81c141581ced6c572aed3602032d2e1a15a7c0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP1145",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3125",
+        "record_hash": "sha256:b00eab7685ff3a9a7ab36650e0f6b1436b04a06a41c83b237fc0a16bec3b51a3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DX1145",
+        "column": "INTIM_DIS22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3797",
+        "record_hash": "sha256:a5a124b07f9dacf263d01029a0a210bde261818e9d4245369c7fb8ca97ba77e1",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1149",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=gallaudet_university&signal_id=sig_a1ee43dbc8b781a0da2e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_a1ee43dbc8b781a0da2e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Gallaudet University. Across 10 certified ED cells, the reported geography totals are on-campus (15), residence-hall (5). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_a1ee43dbc8b781a0da2e/",
+    "proactive_reply": "Relevant certified public-data context for Gallaudet University: https://campusevidencelab.org/signals/sig_a1ee43dbc8b781a0da2e/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

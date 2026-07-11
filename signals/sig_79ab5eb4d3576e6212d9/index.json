@@ -1,0 +1,125 @@
+{
+  "id": "sig_79ab5eb4d3576e6212d9",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e721def623d8eafc9d38",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_38f774267044556d8351",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/florida_institute_of_technology/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "florida_institute_of_technology"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "florida_institute_of_technology",
+    "name": "Florida Institute of Technology",
+    "city": "MELBOURNE",
+    "state": "FL"
+  },
+  "record_ids": [
+    "evt_2026_0271",
+    "evt_2026_0909",
+    "evt_2026_2978",
+    "evt_2026_3357"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Florida Institute of Technology: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0271",
+        "evt_2026_0909",
+        "evt_2026_2978",
+        "evt_2026_3357"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0271",
+        "record_hash": "sha256:441fbf2cd3c6ff6180adebe070985a2806a2e9beb8f88a642143e04ed857db25",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MY1251",
+        "column": "SIM_A_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0909",
+        "record_hash": "sha256:0be7b05721568b69abb9be921642f3d0cc05516de087869ce8c8a21574255d5f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO1251",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2978",
+        "record_hash": "sha256:322ee1b46f83c0339a2fe39a86f09fd376627b7ab016923ee431aced5aa842c0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MY1251",
+        "column": "SIM_A_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3357",
+        "record_hash": "sha256:13ed002360f47237a704155c5edba33ab298e70cdadcb4120c4ef8b9ec24a600",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO1251",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=florida_institute_of_technology&signal_id=sig_79ab5eb4d3576e6212d9",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_79ab5eb4d3576e6212d9/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Florida Institute of Technology. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_79ab5eb4d3576e6212d9/",
+    "proactive_reply": "Relevant certified public-data context for Florida Institute of Technology: https://campusevidencelab.org/signals/sig_79ab5eb4d3576e6212d9/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

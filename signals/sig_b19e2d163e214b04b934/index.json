@@ -1,0 +1,185 @@
+{
+  "id": "sig_b19e2d163e214b04b934",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_9afd401e9b3b114f48d3",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_47a4792245b8a9641ba9",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/vanderbilt_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "vanderbilt_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 8 reported statistics across 5 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "vanderbilt_university",
+    "name": "Vanderbilt University",
+    "city": "NASHVILLE",
+    "state": "TN"
+  },
+  "record_ids": [
+    "evt_2026_0165",
+    "evt_2026_0762",
+    "evt_2026_0975",
+    "evt_2026_1134",
+    "evt_2026_1240",
+    "evt_2026_1303",
+    "evt_2026_2460",
+    "evt_2026_2961",
+    "evt_2026_3115"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Vanderbilt University: Certified ED workbook cells document 8 reported statistics across 5 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0165",
+        "evt_2026_0762",
+        "evt_2026_0975",
+        "evt_2026_1134",
+        "evt_2026_1240",
+        "evt_2026_1303",
+        "evt_2026_2460",
+        "evt_2026_2961",
+        "evt_2026_3115"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0165",
+        "record_hash": "sha256:9393e4ce0ceb331d29a02cfa1332c91c61a783d9980bb3480e194e042a1572b4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL5950",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0762",
+        "record_hash": "sha256:4e965d09a4fd2958f0ae97ee104732db4b6490affeb31f258232a660e4e1fbd8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR5950",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0975",
+        "record_hash": "sha256:72c39d435116621826f5930f463d08bbcb2339edd824e8806234b698b523478a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM5950",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1134",
+        "record_hash": "sha256:c2fbfd8202e039c4819be1a065d8e5c3fea077c2c2ba815d2cae07b6d1631458",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS5950",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1240",
+        "record_hash": "sha256:4e699b88965e0933f7edea8e665065591ba1eb7b940191096fc75d52049966f8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5950",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1303",
+        "record_hash": "sha256:9a00cc6ba062fcb6ede62107bb3a0ee2242dcdbdfc4ae5ca5076465ddf3b75f9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP5950",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2460",
+        "record_hash": "sha256:c7e745fe4de2770feee05b92e8df72d8dd196bcb79e12627574e53b631961f24",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5950",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2961",
+        "record_hash": "sha256:764e1bfd902ade2b5a2b2fb40e953fca2c99fa9a5cc8c28d195498a58bedead7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM5950",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3115",
+        "record_hash": "sha256:378e071ece723b1edcd8487bb485bc50f073e01f2dc247bd60945aaa7de2654b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS5950",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=vanderbilt_university&signal_id=sig_b19e2d163e214b04b934",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b19e2d163e214b04b934/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Vanderbilt University. Certified ED workbook cells document 8 reported statistics across 5 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_b19e2d163e214b04b934/",
+    "proactive_reply": "Relevant certified public-data context for Vanderbilt University: https://campusevidencelab.org/signals/sig_b19e2d163e214b04b934/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

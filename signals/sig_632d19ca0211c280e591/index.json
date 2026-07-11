@@ -1,0 +1,173 @@
+{
+  "id": "sig_632d19ca0211c280e591",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_9f77fcd25ea161ef3e21",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e6e6c888f844485afbb8",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/arkansas_baptist_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "arkansas_baptist_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 10 reported statistics across 8 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "arkansas_baptist_college",
+    "name": "Arkansas Baptist College",
+    "city": "LITTLE ROCK",
+    "state": "AR"
+  },
+  "record_ids": [
+    "evt_2026_0082",
+    "evt_2026_0678",
+    "evt_2026_0984",
+    "evt_2026_1064",
+    "evt_2026_2894",
+    "evt_2026_2928",
+    "evt_2026_3012",
+    "evt_2026_3087"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Arkansas Baptist College: Certified ED workbook cells document 10 reported statistics across 8 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0082",
+        "evt_2026_0678",
+        "evt_2026_0984",
+        "evt_2026_1064",
+        "evt_2026_2894",
+        "evt_2026_2928",
+        "evt_2026_3012",
+        "evt_2026_3087"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0082",
+        "record_hash": "sha256:effde829025a103422fcef8be4e59cecd6739262929647ad87345a6d171f80da",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC296",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0678",
+        "record_hash": "sha256:55d2e1dca46da1e4baf0783ae832461b31c3924518c8d18cc38e1d10da795594",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MK296",
+        "column": "ARSON_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0984",
+        "record_hash": "sha256:9f1cb8d774db35b025428dd25e512829e20e83fc358a49a00e20b892cc96a9bc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL296",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1064",
+        "record_hash": "sha256:058140d477eed49dadcae25e54b5a41753bed8e151038ae2edd10685af7a6370",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU296",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2894",
+        "record_hash": "sha256:6069ee88710f337757f81529087d18cc791080b44474ba682e5f771c6bbd9473",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC296",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2928",
+        "record_hash": "sha256:ffa5193420ead79e05c4f4d978d179224a074c3db3eefba059a600affb90c1b2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MK296",
+        "column": "ARSON_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3012",
+        "record_hash": "sha256:b16abd0e9de615610c7c0c4395eb83a993fe306530edaed059510d8ee974707d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL296",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3087",
+        "record_hash": "sha256:0060bf834f8b23dbd79adc425d0562d0ba2af56ace863e2a31f13420853831cb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU296",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=arkansas_baptist_college&signal_id=sig_632d19ca0211c280e591",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_632d19ca0211c280e591/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Arkansas Baptist College. Certified ED workbook cells document 10 reported statistics across 8 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_632d19ca0211c280e591/",
+    "proactive_reply": "Relevant certified public-data context for Arkansas Baptist College: https://campusevidencelab.org/signals/sig_632d19ca0211c280e591/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

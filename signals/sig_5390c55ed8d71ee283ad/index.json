@@ -1,0 +1,137 @@
+{
+  "id": "sig_5390c55ed8d71ee283ad",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_18f0efe0187424bb4fd1",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_5d7bcf6860f6b3c55792",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/riverland_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "riverland_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Vandalism (6), Harassment or threat (2)."
+  },
+  "institution": {
+    "id": "riverland_community_college",
+    "name": "Riverland Community College",
+    "city": "Albert Lea",
+    "state": "MN"
+  },
+  "record_ids": [
+    "evt_2026_0413",
+    "evt_2026_1193",
+    "evt_2026_1293",
+    "evt_2026_1378",
+    "evt_2026_3066"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Riverland Community College: Across 5 certified ED cells, the documented category totals are Vandalism (6), Harassment or threat (2).",
+      "supporting_record_ids": [
+        "evt_2026_0413",
+        "evt_2026_1193",
+        "evt_2026_1293",
+        "evt_2026_1378",
+        "evt_2026_3066"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0413",
+        "record_hash": "sha256:d963b906fdc7f8563bf23cf49f25c07d84606498a19a622a7427f7cc0653fe63",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3319",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1193",
+        "record_hash": "sha256:2047496759d1328d2b0d4898d84b2b1641ae33f929c81177d72fb74fbb4121af",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ3319",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_1293",
+        "record_hash": "sha256:cb841ed17406dd2f7819bd1fbc2e89205f3f568146571a900147f450697ac8a3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3318",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1378",
+        "record_hash": "sha256:3afc47f19ca81bf54d361e7d838783eaf396f0e96cccf15d472b55c857fce904",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3319",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3066",
+        "record_hash": "sha256:3d1f891348fdcb2d73256c21db15ae04ba89066103e87fb3c57953cbdb7c2c52",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3318",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=riverland_community_college&signal_id=sig_5390c55ed8d71ee283ad",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5390c55ed8d71ee283ad/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Riverland Community College. Across 5 certified ED cells, the documented category totals are Vandalism (6), Harassment or threat (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_5390c55ed8d71ee283ad/",
+    "proactive_reply": "Relevant certified public-data context for Riverland Community College: https://campusevidencelab.org/signals/sig_5390c55ed8d71ee283ad/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,169 @@
+{
+  "id": "sig_fd0ac1cbc64779092615",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_0f02dc38758d3a103b44",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_4112cb1dc9ada96cd4f4",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_nebraska_at_omaha/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_nebraska_at_omaha"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Race (7), Gender (2), LGBTQ+ (2)."
+  },
+  "institution": {
+    "id": "university_of_nebraska_at_omaha",
+    "name": "University of Nebraska at Omaha",
+    "city": "OMAHA",
+    "state": "NE"
+  },
+  "record_ids": [
+    "evt_2026_0296",
+    "evt_2026_0883",
+    "evt_2026_0965",
+    "evt_2026_1045",
+    "evt_2026_1124",
+    "evt_2026_3768",
+    "evt_2026_3895"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Nebraska at Omaha: Across 7 certified ED cells, the source-supported affected-community totals are Race (7), Gender (2), LGBTQ+ (2).",
+      "supporting_record_ids": [
+        "evt_2026_0296",
+        "evt_2026_0883",
+        "evt_2026_0965",
+        "evt_2026_1045",
+        "evt_2026_1124",
+        "evt_2026_3768",
+        "evt_2026_3895"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0296",
+        "record_hash": "sha256:714e092d6c59b473097aa06f0fa02eaef9887b364505569051b37f6d969ce7ea",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR3806",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0883",
+        "record_hash": "sha256:43b43af7dd9d60f7cb0eae62da5bd2796cb4613847d6f6ea0ef8600a023c5842",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX3806",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0965",
+        "record_hash": "sha256:ea82d9c0e56896bcf07133ce384d7f3f46d7e6ebd3fc804eed85521cb48d9196",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3806",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1045",
+        "record_hash": "sha256:f381d7aab6c9bd9f7adba4c9aa9196008f9df1aaf23cff65e491d7f32d6318ab",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV3806",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1124",
+        "record_hash": "sha256:866721aec24f1f3e56dee6f35268778f6a06502bcd166a62df01cf4a97e54473",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED3806",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3768",
+        "record_hash": "sha256:e221976d1c5710582faf75c4394314aa0a8061e7355d09e27b20a4e090aaee82",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3904",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_3895",
+        "record_hash": "sha256:d48cb36fcf35328e8b3e36d15981b17990d73b18bc0920b501cf406b635a232d",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED3904",
+        "column": "VANDAL_SEX21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_nebraska_at_omaha&signal_id=sig_fd0ac1cbc64779092615",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_fd0ac1cbc64779092615/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Nebraska at Omaha. Across 7 certified ED cells, the source-supported affected-community totals are Race (7), Gender (2), LGBTQ+ (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_fd0ac1cbc64779092615/",
+    "proactive_reply": "Relevant certified public-data context for University of Nebraska at Omaha: https://campusevidencelab.org/signals/sig_fd0ac1cbc64779092615/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

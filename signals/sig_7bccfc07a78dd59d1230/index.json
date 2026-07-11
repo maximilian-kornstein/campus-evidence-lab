@@ -1,0 +1,125 @@
+{
+  "id": "sig_7bccfc07a78dd59d1230",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_0b3489bcb015f4c885a7",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_2a0fa2afbe8cc2572618",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/cuny_queensborough_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "cuny_queensborough_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the documented category totals are Vandalism (3), Harassment or threat (1)."
+  },
+  "institution": {
+    "id": "cuny_queensborough_community_college",
+    "name": "CUNY Queensborough Community College",
+    "city": "Bayside",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1128",
+    "evt_2026_1554",
+    "evt_2026_2212",
+    "evt_2026_2282"
+  ],
+  "bounded_claims": [
+    {
+      "text": "CUNY Queensborough Community College: Across 4 certified ED cells, the documented category totals are Vandalism (3), Harassment or threat (1).",
+      "supporting_record_ids": [
+        "evt_2026_1128",
+        "evt_2026_1554",
+        "evt_2026_2212",
+        "evt_2026_2282"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1128",
+        "record_hash": "sha256:c96d0aab637c9c8a976d71e9ea3f441588bab34b27592dccb34c1192a92dc37e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4213",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1554",
+        "record_hash": "sha256:decb38302f3523bae1e75d247f3907224e930f06a4561fffee905e8b3436e883",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4213",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2212",
+        "record_hash": "sha256:b5ab66b9b717a36b7cd9b325ccc4f0a5ca97679d19825d4479b9956b8d33e8de",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX4213",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2282",
+        "record_hash": "sha256:52d7a3284325ff2cc00d5abcdfd039c13db70976ca998ecf834f05c7c192737e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4213",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=cuny_queensborough_community_college&signal_id=sig_7bccfc07a78dd59d1230",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7bccfc07a78dd59d1230/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: CUNY Queensborough Community College. Across 4 certified ED cells, the documented category totals are Vandalism (3), Harassment or threat (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7bccfc07a78dd59d1230/",
+    "proactive_reply": "Relevant certified public-data context for CUNY Queensborough Community College: https://campusevidencelab.org/signals/sig_7bccfc07a78dd59d1230/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,161 @@
+{
+  "id": "sig_e4e9a8265dc58a56cbde",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c472c3ac5fe147693845",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_392cd93077ea92773de4",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/florida_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "florida_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), Race (2), Religion (2), National origin (1)."
+  },
+  "institution": {
+    "id": "florida_state_university",
+    "name": "Florida State University",
+    "city": "TALLAHASSEE",
+    "state": "FL"
+  },
+  "record_ids": [
+    "evt_2026_0428",
+    "evt_2026_0990",
+    "evt_2026_1183",
+    "evt_2026_1342",
+    "evt_2026_2771",
+    "evt_2026_3126",
+    "evt_2026_3315"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Florida State University: Across 7 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), Race (2), Religion (2), National origin (1).",
+      "supporting_record_ids": [
+        "evt_2026_0428",
+        "evt_2026_0990",
+        "evt_2026_1183",
+        "evt_2026_1342",
+        "evt_2026_2771",
+        "evt_2026_3126",
+        "evt_2026_3315"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0428",
+        "record_hash": "sha256:8eb8b4bc5212c340566b775449e9c2ccb27496fbc76ec838e0ca2397dac04650",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IG1263",
+        "column": "LAR_T_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0990",
+        "record_hash": "sha256:b22930ad971c6f8eaa0f63b66b6880e00e7086447c4610c72a3a2812f93dea2c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ1263",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1183",
+        "record_hash": "sha256:3c22b14f4fac1aecf54215b1bb038abbb74315d09aa4f1c6d02880c9ef72ae40",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA1263",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1342",
+        "record_hash": "sha256:7a328e3449a401cf4360cdd103fcbf7aeb99d3ccf8474b466864cafd239faf21",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DC1263",
+        "column": "SIM_A_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2771",
+        "record_hash": "sha256:3193a0f83ca943993fef25635e0456a8a404ac5ffa9ae72231e9f9adb5f7f1f0",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS1263",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3126",
+        "record_hash": "sha256:7cbcd7fa6c74005d560c60348e9f5d6b449bfffe5df0465e4539146c086ebc8d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IG1263",
+        "column": "LAR_T_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3315",
+        "record_hash": "sha256:4619a34a086d6c98a102859503af6621c3e2f3032ca269f7df2c4eec8d6a7859",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DC1263",
+        "column": "SIM_A_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=florida_state_university&signal_id=sig_e4e9a8265dc58a56cbde",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e4e9a8265dc58a56cbde/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Florida State University. Across 7 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), Race (2), Religion (2), National origin (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e4e9a8265dc58a56cbde/",
+    "proactive_reply": "Relevant certified public-data context for Florida State University: https://campusevidencelab.org/signals/sig_e4e9a8265dc58a56cbde/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

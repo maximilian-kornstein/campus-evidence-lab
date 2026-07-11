@@ -1,0 +1,173 @@
+{
+  "id": "sig_58355e046afc5d6e7a0e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_81a95a446ce9102d5e56",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ca09129c177eb6935cae",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/brandeis_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "brandeis_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the reported geography totals are on-campus (8), residence-hall (5)."
+  },
+  "institution": {
+    "id": "brandeis_university",
+    "name": "Brandeis University",
+    "city": "Waltham",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0193",
+    "evt_2026_0742",
+    "evt_2026_1347",
+    "evt_2026_1547",
+    "evt_2026_1775",
+    "evt_2026_2910",
+    "evt_2026_3342",
+    "evt_2026_3633"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Brandeis University: Across 8 certified ED cells, the reported geography totals are on-campus (8), residence-hall (5).",
+      "supporting_record_ids": [
+        "evt_2026_0193",
+        "evt_2026_0742",
+        "evt_2026_1347",
+        "evt_2026_1547",
+        "evt_2026_1775",
+        "evt_2026_2910",
+        "evt_2026_3342",
+        "evt_2026_3633"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 13,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0193",
+        "record_hash": "sha256:9af1bd66f4251533325a1dd87724dc1296c5b013e7872ffff29b9b0eec60bd31",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU2926",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0742",
+        "record_hash": "sha256:098847ff3bd4e59273850e1f774ea015199ea2205af8dfdbcfebbb439c1ebaa5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX2926",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1347",
+        "record_hash": "sha256:085cf74952f649457b2b947af410632fee07fbd2953a8dac2c1339bd0993897b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT2926",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1547",
+        "record_hash": "sha256:e8f2a7a0def796e1dc66c36ae6459d039dd6b847f517cb5f2bd90ab504b2e4c3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP2926",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1775",
+        "record_hash": "sha256:48870711e64ed4a6c1ae9d94049cfd04b02e94e2dce87d5e7f192fa34e510387",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY2926",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2910",
+        "record_hash": "sha256:79009c6563ff74af14bcc449f21c74fbf754f7ecdbf61f1e47323d6ebc39571d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU2926",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3342",
+        "record_hash": "sha256:7f6773c94fcd3386fbc7e830ace60f5c5fd35b35d635b697fc7d700c524fb87f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX2926",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3633",
+        "record_hash": "sha256:68cec9c9a661aa6c2854c7cb601eedaa2090d153f6d2e76e1d49cc6f3efecc8b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP2926",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=brandeis_university&signal_id=sig_58355e046afc5d6e7a0e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_58355e046afc5d6e7a0e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Brandeis University. Across 8 certified ED cells, the reported geography totals are on-campus (8), residence-hall (5). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_58355e046afc5d6e7a0e/",
+    "proactive_reply": "Relevant certified public-data context for Brandeis University: https://campusevidencelab.org/signals/sig_58355e046afc5d6e7a0e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

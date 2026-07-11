@@ -4,11 +4,12 @@ import { paths, readJson, rootDir } from "./lib.mjs";
 import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registry.mjs";
 
 const baseUrl = (process.env.SITE_URL || "https://campusevidencelab.org").replace(/\/+$/, "");
-const [events, schools, briefs, sources] = await Promise.all([
+const [events, schools, briefs, sources, signalsArtifact] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
   readJson(paths.briefs),
-  readJson(paths.sources)
+  readJson(paths.sources),
+  readJson(paths.signals).catch(() => ({ signals: [] }))
 ]);
 
 const staticPaths = [
@@ -16,6 +17,7 @@ const staticPaths = [
   "/events/",
   "/schools/",
   "/briefs/",
+  "/signals/",
   "/sources/",
   "/quality/",
   "/methodology/",
@@ -60,7 +62,8 @@ const eventPaths = events.map((event) => `/events/${event.id}/`);
 const schoolPaths = schools.map((school) => `/schools/${school.id}/`);
 const briefPaths = briefs.map((brief) => `/briefs/${brief.id}/`);
 const sourcePaths = sources.map((source) => `/sources/${source.id}/`);
-const urls = [...staticPaths, ...eventPaths, ...schoolPaths, ...briefPaths, ...sourcePaths];
+const signalPaths = (signalsArtifact.signals ?? []).map((signal) => `/signals/${signal.id}/`);
+const urls = [...staticPaths, ...eventPaths, ...schoolPaths, ...briefPaths, ...sourcePaths, ...signalPaths];
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -1,0 +1,137 @@
+{
+  "id": "sig_1c6259ed53b10b212c1e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_fcb3c7b3f9148248fbe5",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_dc683c8a945f8c648fb4",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/virginia_military_institute/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "virginia_military_institute"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (1)."
+  },
+  "institution": {
+    "id": "virginia_military_institute",
+    "name": "Virginia Military Institute",
+    "city": "LEXINGTON",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_0168",
+    "evt_2026_0855",
+    "evt_2026_1362",
+    "evt_2026_3118",
+    "evt_2026_3371"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Virginia Military Institute: Across 5 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (1).",
+      "supporting_record_ids": [
+        "evt_2026_0168",
+        "evt_2026_0855",
+        "evt_2026_1362",
+        "evt_2026_3118",
+        "evt_2026_3371"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0168",
+        "record_hash": "sha256:94673eedeeb901e2d3f0222044d7ce79faba57d940c238400949b56f5bd4fee2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK6743",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0855",
+        "record_hash": "sha256:65165cc394ccf4fd648e15b36bb6ce157cad634facc89623c309c6a6467a503c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT6743",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1362",
+        "record_hash": "sha256:890415b6fce9d2809f4882af718f5ecf823a52b2e490f692ed0564ea3e27e252",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6743",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3118",
+        "record_hash": "sha256:8ebbccdf08c38157a89d0f971e298859ab03ebe3d21d9bab5eb47f58a99d814c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK6743",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3371",
+        "record_hash": "sha256:de1e38e531dfa57a7e5c0cdda8f4ea3ca6e2a474a0229ab297fe6f574a50ca23",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6743",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=virginia_military_institute&signal_id=sig_1c6259ed53b10b212c1e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_1c6259ed53b10b212c1e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Virginia Military Institute. Across 5 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_1c6259ed53b10b212c1e/",
+    "proactive_reply": "Relevant certified public-data context for Virginia Military Institute: https://campusevidencelab.org/signals/sig_1c6259ed53b10b212c1e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

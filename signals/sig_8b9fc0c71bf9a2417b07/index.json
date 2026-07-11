@@ -1,0 +1,161 @@
+{
+  "id": "sig_8b9fc0c71bf9a2417b07",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_acea4ee8ea655ef2f21f",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_69c7dd804df0e44e77eb",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/lincoln_memorial_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "lincoln_memorial_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "lincoln_memorial_university",
+    "name": "Lincoln Memorial University",
+    "city": "HARROGATE",
+    "state": "TN"
+  },
+  "record_ids": [
+    "evt_2026_0211",
+    "evt_2026_0715",
+    "evt_2026_0935",
+    "evt_2026_1095",
+    "evt_2026_1331",
+    "evt_2026_1359",
+    "evt_2026_2558"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Lincoln Memorial University: Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0211",
+        "evt_2026_0715",
+        "evt_2026_0935",
+        "evt_2026_1095",
+        "evt_2026_1331",
+        "evt_2026_1359",
+        "evt_2026_2558"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0211",
+        "record_hash": "sha256:59e35625e4fb9f90287de7a5428f79b5fd8969567c0d39c35a19be65d5df5d57",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN5847",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0715",
+        "record_hash": "sha256:02a69d1516b130fe2fc1493218129222e5f7fd82626249897c4ae4f4208d4785",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5847",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0935",
+        "record_hash": "sha256:fb78bc560dac153f0dd0ab311e15f5b000e4baf1e3f7222e1fa7afdcc153e506",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5847",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1095",
+        "record_hash": "sha256:9810800d7d3e0ec87f38cffa585aa43ee71c548fa3f01d7119c1a89f28d349b4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ5847",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1331",
+        "record_hash": "sha256:f213d98da8d0c736de8f4b336162d9ab6b19ed8a15e0113b5398e61724a9e988",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ5847",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1359",
+        "record_hash": "sha256:f554e3f0826fbc947d86baf2962f168fb6ed833abb2c7cecddb1bc179a9603ee",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5847",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2558",
+        "record_hash": "sha256:beddef7a444f6227b9f4e17df4ba930d6e0f7744c1d4b3d9170cf052edf93196",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5847",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=lincoln_memorial_university&signal_id=sig_8b9fc0c71bf9a2417b07",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_8b9fc0c71bf9a2417b07/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Lincoln Memorial University. Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_8b9fc0c71bf9a2417b07/",
+    "proactive_reply": "Relevant certified public-data context for Lincoln Memorial University: https://campusevidencelab.org/signals/sig_8b9fc0c71bf9a2417b07/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

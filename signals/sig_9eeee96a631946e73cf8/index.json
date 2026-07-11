@@ -1,0 +1,145 @@
+{
+  "id": "sig_9eeee96a631946e73cf8",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_ad73ca7aa03ac79e76c3",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_0fde881d356269b7c248",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/viterbo_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "viterbo_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "viterbo_university",
+    "name": "Viterbo University",
+    "city": "LA CROSSE",
+    "state": "WI"
+  },
+  "record_ids": [
+    "evt_2026_0471",
+    "evt_2026_1021",
+    "evt_2026_3086",
+    "evt_2026_3266",
+    "evt_2026_3874"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Viterbo University: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0471",
+        "evt_2026_1021",
+        "evt_2026_3086",
+        "evt_2026_3266",
+        "evt_2026_3874"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0471",
+        "record_hash": "sha256:54ed5a71b8d6d05416b433c26767e8cdb3668c732ffd5edb2e6a71a836b23fdc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK7026",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1021",
+        "record_hash": "sha256:b7a80e86e9b7cc5e45ba22ec80cb80a8a97fcc2fe7f1fca1771ff22f4964db68",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT7026",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3086",
+        "record_hash": "sha256:42cfee20126a10924b0b8071f961dc53d92d683aefa3fbb8cf1e53830fe3d47a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK7026",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3266",
+        "record_hash": "sha256:7a09bdc5884b25d186f2f6ca1b5e872f5ec274a1d8ce12d9ba5dc6e144f4f6a0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT7026",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3874",
+        "record_hash": "sha256:808d5b69bd63e0788c361de5c4dbbe9940bfb8f59e4c99bfc71607f73bb38a7f",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB7166",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=viterbo_university&signal_id=sig_9eeee96a631946e73cf8",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_9eeee96a631946e73cf8/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Viterbo University. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_9eeee96a631946e73cf8/",
+    "proactive_reply": "Relevant certified public-data context for Viterbo University: https://campusevidencelab.org/signals/sig_9eeee96a631946e73cf8/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

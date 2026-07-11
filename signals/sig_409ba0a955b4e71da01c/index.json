@@ -1,0 +1,125 @@
+{
+  "id": "sig_409ba0a955b4e71da01c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_2c9d6a9b6a6bfcfd789b",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_a3e16af3d8715426cf78",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/indian_river_state_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "indian_river_state_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (3), residence-hall (3)."
+  },
+  "institution": {
+    "id": "indian_river_state_college",
+    "name": "Indian River State College",
+    "city": "FORT PIERCE",
+    "state": "FL"
+  },
+  "record_ids": [
+    "evt_2026_0134",
+    "evt_2026_1070",
+    "evt_2026_2901",
+    "evt_2026_3057"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Indian River State College: Across 4 certified ED cells, the reported geography totals are on-campus (3), residence-hall (3).",
+      "supporting_record_ids": [
+        "evt_2026_0134",
+        "evt_2026_1070",
+        "evt_2026_2901",
+        "evt_2026_3057"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0134",
+        "record_hash": "sha256:935e394ae59d298b5215b97561d933f8056e1c3233cad56ae1be2a94735fad2b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM1329",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1070",
+        "record_hash": "sha256:db9a4d2f4bac57d5bb2e874bfeceb83915940e864d3c120b087ce859ec893e81",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1329",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2901",
+        "record_hash": "sha256:6f87302a3b694230a329abede139029714d3bfa3b52734825848d64e8db081b2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM1329",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3057",
+        "record_hash": "sha256:2b3114bd807405fbc466b9cab82208ddc09b7cbc1a9cee7dfed059c12ab22f1a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1329",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=indian_river_state_college&signal_id=sig_409ba0a955b4e71da01c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_409ba0a955b4e71da01c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Indian River State College. Across 4 certified ED cells, the reported geography totals are on-campus (3), residence-hall (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_409ba0a955b4e71da01c/",
+    "proactive_reply": "Relevant certified public-data context for Indian River State College: https://campusevidencelab.org/signals/sig_409ba0a955b4e71da01c/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,169 @@
+{
+  "id": "sig_ca20439128a032c07c7f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c69f61a0cff5390d7abd",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_d55871783054e12da7cd",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/georgetown_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "georgetown_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (3), Other source-backed civil rights event (1)."
+  },
+  "institution": {
+    "id": "georgetown_university",
+    "name": "Georgetown University",
+    "city": "WASHINGTON",
+    "state": "DC"
+  },
+  "record_ids": [
+    "evt_2026_0182",
+    "evt_2026_0731",
+    "evt_2026_0908",
+    "evt_2026_1069",
+    "evt_2026_1217",
+    "evt_2026_1313",
+    "evt_2026_3840"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Georgetown University: Across 7 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (3), Other source-backed civil rights event (1).",
+      "supporting_record_ids": [
+        "evt_2026_0182",
+        "evt_2026_0731",
+        "evt_2026_0908",
+        "evt_2026_1069",
+        "evt_2026_1217",
+        "evt_2026_1313",
+        "evt_2026_3840"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0182",
+        "record_hash": "sha256:f01fd6226f99604fcd9c28954db3c38566e37c805b4769eb28e7dbfdcb749aaa",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MW1153",
+        "column": "SIM_A_GID24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0731",
+        "record_hash": "sha256:4078035973632f432c6abc2372a81e933c1d4de8d939c1e170411c798c59837a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1153",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0908",
+        "record_hash": "sha256:1ffdd6a83c1b2ae242ee263d88323c7263fd697616b44f142a786c4a2bb78366",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN1153",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1069",
+        "record_hash": "sha256:b27f1eeba28a604e7242e768a5db87c4cc4bc51ba65dc02ce9759f6b1febd3d8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND1153",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1217",
+        "record_hash": "sha256:024e88e4916d2d56dabc2883f907fed028c66d03838da571ef967e8646a99054",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1153",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1313",
+        "record_hash": "sha256:36df80d690b7d99bc3bad7c6b767828edf456c60cfa9a8157f595f3339d1558a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED1153",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3840",
+        "record_hash": "sha256:27e2841e721585ea1f40b40ad642488c25fd5c2b8cc233dddfb9608f74ccb641",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1158",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=georgetown_university&signal_id=sig_ca20439128a032c07c7f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ca20439128a032c07c7f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Georgetown University. Across 7 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (3), Other source-backed civil rights event (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ca20439128a032c07c7f/",
+    "proactive_reply": "Relevant certified public-data context for Georgetown University: https://campusevidencelab.org/signals/sig_ca20439128a032c07c7f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

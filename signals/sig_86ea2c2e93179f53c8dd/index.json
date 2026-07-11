@@ -1,0 +1,161 @@
+{
+  "id": "sig_86ea2c2e93179f53c8dd",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_b06282f5916f8402d7b5",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_aa34f2ad006482564d39",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/stockton_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "stockton_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the reported geography totals are on-campus (6), residence-hall (2)."
+  },
+  "institution": {
+    "id": "stockton_university",
+    "name": "Stockton University",
+    "city": "Galloway",
+    "state": "NJ"
+  },
+  "record_ids": [
+    "evt_2026_0601",
+    "evt_2026_1126",
+    "evt_2026_1531",
+    "evt_2026_1690",
+    "evt_2026_1791",
+    "evt_2026_3281",
+    "evt_2026_3365"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Stockton University: Across 7 certified ED cells, the reported geography totals are on-campus (6), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0601",
+        "evt_2026_1126",
+        "evt_2026_1531",
+        "evt_2026_1690",
+        "evt_2026_1791",
+        "evt_2026_3281",
+        "evt_2026_3365"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0601",
+        "record_hash": "sha256:77db85763ce85e2384ced1a9943356a869dfdf3d13717a21cb56914a2809a22f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4036",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1126",
+        "record_hash": "sha256:d3ab6564f56fc1a2679aae85fab47f56117f48cecaa06993107bd66c8adc5216",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS4036",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1531",
+        "record_hash": "sha256:938294e22774dfc9ae494e55f44c3674983d65923946bc6dd22f5652b3a4ce93",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4040",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1690",
+        "record_hash": "sha256:a97b9d646d739d14b4b67d1f67f1c746fd6e4cb71b6dc13bc363387ed94e6eeb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4036",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1791",
+        "record_hash": "sha256:7fdf6de6a2fbf71dfde72947d6aa6bf03152c1ae91f1d1c4f8592941d3a14eb0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4036",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3281",
+        "record_hash": "sha256:8537eba7e80056d1fc59caeb58f75ae2d62f5e2b1682073eb2de68eda2d908c0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4040",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3365",
+        "record_hash": "sha256:b2e408419e5ef0959fdebeb1a4a3829393f0baa5bc0312325ae934978348e7b2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4036",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=stockton_university&signal_id=sig_86ea2c2e93179f53c8dd",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_86ea2c2e93179f53c8dd/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Stockton University. Across 7 certified ED cells, the reported geography totals are on-campus (6), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_86ea2c2e93179f53c8dd/",
+    "proactive_reply": "Relevant certified public-data context for Stockton University: https://campusevidencelab.org/signals/sig_86ea2c2e93179f53c8dd/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

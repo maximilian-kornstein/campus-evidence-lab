@@ -1,0 +1,173 @@
+{
+  "id": "sig_5248cea1fb32df227c8d",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_221f30747e1900e02ff7",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_5d9b480a427f1a030f2e",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/rider_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "rider_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the reported geography totals are on-campus (7), residence-hall (2)."
+  },
+  "institution": {
+    "id": "rider_university",
+    "name": "Rider University",
+    "city": "LAWRENCEVILLE",
+    "state": "NJ"
+  },
+  "record_ids": [
+    "evt_2026_0534",
+    "evt_2026_0885",
+    "evt_2026_1618",
+    "evt_2026_1736",
+    "evt_2026_1895",
+    "evt_2026_1921",
+    "evt_2026_3230",
+    "evt_2026_3345"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Rider University: Across 8 certified ED cells, the reported geography totals are on-campus (7), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0534",
+        "evt_2026_0885",
+        "evt_2026_1618",
+        "evt_2026_1736",
+        "evt_2026_1895",
+        "evt_2026_1921",
+        "evt_2026_3230",
+        "evt_2026_3345"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0534",
+        "record_hash": "sha256:a90f8525be01ae8793ea2dc08496541b3569692169bb000a5c6cf80b809f1e2f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3996",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0885",
+        "record_hash": "sha256:03c88aef2cfba49bc69e339fd18e368b2bddbc75a653a77b8d92a8ddc74930d3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL3996",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1618",
+        "record_hash": "sha256:723c658eef20eb3808314a50884c2afd9f807af4391af4e31886d4f07748754b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT3997",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1736",
+        "record_hash": "sha256:81d88b276dbe6891095b353e43902d5fd1262893458d830d2445293a2cef641d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX3996",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1895",
+        "record_hash": "sha256:ec1f2618d640cb24d35fdae607ad91c4a9f13da913ef1e41708b5e95fcf412f5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD3996",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1921",
+        "record_hash": "sha256:b3fd8fa16997a7b7bdbb9689e47a68345493bd59cf00b83e5d5ead1227960355",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA3996",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3230",
+        "record_hash": "sha256:862ac8b65505343686dc6c2d939efee44f481c584a5d4e6c133ca9b697bc61c7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL3996",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3345",
+        "record_hash": "sha256:34c80a135ee1bab281d5a30afd94932a073b89a43e1313aa412f745f8d1644a7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD3996",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=rider_university&signal_id=sig_5248cea1fb32df227c8d",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5248cea1fb32df227c8d/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Rider University. Across 8 certified ED cells, the reported geography totals are on-campus (7), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_5248cea1fb32df227c8d/",
+    "proactive_reply": "Relevant certified public-data context for Rider University: https://campusevidencelab.org/signals/sig_5248cea1fb32df227c8d/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

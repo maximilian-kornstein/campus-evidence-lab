@@ -1,0 +1,125 @@
+{
+  "id": "sig_8b96041d6ce56e83d36b",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_eb6686b605d90438ba76",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_c8f0cfa5ab2d879c0d4c",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/trinity_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "trinity_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the documented category totals are Vandalism (3), Harassment or threat (2)."
+  },
+  "institution": {
+    "id": "trinity_college",
+    "name": "Trinity College",
+    "city": "HARTFORD",
+    "state": "CT"
+  },
+  "record_ids": [
+    "evt_2026_0181",
+    "evt_2026_0776",
+    "evt_2026_0948",
+    "evt_2026_3124"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Trinity College: Across 4 certified ED cells, the documented category totals are Vandalism (3), Harassment or threat (2).",
+      "supporting_record_ids": [
+        "evt_2026_0181",
+        "evt_2026_0776",
+        "evt_2026_0948",
+        "evt_2026_3124"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0181",
+        "record_hash": "sha256:bbd2b69a0f8d85a8fbbf0cec305e8a16c8211db94d63e58485696d961a57d9ef",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL1106",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0776",
+        "record_hash": "sha256:c594338d1035fd478df2df6075142225d422e2b09a4d2bb0f5be812fc1c3c757",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ1106",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0948",
+        "record_hash": "sha256:8a382912da054cae5aa1aee1d256624d9b196abb5f67c5fe00536bb1d570c3ec",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC1106",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3124",
+        "record_hash": "sha256:9800b376cc80b77b4908a14235f9fc21b304c2b903a091c2e363453c803b660b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC1106",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=trinity_college&signal_id=sig_8b96041d6ce56e83d36b",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_8b96041d6ce56e83d36b/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Trinity College. Across 4 certified ED cells, the documented category totals are Vandalism (3), Harassment or threat (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_8b96041d6ce56e83d36b/",
+    "proactive_reply": "Relevant certified public-data context for Trinity College: https://campusevidencelab.org/signals/sig_8b96041d6ce56e83d36b/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

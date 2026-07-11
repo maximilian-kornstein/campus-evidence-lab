@@ -1,0 +1,173 @@
+{
+  "id": "sig_a3b0758665d264ef324c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_ceffb372777256d1e2f2",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ad419823f2282f3b1317",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/cuny_city_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "cuny_city_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the source-supported affected-community totals are Religion (15), National origin (1), Race (1)."
+  },
+  "institution": {
+    "id": "cuny_city_college",
+    "name": "CUNY City College",
+    "city": "NEW YORK",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0634",
+    "evt_2026_0928",
+    "evt_2026_1510",
+    "evt_2026_2096",
+    "evt_2026_2209",
+    "evt_2026_2280",
+    "evt_2026_2326",
+    "evt_2026_2378"
+  ],
+  "bounded_claims": [
+    {
+      "text": "CUNY City College: Across 8 certified ED cells, the source-supported affected-community totals are Religion (15), National origin (1), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_0634",
+        "evt_2026_0928",
+        "evt_2026_1510",
+        "evt_2026_2096",
+        "evt_2026_2209",
+        "evt_2026_2280",
+        "evt_2026_2326",
+        "evt_2026_2378"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 17,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0634",
+        "record_hash": "sha256:9c39226367d4f2f4b4e68861df16648b32a892a418aed1b14628d79c086e1876",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR4194",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0928",
+        "record_hash": "sha256:6e0168afc279c57107d7fda682bac25d3a73cd952a8faec941b1af789824d0df",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL4194",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1510",
+        "record_hash": "sha256:681ba239f7d34477746b8b9b2ddea4144da8801de153c0e930aa4737973a071a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4194",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2096",
+        "record_hash": "sha256:db9db53add53499be1a6abbe8949a30d82ebd3aa84911c393f6400ac7943e9a0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4194",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 9
+      },
+      {
+        "event_id": "evt_2026_2209",
+        "record_hash": "sha256:00c5be6b345001631c531bbec7272867f75a033f0fc1d6269a132c54b5c5afa0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4194",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2280",
+        "record_hash": "sha256:c4218ff9ce8cd97ad896b5f7a10593515203a3997f6665659ec692307c845c3e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IG4194",
+        "column": "LAR_T_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2326",
+        "record_hash": "sha256:4a83557838c5ef4d8b8db6c822347e058b58dcbdea39698fc6996fca2ba48a83",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4194",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2378",
+        "record_hash": "sha256:048a911e4bf2cae18e0ac0a3f8c2afb1e5e7e46492f16b8953786ff6d17550d5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4194",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=cuny_city_college&signal_id=sig_a3b0758665d264ef324c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_a3b0758665d264ef324c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: CUNY City College. Across 8 certified ED cells, the source-supported affected-community totals are Religion (15), National origin (1), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_a3b0758665d264ef324c/",
+    "proactive_reply": "Relevant certified public-data context for CUNY City College: https://campusevidencelab.org/signals/sig_a3b0758665d264ef324c/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

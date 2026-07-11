@@ -1,0 +1,265 @@
+{
+  "id": "sig_f7eed749943b2efb156f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_550d8827fd491182a974",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_2c973ea144c0b55687a0",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/vermont_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "vermont_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 15 certified ED cells, the source-supported affected-community totals are LGBTQ+ (8), National origin (3), Race (2), Gender (1)."
+  },
+  "institution": {
+    "id": "vermont_state_university",
+    "name": "Vermont State University",
+    "city": "JOHNSON",
+    "state": "VT"
+  },
+  "record_ids": [
+    "evt_2026_1019",
+    "evt_2026_1210",
+    "evt_2026_1416",
+    "evt_2026_1472",
+    "evt_2026_1561",
+    "evt_2026_1604",
+    "evt_2026_1625",
+    "evt_2026_1645",
+    "evt_2026_3084",
+    "evt_2026_3237",
+    "evt_2026_3411",
+    "evt_2026_3561",
+    "evt_2026_3611",
+    "evt_2026_3621",
+    "evt_2026_3909"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Vermont State University: Across 15 certified ED cells, the source-supported affected-community totals are LGBTQ+ (8), National origin (3), Race (2), Gender (1).",
+      "supporting_record_ids": [
+        "evt_2026_1019",
+        "evt_2026_1210",
+        "evt_2026_1416",
+        "evt_2026_1472",
+        "evt_2026_1561",
+        "evt_2026_1604",
+        "evt_2026_1625",
+        "evt_2026_1645",
+        "evt_2026_3084",
+        "evt_2026_3237",
+        "evt_2026_3411",
+        "evt_2026_3561",
+        "evt_2026_3611",
+        "evt_2026_3621",
+        "evt_2026_3909"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 15,
+    "certified_cell_count": 15,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1019",
+        "record_hash": "sha256:86814e0cb09407de5e7fe84241a2738daa1489a1f09cb7b6c49672e6a578d2af",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX6546",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1210",
+        "record_hash": "sha256:b1d06e11f2ef17a02ba56e323f605e9a50558d985920861ef685b4906e7b0dbc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA6544",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1416",
+        "record_hash": "sha256:6e6ecaf50ddf24ebdf8c0a7d4541b61f5201cc3917ca9d89af7ecdb3db0d1d8e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6544",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1472",
+        "record_hash": "sha256:83eba8fbaed5d9898ce2b7f6f19e33fbadde92a91d51a9bf6ff3f147607e01f8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ6546",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1561",
+        "record_hash": "sha256:0cb716a77f540a2e08c7db42eff3a3f8ba79830104ef0c7a7c4cae898c77c19c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ6544",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1604",
+        "record_hash": "sha256:1604009e965ddd2a384e58cb43cfb70561bf70dc7775504338ed0bcd411df299",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6545",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1625",
+        "record_hash": "sha256:d7f8ac19205730dc17cf01cbbfedd3b006baea6bf353c0adf28760de0376cadf",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB6544",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1645",
+        "record_hash": "sha256:c8a53ad32d34e9d002973af9228b3f979ea598d8e8a247745b193de11710d4fc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED6544",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3084",
+        "record_hash": "sha256:b87d6827f3dc15572c59b5de489c11f86010710be716ad5b70887d049922ef47",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK6545",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3237",
+        "record_hash": "sha256:d316ddfd34fec9652a8a368c62123b4a99ac9289ff30b001dfb26203b726d5cb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX6546",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3411",
+        "record_hash": "sha256:e6dac183574893aa7bbb05625161b1b9e71130249ad41cf908b00a4a4b8ae048",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ6546",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3561",
+        "record_hash": "sha256:de8f0f99e5d956eb784918b07bb994bb6b51925438b9902e3beeaf7664a2e0e8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ6544",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3611",
+        "record_hash": "sha256:bf67ba553b51bd6413610798b9120a9a1b7d40252a3fa2d71f0af19047484113",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6545",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3621",
+        "record_hash": "sha256:bbf58d6e9b2e1b57c8bcd72cefd5221666d4b93f4f05d70ac18cd203423dfe27",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED6544",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3909",
+        "record_hash": "sha256:22bd424257875f8093c068bcba74998b2c172aba905baecbc76cfa1fd44bf4d3",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EE6687",
+        "column": "VANDAL_GEN21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=vermont_state_university&signal_id=sig_f7eed749943b2efb156f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f7eed749943b2efb156f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Vermont State University. Across 15 certified ED cells, the source-supported affected-community totals are LGBTQ+ (8), National origin (3), Race (2), Gender (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_f7eed749943b2efb156f/",
+    "proactive_reply": "Relevant certified public-data context for Vermont State University: https://campusevidencelab.org/signals/sig_f7eed749943b2efb156f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

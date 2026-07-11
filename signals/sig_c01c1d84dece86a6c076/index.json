@@ -1,0 +1,157 @@
+{
+  "id": "sig_c01c1d84dece86a6c076",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_5699aa4d458b05c5ceeb",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_a5b718d16e2e62f803e9",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/albion_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "albion_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the reported geography totals are on-campus (6), public-property (2), residence-hall (2)."
+  },
+  "institution": {
+    "id": "albion_college",
+    "name": "Albion College",
+    "city": "ALBION",
+    "state": "MI"
+  },
+  "record_ids": [
+    "evt_2026_0243",
+    "evt_2026_2444",
+    "evt_2026_2483",
+    "evt_2026_3134",
+    "evt_2026_3299",
+    "evt_2026_3762"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Albion College: Across 6 certified ED cells, the reported geography totals are on-campus (6), public-property (2), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0243",
+        "evt_2026_2444",
+        "evt_2026_2483",
+        "evt_2026_3134",
+        "evt_2026_3299",
+        "evt_2026_3762"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0243",
+        "record_hash": "sha256:6fdb1adda9014e095a7cde100e772ed8dc20865d8b14fe39217e72bc2c492691",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3083",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2444",
+        "record_hash": "sha256:6341ffab894f9ffe217d37b04bffccdc5f2bf45d2f1cb5a7e13cad502e947ce7",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3083",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2483",
+        "record_hash": "sha256:c6b664313eafa055030296e3d4d8917912e8dc6d402e9073ea9a269729592772",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3083",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3134",
+        "record_hash": "sha256:a4f76b64276c200de459415cfd0a781ca17b9e2a5b0fea19b24907ea82f13c80",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT3083",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3299",
+        "record_hash": "sha256:c972a188e4e86ba9f5c6d3e0a4e1b9dc53ba9ebf1bce80962af897e1186f770b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3083",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3762",
+        "record_hash": "sha256:fb27c0e11231eebdea712ad87d06230699ef397f94de90071456ea2e2fcbeb21",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3109",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 5
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=albion_college&signal_id=sig_c01c1d84dece86a6c076",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_c01c1d84dece86a6c076/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Albion College. Across 6 certified ED cells, the reported geography totals are on-campus (6), public-property (2), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_c01c1d84dece86a6c076/",
+    "proactive_reply": "Relevant certified public-data context for Albion College: https://campusevidencelab.org/signals/sig_c01c1d84dece86a6c076/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,169 @@
+{
+  "id": "sig_73090bb4639ec1649d4e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_87d1a83016afbebac6bd",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_79a881e3ae7176df9819",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/colorado_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "colorado_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Ethnicity (3), LGBTQ+ (2), National origin (2), Religion (2)."
+  },
+  "institution": {
+    "id": "colorado_college",
+    "name": "Colorado College",
+    "city": "COLORADO SPRINGS",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0119",
+    "evt_2026_0729",
+    "evt_2026_1215",
+    "evt_2026_1476",
+    "evt_2026_1629",
+    "evt_2026_3015",
+    "evt_2026_3795"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Colorado College: Across 7 certified ED cells, the source-supported affected-community totals are Ethnicity (3), LGBTQ+ (2), National origin (2), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_0119",
+        "evt_2026_0729",
+        "evt_2026_1215",
+        "evt_2026_1476",
+        "evt_2026_1629",
+        "evt_2026_3015",
+        "evt_2026_3795"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0119",
+        "record_hash": "sha256:9538dcf26eb94c50255bf4df2366cf4ee09b0a7e035c8246e3b453d3cd3cc9b6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU975",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0729",
+        "record_hash": "sha256:94e0d8c23e84b49b6c4b3a6cfb8d4919e4803229d8eed510dd450c89fdbee6ef",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR975",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1215",
+        "record_hash": "sha256:ab80a1c9db3ced4284a3d34d1a9da660a25747103f5026fe782db0f4028653cd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ975",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1476",
+        "record_hash": "sha256:17b29585f91105a19143423d370c847f57057ca0bd22333ac4e975f65ed83179",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU975",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1629",
+        "record_hash": "sha256:6070336ebd7bdd517fa66641fd8f7a9026f4133f0e111df555a14313f6d6a81a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ975",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3015",
+        "record_hash": "sha256:1e4929d362fd5c9e7b8ec5e0530df76fc449b827a43f0a0fc0a801476084d1fe",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR975",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3795",
+        "record_hash": "sha256:70002619719d64195b96c5b85a513431017ead96194d409fc8af38b44439ecb6",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA979",
+        "column": "SIM_A_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=colorado_college&signal_id=sig_73090bb4639ec1649d4e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_73090bb4639ec1649d4e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Colorado College. Across 7 certified ED cells, the source-supported affected-community totals are Ethnicity (3), LGBTQ+ (2), National origin (2), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_73090bb4639ec1649d4e/",
+    "proactive_reply": "Relevant certified public-data context for Colorado College: https://campusevidencelab.org/signals/sig_73090bb4639ec1649d4e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

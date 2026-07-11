@@ -1,0 +1,185 @@
+{
+  "id": "sig_f715bda2479d5528ae07",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e4d1a16c155d21ccfe08",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_65375ff81e372425ac5c",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/vassar_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "vassar_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the reported geography totals are on-campus (12), residence-hall (10), public-property (1)."
+  },
+  "institution": {
+    "id": "vassar_college",
+    "name": "Vassar College",
+    "city": "POUGHKEEPSIE",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0205",
+    "evt_2026_1870",
+    "evt_2026_2152",
+    "evt_2026_2254",
+    "evt_2026_2342",
+    "evt_2026_2637",
+    "evt_2026_2924",
+    "evt_2026_3203",
+    "evt_2026_3594"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Vassar College: Across 9 certified ED cells, the reported geography totals are on-campus (12), residence-hall (10), public-property (1).",
+      "supporting_record_ids": [
+        "evt_2026_0205",
+        "evt_2026_1870",
+        "evt_2026_2152",
+        "evt_2026_2254",
+        "evt_2026_2342",
+        "evt_2026_2637",
+        "evt_2026_2924",
+        "evt_2026_3203",
+        "evt_2026_3594"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 23,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0205",
+        "record_hash": "sha256:a5bd624e02e862be656693d0c022218f2be2ba801f0b0a41a6c8008265080a1b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4524",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 8
+      },
+      {
+        "event_id": "evt_2026_1870",
+        "record_hash": "sha256:08854e606443a3efbebf0f5aa97ea733777de0c282980ef184779ae99d31e030",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA4524",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2152",
+        "record_hash": "sha256:fe7ff00fba99bb4c86bdd2e8e4a56fc8e794e2628acb5a6af6c63d74737b49c0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4524",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2254",
+        "record_hash": "sha256:35518c4d334a342cb4b9c8c528824475e71621843727b3bc67b331906d91eb78",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4524",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2342",
+        "record_hash": "sha256:14a25731ae729c556a26f03d1dddd78810d48849f3f592b18bffe28f51740c0d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4524",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2637",
+        "record_hash": "sha256:fcfd8674e66ddba8c9a5f9f094c9de952f8c8c00104116dc41116022a80f6ff2",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LJ4524",
+        "column": "AGG_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2924",
+        "record_hash": "sha256:124c08bafc720e0c4b011c3a281e6c5a05d4e229880536a1cdf8488d8fc9035e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4524",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 8
+      },
+      {
+        "event_id": "evt_2026_3203",
+        "record_hash": "sha256:995b4b89022c029331000a9d5e1e4fe3d47f351dda1c5d47c6ae4ddb4e94f2f7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA4524",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3594",
+        "record_hash": "sha256:c670639b999420e4afd568e1f0d3eba825534591d62f42a57889e537b55a299f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4524",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=vassar_college&signal_id=sig_f715bda2479d5528ae07",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f715bda2479d5528ae07/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Vassar College. Across 9 certified ED cells, the reported geography totals are on-campus (12), residence-hall (10), public-property (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_f715bda2479d5528ae07/",
+    "proactive_reply": "Relevant certified public-data context for Vassar College: https://campusevidencelab.org/signals/sig_f715bda2479d5528ae07/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

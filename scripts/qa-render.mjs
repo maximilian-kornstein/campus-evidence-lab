@@ -17,6 +17,11 @@ const selectedChallengePacket = challengeQueues.packets?.[8] ?? challengeQueues.
 
 const pages = [
   {
+    route: "/signals/",
+    file: "signals/index.html",
+    checks: ["Missing context", "Current Signals", "Subscribe or syndicate", "Automated evidence gate passed", "RSS feed", "JSON feed"]
+  },
+  {
     route: "/",
     file: "index.html",
     checks: [

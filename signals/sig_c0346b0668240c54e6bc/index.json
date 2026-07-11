@@ -1,0 +1,145 @@
+{
+  "id": "sig_c0346b0668240c54e6bc",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_86f6893d2b77da7d9353",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_dcab0727b77be7092fc7",
+    "title": "2023 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/bryant_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "bryant_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2023."
+  },
+  "institution": {
+    "id": "bryant_university",
+    "name": "Bryant University",
+    "city": "SMITHFIELD",
+    "state": "RI"
+  },
+  "record_ids": [
+    "evt_2026_0374",
+    "evt_2026_0849",
+    "evt_2026_3039",
+    "evt_2026_3146",
+    "evt_2026_3825"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Bryant University: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2023.",
+      "supporting_record_ids": [
+        "evt_2026_0374",
+        "evt_2026_0849",
+        "evt_2026_3039",
+        "evt_2026_3146",
+        "evt_2026_3825"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0374",
+        "record_hash": "sha256:cfa5f55003cfda7930736c03102af31ab353cbc24d065641d7e6f698bf773277",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5611",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0849",
+        "record_hash": "sha256:b8e7e3b6141812d27e8e9035c86c970a53ef63dced3a06ae01ac2bcb4d2a4abf",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB5611",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3039",
+        "record_hash": "sha256:a19dbf54c3ee8c1f14ba24b4735ec865e272f50d3a68fa0bc234cec78bb12beb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5611",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3146",
+        "record_hash": "sha256:ae5dbb6d92d9b5429188995a73b690f90e9f7667c32aa9a997367e24ba735501",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB5611",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3825",
+        "record_hash": "sha256:9e15d792642d8f27d9f32fd378111851e1b4ab122171b252b4eb5a322ab06e6e",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5757",
+        "column": "VANDAL_REL21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=bryant_university&signal_id=sig_c0346b0668240c54e6bc",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_c0346b0668240c54e6bc/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Bryant University. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2023. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_c0346b0668240c54e6bc/",
+    "proactive_reply": "Relevant certified public-data context for Bryant University: https://campusevidencelab.org/signals/sig_c0346b0668240c54e6bc/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,181 @@
+{
+  "id": "sig_2ff1124bb639bf5f086f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_da8a5807811eca4e12eb",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_9d69e8c45714d6b18a98",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_colorado_colorado_springs/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_colorado_colorado_springs"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the documented category totals are Harassment or threat (9), Vandalism (3)."
+  },
+  "institution": {
+    "id": "university_of_colorado_colorado_springs",
+    "name": "University of Colorado Colorado Springs",
+    "city": "COLORADO SPRINGS",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0102",
+    "evt_2026_0906",
+    "evt_2026_1340",
+    "evt_2026_1745",
+    "evt_2026_2975",
+    "evt_2026_3214",
+    "evt_2026_3356",
+    "evt_2026_3838"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Colorado Colorado Springs: Across 8 certified ED cells, the documented category totals are Harassment or threat (9), Vandalism (3).",
+      "supporting_record_ids": [
+        "evt_2026_0102",
+        "evt_2026_0906",
+        "evt_2026_1340",
+        "evt_2026_1745",
+        "evt_2026_2975",
+        "evt_2026_3214",
+        "evt_2026_3356",
+        "evt_2026_3838"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0102",
+        "record_hash": "sha256:d545614cd59cb2e63205e73cc297e827c2691f3ab5551ecc27da495c58ce3b2e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK971",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_0906",
+        "record_hash": "sha256:d25cab6c098583f1983905c043dfedc657841662fb7b64af8578aee5abd0fcfd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS971",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1340",
+        "record_hash": "sha256:e40b8739c20a25473ff8c5418ed7784a9f217d6625dde54e862da7a901dfb6e6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU971",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1745",
+        "record_hash": "sha256:e35462d9629a15cd12b62dabd888a42a90bfe8deca83e226d7f3306bd3761bdc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS971",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2975",
+        "record_hash": "sha256:e8a89fc9b5d4f049022f54a73e1f7e321376a9e39387d2388aa335cd670754e8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK971",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3214",
+        "record_hash": "sha256:5c96c278b2d2f920c5fa9d6fee9bf5844f6d94038df2e9f2b2c834cd8c048be7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU971",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3356",
+        "record_hash": "sha256:710d2963542b6c1434309c94d257ee2bfc03b38ec6e9a2335f8b47b5fc77ac04",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS971",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3838",
+        "record_hash": "sha256:338e4036aed619bcffd11dc660c892faf45ddae2208bdf8d698e64846161efd1",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC975",
+        "column": "VANDAL_REL21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_colorado_colorado_springs&signal_id=sig_2ff1124bb639bf5f086f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_2ff1124bb639bf5f086f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Colorado Colorado Springs. Across 8 certified ED cells, the documented category totals are Harassment or threat (9), Vandalism (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_2ff1124bb639bf5f086f/",
+    "proactive_reply": "Relevant certified public-data context for University of Colorado Colorado Springs: https://campusevidencelab.org/signals/sig_2ff1124bb639bf5f086f/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

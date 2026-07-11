@@ -1,0 +1,137 @@
+{
+  "id": "sig_bb08336c45bdf061951d",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_fdfa0fc6d9edc3a80366",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e92b441142943c8ef967",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/california_state_polytechnic_university_humboldt/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "california_state_polytechnic_university_humboldt"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "california_state_polytechnic_university_humboldt",
+    "name": "California State Polytechnic University-Humboldt",
+    "city": "ARCATA",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0179",
+    "evt_2026_1105",
+    "evt_2026_1903",
+    "evt_2026_2196",
+    "evt_2026_3240"
+  ],
+  "bounded_claims": [
+    {
+      "text": "California State Polytechnic University-Humboldt: Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0179",
+        "evt_2026_1105",
+        "evt_2026_1903",
+        "evt_2026_2196",
+        "evt_2026_3240"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0179",
+        "record_hash": "sha256:3cf5453af4010ddc556daaf78490be947dc398eb2db7566b95f1f642311ba11f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT617",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1105",
+        "record_hash": "sha256:c0bc029291521253c81258e881418edcea498e6d9c660d78c5a689a02d62742f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK617",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1903",
+        "record_hash": "sha256:92070d77bd2ba693e29e5cf6ef5a75f37cb980a65b938fb237adae2bf261d93a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY617",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2196",
+        "record_hash": "sha256:7703f156912c4b3be4f292029cc1a4fb00fd29d180ddddfb3580943aeaeb1db6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT617",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3240",
+        "record_hash": "sha256:2885bd7bf9dfcc26c2acea95b8dbacd5d191b6303adeb04642427f599e701a85",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT617",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=california_state_polytechnic_university_humboldt&signal_id=sig_bb08336c45bdf061951d",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_bb08336c45bdf061951d/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: California State Polytechnic University-Humboldt. Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_bb08336c45bdf061951d/",
+    "proactive_reply": "Relevant certified public-data context for California State Polytechnic University-Humboldt: https://campusevidencelab.org/signals/sig_bb08336c45bdf061951d/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

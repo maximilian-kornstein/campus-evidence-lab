@@ -1,0 +1,161 @@
+{
+  "id": "sig_ce06e24df82190975841",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_73ae3a63c058926ca26c",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_980e5294fef576a3a147",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/california_state_university_fullerton/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "california_state_university_fullerton"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Race (12), Ethnicity (2), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "california_state_university_fullerton",
+    "name": "California State University-Fullerton",
+    "city": "FULLERTON",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0129",
+    "evt_2026_1964",
+    "evt_2026_2205",
+    "evt_2026_2659",
+    "evt_2026_2876",
+    "evt_2026_2896",
+    "evt_2026_3655"
+  ],
+  "bounded_claims": [
+    {
+      "text": "California State University-Fullerton: Across 7 certified ED cells, the source-supported affected-community totals are Race (12), Ethnicity (2), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_0129",
+        "evt_2026_1964",
+        "evt_2026_2205",
+        "evt_2026_2659",
+        "evt_2026_2876",
+        "evt_2026_2896",
+        "evt_2026_3655"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 15,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0129",
+        "record_hash": "sha256:b5c54ee9683cb7956d6065cac6333608774e6d8ecc3c57e6b4fdf534c9694e27",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK457",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_1964",
+        "record_hash": "sha256:8579b92edde422dce0fa162ac9cf3af92ba22b71e78c0a267660396fcc7e7695",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ457",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2205",
+        "record_hash": "sha256:38c04a5830ca74bdd78feb34e1219f53f96b08624f0a1d3238fd22a830ba45a6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD457",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2659",
+        "record_hash": "sha256:04588a6a779b0056fc3b4a395bf9676de8fc3f8428f7ed98ff63875e61fda1eb",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO457",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2876",
+        "record_hash": "sha256:2dda2f2fa8c55df40c33e0eb73faa9abdb9da6674f00e552de1dbed61871e5e3",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA457",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2896",
+        "record_hash": "sha256:635c7cdab4d68294cfc3a4601ff6ea75e09f16467bfc60e1604804c3c46f071c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK457",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_3655",
+        "record_hash": "sha256:d3033d2f52df7f3aea7d70004c2e5715f452a3f14959f377e046058f3c589588",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD457",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=california_state_university_fullerton&signal_id=sig_ce06e24df82190975841",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ce06e24df82190975841/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: California State University-Fullerton. Across 7 certified ED cells, the source-supported affected-community totals are Race (12), Ethnicity (2), LGBTQ+ (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ce06e24df82190975841/",
+    "proactive_reply": "Relevant certified public-data context for California State University-Fullerton: https://campusevidencelab.org/signals/sig_ce06e24df82190975841/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

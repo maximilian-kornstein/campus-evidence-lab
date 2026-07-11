@@ -1,0 +1,145 @@
+{
+  "id": "sig_9fe40e1b48ae8bf46260",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_9615baeebbdaba6eb314",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e740f82c295b3d352195",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_richmond/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_richmond"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Vandalism (5), Harassment or threat (1)."
+  },
+  "institution": {
+    "id": "university_of_richmond",
+    "name": "University of Richmond",
+    "city": "University of Richmond",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_1058",
+    "evt_2026_1560",
+    "evt_2026_1727",
+    "evt_2026_3209",
+    "evt_2026_3785"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Richmond: Across 5 certified ED cells, the documented category totals are Vandalism (5), Harassment or threat (1).",
+      "supporting_record_ids": [
+        "evt_2026_1058",
+        "evt_2026_1560",
+        "evt_2026_1727",
+        "evt_2026_3209",
+        "evt_2026_3785"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1058",
+        "record_hash": "sha256:7f59eb7c563f030520652bee4ce057b00a576a94bc2796c16a440c864fb73e6b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6675",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1560",
+        "record_hash": "sha256:f1d8ad7fc858c822386b540c4a52d14bf1aefe447bb60275132a5d8e2113dda9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ6675",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1727",
+        "record_hash": "sha256:337c1bfe496357c5175aef42caf4761a6e4497bfc1eb4c3ad603f5d0a53c1311",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA6675",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3209",
+        "record_hash": "sha256:7d6f46385e0aeed430ff2fbb10d406c4e8be237eed1105789d37be690a00b2b6",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ6675",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3785",
+        "record_hash": "sha256:3edcef9602c6180231ae4e741c2681cf762f2cc7f9f94ec126eec9491d1a1f61",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC6810",
+        "column": "VANDAL_REL21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_richmond&signal_id=sig_9fe40e1b48ae8bf46260",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_9fe40e1b48ae8bf46260/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Richmond. Across 5 certified ED cells, the documented category totals are Vandalism (5), Harassment or threat (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_9fe40e1b48ae8bf46260/",
+    "proactive_reply": "Relevant certified public-data context for University of Richmond: https://campusevidencelab.org/signals/sig_9fe40e1b48ae8bf46260/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

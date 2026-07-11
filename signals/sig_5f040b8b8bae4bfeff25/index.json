@@ -1,0 +1,217 @@
+{
+  "id": "sig_5f040b8b8bae4bfeff25",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f310ab6b967e714b61ee",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_406425376f6891bb2c9b",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/butler_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "butler_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 11 certified ED cells, the documented category totals are Harassment or threat (5), Other source-backed civil rights event (5), Vandalism (1)."
+  },
+  "institution": {
+    "id": "butler_university",
+    "name": "Butler University",
+    "city": "INDIANAPOLIS",
+    "state": "IN"
+  },
+  "record_ids": [
+    "evt_2026_0286",
+    "evt_2026_0738",
+    "evt_2026_0995",
+    "evt_2026_1151",
+    "evt_2026_1288",
+    "evt_2026_2438",
+    "evt_2026_2939",
+    "evt_2026_3247",
+    "evt_2026_3400",
+    "evt_2026_3419",
+    "evt_2026_3804"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Butler University: Across 11 certified ED cells, the documented category totals are Harassment or threat (5), Other source-backed civil rights event (5), Vandalism (1).",
+      "supporting_record_ids": [
+        "evt_2026_0286",
+        "evt_2026_0738",
+        "evt_2026_0995",
+        "evt_2026_1151",
+        "evt_2026_1288",
+        "evt_2026_2438",
+        "evt_2026_2939",
+        "evt_2026_3247",
+        "evt_2026_3400",
+        "evt_2026_3419",
+        "evt_2026_3804"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 11,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0286",
+        "record_hash": "sha256:51d77e1c57e4926f14bff547d1358af137ee34ab9aad43632cbcb1a03a9c5d1c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2069",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0738",
+        "record_hash": "sha256:4a507ded415e50189ebffca5bfb89c3eefd2d1016814f3440307f4c26a8d486d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NB2069",
+        "column": "LAR_T_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0995",
+        "record_hash": "sha256:3577563f09172dc67be7bca24d99a009277247e564cc829b59bccadd72b2827a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2069",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1151",
+        "record_hash": "sha256:7eb1256925a92da418ad651409aeb07603670d3d8494de17952207a26a315264",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IF2069",
+        "column": "LAR_T_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1288",
+        "record_hash": "sha256:04a5d36a264daa2b1db253b693ce23da5b4c724de03a6be3d89eea731a77cf60",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IG2069",
+        "column": "LAR_T_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2438",
+        "record_hash": "sha256:582e820bc8d82e8f22e627978cdd5c3171e2f320d447fb562395ef8a5cba1541",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM2069",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2939",
+        "record_hash": "sha256:b77b6365a182b33931c6b25ef65478f283a439eff9c731c450cafa63de30a2ff",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2069",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3247",
+        "record_hash": "sha256:b62d7c196283964210255c29873cd5e74640bac8d54fea0308b0fc28eb12c78f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NB2069",
+        "column": "LAR_T_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3400",
+        "record_hash": "sha256:f369b4af6ca568383fc3d8fbf99debd325c9863d813148ef1a835689078ed67a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2069",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3419",
+        "record_hash": "sha256:9550164ab7a1039f9e488b6c1fbd018acb4fd0d1ebe5e6534a0baa887ffe44ce",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IF2069",
+        "column": "LAR_T_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3804",
+        "record_hash": "sha256:678c57b945f621b37288f9f0dec284126ce04efbc91211612de96e0ee9a086c2",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC2076",
+        "column": "VANDAL_REL21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=butler_university&signal_id=sig_5f040b8b8bae4bfeff25",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5f040b8b8bae4bfeff25/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Butler University. Across 11 certified ED cells, the documented category totals are Harassment or threat (5), Other source-backed civil rights event (5), Vandalism (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_5f040b8b8bae4bfeff25/",
+    "proactive_reply": "Relevant certified public-data context for Butler University: https://campusevidencelab.org/signals/sig_5f040b8b8bae4bfeff25/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,185 @@
+{
+  "id": "sig_3eab093f0b0dfe3dbbf6",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e62dee1f162e487b9c3f",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_242bbf7ad038308ddf82",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/cuny_hunter_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "cuny_hunter_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the reported geography totals are on-campus (8), public-property (3)."
+  },
+  "institution": {
+    "id": "cuny_hunter_college",
+    "name": "CUNY Hunter College",
+    "city": "New York",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0489",
+    "evt_2026_1946",
+    "evt_2026_2312",
+    "evt_2026_2348",
+    "evt_2026_2372",
+    "evt_2026_2388",
+    "evt_2026_2656",
+    "evt_2026_2709",
+    "evt_2026_2752"
+  ],
+  "bounded_claims": [
+    {
+      "text": "CUNY Hunter College: Across 9 certified ED cells, the reported geography totals are on-campus (8), public-property (3).",
+      "supporting_record_ids": [
+        "evt_2026_0489",
+        "evt_2026_1946",
+        "evt_2026_2312",
+        "evt_2026_2348",
+        "evt_2026_2372",
+        "evt_2026_2388",
+        "evt_2026_2656",
+        "evt_2026_2709",
+        "evt_2026_2752"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0489",
+        "record_hash": "sha256:ea7fa912c7b00737b9ba30d9edc919fddfe6eba0641f4996db4ee1e5d73dc930",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ4201",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1946",
+        "record_hash": "sha256:75a23861dc9d105941798fc07d752561b94d9aac36b9c9e4bda4b945fb3f0910",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU4201",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2312",
+        "record_hash": "sha256:05270bcad8b32bb3cefe8934bf78fcbcaeddd19cf57f7771cfd69a6ea23a3dd7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4201",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2348",
+        "record_hash": "sha256:e39079d805c79a4cc24918d8566296ea9ab1e30508d23d01c64d2ec655a5a1a3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ4201",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2372",
+        "record_hash": "sha256:4a7df9954a0c20b3f5d8f753cbf076fadeb51a454f5aed58a5bad456ae03ef6b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW4204",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2388",
+        "record_hash": "sha256:8c053cee6ddf5a7f01c057c16ed05c5e5c849d05b9bbe156b92c2ba4d5016bf4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4201",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2656",
+        "record_hash": "sha256:ddaa4341243e2ad682e05d870b94aeacf5a00529a7c296ff9f1991f52e8ab216",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU4201",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2709",
+        "record_hash": "sha256:dda1bd5a7ac78543aafdbbfb6232c356fee8ae035700fae0b37fba0020d01003",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4201",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2752",
+        "record_hash": "sha256:4257e72cf0bd7af67bdda307d3e8b370fedfb7d8800501f4938358775d0e814b",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BH4203",
+        "column": "ROBBE_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=cuny_hunter_college&signal_id=sig_3eab093f0b0dfe3dbbf6",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3eab093f0b0dfe3dbbf6/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: CUNY Hunter College. Across 9 certified ED cells, the reported geography totals are on-campus (8), public-property (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3eab093f0b0dfe3dbbf6/",
+    "proactive_reply": "Relevant certified public-data context for CUNY Hunter College: https://campusevidencelab.org/signals/sig_3eab093f0b0dfe3dbbf6/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,157 @@
+{
+  "id": "sig_43697a73456b8247fdde",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_5e03ce667dc18e35e71d",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_eb16781f866b1d446d9f",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/montclair_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "montclair_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the documented category totals are Harassment or threat (6)."
+  },
+  "institution": {
+    "id": "montclair_state_university",
+    "name": "Montclair State University",
+    "city": "MONTCLAIR",
+    "state": "NJ"
+  },
+  "record_ids": [
+    "evt_2026_0661",
+    "evt_2026_1575",
+    "evt_2026_1721",
+    "evt_2026_3071",
+    "evt_2026_3423",
+    "evt_2026_3897"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Montclair State University: Across 6 certified ED cells, the documented category totals are Harassment or threat (6).",
+      "supporting_record_ids": [
+        "evt_2026_0661",
+        "evt_2026_1575",
+        "evt_2026_1721",
+        "evt_2026_3071",
+        "evt_2026_3423",
+        "evt_2026_3897"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0661",
+        "record_hash": "sha256:236dc1428bcd0899a49c525c6a5a3d73fbc46da63d9dfb90f02c2af4ecaebc11",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3976",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1575",
+        "record_hash": "sha256:59a6a85903a59f43ef46b80babc48bafde88698220422c86612739f81f9819ef",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ3976",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1721",
+        "record_hash": "sha256:90676c4268704ff0281a5dd00ae485cb707a1167c76105d6b2de70900c2403f5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3976",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3071",
+        "record_hash": "sha256:8f503d66d98e13d702ad49458d1629398726229ab3b2616d2912ce044ee8e1ab",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3976",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3423",
+        "record_hash": "sha256:685e780bba1554849ef336cdc6ce1eab7f130ae8c6a392b1fa4d4dd72b5eb4a9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3976",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3897",
+        "record_hash": "sha256:4a375dcf453dea00eb1caf5f90c117e82dccf413e667aa76d006ceaa0282c4c6",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU4078",
+        "column": "INTIM_SEX21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=montclair_state_university&signal_id=sig_43697a73456b8247fdde",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_43697a73456b8247fdde/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Montclair State University. Across 6 certified ED cells, the documented category totals are Harassment or threat (6). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_43697a73456b8247fdde/",
+    "proactive_reply": "Relevant certified public-data context for Montclair State University: https://campusevidencelab.org/signals/sig_43697a73456b8247fdde/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

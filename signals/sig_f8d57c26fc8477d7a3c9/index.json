@@ -1,0 +1,217 @@
+{
+  "id": "sig_f8d57c26fc8477d7a3c9",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f5391de4055ff4b7ee11",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_f760fa1b8204ecd343ab",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_south_carolina_columbia/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_south_carolina_columbia"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 11 certified ED cells, the documented category totals are Vandalism (10), Harassment or threat (3)."
+  },
+  "institution": {
+    "id": "university_of_south_carolina_columbia",
+    "name": "University of South Carolina-Columbia",
+    "city": "COLUMBIA",
+    "state": "SC"
+  },
+  "record_ids": [
+    "evt_2026_0113",
+    "evt_2026_0760",
+    "evt_2026_0893",
+    "evt_2026_1054",
+    "evt_2026_1094",
+    "evt_2026_1133",
+    "evt_2026_1170",
+    "evt_2026_2459",
+    "evt_2026_3001",
+    "evt_2026_3114",
+    "evt_2026_3904"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of South Carolina-Columbia: Across 11 certified ED cells, the documented category totals are Vandalism (10), Harassment or threat (3).",
+      "supporting_record_ids": [
+        "evt_2026_0113",
+        "evt_2026_0760",
+        "evt_2026_0893",
+        "evt_2026_1054",
+        "evt_2026_1094",
+        "evt_2026_1133",
+        "evt_2026_1170",
+        "evt_2026_2459",
+        "evt_2026_3001",
+        "evt_2026_3114",
+        "evt_2026_3904"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 13,
+    "certified_cell_count": 11,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0113",
+        "record_hash": "sha256:4cdeb9e3b29ba90dce8fc5395666e67594bc8e9d2d21523a50dda675fc45969d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA5717",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0760",
+        "record_hash": "sha256:83df760c18ae9ce8043c8b581f1f3a11c8430fc2803c8f86ce6fd1bc3831849f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS5717",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0893",
+        "record_hash": "sha256:46e0ae44276986e92375cd3d1a428e809d0bda865185d1e60f5a1c73c7a7ee4f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU5717",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1054",
+        "record_hash": "sha256:03383f4e5462679edb302872c5621526051abebf9a2719c622d2c2053057c6e7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5717",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1094",
+        "record_hash": "sha256:deb92c9bf0797dd5370c75dc609559ae2a04fe65ccbb403256235eb570eeef0c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5717",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1133",
+        "record_hash": "sha256:874d011342f5e08d18c71ddfac46af921c1a569274b0738abe9ac794af357e8b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5717",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1170",
+        "record_hash": "sha256:8dcb1b3aa4df18b958780a43dae87ff59ea6bdbf82c88b98c422b7acb7ad49cb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5717",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2459",
+        "record_hash": "sha256:1385634b6e9db5b988c87cf57b2daebea50c3684ac5bffc4f75d99bfdae7ed9d",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT5717",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3001",
+        "record_hash": "sha256:9aa06e0f5a23d452a74de58042042b41f59993b2326940cb536e1cf2c96ebafb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU5717",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3114",
+        "record_hash": "sha256:b20169fdbad24782050fbeaef76685739fab606043e85bb459500b8c15216303",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5717",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3904",
+        "record_hash": "sha256:cb55665d84db1313d625d780e12bc2e4c6f90051f750cbced887f7e860887719",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5866",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_south_carolina_columbia&signal_id=sig_f8d57c26fc8477d7a3c9",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f8d57c26fc8477d7a3c9/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of South Carolina-Columbia. Across 11 certified ED cells, the documented category totals are Vandalism (10), Harassment or threat (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_f8d57c26fc8477d7a3c9/",
+    "proactive_reply": "Relevant certified public-data context for University of South Carolina-Columbia: https://campusevidencelab.org/signals/sig_f8d57c26fc8477d7a3c9/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

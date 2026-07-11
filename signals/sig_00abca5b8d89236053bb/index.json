@@ -1,0 +1,233 @@
+{
+  "id": "sig_00abca5b8d89236053bb",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_86f4f07f446d6a30f9f2",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ae667fa6433b7b37e85b",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/northwestern_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "northwestern_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 13 certified ED cells, the documented category totals are Harassment or threat (11), Other source-backed civil rights event (2), Vandalism (2)."
+  },
+  "institution": {
+    "id": "northwestern_university",
+    "name": "Northwestern University",
+    "city": "Evanston",
+    "state": "IL"
+  },
+  "record_ids": [
+    "evt_2026_0783",
+    "evt_2026_1373",
+    "evt_2026_1455",
+    "evt_2026_1667",
+    "evt_2026_1774",
+    "evt_2026_1840",
+    "evt_2026_1892",
+    "evt_2026_1931",
+    "evt_2026_1966",
+    "evt_2026_1995",
+    "evt_2026_2028",
+    "evt_2026_2036",
+    "evt_2026_2645"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Northwestern University: Across 13 certified ED cells, the documented category totals are Harassment or threat (11), Other source-backed civil rights event (2), Vandalism (2).",
+      "supporting_record_ids": [
+        "evt_2026_0783",
+        "evt_2026_1373",
+        "evt_2026_1455",
+        "evt_2026_1667",
+        "evt_2026_1774",
+        "evt_2026_1840",
+        "evt_2026_1892",
+        "evt_2026_1931",
+        "evt_2026_1966",
+        "evt_2026_1995",
+        "evt_2026_2028",
+        "evt_2026_2036",
+        "evt_2026_2645"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 15,
+    "certified_cell_count": 13,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0783",
+        "record_hash": "sha256:1369deee90ecd821cfaa0b7b1e474b4970c66ab4bed49543b8d3cdc5b9b58576",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL1976",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1373",
+        "record_hash": "sha256:641430efc569ffd3f12a666c892c1f8c6373e07387db0626e67e7b54e32d1abc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI1976",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1455",
+        "record_hash": "sha256:950f1f85195d7b4abda7e65207ac43eb53ee33146ca63fb925551bd0c2c900c8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC1976",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1667",
+        "record_hash": "sha256:9446ce68e778deb451f82610c99437b67e87965213b8b429b9531a51227b6e87",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MZ1976",
+        "column": "SIM_A_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1774",
+        "record_hash": "sha256:1b6fdf74b0bd8512554c140a222a53f910cb72c590f76d1af36785d6c6ad5e23",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT1976",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1840",
+        "record_hash": "sha256:040f441688d7f45f1fef63ff3277d151a628bd6f073aa3af8e03bed38fecb345",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX1976",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1892",
+        "record_hash": "sha256:0050299641a2650f36a9a0cb66cca2f4fa8a8a0d0d848e63342a008ba9c92f4e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA1976",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1931",
+        "record_hash": "sha256:c38877b13f37dc4aebadab6e707bf6f878bd0f213eec36d6515a3b0f36fa952b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU1977",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1966",
+        "record_hash": "sha256:d7481da9bec16cacb5fcc4e044c716d3207c247bf6b341c60c76d99687d58c89",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO1976",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1995",
+        "record_hash": "sha256:729dc37f2f0f601d68c51760ff1788fb82abfada0e7c9eb520687e7e1eb0664b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU1976",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2028",
+        "record_hash": "sha256:9399547ba5d0beafc8fc52dafaea5e44090a7d4b4a93098def95ae6b0e861ed1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW1976",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2036",
+        "record_hash": "sha256:25b2b4687bb5287ef5bb4ae16ef8e82669219677203fc4ec600326ca4badc4e7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DD1977",
+        "column": "SIM_A_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2645",
+        "record_hash": "sha256:39841dec68bccad7697300a20ba8704f263a0bf02959c13978bda49d9f67778e",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1976",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=northwestern_university&signal_id=sig_00abca5b8d89236053bb",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_00abca5b8d89236053bb/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Northwestern University. Across 13 certified ED cells, the documented category totals are Harassment or threat (11), Other source-backed civil rights event (2), Vandalism (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_00abca5b8d89236053bb/",
+    "proactive_reply": "Relevant certified public-data context for Northwestern University: https://campusevidencelab.org/signals/sig_00abca5b8d89236053bb/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

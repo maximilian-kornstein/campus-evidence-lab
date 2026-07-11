@@ -73,6 +73,8 @@ export const paths = {
   sourcesResearchCsv: path.join(rootDir, "data", "sources-research.csv"),
   manifest: path.join(rootDir, "data", "snapshot-manifest.json"),
   snapshotsDir: path.join(rootDir, "data", "snapshots")
+  ,signals: path.join(rootDir, "data", "signals.json")
+  ,signalEligibility: path.join(rootDir, "data", "signal-eligibility.json")
 };
 
 export async function readJson(filePath) {

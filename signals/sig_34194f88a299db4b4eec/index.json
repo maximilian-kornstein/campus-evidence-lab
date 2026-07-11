@@ -1,0 +1,193 @@
+{
+  "id": "sig_34194f88a299db4b4eec",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_142520944fb74f634005",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e68a9625e88f39b967e9",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/brigham_young_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "brigham_young_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the documented category totals are Harassment or threat (8), Vandalism (1)."
+  },
+  "institution": {
+    "id": "brigham_young_university",
+    "name": "Brigham Young University",
+    "city": "PROVO",
+    "state": "UT"
+  },
+  "record_ids": [
+    "evt_2026_0308",
+    "evt_2026_0764",
+    "evt_2026_0896",
+    "evt_2026_1017",
+    "evt_2026_1097",
+    "evt_2026_2462",
+    "evt_2026_2794",
+    "evt_2026_3005",
+    "evt_2026_3870"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Brigham Young University: Across 9 certified ED cells, the documented category totals are Harassment or threat (8), Vandalism (1).",
+      "supporting_record_ids": [
+        "evt_2026_0308",
+        "evt_2026_0764",
+        "evt_2026_0896",
+        "evt_2026_1017",
+        "evt_2026_1097",
+        "evt_2026_2462",
+        "evt_2026_2794",
+        "evt_2026_3005",
+        "evt_2026_3870"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0308",
+        "record_hash": "sha256:6ecf50023696ee4c4563da66f259c9e33b6d32d8b666645231ac1cf0b83462ee",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GO6452",
+        "column": "AGG_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0764",
+        "record_hash": "sha256:76a08f153f248a09ba73d1f0ce97f8a29b271e6af7ca82ec4bf600161fd2f352",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ6452",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0896",
+        "record_hash": "sha256:58a8cfe014458f20c4fbb84a5c9d10f22013909fe10525f2983af9f046a82e22",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ6452",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1017",
+        "record_hash": "sha256:61cd9b3f73b670d7b5cc2a756a11efecd4ab82909bd0a5c0aaf929143c17dc7b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS6452",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1097",
+        "record_hash": "sha256:2852bf475dcb35332a121e6ebe4b3fc7619a73c46ca84caaef4879b6e93c6030",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6452",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2462",
+        "record_hash": "sha256:f3be50b3eb2988da08b0b5f9df2782eb275185a37c873c8cbaf593f250e099e1",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ6452",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2794",
+        "record_hash": "sha256:9a440224def05c2ff4efc10845e81f2b9f3d4fd8afb3fb65cc66fe41580b376d",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ6452",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3005",
+        "record_hash": "sha256:041e153533bc9a6f791f9365829cf5f7a2e0b9d4331134cd7ed2480feb55f8cf",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6452",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3870",
+        "record_hash": "sha256:c73f2a6ac9ea932308ca016bc7ecc1d5eb61e51c29aa10d7be2630c1d9c4284c",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DC6598",
+        "column": "SIM_A_SEX21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=brigham_young_university&signal_id=sig_34194f88a299db4b4eec",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_34194f88a299db4b4eec/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Brigham Young University. Across 9 certified ED cells, the documented category totals are Harassment or threat (8), Vandalism (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_34194f88a299db4b4eec/",
+    "proactive_reply": "Relevant certified public-data context for Brigham Young University: https://campusevidencelab.org/signals/sig_34194f88a299db4b4eec/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,137 @@
+{
+  "id": "sig_0bef1c980a714c28a084",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_053df560a9ba66cfae8e",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6e76642d7509ab7a755a",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/clemson_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "clemson_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (4), residence-hall (3)."
+  },
+  "institution": {
+    "id": "clemson_university",
+    "name": "Clemson University",
+    "city": "Clemson",
+    "state": "SC"
+  },
+  "record_ids": [
+    "evt_2026_0095",
+    "evt_2026_0713",
+    "evt_2026_0974",
+    "evt_2026_2959",
+    "evt_2026_3147"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Clemson University: Across 5 certified ED cells, the reported geography totals are on-campus (4), residence-hall (3).",
+      "supporting_record_ids": [
+        "evt_2026_0095",
+        "evt_2026_0713",
+        "evt_2026_0974",
+        "evt_2026_2959",
+        "evt_2026_3147"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0095",
+        "record_hash": "sha256:a45494b174d7455ab5217f7409aac9b669701709176887f59d6e52a688d9c824",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5657",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0713",
+        "record_hash": "sha256:83ff5ff4857308562a6877f9a1b8d4a931283d79c580fc163d9848891ab9c0bb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MU5657",
+        "column": "SIM_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0974",
+        "record_hash": "sha256:18a9f17228530d38386260b1f0fa58e0673c219b1d42d3d71ed89aa79c38b3fc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5657",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2959",
+        "record_hash": "sha256:45b0ad6165c56f46e71acd56269a4611cf8c2a139cc044914a82ae360e9aeed6",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5657",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3147",
+        "record_hash": "sha256:4319f8a2e53e19300f2187f83d4308d65980f23b04ee3ad4bc5ac3f497d8a534",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MU5657",
+        "column": "SIM_A_SEX24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=clemson_university&signal_id=sig_0bef1c980a714c28a084",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_0bef1c980a714c28a084/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Clemson University. Across 5 certified ED cells, the reported geography totals are on-campus (4), residence-hall (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_0bef1c980a714c28a084/",
+    "proactive_reply": "Relevant certified public-data context for Clemson University: https://campusevidencelab.org/signals/sig_0bef1c980a714c28a084/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

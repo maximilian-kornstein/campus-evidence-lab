@@ -1,0 +1,161 @@
+{
+  "id": "sig_d1d07b9aa833603a723e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e585258f3d2d7ebd1f8e",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ecbc294560565cb41d0d",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/cornell_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "cornell_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Ethnicity (9), Race (2), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "cornell_university",
+    "name": "Cornell University",
+    "city": "Ithaca",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0844",
+    "evt_2026_2158",
+    "evt_2026_2258",
+    "evt_2026_2308",
+    "evt_2026_2344",
+    "evt_2026_2370",
+    "evt_2026_3258"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Cornell University: Across 7 certified ED cells, the source-supported affected-community totals are Ethnicity (9), Race (2), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_0844",
+        "evt_2026_2158",
+        "evt_2026_2258",
+        "evt_2026_2308",
+        "evt_2026_2344",
+        "evt_2026_2370",
+        "evt_2026_3258"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0844",
+        "record_hash": "sha256:dacccc2f0fd7b5bbda81ac5ce2472992a08c56ca7d85b52b1eac494126cb2cd0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ4174",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2158",
+        "record_hash": "sha256:7b538328614c01a290e01ece6f74646db4002deff75a788471082fb0486fc1ac",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU4174",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_2258",
+        "record_hash": "sha256:cbf94d1971687e02150e07b3fcd87e8dc4f40a4070c2480be20f523e1671c370",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4174",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2308",
+        "record_hash": "sha256:452a73ab9785c7d3289c0a1ca07e320461be92f247a02751c9e1575dd9b371b7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD4174",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2344",
+        "record_hash": "sha256:3b7894d2fbf998025c14105ec23f3f404e698a521f789fa6ea305df73f9af91c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB4175",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2370",
+        "record_hash": "sha256:a6c46a91ff4f710c694dc8be76d9b811df9603158619aa8daeba550fc7f1ab3d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4174",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3258",
+        "record_hash": "sha256:aa82e556dfa7f5537eb886e6ec47e31b84375a567ff08dd06d9292b3760964b2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU4174",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=cornell_university&signal_id=sig_d1d07b9aa833603a723e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_d1d07b9aa833603a723e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Cornell University. Across 7 certified ED cells, the source-supported affected-community totals are Ethnicity (9), Race (2), LGBTQ+ (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_d1d07b9aa833603a723e/",
+    "proactive_reply": "Relevant certified public-data context for Cornell University: https://campusevidencelab.org/signals/sig_d1d07b9aa833603a723e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

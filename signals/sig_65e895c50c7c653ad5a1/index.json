@@ -1,0 +1,125 @@
+{
+  "id": "sig_65e895c50c7c653ad5a1",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_16e5191dcdd0e01b17ef",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_9a59be5fcd67eafdaa25",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_south_florida/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_south_florida"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Religion (4), Gender (1)."
+  },
+  "institution": {
+    "id": "university_of_south_florida",
+    "name": "University of South Florida",
+    "city": "Tampa",
+    "state": "FL"
+  },
+  "record_ids": [
+    "evt_2026_0685",
+    "evt_2026_1030",
+    "evt_2026_1218",
+    "evt_2026_3243"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of South Florida: Across 4 certified ED cells, the source-supported affected-community totals are Religion (4), Gender (1).",
+      "supporting_record_ids": [
+        "evt_2026_0685",
+        "evt_2026_1030",
+        "evt_2026_1218",
+        "evt_2026_3243"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0685",
+        "record_hash": "sha256:91b078b63acdfa311189cca23320e1d8136c5b3631c5d84a7b056d0d3bdecd15",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1484",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1030",
+        "record_hash": "sha256:f6d3d908a60712e71d2425c64d5ecb338c9fcb07737e3337989c76e4ba051999",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN1487",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1218",
+        "record_hash": "sha256:285d9fb8069add285846d7203bb7736f65445584ffe63d6b3c6f3c8779ddec7d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX1484",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3243",
+        "record_hash": "sha256:7b36987c4a5fa158c17874d0c76be52d6e249643a34e60ef26aa0f2aa25cdfc7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1484",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_south_florida&signal_id=sig_65e895c50c7c653ad5a1",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_65e895c50c7c653ad5a1/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of South Florida. Across 4 certified ED cells, the source-supported affected-community totals are Religion (4), Gender (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_65e895c50c7c653ad5a1/",
+    "proactive_reply": "Relevant certified public-data context for University of South Florida: https://campusevidencelab.org/signals/sig_65e895c50c7c653ad5a1/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

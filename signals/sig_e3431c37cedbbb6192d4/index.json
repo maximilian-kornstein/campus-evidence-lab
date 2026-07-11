@@ -1,0 +1,149 @@
+{
+  "id": "sig_e3431c37cedbbb6192d4",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_0c395296317a37d3acd2",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ff2b7767f2dfe2c8403d",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_massachusetts_amherst/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_massachusetts_amherst"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), National origin (2), Race (1), Religion (1)."
+  },
+  "institution": {
+    "id": "university_of_massachusetts_amherst",
+    "name": "University of Massachusetts Amherst",
+    "city": "Amherst",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0958",
+    "evt_2026_1503",
+    "evt_2026_1747",
+    "evt_2026_1880",
+    "evt_2026_1987",
+    "evt_2026_3382"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Massachusetts Amherst: Across 6 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), National origin (2), Race (1), Religion (1).",
+      "supporting_record_ids": [
+        "evt_2026_0958",
+        "evt_2026_1503",
+        "evt_2026_1747",
+        "evt_2026_1880",
+        "evt_2026_1987",
+        "evt_2026_3382"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0958",
+        "record_hash": "sha256:e6588cbeb3eb1f45c7db9d73d6392bf20d47b97aa0bf9e74956066dd4e58bf1c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA2986",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1503",
+        "record_hash": "sha256:ecf0ce5bafb5a28b5e0f56b5f749ea0778888c87bb0d04dc01ec65bfb9c87791",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU2986",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1747",
+        "record_hash": "sha256:8111ef4092b19c9586b06549dd33d360d03b3ee76d61b3762c705746d35726b4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV2986",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1880",
+        "record_hash": "sha256:2fb79ce99bcaca9049c774089c5af2388e0906af8e1aa015a2af72ccc6f3b2b9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ID2986",
+        "column": "SIM_A_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1987",
+        "record_hash": "sha256:15465e66483f60f723c9e9d50680418f0824c3368cbcdccac98e648ac6b4e96b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA2986",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3382",
+        "record_hash": "sha256:2824f9ef6ca979d31d663754d1220c6b8bc963bc57114fa040ddb5029f217ea7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV2986",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_massachusetts_amherst&signal_id=sig_e3431c37cedbbb6192d4",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e3431c37cedbbb6192d4/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Massachusetts Amherst. Across 6 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), National origin (2), Race (1), Religion (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e3431c37cedbbb6192d4/",
+    "proactive_reply": "Relevant certified public-data context for University of Massachusetts Amherst: https://campusevidencelab.org/signals/sig_e3431c37cedbbb6192d4/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

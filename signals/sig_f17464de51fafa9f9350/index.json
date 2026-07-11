@@ -1,0 +1,197 @@
+{
+  "id": "sig_f17464de51fafa9f9350",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_84986678450d4977c700",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_69051badbda17493922c",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/cuny_john_jay_college_of_criminal_justice/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "cuny_john_jay_college_of_criminal_justice"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 10 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (4), Religion (4), National origin (3)."
+  },
+  "institution": {
+    "id": "cuny_john_jay_college_of_criminal_justice",
+    "name": "CUNY John Jay College of Criminal Justice",
+    "city": "NEW YORK",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0648",
+    "evt_2026_1009",
+    "evt_2026_1909",
+    "evt_2026_2161",
+    "evt_2026_2260",
+    "evt_2026_2310",
+    "evt_2026_2346",
+    "evt_2026_2386",
+    "evt_2026_2404",
+    "evt_2026_2412"
+  ],
+  "bounded_claims": [
+    {
+      "text": "CUNY John Jay College of Criminal Justice: Across 10 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (4), Religion (4), National origin (3).",
+      "supporting_record_ids": [
+        "evt_2026_0648",
+        "evt_2026_1009",
+        "evt_2026_1909",
+        "evt_2026_2161",
+        "evt_2026_2260",
+        "evt_2026_2310",
+        "evt_2026_2346",
+        "evt_2026_2386",
+        "evt_2026_2404",
+        "evt_2026_2412"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 16,
+    "certified_cell_count": 10,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0648",
+        "record_hash": "sha256:099139497bb8ddc6e5209163790208f4f9db7cf55aa5796566362adf5c0d2a75",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NO4206",
+        "column": "INTIM_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1009",
+        "record_hash": "sha256:89fce7cae297d79dbee7266c63d8fb7cc2158efb71cbfcc12831b95e091afd78",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM4206",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1909",
+        "record_hash": "sha256:58d9b00feb8a1ea3b4b9301bdd150e809819589eb3bce01347dde19f0a9074e8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4206",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_2161",
+        "record_hash": "sha256:934bbe657641d4b1b9f5e516684d0f9525b8263ad24ef259fc60dcedad08e489",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV4206",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2260",
+        "record_hash": "sha256:2ef215b856e192b31f650cbdafc1ba683131b6f4b58e07bc5b00839c37885fa2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ4206",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2310",
+        "record_hash": "sha256:0248475990a6facbf2ef3b5605f4323b1300f8e7a19ef10aac7addfb2d1443ae",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4206",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2346",
+        "record_hash": "sha256:32a5d0ce275fb78a7ecdf8268e19a7dfa4d2b2ca3d4dbb654292869eb89b7c10",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4206",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_2386",
+        "record_hash": "sha256:0045ba0e32cd52ea89185179fd4becc552875e1ac726623b62dad2640d385d05",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ4206",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2404",
+        "record_hash": "sha256:a55cee2ae53ea2fe2889c36e082d4865f2c1010650f22c44a6082cc5624e2cae",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4206",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2412",
+        "record_hash": "sha256:7b136c485fa254f7bc9c86962ab80089cba09d2505c4782330ae6777a0cd8367",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU4206",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=cuny_john_jay_college_of_criminal_justice&signal_id=sig_f17464de51fafa9f9350",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f17464de51fafa9f9350/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: CUNY John Jay College of Criminal Justice. Across 10 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (4), Religion (4), National origin… Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_f17464de51fafa9f9350/",
+    "proactive_reply": "Relevant certified public-data context for CUNY John Jay College of Criminal Justice: https://campusevidencelab.org/signals/sig_f17464de51fafa9f9350/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

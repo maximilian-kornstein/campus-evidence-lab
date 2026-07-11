@@ -1,0 +1,137 @@
+{
+  "id": "sig_dd13eea704da914f6897",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_8227d62c2b64557a2677",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_01a27bb89f9b47aa288c",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/cuny_laguardia_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "cuny_laguardia_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (5)."
+  },
+  "institution": {
+    "id": "cuny_laguardia_community_college",
+    "name": "CUNY LaGuardia Community College",
+    "city": "LONG ISLAND CITY",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0675",
+    "evt_2026_2170",
+    "evt_2026_2264",
+    "evt_2026_2314",
+    "evt_2026_2350"
+  ],
+  "bounded_claims": [
+    {
+      "text": "CUNY LaGuardia Community College: Across 5 certified ED cells, the reported geography totals are on-campus (5).",
+      "supporting_record_ids": [
+        "evt_2026_0675",
+        "evt_2026_2170",
+        "evt_2026_2264",
+        "evt_2026_2314",
+        "evt_2026_2350"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0675",
+        "record_hash": "sha256:f99b437b66b0978a97e447b9bb28b1b16e387c53b03a2112e352fc801bc703a6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL4208",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2170",
+        "record_hash": "sha256:118b9c48a7014e5a1ea61ca57619f972ae14694ea91fb35c8b1d0321dee22dda",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE4208",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2264",
+        "record_hash": "sha256:651b0536f0c558881cbec6a2ce5143f3d725bbea37ec31493f242cdfba0dfbc6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4208",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2314",
+        "record_hash": "sha256:dd011f086c2847a04686de53fd3ee689602c3fba6f04fbe937f6cf7d7426a7a2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DY4208",
+        "column": "INTIM_ET22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2350",
+        "record_hash": "sha256:d35acccf0d49ed445a689fdf09d5553100d427457fbc8ab8e5e371b2d0f41f1b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4208",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=cuny_laguardia_community_college&signal_id=sig_dd13eea704da914f6897",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_dd13eea704da914f6897/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: CUNY LaGuardia Community College. Across 5 certified ED cells, the reported geography totals are on-campus (5). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_dd13eea704da914f6897/",
+    "proactive_reply": "Relevant certified public-data context for CUNY LaGuardia Community College: https://campusevidencelab.org/signals/sig_dd13eea704da914f6897/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

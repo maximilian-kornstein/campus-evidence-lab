@@ -1,0 +1,137 @@
+{
+  "id": "sig_300771c49673086c80f4",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_08b550f958fdfa881919",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e73e19c7f1b5982307c2",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/the_university_of_alabama/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "the_university_of_alabama"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (2)."
+  },
+  "institution": {
+    "id": "the_university_of_alabama",
+    "name": "The University of Alabama",
+    "city": "TUSCALOOSA",
+    "state": "AL"
+  },
+  "record_ids": [
+    "evt_2026_0218",
+    "evt_2026_0725",
+    "evt_2026_0816",
+    "evt_2026_0902",
+    "evt_2026_2927"
+  ],
+  "bounded_claims": [
+    {
+      "text": "The University of Alabama: Across 5 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (2).",
+      "supporting_record_ids": [
+        "evt_2026_0218",
+        "evt_2026_0725",
+        "evt_2026_0816",
+        "evt_2026_0902",
+        "evt_2026_2927"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0218",
+        "record_hash": "sha256:185df03c6e1f9df4a70704ab6e3196254d19c19c82b4d1d242062ccabcdd11b7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK7",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0725",
+        "record_hash": "sha256:73d0c185bc784b98a6ccf4e5e6736fba5b2953c28bbc683fe89d371cffeac9d9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT7",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0816",
+        "record_hash": "sha256:ee6fe26cd34f3461a551739127a1757f95c83ccac279bf59f9d304e85de8a292",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO7",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0902",
+        "record_hash": "sha256:c530324ce3cb31a55d09c4dc24bdf0489d714eaeaa537cba995de125daf2b685",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP7",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2927",
+        "record_hash": "sha256:60eeb612ecae9e06420780fa26125af957fd2780538a11b66270a2c5931efe2c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT7",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=the_university_of_alabama&signal_id=sig_300771c49673086c80f4",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_300771c49673086c80f4/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: The University of Alabama. Across 5 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_300771c49673086c80f4/",
+    "proactive_reply": "Relevant certified public-data context for The University of Alabama: https://campusevidencelab.org/signals/sig_300771c49673086c80f4/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,161 @@
+{
+  "id": "sig_fb4307c613a75f8909c4",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e1ee103a0e41f46a5521",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6f40d9214b46604d0c71",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/kent_state_university_at_kent/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "kent_state_university_at_kent"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Religion (7), Race (3), LGBTQ+ (2)."
+  },
+  "institution": {
+    "id": "kent_state_university_at_kent",
+    "name": "Kent State University at Kent",
+    "city": "Kent",
+    "state": "OH"
+  },
+  "record_ids": [
+    "evt_2026_0301",
+    "evt_2026_0800",
+    "evt_2026_1269",
+    "evt_2026_1466",
+    "evt_2026_1620",
+    "evt_2026_1708",
+    "evt_2026_3036"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Kent State University at Kent: Across 7 certified ED cells, the source-supported affected-community totals are Religion (7), Race (3), LGBTQ+ (2).",
+      "supporting_record_ids": [
+        "evt_2026_0301",
+        "evt_2026_0800",
+        "evt_2026_1269",
+        "evt_2026_1466",
+        "evt_2026_1620",
+        "evt_2026_1708",
+        "evt_2026_3036"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0301",
+        "record_hash": "sha256:417925a4d61026e0f06ca5d6855ceba76ab481acfd29fe7be3f6e6d7956c3424",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV4966",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0800",
+        "record_hash": "sha256:caa90ff1b2e72608f6d16d2fdb0aeaf7623d8b4e0dabc26ffdb3e64fb76962e0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC4966",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1269",
+        "record_hash": "sha256:056c372ccbc11e18aa347aa5047920aeb3b0b6d9e40eff1832ad31302927b6a1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4966",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1466",
+        "record_hash": "sha256:6ac3febf0c1e5da73697eb928c5a47f6bba17b9289a3291aace9b650a787538d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4966",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1620",
+        "record_hash": "sha256:698d1630fa501202886e47feb13c5e38f4a3ac9259bc5712dde18f8729174ea0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4966",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1708",
+        "record_hash": "sha256:fcb8f3566632b57ce4501eb68150ac88700c415c4bb3ee5ea816faada4c3a38c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4966",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3036",
+        "record_hash": "sha256:42a0b20f904b4db3921b5f9e3fc744ea47c4a9b5a187b5dd6c8fa0a8cfd72336",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC4966",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=kent_state_university_at_kent&signal_id=sig_fb4307c613a75f8909c4",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_fb4307c613a75f8909c4/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Kent State University at Kent. Across 7 certified ED cells, the source-supported affected-community totals are Religion (7), Race (3), LGBTQ+ (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_fb4307c613a75f8909c4/",
+    "proactive_reply": "Relevant certified public-data context for Kent State University at Kent: https://campusevidencelab.org/signals/sig_fb4307c613a75f8909c4/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

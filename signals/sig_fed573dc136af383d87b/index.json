@@ -1,0 +1,161 @@
+{
+  "id": "sig_fed573dc136af383d87b",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_9f130cadaa67f1bd9742",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_f43b916c2671c5f3d119",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/pennsylvania_state_university_penn_state_berks/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "pennsylvania_state_university_penn_state_berks"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the documented category totals are Harassment or threat (7)."
+  },
+  "institution": {
+    "id": "pennsylvania_state_university_penn_state_berks",
+    "name": "Pennsylvania State University-Penn State Berks",
+    "city": "READING",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_1412",
+    "evt_2026_1642",
+    "evt_2026_2114",
+    "evt_2026_2162",
+    "evt_2026_3694",
+    "evt_2026_3721",
+    "evt_2026_3734"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Pennsylvania State University-Penn State Berks: Across 7 certified ED cells, the documented category totals are Harassment or threat (7).",
+      "supporting_record_ids": [
+        "evt_2026_1412",
+        "evt_2026_1642",
+        "evt_2026_2114",
+        "evt_2026_2162",
+        "evt_2026_3694",
+        "evt_2026_3721",
+        "evt_2026_3734"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1412",
+        "record_hash": "sha256:a34cad851ab5fd8ca42450d18c52c3dfcb0302cc703caa6fff64b6e6c7848b9f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV5480",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1642",
+        "record_hash": "sha256:ec771f5de453ad4a0a0924698de2608a5887b045233ce8aa57246f4b36d2e64a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5480",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2114",
+        "record_hash": "sha256:530ec5dc7ef930da11091b25ad5a46580f483fe023fde74d00f63412ddc5c461",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP5480",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2162",
+        "record_hash": "sha256:85d175816f6b5d4ebe6aea9918fdac41de917f24acbf7c205aed588f2971902a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ5480",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3694",
+        "record_hash": "sha256:96f7c853138fd518d555c85e1278933b7f51c6314bfd4c96176e56d741004478",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV5480",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3721",
+        "record_hash": "sha256:3ee85d26dd7e471a2f5853d3b0f8b11e740dddd3137a81a7a9ba133c91677aba",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP5480",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3734",
+        "record_hash": "sha256:13ef2fca00eb5d8b742e60a805c8466d909de58e066716248204e5893a290fca",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ5480",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=pennsylvania_state_university_penn_state_berks&signal_id=sig_fed573dc136af383d87b",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_fed573dc136af383d87b/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Pennsylvania State University-Penn State Berks. Across 7 certified ED cells, the documented category totals are Harassment or threat (7). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_fed573dc136af383d87b/",
+    "proactive_reply": "Relevant certified public-data context for Pennsylvania State University-Penn State Berks: https://campusevidencelab.org/signals/sig_fed573dc136af383d87b/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

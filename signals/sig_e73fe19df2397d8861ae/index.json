@@ -1,0 +1,245 @@
+{
+  "id": "sig_e73fe19df2397d8861ae",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d014d16a92bfbcb08042",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_4e6113c983132ca5a410",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_virginia_main_campus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_virginia_main_campus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 14 certified ED cells, the reported geography totals are on-campus (12), public-property (4), noncampus (2)."
+  },
+  "institution": {
+    "id": "university_of_virginia_main_campus",
+    "name": "University of Virginia-Main Campus",
+    "city": "CHARLOTTESVILLE",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_0495",
+    "evt_2026_1471",
+    "evt_2026_1679",
+    "evt_2026_1770",
+    "evt_2026_1823",
+    "evt_2026_1875",
+    "evt_2026_1927",
+    "evt_2026_1962",
+    "evt_2026_2609",
+    "evt_2026_2640",
+    "evt_2026_2652",
+    "evt_2026_2658",
+    "evt_2026_2795",
+    "evt_2026_2861"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Virginia-Main Campus: Across 14 certified ED cells, the reported geography totals are on-campus (12), public-property (4), noncampus (2).",
+      "supporting_record_ids": [
+        "evt_2026_0495",
+        "evt_2026_1471",
+        "evt_2026_1679",
+        "evt_2026_1770",
+        "evt_2026_1823",
+        "evt_2026_1875",
+        "evt_2026_1927",
+        "evt_2026_1962",
+        "evt_2026_2609",
+        "evt_2026_2640",
+        "evt_2026_2652",
+        "evt_2026_2658",
+        "evt_2026_2795",
+        "evt_2026_2861"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 18,
+    "certified_cell_count": 14,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0495",
+        "record_hash": "sha256:ecd41413a0102723e6e013896a4978abc4f6e21c36cb6b3a7c0f0c82ed972bf7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL6737",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1471",
+        "record_hash": "sha256:022b6d7781cd0c64a0dffe3cf29b926c7d4bfe52bb29c1b108918dcf837c3a07",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MZ6737",
+        "column": "SIM_A_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1679",
+        "record_hash": "sha256:80b4d1f743fe0fad3f1ac490e940c18036bcf2a4c96593edfd1c6e6f8160a3cc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA6737",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1770",
+        "record_hash": "sha256:f550b2dbefdd887c8829fbb5641e8e86ebf05130b12ee64094cd797936137fd1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP6737",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1823",
+        "record_hash": "sha256:77c20df9adaa38297d216344db8bb98f7af78f380ca6e4a5c9a7834e45b59dd1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6737",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1875",
+        "record_hash": "sha256:b97c8bc92199368028f0adc1fb01287b90bc014f5818c2f0a236332fddd14461",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW6741",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1927",
+        "record_hash": "sha256:e5db53d9ded99663e565994b7ce8414f423a1d465082720cc92559e4dfee210a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA6741",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1962",
+        "record_hash": "sha256:bcf2916933a5903e780687f06e50a4e686b4dabb0b989dc8e1354aa11ce6fc0d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS6737",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2609",
+        "record_hash": "sha256:f3b74d3ba16837dab6127f8b1c024cdb5f2d150ea364d5d27ef4f1a806b571a3",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP6737",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2640",
+        "record_hash": "sha256:e12263300338bf6dd724572aa3eb6cd0ca36c293efc5697f8fa19ae2964909c4",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW6737",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2652",
+        "record_hash": "sha256:5cdc3c44759f03ca909f1a095de76106ff8ec2e9656383d5321ee1412e9469cf",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BQ6737",
+        "column": "AGG_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2658",
+        "record_hash": "sha256:3db9fbf2345bcaa31f5f52457ee7a3057596a99f16921ba3cdf010c259e5112d",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS6737",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2795",
+        "record_hash": "sha256:199329f11b2b04cde1f7d3005e9f2042b750c3ab458c2500671c841e3b4a9ffb",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK6737",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2861",
+        "record_hash": "sha256:0e2bb22e2ffde9dbf219706f57266c16d7de1ed6ef46fe3a862c4f69f56d81ff",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MZ6737",
+        "column": "SIM_A_NAT24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_virginia_main_campus&signal_id=sig_e73fe19df2397d8861ae",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e73fe19df2397d8861ae/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Virginia-Main Campus. Across 14 certified ED cells, the reported geography totals are on-campus (12), public-property (4), noncampus (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e73fe19df2397d8861ae/",
+    "proactive_reply": "Relevant certified public-data context for University of Virginia-Main Campus: https://campusevidencelab.org/signals/sig_e73fe19df2397d8861ae/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

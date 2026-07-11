@@ -1,0 +1,125 @@
+{
+  "id": "sig_91b5210b262b46d3f40e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c1b1a67eca30decc7f3e",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6f400019cad412b6b407",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/purdue_university_main_campus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "purdue_university_main_campus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (3), noncampus (1), public-property (1)."
+  },
+  "institution": {
+    "id": "purdue_university_main_campus",
+    "name": "Purdue University-Main Campus",
+    "city": "WEST LAFAYETTE",
+    "state": "IN"
+  },
+  "record_ids": [
+    "evt_2026_0432",
+    "evt_2026_0955",
+    "evt_2026_2513",
+    "evt_2026_2827"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Purdue University-Main Campus: Across 4 certified ED cells, the reported geography totals are on-campus (3), noncampus (1), public-property (1).",
+      "supporting_record_ids": [
+        "evt_2026_0432",
+        "evt_2026_0955",
+        "evt_2026_2513",
+        "evt_2026_2827"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0432",
+        "record_hash": "sha256:2e5c8fbef5ea54139846fabcdcc29ec0d5575d1e040e53ca622c97e68515b318",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DL7243",
+        "column": "LAR_T_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0955",
+        "record_hash": "sha256:9b232e813d5560af65419dbda8f3b933565f1da3ba3d62ea98392ad31dc113de",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DC7243",
+        "column": "SIM_A_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2513",
+        "record_hash": "sha256:523f4a3a9bc5f7e6a88a4508e77b1bcfb1d3c4205feea7deb75d28e0fafb40bf",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LP7243",
+        "column": "AGG_A_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2827",
+        "record_hash": "sha256:e022a7cff6a5199d90a360b15794dbc3266416dedbf43de67f0e02f42bcebf62",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL7243",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=purdue_university_main_campus&signal_id=sig_91b5210b262b46d3f40e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_91b5210b262b46d3f40e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Purdue University-Main Campus. Across 4 certified ED cells, the reported geography totals are on-campus (3), noncampus (1), public-property (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_91b5210b262b46d3f40e/",
+    "proactive_reply": "Relevant certified public-data context for Purdue University-Main Campus: https://campusevidencelab.org/signals/sig_91b5210b262b46d3f40e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

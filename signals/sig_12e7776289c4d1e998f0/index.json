@@ -1,0 +1,137 @@
+{
+  "id": "sig_12e7776289c4d1e998f0",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_fca68c2f418673eac4f8",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_02eb99bc085b0088383f",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/montana_technological_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "montana_technological_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Vandalism (8)."
+  },
+  "institution": {
+    "id": "montana_technological_university",
+    "name": "Montana Technological University",
+    "city": "BUTTE",
+    "state": "MT"
+  },
+  "record_ids": [
+    "evt_2026_0198",
+    "evt_2026_0838",
+    "evt_2026_1043",
+    "evt_2026_1324",
+    "evt_2026_2520"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Montana Technological University: Across 5 certified ED cells, the documented category totals are Vandalism (8).",
+      "supporting_record_ids": [
+        "evt_2026_0198",
+        "evt_2026_0838",
+        "evt_2026_1043",
+        "evt_2026_1324",
+        "evt_2026_2520"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0198",
+        "record_hash": "sha256:4475cbe0a211a054765aa7ff9825215c265effaf9a0f183a7d9d34abce7452d0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT3746",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0838",
+        "record_hash": "sha256:c388e17548a7be4149c72e394546659586d331bbd90b7d6bd70b1407d972900e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ3746",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1043",
+        "record_hash": "sha256:f180c41a2a8216254507a2107f5cc111127130872f98a212bec8e60efe82eb35",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX3746",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1324",
+        "record_hash": "sha256:ed2b859c2e311924b9f5ad6eb2a49826cb0d03adde390b17b0210208ab83a87b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3746",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2520",
+        "record_hash": "sha256:36afd6bb0c609860a59bc8c48818aafb669d0070a37aa75bc2a27ebcac2abc56",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT3746",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=montana_technological_university&signal_id=sig_12e7776289c4d1e998f0",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_12e7776289c4d1e998f0/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Montana Technological University. Across 5 certified ED cells, the documented category totals are Vandalism (8). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_12e7776289c4d1e998f0/",
+    "proactive_reply": "Relevant certified public-data context for Montana Technological University: https://campusevidencelab.org/signals/sig_12e7776289c4d1e998f0/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

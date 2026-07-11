@@ -1,0 +1,125 @@
+{
+  "id": "sig_55ec9b13fcd5f1c52861",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_cb9c8d8e6b9d6e8b667d",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_7e69b94b0250c474811b",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/pierce_college_district/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "pierce_college_district"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Race (2), Gender (1), Religion (1)."
+  },
+  "institution": {
+    "id": "pierce_college_district",
+    "name": "Pierce College District",
+    "city": "Lakewood",
+    "state": "WA"
+  },
+  "record_ids": [
+    "evt_2026_0470",
+    "evt_2026_1020",
+    "evt_2026_1496",
+    "evt_2026_1663"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Pierce College District: Across 4 certified ED cells, the source-supported affected-community totals are Race (2), Gender (1), Religion (1).",
+      "supporting_record_ids": [
+        "evt_2026_0470",
+        "evt_2026_1020",
+        "evt_2026_1496",
+        "evt_2026_1663"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0470",
+        "record_hash": "sha256:763cdb97365a200602bd84ec2e8a2c2768e77dd895dcfb3f84539f1bc49139d6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT6787",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1020",
+        "record_hash": "sha256:36ba26f012884a7a87f6ca41f392350f41f66616bc3f5b5da0e18112fcf188c3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6790",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1496",
+        "record_hash": "sha256:a5ab9717336fd8a495f6469521d77e47b893e24ccc4acc65c9ad0824afb8c840",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA6790",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1663",
+        "record_hash": "sha256:3f5414ecb2e84f5cfd0266686f01e7e2c5095f9ab7e280a7c04ea3b5793581ad",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6787",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=pierce_college_district&signal_id=sig_55ec9b13fcd5f1c52861",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_55ec9b13fcd5f1c52861/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Pierce College District. Across 4 certified ED cells, the source-supported affected-community totals are Race (2), Gender (1), Religion (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_55ec9b13fcd5f1c52861/",
+    "proactive_reply": "Relevant certified public-data context for Pierce College District: https://campusevidencelab.org/signals/sig_55ec9b13fcd5f1c52861/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

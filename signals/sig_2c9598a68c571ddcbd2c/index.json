@@ -1,0 +1,185 @@
+{
+  "id": "sig_2c9598a68c571ddcbd2c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_224f3a65a6b45752486c",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_0343fc3760ffa1109aaa",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/the_new_school/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "the_new_school"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the reported geography totals are on-campus (7), public-property (3), residence-hall (1)."
+  },
+  "institution": {
+    "id": "the_new_school",
+    "name": "The New School",
+    "city": "New York",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1792",
+    "evt_2026_2134",
+    "evt_2026_2242",
+    "evt_2026_2300",
+    "evt_2026_2340",
+    "evt_2026_2604",
+    "evt_2026_2700",
+    "evt_2026_2730",
+    "evt_2026_3386"
+  ],
+  "bounded_claims": [
+    {
+      "text": "The New School: Across 9 certified ED cells, the reported geography totals are on-campus (7), public-property (3), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_1792",
+        "evt_2026_2134",
+        "evt_2026_2242",
+        "evt_2026_2300",
+        "evt_2026_2340",
+        "evt_2026_2604",
+        "evt_2026_2700",
+        "evt_2026_2730",
+        "evt_2026_3386"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1792",
+        "record_hash": "sha256:459cdbad4eb9f349ec18a92c6fc08c722bc89c4cf9a9dc24da7f060813e3c383",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4319",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2134",
+        "record_hash": "sha256:f554cf88dbff523a4012971c4c41dab1e37d0e72e38c981878ff35e7af134188",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4319",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_2242",
+        "record_hash": "sha256:ec790fffa26b232e9b6dd46850ef6189493047c2a183abec8891c98306f87926",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR4319",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2300",
+        "record_hash": "sha256:3228f9ae849fd77ee553536465eb74dacf12a698af4e1906c44e672497d41d99",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW4319",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2340",
+        "record_hash": "sha256:6c23f5c85b83f37e68718fff980de580b1bcd890984c3ed127d94976cc545742",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY4319",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2604",
+        "record_hash": "sha256:57000ec03c9f3e7d44f6bdf313d0c0a78faf792c5d829d51bd982beb43a646b6",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NH4319",
+        "column": "LAR_T_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2700",
+        "record_hash": "sha256:4c65f0890f7a39fcc59df7f6989c51e0dc2118767450f146148a5ff2fc4f1b79",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4319",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2730",
+        "record_hash": "sha256:ed5205120454ce36af916380ad156526047dd8ad14e453a2ee28a69f841b9752",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4319",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3386",
+        "record_hash": "sha256:4c8c4cc04213bd67839b46bd6efd20a819cd081a4b906c8f3875ecaaab0f0081",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4319",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=the_new_school&signal_id=sig_2c9598a68c571ddcbd2c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_2c9598a68c571ddcbd2c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: The New School. Across 9 certified ED cells, the reported geography totals are on-campus (7), public-property (3), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_2c9598a68c571ddcbd2c/",
+    "proactive_reply": "Relevant certified public-data context for The New School: https://campusevidencelab.org/signals/sig_2c9598a68c571ddcbd2c/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

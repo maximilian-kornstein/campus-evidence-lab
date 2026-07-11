@@ -1,0 +1,125 @@
+{
+  "id": "sig_3ca69d581fd20962e625",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_96799941946525afce58",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_a0427c3a0c25b9207356",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/augustana_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "augustana_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (3), residence-hall (1)."
+  },
+  "institution": {
+    "id": "augustana_university",
+    "name": "Augustana University",
+    "city": "SIOUX FALLS",
+    "state": "SD"
+  },
+  "record_ids": [
+    "evt_2026_0114",
+    "evt_2026_0714",
+    "evt_2026_0806",
+    "evt_2026_3002"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Augustana University: Across 4 certified ED cells, the reported geography totals are on-campus (3), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0114",
+        "evt_2026_0714",
+        "evt_2026_0806",
+        "evt_2026_3002"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0114",
+        "record_hash": "sha256:db3bda371329ed2dcf69050e5aa840de36f7aedcfe0e829a1a4ec8248b8eb041",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT5755",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0714",
+        "record_hash": "sha256:6bf71b79eb9fdfa1e8d703ceca3aed670be553876d29ef58239a6d904274c302",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV5755",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0806",
+        "record_hash": "sha256:4fbdc04c0a6dc3247ecfbe434092f8cdcaab4c6780a93a0e01f77c9d98e163e3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5755",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3002",
+        "record_hash": "sha256:57fa0fa48af1e11e35370cb75913e5b40cc9960a03cc233ad6226a72782c4e91",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT5755",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=augustana_university&signal_id=sig_3ca69d581fd20962e625",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3ca69d581fd20962e625/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Augustana University. Across 4 certified ED cells, the reported geography totals are on-campus (3), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3ca69d581fd20962e625/",
+    "proactive_reply": "Relevant certified public-data context for Augustana University: https://campusevidencelab.org/signals/sig_3ca69d581fd20962e625/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

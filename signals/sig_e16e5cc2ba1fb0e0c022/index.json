@@ -1,0 +1,149 @@
+{
+  "id": "sig_e16e5cc2ba1fb0e0c022",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_2cc192b52f829f733f50",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1f4483a434d28784bb01",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/bucknell_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "bucknell_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the documented category totals are Harassment or threat (6)."
+  },
+  "institution": {
+    "id": "bucknell_university",
+    "name": "Bucknell University",
+    "city": "Lewisburg",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0373",
+    "evt_2026_1238",
+    "evt_2026_1821",
+    "evt_2026_3038",
+    "evt_2026_3585",
+    "evt_2026_3719"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Bucknell University: Across 6 certified ED cells, the documented category totals are Harassment or threat (6).",
+      "supporting_record_ids": [
+        "evt_2026_0373",
+        "evt_2026_1238",
+        "evt_2026_1821",
+        "evt_2026_3038",
+        "evt_2026_3585",
+        "evt_2026_3719"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0373",
+        "record_hash": "sha256:ebb3111c0cf504ca582bad8c5cf03576a80d54af7b6d3aec64489121174c3a69",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5318",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1238",
+        "record_hash": "sha256:fa1ca8fe8eea6e08d3a7e5d27357478a9da2deb8c6b6b661866c1a9f0ca04f31",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5318",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1821",
+        "record_hash": "sha256:36f1d30dff40ebc83ead945ebacde1fca882a01377c01eb26ea16ae446d0e9fe",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5318",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3038",
+        "record_hash": "sha256:3c5319bb1715033129bf1793197cb3402d1b581ce530bba46024e85313d5cbd0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5318",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3585",
+        "record_hash": "sha256:ef54f83d84f7376b635c54f9cca58181f6710824406a49865dea53a6315aecec",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5318",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3719",
+        "record_hash": "sha256:ffe2dd9ca68b02b547c3db34208868cd1b380b7c17a590e9cf86e99f3dd5e00b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5318",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=bucknell_university&signal_id=sig_e16e5cc2ba1fb0e0c022",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e16e5cc2ba1fb0e0c022/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Bucknell University. Across 6 certified ED cells, the documented category totals are Harassment or threat (6). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e16e5cc2ba1fb0e0c022/",
+    "proactive_reply": "Relevant certified public-data context for Bucknell University: https://campusevidencelab.org/signals/sig_e16e5cc2ba1fb0e0c022/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

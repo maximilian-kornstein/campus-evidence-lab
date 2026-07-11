@@ -1,0 +1,149 @@
+{
+  "id": "sig_6d2e56900b0c095281b2",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_843093bbc2322f4195a2",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_be65bde800375d4dfeb9",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_illinois_chicago/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_illinois_chicago"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (1)."
+  },
+  "institution": {
+    "id": "university_of_illinois_chicago",
+    "name": "University of Illinois Chicago",
+    "city": "Chicago",
+    "state": "IL"
+  },
+  "record_ids": [
+    "evt_2026_0655",
+    "evt_2026_1501",
+    "evt_2026_1700",
+    "evt_2026_1801",
+    "evt_2026_2542",
+    "evt_2026_2654"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Illinois Chicago: Across 6 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (1).",
+      "supporting_record_ids": [
+        "evt_2026_0655",
+        "evt_2026_1501",
+        "evt_2026_1700",
+        "evt_2026_1801",
+        "evt_2026_2542",
+        "evt_2026_2654"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0655",
+        "record_hash": "sha256:5c70511db29d53fa9e27d754517dfb4f8c6bb8c83fdfdc9a5e266b9e118ed8a6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM1870",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1501",
+        "record_hash": "sha256:7e8338ff5e7ddf940d9f9b3214d5bc754ccf375e3dae6a1b6bb1b2b57a44eda2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV1870",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1700",
+        "record_hash": "sha256:0b7fc4aa24d0732d845c216b18fc660b065b093c7d85e632479dbd1ef973a106",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP1870",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1801",
+        "record_hash": "sha256:0dd20e7bcd5d253b5bbf933a94f2caa37dca836372ee7cff7f0bb719783f5e8e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW1870",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2542",
+        "record_hash": "sha256:39ec4446bf271b94087153670c1ff4faa45f9581cd0a78c63d59ff72b0b2b644",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT1874",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2654",
+        "record_hash": "sha256:c869ce33ebed75597a81651cbed82d1fbac48caaf10b9096469e6e7731a7c332",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1874",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_illinois_chicago&signal_id=sig_6d2e56900b0c095281b2",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6d2e56900b0c095281b2/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Illinois Chicago. Across 6 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6d2e56900b0c095281b2/",
+    "proactive_reply": "Relevant certified public-data context for University of Illinois Chicago: https://campusevidencelab.org/signals/sig_6d2e56900b0c095281b2/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

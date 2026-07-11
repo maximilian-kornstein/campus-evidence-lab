@@ -1,0 +1,181 @@
+{
+  "id": "sig_f72fe925a296ca789a26",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e230b2bf3b8908f551ae",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_052480c60cd351078de6",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_missouri_kansas_city/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_missouri_kansas_city"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (4)."
+  },
+  "institution": {
+    "id": "university_of_missouri_kansas_city",
+    "name": "University of Missouri-Kansas City",
+    "city": "KANSAS CITY",
+    "state": "MO"
+  },
+  "record_ids": [
+    "evt_2026_0293",
+    "evt_2026_1158",
+    "evt_2026_1461",
+    "evt_2026_1529",
+    "evt_2026_1573",
+    "evt_2026_2518",
+    "evt_2026_3226",
+    "evt_2026_3812"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Missouri-Kansas City: Across 8 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (4).",
+      "supporting_record_ids": [
+        "evt_2026_0293",
+        "evt_2026_1158",
+        "evt_2026_1461",
+        "evt_2026_1529",
+        "evt_2026_1573",
+        "evt_2026_2518",
+        "evt_2026_3226",
+        "evt_2026_3812"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0293",
+        "record_hash": "sha256:75c23899025cc2b273d2e11d9a5ab66879ce663ffa845198b496500a7102c268",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL3610",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1158",
+        "record_hash": "sha256:4b0bf6ba98cbd113055cf7f7034d9990d6daabe69cc5d2e21a8c4666bf716146",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN3610",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1461",
+        "record_hash": "sha256:384e6c18b278c976762757b20afbc7aeb849500a7119b043793e4c9fc4c5e8f2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR3610",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1529",
+        "record_hash": "sha256:c91f3bf2eac23dcb4eb9566a5e5353901c01f471517fe123b75f1609ecb792db",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3610",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1573",
+        "record_hash": "sha256:a96b5e3da0e9bb157b8444616f07be2336792c3d62882b4b6d3f4f035e4e4cab",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED3610",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2518",
+        "record_hash": "sha256:ce10768c4f342fc136694efd2130f1eca2bf81eb969125cac960a8fa5c1d5580",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP3610",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3226",
+        "record_hash": "sha256:ae7f2dcd201f91c3be546a40ead04d4cbda3e9316ec6b897fff5dfaf308debe9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED3610",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3812",
+        "record_hash": "sha256:39ab150cb8644dbea313707aad31c2f8db14110976a0a97a81038512f5985744",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3692",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_missouri_kansas_city&signal_id=sig_f72fe925a296ca789a26",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f72fe925a296ca789a26/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Missouri-Kansas City. Across 8 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_f72fe925a296ca789a26/",
+    "proactive_reply": "Relevant certified public-data context for University of Missouri-Kansas City: https://campusevidencelab.org/signals/sig_f72fe925a296ca789a26/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

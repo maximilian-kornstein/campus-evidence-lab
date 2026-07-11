@@ -1,0 +1,193 @@
+{
+  "id": "sig_192cc78c9fa193c79cd0",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_3bff4b7d2d13cab66555",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_90a02805ac756172322a",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_delaware/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_delaware"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the documented category totals are Harassment or threat (7), Vandalism (4)."
+  },
+  "institution": {
+    "id": "university_of_delaware",
+    "name": "University of Delaware",
+    "city": "NEWARK",
+    "state": "DE"
+  },
+  "record_ids": [
+    "evt_2026_0133",
+    "evt_2026_0684",
+    "evt_2026_0732",
+    "evt_2026_0778",
+    "evt_2026_0823",
+    "evt_2026_2900",
+    "evt_2026_3750",
+    "evt_2026_3798",
+    "evt_2026_3841"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Delaware: Across 9 certified ED cells, the documented category totals are Harassment or threat (7), Vandalism (4).",
+      "supporting_record_ids": [
+        "evt_2026_0133",
+        "evt_2026_0684",
+        "evt_2026_0732",
+        "evt_2026_0778",
+        "evt_2026_0823",
+        "evt_2026_2900",
+        "evt_2026_3750",
+        "evt_2026_3798",
+        "evt_2026_3841"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0133",
+        "record_hash": "sha256:83b57ebc96d5e61953da1d2724127b2874db00d578396ba43876aee7d5734fd0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA1122",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0684",
+        "record_hash": "sha256:f16731bb0bf545d95a494eba4ab29de6f70e6e50c9e2616d509e668cb8df5da2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL1122",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0732",
+        "record_hash": "sha256:5d41c414691ce975bdbca460138a34caa0738cdb800d8229c8531ac70a054be3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV1122",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0778",
+        "record_hash": "sha256:d152c23790fd319c46b44c95597b3d6e7d7a871f25fbfbd1cd444f1098f82170",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE1122",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0823",
+        "record_hash": "sha256:1dbc11fcc4e69500413f0f278d4f35ed6add1fd9d92cc98245deb6acff3f369b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1122",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2900",
+        "record_hash": "sha256:625cb1e560b5ffd40b40d8d9767f5dee3d3c6d7a5eb609d17e9bbbc4a34b791d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV1122",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3750",
+        "record_hash": "sha256:c19ab60821a19d4928b3091e4106ed08e28dc7ad70aa6c5a4ca056b4346dada3",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ1125",
+        "column": "INTIM_NAT21",
+        "year": "2021",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3798",
+        "record_hash": "sha256:31fdb22c472ecf2b67c3fb4805ede01c7a44716f868e42877fad68188651bf4c",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1125",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3841",
+        "record_hash": "sha256:d82de107f6663ba5ac2c6d401469b591125ddb2a1e1f10d5ccc8722eaa17314e",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU1125",
+        "column": "INTIM_SEX21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_delaware&signal_id=sig_192cc78c9fa193c79cd0",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_192cc78c9fa193c79cd0/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Delaware. Across 9 certified ED cells, the documented category totals are Harassment or threat (7), Vandalism (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_192cc78c9fa193c79cd0/",
+    "proactive_reply": "Relevant certified public-data context for University of Delaware: https://campusevidencelab.org/signals/sig_192cc78c9fa193c79cd0/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

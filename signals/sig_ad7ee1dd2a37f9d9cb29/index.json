@@ -1,0 +1,145 @@
+{
+  "id": "sig_ad7ee1dd2a37f9d9cb29",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d22193742b5f2dd479c6",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_47a7911f52317231b43f",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/minneapolis_community_and_technical_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "minneapolis_community_and_technical_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2)."
+  },
+  "institution": {
+    "id": "minneapolis_community_and_technical_college",
+    "name": "Minneapolis Community and Technical College",
+    "city": "MINNEAPOLIS",
+    "state": "MN"
+  },
+  "record_ids": [
+    "evt_2026_0386",
+    "evt_2026_0791",
+    "evt_2026_1041",
+    "evt_2026_2547",
+    "evt_2026_3811"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Minneapolis Community and Technical College: Across 5 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2).",
+      "supporting_record_ids": [
+        "evt_2026_0386",
+        "evt_2026_0791",
+        "evt_2026_1041",
+        "evt_2026_2547",
+        "evt_2026_3811"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0386",
+        "record_hash": "sha256:4a6f2e502617aed18b1520c02a71c07275e32a8ce464f719fbe9afa2bfe8a89d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM3378",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0791",
+        "record_hash": "sha256:44602957533a34615bd639c68b78c57dc825a94341bb6e236059eb6d375027b7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS3378",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1041",
+        "record_hash": "sha256:82b34bedfe850a436546a525679d0983d8edae5439f0d0ccc4ee1b5350e39082",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3378",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2547",
+        "record_hash": "sha256:67c0c09563c969652e5381da632840436cc482ba4d3430836a0857320621fbb8",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3378",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3811",
+        "record_hash": "sha256:7624926c4d7e3ffedadcf6701fba55c485f255c18edd198b8446e77dba3bc142",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3417",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=minneapolis_community_and_technical_college&signal_id=sig_ad7ee1dd2a37f9d9cb29",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ad7ee1dd2a37f9d9cb29/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Minneapolis Community and Technical College. Across 5 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ad7ee1dd2a37f9d9cb29/",
+    "proactive_reply": "Relevant certified public-data context for Minneapolis Community and Technical College: https://campusevidencelab.org/signals/sig_ad7ee1dd2a37f9d9cb29/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

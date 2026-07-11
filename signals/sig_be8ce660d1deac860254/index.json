@@ -1,0 +1,161 @@
+{
+  "id": "sig_be8ce660d1deac860254",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_2a1e1f64e051c388978c",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ca761d79fb07cf8753fa",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/san_jose_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "san_jose_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Race (3), Ethnicity (2), LGBTQ+ (1), National origin (1)."
+  },
+  "institution": {
+    "id": "san_jose_state_university",
+    "name": "San Jose State University",
+    "city": "San Jose",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1786",
+    "evt_2026_2175",
+    "evt_2026_2339",
+    "evt_2026_2385",
+    "evt_2026_2421",
+    "evt_2026_2591",
+    "evt_2026_3445"
+  ],
+  "bounded_claims": [
+    {
+      "text": "San Jose State University: Across 7 certified ED cells, the source-supported affected-community totals are Race (3), Ethnicity (2), LGBTQ+ (1), National origin (1).",
+      "supporting_record_ids": [
+        "evt_2026_1786",
+        "evt_2026_2175",
+        "evt_2026_2339",
+        "evt_2026_2385",
+        "evt_2026_2421",
+        "evt_2026_2591",
+        "evt_2026_3445"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1786",
+        "record_hash": "sha256:c6763d1e0573b31f642f8f8f68a0d09a3af75b3b13ca8d715dfb2988db99e864",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT857",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2175",
+        "record_hash": "sha256:fb25b83f8e02c9371a372126c37503901e66aaf850f20a0a5f4eb3433bf7b0e6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU857",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2339",
+        "record_hash": "sha256:de5627d77bbc73366280cef673c45938274d737c55d5bada57ab3968341d4db2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ID857",
+        "column": "SIM_A_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2385",
+        "record_hash": "sha256:36ebac69161cb8cb5f4beb8e4709b03f912b69387351f3f15325547b0a9717ac",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY859",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2421",
+        "record_hash": "sha256:d0c2de37fe45e0c1290ea4c6d0a084407a354410b8ac37a190b2bf8923ce549f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DG857",
+        "column": "SIM_A_ET22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2591",
+        "record_hash": "sha256:4496c70e82062be4b0ffd2e5195e3cc315e901465e2ae9dee1ae682629c38437",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK857",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3445",
+        "record_hash": "sha256:3ff6b365afa2984d8e57343af8777c9f210beeaab9bf3a6a501f5607abcb4de1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA857",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=san_jose_state_university&signal_id=sig_be8ce660d1deac860254",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_be8ce660d1deac860254/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: San Jose State University. Across 7 certified ED cells, the source-supported affected-community totals are Race (3), Ethnicity (2), LGBTQ+ (1), National origin (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_be8ce660d1deac860254/",
+    "proactive_reply": "Relevant certified public-data context for San Jose State University: https://campusevidencelab.org/signals/sig_be8ce660d1deac860254/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,137 @@
+{
+  "id": "sig_43c855a7d0f4823e6e92",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_84d92c25cc1d3d74fcc2",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_7ded5185ec853d45ce48",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/pennsylvania_college_of_art_and_design/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "pennsylvania_college_of_art_and_design"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (6), residence-hall (1)."
+  },
+  "institution": {
+    "id": "pennsylvania_college_of_art_and_design",
+    "name": "Pennsylvania College of Art and Design",
+    "city": "LANCASTER",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_1795",
+    "evt_2026_2053",
+    "evt_2026_2132",
+    "evt_2026_2198",
+    "evt_2026_3732"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Pennsylvania College of Art and Design: Across 5 certified ED cells, the reported geography totals are on-campus (6), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_1795",
+        "evt_2026_2053",
+        "evt_2026_2132",
+        "evt_2026_2198",
+        "evt_2026_3732"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1795",
+        "record_hash": "sha256:00fe091f762b67ffcf10b5f67c2ef99d663d4e9a2b387d6ebeb33a8984e70f97",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV5500",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2053",
+        "record_hash": "sha256:3af6036c01f206f83acca852acb73684ffda56cc8c39b4251547c037d6fb63c8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5500",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2132",
+        "record_hash": "sha256:54bae822339f3b527c43d5753a6853eff215d4a420f1fcef7a7fa856c67e4845",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW5500",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2198",
+        "record_hash": "sha256:e06ac30a6a536aa10d76f491a9248e84229ede00a7857ca272b35721cd8b224b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT5500",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3732",
+        "record_hash": "sha256:9e83b4e1f2324c3960ddfdba61cf9da4729f30c1c0c9e9f5370db978835b2d4a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5500",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=pennsylvania_college_of_art_and_design&signal_id=sig_43c855a7d0f4823e6e92",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_43c855a7d0f4823e6e92/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Pennsylvania College of Art and Design. Across 5 certified ED cells, the reported geography totals are on-campus (6), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_43c855a7d0f4823e6e92/",
+    "proactive_reply": "Relevant certified public-data context for Pennsylvania College of Art and Design: https://campusevidencelab.org/signals/sig_43c855a7d0f4823e6e92/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

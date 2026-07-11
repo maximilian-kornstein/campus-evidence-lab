@@ -1,0 +1,193 @@
+{
+  "id": "sig_0aa677fcd9f0ec411791",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_af6cb645ca4f0be89a78",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e0b7a31af61a76fa82d8",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/regis_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "regis_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "regis_university",
+    "name": "Regis University",
+    "city": "DENVER",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0327",
+    "evt_2026_0864",
+    "evt_2026_1312",
+    "evt_2026_1565",
+    "evt_2026_3268",
+    "evt_2026_3376",
+    "evt_2026_3550",
+    "evt_2026_3591",
+    "evt_2026_3747"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Regis University: Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0327",
+        "evt_2026_0864",
+        "evt_2026_1312",
+        "evt_2026_1565",
+        "evt_2026_3268",
+        "evt_2026_3376",
+        "evt_2026_3550",
+        "evt_2026_3591",
+        "evt_2026_3747"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 13,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0327",
+        "record_hash": "sha256:db69280e5b0b25d710f5574d05e3be4b941f725d3ef1c8c651158544b26d7d29",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR1031",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0864",
+        "record_hash": "sha256:536119f65b778a24e877af0ef2c7856f60d86e89ad1614331d2bcf435db61704",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV1031",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1312",
+        "record_hash": "sha256:82e38f5a82a53d2c83fb3edf1f84782846b4d1db03e9e2037e95abc0277681b8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO1031",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_1565",
+        "record_hash": "sha256:c631a46179435ff55dd620288b7c2577e859857432f2ccb304be2d91cfed0ecd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1031",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3268",
+        "record_hash": "sha256:c69100470c9ba308fbb63aeb9fc5245025d5baf2dd431e1e1fcc39a501c0a764",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR1031",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3376",
+        "record_hash": "sha256:143003e63f030be6f93f55ffeee38018d28a859d52f7ac9ccd94173ab12109d2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV1031",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3550",
+        "record_hash": "sha256:1b6f568d79e2b810afe21ff35fdf0cbcb1ba8d54864cbb598fa99da0d26040c1",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO1031",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3591",
+        "record_hash": "sha256:4c87125b46f1624efbe96a89744825c20a706551544bce906926ede3f189b231",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1031",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3747",
+        "record_hash": "sha256:834db6ebaf47bd57a3b03c00883eb3c85ee0004565afc1271c6376d75870ca8c",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1036",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=regis_university&signal_id=sig_0aa677fcd9f0ec411791",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_0aa677fcd9f0ec411791/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Regis University. Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_0aa677fcd9f0ec411791/",
+    "proactive_reply": "Relevant certified public-data context for Regis University: https://campusevidencelab.org/signals/sig_0aa677fcd9f0ec411791/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

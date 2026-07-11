@@ -1,0 +1,161 @@
+{
+  "id": "sig_aee1805ca9d5e069fa91",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e2578fcf7db7552a4527",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_d758a3c24f1b757e1d95",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/james_madison_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "james_madison_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "james_madison_university",
+    "name": "James Madison University",
+    "city": "HARRISONBURG",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_0309",
+    "evt_2026_0938",
+    "evt_2026_1389",
+    "evt_2026_1516",
+    "evt_2026_2820",
+    "evt_2026_3006",
+    "evt_2026_3331"
+  ],
+  "bounded_claims": [
+    {
+      "text": "James Madison University: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0309",
+        "evt_2026_0938",
+        "evt_2026_1389",
+        "evt_2026_1516",
+        "evt_2026_2820",
+        "evt_2026_3006",
+        "evt_2026_3331"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0309",
+        "record_hash": "sha256:52dad4d3b24f52be3ea872d72db74f04c7ccc6c607da3949298317c444d79f6e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ6601",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0938",
+        "record_hash": "sha256:d2eb8022611c15c29f88074cc5545484d30466ce9929dc77b9b292aad2d6852b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6601",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1389",
+        "record_hash": "sha256:9195e422d566eff140069bd503a6b2eaf0aa533f3e4a8af17ec7e879e6c20e7a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IC6601",
+        "column": "SIM_A_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1516",
+        "record_hash": "sha256:140890533c505e64ff4e69660e5556c84445be5ec0a70e238e66e09ebd71eff9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT6601",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2820",
+        "record_hash": "sha256:c84e7938870ac0b636d319e78a90d158d9768a864d348354634d589a78d00691",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6601",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_3006",
+        "record_hash": "sha256:da4ff5c0797ab03955f4dd7a7016c3d4dc9f9bbeaa14ed5adc840d90c2a03c37",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ6601",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3331",
+        "record_hash": "sha256:679c13ef6b532f018d7eef8cf6419ee6bc36a285a910b865cd10e733ada9db0e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6601",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=james_madison_university&signal_id=sig_aee1805ca9d5e069fa91",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_aee1805ca9d5e069fa91/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: James Madison University. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_aee1805ca9d5e069fa91/",
+    "proactive_reply": "Relevant certified public-data context for James Madison University: https://campusevidencelab.org/signals/sig_aee1805ca9d5e069fa91/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

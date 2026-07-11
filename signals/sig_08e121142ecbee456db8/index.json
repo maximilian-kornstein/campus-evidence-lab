@@ -1,0 +1,221 @@
+{
+  "id": "sig_08e121142ecbee456db8",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_6bd18d1d47c71455517d",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_cf23d7e967293aea426b",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/george_mason_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "george_mason_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 12 certified ED cells, the documented category totals are Harassment or threat (16), Vandalism (2)."
+  },
+  "institution": {
+    "id": "george_mason_university",
+    "name": "George Mason University",
+    "city": "Fairfax",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_0718",
+    "evt_2026_1447",
+    "evt_2026_1662",
+    "evt_2026_1862",
+    "evt_2026_1914",
+    "evt_2026_1951",
+    "evt_2026_1972",
+    "evt_2026_1992",
+    "evt_2026_2001",
+    "evt_2026_2964",
+    "evt_2026_3309",
+    "evt_2026_3530"
+  ],
+  "bounded_claims": [
+    {
+      "text": "George Mason University: Across 12 certified ED cells, the documented category totals are Harassment or threat (16), Vandalism (2).",
+      "supporting_record_ids": [
+        "evt_2026_0718",
+        "evt_2026_1447",
+        "evt_2026_1662",
+        "evt_2026_1862",
+        "evt_2026_1914",
+        "evt_2026_1951",
+        "evt_2026_1972",
+        "evt_2026_1992",
+        "evt_2026_2001",
+        "evt_2026_2964",
+        "evt_2026_3309",
+        "evt_2026_3530"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 18,
+    "certified_cell_count": 12,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0718",
+        "record_hash": "sha256:8bc8215b8869903d06809539ce9d2b365af7f11cf4ed45d7bbf8b42230dc4d59",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL6583",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_1447",
+        "record_hash": "sha256:2832faddbc7f228d905fafebd4436043d1ad32b61cd22410bfcbbefd51432d92",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT6583",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1662",
+        "record_hash": "sha256:740230f6e471b162c723619f8dce463a6ce146346ec4f4daef8ebc36bbcbce90",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK6583",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1862",
+        "record_hash": "sha256:ea5eebd1f49e51c56b7f0c15570eb697adeaf0d7e019074f5cf95b805944c29d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU6583",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1914",
+        "record_hash": "sha256:b1ded6a7b4d9597c3a07fc7c767ee13f81886a4b3f01b1cdf73ff02aeee31f18",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6583",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1951",
+        "record_hash": "sha256:77c248115eab143dcde3981d91dbaa82c353f73990cd818da90bbffacbc11597",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP6583",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1972",
+        "record_hash": "sha256:0349482264fd5d9c9593b07a7508349b01230fb4123d3e7121757d1828506110",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT6583",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1992",
+        "record_hash": "sha256:dfdf0d3653ea0dffcee5233a48ca4a5cfc2b53dc9340109e34d3de581d77c013",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS6583",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2001",
+        "record_hash": "sha256:0a5afa540b93c8359e28f12f0d3a2bc60b67e250cf69fbcae1faf62e3f4e2d7d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6583",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2964",
+        "record_hash": "sha256:c5e06374601d081b28c6e188dee9e64095e736778112ef5608fbb3a75c324519",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK6583",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3309",
+        "record_hash": "sha256:158448baa2c718fdd6416263fad2ce3aa3c5c941ea8fb158b1ce274077cb7ded",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL6583",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3530",
+        "record_hash": "sha256:0f7ed4faaacb4814cad1d7f74a15d3ff21fb480cadc3339f66821722f5bd3845",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU6583",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=george_mason_university&signal_id=sig_08e121142ecbee456db8",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_08e121142ecbee456db8/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: George Mason University. Across 12 certified ED cells, the documented category totals are Harassment or threat (16), Vandalism (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_08e121142ecbee456db8/",
+    "proactive_reply": "Relevant certified public-data context for George Mason University: https://campusevidencelab.org/signals/sig_08e121142ecbee456db8/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

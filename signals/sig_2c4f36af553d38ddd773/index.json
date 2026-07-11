@@ -1,0 +1,137 @@
+{
+  "id": "sig_2c4f36af553d38ddd773",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_1280fed0cdef569beddd",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_48c664c7d3d1cf860224",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/simmons_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "simmons_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Harassment or threat (4), Vandalism (1)."
+  },
+  "institution": {
+    "id": "simmons_university",
+    "name": "Simmons University",
+    "city": "BOSTON",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0456",
+    "evt_2026_0876",
+    "evt_2026_1633",
+    "evt_2026_1815",
+    "evt_2026_3298"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Simmons University: Across 5 certified ED cells, the documented category totals are Harassment or threat (4), Vandalism (1).",
+      "supporting_record_ids": [
+        "evt_2026_0456",
+        "evt_2026_0876",
+        "evt_2026_1633",
+        "evt_2026_1815",
+        "evt_2026_3298"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0456",
+        "record_hash": "sha256:541aaae35877c9235632bd7cff8531dcb8c1402e0c6ddce5a451ebd57e7158e7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ3057",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0876",
+        "record_hash": "sha256:a31bc3155244430acfddb3897f45e08010b716c4f056c884af119851773b8bd9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3057",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1633",
+        "record_hash": "sha256:767d85609ba940ee5e4ef886ea965586c26a7d65273ea70600aa0992cfbdcc51",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU3057",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1815",
+        "record_hash": "sha256:366a5caee1042ee82fc5e1a5ce2bfbacddb5dd45686e3de15cf8b8eca47c16ee",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP3057",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3298",
+        "record_hash": "sha256:2be55b4a94163ac070d7af06583f3b21d972a2828c1aa790c32329697a76d076",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP3057",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=simmons_university&signal_id=sig_2c4f36af553d38ddd773",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_2c4f36af553d38ddd773/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Simmons University. Across 5 certified ED cells, the documented category totals are Harassment or threat (4), Vandalism (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_2c4f36af553d38ddd773/",
+    "proactive_reply": "Relevant certified public-data context for Simmons University: https://campusevidencelab.org/signals/sig_2c4f36af553d38ddd773/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

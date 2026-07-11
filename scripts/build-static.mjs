@@ -15,6 +15,7 @@ const publicPaths = [
   "events",
   "schools",
   "briefs",
+  "signals",
   "sources",
   "quality",
   "methodology",

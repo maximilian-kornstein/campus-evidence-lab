@@ -1,0 +1,125 @@
+{
+  "id": "sig_83b3c48cb9fbe4384306",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_7e98c403be8b9d179658",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_2978f0fb2fc018915550",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/burrell_college_of_osteopathic_medicine/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "burrell_college_of_osteopathic_medicine"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2)."
+  },
+  "institution": {
+    "id": "burrell_college_of_osteopathic_medicine",
+    "name": "Burrell College of Osteopathic Medicine",
+    "city": "Las Cruces",
+    "state": "NM"
+  },
+  "record_ids": [
+    "evt_2026_0110",
+    "evt_2026_0752",
+    "evt_2026_2922",
+    "evt_2026_2994"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Burrell College of Osteopathic Medicine: Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0110",
+        "evt_2026_0752",
+        "evt_2026_2922",
+        "evt_2026_2994"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0110",
+        "record_hash": "sha256:637f80ce4957492a4aa3df5cb970406df9ddecc8e44a9779cd965f4dcee78ba0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MY9642",
+        "column": "SIM_A_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0752",
+        "record_hash": "sha256:b9fb130345f0f3b2a052f590943171ae992d82a8c99db23e446b835f4a4ec582",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED9642",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2922",
+        "record_hash": "sha256:cf59a42b3473f1141edff8e8a221514c32c4dfa17ed0c42e00ae5b19cebfad1c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MY9642",
+        "column": "SIM_A_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2994",
+        "record_hash": "sha256:848fc1bbc458ebeb7076ebfdd23e2131148b94de668e377076e80aed032a644d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED9642",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=burrell_college_of_osteopathic_medicine&signal_id=sig_83b3c48cb9fbe4384306",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_83b3c48cb9fbe4384306/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Burrell College of Osteopathic Medicine. Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_83b3c48cb9fbe4384306/",
+    "proactive_reply": "Relevant certified public-data context for Burrell College of Osteopathic Medicine: https://campusevidencelab.org/signals/sig_83b3c48cb9fbe4384306/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

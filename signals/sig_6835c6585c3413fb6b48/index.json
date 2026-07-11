@@ -1,0 +1,185 @@
+{
+  "id": "sig_6835c6585c3413fb6b48",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_07786d487dc185d1f12e",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_fb2ed8db15fc8fd02b24",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_california_santa_cruz/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_california_santa_cruz"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the reported geography totals are on-campus (11), residence-hall (1)."
+  },
+  "institution": {
+    "id": "university_of_california_santa_cruz",
+    "name": "University of California-Santa Cruz",
+    "city": "SANTA CRUZ",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0519",
+    "evt_2026_1864",
+    "evt_2026_2190",
+    "evt_2026_2291",
+    "evt_2026_2391",
+    "evt_2026_2425",
+    "evt_2026_3455",
+    "evt_2026_3464",
+    "evt_2026_3683"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of California-Santa Cruz: Across 9 certified ED cells, the reported geography totals are on-campus (11), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0519",
+        "evt_2026_1864",
+        "evt_2026_2190",
+        "evt_2026_2291",
+        "evt_2026_2391",
+        "evt_2026_2425",
+        "evt_2026_3455",
+        "evt_2026_3464",
+        "evt_2026_3683"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0519",
+        "record_hash": "sha256:a51c9b9591efa0459a19f7a8fe8756ecf6b11f5bea9d86fd17d76aa3573b95f5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU484",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1864",
+        "record_hash": "sha256:65f56bc4681e0c4d3b6ec7cc187ebbc3a7fb2b1efac402cea588aae8a0444095",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI484",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2190",
+        "record_hash": "sha256:3e83e7f9bf6ef233ac071e9a44e41d8d7b7b16c796c8cd159f00bf213666d6c0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA484",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2291",
+        "record_hash": "sha256:de4a26c41d116875619a6eb5f451e0b71d0f124380124c499fc6e6442dba645f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT484",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2391",
+        "record_hash": "sha256:e662c9efc5e8a2fac5ab8d5f5fc95598969333d0fb55f2821d17b7d83a395cf5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX484",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2425",
+        "record_hash": "sha256:b701932b54ca7ccdd8865fda7a979614b77b05bbc15b67d21c2a4e6e638c3cca",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB484",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_3455",
+        "record_hash": "sha256:448189a8a453e345897dfd9f15f0db99a33bc6747273d63ed9fd94ea818b2d23",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EI484",
+        "column": "VANDAL_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3464",
+        "record_hash": "sha256:c63fb3bb2714827c9e111c67d93992510c8059e5915acb5ed97555f4baf8f07c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED484",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3683",
+        "record_hash": "sha256:d36a7b2eee6b96d90fb8dbf73edcece2f70fe40e874bf1946fbdcf66e767caae",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED484",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_california_santa_cruz&signal_id=sig_6835c6585c3413fb6b48",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6835c6585c3413fb6b48/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of California-Santa Cruz. Across 9 certified ED cells, the reported geography totals are on-campus (11), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6835c6585c3413fb6b48/",
+    "proactive_reply": "Relevant certified public-data context for University of California-Santa Cruz: https://campusevidencelab.org/signals/sig_6835c6585c3413fb6b48/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sig_9228ea71c78f9bc52e8b",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_162377a30a281ff93660",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_a2693b1af141243bd97d",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/gonzaga_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "gonzaga_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), Race (2)."
+  },
+  "institution": {
+    "id": "gonzaga_university",
+    "name": "Gonzaga University",
+    "city": "SPOKANE",
+    "state": "WA"
+  },
+  "record_ids": [
+    "evt_2026_0447",
+    "evt_2026_1100",
+    "evt_2026_3047",
+    "evt_2026_3211"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Gonzaga University: Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), Race (2).",
+      "supporting_record_ids": [
+        "evt_2026_0447",
+        "evt_2026_1100",
+        "evt_2026_3047",
+        "evt_2026_3211"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0447",
+        "record_hash": "sha256:a0a728b1231855c4e0b52dec558911efa4df60c946decd67daa307a327369d3c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT6792",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1100",
+        "record_hash": "sha256:eb0365ad34e4d2b7c7471dfe03871499fac539bb3d77d064d6592aaaeea8148b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF6792",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3047",
+        "record_hash": "sha256:20dc8176ac3b88d01d394fb3c8929e0cbeda43593b76a7abd240eb9c444e91a1",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT6792",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3211",
+        "record_hash": "sha256:4f3ec85ccdc0c635203ca0930f20b08646c6c9c117fccfa3eb3daa486ff6173c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF6792",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=gonzaga_university&signal_id=sig_9228ea71c78f9bc52e8b",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_9228ea71c78f9bc52e8b/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Gonzaga University. Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), Race (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_9228ea71c78f9bc52e8b/",
+    "proactive_reply": "Relevant certified public-data context for Gonzaga University: https://campusevidencelab.org/signals/sig_9228ea71c78f9bc52e8b/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -174,3 +174,19 @@ CREATE INDEX IF NOT EXISTS idx_duplicate_flags_target ON duplicate_flags(target_
 CREATE INDEX IF NOT EXISTS idx_duplicate_flags_contact ON duplicate_flags(contact_id);
 CREATE INDEX IF NOT EXISTS idx_duplicate_flags_org ON duplicate_flags(organization_id);
 CREATE INDEX IF NOT EXISTS idx_duplicate_flags_type ON duplicate_flags(flag_type);
+
+CREATE TABLE IF NOT EXISTS signals_partner_events (
+  id TEXT PRIMARY KEY,
+  campaign_target_id TEXT NOT NULL DEFAULT '',
+  organization_id TEXT NOT NULL DEFAULT '',
+  event_type TEXT NOT NULL CHECK (event_type IN ('invited','followed_up','subscribed','embedded','webhook_enabled','declined','opted_out','cancelled')),
+  feed_key TEXT NOT NULL DEFAULT '',
+  external_url TEXT NOT NULL DEFAULT '',
+  occurred_at TEXT NOT NULL,
+  notes TEXT NOT NULL DEFAULT '',
+  FOREIGN KEY (campaign_target_id) REFERENCES campaign_targets(id),
+  FOREIGN KEY (organization_id) REFERENCES organizations(id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_signals_partner_target ON signals_partner_events(campaign_target_id);
+CREATE INDEX IF NOT EXISTS idx_signals_partner_org ON signals_partner_events(organization_id);

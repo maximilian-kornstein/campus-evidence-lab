@@ -1,0 +1,173 @@
+{
+  "id": "sig_1bfe84117d39a1b73692",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_6ff623a78974fe7a7e85",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_be0d797c5187a0ce0ffd",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_wisconsin_eau_claire/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_wisconsin_eau_claire"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the source-supported affected-community totals are LGBTQ+ (6), Ethnicity (2)."
+  },
+  "institution": {
+    "id": "university_of_wisconsin_eau_claire",
+    "name": "University of Wisconsin-Eau Claire",
+    "city": "Eau Claire",
+    "state": "WI"
+  },
+  "record_ids": [
+    "evt_2026_0402",
+    "evt_2026_0813",
+    "evt_2026_1246",
+    "evt_2026_1365",
+    "evt_2026_2797",
+    "evt_2026_3212",
+    "evt_2026_3334",
+    "evt_2026_3533"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Wisconsin-Eau Claire: Across 8 certified ED cells, the source-supported affected-community totals are LGBTQ+ (6), Ethnicity (2).",
+      "supporting_record_ids": [
+        "evt_2026_0402",
+        "evt_2026_0813",
+        "evt_2026_1246",
+        "evt_2026_1365",
+        "evt_2026_2797",
+        "evt_2026_3212",
+        "evt_2026_3334",
+        "evt_2026_3533"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0402",
+        "record_hash": "sha256:0031e3196f6d7bcda1fb8320a4181c14aea6db6beae0c0dd807004730b4566da",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND7056",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0813",
+        "record_hash": "sha256:db5452273c3751c42e73c7e280e5a12be8d7323ed4906330e3d96c58bed2c77a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ7056",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1246",
+        "record_hash": "sha256:bc4183d82ecfaa35c6af5a6a8e678a7ece42be7135c16a5e541d1730ba9d5d6f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV7056",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1365",
+        "record_hash": "sha256:442ba41304a1ab138a844803a096a421976c30198a39ef5f54b5e64e5c850a9f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU7056",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2797",
+        "record_hash": "sha256:a2ef2da8f11b34b15275f93d4bd7c885642e7ced5fb4c1920f7535ffadc4a45f",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV7056",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3212",
+        "record_hash": "sha256:d08818496776e883c3522f835266c8b926de41d9702ba266b98f7f08bddac6a6",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND7056",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3334",
+        "record_hash": "sha256:3c7af5923c8611644f09615f52f1ffb25c667d7193c5e91ed42a38bbc8659eda",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ7056",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3533",
+        "record_hash": "sha256:47b2b22d54ccd3d49c9d96e07b3554c06c4d483157c857d2fcb10f5f75956e60",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV7056",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_wisconsin_eau_claire&signal_id=sig_1bfe84117d39a1b73692",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_1bfe84117d39a1b73692/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Wisconsin-Eau Claire. Across 8 certified ED cells, the source-supported affected-community totals are LGBTQ+ (6), Ethnicity (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_1bfe84117d39a1b73692/",
+    "proactive_reply": "Relevant certified public-data context for University of Wisconsin-Eau Claire: https://campusevidencelab.org/signals/sig_1bfe84117d39a1b73692/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

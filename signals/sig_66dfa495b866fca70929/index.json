@@ -1,0 +1,241 @@
+{
+  "id": "sig_66dfa495b866fca70929",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_3668a431738f5a8e182f",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8f2a821908a4f9831b04",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_northern_iowa/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_northern_iowa"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 13 certified ED cells, the source-supported affected-community totals are LGBTQ+ (9), Religion (4), Race (2)."
+  },
+  "institution": {
+    "id": "university_of_northern_iowa",
+    "name": "University of Northern Iowa",
+    "city": "CEDAR FALLS",
+    "state": "IA"
+  },
+  "record_ids": [
+    "evt_2026_0120",
+    "evt_2026_0735",
+    "evt_2026_0992",
+    "evt_2026_1148",
+    "evt_2026_1253",
+    "evt_2026_1316",
+    "evt_2026_2476",
+    "evt_2026_2980",
+    "evt_2026_3218",
+    "evt_2026_3317",
+    "evt_2026_3379",
+    "evt_2026_3417",
+    "evt_2026_3883"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Northern Iowa: Across 13 certified ED cells, the source-supported affected-community totals are LGBTQ+ (9), Religion (4), Race (2).",
+      "supporting_record_ids": [
+        "evt_2026_0120",
+        "evt_2026_0735",
+        "evt_2026_0992",
+        "evt_2026_1148",
+        "evt_2026_1253",
+        "evt_2026_1316",
+        "evt_2026_2476",
+        "evt_2026_2980",
+        "evt_2026_3218",
+        "evt_2026_3317",
+        "evt_2026_3379",
+        "evt_2026_3417",
+        "evt_2026_3883"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 15,
+    "certified_cell_count": 13,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0120",
+        "record_hash": "sha256:4e9a949e4922c84e1fa38be5aeddf168e5aa9f079fa340a6bb2c433116e95e01",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC2303",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0735",
+        "record_hash": "sha256:c73362d37119b871851176c23025eb18d0087229fe10f42f046d204f7ca1a8d2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2303",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0992",
+        "record_hash": "sha256:7f384fadfc52f2ec4e6a73d2b8c0abb660cc95e413034afbd2c83c109ed641fd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX2303",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1148",
+        "record_hash": "sha256:e1cfc7cf9e1e8509925030c60ce7bc0465c379660656200d9794b28ee85c8162",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV2303",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1253",
+        "record_hash": "sha256:4073bc1880949d972a3c609285d0df560380b3d1a40cdac733858dbe079695ea",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ2303",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1316",
+        "record_hash": "sha256:5d55ffea9dc9080ec82fd2ca81b84094a935c4d46caf9da312f07c9147a1e660",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DN2303",
+        "column": "LAR_T_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2476",
+        "record_hash": "sha256:365509bb26ac37fad856dfadd374ef009c808968f78b245c309499f55687fb76",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY2303",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2980",
+        "record_hash": "sha256:3602a72b84058877ce212524604e539f55df627d50161680d5b7687bed48f45b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC2303",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3218",
+        "record_hash": "sha256:69ae1f1fc3c455525d8d5b2c0200201b02de39cc62f22025c5203f3af9369b30",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX2303",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3317",
+        "record_hash": "sha256:c391bc5e34df47f3b314e5084ed7eed7cb0d073483cd94035f885c431b5416b4",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV2303",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3379",
+        "record_hash": "sha256:00e7bc3dc41feec8ca649987e79dcf9b41efa530b66f6e57c52759bae7f379ca",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ2303",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3417",
+        "record_hash": "sha256:bb6beeda324b9637959298bac122921d13ba1790f5148a44fcba71b85d027bcc",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DN2303",
+        "column": "LAR_T_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3883",
+        "record_hash": "sha256:c528829130b480e2cdf137fb0b0f2885f6fad2dc94cb8f507b2b30ef1f6eafa8",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB2310",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_northern_iowa&signal_id=sig_66dfa495b866fca70929",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_66dfa495b866fca70929/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Northern Iowa. Across 13 certified ED cells, the source-supported affected-community totals are LGBTQ+ (9), Religion (4), Race (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_66dfa495b866fca70929/",
+    "proactive_reply": "Relevant certified public-data context for University of Northern Iowa: https://campusevidencelab.org/signals/sig_66dfa495b866fca70929/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

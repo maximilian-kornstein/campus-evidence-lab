@@ -1,0 +1,125 @@
+{
+  "id": "sig_e88348d2779e4c9c807d",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_ad1c8613edc5b6b220df",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_991a3561aed7edcb3ca9",
+    "title": "2022 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/marywood_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "marywood_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2022."
+  },
+  "institution": {
+    "id": "marywood_university",
+    "name": "Marywood University",
+    "city": "SCRANTON",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_2071",
+    "evt_2026_2138",
+    "evt_2026_3662",
+    "evt_2026_3709"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Marywood University: Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2022.",
+      "supporting_record_ids": [
+        "evt_2026_2071",
+        "evt_2026_2138",
+        "evt_2026_3662",
+        "evt_2026_3709"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2071",
+        "record_hash": "sha256:f0681ff86049811b11abe66d19ce013c086568695af4fe28c6f52c525a9b58bc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DX5444",
+        "column": "INTIM_DIS22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2138",
+        "record_hash": "sha256:43e5c7da7e45645e03b02767f3ca5c5e91e0b5ed667b3c0f132651ceb5491e2c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EG5444",
+        "column": "VANDAL_DIS22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3662",
+        "record_hash": "sha256:474d327a1ad4b87280665fed4ab16aa3a6ad03cc56c78e2c99c2468b821aa5c0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DX5444",
+        "column": "INTIM_DIS22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3709",
+        "record_hash": "sha256:3d5191f7e4b197ac684ead4257a336913213ef6ef094c9eda2ee91f35899ee8d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EG5444",
+        "column": "VANDAL_DIS22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=marywood_university&signal_id=sig_e88348d2779e4c9c807d",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e88348d2779e4c9c807d/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Marywood University. Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2022. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e88348d2779e4c9c807d/",
+    "proactive_reply": "Relevant certified public-data context for Marywood University: https://campusevidencelab.org/signals/sig_e88348d2779e4c9c807d/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

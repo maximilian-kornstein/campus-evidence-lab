@@ -1,0 +1,125 @@
+{
+  "id": "sig_3036eca1c74b3cf50859",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_a29c682b1b749c21627a",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_85a6669913fda8ecb7ef",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/manhattanville_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "manhattanville_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2)."
+  },
+  "institution": {
+    "id": "manhattanville_university",
+    "name": "Manhattanville University",
+    "city": "PURCHASE",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_2318",
+    "evt_2026_2352",
+    "evt_2026_3405",
+    "evt_2026_3642"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Manhattanville University: Across 4 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2).",
+      "supporting_record_ids": [
+        "evt_2026_2318",
+        "evt_2026_2352",
+        "evt_2026_3405",
+        "evt_2026_3642"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2318",
+        "record_hash": "sha256:f024d9a41d37698371bdbfe011e6d97fa23f393b66c4101d7141c22f64e9493b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4286",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2352",
+        "record_hash": "sha256:cf2ccf0f73c5346ab7c98e8062837d75a3a532edfbc76d4168d059ca14181e4a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU4286",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3405",
+        "record_hash": "sha256:2e23545f110438d17a1cab7993de90f4e4397c82da571cdcca86b4567f0434bf",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4286",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3642",
+        "record_hash": "sha256:e9678a3b2fda738b26f3990020674c36d5ca756428e623b0ec53c9b082a1b386",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU4286",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=manhattanville_university&signal_id=sig_3036eca1c74b3cf50859",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3036eca1c74b3cf50859/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Manhattanville University. Across 4 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3036eca1c74b3cf50859/",
+    "proactive_reply": "Relevant certified public-data context for Manhattanville University: https://campusevidencelab.org/signals/sig_3036eca1c74b3cf50859/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

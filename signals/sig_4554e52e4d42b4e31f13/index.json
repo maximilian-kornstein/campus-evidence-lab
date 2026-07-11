@@ -1,0 +1,145 @@
+{
+  "id": "sig_4554e52e4d42b4e31f13",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_91f320fabbdfb54f1b89",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_07380204daad997eeba7",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/keuka_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "keuka_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (2)."
+  },
+  "institution": {
+    "id": "keuka_college",
+    "name": "Keuka College",
+    "city": "Keuka Park",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1988",
+    "evt_2026_2176",
+    "evt_2026_3282",
+    "evt_2026_3718",
+    "evt_2026_3773"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Keuka College: Across 5 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (2).",
+      "supporting_record_ids": [
+        "evt_2026_1988",
+        "evt_2026_2176",
+        "evt_2026_3282",
+        "evt_2026_3718",
+        "evt_2026_3773"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1988",
+        "record_hash": "sha256:0f1881cefc2baf3412f1555e8f20f42fdf0e32ed0a0c9fbef83a462bc21f035a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4270",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2176",
+        "record_hash": "sha256:8ce7f7a0e16b710122fcea24ce933aeae3f100f94924d94c64fa12823cdc4152",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4270",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3282",
+        "record_hash": "sha256:7fb5554c333952f8956414d2e8cbab65d568f020f8b89efbe4082ce5925ad6e0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4270",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3718",
+        "record_hash": "sha256:e08ebfa6a4b8f54fd4dd63c60fddab76b0409a6602a90bfa4fb0f957c6b85080",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4270",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3773",
+        "record_hash": "sha256:21c98f003fd986cd9d00224818a157dde28e26f2b9166a5ac04c80f4d0b7f6f8",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4386",
+        "column": "VANDAL_SEX21",
+        "year": "2021",
+        "value": 3
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=keuka_college&signal_id=sig_4554e52e4d42b4e31f13",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4554e52e4d42b4e31f13/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Keuka College. Across 5 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_4554e52e4d42b4e31f13/",
+    "proactive_reply": "Relevant certified public-data context for Keuka College: https://campusevidencelab.org/signals/sig_4554e52e4d42b4e31f13/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

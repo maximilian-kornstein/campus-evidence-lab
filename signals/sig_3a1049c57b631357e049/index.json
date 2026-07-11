@@ -1,0 +1,125 @@
+{
+  "id": "sig_3a1049c57b631357e049",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_0e8241e6e3f0b1f40a3c",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ef1dffd02f4f602d25ad",
+    "title": "2022 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/california_state_university_stanislaus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "california_state_university_stanislaus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 6 reported statistics across 4 distinct cells for 2022."
+  },
+  "institution": {
+    "id": "california_state_university_stanislaus",
+    "name": "California State University-Stanislaus",
+    "city": "Turlock",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_2309",
+    "evt_2026_2359",
+    "evt_2026_2399",
+    "evt_2026_3659"
+  ],
+  "bounded_claims": [
+    {
+      "text": "California State University-Stanislaus: Certified ED workbook cells document 6 reported statistics across 4 distinct cells for 2022.",
+      "supporting_record_ids": [
+        "evt_2026_2309",
+        "evt_2026_2359",
+        "evt_2026_2399",
+        "evt_2026_3659"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2309",
+        "record_hash": "sha256:4bee49f8cb539bd9c5d3813d8ac076cec367359c8a29bff33fb5ec1e5a08a41f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS447",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2359",
+        "record_hash": "sha256:70ccb0c62568ba79ec18d4b42875b1a558e3d1325e979ad95234083ebbbb39f7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU447",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2399",
+        "record_hash": "sha256:7fbc7a0ac6217af7ac369999f1f432d46f3d5c939058442223a81f6c89df37e1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC447",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3659",
+        "record_hash": "sha256:2b17d520ee9b37fec12e47bf86e01c6838cfe697171ccf7662e2beaf819f9fd5",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS447",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=california_state_university_stanislaus&signal_id=sig_3a1049c57b631357e049",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3a1049c57b631357e049/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: California State University-Stanislaus. Certified ED workbook cells document 6 reported statistics across 4 distinct cells for 2022. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3a1049c57b631357e049/",
+    "proactive_reply": "Relevant certified public-data context for California State University-Stanislaus: https://campusevidencelab.org/signals/sig_3a1049c57b631357e049/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

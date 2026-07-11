@@ -1,0 +1,193 @@
+{
+  "id": "sig_30fd2b0a8d9e948c44da",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_4af555e50ce76b6d3199",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_fbecda679ffdc867d57b",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/louisiana_state_university_and_agricultural_and_mechanical_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "louisiana_state_university_and_agricultural_and_mechanical_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the documented category totals are Harassment or threat (13), Vandalism (2)."
+  },
+  "institution": {
+    "id": "louisiana_state_university_and_agricultural_and_mechanical_college",
+    "name": "Louisiana State University and Agricultural & Mechanical College",
+    "city": "BATON ROUGE",
+    "state": "LA"
+  },
+  "record_ids": [
+    "evt_2026_0142",
+    "evt_2026_0693",
+    "evt_2026_0832",
+    "evt_2026_0997",
+    "evt_2026_1077",
+    "evt_2026_1153",
+    "evt_2026_2480",
+    "evt_2026_2544",
+    "evt_2026_3849"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Louisiana State University and Agricultural & Mechanical College: Across 9 certified ED cells, the documented category totals are Harassment or threat (13), Vandalism (2).",
+      "supporting_record_ids": [
+        "evt_2026_0142",
+        "evt_2026_0693",
+        "evt_2026_0832",
+        "evt_2026_0997",
+        "evt_2026_1077",
+        "evt_2026_1153",
+        "evt_2026_2480",
+        "evt_2026_2544",
+        "evt_2026_3849"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 15,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0142",
+        "record_hash": "sha256:eac548949d69f94ff307d125daa5f74f4ab1e0ee56aa6d99fed079ce2f17e407",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2679",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0693",
+        "record_hash": "sha256:f4685c05ac208b0bff43ef44e967938b0b58180e8ee74a2e880caf87083d5f52",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS2679",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0832",
+        "record_hash": "sha256:61124268d44e76fc39aebac3dffeaf7e012ef77ac8717a81cdbc99f7a92c6ac8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MU2679",
+        "column": "SIM_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0997",
+        "record_hash": "sha256:2cfc490e29e10aa70984fd2249a734cb26437ece756dd143854c31c30b1c1977",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT2679",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1077",
+        "record_hash": "sha256:3b6935815ac11a810c54fbbb9054acaf72c0228ac8de2ce55c26ba36ae94917c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2679",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_1153",
+        "record_hash": "sha256:d426bd1397864edb5a0bc58c4572af7f6da08f5d09f2bc89d592ef4f15683284",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS2679",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2480",
+        "record_hash": "sha256:540be687e43ee71acafa6bb17736185568bea9e70758efe4d1c2d3f02b0cc1d4",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GM2679",
+        "column": "AGG_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2544",
+        "record_hash": "sha256:2d995f84d8864958f930e6a40c0451ad884b518fc6a246e512beae3642583ccf",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2679",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3849",
+        "record_hash": "sha256:1f44f977be8e95b6e669c91d8d2091934e16a8498e1809b794d7b0840c97bfc8",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB2696",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=louisiana_state_university_and_agricultural_and_mechanical_college&signal_id=sig_30fd2b0a8d9e948c44da",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_30fd2b0a8d9e948c44da/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Louisiana State University and Agricultural & Mechanical College. Across 9 certified ED cells, the documented category totals are Harassment or threat (13), Vandalism (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_30fd2b0a8d9e948c44da/",
+    "proactive_reply": "Relevant certified public-data context for Louisiana State University and Agricultural & Mechanical College: https://campusevidencelab.org/signals/sig_30fd2b0a8d9e948c44da/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

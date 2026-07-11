@@ -1,0 +1,137 @@
+{
+  "id": "sig_37af48bb9933fb5670be",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_082d20390823281a4635",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ef60976fa785b20b6b1c",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/bennington_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "bennington_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Harassment or threat (5)."
+  },
+  "institution": {
+    "id": "bennington_college",
+    "name": "Bennington College",
+    "city": "Bennington",
+    "state": "VT"
+  },
+  "record_ids": [
+    "evt_2026_0400",
+    "evt_2026_1099",
+    "evt_2026_1277",
+    "evt_2026_2464",
+    "evt_2026_3119"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Bennington College: Across 5 certified ED cells, the documented category totals are Harassment or threat (5).",
+      "supporting_record_ids": [
+        "evt_2026_0400",
+        "evt_2026_1099",
+        "evt_2026_1277",
+        "evt_2026_2464",
+        "evt_2026_3119"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0400",
+        "record_hash": "sha256:405fca1d03a2fc7c20d8eba3d20defcb9db1cdae28774211a1f98abf6a838521",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS6528",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1099",
+        "record_hash": "sha256:6faf536a7eac2a1c9134e3db45a62bf370471cb2a05423f721b91ef9b31fb01d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP6528",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1277",
+        "record_hash": "sha256:2f064118c68fb9ea5cc399919284fb1fc4f1631c626c8bcf1d33b2e4e7e5b641",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW6528",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2464",
+        "record_hash": "sha256:7451cfdfe19d85e54ebb4e36ab8e38102f86441f71ec172a88c9ef7f0df8a003",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP6528",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3119",
+        "record_hash": "sha256:e9c42abd89ad50a28e84a77c0ae36bb04a8adfa1a5d83f5841fd73eb03a2a89a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS6528",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=bennington_college&signal_id=sig_37af48bb9933fb5670be",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_37af48bb9933fb5670be/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Bennington College. Across 5 certified ED cells, the documented category totals are Harassment or threat (5). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_37af48bb9933fb5670be/",
+    "proactive_reply": "Relevant certified public-data context for Bennington College: https://campusevidencelab.org/signals/sig_37af48bb9933fb5670be/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

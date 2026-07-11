@@ -1,0 +1,137 @@
+{
+  "id": "sig_076e13df7e386ecf616f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_b5fc1f3e7e979a891d39",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_bca75428723848b3dc89",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/missouri_state_university_springfield/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "missouri_state_university_springfield"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Vandalism (8), Harassment or threat (2)."
+  },
+  "institution": {
+    "id": "missouri_state_university_springfield",
+    "name": "Missouri State University-Springfield",
+    "city": "SPRINGFIELD",
+    "state": "MO"
+  },
+  "record_ids": [
+    "evt_2026_0088",
+    "evt_2026_1121",
+    "evt_2026_1351",
+    "evt_2026_2915",
+    "evt_2026_2989"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Missouri State University-Springfield: Across 5 certified ED cells, the documented category totals are Vandalism (8), Harassment or threat (2).",
+      "supporting_record_ids": [
+        "evt_2026_0088",
+        "evt_2026_1121",
+        "evt_2026_1351",
+        "evt_2026_2915",
+        "evt_2026_2989"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0088",
+        "record_hash": "sha256:066595fd58272c9f00221e4159ab1d2f674ba52abb197901488bd508795c4412",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3692",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_1121",
+        "record_hash": "sha256:6312cccd81f8e6256469a14b3c2e65a8b1907bfa89d205428085c53dcbd699ad",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3692",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1351",
+        "record_hash": "sha256:c447f8378239ea540d85c7be8396ccc0df830450bd84f33dc38224df083c8efa",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT3692",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2915",
+        "record_hash": "sha256:5ac8e1821491ce2ad1b67be5e91677ab1280d0587c2504fc442c2d86290f5746",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3692",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2989",
+        "record_hash": "sha256:03803943bf10666bc97eabe1776b9fdbcc178f789a402bd332a55d3f110a0be0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3692",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=missouri_state_university_springfield&signal_id=sig_076e13df7e386ecf616f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_076e13df7e386ecf616f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Missouri State University-Springfield. Across 5 certified ED cells, the documented category totals are Vandalism (8), Harassment or threat (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_076e13df7e386ecf616f/",
+    "proactive_reply": "Relevant certified public-data context for Missouri State University-Springfield: https://campusevidencelab.org/signals/sig_076e13df7e386ecf616f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

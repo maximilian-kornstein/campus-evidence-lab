@@ -1,0 +1,125 @@
+{
+  "id": "sig_f69b4ad38e036aa5243c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_4accb4efd8f3b65fbede",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6326c98cf1d0ae8a74f5",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/rutgers_university_camden/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "rutgers_university_camden"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 10 reported statistics across 4 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "rutgers_university_camden",
+    "name": "Rutgers University-Camden",
+    "city": "CAMDEN",
+    "state": "NJ"
+  },
+  "record_ids": [
+    "evt_2026_0203",
+    "evt_2026_0926",
+    "evt_2026_2921",
+    "evt_2026_3033"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Rutgers University-Camden: Certified ED workbook cells document 10 reported statistics across 4 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0203",
+        "evt_2026_0926",
+        "evt_2026_2921",
+        "evt_2026_3033"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0203",
+        "record_hash": "sha256:250856ee5b5a5ede16e50bbea5b1c89a2961ad1800105c9a4955134ccde11c5a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3998",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_0926",
+        "record_hash": "sha256:995ddde2e3789373abf1bfbe331586c8cc3c7ba2698e65af148c147e5a53941c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC3998",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2921",
+        "record_hash": "sha256:f2ff77ec7d08ca4f80cf2ed088b6989acdaf78cce74527889943f9a45f208d1a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3998",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_3033",
+        "record_hash": "sha256:8a76544b26d57d2d481a6aadf17ccbf002fb930d5b14a389845c43a5c728ea3a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC3998",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=rutgers_university_camden&signal_id=sig_f69b4ad38e036aa5243c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f69b4ad38e036aa5243c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Rutgers University-Camden. Certified ED workbook cells document 10 reported statistics across 4 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_f69b4ad38e036aa5243c/",
+    "proactive_reply": "Relevant certified public-data context for Rutgers University-Camden: https://campusevidencelab.org/signals/sig_f69b4ad38e036aa5243c/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sig_4d896599c1f2dd9277b5",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_4b91329e96bc53251026",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_fdcbc62238f04924e472",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/marist_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "marist_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Race (2), Religion (2)."
+  },
+  "institution": {
+    "id": "marist_university",
+    "name": "Marist University",
+    "city": "POUGHKEEPSIE",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1997",
+    "evt_2026_2316",
+    "evt_2026_3304",
+    "evt_2026_3684"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Marist University: Across 4 certified ED cells, the source-supported affected-community totals are Race (2), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_1997",
+        "evt_2026_2316",
+        "evt_2026_3304",
+        "evt_2026_3684"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1997",
+        "record_hash": "sha256:c574a6e493b28ec33c71b4470afb306c86a9e3e3b7fcc345d556f142949d1cad",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4289",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2316",
+        "record_hash": "sha256:84070a17a0841c12604020195390241d5847de7b4b3eafce51aef31766a7897e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4289",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3304",
+        "record_hash": "sha256:e45a0bbfad68873b6b2eded97d032b9d03a223ce789123ad09b68a6076a15e15",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4289",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3684",
+        "record_hash": "sha256:ad103c3e3814594eed4125e07a5e1f7ad07b6d420fab717b62d37d9dc7af2290",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4289",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=marist_university&signal_id=sig_4d896599c1f2dd9277b5",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4d896599c1f2dd9277b5/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Marist University. Across 4 certified ED cells, the source-supported affected-community totals are Race (2), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_4d896599c1f2dd9277b5/",
+    "proactive_reply": "Relevant certified public-data context for Marist University: https://campusevidencelab.org/signals/sig_4d896599c1f2dd9277b5/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

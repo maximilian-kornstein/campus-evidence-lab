@@ -1,0 +1,125 @@
+{
+  "id": "sig_1cb63afde4b666a94610",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_6d13614d682bedd9a66e",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_506fb4e1edde3f0b5d8e",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/presbyterian_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "presbyterian_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2)."
+  },
+  "institution": {
+    "id": "presbyterian_college",
+    "name": "Presbyterian College",
+    "city": "CLINTON",
+    "state": "SC"
+  },
+  "record_ids": [
+    "evt_2026_0257",
+    "evt_2026_0850",
+    "evt_2026_3040",
+    "evt_2026_3178"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Presbyterian College: Across 4 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2).",
+      "supporting_record_ids": [
+        "evt_2026_0257",
+        "evt_2026_0850",
+        "evt_2026_3040",
+        "evt_2026_3178"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0257",
+        "record_hash": "sha256:1d9514d52c137d02dcae13e4083f680134e4db9b040c941a9c7664d36e09e1f6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5712",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0850",
+        "record_hash": "sha256:3b61181dda9613485d94428ccca5427e141f52acb8b85c24d9ed887e39f2eddb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ5712",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3040",
+        "record_hash": "sha256:381ad58c9ce3830ceba96a4bded7d05fa1a9c98bd412da9a71cb456e8dd30d02",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5712",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3178",
+        "record_hash": "sha256:4a1bffc9dae81799ca214cbe36624fbb1872932f67c293d6cecbc02830df9648",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ5712",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=presbyterian_college&signal_id=sig_1cb63afde4b666a94610",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_1cb63afde4b666a94610/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Presbyterian College. Across 4 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_1cb63afde4b666a94610/",
+    "proactive_reply": "Relevant certified public-data context for Presbyterian College: https://campusevidencelab.org/signals/sig_1cb63afde4b666a94610/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

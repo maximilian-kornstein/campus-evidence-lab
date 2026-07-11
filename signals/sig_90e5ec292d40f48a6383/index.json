@@ -1,0 +1,257 @@
+{
+  "id": "sig_90e5ec292d40f48a6383",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c71e47848b7b43442b7c",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_abab54a9b49cfba331bf",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/suny_college_of_technology_at_delhi/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "suny_college_of_technology_at_delhi"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 15 certified ED cells, the reported geography totals are on-campus (15), residence-hall (11)."
+  },
+  "institution": {
+    "id": "suny_college_of_technology_at_delhi",
+    "name": "SUNY College of Technology at Delhi",
+    "city": "DELHI",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0252",
+    "evt_2026_0799",
+    "evt_2026_1722",
+    "evt_2026_2125",
+    "evt_2026_2233",
+    "evt_2026_2294",
+    "evt_2026_2336",
+    "evt_2026_2364",
+    "evt_2026_3035",
+    "evt_2026_3582",
+    "evt_2026_3669",
+    "evt_2026_3693",
+    "evt_2026_3708",
+    "evt_2026_3716",
+    "evt_2026_3720"
+  ],
+  "bounded_claims": [
+    {
+      "text": "SUNY College of Technology at Delhi: Across 15 certified ED cells, the reported geography totals are on-campus (15), residence-hall (11).",
+      "supporting_record_ids": [
+        "evt_2026_0252",
+        "evt_2026_0799",
+        "evt_2026_1722",
+        "evt_2026_2125",
+        "evt_2026_2233",
+        "evt_2026_2294",
+        "evt_2026_2336",
+        "evt_2026_2364",
+        "evt_2026_3035",
+        "evt_2026_3582",
+        "evt_2026_3669",
+        "evt_2026_3693",
+        "evt_2026_3708",
+        "evt_2026_3716",
+        "evt_2026_3720"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 26,
+    "certified_cell_count": 15,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0252",
+        "record_hash": "sha256:a61b7df6ffc387075178057726241120d2782d6ead569c6ce65b7580e37a1792",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4432",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_0799",
+        "record_hash": "sha256:f3e5f5e7b26cfc2326e2664af40827b46d976794b5a4bb5ac180de5caf7330c2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4432",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1722",
+        "record_hash": "sha256:bb6b800df550679954fc5dadde94914465749e8ea770d2ea3836831e9fa85316",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA4432",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2125",
+        "record_hash": "sha256:1c7129affcddbf229bec7414bcc5e951708f7e9f0764280b6673481e3c20a3eb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV4432",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2233",
+        "record_hash": "sha256:a16cd4124c4e104c5094f2581da90a48cc9118c2f58188b51f47dedaa74b1c48",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4432",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2294",
+        "record_hash": "sha256:faa5ae7aa5be561be16c23af3e6ccf05ece008fdb7c5d814269f841d298eec43",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4432",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2336",
+        "record_hash": "sha256:fe829605216b7e9143050bfd4cf68ae42fc58931ef1419a9562d5383d33e87ae",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4432",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2364",
+        "record_hash": "sha256:4df96ba0c192b0a31a27f2bd1757c8485bc2d49263638598d4fe00ff7741238c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4432",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_3035",
+        "record_hash": "sha256:f8226c789faa8b5a7af7d5561c5ec6da0dc62d7d6b78d5b8c60b995cfa3192b7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4432",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3582",
+        "record_hash": "sha256:a794191d0bddcf5f4eab45d9d4e45b8fac51b3cb6962ab1e8a94e3987ece594a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4432",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3669",
+        "record_hash": "sha256:94cb4f2cd21b08cb44d2c4ed5589925314a23e8ecaf90944e0bcdf25cc552f4c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV4432",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3693",
+        "record_hash": "sha256:9acbc421ca18fe1ef8432463338551b7c197c8151f4665f815207a89c245e6b6",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4432",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3708",
+        "record_hash": "sha256:ac8e6af07ed606b43d1c15280d0283137c1c3bb4f35daea2dc8a4e5105ab1809",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4432",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3716",
+        "record_hash": "sha256:634020a945b4dc0d1614175a82d9a12865af6fb9a7b1fa406c4df22e83441d37",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4432",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3720",
+        "record_hash": "sha256:5bd36af10a9caafc534bb6a7db36071908e37d9182f481a7d2542464e17a0ea7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4432",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 3
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=suny_college_of_technology_at_delhi&signal_id=sig_90e5ec292d40f48a6383",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_90e5ec292d40f48a6383/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: SUNY College of Technology at Delhi. Across 15 certified ED cells, the reported geography totals are on-campus (15), residence-hall (11). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_90e5ec292d40f48a6383/",
+    "proactive_reply": "Relevant certified public-data context for SUNY College of Technology at Delhi: https://campusevidencelab.org/signals/sig_90e5ec292d40f48a6383/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

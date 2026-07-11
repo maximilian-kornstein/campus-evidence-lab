@@ -1,0 +1,125 @@
+{
+  "id": "sig_a94f39d210dd90deb18a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_1363d32e4903c9f534c2",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_bba1936ce199c6d249e9",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/pomona_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "pomona_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), National origin (2)."
+  },
+  "institution": {
+    "id": "pomona_college",
+    "name": "Pomona College",
+    "city": "Claremont",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0863",
+    "evt_2026_2315",
+    "evt_2026_2974",
+    "evt_2026_3663"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Pomona College: Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), National origin (2).",
+      "supporting_record_ids": [
+        "evt_2026_0863",
+        "evt_2026_2315",
+        "evt_2026_2974",
+        "evt_2026_3663"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0863",
+        "record_hash": "sha256:9853a40f103733dba7ff4107d07bfd7f71ef1d7734eb30f49761fbc887582c61",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV794",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2315",
+        "record_hash": "sha256:34c2044fc5f80013c02099e879e516639a7585167c3bbf50e3daa1dad80f419c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EI794",
+        "column": "VANDAL_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2974",
+        "record_hash": "sha256:6e411f4f2d231908c429bf4a6dc68ed3e0417c8d7b533287862ab5784040f676",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV794",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3663",
+        "record_hash": "sha256:84e25f997c717cebf732f68de42a3cb85c4ebdd87660c8e8a795bd2e1a509c7b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EI794",
+        "column": "VANDAL_NAT22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=pomona_college&signal_id=sig_a94f39d210dd90deb18a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_a94f39d210dd90deb18a/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Pomona College. Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), National origin (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_a94f39d210dd90deb18a/",
+    "proactive_reply": "Relevant certified public-data context for Pomona College: https://campusevidencelab.org/signals/sig_a94f39d210dd90deb18a/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

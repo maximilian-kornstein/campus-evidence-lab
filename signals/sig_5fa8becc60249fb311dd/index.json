@@ -1,0 +1,161 @@
+{
+  "id": "sig_5fa8becc60249fb311dd",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_53b7176ee941c8646832",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e8822dfb1b2ccd35d63b",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/college_of_western_idaho/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "college_of_western_idaho"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "college_of_western_idaho",
+    "name": "College of Western Idaho",
+    "city": "Nampa",
+    "state": "ID"
+  },
+  "record_ids": [
+    "evt_2026_0104",
+    "evt_2026_0736",
+    "evt_2026_0827",
+    "evt_2026_0912",
+    "evt_2026_0993",
+    "evt_2026_1073",
+    "evt_2026_1149"
+  ],
+  "bounded_claims": [
+    {
+      "text": "College of Western Idaho: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0104",
+        "evt_2026_0736",
+        "evt_2026_0827",
+        "evt_2026_0912",
+        "evt_2026_0993",
+        "evt_2026_1073",
+        "evt_2026_1149"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0104",
+        "record_hash": "sha256:4285d339de3573d49ef1b294534af96816db2de289f155176a27f7113738d14b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM8733",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0736",
+        "record_hash": "sha256:04d25aefd4c4e7f3b54a3664991cd504a26593824a173724fcf94d4f570a1522",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ8733",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0827",
+        "record_hash": "sha256:e45b695374ad510cd6b4e40f110988e72e3038ea51b8cfcba6b0025fb0297d8c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT8732",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0912",
+        "record_hash": "sha256:489f02e0ad36a35e12269202f9974d6f54c7e8ab0e154c6455e5de300e105f47",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS8732",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0993",
+        "record_hash": "sha256:c8b9bada019274a4f3f0bd526faeb6a4121cef3392a6d6e049f2cbf95f176e7d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ8732",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1073",
+        "record_hash": "sha256:d334e9e9d7f1d84086ed2fe3fd6636ff36659413cd47030b66729f251676225c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ8734",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1149",
+        "record_hash": "sha256:d3a2fae06e8664eb406b76ea12b50ecdb3ad03060266fe980cc61ba993229118",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW8732",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=college_of_western_idaho&signal_id=sig_5fa8becc60249fb311dd",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5fa8becc60249fb311dd/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: College of Western Idaho. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_5fa8becc60249fb311dd/",
+    "proactive_reply": "Relevant certified public-data context for College of Western Idaho: https://campusevidencelab.org/signals/sig_5fa8becc60249fb311dd/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

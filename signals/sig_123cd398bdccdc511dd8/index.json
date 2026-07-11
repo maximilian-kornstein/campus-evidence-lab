@@ -1,0 +1,181 @@
+{
+  "id": "sig_123cd398bdccdc511dd8",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_8b688f0235816b21ae9d",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_cbbc96bb9d08770c26b6",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/arizona_state_university_campus_immersion/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "arizona_state_university_campus_immersion"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (4)."
+  },
+  "institution": {
+    "id": "arizona_state_university_campus_immersion",
+    "name": "Arizona State University Campus Immersion",
+    "city": "TEMPE",
+    "state": "AZ"
+  },
+  "record_ids": [
+    "evt_2026_0175",
+    "evt_2026_0773",
+    "evt_2026_0945",
+    "evt_2026_1104",
+    "evt_2026_1213",
+    "evt_2026_1280",
+    "evt_2026_2973",
+    "evt_2026_3745"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Arizona State University Campus Immersion: Across 8 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (4).",
+      "supporting_record_ids": [
+        "evt_2026_0175",
+        "evt_2026_0773",
+        "evt_2026_0945",
+        "evt_2026_1104",
+        "evt_2026_1213",
+        "evt_2026_1280",
+        "evt_2026_2973",
+        "evt_2026_3745"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0175",
+        "record_hash": "sha256:a28d577bbe3994d5db9e2c7aadaa91f51842dca718f639a8865f1da649a35d73",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK167",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0773",
+        "record_hash": "sha256:030320ee03f7953c9edce8e591230260a15271028e52fb42463b9a08c97cab5e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY167",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0945",
+        "record_hash": "sha256:8fbbec9e7333460db557a49daab9f1d252dd9d22518eaca707567d859d554bae",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV167",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1104",
+        "record_hash": "sha256:1fc8553a2b3084b9f2f5b016730ac1e8ff4c135177f773883f459872ab8a4de0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IA167",
+        "column": "SIM_A_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1213",
+        "record_hash": "sha256:58dee0b5034580792a9b79a7ce91e9deba2d8f59f2eceb60278dd4b99d247c8d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY167",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1280",
+        "record_hash": "sha256:945b9edd3280177f901c967413026b6af0928e5ec731437482aa2a5e4bafc612",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE167",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2973",
+        "record_hash": "sha256:b27200dcab3f3108673f4b074ad4213c5726acf79eb37c90cc05134399b1d6b3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY167",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3745",
+        "record_hash": "sha256:8a6f8d1d7710ab8be01e5f2abace80a0b2f33fab5466e54bb1b18ea25b16d394",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS168",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=arizona_state_university_campus_immersion&signal_id=sig_123cd398bdccdc511dd8",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_123cd398bdccdc511dd8/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Arizona State University Campus Immersion. Across 8 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_123cd398bdccdc511dd8/",
+    "proactive_reply": "Relevant certified public-data context for Arizona State University Campus Immersion: https://campusevidencelab.org/signals/sig_123cd398bdccdc511dd8/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

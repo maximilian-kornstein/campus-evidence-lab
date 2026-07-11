@@ -1,0 +1,185 @@
+{
+  "id": "sig_214b81e742ed1ff06906",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_3ea64f91f159ee3ab608",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_c68a45b7ccb70a293ff2",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/metropolitan_state_university_of_denver/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "metropolitan_state_university_of_denver"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), National origin (3), Religion (2)."
+  },
+  "institution": {
+    "id": "metropolitan_state_university_of_denver",
+    "name": "Metropolitan State University of Denver",
+    "city": "DENVER",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0269",
+    "evt_2026_0820",
+    "evt_2026_1282",
+    "evt_2026_1715",
+    "evt_2026_1800",
+    "evt_2026_1826",
+    "evt_2026_2505",
+    "evt_2026_2592",
+    "evt_2026_3155"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Metropolitan State University of Denver: Across 9 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), National origin (3), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_0269",
+        "evt_2026_0820",
+        "evt_2026_1282",
+        "evt_2026_1715",
+        "evt_2026_1800",
+        "evt_2026_1826",
+        "evt_2026_2505",
+        "evt_2026_2592",
+        "evt_2026_3155"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0269",
+        "record_hash": "sha256:348f440306a9882a52f1218acc1ac0c83f3175e7fe353056e28818322cf1d439",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR1008",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0820",
+        "record_hash": "sha256:560e518b3ea3095444a62e70cf044e697838fdecf9f838b624b996980fa7efd5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL1008",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1282",
+        "record_hash": "sha256:832502620c6b2886a9fa3f864efdce6da5626bc49b33472109cd515e6479456a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS1008",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1715",
+        "record_hash": "sha256:0a8aba21453fad106dec1b56729e269571a1b65be187092beb431af7b247e0b1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV1008",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1800",
+        "record_hash": "sha256:72a1b76919955b55cd10295098682329d9c0e6063c5d37853ee04d53185681e9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP1008",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1826",
+        "record_hash": "sha256:e2e6c732562c9e69a74dabffe4c63e849baa15c51a1e0b816552a445cc72e39f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ1008",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2505",
+        "record_hash": "sha256:5e947aeff484335d67301a35686dcf7fe9494125a01dfb0080ca0b3dc9f12add",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV1008",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2592",
+        "record_hash": "sha256:32c4634c3e4cd76828f93d81eac545acd30a82e102aad33fafad43bc4d3d63cf",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ1008",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3155",
+        "record_hash": "sha256:5faeda471025c6f5a9ff92cfafaf1c12ea8edc5b4690a4a02e1f035e9d8eafe6",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS1008",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=metropolitan_state_university_of_denver&signal_id=sig_214b81e742ed1ff06906",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_214b81e742ed1ff06906/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Metropolitan State University of Denver. Across 9 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), National origin (3), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_214b81e742ed1ff06906/",
+    "proactive_reply": "Relevant certified public-data context for Metropolitan State University of Denver: https://campusevidencelab.org/signals/sig_214b81e742ed1ff06906/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

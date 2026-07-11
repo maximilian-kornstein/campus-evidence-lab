@@ -1,0 +1,161 @@
+{
+  "id": "sig_2061ad5404b46bb35e9d",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_69f26e13c882ad6dc0ec",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ab349a296ae02604b7f3",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/pasadena_city_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "pasadena_city_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the documented category totals are Vandalism (9), Harassment or threat (2), Other source-backed civil rights event (1)."
+  },
+  "institution": {
+    "id": "pasadena_city_college",
+    "name": "Pasadena City College",
+    "city": "PASADENA",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0449",
+    "evt_2026_2163",
+    "evt_2026_2335",
+    "evt_2026_2381",
+    "evt_2026_2417",
+    "evt_2026_2722",
+    "evt_2026_3444"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Pasadena City College: Across 7 certified ED cells, the documented category totals are Vandalism (9), Harassment or threat (2), Other source-backed civil rights event (1).",
+      "supporting_record_ids": [
+        "evt_2026_0449",
+        "evt_2026_2163",
+        "evt_2026_2335",
+        "evt_2026_2381",
+        "evt_2026_2417",
+        "evt_2026_2722",
+        "evt_2026_3444"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0449",
+        "record_hash": "sha256:1c8933aab60ef22e0ce572cfeb73776816989b3344634a45e3760594d7d9dcb5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT770",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2163",
+        "record_hash": "sha256:87cfacd0f0798720992470a171372a4dbbfd484ed94c5d6fe08be1d7037d1536",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LT770",
+        "column": "BURGLA_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2335",
+        "record_hash": "sha256:06b3aa36928240e2f7f4c452c36279178e422bef2a5d62cd0d5df3d3c83b44da",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO770",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2381",
+        "record_hash": "sha256:0714e8738b5feef56ce3fa638fee06566426a334282bc12220204670820a723c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC770",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_2417",
+        "record_hash": "sha256:9096feb8ab9086f4b10b6a07668a70fb812a733decf1b39e605ff5f5985ab96e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS770",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2722",
+        "record_hash": "sha256:23168dbf096b0d562f4bd9ea01fbf34ada267c61c7032710689334e27f4a3089",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT770",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3444",
+        "record_hash": "sha256:e1842ee1ee64ec80db895bebe5580918d6932266646e982a7646d13ee2c1b2c7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB770",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=pasadena_city_college&signal_id=sig_2061ad5404b46bb35e9d",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_2061ad5404b46bb35e9d/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Pasadena City College. Across 7 certified ED cells, the documented category totals are Vandalism (9), Harassment or threat (2), Other source-backed civil rights event (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_2061ad5404b46bb35e9d/",
+    "proactive_reply": "Relevant certified public-data context for Pasadena City College: https://campusevidencelab.org/signals/sig_2061ad5404b46bb35e9d/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

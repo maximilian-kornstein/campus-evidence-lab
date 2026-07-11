@@ -1,0 +1,209 @@
+{
+  "id": "sig_d0c668a6b477314a970a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_1b24c48eb8e9b2df3d69",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_d9774cc4bfa10319ef47",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/spokane_falls_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "spokane_falls_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 11 certified ED cells, the reported geography totals are on-campus (13)."
+  },
+  "institution": {
+    "id": "spokane_falls_community_college",
+    "name": "Spokane Falls Community College",
+    "city": "PULLMAN",
+    "state": "WA"
+  },
+  "record_ids": [
+    "evt_2026_0542",
+    "evt_2026_0940",
+    "evt_2026_1336",
+    "evt_2026_1518",
+    "evt_2026_1757",
+    "evt_2026_1824",
+    "evt_2026_1889",
+    "evt_2026_1941",
+    "evt_2026_2002",
+    "evt_2026_2049",
+    "evt_2026_2067"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Spokane Falls Community College: Across 11 certified ED cells, the reported geography totals are on-campus (13).",
+      "supporting_record_ids": [
+        "evt_2026_0542",
+        "evt_2026_0940",
+        "evt_2026_1336",
+        "evt_2026_1518",
+        "evt_2026_1757",
+        "evt_2026_1824",
+        "evt_2026_1889",
+        "evt_2026_1941",
+        "evt_2026_2002",
+        "evt_2026_2049",
+        "evt_2026_2067"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 13,
+    "certified_cell_count": 11,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0542",
+        "record_hash": "sha256:7305c2f9f95cc49066480cdcf43672c9f4d3791d5f1f5451e20019ebabe37f93",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK6849",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0940",
+        "record_hash": "sha256:0b4ec1617f9716d32b64db76e492ead2f68d6830e5cbd8259b14a4992cc9d5a6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA6849",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1336",
+        "record_hash": "sha256:ad2dcbb3f179fd32d5e9c4575ea4b6441e98ae882ed99690686222e99802d668",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR6849",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1518",
+        "record_hash": "sha256:73e51150415f00862d51dab67f37a5f03c7edd7baeb34e41879942ba42de26c6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6849",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1757",
+        "record_hash": "sha256:a553299133cf10ac371a83f2088c4189fcc19c831443c56685b174d425f9b673",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ6849",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1824",
+        "record_hash": "sha256:ead1311778396d6ca3b0ae91d42d734336631b935faacbbd870de4f08b49e0f1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6849",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1889",
+        "record_hash": "sha256:fac39c3176619026e858eac86f9b78aefe323d79aefa9b8fe4f2e94de1e825a2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ6849",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1941",
+        "record_hash": "sha256:9b2f4690047e5ad00798fde7a2d58968ecb1fe23e6f8a6a2187a0d0497d1a62d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DD6849",
+        "column": "SIM_A_GEN22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2002",
+        "record_hash": "sha256:906094e1dc90fa4f5e198f39e0bb00d088b7e803e9bb093d250f5d78b3177e59",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV6849",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2049",
+        "record_hash": "sha256:7258da11454bd94dc9291da8bdb81a65b1335a9ca4a5f8fa70de6ead1abe9bc7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT6849",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2067",
+        "record_hash": "sha256:696e1f65241c3706dd385af30e5d60616dbe2741b59af6025f43184d3a1b2236",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6849",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=spokane_falls_community_college&signal_id=sig_d0c668a6b477314a970a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_d0c668a6b477314a970a/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Spokane Falls Community College. Across 11 certified ED cells, the reported geography totals are on-campus (13). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_d0c668a6b477314a970a/",
+    "proactive_reply": "Relevant certified public-data context for Spokane Falls Community College: https://campusevidencelab.org/signals/sig_d0c668a6b477314a970a/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

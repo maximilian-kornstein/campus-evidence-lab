@@ -1,0 +1,317 @@
+{
+  "id": "sig_4c93028e5fca4671143f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_08c15fa0fe77254d3c56",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_f60e12857f40e427d4b0",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/harvard_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "harvard_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 20 certified ED cells, the reported geography totals are public-property (17), on-campus (7), residence-hall (2)."
+  },
+  "institution": {
+    "id": "harvard_university",
+    "name": "Harvard University",
+    "city": "Cambridge",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0788",
+    "evt_2026_1375",
+    "evt_2026_1457",
+    "evt_2026_1718",
+    "evt_2026_1854",
+    "evt_2026_1967",
+    "evt_2026_2029",
+    "evt_2026_2481",
+    "evt_2026_2666",
+    "evt_2026_2695",
+    "evt_2026_2711",
+    "evt_2026_2726",
+    "evt_2026_2732",
+    "evt_2026_2738",
+    "evt_2026_2744",
+    "evt_2026_2747",
+    "evt_2026_2749",
+    "evt_2026_2751",
+    "evt_2026_2985",
+    "evt_2026_3362"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Harvard University: Across 20 certified ED cells, the reported geography totals are public-property (17), on-campus (7), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0788",
+        "evt_2026_1375",
+        "evt_2026_1457",
+        "evt_2026_1718",
+        "evt_2026_1854",
+        "evt_2026_1967",
+        "evt_2026_2029",
+        "evt_2026_2481",
+        "evt_2026_2666",
+        "evt_2026_2695",
+        "evt_2026_2711",
+        "evt_2026_2726",
+        "evt_2026_2732",
+        "evt_2026_2738",
+        "evt_2026_2744",
+        "evt_2026_2747",
+        "evt_2026_2749",
+        "evt_2026_2751",
+        "evt_2026_2985",
+        "evt_2026_3362"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 26,
+    "certified_cell_count": 20,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0788",
+        "record_hash": "sha256:996e3a1b96750d08a53a243ce12b7a1a0f288f967e4b699707705d963e0a5b97",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LK2969",
+        "column": "AGG_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1375",
+        "record_hash": "sha256:4d2ccccc85d92c1e0d4251c18c3a48d1eb4b9b7f93f046e699c6c0804dc72a0e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC2969",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1457",
+        "record_hash": "sha256:946aa522fbe7a3df050620aec33bcf2492491d57ef076e218cb02acacc7aa1ae",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU2969",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1718",
+        "record_hash": "sha256:8a27c7cbb249400ce23eda0719c34040c0ec5ab04157993140c24a228c368b4d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV2969",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1854",
+        "record_hash": "sha256:adf98ce6040715a214076fe68ed23094d79c4352d6777a469a221362746e8a4f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2969",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1967",
+        "record_hash": "sha256:37b4a678a1cd87bedb625d1eca20f5ddfeffabff59b213f76b06d7a2898f06e1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IG2969",
+        "column": "LAR_T_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2029",
+        "record_hash": "sha256:49f0d8d68236cfd81d45bccdf44796b4ed384e495e6acbe8b137881e4f7c2ef1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY2969",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2481",
+        "record_hash": "sha256:00d95a3c14c3338985316efc88528f1dd88ed3aef5478347ffb5541b9641cdc7",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU2969",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2666",
+        "record_hash": "sha256:feedd0262ce99e82fe8ce3b072801b432404175c92c1ba90f3979055db4e6db6",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL2969",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2695",
+        "record_hash": "sha256:82ff63a5b6ec7c06f25143ddae2766c789bef62ed84aa13fcf43c36355a4a6d7",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS2970",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2711",
+        "record_hash": "sha256:734e85a8875ddd7dd2a1f78b294b86335cd68cd2463c671f556f26a6908306d1",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GM2969",
+        "column": "AGG_A_RAC23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_2726",
+        "record_hash": "sha256:0d9dc2f22caf559942e484c3d4d226663b6bcaf1ca2a3ff9424dfea9a1e24cf5",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IA2969",
+        "column": "SIM_A_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2732",
+        "record_hash": "sha256:f64d3e989e171cc2bf96131cdc76650fdd4b4dae29e0ebef47905cbd9e80f79b",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW2969",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2738",
+        "record_hash": "sha256:ddb8731ee75f2dc8c5927d6345edd05c080bd85968e29b78873d5b7ca42987da",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX2969",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2744",
+        "record_hash": "sha256:c70203ac3d4550204acd6157799adab0a19ed8e8e77b0044324c36e736820397",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY2969",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2747",
+        "record_hash": "sha256:dd8d28bfce0bf1abb2eff9f4de926160113f8437356d64e11a7e5105b453b987",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA2969",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_2749",
+        "record_hash": "sha256:eecd469a283464f5bccdaeb5ebb907325d93abf325f087d60ad779fca8062e8b",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BQ2969",
+        "column": "AGG_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2751",
+        "record_hash": "sha256:e696aa2df0da2068355810498531cb775f1ab5701f9fb3749dfaec8f63d436e1",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DC2969",
+        "column": "SIM_A_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2985",
+        "record_hash": "sha256:59c098feb538c65649ce21020a3e3ccd5ee68832a7af3b9c1e1011196f7c97a2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC2969",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3362",
+        "record_hash": "sha256:03f5be63b4d8d04f761ddb37befc081c3222c7a863eb93cfc70b30af111d30af",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IG2969",
+        "column": "LAR_T_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=harvard_university&signal_id=sig_4c93028e5fca4671143f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4c93028e5fca4671143f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Harvard University. Across 20 certified ED cells, the reported geography totals are public-property (17), on-campus (7), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_4c93028e5fca4671143f/",
+    "proactive_reply": "Relevant certified public-data context for Harvard University: https://campusevidencelab.org/signals/sig_4c93028e5fca4671143f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

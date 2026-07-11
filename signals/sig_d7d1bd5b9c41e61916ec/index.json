@@ -1,0 +1,137 @@
+{
+  "id": "sig_d7d1bd5b9c41e61916ec",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d0e3a3f82f01e6d087d4",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_b5bf45806e684bf837cb",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_new_haven/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_new_haven"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the source-supported affected-community totals are Religion (3), Gender (1), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "university_of_new_haven",
+    "name": "University of New Haven",
+    "city": "WEST HAVEN",
+    "state": "CT"
+  },
+  "record_ids": [
+    "evt_2026_0223",
+    "evt_2026_0907",
+    "evt_2026_1028",
+    "evt_2026_2431",
+    "evt_2026_3186"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of New Haven: Across 5 certified ED cells, the source-supported affected-community totals are Religion (3), Gender (1), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_0223",
+        "evt_2026_0907",
+        "evt_2026_1028",
+        "evt_2026_2431",
+        "evt_2026_3186"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0223",
+        "record_hash": "sha256:0c60d0cc357db1a5d87b955f53def477a8f436988e18e4e9db102325f2584a62",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1089",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0907",
+        "record_hash": "sha256:6269d741f3db60ae749e029566214af6c119b5695fbadfe9cdb2f1a7984870df",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV1089",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1028",
+        "record_hash": "sha256:385c8a6a29521f6af6153065e5fd476128e0cebe64fd497b6169925fdedea9a6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA1089",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2431",
+        "record_hash": "sha256:8996afa36e2b71c457dca5431e151056ca0ceaba1ecabbf47128431509a0c2bf",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT1089",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3186",
+        "record_hash": "sha256:b3acc2dd6e2d04388ab13ee435333d42fa0684c03697d5344ff116c58bd13a7d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1089",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_new_haven&signal_id=sig_d7d1bd5b9c41e61916ec",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_d7d1bd5b9c41e61916ec/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of New Haven. Across 5 certified ED cells, the source-supported affected-community totals are Religion (3), Gender (1), LGBTQ+ (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_d7d1bd5b9c41e61916ec/",
+    "proactive_reply": "Relevant certified public-data context for University of New Haven: https://campusevidencelab.org/signals/sig_d7d1bd5b9c41e61916ec/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

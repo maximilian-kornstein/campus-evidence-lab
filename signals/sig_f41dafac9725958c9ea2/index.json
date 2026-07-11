@@ -1,0 +1,133 @@
+{
+  "id": "sig_f41dafac9725958c9ea2",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_7691ec8e2a3ee2e76368",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_d2b6c7788688b91ef905",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/lewis_and_clark_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "lewis_and_clark_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2)."
+  },
+  "institution": {
+    "id": "lewis_and_clark_college",
+    "name": "Lewis & Clark College",
+    "city": "PORTLAND",
+    "state": "OR"
+  },
+  "record_ids": [
+    "evt_2026_0207",
+    "evt_2026_0846",
+    "evt_2026_2998",
+    "evt_2026_3864"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Lewis & Clark College: Across 4 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2).",
+      "supporting_record_ids": [
+        "evt_2026_0207",
+        "evt_2026_0846",
+        "evt_2026_2998",
+        "evt_2026_3864"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0207",
+        "record_hash": "sha256:2aa08bfb7a99a1fa6e9c40d84a7c901e7c4de25b14f5e0f2d51dac0e6b136f01",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT5219",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0846",
+        "record_hash": "sha256:4f7a5b2dc26b8df7966de5df1be07f5a57f5c79940e713fff0072919d2184315",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ5219",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2998",
+        "record_hash": "sha256:da937d640a631c52b842a4f3add0780c68447bdb6662b835bedf79546f840a58",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ5219",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3864",
+        "record_hash": "sha256:318945a5c09bb8aa7e5370831e84e994a0d684d97a5072ee3fc8c42b7515001b",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB5354",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=lewis_and_clark_college&signal_id=sig_f41dafac9725958c9ea2",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f41dafac9725958c9ea2/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Lewis & Clark College. Across 4 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_f41dafac9725958c9ea2/",
+    "proactive_reply": "Relevant certified public-data context for Lewis & Clark College: https://campusevidencelab.org/signals/sig_f41dafac9725958c9ea2/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

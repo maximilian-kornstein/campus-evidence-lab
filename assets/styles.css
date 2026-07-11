@@ -10,6 +10,56 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/* CEL Signals: an editorial wire, not a social dashboard. */
+.signals-body {
+  --page: #f4f0e6;
+  --ink: #161512;
+  --muted: #686157;
+  --line: #c9c0b1;
+  --line-strong: #161512;
+  --soft: #e9e2d5;
+  background: var(--page);
+}
+
+.signals-main { padding-top: clamp(56px, 8vw, 108px); }
+.signals-hero { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr); gap: clamp(32px, 8vw, 120px); align-items: end; }
+.signals-hero .page-title { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(54px, 8.8vw, 126px); line-height: .85; letter-spacing: -.055em; max-width: 900px; }
+.signals-hero .page-intro { border-top: 5px solid var(--ink); padding-top: 18px; font-size: clamp(17px, 1.7vw, 22px); }
+.signal-wire-status { margin: clamp(56px, 8vw, 110px) 0 0; padding: 16px 0; border-block: 1px solid var(--ink); text-transform: uppercase; letter-spacing: .06em; font-size: 12px; }
+.signal-wire-status strong { font-size: 18px; margin-right: 3px; }
+.signals-ledger { margin-top: 0; }
+.signal-list { border-top: 1px solid var(--ink); }
+.signal-row { display: grid; grid-template-columns: 70px minmax(0, 1fr) 160px; gap: 24px; padding: 26px 0 32px; border-bottom: 1px solid var(--line); align-items: start; }
+.signal-index { font-family: Georgia, serif; font-size: 30px; color: var(--muted); }
+.signal-row__meta, .signal-row__state span { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; color: var(--muted); }
+.signal-row h3 { font-family: Georgia, serif; font-size: clamp(26px, 3vw, 42px); font-weight: 400; margin: 4px 0 8px; line-height: 1; }
+.signal-row__body > p:last-child { max-width: 760px; margin-bottom: 0; }
+.signal-row__state { display: flex; flex-direction: column; gap: 28px; text-align: right; }
+.signal-method-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--ink); }
+.signal-method-grid p { margin: 0; padding: 22px; border-right: 1px solid var(--line); }
+.signal-method-grid p:last-child { border-right: 0; }
+.signal-method-grid strong, .signal-method-grid span { display: block; }
+.signal-method-grid strong { margin-bottom: 30px; font-size: 12px; letter-spacing: .06em; }
+.signal-story { max-width: 900px; }
+.signal-story .page-title { font-family: Georgia, serif; font-weight: 400; }
+.signal-trigger { border-block: 1px solid var(--ink); padding: 16px 0; }
+.signal-brief { font-family: Georgia, serif; font-size: clamp(20px, 2.5vw, 30px); line-height: 1.35; margin: 60px 0; }
+.signal-brief h2 { font: 700 12px/1.2 sans-serif; letter-spacing: .08em; text-transform: uppercase; margin-top: 46px; }
+.signal-sources { padding-left: 20px; }
+.signal-sources li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.signal-sources span { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
+.signal-limit { margin: 54px 0; padding: 20px 0; border-block: 4px double var(--ink); }
+.signal-limit p { max-width: 720px; }
+
+@media (max-width: 760px) {
+  .signals-hero { grid-template-columns: 1fr; }
+  .signal-row { grid-template-columns: 42px minmax(0, 1fr); }
+  .signal-row__state { grid-column: 2; flex-direction: row; justify-content: space-between; text-align: left; }
+  .signal-method-grid { grid-template-columns: 1fr 1fr; }
+  .signal-method-grid p:nth-child(2) { border-right: 0; }
+  .signal-method-grid p { border-bottom: 1px solid var(--line); }
+}
+
 * {
   box-sizing: border-box;
 }

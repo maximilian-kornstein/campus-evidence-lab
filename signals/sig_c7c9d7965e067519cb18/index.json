@@ -1,0 +1,205 @@
+{
+  "id": "sig_c7c9d7965e067519cb18",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_4555904751ca1b3b4bb6",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8c4f24f35615eb9a38d3",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/tufts_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "tufts_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 10 certified ED cells, the reported geography totals are on-campus (13), residence-hall (2), public-property (1)."
+  },
+  "institution": {
+    "id": "tufts_university",
+    "name": "Tufts University",
+    "city": "Medford",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0917",
+    "evt_2026_1733",
+    "evt_2026_1867",
+    "evt_2026_2063",
+    "evt_2026_2085",
+    "evt_2026_2103",
+    "evt_2026_2634",
+    "evt_2026_3647",
+    "evt_2026_3664",
+    "evt_2026_3759"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Tufts University: Across 10 certified ED cells, the reported geography totals are on-campus (13), residence-hall (2), public-property (1).",
+      "supporting_record_ids": [
+        "evt_2026_0917",
+        "evt_2026_1733",
+        "evt_2026_1867",
+        "evt_2026_2063",
+        "evt_2026_2085",
+        "evt_2026_2103",
+        "evt_2026_2634",
+        "evt_2026_3647",
+        "evt_2026_3664",
+        "evt_2026_3759"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 16,
+    "certified_cell_count": 10,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0917",
+        "record_hash": "sha256:db20a640dae9094fe4387b5486417dafa407410cbb83baebb50fae9012d51867",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL3068",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1733",
+        "record_hash": "sha256:4c28aaef0e230f825e7cd3da30b235151eb705d8c32ee9ee377a789390c62be2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS3068",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1867",
+        "record_hash": "sha256:b660ba2bed3524b75411e5693bda0d1853ed8835e1ee679d9ea0543cceef286d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY3068",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2063",
+        "record_hash": "sha256:1506f319d138458786a44af4260bbae1435f7688ed8c79ba505a821796084c92",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE3068",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2085",
+        "record_hash": "sha256:5e1396fd1635619d3076b01013cf5969d64998712f61702777519d40f0f901f7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EI3070",
+        "column": "VANDAL_NAT22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2103",
+        "record_hash": "sha256:f5e5aa9aa9b1f22f7d4d24108198d4c8eade458705d4505efb4514aa0a4246fa",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU3069",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2634",
+        "record_hash": "sha256:03e80e7a8bc34bb45cc389475009b76eceb2c2aec9be5381450337431b26b0f4",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ3068",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3647",
+        "record_hash": "sha256:d1b7da4ea67afe0bf5d21090e64b6e46bee3edc007fde3f3fb1b79dfa8a01d22",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS3068",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3664",
+        "record_hash": "sha256:c96770ee4220be1ed743a8c9353cf2218ff9b76ae0ba86e04ccd9379f15525c8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3068",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3759",
+        "record_hash": "sha256:e9ba1727d654a2ed00257a145215e56e66d39dbb2919057f2cff96f87dbed6c8",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3093",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 4
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=tufts_university&signal_id=sig_c7c9d7965e067519cb18",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_c7c9d7965e067519cb18/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Tufts University. Across 10 certified ED cells, the reported geography totals are on-campus (13), residence-hall (2), public-property (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_c7c9d7965e067519cb18/",
+    "proactive_reply": "Relevant certified public-data context for Tufts University: https://campusevidencelab.org/signals/sig_c7c9d7965e067519cb18/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

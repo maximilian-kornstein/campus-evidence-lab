@@ -1,0 +1,125 @@
+{
+  "id": "sig_e3f76a7b82908464271c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_ada61c647003efc4abcb",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_62913a1dc5c24c058d11",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/allegheny_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "allegheny_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Race (4), Religion (2)."
+  },
+  "institution": {
+    "id": "allegheny_college",
+    "name": "Allegheny College",
+    "city": "MEADVILLE",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0208",
+    "evt_2026_2059",
+    "evt_2026_2457",
+    "evt_2026_3654"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Allegheny College: Across 4 certified ED cells, the source-supported affected-community totals are Race (4), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_0208",
+        "evt_2026_2059",
+        "evt_2026_2457",
+        "evt_2026_3654"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0208",
+        "record_hash": "sha256:19b7d7a3ace140763f4a50314557a08d34a6dfc5602237f80f0e4a8c91d7cab7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5303",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2059",
+        "record_hash": "sha256:f9f08588afd127c3446ba51144ac9f4e2b48ca3b2f074ddc3597ce27c8f06b86",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5303",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2457",
+        "record_hash": "sha256:472b7153963975b77bf726f42e73569590b18cf3cbdadb7ad2b63d25624519f9",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5303",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3654",
+        "record_hash": "sha256:30d8ebe6413065ebece8bc6d3e1b3e18ab0f5992cc9021d5c066dfe2f9425178",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5303",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=allegheny_college&signal_id=sig_e3f76a7b82908464271c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e3f76a7b82908464271c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Allegheny College. Across 4 certified ED cells, the source-supported affected-community totals are Race (4), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e3f76a7b82908464271c/",
+    "proactive_reply": "Relevant certified public-data context for Allegheny College: https://campusevidencelab.org/signals/sig_e3f76a7b82908464271c/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

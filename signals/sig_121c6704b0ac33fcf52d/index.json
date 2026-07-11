@@ -1,0 +1,221 @@
+{
+  "id": "sig_121c6704b0ac33fcf52d",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_17609a93c269fe29f3e2",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_29af06cc64ec03ede8b4",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/bridgewater_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "bridgewater_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 12 certified ED cells, the documented category totals are Vandalism (12), Harassment or threat (2)."
+  },
+  "institution": {
+    "id": "bridgewater_state_university",
+    "name": "Bridgewater State University",
+    "city": "BRIDGEWATER",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0547",
+    "evt_2026_1190",
+    "evt_2026_1591",
+    "evt_2026_1789",
+    "evt_2026_1919",
+    "evt_2026_2005",
+    "evt_2026_3194",
+    "evt_2026_3420",
+    "evt_2026_3581",
+    "evt_2026_3641",
+    "evt_2026_3676",
+    "evt_2026_3680"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Bridgewater State University: Across 12 certified ED cells, the documented category totals are Vandalism (12), Harassment or threat (2).",
+      "supporting_record_ids": [
+        "evt_2026_0547",
+        "evt_2026_1190",
+        "evt_2026_1591",
+        "evt_2026_1789",
+        "evt_2026_1919",
+        "evt_2026_2005",
+        "evt_2026_3194",
+        "evt_2026_3420",
+        "evt_2026_3581",
+        "evt_2026_3641",
+        "evt_2026_3676",
+        "evt_2026_3680"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 14,
+    "certified_cell_count": 12,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0547",
+        "record_hash": "sha256:ef73b449cb6ba3917f300a0752e4f366ccb7d3133beb5fcc933b7365dd1fc5c0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ2927",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1190",
+        "record_hash": "sha256:9a877df695a28cc3f3418928a690bb708c610531fd8afca9af016371ba31a9f9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY2927",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1591",
+        "record_hash": "sha256:7ab7420a6ea91b86727adefe22ab508b0992a9e17646a95c1e4942e8532955b8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA2927",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1789",
+        "record_hash": "sha256:4d2ad86f4f53a924d57d796818a55bc6f823e339c32c571284bd2fdbace5054c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX2927",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1919",
+        "record_hash": "sha256:da2a82124d1fd46eee0a0bd0bbcb75cd782d929dd2bee93012397dbd0489d5d0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB2927",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2005",
+        "record_hash": "sha256:93b65c6e1be14b025564467f25cdf1d56dee1dcac0ee7ecc9666f1d88ade0264",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED2927",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3194",
+        "record_hash": "sha256:9df162a8d7cd7cb47db3226c09ecc140b9bb94ad457685e107a67162299481fa",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ2927",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3420",
+        "record_hash": "sha256:d889d390e871062141fe1abb810076e061e0314eef8a50facf6be5cd07b316bf",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY2927",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3581",
+        "record_hash": "sha256:59fe1ffdf2bcec1f43ed249cc5fc34a366a47951a54f136b731b6b12ffad32b3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA2927",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3641",
+        "record_hash": "sha256:d9fed5a9d3474444b0cd6a6d522ed1d88428e0865f9fc2c994f04a06d5ea1e8c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX2927",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3676",
+        "record_hash": "sha256:f601e4f11e128da8d73fa837f09d84a5ee7a82dfcc0367e1e2a7fcf8d9489d94",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB2927",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3680",
+        "record_hash": "sha256:852a7a6a5d6b5a3e475f511114c0ad21cbcd1630ae38ae1c2a21a4944fe64a10",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED2927",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=bridgewater_state_university&signal_id=sig_121c6704b0ac33fcf52d",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_121c6704b0ac33fcf52d/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Bridgewater State University. Across 12 certified ED cells, the documented category totals are Vandalism (12), Harassment or threat (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_121c6704b0ac33fcf52d/",
+    "proactive_reply": "Relevant certified public-data context for Bridgewater State University: https://campusevidencelab.org/signals/sig_121c6704b0ac33fcf52d/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

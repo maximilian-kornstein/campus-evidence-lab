@@ -1,0 +1,233 @@
+{
+  "id": "sig_1cfb0e1e8a61b1dcd531",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_7ebd5186f65eb59aa8d2",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_354eb490e69c9c18147d",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/virginia_commonwealth_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "virginia_commonwealth_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 13 certified ED cells, the reported geography totals are on-campus (15), public-property (3), residence-hall (2), noncampus (1)."
+  },
+  "institution": {
+    "id": "virginia_commonwealth_university",
+    "name": "Virginia Commonwealth University",
+    "city": "Richmond",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_0590",
+    "evt_2026_1098",
+    "evt_2026_1582",
+    "evt_2026_1797",
+    "evt_2026_1849",
+    "evt_2026_1901",
+    "evt_2026_1982",
+    "evt_2026_2530",
+    "evt_2026_2587",
+    "evt_2026_2626",
+    "evt_2026_2838",
+    "evt_2026_3587",
+    "evt_2026_3610"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Virginia Commonwealth University: Across 13 certified ED cells, the reported geography totals are on-campus (15), public-property (3), residence-hall (2), noncampus (1).",
+      "supporting_record_ids": [
+        "evt_2026_0590",
+        "evt_2026_1098",
+        "evt_2026_1582",
+        "evt_2026_1797",
+        "evt_2026_1849",
+        "evt_2026_1901",
+        "evt_2026_1982",
+        "evt_2026_2530",
+        "evt_2026_2587",
+        "evt_2026_2626",
+        "evt_2026_2838",
+        "evt_2026_3587",
+        "evt_2026_3610"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 21,
+    "certified_cell_count": 13,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0590",
+        "record_hash": "sha256:a951f24c70a3fdcb3c20a057ae13ba3f798c02752dd22b1427dc4725b5cdcdf1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6730",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 7
+      },
+      {
+        "event_id": "evt_2026_1098",
+        "record_hash": "sha256:ff3e7d975d7eb2007c9a25205ffffcf71ec39514363656b7944b409ec1da0a6d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS6730",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1582",
+        "record_hash": "sha256:765f04aef599d3777b3af1eb166fdfe597f16aa443db49eefea83726b6ddb247",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV6730",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1797",
+        "record_hash": "sha256:9b456250d3a03c7cc6620c03aa0e7ad8d1b9a537ae10e3e54bfd4e3afcf47ce9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX6731",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1849",
+        "record_hash": "sha256:9b93ebffc0db4e4b61198f66a2f2190ec232383926d2a9e7c1063cd552d1dbf0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA6733",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1901",
+        "record_hash": "sha256:cfa08e0952a859c81d3b66018629925cb77a6d8500afb93d4ff2af4588990f65",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS6730",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1982",
+        "record_hash": "sha256:c8572fcc819c0cc4a43d44f162e1ef6efd028114b36ffbe58f5a0d5c3ddeb847",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6730",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2530",
+        "record_hash": "sha256:216dbb54be91866f0892748f555bee684eac12bdf753e110fe5de7f1479594ab",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6730",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2587",
+        "record_hash": "sha256:dfd64c50e48464cf49e590d9db79ca60bf2da2a68751368c1afc66e7c84ba840",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ID6730",
+        "column": "SIM_A_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2626",
+        "record_hash": "sha256:fcbe8165fd572c5fa6b26dd5b3a88ccecf9e2b293407d26a6c26f3c964f5108a",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS6730",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2838",
+        "record_hash": "sha256:668317c676868535ec6df45b7705f7522ef1eba909272c827eb2cfabd0b82291",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BS6730",
+        "column": "AGG_A_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3587",
+        "record_hash": "sha256:1ddbcff1a17f61e0c16f038e0a8c3a4a6c322525e0f199978e345fde372008aa",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS6730",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3610",
+        "record_hash": "sha256:68a46683069c24633b6ca2a35ffaec2eb08742f20b7efa0d44b4036d59bbbd5e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6730",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=virginia_commonwealth_university&signal_id=sig_1cfb0e1e8a61b1dcd531",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_1cfb0e1e8a61b1dcd531/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Virginia Commonwealth University. Across 13 certified ED cells, the reported geography totals are on-campus (15), public-property (3), residence-hall (2), noncampus (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_1cfb0e1e8a61b1dcd531/",
+    "proactive_reply": "Relevant certified public-data context for Virginia Commonwealth University: https://campusevidencelab.org/signals/sig_1cfb0e1e8a61b1dcd531/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

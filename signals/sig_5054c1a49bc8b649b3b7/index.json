@@ -1,0 +1,257 @@
+{
+  "id": "sig_5054c1a49bc8b649b3b7",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e76c45ab3188a622d828",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_7f2208d2c497cf998c90",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/temple_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "temple_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 15 certified ED cells, the documented category totals are Harassment or threat (8), Vandalism (8)."
+  },
+  "institution": {
+    "id": "temple_university",
+    "name": "Temple University",
+    "city": "Philadelphia",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0931",
+    "evt_2026_1694",
+    "evt_2026_2016",
+    "evt_2026_2120",
+    "evt_2026_2165",
+    "evt_2026_2192",
+    "evt_2026_2213",
+    "evt_2026_2639",
+    "evt_2026_2668",
+    "evt_2026_2688",
+    "evt_2026_3618",
+    "evt_2026_3697",
+    "evt_2026_3723",
+    "evt_2026_3730",
+    "evt_2026_3737"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Temple University: Across 15 certified ED cells, the documented category totals are Harassment or threat (8), Vandalism (8).",
+      "supporting_record_ids": [
+        "evt_2026_0931",
+        "evt_2026_1694",
+        "evt_2026_2016",
+        "evt_2026_2120",
+        "evt_2026_2165",
+        "evt_2026_2192",
+        "evt_2026_2213",
+        "evt_2026_2639",
+        "evt_2026_2668",
+        "evt_2026_2688",
+        "evt_2026_3618",
+        "evt_2026_3697",
+        "evt_2026_3723",
+        "evt_2026_3730",
+        "evt_2026_3737"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 16,
+    "certified_cell_count": 15,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0931",
+        "record_hash": "sha256:9aeda9a6d8475e19e467955e762d619f83e9832c8f01ed0e1cfe507ba5f38568",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL5565",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1694",
+        "record_hash": "sha256:f04660494bbaff928af73728a87df92c81688784bf3088c0f7b925a5e0de1466",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS5565",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2016",
+        "record_hash": "sha256:9d9f18f692bc7373c7652ef874ce2b60235a1cba2a2e099bbdc2ea6c10b521c9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5565",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2120",
+        "record_hash": "sha256:361789edb6f63273ce84c53b4cd57dab2e96b68e6405147df6d5fb60cd5f1ed4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5565",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2165",
+        "record_hash": "sha256:a7d983125acaee8fc74a9b36d47fccd64da7cfb8aae50babc004d8c691cc649a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5565",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2192",
+        "record_hash": "sha256:40dee6f9716552352e82535a9ec813ca629b2084ab7515152e3599489c085411",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5565",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2213",
+        "record_hash": "sha256:dfc6da7ad29e85c153fa58b814afa2362a485406b8b4f0ba95f0419ae1794b72",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5565",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2639",
+        "record_hash": "sha256:eae2f425978e7d6fea04f8c7453b5bf65c731c6446a3205a22b942a1fc00ec5a",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS5565",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2668",
+        "record_hash": "sha256:7914ee077e99caca667276dfc966a66fade6660439a8472cc37cca0d945fe244",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5565",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2688",
+        "record_hash": "sha256:1850e2e2104387db573fb38ae64565ea7cae3f18eb8c8c63cd23c4442031cbb5",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL5565",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3618",
+        "record_hash": "sha256:c64ba155c2707814c5a20367cc4a07697db52c718b2e98f9283243fab1cbbdd7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS5565",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3697",
+        "record_hash": "sha256:883cde793136e700866ce5d2ec2bf7876fbe17fa1a78b5a37644b0dc57d54859",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5565",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3723",
+        "record_hash": "sha256:4512442bc0c6d2f5c27732f37ae26faae72685ea0624e6cc66e615dc6c7e4c3e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5565",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3730",
+        "record_hash": "sha256:12a62011c2e716036f2abe8e70d2f99238d8d9ec272ff29de7a68295081f87e6",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5565",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3737",
+        "record_hash": "sha256:ceb3a73d052b0d13369d8ebaf8c18bae1532c3e151ddd0a58d74d61d56ae2417",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5565",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=temple_university&signal_id=sig_5054c1a49bc8b649b3b7",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5054c1a49bc8b649b3b7/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Temple University. Across 15 certified ED cells, the documented category totals are Harassment or threat (8), Vandalism (8). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_5054c1a49bc8b649b3b7/",
+    "proactive_reply": "Relevant certified public-data context for Temple University: https://campusevidencelab.org/signals/sig_5054c1a49bc8b649b3b7/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

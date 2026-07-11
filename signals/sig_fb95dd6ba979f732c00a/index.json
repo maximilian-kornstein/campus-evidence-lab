@@ -1,0 +1,289 @@
+{
+  "id": "sig_fb95dd6ba979f732c00a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_2572ddc473b8e7b9cf31",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_b58102e14a5259b2ce34",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_oregon/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_oregon"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 17 certified ED cells, the reported geography totals are on-campus (18), residence-hall (5)."
+  },
+  "institution": {
+    "id": "university_of_oregon",
+    "name": "University of Oregon",
+    "city": "Eugene",
+    "state": "OR"
+  },
+  "record_ids": [
+    "evt_2026_0491",
+    "evt_2026_0889",
+    "evt_2026_1270",
+    "evt_2026_1512",
+    "evt_2026_1659",
+    "evt_2026_1753",
+    "evt_2026_1833",
+    "evt_2026_1898",
+    "evt_2026_1989",
+    "evt_2026_2015",
+    "evt_2026_2031",
+    "evt_2026_2046",
+    "evt_2026_3144",
+    "evt_2026_3328",
+    "evt_2026_3596",
+    "evt_2026_3627",
+    "evt_2026_3776"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Oregon: Across 17 certified ED cells, the reported geography totals are on-campus (18), residence-hall (5).",
+      "supporting_record_ids": [
+        "evt_2026_0491",
+        "evt_2026_0889",
+        "evt_2026_1270",
+        "evt_2026_1512",
+        "evt_2026_1659",
+        "evt_2026_1753",
+        "evt_2026_1833",
+        "evt_2026_1898",
+        "evt_2026_1989",
+        "evt_2026_2015",
+        "evt_2026_2031",
+        "evt_2026_2046",
+        "evt_2026_3144",
+        "evt_2026_3328",
+        "evt_2026_3596",
+        "evt_2026_3627",
+        "evt_2026_3776"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 23,
+    "certified_cell_count": 17,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0491",
+        "record_hash": "sha256:a24738bbd90fd61b6081f6ff7ebdc742274c7f187d902b5b062111597108e12a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR5242",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0889",
+        "record_hash": "sha256:2c73977d954fbddf5ab7de1529f1d3a461e0b3a510f3a7c71563913eaeea6711",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5242",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1270",
+        "record_hash": "sha256:e56fce70256a5c42e0e1e91da70bf972cd1fef95b472d2c6d5d7172c9922142d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL5242",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1512",
+        "record_hash": "sha256:c92dd42206e3853fbd5dd28c71d28bbe34852ad00431c9b42fa66ef62618e544",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA5242",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1659",
+        "record_hash": "sha256:7d416436382cb89f9a455075b7a5a9ed639875f945efad144236ec8e346a8b2e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU5242",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1753",
+        "record_hash": "sha256:0e3de2f5cd101a859d7eb02d1e869ee871a29b3af63e51704586fd4e990f6a55",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY5242",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1833",
+        "record_hash": "sha256:e976b7d973a3e915392d3a13c5f79140c9ec9aee93aec70162aa7601c47ba2a5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD5242",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1898",
+        "record_hash": "sha256:9d0f07d8c8f6663bc30845556f0516cf16062fe77fe8482a4c861c3b22131c87",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5242",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1989",
+        "record_hash": "sha256:7dde2fcdf7b9ee387ff99d31f7c2a04257e6a32155045137f68d525339d158c9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5242",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2015",
+        "record_hash": "sha256:15158753f946194065b22e21dbc79dfef724c3ca4d16258f6957d73942440410",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5242",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2031",
+        "record_hash": "sha256:e819b9fd84d06f36fb21863019bb71cd1ea973dfe550a7399529c25435db0920",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV5242",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2046",
+        "record_hash": "sha256:49227f3d0806af9a707cd6677644b075fcbc87c6557ca33d6d5df4f3daebfb3b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5242",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3144",
+        "record_hash": "sha256:b8fa4cc2abc2cf18f4aa7b292e7386d753c4b8a255695e2de2acbbc09bf33334",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD5242",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3328",
+        "record_hash": "sha256:6867c220c5da09a0e74e9002a12d59b0b3a0c15530ccf54771af4da320cf732b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5242",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3596",
+        "record_hash": "sha256:1a1c7f41b04ca3cc604d1590c2f4ed419e9575f4943aeab8eaf4014a96b06f55",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV5242",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3627",
+        "record_hash": "sha256:9f87bba8a8d1b3063a57442cc77a6a0fe55c9c722c563cf0c8a17bf586d62861",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5242",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3776",
+        "record_hash": "sha256:488aec8d2e0c6c5632832e308a5af6923e2e87ef7f3120a182be612c7c1fbc81",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5377",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 3
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_oregon&signal_id=sig_fb95dd6ba979f732c00a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_fb95dd6ba979f732c00a/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Oregon. Across 17 certified ED cells, the reported geography totals are on-campus (18), residence-hall (5). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_fb95dd6ba979f732c00a/",
+    "proactive_reply": "Relevant certified public-data context for University of Oregon: https://campusevidencelab.org/signals/sig_fb95dd6ba979f732c00a/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

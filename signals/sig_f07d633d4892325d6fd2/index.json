@@ -1,0 +1,125 @@
+{
+  "id": "sig_f07d633d4892325d6fd2",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e11c2ec2524377ce79d8",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_a01b3d1b6927c7b1ddee",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/pitzer_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "pitzer_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (2), noncampus (1), residence-hall (1)."
+  },
+  "institution": {
+    "id": "pitzer_college",
+    "name": "Pitzer College",
+    "city": "CLAREMONT",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1729",
+    "evt_2026_2166",
+    "evt_2026_2882",
+    "evt_2026_3089"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Pitzer College: Across 4 certified ED cells, the reported geography totals are on-campus (2), noncampus (1), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_1729",
+        "evt_2026_2166",
+        "evt_2026_2882",
+        "evt_2026_3089"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1729",
+        "record_hash": "sha256:fbb54ef22ff20ce002e470d0f303405c307d9002e9533872c708d6b7835d302a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ784",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2166",
+        "record_hash": "sha256:dd9a9f3a5c4d6f8ff9aaf3aa26a17510df58d736bdf11b2246d611760a59166d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL784",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2882",
+        "record_hash": "sha256:c386ffbd3d1731f5f10a58ba1ab669d7b035216a0818c448092ed60f865aef43",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP784",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3089",
+        "record_hash": "sha256:505510bb78715c80f63b51cc2666b3baea124ff3ee83b4344befdb5b4c0f6840",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL784",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=pitzer_college&signal_id=sig_f07d633d4892325d6fd2",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f07d633d4892325d6fd2/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Pitzer College. Across 4 certified ED cells, the reported geography totals are on-campus (2), noncampus (1), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_f07d633d4892325d6fd2/",
+    "proactive_reply": "Relevant certified public-data context for Pitzer College: https://campusevidencelab.org/signals/sig_f07d633d4892325d6fd2/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

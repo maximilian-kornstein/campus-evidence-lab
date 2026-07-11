@@ -1,0 +1,149 @@
+{
+  "id": "sig_77a9f8200e8a24f3906a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_89535fdcff300c9ba841",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1c6bdad89f4aa5b5c2a3",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/kansas_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "kansas_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the documented category totals are Vandalism (7), Harassment or threat (3)."
+  },
+  "institution": {
+    "id": "kansas_state_university",
+    "name": "Kansas State University",
+    "city": "MANHATTAN",
+    "state": "KS"
+  },
+  "record_ids": [
+    "evt_2026_0086",
+    "evt_2026_0739",
+    "evt_2026_0830",
+    "evt_2026_0915",
+    "evt_2026_0996",
+    "evt_2026_2907"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Kansas State University: Across 6 certified ED cells, the documented category totals are Vandalism (7), Harassment or threat (3).",
+      "supporting_record_ids": [
+        "evt_2026_0086",
+        "evt_2026_0739",
+        "evt_2026_0830",
+        "evt_2026_0915",
+        "evt_2026_0996",
+        "evt_2026_2907"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0086",
+        "record_hash": "sha256:e3ba8d0a54105281c0af9aa42a34c736bd520bb7e0dda1733c76b10b4f204595",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV2432",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0739",
+        "record_hash": "sha256:63a0d13da0667bd7ff10e9d66851dfba9a5ba64114713f194e956d80c819d0d8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2432",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0830",
+        "record_hash": "sha256:14535dc4b744988973b89cacd2c4919a9e0e1ab71b8be2da44faf534bd76c007",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2432",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0915",
+        "record_hash": "sha256:62b7397cd694ddedad0cde1b3eb26f1a0ee01b1d79fd019214fc0879e9e4b319",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ2432",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0996",
+        "record_hash": "sha256:e0ca5c4aa8728aa33f293a56ccc3e45c55bee46e3bce47e10383201234c8bce1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ2432",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2907",
+        "record_hash": "sha256:244d94b1de233ef2cbb8dc5ce4428d56c0f8cd3cb955ea6f16fcf7903a165590",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV2432",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 3
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=kansas_state_university&signal_id=sig_77a9f8200e8a24f3906a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_77a9f8200e8a24f3906a/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Kansas State University. Across 6 certified ED cells, the documented category totals are Vandalism (7), Harassment or threat (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_77a9f8200e8a24f3906a/",
+    "proactive_reply": "Relevant certified public-data context for Kansas State University: https://campusevidencelab.org/signals/sig_77a9f8200e8a24f3906a/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

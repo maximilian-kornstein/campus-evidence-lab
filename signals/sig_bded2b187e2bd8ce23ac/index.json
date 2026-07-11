@@ -1,0 +1,161 @@
+{
+  "id": "sig_bded2b187e2bd8ce23ac",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c7bbf2e823b6d3aad0cc",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_027a736cf56152e79917",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/worcester_polytechnic_institute/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "worcester_polytechnic_institute"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the reported geography totals are on-campus (8)."
+  },
+  "institution": {
+    "id": "worcester_polytechnic_institute",
+    "name": "Worcester Polytechnic Institute",
+    "city": "WORCESTER",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0529",
+    "evt_2026_1078",
+    "evt_2026_1652",
+    "evt_2026_1945",
+    "evt_2026_2013",
+    "evt_2026_2051",
+    "evt_2026_2080"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Worcester Polytechnic Institute: Across 7 certified ED cells, the reported geography totals are on-campus (8).",
+      "supporting_record_ids": [
+        "evt_2026_0529",
+        "evt_2026_1078",
+        "evt_2026_1652",
+        "evt_2026_1945",
+        "evt_2026_2013",
+        "evt_2026_2051",
+        "evt_2026_2080"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0529",
+        "record_hash": "sha256:7711ef5aa725a051a7df9d15e83064b0e2a0778743090d57900ec5b9fcaf2078",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX3080",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1078",
+        "record_hash": "sha256:cd727940e1244d1f9e948a9eb11f370ea585a1a7a858c309e1b07ee8d4af79ca",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3080",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1652",
+        "record_hash": "sha256:694a0b36f99fe536f9ed7b08b6eb39b7b4a3731abba6ec35b8499097213c77e5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS3080",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1945",
+        "record_hash": "sha256:81d8c436f978b07afbae2313e1bc751532f77e19420327b4a7eee41afc743dea",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB3080",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2013",
+        "record_hash": "sha256:44129e5fbc961b00a9a0d8810248573571501d0845e5aa865498a45c31aeea58",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ3080",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2051",
+        "record_hash": "sha256:d5242a2ebd3759890aee92c08fd2eecd4defb0b897ed23d4674483bbb1333eb7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF3080",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2080",
+        "record_hash": "sha256:b4b4ce944bf704f01e0def2ecce4968b41f6c09c477274fdfc94923140912036",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3080",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=worcester_polytechnic_institute&signal_id=sig_bded2b187e2bd8ce23ac",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_bded2b187e2bd8ce23ac/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Worcester Polytechnic Institute. Across 7 certified ED cells, the reported geography totals are on-campus (8). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_bded2b187e2bd8ce23ac/",
+    "proactive_reply": "Relevant certified public-data context for Worcester Polytechnic Institute: https://campusevidencelab.org/signals/sig_bded2b187e2bd8ce23ac/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

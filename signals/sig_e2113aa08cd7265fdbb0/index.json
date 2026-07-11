@@ -1,0 +1,193 @@
+{
+  "id": "sig_e2113aa08cd7265fdbb0",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f04881779ade3b20758e",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_63037ce335524d35427c",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/auburn_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "auburn_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 12 reported statistics across 5 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "auburn_university",
+    "name": "Auburn University",
+    "city": "Auburn",
+    "state": "AL"
+  },
+  "record_ids": [
+    "evt_2026_0126",
+    "evt_2026_0677",
+    "evt_2026_0860",
+    "evt_2026_0943",
+    "evt_2026_0983",
+    "evt_2026_1023",
+    "evt_2026_1063",
+    "evt_2026_1102",
+    "evt_2026_3743"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Auburn University: Certified ED workbook cells document 12 reported statistics across 5 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0126",
+        "evt_2026_0677",
+        "evt_2026_0860",
+        "evt_2026_0943",
+        "evt_2026_0983",
+        "evt_2026_1023",
+        "evt_2026_1063",
+        "evt_2026_1102",
+        "evt_2026_3743"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 16,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0126",
+        "record_hash": "sha256:8323c8999cb7a7f41f21b5e844bfb8056e16e17d47d4a143b5d2910b050c7852",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN14",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_0677",
+        "record_hash": "sha256:943021488c5f2a9c0418a7f1db6290f26c9ef331b198800cd7a43e15f6c49477",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK14",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_0860",
+        "record_hash": "sha256:b3875535a06766dc5cc27485e1024cf2dff88a0dfead5b1c8c7a96c194e3dccb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LI14",
+        "column": "AGG_A_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0943",
+        "record_hash": "sha256:b92a6cf4904be30d690151b8712d576513b51aa80f17388dbfb8d2f143bc4dad",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR14",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0983",
+        "record_hash": "sha256:0091a4cd98047dc99b72b125166785c1f31aad317ff0b5035d8434c3aac125b4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV14",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1023",
+        "record_hash": "sha256:c685b9249a692e214625924b83b25e5b229faf5fa8d6c36a34af45e4039ef281",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GV14",
+        "column": "BURGLA_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1063",
+        "record_hash": "sha256:659a0eb7fc9a2d9928a98df6b59ccd7f32ac26d9a949f672a9c64b5b00f97db8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ14",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1102",
+        "record_hash": "sha256:5d3cece209d244ece306e0e03ea0a177f1780b07b97596640eab869abc3b9d11",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX14",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3743",
+        "record_hash": "sha256:3b3dd5389a011f21eff66526ae604ac0a52af343650198a2dc4529db2e257d0b",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "BQ14",
+        "column": "AGG_A_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=auburn_university&signal_id=sig_e2113aa08cd7265fdbb0",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e2113aa08cd7265fdbb0/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Auburn University. Certified ED workbook cells document 12 reported statistics across 5 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e2113aa08cd7265fdbb0/",
+    "proactive_reply": "Relevant certified public-data context for Auburn University: https://campusevidencelab.org/signals/sig_e2113aa08cd7265fdbb0/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

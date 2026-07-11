@@ -1,0 +1,173 @@
+{
+  "id": "sig_18d2afcbb9f9537de789",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_1b9a85251f6ed726a852",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_d8ccafa0cee5a757946f",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/orange_coast_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "orange_coast_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "orange_coast_college",
+    "name": "Orange Coast College",
+    "city": "COSTA MESA",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0426",
+    "evt_2026_1698",
+    "evt_2026_2275",
+    "evt_2026_2333",
+    "evt_2026_2379",
+    "evt_2026_2869",
+    "evt_2026_3463",
+    "evt_2026_3622"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Orange Coast College: Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0426",
+        "evt_2026_1698",
+        "evt_2026_2275",
+        "evt_2026_2333",
+        "evt_2026_2379",
+        "evt_2026_2869",
+        "evt_2026_3463",
+        "evt_2026_3622"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0426",
+        "record_hash": "sha256:ed982e89525994a268071eb898cd8f594b2dfc8a6073cfaf395a24aa75b8615a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT749",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1698",
+        "record_hash": "sha256:548f2fb0df77c94fd35a5954ed7df9ce5ff041a9dfe85410720a1ff3642b407b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL749",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2275",
+        "record_hash": "sha256:1cece7f7740de2139757ce5f807155712580fec6b46f72b6893b993cb1fe3408",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM749",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2333",
+        "record_hash": "sha256:ecbce7a2c0f8dc4183bb0bad4bedb57e4b76de6ba9aaf67c7507b176a2a254ee",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU749",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2379",
+        "record_hash": "sha256:ab3a09a82fc5976d9e7e4165c66b68a2eefbd66e84f49c258992dd763702578f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS749",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2869",
+        "record_hash": "sha256:4b3dac00bd13b2806a7a7b22a6ee298b242f0833d1f02ac0fe6d4c443987e67c",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV750",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3463",
+        "record_hash": "sha256:dd1c565efc2731646a73808a93d3f02680154b7c6dc1bab4a00611d19604a2b4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB749",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3622",
+        "record_hash": "sha256:27b7f135db21939326f8eb8cc7391d0c7bdfb3e95ecf8808130de42ef82dae6a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU749",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=orange_coast_college&signal_id=sig_18d2afcbb9f9537de789",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_18d2afcbb9f9537de789/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Orange Coast College. Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_18d2afcbb9f9537de789/",
+    "proactive_reply": "Relevant certified public-data context for Orange Coast College: https://campusevidencelab.org/signals/sig_18d2afcbb9f9537de789/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

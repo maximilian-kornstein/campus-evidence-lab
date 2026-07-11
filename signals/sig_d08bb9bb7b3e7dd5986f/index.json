@@ -1,0 +1,173 @@
+{
+  "id": "sig_d08bb9bb7b3e7dd5986f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_188f79d35647888d52b2",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ddfce7bd37b0f463da7e",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/menlo_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "menlo_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the documented category totals are Harassment or threat (4), Vandalism (4)."
+  },
+  "institution": {
+    "id": "menlo_college",
+    "name": "Menlo College",
+    "city": "ATHERTON",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_2056",
+    "evt_2026_2223",
+    "evt_2026_2353",
+    "evt_2026_3291",
+    "evt_2026_3442",
+    "evt_2026_3675",
+    "evt_2026_3692",
+    "evt_2026_3698"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Menlo College: Across 8 certified ED cells, the documented category totals are Harassment or threat (4), Vandalism (4).",
+      "supporting_record_ids": [
+        "evt_2026_2056",
+        "evt_2026_2223",
+        "evt_2026_2353",
+        "evt_2026_3291",
+        "evt_2026_3442",
+        "evt_2026_3675",
+        "evt_2026_3692",
+        "evt_2026_3698"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2056",
+        "record_hash": "sha256:2a5f9510d3f95e4cc5e3e0e2811a700d8f4f056c7a6f2d7641365c1664769f68",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO678",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2223",
+        "record_hash": "sha256:6d3fe825a47152aade78668d3cb9fd1cb11924f8348bc9123f667b129d3c048d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ678",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2353",
+        "record_hash": "sha256:daa493e303aea544eff9f85a4d1c187794aeb6b384ea0facc833fd2f84ca37f1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF678",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3291",
+        "record_hash": "sha256:43e75f31be32a98cd64ca50e9e50ab5bb30c30fe7e3f2fdc2a8763e57d8a5bc2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO678",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3442",
+        "record_hash": "sha256:834d8b9c67783804aff2867096b0f6232b58634a0c9811799c4dff1b35811fca",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB678",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3675",
+        "record_hash": "sha256:15bde66400112c79de07d5173b0a28f18c663ef806903273fa35fdf2d28515ef",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ678",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3692",
+        "record_hash": "sha256:b6068ea114f5b6519b46e27c079308848a03812284ef3e55d709c6e47c2323c8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF678",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3698",
+        "record_hash": "sha256:0980a6be5b6077462b952c0ae8da0f2736b4f46800016e4c8b9b7327754d7ea9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB678",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=menlo_college&signal_id=sig_d08bb9bb7b3e7dd5986f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_d08bb9bb7b3e7dd5986f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Menlo College. Across 8 certified ED cells, the documented category totals are Harassment or threat (4), Vandalism (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_d08bb9bb7b3e7dd5986f/",
+    "proactive_reply": "Relevant certified public-data context for Menlo College: https://campusevidencelab.org/signals/sig_d08bb9bb7b3e7dd5986f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

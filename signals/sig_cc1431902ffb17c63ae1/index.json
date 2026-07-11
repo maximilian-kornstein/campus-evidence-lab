@@ -1,0 +1,125 @@
+{
+  "id": "sig_cc1431902ffb17c63ae1",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f0f9e1b7c50df6b648a2",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_91f374695958df9917af",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/bryn_mawr_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "bryn_mawr_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2)."
+  },
+  "institution": {
+    "id": "bryn_mawr_college",
+    "name": "Bryn Mawr College",
+    "city": "BRYN MAWR",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0346",
+    "evt_2026_1768",
+    "evt_2026_2495",
+    "evt_2026_3644"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Bryn Mawr College: Across 4 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2).",
+      "supporting_record_ids": [
+        "evt_2026_0346",
+        "evt_2026_1768",
+        "evt_2026_2495",
+        "evt_2026_3644"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0346",
+        "record_hash": "sha256:9c56f6b74911d0599980ebf497c18f459cd95c4b2cb16b1be63f181693e67084",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5317",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1768",
+        "record_hash": "sha256:b500a16c622ee68be999a2a624acdf70b9dfb23bf5bb007987497721b74460ae",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB5317",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2495",
+        "record_hash": "sha256:5ae9f6b86367de22df976c7e5785f157357854be3d7bb78224cc6832976838fe",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5317",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3644",
+        "record_hash": "sha256:30fd3e72864f0b6a51b9e6bb5ffc887a885b80b16f7fb6233fba0889468891e6",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB5317",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=bryn_mawr_college&signal_id=sig_cc1431902ffb17c63ae1",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_cc1431902ffb17c63ae1/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Bryn Mawr College. Across 4 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_cc1431902ffb17c63ae1/",
+    "proactive_reply": "Relevant certified public-data context for Bryn Mawr College: https://campusevidencelab.org/signals/sig_cc1431902ffb17c63ae1/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

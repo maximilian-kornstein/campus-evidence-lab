@@ -1,0 +1,245 @@
+{
+  "id": "sig_d05a5efc57d6e5de602a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_50f8fc25cc5a0a4e770a",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_cb70a93213639f3b1c26",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/tulane_university_of_louisiana/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "tulane_university_of_louisiana"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 14 certified ED cells, the reported geography totals are on-campus (15), noncampus (5), public-property (5), residence-hall (1)."
+  },
+  "institution": {
+    "id": "tulane_university_of_louisiana",
+    "name": "Tulane University of Louisiana",
+    "city": "NEW ORLEANS",
+    "state": "LA"
+  },
+  "record_ids": [
+    "evt_2026_0240",
+    "evt_2026_0741",
+    "evt_2026_0875",
+    "evt_2026_0957",
+    "evt_2026_1037",
+    "evt_2026_1116",
+    "evt_2026_2441",
+    "evt_2026_2514",
+    "evt_2026_2572",
+    "evt_2026_2597",
+    "evt_2026_2777",
+    "evt_2026_2808",
+    "evt_2026_2828",
+    "evt_2026_2941"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Tulane University of Louisiana: Across 14 certified ED cells, the reported geography totals are on-campus (15), noncampus (5), public-property (5), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0240",
+        "evt_2026_0741",
+        "evt_2026_0875",
+        "evt_2026_0957",
+        "evt_2026_1037",
+        "evt_2026_1116",
+        "evt_2026_2441",
+        "evt_2026_2514",
+        "evt_2026_2572",
+        "evt_2026_2597",
+        "evt_2026_2777",
+        "evt_2026_2808",
+        "evt_2026_2828",
+        "evt_2026_2941"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 26,
+    "certified_cell_count": 14,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0240",
+        "record_hash": "sha256:85774b15499ffc9e4d2cc3224f22aa0a6dec20318925ba4ffcc779ac5f29db31",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ2738",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_0741",
+        "record_hash": "sha256:e978c20cb1c586f6ae33b3dea98ca36958739b48b08137996284cf4be7f52ceb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP2738",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_0875",
+        "record_hash": "sha256:8269265e606e1a4c9140a264a7b4054d0b1216cebd401793fa6d85c30d4ecf47",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2740",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0957",
+        "record_hash": "sha256:c913b40436468a57a5cb8168154bbb43d83294c3efc27bd9586ae7ab3514818e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ2738",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1037",
+        "record_hash": "sha256:36b54e024796964035db0a96ff95f9d00ffb4482933ab1a5b3477ffb85d1154c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU2738",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1116",
+        "record_hash": "sha256:8d38e225f9947490eb2057eda215242331c70e3eef24de7cf2b884caa4341b9b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC2739",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2441",
+        "record_hash": "sha256:35ddfcd39ae45440c6eb2d7ac6cde263134f01384fcd8b7fcf0afa50bcb88733",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GN2738",
+        "column": "AGG_A_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2514",
+        "record_hash": "sha256:0af3c29407ee686cabe9119d763e218c00b5f68ede5178f317e5ef482ea50bce",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2738",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2572",
+        "record_hash": "sha256:09869a9b7d3022f2c57a784d883aae92035205970f529b92c330a1c79af652e1",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY2738",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2597",
+        "record_hash": "sha256:b438063a7b098862b1063dffbd8b5c8bb9cab645a6de90607a12ba7e6e8e4f53",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU2738",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2777",
+        "record_hash": "sha256:4cdf4dd3d54f3fc7ec718bb0266041b674ff6e4ddccac7a9f091a2d3a77fbce2",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU2738",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2808",
+        "record_hash": "sha256:e1c233d98ebaf42500ce075bd9accb536d2b562053eea125e104918d98359a69",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA2738",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2828",
+        "record_hash": "sha256:6eb4845442be2f4d44d3ca5fabdfc9da9eb647c6f31989bfd78ce247b9d83cb9",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS2738",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2941",
+        "record_hash": "sha256:377c8407edfd7d5c062b3eaaa285e2054f078af5f64ca5ce7f176eee5c59cdeb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU2738",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=tulane_university_of_louisiana&signal_id=sig_d05a5efc57d6e5de602a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_d05a5efc57d6e5de602a/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Tulane University of Louisiana. Across 14 certified ED cells, the reported geography totals are on-campus (15), noncampus (5), public-property (5), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_d05a5efc57d6e5de602a/",
+    "proactive_reply": "Relevant certified public-data context for Tulane University of Louisiana: https://campusevidencelab.org/signals/sig_d05a5efc57d6e5de602a/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

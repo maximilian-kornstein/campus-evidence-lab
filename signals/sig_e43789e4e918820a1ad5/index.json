@@ -1,0 +1,125 @@
+{
+  "id": "sig_e43789e4e918820a1ad5",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_280e7c30b8ae4dfa413a",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_daefcaf31179288f15cd",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/ulster_county_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "ulster_county_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (5)."
+  },
+  "institution": {
+    "id": "ulster_county_community_college",
+    "name": "Ulster County Community College",
+    "city": "STONE RIDGE",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0535",
+    "evt_2026_1805",
+    "evt_2026_2137",
+    "evt_2026_2245"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Ulster County Community College: Across 4 certified ED cells, the reported geography totals are on-campus (5).",
+      "supporting_record_ids": [
+        "evt_2026_0535",
+        "evt_2026_1805",
+        "evt_2026_2137",
+        "evt_2026_2245"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0535",
+        "record_hash": "sha256:fc894c4906f14f0b87a660792766f91cb63053a98a4ca7b42d793cfb2522be18",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4510",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1805",
+        "record_hash": "sha256:88f047ab8713a53aa2f1ffbfb094da98930780df8fd2808e9da5444aafa08c7f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN4510",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2137",
+        "record_hash": "sha256:b963ea538444dd198901fd963502013684894abe2cbd6c16ec1444f177c82bf2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX4510",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2245",
+        "record_hash": "sha256:fd28f77f85e5a910f1e79606455312df373f73a55a4cc2049fc20cadc5718bb5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4510",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=ulster_county_community_college&signal_id=sig_e43789e4e918820a1ad5",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e43789e4e918820a1ad5/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Ulster County Community College. Across 4 certified ED cells, the reported geography totals are on-campus (5). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e43789e4e918820a1ad5/",
+    "proactive_reply": "Relevant certified public-data context for Ulster County Community College: https://campusevidencelab.org/signals/sig_e43789e4e918820a1ad5/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

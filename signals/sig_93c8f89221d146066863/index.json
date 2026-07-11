@@ -1,0 +1,197 @@
+{
+  "id": "sig_93c8f89221d146066863",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_9802fb9c36a084a369b3",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_20f955f7da9619c82d06",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/the_evergreen_state_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "the_evergreen_state_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 10 certified ED cells, the documented category totals are Vandalism (14), Harassment or threat (4)."
+  },
+  "institution": {
+    "id": "the_evergreen_state_college",
+    "name": "The Evergreen State College",
+    "city": "OLYMPIA",
+    "state": "WA"
+  },
+  "record_ids": [
+    "evt_2026_0170",
+    "evt_2026_1211",
+    "evt_2026_1473",
+    "evt_2026_1646",
+    "evt_2026_1743",
+    "evt_2026_1811",
+    "evt_2026_1876",
+    "evt_2026_1928",
+    "evt_2026_1973",
+    "evt_2026_3152"
+  ],
+  "bounded_claims": [
+    {
+      "text": "The Evergreen State College: Across 10 certified ED cells, the documented category totals are Vandalism (14), Harassment or threat (4).",
+      "supporting_record_ids": [
+        "evt_2026_0170",
+        "evt_2026_1211",
+        "evt_2026_1473",
+        "evt_2026_1646",
+        "evt_2026_1743",
+        "evt_2026_1811",
+        "evt_2026_1876",
+        "evt_2026_1928",
+        "evt_2026_1973",
+        "evt_2026_3152"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 18,
+    "certified_cell_count": 10,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0170",
+        "record_hash": "sha256:2c93d978e56057232d156d07fe9857bb62f0aace3a0cad72e20f6b5a46a4d852",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA6785",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 7
+      },
+      {
+        "event_id": "evt_2026_1211",
+        "record_hash": "sha256:33a2a9f63d127870c5c614433cc6cfb31a2ac1487a0952a16c4eab993abf2a0f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL6785",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1473",
+        "record_hash": "sha256:ea764e8b4017f6bba93b0b4fd366c98a86e4bb20b42e50bf578276f67ac73cf6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV6785",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1646",
+        "record_hash": "sha256:4d306f1f90be71155aa2d7776014c4ea38eea187c49b88a89f70ee5b4a22385c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ6785",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1743",
+        "record_hash": "sha256:8933dada9c685ddf32d96337b53426a8e8962687b18cfed073040c4b058308a5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6785",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1811",
+        "record_hash": "sha256:abf3752950aee08a2ae1a9d9ca0f22b5af2f46d74785fc218cc8bd388eb15b25",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE6785",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1876",
+        "record_hash": "sha256:9ca3fae37764ce4076f4eeaca2a333d77b1bdbe93463763443a2e76f532f8795",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6785",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1928",
+        "record_hash": "sha256:a31135c53cb2f1efdaacd2682dc1dec6d41c67b76bd8b912be3e0328a4f596c3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EH6785",
+        "column": "VANDAL_ET22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1973",
+        "record_hash": "sha256:44953fc6b4cc13de596a085a226f2692b4458aa40139a43e09ae98afd68f1968",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA6785",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3152",
+        "record_hash": "sha256:90032456de950ce79ca5c5431274f1ee935a42e41dd8736eed4e8f1fd9b6ffd5",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA6785",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=the_evergreen_state_college&signal_id=sig_93c8f89221d146066863",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_93c8f89221d146066863/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: The Evergreen State College. Across 10 certified ED cells, the documented category totals are Vandalism (14), Harassment or threat (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_93c8f89221d146066863/",
+    "proactive_reply": "Relevant certified public-data context for The Evergreen State College: https://campusevidencelab.org/signals/sig_93c8f89221d146066863/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

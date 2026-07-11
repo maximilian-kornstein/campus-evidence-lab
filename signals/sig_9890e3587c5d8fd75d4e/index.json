@@ -1,0 +1,149 @@
+{
+  "id": "sig_9890e3587c5d8fd75d4e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_4096efb7ff2b90bd553d",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ac5181094921e7f37af0",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/chabot_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "chabot_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the source-supported affected-community totals are Ethnicity (2), Gender (2), LGBTQ+ (2)."
+  },
+  "institution": {
+    "id": "chabot_college",
+    "name": "Chabot College",
+    "city": "Hayward",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0576",
+    "evt_2026_1214",
+    "evt_2026_2504",
+    "evt_2026_2707",
+    "evt_2026_2887",
+    "evt_2026_2891"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Chabot College: Across 6 certified ED cells, the source-supported affected-community totals are Ethnicity (2), Gender (2), LGBTQ+ (2).",
+      "supporting_record_ids": [
+        "evt_2026_0576",
+        "evt_2026_1214",
+        "evt_2026_2504",
+        "evt_2026_2707",
+        "evt_2026_2887",
+        "evt_2026_2891"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0576",
+        "record_hash": "sha256:f47f61c64316a39457f748436f7347baa5bf8b9bd0d1cf0b0854ae0e09dfe868",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ML511",
+        "column": "ARSON_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1214",
+        "record_hash": "sha256:edb564a2229127ed04b795ec289040519cde334ae69f92b2165e83c44de98c96",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV511",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2504",
+        "record_hash": "sha256:992044eff3839ac502113ae7f5ee028ec14168ad4fab7e57cecdce37986763ca",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ512",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2707",
+        "record_hash": "sha256:d07abf62fb557adb7050541303048b085d7bc8648ef492bc48bf359af8bfb58c",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN512",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2887",
+        "record_hash": "sha256:05b674dedc14d5114ea0932db711272cac4c09046fff253fe4533bde18759ebd",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ511",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2891",
+        "record_hash": "sha256:8ee256ee683c0806664b431784921bf1d5a7304885b291ff6f8afec5003b75e8",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN511",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=chabot_college&signal_id=sig_9890e3587c5d8fd75d4e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_9890e3587c5d8fd75d4e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Chabot College. Across 6 certified ED cells, the source-supported affected-community totals are Ethnicity (2), Gender (2), LGBTQ+ (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_9890e3587c5d8fd75d4e/",
+    "proactive_reply": "Relevant certified public-data context for Chabot College: https://campusevidencelab.org/signals/sig_9890e3587c5d8fd75d4e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

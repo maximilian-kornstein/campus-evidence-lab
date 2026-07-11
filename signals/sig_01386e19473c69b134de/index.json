@@ -1,0 +1,125 @@
+{
+  "id": "sig_01386e19473c69b134de",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_334917d93e96be58525f",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_83e82e244b557ef02ab6",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/naropa_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "naropa_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (1)."
+  },
+  "institution": {
+    "id": "naropa_university",
+    "name": "Naropa University",
+    "city": "Boulder",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0280",
+    "evt_2026_1420",
+    "evt_2026_1521",
+    "evt_2026_3054"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Naropa University: Across 4 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (1).",
+      "supporting_record_ids": [
+        "evt_2026_0280",
+        "evt_2026_1420",
+        "evt_2026_1521",
+        "evt_2026_3054"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0280",
+        "record_hash": "sha256:6379b341fc10354535550f02c21fbc8bae70ca009bf2cd20c5b12258799808a7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LI1013",
+        "column": "AGG_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1420",
+        "record_hash": "sha256:d62c898efa2dd87139f5ecba552e23b710eabac5a4a0e51c49c0b219b0cac982",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP1013",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1521",
+        "record_hash": "sha256:cf7fe98ffd5540be087242d83f2917b9599ec9861c8349d3336c4248f11c1542",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE1013",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3054",
+        "record_hash": "sha256:e3111468598c5b909703dfb23b3fa281a3476c0d52eca06ec699b231b6903bd8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LI1013",
+        "column": "AGG_A_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=naropa_university&signal_id=sig_01386e19473c69b134de",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_01386e19473c69b134de/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Naropa University. Across 4 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_01386e19473c69b134de/",
+    "proactive_reply": "Relevant certified public-data context for Naropa University: https://campusevidencelab.org/signals/sig_01386e19473c69b134de/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

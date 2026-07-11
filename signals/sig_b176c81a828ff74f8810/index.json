@@ -1,0 +1,193 @@
+{
+  "id": "sig_b176c81a828ff74f8810",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c6852674d02b987d9899",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_c56ec37a66abaa4cdb77",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/central_washington_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "central_washington_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the source-supported affected-community totals are Race (14), LGBTQ+ (4)."
+  },
+  "institution": {
+    "id": "central_washington_university",
+    "name": "Central Washington University",
+    "city": "Ellensburg",
+    "state": "WA"
+  },
+  "record_ids": [
+    "evt_2026_0263",
+    "evt_2026_0899",
+    "evt_2026_1308",
+    "evt_2026_1584",
+    "evt_2026_3008",
+    "evt_2026_3182",
+    "evt_2026_3289",
+    "evt_2026_3373",
+    "evt_2026_3832"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Central Washington University: Across 9 certified ED cells, the source-supported affected-community totals are Race (14), LGBTQ+ (4).",
+      "supporting_record_ids": [
+        "evt_2026_0263",
+        "evt_2026_0899",
+        "evt_2026_1308",
+        "evt_2026_1584",
+        "evt_2026_3008",
+        "evt_2026_3182",
+        "evt_2026_3289",
+        "evt_2026_3373",
+        "evt_2026_3832"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 18,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0263",
+        "record_hash": "sha256:a0d4f9068225baabe8e5849e2fb1a00633a378348ee5887c83854c08699b3fae",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT6753",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0899",
+        "record_hash": "sha256:e769a867b7fcd56f98da9a9202f0f32b2890eb9c02c96579c9e32ed5c96020f5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6753",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_1308",
+        "record_hash": "sha256:f51a3531da4fbf5bdc3d6fe51ec7c64d0d5a90b70e01070b1c9a0d68661c6cc8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB6753",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1584",
+        "record_hash": "sha256:967334eaa8a25d6fb8a5a34d4d86c7ce0625d0858eacaf788ea007bc4fc429d4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED6753",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3008",
+        "record_hash": "sha256:a2f73faef8a41dd86b60afc9a78a9e53fe26c094ae1f47aefb4817729be05441",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT6753",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3182",
+        "record_hash": "sha256:0ca86ba8a95d151629da3a41577eaf6008ecdc0d169dcf5b821f1c71d5bd2b24",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6753",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_3289",
+        "record_hash": "sha256:32a4e858e2f2924f46a834a7f174ff3d31b67329edb22808da9b3176fc9940ce",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB6753",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3373",
+        "record_hash": "sha256:ba982fe84a7b8e3a0c157ecbd8100822e0d753d7e91f7a8103078f62f849acfb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED6753",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3832",
+        "record_hash": "sha256:849e2d528d4d3c9fb8b873000e627e7d4ea3297db3b28797a3cea6dc7ef3a805",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED6888",
+        "column": "VANDAL_SEX21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=central_washington_university&signal_id=sig_b176c81a828ff74f8810",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b176c81a828ff74f8810/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Central Washington University. Across 9 certified ED cells, the source-supported affected-community totals are Race (14), LGBTQ+ (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_b176c81a828ff74f8810/",
+    "proactive_reply": "Relevant certified public-data context for Central Washington University: https://campusevidencelab.org/signals/sig_b176c81a828ff74f8810/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

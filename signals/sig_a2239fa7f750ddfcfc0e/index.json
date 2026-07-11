@@ -1,0 +1,173 @@
+{
+  "id": "sig_a2239fa7f750ddfcfc0e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_634e442bd5e3f54aa226",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_91ad4fcbb2be8e30a773",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/georgia_college_and_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "georgia_college_and_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (2), National origin (1)."
+  },
+  "institution": {
+    "id": "georgia_college_and_state_university",
+    "name": "Georgia College & State University",
+    "city": "MILLEDGEVILLE",
+    "state": "GA"
+  },
+  "record_ids": [
+    "evt_2026_0500",
+    "evt_2026_0825",
+    "evt_2026_1110",
+    "evt_2026_1397",
+    "evt_2026_2804",
+    "evt_2026_3058",
+    "evt_2026_3378",
+    "evt_2026_3416"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Georgia College & State University: Across 8 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (2), National origin (1).",
+      "supporting_record_ids": [
+        "evt_2026_0500",
+        "evt_2026_0825",
+        "evt_2026_1110",
+        "evt_2026_1397",
+        "evt_2026_2804",
+        "evt_2026_3058",
+        "evt_2026_3378",
+        "evt_2026_3416"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0500",
+        "record_hash": "sha256:0a8cd9ce88ab072b8eb9783b47de74482189711a67885f435d99c091872a6584",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IJ1640",
+        "column": "LAR_T_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0825",
+        "record_hash": "sha256:44304e3767125ab938e8075275f6408e053e445a704e9062d83899d6136c7a14",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB1640",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1110",
+        "record_hash": "sha256:6b689791fde3e7fa9193e0d4dbd7819cb1cac61daf8446f4d2719ce0584ab45e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EI1640",
+        "column": "VANDAL_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1397",
+        "record_hash": "sha256:20bc3685cae898fd45181f4b3fa3994ac0774458d734dcb7a40114d7b8535422",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB1640",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2804",
+        "record_hash": "sha256:ee76e0ed27dc60176a96aac04eb8490f95f148b687d0e0b19e4c05066f613eee",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ1640",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3058",
+        "record_hash": "sha256:fdf95aa4bbd7698766a4ddb9b9a1c33c6c8e834c015dc00614ea3e1f0136b9d8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IJ1640",
+        "column": "LAR_T_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3378",
+        "record_hash": "sha256:307900a197254da26f8a37b45794cda001ecda5e97c133bff59cc298a794bafa",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB1640",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3416",
+        "record_hash": "sha256:b36debf8a9ed1507532767cdf9d83ba3f34775b77f748d95c9dc139e83e769f6",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB1640",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=georgia_college_and_state_university&signal_id=sig_a2239fa7f750ddfcfc0e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_a2239fa7f750ddfcfc0e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Georgia College & State University. Across 8 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Race (2), National origin (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_a2239fa7f750ddfcfc0e/",
+    "proactive_reply": "Relevant certified public-data context for Georgia College & State University: https://campusevidencelab.org/signals/sig_a2239fa7f750ddfcfc0e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

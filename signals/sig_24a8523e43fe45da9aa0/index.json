@@ -1,0 +1,229 @@
+{
+  "id": "sig_24a8523e43fe45da9aa0",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_2de5956641a31dfa94af",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_eaf0d40bfc9c281e18fb",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/dartmouth_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "dartmouth_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 12 certified ED cells, the source-supported affected-community totals are Race (7), LGBTQ+ (3), National origin (3), Religion (1)."
+  },
+  "institution": {
+    "id": "dartmouth_college",
+    "name": "Dartmouth College",
+    "city": "HANOVER",
+    "state": "NH"
+  },
+  "record_ids": [
+    "evt_2026_0109",
+    "evt_2026_0703",
+    "evt_2026_0966",
+    "evt_2026_1046",
+    "evt_2026_1125",
+    "evt_2026_1198",
+    "evt_2026_1265",
+    "evt_2026_2451",
+    "evt_2026_2950",
+    "evt_2026_3070",
+    "evt_2026_3171",
+    "evt_2026_3858"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Dartmouth College: Across 12 certified ED cells, the source-supported affected-community totals are Race (7), LGBTQ+ (3), National origin (3), Religion (1).",
+      "supporting_record_ids": [
+        "evt_2026_0109",
+        "evt_2026_0703",
+        "evt_2026_0966",
+        "evt_2026_1046",
+        "evt_2026_1125",
+        "evt_2026_1198",
+        "evt_2026_1265",
+        "evt_2026_2451",
+        "evt_2026_2950",
+        "evt_2026_3070",
+        "evt_2026_3171",
+        "evt_2026_3858"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 14,
+    "certified_cell_count": 12,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0109",
+        "record_hash": "sha256:ae49eefcff43062cf0fcf8374a3742a67948d3b24eb9f6d7d2ee4b634bbc049a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA3869",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0703",
+        "record_hash": "sha256:27381097bb3b1101ee83396a21d331c0105219b0eff857705e5bc33230294ee2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LK3869",
+        "column": "AGG_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0966",
+        "record_hash": "sha256:bc1d4e13511b91e6fa83b85d2ca1cead23216ccc19efb16fde0317bbed69d802",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL3869",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1046",
+        "record_hash": "sha256:8f4a332a07121fd2e48b07aa77c23e9c7a22fee294108c1efc590d3b407cb9e5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS3869",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1125",
+        "record_hash": "sha256:3944910d5ecd9b487d3b6cd424fa6f30d51f2a72d85c44c808c3dfb24421a40c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MU3869",
+        "column": "SIM_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1198",
+        "record_hash": "sha256:795db341afe35a919b3b577fc82f5a1693e15d3b3d65ee803333312b84e8dcc4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW3869",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1265",
+        "record_hash": "sha256:cffe71fa05cd0fdd64ec5007812c6d923126355687f6593b80ce07d887e3a053",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB3869",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2451",
+        "record_hash": "sha256:cb06c0833a5e4f696df24dd78a8ab26e8936d7a74b78fffc7ca3df7f1222f3c0",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA3869",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2950",
+        "record_hash": "sha256:c8af964bd874af963d18e732ee6086e14e268a16f7ddc5defdc1fef717adc65e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS3869",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3070",
+        "record_hash": "sha256:aaf78521af8c13bb8baf767a3f8319e419095e60f8d3c5c15513885b435d16f2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA3869",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3171",
+        "record_hash": "sha256:3779b20a34b1551e0a8d042924835f6cf7632e90decae1b05589b8b18411b257",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW3869",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3858",
+        "record_hash": "sha256:0f9af48287f3bbce0eebfd93807318e58fd4c333e2be2704f6e936bfdbcd2848",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3966",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=dartmouth_college&signal_id=sig_24a8523e43fe45da9aa0",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_24a8523e43fe45da9aa0/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Dartmouth College. Across 12 certified ED cells, the source-supported affected-community totals are Race (7), LGBTQ+ (3), National origin (3), Religion (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_24a8523e43fe45da9aa0/",
+    "proactive_reply": "Relevant certified public-data context for Dartmouth College: https://campusevidencelab.org/signals/sig_24a8523e43fe45da9aa0/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

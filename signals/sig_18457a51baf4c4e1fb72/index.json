@@ -1,0 +1,173 @@
+{
+  "id": "sig_18457a51baf4c4e1fb72",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_cbca9ec6284d79e6a296",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1c14ab1a122aedae8590",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/boston_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "boston_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "boston_university",
+    "name": "Boston University",
+    "city": "Boston",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_1319",
+    "evt_2026_1433",
+    "evt_2026_1702",
+    "evt_2026_2021",
+    "evt_2026_2057",
+    "evt_2026_2573",
+    "evt_2026_2676",
+    "evt_2026_3275"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Boston University: Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_1319",
+        "evt_2026_1433",
+        "evt_2026_1702",
+        "evt_2026_2021",
+        "evt_2026_2057",
+        "evt_2026_2573",
+        "evt_2026_2676",
+        "evt_2026_3275"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1319",
+        "record_hash": "sha256:73182c96bdcf1d21e8f1dc58d89541efa74ce1f0fdc4621d6b22ebdbf141ce31",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2918",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1433",
+        "record_hash": "sha256:878cb1be3c6d45d93093b2f140e270ed2b9ce8c11697366cce715641ecff84ea",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX2919",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1702",
+        "record_hash": "sha256:620e6211581691dc2454228933db665250448fe8d35843ac95c4e0d7c7ec2f32",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY2918",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2021",
+        "record_hash": "sha256:a3de03c1133c6c4b730b90aa750ca6a1dc812ae7510d91958a4d4bb778b8546d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ2918",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2057",
+        "record_hash": "sha256:1c50d78984c20d05b232fad1f40c46643459129febd8c2692cf8c0d99a98482b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU2918",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_2573",
+        "record_hash": "sha256:0a90de381cd92a3ecce42de2fdab901eb83fe649237de89a4e17b6bfd21dc1a8",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU2918",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2676",
+        "record_hash": "sha256:9795576fbb5a04bef270da796444128d64540f19d1b898f650892abf7447ed1f",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW2919",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3275",
+        "record_hash": "sha256:7c90fc976d5ec7b3574f8833337a86dde7d90eccf282f20d60f8c68fe8e4cd9f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ2918",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=boston_university&signal_id=sig_18457a51baf4c4e1fb72",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_18457a51baf4c4e1fb72/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Boston University. Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_18457a51baf4c4e1fb72/",
+    "proactive_reply": "Relevant certified public-data context for Boston University: https://campusevidencelab.org/signals/sig_18457a51baf4c4e1fb72/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

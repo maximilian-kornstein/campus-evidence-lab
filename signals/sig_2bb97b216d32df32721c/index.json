@@ -1,0 +1,137 @@
+{
+  "id": "sig_2bb97b216d32df32721c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_dc7949d15afea2dcd3c8",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1039efb074978671fad7",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/california_state_university_san_marcos/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "california_state_university_san_marcos"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "california_state_university_san_marcos",
+    "name": "California State University-San Marcos",
+    "city": "San Marcos",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0376",
+    "evt_2026_1916",
+    "evt_2026_2470",
+    "evt_2026_2674",
+    "evt_2026_3267"
+  ],
+  "bounded_claims": [
+    {
+      "text": "California State University-San Marcos: Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0376",
+        "evt_2026_1916",
+        "evt_2026_2470",
+        "evt_2026_2674",
+        "evt_2026_3267"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0376",
+        "record_hash": "sha256:6a6e742295f03052a3e111892c4028f6f376b9087c99ae1d1e57b4909fa702e9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU7455",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1916",
+        "record_hash": "sha256:ea2b8e9e7d42cc700881ce66cd92f5df4eca2c40e57f33bc236846556880b9ed",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ7455",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2470",
+        "record_hash": "sha256:17159e2a17951de4a8b6bdd0587d6e7f73f2919d2d0badccf79d57ae2f377a0d",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM7455",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2674",
+        "record_hash": "sha256:bd3c08e0c376e737be3668895d1e27dedf8cea356e142bd57cff66aee1786176",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MU7455",
+        "column": "SIM_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3267",
+        "record_hash": "sha256:507dca3110d2eec5d711a5ee38ddf8f31e2b501d279fc66e98153b6ca5427ddb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ7455",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=california_state_university_san_marcos&signal_id=sig_2bb97b216d32df32721c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_2bb97b216d32df32721c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: California State University-San Marcos. Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_2bb97b216d32df32721c/",
+    "proactive_reply": "Relevant certified public-data context for California State University-San Marcos: https://campusevidencelab.org/signals/sig_2bb97b216d32df32721c/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

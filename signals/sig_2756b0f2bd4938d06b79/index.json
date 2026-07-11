@@ -1,0 +1,149 @@
+{
+  "id": "sig_2756b0f2bd4938d06b79",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d833b9fda5550227e6af",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e23509ede8b4ceb00f6d",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/benedictine_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "benedictine_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the reported geography totals are on-campus (5), residence-hall (1)."
+  },
+  "institution": {
+    "id": "benedictine_university",
+    "name": "Benedictine University",
+    "city": "LISLE",
+    "state": "IL"
+  },
+  "record_ids": [
+    "evt_2026_0361",
+    "evt_2026_1074",
+    "evt_2026_1523",
+    "evt_2026_1716",
+    "evt_2026_1866",
+    "evt_2026_3161"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Benedictine University: Across 6 certified ED cells, the reported geography totals are on-campus (5), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0361",
+        "evt_2026_1074",
+        "evt_2026_1523",
+        "evt_2026_1716",
+        "evt_2026_1866",
+        "evt_2026_3161"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0361",
+        "record_hash": "sha256:c69823488d523e541e1a648b7d5b08da960e1cd9679b0b2898e12f777f3af55c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1877",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1074",
+        "record_hash": "sha256:01eff06a81468d313a746645cd3e7615cf8dc25ac990f2a90f6c49ad622d918c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO1877",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1523",
+        "record_hash": "sha256:38c831a730d1f0649d8c7ad3bc9b93099631fae8f42ae2a7c1b7b5faf5e3e56c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA1877",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1716",
+        "record_hash": "sha256:254138cf03ca58e3db55c8618ded8c26ce87bc91b5d0723b3ec091f0afa290a0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB1877",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1866",
+        "record_hash": "sha256:c3c5f6b084743d4d0e6f68e218138b00b55a9e59c1a0ed2cb6904c7b125a3dd9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC1877",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3161",
+        "record_hash": "sha256:5c3d78540a3490f5042bf0325831a60f3c60e1177e591f9371606c895edea96d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB1877",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=benedictine_university&signal_id=sig_2756b0f2bd4938d06b79",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_2756b0f2bd4938d06b79/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Benedictine University. Across 6 certified ED cells, the reported geography totals are on-campus (5), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_2756b0f2bd4938d06b79/",
+    "proactive_reply": "Relevant certified public-data context for Benedictine University: https://campusevidencelab.org/signals/sig_2756b0f2bd4938d06b79/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

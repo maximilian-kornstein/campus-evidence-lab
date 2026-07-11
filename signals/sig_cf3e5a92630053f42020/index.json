@@ -1,0 +1,185 @@
+{
+  "id": "sig_cf3e5a92630053f42020",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_ee44a026c5b96181477c",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_3ffd1ca7c6049e02414b",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/pennsylvania_college_of_technology/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "pennsylvania_college_of_technology"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the source-supported affected-community totals are Race (8), LGBTQ+ (3)."
+  },
+  "institution": {
+    "id": "pennsylvania_college_of_technology",
+    "name": "Pennsylvania College of Technology",
+    "city": "WILLIAMSPORT",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0538",
+    "evt_2026_1513",
+    "evt_2026_1949",
+    "evt_2026_2101",
+    "evt_2026_2150",
+    "evt_2026_2207",
+    "evt_2026_3543",
+    "evt_2026_3682",
+    "evt_2026_3717"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Pennsylvania College of Technology: Across 9 certified ED cells, the source-supported affected-community totals are Race (8), LGBTQ+ (3).",
+      "supporting_record_ids": [
+        "evt_2026_0538",
+        "evt_2026_1513",
+        "evt_2026_1949",
+        "evt_2026_2101",
+        "evt_2026_2150",
+        "evt_2026_2207",
+        "evt_2026_3543",
+        "evt_2026_3682",
+        "evt_2026_3717"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0538",
+        "record_hash": "sha256:68fee72b4f0afbf2e5e1303e8711e57ad3037fd0b3b7a6727c64f0be9c2edd4e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK7434",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1513",
+        "record_hash": "sha256:4207bb3b6a365aeab028c30cdfb19f52e664575b8d89de7348c0317e21dceef3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT7434",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1949",
+        "record_hash": "sha256:082c856a9cf0aa19b77dc268cf5f4f61f742a8e0d1d9f3ea81918fc46e79a1eb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX7434",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_2101",
+        "record_hash": "sha256:29e30ca72102ffb0b6efad2efb77d521d85f440603fd3787a7cafbaeb4eba78a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ7434",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2150",
+        "record_hash": "sha256:9b085e8b6776045d3e2e5728b00a5beafda8f2932ea07fb12d985c95ac97ab57",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW7434",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2207",
+        "record_hash": "sha256:3a4c54085c5479a005f81a70e51bbca3955573c03fc942c9dcf3e801bae7ed98",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU7434",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3543",
+        "record_hash": "sha256:34a08882fbb4c3776b62927fd705f0b2af37391b986fd4edae39d2559c9626b4",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK7434",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3682",
+        "record_hash": "sha256:0d907a92b260684f25be8b5cd63d03e507e88065b72fd5e7d45a345ef6c0416f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT7434",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3717",
+        "record_hash": "sha256:6e9eece99c6133bf320cd336b41ec27f67178b28c646c6682b6bbbe7deaaf737",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX7434",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=pennsylvania_college_of_technology&signal_id=sig_cf3e5a92630053f42020",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_cf3e5a92630053f42020/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Pennsylvania College of Technology. Across 9 certified ED cells, the source-supported affected-community totals are Race (8), LGBTQ+ (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_cf3e5a92630053f42020/",
+    "proactive_reply": "Relevant certified public-data context for Pennsylvania College of Technology: https://campusevidencelab.org/signals/sig_cf3e5a92630053f42020/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

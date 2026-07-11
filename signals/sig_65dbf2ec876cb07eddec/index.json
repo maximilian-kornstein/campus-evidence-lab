@@ -1,0 +1,169 @@
+{
+  "id": "sig_65dbf2ec876cb07eddec",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_3b84068febc61fc8d082",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_adf9c347eac60a9299ae",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/chapman_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "chapman_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the reported geography totals are on-campus (7), residence-hall (1)."
+  },
+  "institution": {
+    "id": "chapman_university",
+    "name": "Chapman University",
+    "city": "Orange",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1607",
+    "evt_2026_2151",
+    "evt_2026_2375",
+    "evt_2026_2413",
+    "evt_2026_3438",
+    "evt_2026_3590",
+    "evt_2026_3877"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Chapman University: Across 7 certified ED cells, the reported geography totals are on-campus (7), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_1607",
+        "evt_2026_2151",
+        "evt_2026_2375",
+        "evt_2026_2413",
+        "evt_2026_3438",
+        "evt_2026_3590",
+        "evt_2026_3877"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1607",
+        "record_hash": "sha256:60a172378181a4de1206e2d4eb531fd1e308a685d221ba2e6caad0e5c2b2101b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT517",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2151",
+        "record_hash": "sha256:de286797fbce72ca7280d31afaaaa199a9dc7912f2bc0c91e66be777ed05030f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA517",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2375",
+        "record_hash": "sha256:87d2f61eae81953205f85741f81aee76e4112966fc0a35b6d2ca8c9ad3c8f1d0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IM517",
+        "column": "LAR_T_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2413",
+        "record_hash": "sha256:d3fb52a572c5fd878e5660df03d57db2b05f5b8ce786397d9f203e0a8010d279",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY517",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3438",
+        "record_hash": "sha256:c138da849ab3b3e2101411709a9b1bf323abbd1cb1270aa81645b6814a2eb0c3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY517",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3590",
+        "record_hash": "sha256:7b36d178b5f14faab17443da65a62db1149921e3cecff90bff8a83a3870f6138",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY517",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3877",
+        "record_hash": "sha256:c34be279b8b99279c8d583d9796b6c13f27f8e894ab251fe04377925a5e20944",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB520",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=chapman_university&signal_id=sig_65dbf2ec876cb07eddec",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_65dbf2ec876cb07eddec/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Chapman University. Across 7 certified ED cells, the reported geography totals are on-campus (7), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_65dbf2ec876cb07eddec/",
+    "proactive_reply": "Relevant certified public-data context for Chapman University: https://campusevidencelab.org/signals/sig_65dbf2ec876cb07eddec/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

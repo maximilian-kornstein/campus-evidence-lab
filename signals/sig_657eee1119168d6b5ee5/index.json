@@ -1,0 +1,125 @@
+{
+  "id": "sig_657eee1119168d6b5ee5",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_091bde542f6454e36787",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_5661cdd140b3f7577df3",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/bowling_green_state_university_main_campus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "bowling_green_state_university_main_campus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2)."
+  },
+  "institution": {
+    "id": "bowling_green_state_university_main_campus",
+    "name": "Bowling Green State University-Main Campus",
+    "city": "BOWLING GREEN",
+    "state": "OH"
+  },
+  "record_ids": [
+    "evt_2026_0441",
+    "evt_2026_0929",
+    "evt_2026_2996",
+    "evt_2026_3283"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Bowling Green State University-Main Campus: Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0441",
+        "evt_2026_0929",
+        "evt_2026_2996",
+        "evt_2026_3283"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0441",
+        "record_hash": "sha256:7e3ac5a70d5fa4bf72c1bfd73b8396c91e1a74f900e7f05870566b266d7e1ff0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4867",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0929",
+        "record_hash": "sha256:112d36ef19db71ddea35d654c6d30098aabd227e911f3e253c82dc1612ab4cca",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4867",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2996",
+        "record_hash": "sha256:b5fac6ee0e2c66e6c5f7efdba1dad7a863184394a0a585e97d649ab8968757e2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4867",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3283",
+        "record_hash": "sha256:c5e5101f5a06521416ec96ef02252dce8d6acaa378749f4b42fce811e3810801",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4867",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=bowling_green_state_university_main_campus&signal_id=sig_657eee1119168d6b5ee5",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_657eee1119168d6b5ee5/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Bowling Green State University-Main Campus. Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_657eee1119168d6b5ee5/",
+    "proactive_reply": "Relevant certified public-data context for Bowling Green State University-Main Campus: https://campusevidencelab.org/signals/sig_657eee1119168d6b5ee5/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

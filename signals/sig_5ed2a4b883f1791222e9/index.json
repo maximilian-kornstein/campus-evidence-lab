@@ -1,0 +1,149 @@
+{
+  "id": "sig_5ed2a4b883f1791222e9",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_db81c08f068b361f618a",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8205e306f4f17cad96d7",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/grand_canyon_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "grand_canyon_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the source-supported affected-community totals are Race (6), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "grand_canyon_university",
+    "name": "Grand Canyon University",
+    "city": "PHOENIX",
+    "state": "AZ"
+  },
+  "record_ids": [
+    "evt_2026_0178",
+    "evt_2026_0818",
+    "evt_2026_0985",
+    "evt_2026_1141",
+    "evt_2026_2895",
+    "evt_2026_3013"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Grand Canyon University: Across 6 certified ED cells, the source-supported affected-community totals are Race (6), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_0178",
+        "evt_2026_0818",
+        "evt_2026_0985",
+        "evt_2026_1141",
+        "evt_2026_2895",
+        "evt_2026_3013"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0178",
+        "record_hash": "sha256:f5e766f4d8801ff0872c6c04c2935d6e7b634890a29a8b59fb4e6f8920ac9b07",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT210",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0818",
+        "record_hash": "sha256:0324c37dfdd851ec01cb062047519c849e6a30e17783e016ddf30bfb10e73e3f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS210",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0985",
+        "record_hash": "sha256:a8d76812781d0d9f4a92a8cfba490eafc2dc2b556260d4b8e0cd79bd49c43ba5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB210",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1141",
+        "record_hash": "sha256:e1141f0cf1c1ae86e8caafe9dd8cbc0359a4f0a5a8059ad6fa5dddacc49b3808",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA210",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2895",
+        "record_hash": "sha256:6df7ae97ddf3f6babf5d5b79c777b7c9a26c82557a7ddf4b14f45eda27b840c9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT210",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3013",
+        "record_hash": "sha256:a2c2ea54b7f9feeb69dd833d2351e3de915cca6e96a3944c9df3be398370bd96",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA210",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=grand_canyon_university&signal_id=sig_5ed2a4b883f1791222e9",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5ed2a4b883f1791222e9/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Grand Canyon University. Across 6 certified ED cells, the source-supported affected-community totals are Race (6), LGBTQ+ (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_5ed2a4b883f1791222e9/",
+    "proactive_reply": "Relevant certified public-data context for Grand Canyon University: https://campusevidencelab.org/signals/sig_5ed2a4b883f1791222e9/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

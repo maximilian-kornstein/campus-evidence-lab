@@ -1,0 +1,173 @@
+{
+  "id": "sig_ed0f0a61dadad66ab496",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_db91f83e34d0250c8637",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_be5f0e4419dd40d8bf4e",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/carthage_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "carthage_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the source-supported affected-community totals are Race (6), Ethnicity (2), LGBTQ+ (2), Religion (2)."
+  },
+  "institution": {
+    "id": "carthage_college",
+    "name": "Carthage College",
+    "city": "KENOSHA",
+    "state": "WI"
+  },
+  "record_ids": [
+    "evt_2026_0171",
+    "evt_2026_0900",
+    "evt_2026_1140",
+    "evt_2026_1309",
+    "evt_2026_2967",
+    "evt_2026_3312",
+    "evt_2026_3413",
+    "evt_2026_3577"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Carthage College: Across 8 certified ED cells, the source-supported affected-community totals are Race (6), Ethnicity (2), LGBTQ+ (2), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_0171",
+        "evt_2026_0900",
+        "evt_2026_1140",
+        "evt_2026_1309",
+        "evt_2026_2967",
+        "evt_2026_3312",
+        "evt_2026_3413",
+        "evt_2026_3577"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0171",
+        "record_hash": "sha256:f9d0878f030b9bfc8403a979fd96ec8a9a83c978bc51778db8e29ba27d138646",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT6957",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0900",
+        "record_hash": "sha256:63b1482e0c9174809da60f13cfd8f560f453771f4f9c396fb3e0a58dfe14e919",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6957",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1140",
+        "record_hash": "sha256:f7a7c5723f6c66693f37928f1b3643bd5904400943eb283ab7279c58c66e6eb1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6957",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1309",
+        "record_hash": "sha256:1f389fd8796c8efe1bc4619749293ac833047e48a483209501fcb77f39a2fe43",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF6957",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2967",
+        "record_hash": "sha256:1d8c22666181aefd9babf97d4cb45f48a9e83cbbce61e46a2f2a07763afc520e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT6957",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_3312",
+        "record_hash": "sha256:cb81a2fe51d3e02e45f7b9fa1bac9d1ce29926e4431d5e25bd20845a880b9bd2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU6957",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3413",
+        "record_hash": "sha256:eaadf6f86f2ef06ab22661a24c96ddb4af19c1725516f35f5403ad71b9ea2dd0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6957",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3577",
+        "record_hash": "sha256:9b7af586437aa59b3c3cd5a1228911c67a1f8d1d757cbc3b5b25e579cc550139",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF6957",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=carthage_college&signal_id=sig_ed0f0a61dadad66ab496",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ed0f0a61dadad66ab496/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Carthage College. Across 8 certified ED cells, the source-supported affected-community totals are Race (6), Ethnicity (2), LGBTQ+ (2), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ed0f0a61dadad66ab496/",
+    "proactive_reply": "Relevant certified public-data context for Carthage College: https://campusevidencelab.org/signals/sig_ed0f0a61dadad66ab496/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

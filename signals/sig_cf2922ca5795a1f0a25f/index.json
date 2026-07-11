@@ -1,0 +1,481 @@
+{
+  "id": "sig_cf2922ca5795a1f0a25f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f8d6a0cc47bdcf0d9f98",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_bccb1d7b0391946c48d5",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_colorado_boulder/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_colorado_boulder"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 33 certified ED cells, the documented category totals are Harassment or threat (66), Vandalism (5), Other source-backed civil rights event (2)."
+  },
+  "institution": {
+    "id": "university_of_colorado_boulder",
+    "name": "University of Colorado Boulder",
+    "city": "Boulder",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0083",
+    "evt_2026_0681",
+    "evt_2026_1180",
+    "evt_2026_1427",
+    "evt_2026_1683",
+    "evt_2026_1787",
+    "evt_2026_1839",
+    "evt_2026_1852",
+    "evt_2026_1865",
+    "evt_2026_1878",
+    "evt_2026_1891",
+    "evt_2026_1904",
+    "evt_2026_1917",
+    "evt_2026_1930",
+    "evt_2026_1943",
+    "evt_2026_1954",
+    "evt_2026_1965",
+    "evt_2026_1975",
+    "evt_2026_1985",
+    "evt_2026_2768",
+    "evt_2026_2801",
+    "evt_2026_2897",
+    "evt_2026_2931",
+    "evt_2026_3185",
+    "evt_2026_3336",
+    "evt_2026_3415",
+    "evt_2026_3535",
+    "evt_2026_3579",
+    "evt_2026_3603",
+    "evt_2026_3623",
+    "evt_2026_3632",
+    "evt_2026_3640",
+    "evt_2026_3878"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Colorado Boulder: Across 33 certified ED cells, the documented category totals are Harassment or threat (66), Vandalism (5), Other source-backed civil rights event (2).",
+      "supporting_record_ids": [
+        "evt_2026_0083",
+        "evt_2026_0681",
+        "evt_2026_1180",
+        "evt_2026_1427",
+        "evt_2026_1683",
+        "evt_2026_1787",
+        "evt_2026_1839",
+        "evt_2026_1852",
+        "evt_2026_1865",
+        "evt_2026_1878",
+        "evt_2026_1891",
+        "evt_2026_1904",
+        "evt_2026_1917",
+        "evt_2026_1930",
+        "evt_2026_1943",
+        "evt_2026_1954",
+        "evt_2026_1965",
+        "evt_2026_1975",
+        "evt_2026_1985",
+        "evt_2026_2768",
+        "evt_2026_2801",
+        "evt_2026_2897",
+        "evt_2026_2931",
+        "evt_2026_3185",
+        "evt_2026_3336",
+        "evt_2026_3415",
+        "evt_2026_3535",
+        "evt_2026_3579",
+        "evt_2026_3603",
+        "evt_2026_3623",
+        "evt_2026_3632",
+        "evt_2026_3640",
+        "evt_2026_3878"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 73,
+    "certified_cell_count": 33,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0083",
+        "record_hash": "sha256:a2441d7b92101223ef9d35f22b152783befd5094f26c0bbfe67d918f92af0267",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK973",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_0681",
+        "record_hash": "sha256:b991eb6ed0e02c2e793ad15f6e1290a110106a979c74e8e62518d777ca1b9a5f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL973",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1180",
+        "record_hash": "sha256:318bd942bd5c8ea16dcf689d5a4024e0ec6d3fbaebb011c175d309ddd4f0f3d5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ973",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1427",
+        "record_hash": "sha256:e132b04355786bf150af14f4f0e0b15fed1a70cdfa5d8f21b9b1a12d2349f88a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM973",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1683",
+        "record_hash": "sha256:2162374ffad021a4740f4da7c9a7b2c8d315b727c97e8018720c263eb527ba74",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV973",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1787",
+        "record_hash": "sha256:093feaac8f201690415ccc15727099d6a801565c0642e209104cbd35b74dea54",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN973",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1839",
+        "record_hash": "sha256:b51e85d67bda8911591c3d4ac2304bf59d2486e20aefd2f899d450c4c66eb328",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR973",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1852",
+        "record_hash": "sha256:7d1eaccf5201391cfff8d7a85685daec6edf4f741e83f0d55c26c13bff3c8b35",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC973",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1865",
+        "record_hash": "sha256:6beb530254b1552263f255a7d55bd347e2c313351d41133998e12280a51d3505",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MV973",
+        "column": "SIM_A_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1878",
+        "record_hash": "sha256:c20432630a96f292f697143f8c066c481872a2e4c9b4e65616cc81af5b803ded",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT973",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1891",
+        "record_hash": "sha256:c83dcf7615e9d705e2bfe32f6d4a86c894151b1e019aafe1b36fe111dfa820b1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO973",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 15
+      },
+      {
+        "event_id": "evt_2026_1904",
+        "record_hash": "sha256:bc3e1ec18aad2390d6f4474d4ace08b8704e9d02c41edd58d5b8b2bfab9f4d42",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV973",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 6
+      },
+      {
+        "event_id": "evt_2026_1917",
+        "record_hash": "sha256:ec6797913b0b24e2fa16e642045cc81c64fd850a5bf8af121fa98413cb2ae0b0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP973",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_1930",
+        "record_hash": "sha256:c93886c2f0929c5c9f661050acb2891b3dbdf2ee6f10d86a48d2b017ca455ece",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR973",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_1943",
+        "record_hash": "sha256:12150d009658898a6a833e79cfb684de1de9776a31d203f9c80684502f9d9d5c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT973",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1954",
+        "record_hash": "sha256:5646546af5bce648c1deabc63892ac7527d138d929a515ca2876362a499b5f4f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU973",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1965",
+        "record_hash": "sha256:6cbde5d2647460cc1a77dfe05ae4d04664789785c4f2e1192b3795cdebf6b601",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HZ973",
+        "column": "SIM_A_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1975",
+        "record_hash": "sha256:bb97f1c3eee0abad308e7b63687396a7552796de93f5e22a4adcf4b567e66fab",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX973",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1985",
+        "record_hash": "sha256:1c5021abdc0fe154a4672a38c4af9edc733dcd1d974e244897a5d6a1f8143a0d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS973",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2768",
+        "record_hash": "sha256:d34bf6d0a9088750bf57b11b37077fb09bed70ac8bd8097fef2a2f7949cfd016",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV973",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2801",
+        "record_hash": "sha256:95adfb4cd945b9f550309b58f35062e7b3b38f48b7472653813c657807de5474",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO973",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2897",
+        "record_hash": "sha256:edd31ef0252f7024ff538a55fd988b64b7285c905583af513dd441dd1eb513c2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM973",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2931",
+        "record_hash": "sha256:e1792cb714fe03ff836203eb8bf69eb8fa7f38ff8b07031de76ec10d5d03953c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV973",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3185",
+        "record_hash": "sha256:cb3d56716e39f4a1540852ada933e3faa913a066614489584efc455253b435a8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ973",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3336",
+        "record_hash": "sha256:5fb63935bdd9d3ad113af84e7156a21f5b86ab8d07c2283e4dddd0371ffd3f37",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN973",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3415",
+        "record_hash": "sha256:1c4fbdc1d7e3e289cd6feb099397063f4a15eb510ab11910fb204aa8cb2e4d95",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK973",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3535",
+        "record_hash": "sha256:2a87ec9f3fa53f97b2ab1a30c144e9a18c630ff824b28439983eb357cc7c89d3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC973",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3579",
+        "record_hash": "sha256:8a2fcb9067c2a1cb2b4785306ecd8fedace022804cc7401253ae4eb5e5d02976",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MV973",
+        "column": "SIM_A_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3603",
+        "record_hash": "sha256:5deda2f1072e49749bac910500a8ac360661762e1d6e5484b686b49d021b51dd",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO973",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_3623",
+        "record_hash": "sha256:a0ca159f2f090604db1c77032de2c88b1584ae6d73354a4a4d38b12bd104a33f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR973",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3632",
+        "record_hash": "sha256:e109e88c12b91a261433ff35e8af5b7beb28cecf86dd024b8e736c85ea01414c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT973",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3640",
+        "record_hash": "sha256:333ed59d34a34793a89d0396003f030f79333a07ef42bd940a3a3ebe8fa5168e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP973",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3878",
+        "record_hash": "sha256:904c61c7dcc6275d75963c4e193f5508b7fd2e31f9c3e4855237c7d3e26ecdf5",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS977",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_colorado_boulder&signal_id=sig_cf2922ca5795a1f0a25f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_cf2922ca5795a1f0a25f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Colorado Boulder. Across 33 certified ED cells, the documented category totals are Harassment or threat (66), Vandalism (5), Other source-backed civil rights even… Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_cf2922ca5795a1f0a25f/",
+    "proactive_reply": "Relevant certified public-data context for University of Colorado Boulder: https://campusevidencelab.org/signals/sig_cf2922ca5795a1f0a25f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

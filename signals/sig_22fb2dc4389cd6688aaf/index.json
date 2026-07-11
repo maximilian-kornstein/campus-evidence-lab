@@ -1,0 +1,221 @@
+{
+  "id": "sig_22fb2dc4389cd6688aaf",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_929fa048a07ef996e73d",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8075d14af7b65f7b7d30",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_wisconsin_milwaukee/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_wisconsin_milwaukee"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 12 certified ED cells, the reported geography totals are on-campus (8), residence-hall (4), public-property (1)."
+  },
+  "institution": {
+    "id": "university_of_wisconsin_milwaukee",
+    "name": "University of Wisconsin-Milwaukee",
+    "city": "MILWAUKEE",
+    "state": "WI"
+  },
+  "record_ids": [
+    "evt_2026_0448",
+    "evt_2026_0858",
+    "evt_2026_1101",
+    "evt_2026_1279",
+    "evt_2026_1474",
+    "evt_2026_1519",
+    "evt_2026_1563",
+    "evt_2026_2590",
+    "evt_2026_3153",
+    "evt_2026_3290",
+    "evt_2026_3394",
+    "evt_2026_3601"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Wisconsin-Milwaukee: Across 12 certified ED cells, the reported geography totals are on-campus (8), residence-hall (4), public-property (1).",
+      "supporting_record_ids": [
+        "evt_2026_0448",
+        "evt_2026_0858",
+        "evt_2026_1101",
+        "evt_2026_1279",
+        "evt_2026_1474",
+        "evt_2026_1519",
+        "evt_2026_1563",
+        "evt_2026_2590",
+        "evt_2026_3153",
+        "evt_2026_3290",
+        "evt_2026_3394",
+        "evt_2026_3601"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 13,
+    "certified_cell_count": 12,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0448",
+        "record_hash": "sha256:678fcdd8ab036f596eaddc8fb8481b7f2a082be31646d82b680ec10dcfc0e6b8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ7072",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0858",
+        "record_hash": "sha256:16ef401be5cc2c2fd909cf8f1c1964ef30af59368690bae210726e39bac5b30f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ7072",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1101",
+        "record_hash": "sha256:b45719194d01c98d6c77ff309525a69d74c530cdd577780ad679ad1053ba7311",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD7072",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1279",
+        "record_hash": "sha256:663422e21400c184fa0f109cf7687a507d10fd49646dda4642f3732e756337af",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DD7072",
+        "column": "SIM_A_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1474",
+        "record_hash": "sha256:d4561c93c521fc242bf8c016779d733b175b4039241b1bc1bd6d4285336845a8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB7072",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1519",
+        "record_hash": "sha256:fd1063e911941cfa0eb2d5d1a28d6b101fd2611c5a5c79ee09384e8bec4e919d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC7072",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1563",
+        "record_hash": "sha256:63775fde273c7769e3d8feae06d58993f963c7dd66f9e10272472c0926d8d13c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED7072",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2590",
+        "record_hash": "sha256:bce846dbd00090b40afb7822c197d38ee9c596fc76d0c295e37fc7a92e8dded5",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS7072",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3153",
+        "record_hash": "sha256:4099f37a0d2de6195cb26951650d65c584b71efd58506218626c985aced6dfe9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ7072",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3290",
+        "record_hash": "sha256:e68979ded308117aabbbbb5806c7dcc113664f0d19269ef1db67386dc56721b2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB7072",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3394",
+        "record_hash": "sha256:0499c87011a920d5ec7e379e46e93b29d5eece2393300370439ed9c741d08b26",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC7072",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3601",
+        "record_hash": "sha256:f41687b84ffebd4fb8d91cacb0bd571009e86d16e10057187aa3db0360311dce",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED7072",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_wisconsin_milwaukee&signal_id=sig_22fb2dc4389cd6688aaf",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_22fb2dc4389cd6688aaf/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Wisconsin-Milwaukee. Across 12 certified ED cells, the reported geography totals are on-campus (8), residence-hall (4), public-property (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_22fb2dc4389cd6688aaf/",
+    "proactive_reply": "Relevant certified public-data context for University of Wisconsin-Milwaukee: https://campusevidencelab.org/signals/sig_22fb2dc4389cd6688aaf/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

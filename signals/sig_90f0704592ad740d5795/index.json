@@ -1,0 +1,125 @@
+{
+  "id": "sig_90f0704592ad740d5795",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_7f03b016a707b14ebebf",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_bcb475f080b625ded94a",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/las_positas_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "las_positas_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Religion (3), Race (1)."
+  },
+  "institution": {
+    "id": "las_positas_college",
+    "name": "Las Positas College",
+    "city": "LIVERMORE",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1339",
+    "evt_2026_1648",
+    "evt_2026_2271",
+    "evt_2026_2331"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Las Positas College: Across 4 certified ED cells, the source-supported affected-community totals are Religion (3), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_1339",
+        "evt_2026_1648",
+        "evt_2026_2271",
+        "evt_2026_2331"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1339",
+        "record_hash": "sha256:c2277e270d1f63f301319aae0ccca399b5d15b9f158734f9aee2b2aedf7ec43a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT7443",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1648",
+        "record_hash": "sha256:6a92d30f55f745eb237458461dd71f5d42d7ed78c6f17d360e192ec047d0794b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU7443",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2271",
+        "record_hash": "sha256:e444c33ad29b9cf14cb601b1ea27c0794b8d231fb5b3c3c192465710ed21a42d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP7443",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2331",
+        "record_hash": "sha256:dc77417bb97f38b15fcbe566272032be5d4fdebc6dc09d7190a7415b6b4f9ebf",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY7443",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=las_positas_college&signal_id=sig_90f0704592ad740d5795",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_90f0704592ad740d5795/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Las Positas College. Across 4 certified ED cells, the source-supported affected-community totals are Religion (3), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_90f0704592ad740d5795/",
+    "proactive_reply": "Relevant certified public-data context for Las Positas College: https://campusevidencelab.org/signals/sig_90f0704592ad740d5795/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

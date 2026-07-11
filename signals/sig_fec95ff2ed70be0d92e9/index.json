@@ -1,0 +1,125 @@
+{
+  "id": "sig_fec95ff2ed70be0d92e9",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_a77e1e099391143735f7",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_0754dbf9e9b81ebf5fbc",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/central_lakes_college_brainerd/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "central_lakes_college_brainerd"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Gender (2), LGBTQ+ (1), Race (1)."
+  },
+  "institution": {
+    "id": "central_lakes_college_brainerd",
+    "name": "Central Lakes College-Brainerd",
+    "city": "BRAINERD",
+    "state": "MN"
+  },
+  "record_ids": [
+    "evt_2026_0244",
+    "evt_2026_0920",
+    "evt_2026_1120",
+    "evt_2026_3102"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Central Lakes College-Brainerd: Across 4 certified ED cells, the source-supported affected-community totals are Gender (2), LGBTQ+ (1), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_0244",
+        "evt_2026_0920",
+        "evt_2026_1120",
+        "evt_2026_3102"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0244",
+        "record_hash": "sha256:4c5676d415a5e5847db448a805e83765c9ff1617dfb5fc1b0275901105c9db52",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NO3325",
+        "column": "INTIM_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0920",
+        "record_hash": "sha256:b542fbd5dbec98e85364d0ee39a886da9ff4344730ce77a013a9727f869ae11f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HZ3325",
+        "column": "SIM_A_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1120",
+        "record_hash": "sha256:e15a9b09282e1f120cb15aca6262a4fd708acfcb1ee6fe43b07877402e415944",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3325",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3102",
+        "record_hash": "sha256:ad6260e22fa2c8d81ea6c4132b55f750c369392430f3a72c77485082151961eb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HZ3325",
+        "column": "SIM_A_GEN23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=central_lakes_college_brainerd&signal_id=sig_fec95ff2ed70be0d92e9",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_fec95ff2ed70be0d92e9/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Central Lakes College-Brainerd. Across 4 certified ED cells, the source-supported affected-community totals are Gender (2), LGBTQ+ (1), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_fec95ff2ed70be0d92e9/",
+    "proactive_reply": "Relevant certified public-data context for Central Lakes College-Brainerd: https://campusevidencelab.org/signals/sig_fec95ff2ed70be0d92e9/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

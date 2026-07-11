@@ -1,0 +1,241 @@
+{
+  "id": "sig_750db0d45b405c4e83ba",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_8de2cccf5eda95c2c5f1",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_05a77f669867cbcafebf",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_georgia/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_georgia"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 13 certified ED cells, the documented category totals are Vandalism (10), Harassment or threat (4)."
+  },
+  "institution": {
+    "id": "university_of_georgia",
+    "name": "University of Georgia",
+    "city": "ATHENS",
+    "state": "GA"
+  },
+  "record_ids": [
+    "evt_2026_0379",
+    "evt_2026_0910",
+    "evt_2026_1184",
+    "evt_2026_1453",
+    "evt_2026_1500",
+    "evt_2026_1544",
+    "evt_2026_1588",
+    "evt_2026_1630",
+    "evt_2026_3244",
+    "evt_2026_3316",
+    "evt_2026_3358",
+    "evt_2026_3397",
+    "evt_2026_3843"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Georgia: Across 13 certified ED cells, the documented category totals are Vandalism (10), Harassment or threat (4).",
+      "supporting_record_ids": [
+        "evt_2026_0379",
+        "evt_2026_0910",
+        "evt_2026_1184",
+        "evt_2026_1453",
+        "evt_2026_1500",
+        "evt_2026_1544",
+        "evt_2026_1588",
+        "evt_2026_1630",
+        "evt_2026_3244",
+        "evt_2026_3316",
+        "evt_2026_3358",
+        "evt_2026_3397",
+        "evt_2026_3843"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 14,
+    "certified_cell_count": 13,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0379",
+        "record_hash": "sha256:8d1dcf10fa0b2fc63d17742d488533280f45a76f9017ac787325e0cf1c8e10db",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR1645",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0910",
+        "record_hash": "sha256:b6a7ec76421713e38ec22d755bd6d54f015fa43c9f47c15622e579af69f5cb66",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV1645",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1184",
+        "record_hash": "sha256:326482daf7f1b21585aaa89460f6c1cc365ffa1b42add218c32602b244fc6236",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ID1645",
+        "column": "SIM_A_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1453",
+        "record_hash": "sha256:ade8212b5296497f4f234996a66f519b5717662adcf772a78b8ae4eab9531762",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ1645",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1500",
+        "record_hash": "sha256:0029c9f272e2380a8e0b8d7f961640766a7c6430eba577de328868ea9c6ab0d5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED1645",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1544",
+        "record_hash": "sha256:f030d0ee6fb102a7a95c5853bae1a03785991c63cb474e2f96739983ca877fc6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT1645",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1588",
+        "record_hash": "sha256:dc7e9f810b57f97a5f3791e0aff3867b283c2bd62cb1f3fe1cdb9b4e2cb163e8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB1645",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1630",
+        "record_hash": "sha256:5270d51f885f9a1990f4a0ec0b40c78a1f95d3aaf6ff66719b5444ae3294b9cb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC1645",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3244",
+        "record_hash": "sha256:a54cf1880c3f92ea46b5ff6756be48051c80ffc2b8bb9e519c839b4b68ed96af",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ1645",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3316",
+        "record_hash": "sha256:3b9365b307cf8755e9c12fe1f7552a2561ac68fd06f6294133668c87133bc9b5",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB1645",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3358",
+        "record_hash": "sha256:c55e997dc7236ea23921cc080b8636e3e39d43fb371273d79f877ec529d5bbef",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC1645",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3397",
+        "record_hash": "sha256:49585aeefe9eb52567326f8031461a2be8b7e1b43adc6a3fc05ec1bee24973ca",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED1645",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3843",
+        "record_hash": "sha256:516a7b1ce14584f130121ac6989a4ec5ac76d1df9980bc0e42d3416b11b09adf",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED1652",
+        "column": "VANDAL_SEX21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_georgia&signal_id=sig_750db0d45b405c4e83ba",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_750db0d45b405c4e83ba/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Georgia. Across 13 certified ED cells, the documented category totals are Vandalism (10), Harassment or threat (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_750db0d45b405c4e83ba/",
+    "proactive_reply": "Relevant certified public-data context for University of Georgia: https://campusevidencelab.org/signals/sig_750db0d45b405c4e83ba/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

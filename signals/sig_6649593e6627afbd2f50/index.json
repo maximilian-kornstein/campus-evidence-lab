@@ -1,0 +1,125 @@
+{
+  "id": "sig_6649593e6627afbd2f50",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_38b0fcfb7964000d8194",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_9856fb9576a7f184e3b7",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/university_of_florida/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_florida"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "university_of_florida",
+    "name": "University of Florida",
+    "city": "Gainesville",
+    "state": "FL"
+  },
+  "record_ids": [
+    "evt_2026_0378",
+    "evt_2026_0824",
+    "evt_2026_1109",
+    "evt_2026_3269"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Florida: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0378",
+        "evt_2026_0824",
+        "evt_2026_1109",
+        "evt_2026_3269"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0378",
+        "record_hash": "sha256:1f64aaf3e448340a482d22fef7718bc717fc9e28a27693ad9463d70960fd05a2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1272",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0824",
+        "record_hash": "sha256:8cd32749585117a7d1c0e81a586670a3bd5efb888b49d132d4b3a4e5eb08c0cc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MU1272",
+        "column": "SIM_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1109",
+        "record_hash": "sha256:5dfaf12647af42e58bbeb07d0855c3d056bc4f4a380e66c9411d49da8d07aee9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BU1272",
+        "column": "AGG_A_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3269",
+        "record_hash": "sha256:e986eceac1a9f749c26af7288520db9aa2b5e469a4b1ffc028f249485ab99456",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BU1272",
+        "column": "AGG_A_GID22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_florida&signal_id=sig_6649593e6627afbd2f50",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6649593e6627afbd2f50/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Florida. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6649593e6627afbd2f50/",
+    "proactive_reply": "Relevant certified public-data context for University of Florida: https://campusevidencelab.org/signals/sig_6649593e6627afbd2f50/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

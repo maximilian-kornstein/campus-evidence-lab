@@ -1,0 +1,125 @@
+{
+  "id": "sig_6405583e32eef808aa7f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_770c3196661bc33e8dd1",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_5b2026bf4267451e8401",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/union_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "union_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (4), public-property (2)."
+  },
+  "institution": {
+    "id": "union_college",
+    "name": "Union College",
+    "city": "Schenectady",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1818",
+    "evt_2026_2140",
+    "evt_2026_2302",
+    "evt_2026_2649"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Union College: Across 4 certified ED cells, the reported geography totals are on-campus (4), public-property (2).",
+      "supporting_record_ids": [
+        "evt_2026_1818",
+        "evt_2026_2140",
+        "evt_2026_2302",
+        "evt_2026_2649"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1818",
+        "record_hash": "sha256:af1c2dd88c7b95f361a5bb30bb43b858332718e7ff44a232a951bcfe8a48535b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI4511",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2140",
+        "record_hash": "sha256:a9aa8b1186d89acea3a28ed2edbde33e395d032672a88a6c11d7160f86ac7161",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA4511",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2302",
+        "record_hash": "sha256:4d61eaaeeeb7d4d6cc4668514f20395a141a110acc4913223081dfeff80aa4d4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU4511",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2649",
+        "record_hash": "sha256:5e551be8e8c7bf8fed14dc09c4f189af0fce13ce04c3e7f9bc6536027bc7697f",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU4511",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=union_college&signal_id=sig_6405583e32eef808aa7f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6405583e32eef808aa7f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Union College. Across 4 certified ED cells, the reported geography totals are on-campus (4), public-property (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6405583e32eef808aa7f/",
+    "proactive_reply": "Relevant certified public-data context for Union College: https://campusevidencelab.org/signals/sig_6405583e32eef808aa7f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

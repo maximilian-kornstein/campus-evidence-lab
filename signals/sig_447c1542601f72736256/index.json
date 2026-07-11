@@ -1,0 +1,185 @@
+{
+  "id": "sig_447c1542601f72736256",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_1b41d502be6e0b3f5267",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_2790c66973136c4fde2d",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/rhode_island_school_of_design/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "rhode_island_school_of_design"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the documented category totals are Vandalism (8), Harassment or threat (2)."
+  },
+  "institution": {
+    "id": "rhode_island_school_of_design",
+    "name": "Rhode Island School of Design",
+    "city": "PROVIDENCE",
+    "state": "RI"
+  },
+  "record_ids": [
+    "evt_2026_0162",
+    "evt_2026_0804",
+    "evt_2026_1013",
+    "evt_2026_1093",
+    "evt_2026_1169",
+    "evt_2026_1239",
+    "evt_2026_1272",
+    "evt_2026_2958",
+    "evt_2026_3113"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Rhode Island School of Design: Across 9 certified ED cells, the documented category totals are Vandalism (8), Harassment or threat (2).",
+      "supporting_record_ids": [
+        "evt_2026_0162",
+        "evt_2026_0804",
+        "evt_2026_1013",
+        "evt_2026_1093",
+        "evt_2026_1169",
+        "evt_2026_1239",
+        "evt_2026_1272",
+        "evt_2026_2958",
+        "evt_2026_3113"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0162",
+        "record_hash": "sha256:0f95557efddc32574ae32f4a32f5481b36235c6a6fc73071bca15e32cccf3919",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU5630",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0804",
+        "record_hash": "sha256:32e115e9a663557f240ad516f9197439ce8e057ce3bd409c80a4ceb9f1ab545f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA5630",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1013",
+        "record_hash": "sha256:4722ecf9ddf587e13a0eee80cc6cd90c09fafa486e4fd6e0a3cfea8b213d79a6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA5630",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1093",
+        "record_hash": "sha256:9ef3d29fda6d5c6d58af61540ff371ca56bbaa8eb646f1ab87f556cfe6e3adfc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5630",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1169",
+        "record_hash": "sha256:2be35a4796045b2ac223e9279e3a69cc00de72e362b0a954ff2dd0d005af1ef9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA5630",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1239",
+        "record_hash": "sha256:762ecb60c7ce5def77e6c32e01d303128979ee514ddba36ff9afc93795c1f067",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB5630",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1272",
+        "record_hash": "sha256:89cdd1fe2ae6ca2bbc5b9243474894f3463eac79340bce655e04937788abd809",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5630",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2958",
+        "record_hash": "sha256:2d2a3d6edbab11132381b51feae32531b94ec6c8af5c897f416dedbc62fc025a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU5630",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3113",
+        "record_hash": "sha256:e9ef0a1b415180ca09fcc20371fb5a603ca27dee3e93efc034ebb7ca8409600b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5630",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=rhode_island_school_of_design&signal_id=sig_447c1542601f72736256",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_447c1542601f72736256/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Rhode Island School of Design. Across 9 certified ED cells, the documented category totals are Vandalism (8), Harassment or threat (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_447c1542601f72736256/",
+    "proactive_reply": "Relevant certified public-data context for Rhode Island School of Design: https://campusevidencelab.org/signals/sig_447c1542601f72736256/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}

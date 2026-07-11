@@ -1,0 +1,193 @@
+{
+  "id": "sig_d87a018e126641dfc6f4",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_a9a63837398b7b98c26e",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8d6e179ce685d5a1fa4e",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/university_of_alaska_fairbanks/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T14:23:16.697Z",
+    "institution_ids": [
+      "university_of_alaska_fairbanks"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "university_of_alaska_fairbanks",
+    "name": "University of Alaska Fairbanks",
+    "city": "FAIRBANKS",
+    "state": "AK"
+  },
+  "record_ids": [
+    "evt_2026_0100",
+    "evt_2026_0724",
+    "evt_2026_0815",
+    "evt_2026_0901",
+    "evt_2026_0982",
+    "evt_2026_2798",
+    "evt_2026_2823",
+    "evt_2026_2970",
+    "evt_2026_3790"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Alaska Fairbanks: Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0100",
+        "evt_2026_0724",
+        "evt_2026_0815",
+        "evt_2026_0901",
+        "evt_2026_0982",
+        "evt_2026_2798",
+        "evt_2026_2823",
+        "evt_2026_2970",
+        "evt_2026_3790"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0100",
+        "record_hash": "sha256:13b17d093aecf1b048e8d9c19033445f5aa43b7bc417af1b369c51f4b53ce6d7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND126",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0724",
+        "record_hash": "sha256:490a3ea8dcfa41b316403ac7093f314b660a79204b885674b8a33c20a3050738",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT126",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0815",
+        "record_hash": "sha256:f69c70ca2346a6fefac11cf184dbc0c430290174a0a057fd26b1773027444541",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV126",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0901",
+        "record_hash": "sha256:3405fab1215a050082219a1884cdb99415b7f04c0283cff48690da2ee24e9e4f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GO126",
+        "column": "AGG_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0982",
+        "record_hash": "sha256:c99bab3c284b2221d57fcd02967f8b956f3392cb299c145c8dd458d6b99a6fe3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX126",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2798",
+        "record_hash": "sha256:6dffff285c5b869c4e366ea372ef18984ed3b08688dcd6bf86168c5603de1af2",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BQ131",
+        "column": "AGG_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2823",
+        "record_hash": "sha256:4e7013cd9e9a1d1fe01a1ecbefcdc188c048307670500d053a16f6ff623ba735",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS131",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2970",
+        "record_hash": "sha256:0aac7aae88804d6c1c17049426b0800227e13fb6d9a663d5271eed3e30b8aac0",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX126",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3790",
+        "record_hash": "sha256:83c72f7aaba92952b90322b9c025fbf624f1f59f718e789aab7e05924cb68bda",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED126",
+        "column": "VANDAL_SEX21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_alaska_fairbanks&signal_id=sig_d87a018e126641dfc6f4",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_d87a018e126641dfc6f4/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Alaska Fairbanks. Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_d87a018e126641dfc6f4/",
+    "proactive_reply": "Relevant certified public-data context for University of Alaska Fairbanks: https://campusevidencelab.org/signals/sig_d87a018e126641dfc6f4/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T14:23:16.697Z",
+  "updated_at": "2026-07-11T14:23:16.697Z",
+  "correction_status": "none"
+}
