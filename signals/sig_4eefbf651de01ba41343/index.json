@@ -1,0 +1,185 @@
+{
+  "id": "sig_4eefbf651de01ba41343",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_ca744229fc89f84f2d47",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_4eaf5a0cdab134f559a1",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_pittsburgh_pittsburgh_campus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_pittsburgh_pittsburgh_campus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the source-supported affected-community totals are Ethnicity (4), LGBTQ+ (2), Race (2), National origin (1)."
+  },
+  "institution": {
+    "id": "university_of_pittsburgh_pittsburgh_campus",
+    "name": "University of Pittsburgh-Pittsburgh Campus",
+    "city": "PITTSBURGH",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0303",
+    "evt_2026_0972",
+    "evt_2026_1725",
+    "evt_2026_2123",
+    "evt_2026_2168",
+    "evt_2026_2583",
+    "evt_2026_2848",
+    "evt_2026_3389",
+    "evt_2026_3727"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Pittsburgh-Pittsburgh Campus: Across 9 certified ED cells, the source-supported affected-community totals are Ethnicity (4), LGBTQ+ (2), Race (2), National origin (1).",
+      "supporting_record_ids": [
+        "evt_2026_0303",
+        "evt_2026_0972",
+        "evt_2026_1725",
+        "evt_2026_2123",
+        "evt_2026_2168",
+        "evt_2026_2583",
+        "evt_2026_2848",
+        "evt_2026_3389",
+        "evt_2026_3727"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0303",
+        "record_hash": "sha256:e0d1e3e12b6983c956d711ac0fc08527761e6f30d6c406cd04e614e156f6e435",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ5522",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0972",
+        "record_hash": "sha256:b142aac7a3fd1b0251713607cd40162187f6efe87d23616e957f166c09ef296c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA5522",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1725",
+        "record_hash": "sha256:7fb22893b58dc37bfc98ae6f687ca83e4e0e26cbbc3aa0cb151377a9aea123d4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5522",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2123",
+        "record_hash": "sha256:d7d942a5222034e75126b476eee747fddd210ca0ccb703b02b486ee07b169e52",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5522",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2168",
+        "record_hash": "sha256:4a786082a87d616e8d2a0817f222b7b97d539475d8dcf0d2362a29f5c5a855b7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5522",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2583",
+        "record_hash": "sha256:6566cb524a60b043249b6197bbb316baed482f280203c4cc264e3fed9f6357e9",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU5522",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2848",
+        "record_hash": "sha256:2e87303b4e3e04d2aef7d2dc0929ab0c2f0b7f48e445e4cdec1a671357ee25ba",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU5522",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3389",
+        "record_hash": "sha256:8e06ca9e2a5a5ddf607653b2f423946ef486a7cc0f3966d2cbf8b665e0e80c74",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5522",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3727",
+        "record_hash": "sha256:8d27bb2b1838433e0e4d1b5fd939054353d236987ee9681af550b36ba9a01acb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5522",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_pittsburgh_pittsburgh_campus&signal_id=sig_4eefbf651de01ba41343",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4eefbf651de01ba41343/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Pittsburgh-Pittsburgh Campus. Across 9 certified ED cells, the source-supported affected-community totals are Ethnicity (4), LGBTQ+ (2), Race (2), National origin… Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_4eefbf651de01ba41343/",
+    "proactive_reply": "Relevant certified public-data context for University of Pittsburgh-Pittsburgh Campus: https://campusevidencelab.org/signals/sig_4eefbf651de01ba41343/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

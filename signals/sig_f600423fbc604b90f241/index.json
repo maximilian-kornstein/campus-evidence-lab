@@ -1,0 +1,133 @@
+{
+  "id": "sig_f600423fbc604b90f241",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_78d02e7ed828e5963114",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6128188eaf2415927942",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/bergen_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "bergen_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are National origin (4), Race (3)."
+  },
+  "institution": {
+    "id": "bergen_community_college",
+    "name": "Bergen Community College",
+    "city": "PARAMUS",
+    "state": "NJ"
+  },
+  "record_ids": [
+    "evt_2026_0250",
+    "evt_2026_0751",
+    "evt_2026_1266",
+    "evt_2026_3770"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Bergen Community College: Across 4 certified ED cells, the source-supported affected-community totals are National origin (4), Race (3).",
+      "supporting_record_ids": [
+        "evt_2026_0250",
+        "evt_2026_0751",
+        "evt_2026_1266",
+        "evt_2026_3770"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0250",
+        "record_hash": "sha256:c16ec62a431ef0d61df847203eb1bc4d0c7c3a37de52b0ea74cae6c3f6adfca8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR3910",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0751",
+        "record_hash": "sha256:0289063939f328bfca0c2e9982b163da090348606fa012e603f7c628febbe12a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS3910",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1266",
+        "record_hash": "sha256:7dcd15d8aa4537808155ccde854f46cc3746ec5657d2e3b3c2f949765fd5cd31",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV3910",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3770",
+        "record_hash": "sha256:ddae173defb36a700c50c2c2aa43368127741c29cc823d848d75c300b0ad2df1",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4012",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=bergen_community_college&signal_id=sig_f600423fbc604b90f241",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f600423fbc604b90f241/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Bergen Community College. Across 4 certified ED cells, the source-supported affected-community totals are National origin (4), Race (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_f600423fbc604b90f241/",
+    "proactive_reply": "Relevant certified public-data context for Bergen Community College: https://campusevidencelab.org/signals/sig_f600423fbc604b90f241/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

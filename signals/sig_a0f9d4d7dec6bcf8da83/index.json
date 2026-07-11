@@ -1,0 +1,185 @@
+{
+  "id": "sig_a0f9d4d7dec6bcf8da83",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_b6f007ad9c58ff1c733c",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_0e96d59c323de88c9ed9",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/california_polytechnic_state_university_san_luis_obispo/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "california_polytechnic_state_university_san_luis_obispo"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the source-supported affected-community totals are Religion (6), LGBTQ+ (5), National origin (2)."
+  },
+  "institution": {
+    "id": "california_polytechnic_state_university_san_luis_obispo",
+    "name": "California Polytechnic State University-San Luis Obispo",
+    "city": "SAN LUIS OBISPO",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0315",
+    "evt_2026_1066",
+    "evt_2026_1564",
+    "evt_2026_2145",
+    "evt_2026_2267",
+    "evt_2026_2329",
+    "evt_2026_3518",
+    "evt_2026_3639",
+    "evt_2026_3667"
+  ],
+  "bounded_claims": [
+    {
+      "text": "California Polytechnic State University-San Luis Obispo: Across 9 certified ED cells, the source-supported affected-community totals are Religion (6), LGBTQ+ (5), National origin (2).",
+      "supporting_record_ids": [
+        "evt_2026_0315",
+        "evt_2026_1066",
+        "evt_2026_1564",
+        "evt_2026_2145",
+        "evt_2026_2267",
+        "evt_2026_2329",
+        "evt_2026_3518",
+        "evt_2026_3639",
+        "evt_2026_3667"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 13,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0315",
+        "record_hash": "sha256:591ddb59f13d9cd411ba1ae427de823ca227afe475ee51299aa798814b8a21bb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV438",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1066",
+        "record_hash": "sha256:2fde470ef88d19c1860a49fdaf1ddf711dcb0778ee2dbbd4ba25c2c5db0f6350",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA438",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1564",
+        "record_hash": "sha256:b53c05b1925c1f448191c82b203a340eb5d3e32d78fe868715cd6549be4677d8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU438",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2145",
+        "record_hash": "sha256:407cab26b5946f71061c07f943986090dcaa4f82ead6962041567e408adae96a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY438",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_2267",
+        "record_hash": "sha256:02e8e76f56a6551dd0ea1276ee3347f0dd2c7e68fcfe1e2d66670aa27ff0bc89",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP438",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2329",
+        "record_hash": "sha256:a9ee66a92796e1aa64bdc576af7c5d3a4197fa454eb147ca95f6016885d75988",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ438",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3518",
+        "record_hash": "sha256:55274506b2479f296367c56df855ccfa1bf3736755de1d55de518cd25bdb2238",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA438",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3639",
+        "record_hash": "sha256:e1bc97a7d85700fd85040e8da2c1088413ff9b6cd2d37e39acd8b9c7c003273e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV438",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3667",
+        "record_hash": "sha256:ae88c2f75b47f25feef23ade0453c8bcdb4b2204854ed8e8f461c10f0ffe065d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ438",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=california_polytechnic_state_university_san_luis_obispo&signal_id=sig_a0f9d4d7dec6bcf8da83",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_a0f9d4d7dec6bcf8da83/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: California Polytechnic State University-San Luis Obispo. Across 9 certified ED cells, the source-supported affected-community totals are Religion (6), LGBTQ+ (5), National orig… Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_a0f9d4d7dec6bcf8da83/",
+    "proactive_reply": "Relevant certified public-data context for California Polytechnic State University-San Luis Obispo: https://campusevidencelab.org/signals/sig_a0f9d4d7dec6bcf8da83/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

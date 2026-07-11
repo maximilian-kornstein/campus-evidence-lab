@@ -1,0 +1,149 @@
+{
+  "id": "sig_ed5307d3ab61c7982224",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e3da2749a3df425a3e83",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e6ea053b7144158a24f8",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/dakota_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "dakota_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the documented category totals are Harassment or threat (10)."
+  },
+  "institution": {
+    "id": "dakota_state_university",
+    "name": "Dakota State University",
+    "city": "MADISON",
+    "state": "SD"
+  },
+  "record_ids": [
+    "evt_2026_0096",
+    "evt_2026_0761",
+    "evt_2026_0851",
+    "evt_2026_2960",
+    "evt_2026_3041",
+    "evt_2026_3079"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Dakota State University: Across 6 certified ED cells, the documented category totals are Harassment or threat (10).",
+      "supporting_record_ids": [
+        "evt_2026_0096",
+        "evt_2026_0761",
+        "evt_2026_0851",
+        "evt_2026_2960",
+        "evt_2026_3041",
+        "evt_2026_3079"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0096",
+        "record_hash": "sha256:3f0989b30c9ae28fa947c62eab763bf093d635f24d23ef6bd7e4c25098b7a957",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM5758",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0761",
+        "record_hash": "sha256:aa1cfb90e0246764aaa952ebf6c1c1a92725875e2e46b86d231ca4f9bb5d3fb7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NO5758",
+        "column": "INTIM_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0851",
+        "record_hash": "sha256:c2e7061100d9dab7279bd6c07f871f95bb9752b2d73c27653f44530bbebfd3ff",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT5758",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2960",
+        "record_hash": "sha256:4d7ba379dce9e0ee677127ad498dec7433e2a2593f03eff7588346beca3faeda",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM5758",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3041",
+        "record_hash": "sha256:32911d37d1a467c1963b7d71199a6140036a17178d8fc84db56676e9ecc1e480",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NO5758",
+        "column": "INTIM_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3079",
+        "record_hash": "sha256:ab50c5578e14045d1a0b43f3fe164caf0558d00fe414219b418ff2946ce018a7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT5758",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=dakota_state_university&signal_id=sig_ed5307d3ab61c7982224",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ed5307d3ab61c7982224/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Dakota State University. Across 6 certified ED cells, the documented category totals are Harassment or threat (10). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ed5307d3ab61c7982224/",
+    "proactive_reply": "Relevant certified public-data context for Dakota State University: https://campusevidencelab.org/signals/sig_ed5307d3ab61c7982224/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sig_6693b3ca81251161bbe1",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f48e72629e3cd614e645",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e74fa1ddf12f46b2d558",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/montgomery_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "montgomery_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (4)."
+  },
+  "institution": {
+    "id": "montgomery_college",
+    "name": "Montgomery College",
+    "city": "Rockville",
+    "state": "MD"
+  },
+  "record_ids": [
+    "evt_2026_0877",
+    "evt_2026_1258",
+    "evt_2026_1504",
+    "evt_2026_1613"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Montgomery College: Across 4 certified ED cells, the reported geography totals are on-campus (4).",
+      "supporting_record_ids": [
+        "evt_2026_0877",
+        "evt_2026_1258",
+        "evt_2026_1504",
+        "evt_2026_1613"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0877",
+        "record_hash": "sha256:ee8d043cb05117c6786cd9476b203b09d2896658f08ca98959644aaa776ac538",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU2857",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1258",
+        "record_hash": "sha256:df719f556969f457f506c71949b55afd151978fc1ee60f29d7ec553859b197cb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV2857",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1504",
+        "record_hash": "sha256:a74efd390c1764cfce8e082cb58399d97044a0f8f40e90046b89d4f524be5b69",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY2857",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1613",
+        "record_hash": "sha256:c08b6cf5f332abfa7324d88e0e6a6ed9a96fcae9f9807614fa86f25b87ccf39a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ2857",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=montgomery_college&signal_id=sig_6693b3ca81251161bbe1",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6693b3ca81251161bbe1/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Montgomery College. Across 4 certified ED cells, the reported geography totals are on-campus (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6693b3ca81251161bbe1/",
+    "proactive_reply": "Relevant certified public-data context for Montgomery College: https://campusevidencelab.org/signals/sig_6693b3ca81251161bbe1/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

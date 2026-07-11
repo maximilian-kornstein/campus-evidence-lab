@@ -1,0 +1,66 @@
+name: Activate CEL Signals
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_live:
+        description: "Type ACTIVATE to deploy and start the live ramp"
+        required: true
+
+jobs:
+  activate:
+    if: ${{ inputs.confirm_live == 'ACTIVATE' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run test:signals
+      - name: Configure D1 binding
+        run: sed -i "s/REPLACE_WITH_D1_DATABASE_ID/${D1_DATABASE_ID}/" wrangler.signals.toml
+        env:
+          D1_DATABASE_ID: ${{ secrets.SIGNALS_D1_DATABASE_ID }}
+      - name: Apply D1 schema
+        run: npx wrangler d1 execute cel-signals --remote --file cloudflare/signals/schema.sql --config wrangler.signals.toml
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Deploy Worker
+        run: npx wrangler deploy --config wrangler.signals.toml
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Configure runtime secrets
+        run: |
+          printf '%s' "$SIGNALS_ADMIN_TOKEN" | npx wrangler secret put SIGNALS_ADMIN_TOKEN --config wrangler.signals.toml
+          printf '%s' "$BLUESKY_IDENTIFIER" | npx wrangler secret put BLUESKY_IDENTIFIER --config wrangler.signals.toml
+          printf '%s' "$BLUESKY_APP_PASSWORD" | npx wrangler secret put BLUESKY_APP_PASSWORD --config wrangler.signals.toml
+          printf '%s' "$GMAIL_CLIENT_ID" | npx wrangler secret put GMAIL_CLIENT_ID --config wrangler.signals.toml
+          printf '%s' "$GMAIL_CLIENT_SECRET" | npx wrangler secret put GMAIL_CLIENT_SECRET --config wrangler.signals.toml
+          printf '%s' "$GMAIL_REFRESH_TOKEN" | npx wrangler secret put GMAIL_REFRESH_TOKEN --config wrangler.signals.toml
+          printf '%s' "$GMAIL_SENDER_EMAIL" | npx wrangler secret put GMAIL_SENDER_EMAIL --config wrangler.signals.toml
+          printf '%s' "$VISITOR_SALT" | npx wrangler secret put VISITOR_SALT --config wrangler.signals.toml
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          SIGNALS_ADMIN_TOKEN: ${{ secrets.SIGNALS_ADMIN_TOKEN }}
+          BLUESKY_IDENTIFIER: ${{ secrets.BLUESKY_IDENTIFIER }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
+          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
+          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+          GMAIL_SENDER_EMAIL: ${{ secrets.GMAIL_SENDER_EMAIL }}
+          VISITOR_SALT: ${{ secrets.SIGNALS_VISITOR_SALT }}
+      - name: Sync reviewed artifacts
+        run: npm run signals:sync -- --apply
+        env:
+          SIGNALS_WORKER_URL: ${{ secrets.SIGNALS_WORKER_URL }}
+          SIGNALS_ADMIN_TOKEN: ${{ secrets.SIGNALS_ADMIN_TOKEN }}
+      - name: Activate staged ramp
+        run: npm run signals:activate -- --confirm-live
+        env:
+          SIGNALS_WORKER_URL: ${{ secrets.SIGNALS_WORKER_URL }}
+          SIGNALS_ADMIN_TOKEN: ${{ secrets.SIGNALS_ADMIN_TOKEN }}

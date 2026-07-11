@@ -1,0 +1,161 @@
+{
+  "id": "sig_7fab64ef726239a83e54",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_588e0f3953183947eae8",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ba1e7fdbcf307634f372",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/state_university_of_new_york_at_plattsburgh/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "state_university_of_new_york_at_plattsburgh"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "state_university_of_new_york_at_plattsburgh",
+    "name": "State University of New York at Plattsburgh",
+    "city": "Queensbury",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1383",
+    "evt_2026_2119",
+    "evt_2026_2380",
+    "evt_2026_2402",
+    "evt_2026_2667",
+    "evt_2026_3696",
+    "evt_2026_3711"
+  ],
+  "bounded_claims": [
+    {
+      "text": "State University of New York at Plattsburgh: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_1383",
+        "evt_2026_2119",
+        "evt_2026_2380",
+        "evt_2026_2402",
+        "evt_2026_2667",
+        "evt_2026_3696",
+        "evt_2026_3711"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1383",
+        "record_hash": "sha256:72681a3a7bcf234e6c1dc4745fc71573ee9ecbe4fa423538d2386234056def83",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NP4462",
+        "column": "INTIM_DIS24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2119",
+        "record_hash": "sha256:d6729739dc8639698bad6d8d707a03bc27a848f32de5034a697da336ea769221",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4461",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2380",
+        "record_hash": "sha256:c67b2a81777fd6558cca440909c34529af10970f091d6d8d58c3bde58dc7e277",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ4462",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2402",
+        "record_hash": "sha256:864f556d2c45718f619c71b8c0cf1391c9e21a1710bd00397ac3fbf72ef97305",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4461",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2667",
+        "record_hash": "sha256:17f2c1ab64c8d4ddc27e45639a8d0b00557c6411906315e142a1491980a95b0a",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4461",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3696",
+        "record_hash": "sha256:79a0bb5bcba069812aeec08b5fec4b978038644dce68f22f6e34a5ac96bf0972",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ4462",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3711",
+        "record_hash": "sha256:512377e8e52b93da57af2202e810a6ef1ca04709ab01ee10475f1749883068e5",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4461",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=state_university_of_new_york_at_plattsburgh&signal_id=sig_7fab64ef726239a83e54",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7fab64ef726239a83e54/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: State University of New York at Plattsburgh. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7fab64ef726239a83e54/",
+    "proactive_reply": "Relevant certified public-data context for State University of New York at Plattsburgh: https://campusevidencelab.org/signals/sig_7fab64ef726239a83e54/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

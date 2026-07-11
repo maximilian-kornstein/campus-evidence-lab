@@ -1,0 +1,173 @@
+{
+  "id": "sig_1517c7b1510aacd779ed",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_51dd5d913e60e54cc862",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_b5c42d780ece0b6c0177",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/the_university_of_texas_at_san_antonio/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "the_university_of_texas_at_san_antonio"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the source-supported affected-community totals are Religion (6), National origin (2), Race (2), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "the_university_of_texas_at_san_antonio",
+    "name": "The University of Texas at San Antonio",
+    "city": "San Antonio",
+    "state": "TX"
+  },
+  "record_ids": [
+    "evt_2026_0115",
+    "evt_2026_0763",
+    "evt_2026_1413",
+    "evt_2026_1514",
+    "evt_2026_1726",
+    "evt_2026_1835",
+    "evt_2026_1900",
+    "evt_2026_3559"
+  ],
+  "bounded_claims": [
+    {
+      "text": "The University of Texas at San Antonio: Across 8 certified ED cells, the source-supported affected-community totals are Religion (6), National origin (2), Race (2), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_0115",
+        "evt_2026_0763",
+        "evt_2026_1413",
+        "evt_2026_1514",
+        "evt_2026_1726",
+        "evt_2026_1835",
+        "evt_2026_1900",
+        "evt_2026_3559"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0115",
+        "record_hash": "sha256:3a23becf077b2cbd34d129fbe9aea76e2c374988d9de0b637d9f9ee5970a4131",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL6370",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0763",
+        "record_hash": "sha256:81be5eafc3007a3b0bc9b6e7ed60de01f472c942c9a3604cf5b389f8276b34dc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK6370",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1413",
+        "record_hash": "sha256:c6d5100e117a92925eaf4f4d4cfaa54947e9056aac2016bad51de47659c49466",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NO6370",
+        "column": "INTIM_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1514",
+        "record_hash": "sha256:9935cdd05ca03a6ce2daa16b536ccffb63b598a0f2ba58f300ada2b7a704f140",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR6370",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1726",
+        "record_hash": "sha256:2599d40b0c1c49b02f23691dfed3bc169c76345d361dd9f7b748f3db06416497",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA6370",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1835",
+        "record_hash": "sha256:784a1d16376298960c5db245f0157598b9e10e6963391674d3ea3e9f5bffa31f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP6370",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1900",
+        "record_hash": "sha256:7bdb84424822fb2a73f219827fe7cf9a4797a48e623129bea1c9fea7971355bc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6370",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3559",
+        "record_hash": "sha256:240c1901444e7096cc4781a7d19c57e5a386334e5b3f0c03ea49b29653945e46",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP6370",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=the_university_of_texas_at_san_antonio&signal_id=sig_1517c7b1510aacd779ed",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_1517c7b1510aacd779ed/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: The University of Texas at San Antonio. Across 8 certified ED cells, the source-supported affected-community totals are Religion (6), National origin (2), Race (2), LGBTQ+ (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_1517c7b1510aacd779ed/",
+    "proactive_reply": "Relevant certified public-data context for The University of Texas at San Antonio: https://campusevidencelab.org/signals/sig_1517c7b1510aacd779ed/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

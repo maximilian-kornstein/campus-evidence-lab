@@ -1,0 +1,133 @@
+{
+  "id": "sig_adedb24b5b73fa381bd8",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_87cf702c3d419a621bcb",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6bba3ea96736a7c3afe5",
+    "title": "2023 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/massachusetts_college_of_liberal_arts/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "massachusetts_college_of_liberal_arts"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2023."
+  },
+  "institution": {
+    "id": "massachusetts_college_of_liberal_arts",
+    "name": "Massachusetts College of Liberal Arts",
+    "city": "North Adams",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0596",
+    "evt_2026_1669",
+    "evt_2026_3593",
+    "evt_2026_3889"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Massachusetts College of Liberal Arts: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2023.",
+      "supporting_record_ids": [
+        "evt_2026_0596",
+        "evt_2026_1669",
+        "evt_2026_3593",
+        "evt_2026_3889"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0596",
+        "record_hash": "sha256:c518dc05610bd4795cfaac2d5883607224f88555e08f006469cbf4c01d4e9cea",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY3023",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1669",
+        "record_hash": "sha256:a049a9ff7b8edc429c8a1f1539d506a127286d719f44ce21198c7d97b112378b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU3023",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3593",
+        "record_hash": "sha256:58b7248c1284f62db4678b0050c19bc66fb515c12bafcf58d59c469bd92686a5",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY3023",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3889",
+        "record_hash": "sha256:82960e64c554103d87fb5f893f955a9e26d00abb8fc69a1af7c6e62b4a3e9d66",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC3047",
+        "column": "VANDAL_REL21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=massachusetts_college_of_liberal_arts&signal_id=sig_adedb24b5b73fa381bd8",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_adedb24b5b73fa381bd8/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Massachusetts College of Liberal Arts. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2023. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_adedb24b5b73fa381bd8/",
+    "proactive_reply": "Relevant certified public-data context for Massachusetts College of Liberal Arts: https://campusevidencelab.org/signals/sig_adedb24b5b73fa381bd8/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

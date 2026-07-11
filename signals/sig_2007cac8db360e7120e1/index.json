@@ -1,0 +1,145 @@
+{
+  "id": "sig_2007cac8db360e7120e1",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_00df0b066523b0abe94c",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_83987069d103b5606ca5",
+    "title": "2023 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/harding_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "harding_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 3 reported statistics across 2 distinct cells for 2023."
+  },
+  "institution": {
+    "id": "harding_university",
+    "name": "Harding University",
+    "city": "Searcy",
+    "state": "AR"
+  },
+  "record_ids": [
+    "evt_2026_0177",
+    "evt_2026_0817",
+    "evt_2026_2468",
+    "evt_2026_2534",
+    "evt_2026_3744"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Harding University: Certified ED workbook cells document 3 reported statistics across 2 distinct cells for 2023.",
+      "supporting_record_ids": [
+        "evt_2026_0177",
+        "evt_2026_0817",
+        "evt_2026_2468",
+        "evt_2026_2534",
+        "evt_2026_3744"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0177",
+        "record_hash": "sha256:00b00d43703a62f20fceff23d43e21ae6c18f17986c26dacbfe430d4eab844d3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IC331",
+        "column": "SIM_A_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0817",
+        "record_hash": "sha256:c6cd268376e96a298054352d5c02829729761d854f85adc5daf9604447ab2ad1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS331",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2468",
+        "record_hash": "sha256:91eaf1fd0663071c9875661304311f04145638605367795a3625ee1fef19e209",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO331",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2534",
+        "record_hash": "sha256:d335ade00e353f237ed720c29efb00ada2aca5519c896721d9ea740fd2ce77d6",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS331",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3744",
+        "record_hash": "sha256:4a922e8a225277bf0ea9f25396b6eef45ad3f5a2132c697229be5901af9d2756",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS331",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=harding_university&signal_id=sig_2007cac8db360e7120e1",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_2007cac8db360e7120e1/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Harding University. Certified ED workbook cells document 3 reported statistics across 2 distinct cells for 2023. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_2007cac8db360e7120e1/",
+    "proactive_reply": "Relevant certified public-data context for Harding University: https://campusevidencelab.org/signals/sig_2007cac8db360e7120e1/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

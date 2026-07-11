@@ -1,0 +1,161 @@
+{
+  "id": "sig_172289cc9ed837a5f902",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c61468470e55be68bfbf",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_adaa5fc47ebec6f8d740",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/william_paterson_university_of_new_jersey/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "william_paterson_university_of_new_jersey"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the reported geography totals are on-campus (15), residence-hall (8)."
+  },
+  "institution": {
+    "id": "william_paterson_university_of_new_jersey",
+    "name": "William Paterson University of New Jersey",
+    "city": "WAYNE",
+    "state": "NJ"
+  },
+  "record_ids": [
+    "evt_2026_0584",
+    "evt_2026_1163",
+    "evt_2026_1553",
+    "evt_2026_1706",
+    "evt_2026_1843",
+    "evt_2026_3140",
+    "evt_2026_3303"
+  ],
+  "bounded_claims": [
+    {
+      "text": "William Paterson University of New Jersey: Across 7 certified ED cells, the reported geography totals are on-campus (15), residence-hall (8).",
+      "supporting_record_ids": [
+        "evt_2026_0584",
+        "evt_2026_1163",
+        "evt_2026_1553",
+        "evt_2026_1706",
+        "evt_2026_1843",
+        "evt_2026_3140",
+        "evt_2026_3303"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 23,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0584",
+        "record_hash": "sha256:e655707d046cd7e89d5e1d860d58793c7ab92e76e655457912f49dbd7a894c16",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM4049",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1163",
+        "record_hash": "sha256:b9bc685bd24eeea94253de31133c521d8ff3b11c42c9c3a39e8464c7ca3d9b33",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4049",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1553",
+        "record_hash": "sha256:bbcbf410fb00eac6d95e9b8ca2f130cef6cd6609ffa28f36500129314da19754",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4049",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 8
+      },
+      {
+        "event_id": "evt_2026_1706",
+        "record_hash": "sha256:2b7b62d7bf034489d1ad18637d71b7f989da4d45a621498da2a4633c689caeef",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4049",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1843",
+        "record_hash": "sha256:3a78f6f57a9b352b76a68aeb3837d527922078ed2caf5dc31d945f63b9091418",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4049",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3140",
+        "record_hash": "sha256:55088062752a5433ad2403eb2fa4844683bb993216399e115e276b2ea5ee489c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4049",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 7
+      },
+      {
+        "event_id": "evt_2026_3303",
+        "record_hash": "sha256:fab59d48430dfde27635cb1af8ea276ad1e87313e01bc323636831aa6b872d8c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4049",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=william_paterson_university_of_new_jersey&signal_id=sig_172289cc9ed837a5f902",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_172289cc9ed837a5f902/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: William Paterson University of New Jersey. Across 7 certified ED cells, the reported geography totals are on-campus (15), residence-hall (8). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_172289cc9ed837a5f902/",
+    "proactive_reply": "Relevant certified public-data context for William Paterson University of New Jersey: https://campusevidencelab.org/signals/sig_172289cc9ed837a5f902/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

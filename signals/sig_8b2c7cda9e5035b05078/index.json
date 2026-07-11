@@ -1,0 +1,161 @@
+{
+  "id": "sig_8b2c7cda9e5035b05078",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e585258f3d2d7ebd1f8e",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_e3c16ff99fd48c7753ec",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/cornell_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "cornell_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 1 reported statistic across 1 distinct cell for 2024."
+  },
+  "institution": {
+    "id": "cornell_university",
+    "name": "Cornell University",
+    "city": "Ithaca",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0844",
+    "evt_2026_2158",
+    "evt_2026_2258",
+    "evt_2026_2308",
+    "evt_2026_2344",
+    "evt_2026_2370",
+    "evt_2026_3258"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Cornell University: Certified ED workbook cells document 1 reported statistic across 1 distinct cell for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0844",
+        "evt_2026_2158",
+        "evt_2026_2258",
+        "evt_2026_2308",
+        "evt_2026_2344",
+        "evt_2026_2370",
+        "evt_2026_3258"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0844",
+        "record_hash": "sha256:675eec700a313d326e23b6d3d152f8f95925c4ce111b46c69fd5cd9fb7735fe3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ4174",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2158",
+        "record_hash": "sha256:fecc823bb82a68da929980aaca052ab4ff42bc5d5942d5f35c9c6e61407f1ab2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU4174",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_2258",
+        "record_hash": "sha256:ee862c38afad2f94559a5c1320b79ce93614c2ff12af1ea30c14c194b908e861",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4174",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2308",
+        "record_hash": "sha256:9a0f22306ccbc5128fb97a7489e044894490da9d5132fa18365fb500dd6d0bf0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD4174",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2344",
+        "record_hash": "sha256:27e2fd5bd4ad2eafa699075fd0c0951afb7bc7dd8c73131882072a7509e707eb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB4175",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2370",
+        "record_hash": "sha256:27789c668d15b6132088c6d6c92d1efe8cb14792ad27beb76f3c641572c5f973",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4174",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3258",
+        "record_hash": "sha256:5496ff36b63f2eef356ca5ada5c9d489acbb37d75077ac3185e0e5f2def34221",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU4174",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=cornell_university&signal_id=sig_8b2c7cda9e5035b05078",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_8b2c7cda9e5035b05078/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Cornell University. Certified ED workbook cells document 1 reported statistic across 1 distinct cell for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_8b2c7cda9e5035b05078/",
+    "proactive_reply": "Relevant certified public-data context for Cornell University: https://campusevidencelab.org/signals/sig_8b2c7cda9e5035b05078/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

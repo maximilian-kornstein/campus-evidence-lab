@@ -1,0 +1,193 @@
+{
+  "id": "sig_b1e1a3dd886d8f7103f5",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_3bff4b7d2d13cab66555",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_292e55014c0da8fea581",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_delaware/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_delaware"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the reported geography totals are on-campus (10), residence-hall (1)."
+  },
+  "institution": {
+    "id": "university_of_delaware",
+    "name": "University of Delaware",
+    "city": "NEWARK",
+    "state": "DE"
+  },
+  "record_ids": [
+    "evt_2026_0133",
+    "evt_2026_0684",
+    "evt_2026_0732",
+    "evt_2026_0778",
+    "evt_2026_0823",
+    "evt_2026_2900",
+    "evt_2026_3750",
+    "evt_2026_3798",
+    "evt_2026_3841"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Delaware: Across 9 certified ED cells, the reported geography totals are on-campus (10), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0133",
+        "evt_2026_0684",
+        "evt_2026_0732",
+        "evt_2026_0778",
+        "evt_2026_0823",
+        "evt_2026_2900",
+        "evt_2026_3750",
+        "evt_2026_3798",
+        "evt_2026_3841"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0133",
+        "record_hash": "sha256:1c9dfac590e6c796c302a0f81a79ad82dc23efd0c2567945ba3a768587fda72e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA1122",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0684",
+        "record_hash": "sha256:5d14b7ad451eb814f2a3dc80d09da1c882191f9112abca98d12600ecc29452ec",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL1122",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0732",
+        "record_hash": "sha256:565cab43d107abb34fb7df84b084baddbf0bfdfb82b8837fda6c3b7f2e0b50f8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV1122",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0778",
+        "record_hash": "sha256:1c109dc9e4ed22c9c76badcbcd900deaf61dda90e26fb60fbe793c962f92ee43",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE1122",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0823",
+        "record_hash": "sha256:4a51573636bb3ea126d6586bac3b4d66211fb0c6d9bc266de1ae78dc3579f0ea",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1122",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2900",
+        "record_hash": "sha256:6db1bfe256fa86a09750e76b4008d4a5f9b5da877f134928e81cbe60a5423540",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV1122",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3750",
+        "record_hash": "sha256:82b4283d0beca2dd6e5cdcd81bc75ac33ed74c523ef8725d9abd838bb1e93aa4",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ1125",
+        "column": "INTIM_NAT21",
+        "year": "2021",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3798",
+        "record_hash": "sha256:3904704169454bc41b26babd4e3fe5aa107a3f4743adffc59ba808217e8f550e",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1125",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3841",
+        "record_hash": "sha256:646b91696101a0fa2f443e943cbe31c9af5b8a5d4d2a9de626c4d11336399ecf",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU1125",
+        "column": "INTIM_SEX21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_delaware&signal_id=sig_b1e1a3dd886d8f7103f5",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b1e1a3dd886d8f7103f5/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Delaware. Across 9 certified ED cells, the reported geography totals are on-campus (10), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_b1e1a3dd886d8f7103f5/",
+    "proactive_reply": "Relevant certified public-data context for University of Delaware: https://campusevidencelab.org/signals/sig_b1e1a3dd886d8f7103f5/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

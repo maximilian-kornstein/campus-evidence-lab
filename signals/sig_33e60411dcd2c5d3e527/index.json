@@ -1,0 +1,137 @@
+{
+  "id": "sig_33e60411dcd2c5d3e527",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d34d1208bf77ebc08408",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_06f675b543434dfa2c2f",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/iowa_western_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "iowa_western_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (2)."
+  },
+  "institution": {
+    "id": "iowa_western_community_college",
+    "name": "Iowa Western Community College",
+    "city": "COUNCIL BLUFFS",
+    "state": "IA"
+  },
+  "record_ids": [
+    "evt_2026_0284",
+    "evt_2026_0826",
+    "evt_2026_1072",
+    "evt_2026_3095",
+    "evt_2026_3271"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Iowa Western Community College: Across 5 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (2).",
+      "supporting_record_ids": [
+        "evt_2026_0284",
+        "evt_2026_0826",
+        "evt_2026_1072",
+        "evt_2026_3095",
+        "evt_2026_3271"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0284",
+        "record_hash": "sha256:7e04ab6e7ec19df9f7eb81e50eb8f634cab3f42079cdea318ed86dd35f6ac731",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT2273",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0826",
+        "record_hash": "sha256:0824e41ae9dcf9b5b46eddbbd80325f00ef2f78bdc2ee5bfe872ca34dee2dda4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ2273",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1072",
+        "record_hash": "sha256:65b8c5ac38186c28904ee9ffd0ec4d0ba9c7712f6b5bc7503d5e4b2200275307",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ2273",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3095",
+        "record_hash": "sha256:1e276ba74f2a883f587877eb62405c015108723d81a5c6db5bc8e03eb494a540",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT2273",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3271",
+        "record_hash": "sha256:6ab9a5d9111e4620ae847219a0b6092343f54bd6809dc809f942179113fb39d4",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ2273",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=iowa_western_community_college&signal_id=sig_33e60411dcd2c5d3e527",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_33e60411dcd2c5d3e527/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Iowa Western Community College. Across 5 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_33e60411dcd2c5d3e527/",
+    "proactive_reply": "Relevant certified public-data context for Iowa Western Community College: https://campusevidencelab.org/signals/sig_33e60411dcd2c5d3e527/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

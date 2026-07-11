@@ -1,0 +1,257 @@
+{
+  "id": "sig_580bb96cb0c8ff10a763",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_57347777bb4c4f6cabfb",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6b22005e31b3c6af9dfe",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/swarthmore_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "swarthmore_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 15 certified ED cells, the reported geography totals are on-campus (16), residence-hall (7)."
+  },
+  "institution": {
+    "id": "swarthmore_college",
+    "name": "Swarthmore College",
+    "city": "Swarthmore",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0802",
+    "evt_2026_1468",
+    "evt_2026_1925",
+    "evt_2026_2092",
+    "evt_2026_2144",
+    "evt_2026_2180",
+    "evt_2026_2204",
+    "evt_2026_2219",
+    "evt_2026_2228",
+    "evt_2026_3558",
+    "evt_2026_3685",
+    "evt_2026_3728",
+    "evt_2026_3733",
+    "evt_2026_3736",
+    "evt_2026_3738"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Swarthmore College: Across 15 certified ED cells, the reported geography totals are on-campus (16), residence-hall (7).",
+      "supporting_record_ids": [
+        "evt_2026_0802",
+        "evt_2026_1468",
+        "evt_2026_1925",
+        "evt_2026_2092",
+        "evt_2026_2144",
+        "evt_2026_2180",
+        "evt_2026_2204",
+        "evt_2026_2219",
+        "evt_2026_2228",
+        "evt_2026_3558",
+        "evt_2026_3685",
+        "evt_2026_3728",
+        "evt_2026_3733",
+        "evt_2026_3736",
+        "evt_2026_3738"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 23,
+    "certified_cell_count": 15,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0802",
+        "record_hash": "sha256:0fce7c57f71786469418fa9e8dac15349868ecf8600da5d3335267ba0315deaa",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR5562",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1468",
+        "record_hash": "sha256:cef599f5d7982a1854c590e7a26db003676f71a019334fd63cd55957753464b1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA5562",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1925",
+        "record_hash": "sha256:0843b95b72c64477c9a78c4d62a078f535b90b5e46bd2448cbabd4ee59f6e6e5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MQ5562",
+        "column": "ARSON_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2092",
+        "record_hash": "sha256:1ce071bc9ae72bcf3bf6c1a0891b14eb20b32d8bb8205a2c992f52b74151f187",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ5562",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2144",
+        "record_hash": "sha256:a29fda13481d9dbd1ba247d53aaa8f2e29d7aaf1b5b3d5a374b0a00e0168a3a7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD5562",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_2180",
+        "record_hash": "sha256:186aa97b6b595cb31e83a813d501eff06b6f19070252a469bc172daf07edce9b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ID5562",
+        "column": "SIM_A_NAT23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2204",
+        "record_hash": "sha256:558cfc333d69f071c30238122215e1d85b9182e13a612aee49a66662f91adea0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE5562",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2219",
+        "record_hash": "sha256:4b3b64ff4f9a9a7b2d031507253be52f7bf155f224fbfdcb50491b3f8bf67b74",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV5562",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2228",
+        "record_hash": "sha256:0735335dfab26d12da50665d0ba8fb7c04603a30f2458e27a9a661ce156cb689",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5562",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3558",
+        "record_hash": "sha256:014b4ec16c5f43e570575132b5e421b0ac52fd57dc8e7e28ff89ed78feb79c57",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ5562",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3685",
+        "record_hash": "sha256:5223d9e3c7125bbb01025f0385147220729544a4b42b5e5c0aababb0b629d55a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA5562",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3728",
+        "record_hash": "sha256:2afba37afb162c7d86a35b1365b6233241e0fbddd90dd9ca4f39d3f2bac5ef88",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE5562",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3733",
+        "record_hash": "sha256:589d9bae6b25e6c729814f5edddf3685ab8117f82522765bf298aad0b8fabf83",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV5562",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3736",
+        "record_hash": "sha256:e9f42e70da1d7f2a6208172a18170b17e488fa22799956325e737f2cf023aa09",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD5562",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3738",
+        "record_hash": "sha256:1af0b9184875f84d26e4908e591b9a64a6a7224a4d6f22cdfd8e8a699ea642e8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5562",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=swarthmore_college&signal_id=sig_580bb96cb0c8ff10a763",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_580bb96cb0c8ff10a763/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Swarthmore College. Across 15 certified ED cells, the reported geography totals are on-campus (16), residence-hall (7). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_580bb96cb0c8ff10a763/",
+    "proactive_reply": "Relevant certified public-data context for Swarthmore College: https://campusevidencelab.org/signals/sig_580bb96cb0c8ff10a763/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,149 @@
+{
+  "id": "sig_e30d49755d6fc5dd9354",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_7ea876e930d06009940d",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8b6ff460d6d335790d97",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_north_texas/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_north_texas"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the reported geography totals are on-campus (6), residence-hall (2), public-property (1)."
+  },
+  "institution": {
+    "id": "university_of_north_texas",
+    "name": "University of North Texas",
+    "city": "DENTON",
+    "state": "TX"
+  },
+  "record_ids": [
+    "evt_2026_0422",
+    "evt_2026_1536",
+    "evt_2026_1741",
+    "evt_2026_1848",
+    "evt_2026_2608",
+    "evt_2026_3116"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of North Texas: Across 6 certified ED cells, the reported geography totals are on-campus (6), residence-hall (2), public-property (1).",
+      "supporting_record_ids": [
+        "evt_2026_0422",
+        "evt_2026_1536",
+        "evt_2026_1741",
+        "evt_2026_1848",
+        "evt_2026_2608",
+        "evt_2026_3116"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0422",
+        "record_hash": "sha256:c36f8d96f43b0457bca7af8f609b514c1312c9474ecb9512005cbf466eeaf907",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NF6214",
+        "column": "LAR_T_GID24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1536",
+        "record_hash": "sha256:123f8029dc5cbe0ca30761659e33b42677236f71fb80ee875ec6e3fba7b950c6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX6214",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1741",
+        "record_hash": "sha256:007ca718b95ca0b72188e2bd7817934420fb5a1ec1624265e926cf09df860ca0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV6214",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1848",
+        "record_hash": "sha256:59fee62c9cab0e3c9fdc729dcd35b5112fca1883cd1917cd20d670eb9e055f34",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS6214",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2608",
+        "record_hash": "sha256:334ef44138633ca6ff7feae85873c653f45dd90990520971e209163833ec4f7a",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MY6214",
+        "column": "SIM_A_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3116",
+        "record_hash": "sha256:60fac059b4fc9aa21ef0929cd3b25c527b829b99aeeff7516fd3766eb94bcf1f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV6214",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_north_texas&signal_id=sig_e30d49755d6fc5dd9354",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e30d49755d6fc5dd9354/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of North Texas. Across 6 certified ED cells, the reported geography totals are on-campus (6), residence-hall (2), public-property (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e30d49755d6fc5dd9354/",
+    "proactive_reply": "Relevant certified public-data context for University of North Texas: https://campusevidencelab.org/signals/sig_e30d49755d6fc5dd9354/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

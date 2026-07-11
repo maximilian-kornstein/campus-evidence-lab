@@ -322,3 +322,19 @@ CREATE INDEX IF NOT EXISTS idx_followup_queue_status ON followup_queue(status);
 CREATE INDEX IF NOT EXISTS idx_followup_queue_due_date ON followup_queue(due_date);
 CREATE INDEX IF NOT EXISTS idx_followup_queue_contact ON followup_queue(contact_id);
 CREATE INDEX IF NOT EXISTS idx_followup_queue_org ON followup_queue(organization_id);
+
+CREATE TABLE IF NOT EXISTS signals_partner_events (
+  id TEXT PRIMARY KEY,
+  campaign_target_id TEXT NOT NULL DEFAULT '',
+  organization_id TEXT NOT NULL DEFAULT '',
+  event_type TEXT NOT NULL CHECK (event_type IN ('invited','followed_up','subscribed','embedded','webhook_enabled','declined','opted_out','cancelled')),
+  feed_key TEXT NOT NULL DEFAULT '',
+  external_url TEXT NOT NULL DEFAULT '',
+  occurred_at TEXT NOT NULL,
+  notes TEXT NOT NULL DEFAULT '',
+  FOREIGN KEY (campaign_target_id) REFERENCES campaign_targets(id),
+  FOREIGN KEY (organization_id) REFERENCES organizations(id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_signals_partner_target ON signals_partner_events(campaign_target_id);
+CREATE INDEX IF NOT EXISTS idx_signals_partner_org ON signals_partner_events(organization_id);

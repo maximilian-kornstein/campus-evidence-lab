@@ -1,0 +1,133 @@
+{
+  "id": "sig_b6692b9990ba7b8e76fa",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f3d7a1f8b9eed26aa744",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_cdad19f23d253fbf5927",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/lehigh_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "lehigh_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (3), noncampus (1), residence-hall (1)."
+  },
+  "institution": {
+    "id": "lehigh_university",
+    "name": "Lehigh University",
+    "city": "Bethlehem",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_1358",
+    "evt_2026_2791",
+    "evt_2026_3608",
+    "evt_2026_3865"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Lehigh University: Across 4 certified ED cells, the reported geography totals are on-campus (3), noncampus (1), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_1358",
+        "evt_2026_2791",
+        "evt_2026_3608",
+        "evt_2026_3865"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1358",
+        "record_hash": "sha256:6eb953a6bbb1e0a2bf8737b40ebed4860d15f3a200ceee3fd6bf87c035f96690",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW5433",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2791",
+        "record_hash": "sha256:24604b48d5fa0506a761cc13b6bb235e7a353f806dfb150ba926623d3223a053",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS5433",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3608",
+        "record_hash": "sha256:75c673a5db5fdcbcae9bb728eb5c69f452b41e3bb417adff9644572a1728f885",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW5433",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3865",
+        "record_hash": "sha256:ed4fa6d570c45760e958e3157b3342dc3b97cf8c11392350938e0a005e777a41",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "BW5573",
+        "column": "AGG_A_ET21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=lehigh_university&signal_id=sig_b6692b9990ba7b8e76fa",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b6692b9990ba7b8e76fa/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Lehigh University. Across 4 certified ED cells, the reported geography totals are on-campus (3), noncampus (1), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_b6692b9990ba7b8e76fa/",
+    "proactive_reply": "Relevant certified public-data context for Lehigh University: https://campusevidencelab.org/signals/sig_b6692b9990ba7b8e76fa/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sig_7c048e1b4b694c8b6f89",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_8cab28948b211e8f9f9a",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_285f37a5cbe2f5d33d56",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/blue_mountain_christian_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "blue_mountain_christian_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Gender (6), Race (1)."
+  },
+  "institution": {
+    "id": "blue_mountain_christian_university",
+    "name": "Blue Mountain Christian University",
+    "city": "BLUE MOUNTAIN",
+    "state": "MS"
+  },
+  "record_ids": [
+    "evt_2026_2486",
+    "evt_2026_2549",
+    "evt_2026_2601",
+    "evt_2026_2620"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Blue Mountain Christian University: Across 4 certified ED cells, the source-supported affected-community totals are Gender (6), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_2486",
+        "evt_2026_2549",
+        "evt_2026_2601",
+        "evt_2026_2620"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2486",
+        "record_hash": "sha256:9b20c80f227cd890e8a21f50e74ca577df1355a49f67c110fa2609fbc886fc0b",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DM3435",
+        "column": "LAR_T_GEN22",
+        "year": "2022",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_2549",
+        "record_hash": "sha256:86a7eba987b62d4155353c9a89bff702fb342057642c8350a497c58c9e344b92",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BT3435",
+        "column": "AGG_A_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2601",
+        "record_hash": "sha256:4e2077be6920ee98f2726686661e98decb1a5432e4731209ca6f914d0a783a47",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BH3435",
+        "column": "ROBBE_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2620",
+        "record_hash": "sha256:da57a9d0249ac03ba9a200a1a4860e67e8f976d0b43a23c296005dd09e14a1d6",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DD3435",
+        "column": "SIM_A_GEN22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=blue_mountain_christian_university&signal_id=sig_7c048e1b4b694c8b6f89",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7c048e1b4b694c8b6f89/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Blue Mountain Christian University. Across 4 certified ED cells, the source-supported affected-community totals are Gender (6), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7c048e1b4b694c8b6f89/",
+    "proactive_reply": "Relevant certified public-data context for Blue Mountain Christian University: https://campusevidencelab.org/signals/sig_7c048e1b4b694c8b6f89/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,137 @@
+{
+  "id": "sig_edb783b97f4f9d9eb8d7",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_57640f252440057f6780",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_c11f2b36eeb705e05ee7",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/southwestern_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "southwestern_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the source-supported affected-community totals are Race (5)."
+  },
+  "institution": {
+    "id": "southwestern_college",
+    "name": "Southwestern College",
+    "city": "Santa Fe",
+    "state": "NM"
+  },
+  "record_ids": [
+    "evt_2026_0155",
+    "evt_2026_1825",
+    "evt_2026_2181",
+    "evt_2026_2285",
+    "evt_2026_2343"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Southwestern College: Across 5 certified ED cells, the source-supported affected-community totals are Race (5).",
+      "supporting_record_ids": [
+        "evt_2026_0155",
+        "evt_2026_1825",
+        "evt_2026_2181",
+        "evt_2026_2285",
+        "evt_2026_2343"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0155",
+        "record_hash": "sha256:77a9d23348ee4c2f24209a370314fb35cf10b72a353e030dacb68b2a2f9387c5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4092",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1825",
+        "record_hash": "sha256:3fef938d6cb036609873b563edcb9a818246dcf215cdb24b32eea61bd049140c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT911",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2181",
+        "record_hash": "sha256:a913844b00feb9d56f2f91d2259df0519d91330d3603071317d0567ff46994e0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX911",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2285",
+        "record_hash": "sha256:1fbc11205e0231fe466d7c585a491a2d8ada7de6e777972a33b1795d63c04563",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA911",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2343",
+        "record_hash": "sha256:7c1b604bbdd908fd49edaca780e15d177931817df6fcfbfe97998ec1d512d821",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB911",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=southwestern_college&signal_id=sig_edb783b97f4f9d9eb8d7",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_edb783b97f4f9d9eb8d7/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Southwestern College. Across 5 certified ED cells, the source-supported affected-community totals are Race (5). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_edb783b97f4f9d9eb8d7/",
+    "proactive_reply": "Relevant certified public-data context for Southwestern College: https://campusevidencelab.org/signals/sig_edb783b97f4f9d9eb8d7/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,173 @@
+{
+  "id": "sig_cc01bd6c3394fc83eb2e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_188f79d35647888d52b2",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_c4be1a36a4d597076028",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/menlo_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "menlo_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the reported geography totals are on-campus (4), residence-hall (4)."
+  },
+  "institution": {
+    "id": "menlo_college",
+    "name": "Menlo College",
+    "city": "ATHERTON",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_2056",
+    "evt_2026_2223",
+    "evt_2026_2353",
+    "evt_2026_3291",
+    "evt_2026_3442",
+    "evt_2026_3675",
+    "evt_2026_3692",
+    "evt_2026_3698"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Menlo College: Across 8 certified ED cells, the reported geography totals are on-campus (4), residence-hall (4).",
+      "supporting_record_ids": [
+        "evt_2026_2056",
+        "evt_2026_2223",
+        "evt_2026_2353",
+        "evt_2026_3291",
+        "evt_2026_3442",
+        "evt_2026_3675",
+        "evt_2026_3692",
+        "evt_2026_3698"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2056",
+        "record_hash": "sha256:295d46563887356bb5637c9d632004d1a5d490b28ee8d5fd110daa380fd653ba",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO678",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2223",
+        "record_hash": "sha256:25066d0433265b333d106aab078926f061e4cd788fe42589be432bdd0e397632",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ678",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2353",
+        "record_hash": "sha256:f01f8ac67ccec6df2f02ca8a5229be65898d70efd6e6c6d0d7bb10dcf9f62631",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF678",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3291",
+        "record_hash": "sha256:afa1f80c81629338a7e63a51eedd99b1bde100a9bb189b55696873fd3f8d80ed",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO678",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3442",
+        "record_hash": "sha256:9380394bc7609611e2cee1f2121736c80cc10afff5956304f93a3425d486dd4c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB678",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3675",
+        "record_hash": "sha256:67574303eedf80c68dd5be875cbb35154a9508d785cdc45b65e84476c2ea49f4",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ678",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3692",
+        "record_hash": "sha256:f9243b9dd864ef15c08a74db2fe04d90647ccca8ae2d8c8fe103e3a26723ab1e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF678",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3698",
+        "record_hash": "sha256:8312762cc4e9f528ffaf2e7ecc1eef613e19f5b85b34100154ce05ce840f214c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB678",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=menlo_college&signal_id=sig_cc01bd6c3394fc83eb2e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_cc01bd6c3394fc83eb2e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Menlo College. Across 8 certified ED cells, the reported geography totals are on-campus (4), residence-hall (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_cc01bd6c3394fc83eb2e/",
+    "proactive_reply": "Relevant certified public-data context for Menlo College: https://campusevidencelab.org/signals/sig_cc01bd6c3394fc83eb2e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

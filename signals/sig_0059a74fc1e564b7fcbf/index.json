@@ -1,0 +1,125 @@
+{
+  "id": "sig_0059a74fc1e564b7fcbf",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_eb6686b605d90438ba76",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_0d507583f21c5e452f01",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/trinity_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "trinity_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Religion (4), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "trinity_college",
+    "name": "Trinity College",
+    "city": "HARTFORD",
+    "state": "CT"
+  },
+  "record_ids": [
+    "evt_2026_0181",
+    "evt_2026_0776",
+    "evt_2026_0948",
+    "evt_2026_3124"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Trinity College: Across 4 certified ED cells, the source-supported affected-community totals are Religion (4), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_0181",
+        "evt_2026_0776",
+        "evt_2026_0948",
+        "evt_2026_3124"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0181",
+        "record_hash": "sha256:39d6eeedfdee840e573849a75291f35f071b21986f9cb0d513dad7de6c1c4f4b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL1106",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0776",
+        "record_hash": "sha256:f7f6cfaae885a69f5e1f0c05ee1b8276dfc1bae4f33c58ed01fe942c1761c12e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ1106",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0948",
+        "record_hash": "sha256:95b9eafb5531da613e2a02a6a956dad5ebd49e6feeff94379663787507dea2ba",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC1106",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3124",
+        "record_hash": "sha256:a3625fe9983586e046c28afd9e9fa4b58e4d806f8d42f6367ad61922ddef9682",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC1106",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=trinity_college&signal_id=sig_0059a74fc1e564b7fcbf",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_0059a74fc1e564b7fcbf/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Trinity College. Across 4 certified ED cells, the source-supported affected-community totals are Religion (4), LGBTQ+ (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_0059a74fc1e564b7fcbf/",
+    "proactive_reply": "Relevant certified public-data context for Trinity College: https://campusevidencelab.org/signals/sig_0059a74fc1e564b7fcbf/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

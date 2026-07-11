@@ -1,0 +1,161 @@
+{
+  "id": "sig_768d0cd5ae1a21edce41",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f93caa29656d1c3ba868",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_b6ffa018819fe9a5ea79",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/georgia_institute_of_technology_main_campus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "georgia_institute_of_technology_main_campus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Religion (6), Race (1)."
+  },
+  "institution": {
+    "id": "georgia_institute_of_technology_main_campus",
+    "name": "Georgia Institute of Technology-Main Campus",
+    "city": "Atlanta",
+    "state": "GA"
+  },
+  "record_ids": [
+    "evt_2026_0272",
+    "evt_2026_0734",
+    "evt_2026_1071",
+    "evt_2026_2475",
+    "evt_2026_2842",
+    "evt_2026_2902",
+    "evt_2026_3094"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Georgia Institute of Technology-Main Campus: Across 7 certified ED cells, the source-supported affected-community totals are Religion (6), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_0272",
+        "evt_2026_0734",
+        "evt_2026_1071",
+        "evt_2026_2475",
+        "evt_2026_2842",
+        "evt_2026_2902",
+        "evt_2026_3094"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0272",
+        "record_hash": "sha256:b259db3d0929903a87ff3e03164c9d1ac372437da7fceddfba79bfefac5d6a77",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LJ1635",
+        "column": "AGG_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0734",
+        "record_hash": "sha256:7f2b088158a81bc68a60a2aac5fb95d9c03cc66c01ec3c9c9d03b2d4226acecb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1635",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1071",
+        "record_hash": "sha256:6817ee09f2ca0446fd4fec82cd7225c635e7ee709910f8abdeed1026bc62bcd7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY1635",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2475",
+        "record_hash": "sha256:8444989fb275805bd27f7b198d95044c0b7811d44a70195958618ff16ce81875",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO1635",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2842",
+        "record_hash": "sha256:cd19ba54bd4325bdfa5a26e89524e65bb2f2483b940ce48d30e4d3bee5b386d1",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP1635",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2902",
+        "record_hash": "sha256:d00ca86d1f0d9e899e9a18fb22ee73ee3c661dc2c1d12d2a7eb9de7299b329ff",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LJ1635",
+        "column": "AGG_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3094",
+        "record_hash": "sha256:c0c32ca072aa5ef19c3ec50d21853e3e156cc804fadfbd73851989b5b56b18d6",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY1635",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=georgia_institute_of_technology_main_campus&signal_id=sig_768d0cd5ae1a21edce41",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_768d0cd5ae1a21edce41/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Georgia Institute of Technology-Main Campus. Across 7 certified ED cells, the source-supported affected-community totals are Religion (6), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_768d0cd5ae1a21edce41/",
+    "proactive_reply": "Relevant certified public-data context for Georgia Institute of Technology-Main Campus: https://campusevidencelab.org/signals/sig_768d0cd5ae1a21edce41/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

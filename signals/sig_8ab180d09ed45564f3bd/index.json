@@ -1,0 +1,221 @@
+{
+  "id": "sig_8ab180d09ed45564f3bd",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_6a166425740cb4fc471c",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_7565bffe33e76a2fe1fd",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_alaska_anchorage/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_alaska_anchorage"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 12 certified ED cells, the source-supported affected-community totals are Religion (8), Ethnicity (3), LGBTQ+ (3), Race (1)."
+  },
+  "institution": {
+    "id": "university_of_alaska_anchorage",
+    "name": "University of Alaska Anchorage",
+    "city": "Anchorage",
+    "state": "AK"
+  },
+  "record_ids": [
+    "evt_2026_0081",
+    "evt_2026_0676",
+    "evt_2026_0770",
+    "evt_2026_0859",
+    "evt_2026_0942",
+    "evt_2026_1022",
+    "evt_2026_1062",
+    "evt_2026_2426",
+    "evt_2026_2892",
+    "evt_2026_2926",
+    "evt_2026_3010",
+    "evt_2026_3049"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Alaska Anchorage: Across 12 certified ED cells, the source-supported affected-community totals are Religion (8), Ethnicity (3), LGBTQ+ (3), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_0081",
+        "evt_2026_0676",
+        "evt_2026_0770",
+        "evt_2026_0859",
+        "evt_2026_0942",
+        "evt_2026_1022",
+        "evt_2026_1062",
+        "evt_2026_2426",
+        "evt_2026_2892",
+        "evt_2026_2926",
+        "evt_2026_3010",
+        "evt_2026_3049"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 15,
+    "certified_cell_count": 12,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0081",
+        "record_hash": "sha256:13cd8b4170adb372d18d731c5706001eac31ac274a3342d611ded51e53af2b85",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV113",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0676",
+        "record_hash": "sha256:390d6994ba95b50c02ece5b4f9c2d3e73496490ecf6f0d45e23c72aeb1d71e2e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ113",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0770",
+        "record_hash": "sha256:5ce3b73b77e4ba814ffc4d20b4d1699133fd78ac36b12dfe35c230807ca52f03",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP113",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0859",
+        "record_hash": "sha256:766bddae4038529615b2f4ba0ab4f4f6fc7527ba65a2d32a0c87dad599df97cb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GN113",
+        "column": "AGG_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0942",
+        "record_hash": "sha256:a46b425e962113d0dcf26d8e8c44ad79ee847706cebfde06b30961b8f4ad0a59",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU113",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1022",
+        "record_hash": "sha256:fcbbfa5abb3978d18f4c6df136dbf66b1b352f357432a51923816786d5140598",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX113",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1062",
+        "record_hash": "sha256:39005cfe7d0602e39229d204aa171ca10bea13e9e1a8e113b8cc2ee545fb4b4c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ113",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2426",
+        "record_hash": "sha256:728e9667ccfaa1c9b5bb60ab1f5786272ca0f6490759fcb5ec84cba89545c5dd",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA113",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2892",
+        "record_hash": "sha256:ceb082916d024ffba1ac87e9364e0e29d1cb9f7b84ac313a14cac9d8576bc1e6",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ113",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2926",
+        "record_hash": "sha256:a7621e71cc0ad3f15af08f76b62d50ac42dcfa63145f340fa97bda20770654ac",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP113",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3010",
+        "record_hash": "sha256:c74aebf9f5458a3cfb0719df8965de4b82f0377aaa5a3c6ba184f622e4a52b79",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GN113",
+        "column": "AGG_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3049",
+        "record_hash": "sha256:49cf748239863c6da5595d952251e953386cb5e600f64abe1ed3fab24053dc8d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX113",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_alaska_anchorage&signal_id=sig_8ab180d09ed45564f3bd",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_8ab180d09ed45564f3bd/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Alaska Anchorage. Across 12 certified ED cells, the source-supported affected-community totals are Religion (8), Ethnicity (3), LGBTQ+ (3), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_8ab180d09ed45564f3bd/",
+    "proactive_reply": "Relevant certified public-data context for University of Alaska Anchorage: https://campusevidencelab.org/signals/sig_8ab180d09ed45564f3bd/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

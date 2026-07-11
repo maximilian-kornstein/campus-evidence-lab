@@ -1,0 +1,133 @@
+{
+  "id": "sig_345769d54fe134a80f3e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_a464c2f8293205a983a8",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_73a04bbbe3b10eb39ae5",
+    "title": "2023 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/university_of_houston/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_houston"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2023."
+  },
+  "institution": {
+    "id": "university_of_houston",
+    "name": "University of Houston",
+    "city": "HOUSTON",
+    "state": "TX"
+  },
+  "record_ids": [
+    "evt_2026_1602",
+    "evt_2026_1769",
+    "evt_2026_1861",
+    "evt_2026_3906"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Houston: Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2023.",
+      "supporting_record_ids": [
+        "evt_2026_1602",
+        "evt_2026_1769",
+        "evt_2026_1861",
+        "evt_2026_3906"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1602",
+        "record_hash": "sha256:d7b786e5fdef6d7bf854073e32f0f253040103b8502f130a30269c09c23c7ea2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT6141",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1769",
+        "record_hash": "sha256:f4026b54296a694ba53fac1b527f7ebd139f179c98aab3ca42c548300101b23e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6141",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1861",
+        "record_hash": "sha256:49f278bf1ba59f6ef73ca578da0d8b6c181cc7680630d745263ebc58ba8e9336",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ6142",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3906",
+        "record_hash": "sha256:36640aea8771de7ed1de911e183235ccb0b50d1ea84945c21e8cc291d77eb6bd",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS6284",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_houston&signal_id=sig_345769d54fe134a80f3e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_345769d54fe134a80f3e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Houston. Certified ED workbook cells document 3 reported statistics across 3 distinct cells for 2023. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_345769d54fe134a80f3e/",
+    "proactive_reply": "Relevant certified public-data context for University of Houston: https://campusevidencelab.org/signals/sig_345769d54fe134a80f3e/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

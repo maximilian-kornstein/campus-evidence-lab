@@ -1,0 +1,161 @@
+{
+  "id": "sig_eb35908813d334d7bd87",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_73ae3a63c058926ca26c",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_737ca4a9d63500f18847",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/california_state_university_fullerton/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "california_state_university_fullerton"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the reported geography totals are on-campus (7), residence-hall (6), noncampus (1), public-property (1)."
+  },
+  "institution": {
+    "id": "california_state_university_fullerton",
+    "name": "California State University-Fullerton",
+    "city": "FULLERTON",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0129",
+    "evt_2026_1964",
+    "evt_2026_2205",
+    "evt_2026_2659",
+    "evt_2026_2876",
+    "evt_2026_2896",
+    "evt_2026_3655"
+  ],
+  "bounded_claims": [
+    {
+      "text": "California State University-Fullerton: Across 7 certified ED cells, the reported geography totals are on-campus (7), residence-hall (6), noncampus (1), public-property (1).",
+      "supporting_record_ids": [
+        "evt_2026_0129",
+        "evt_2026_1964",
+        "evt_2026_2205",
+        "evt_2026_2659",
+        "evt_2026_2876",
+        "evt_2026_2896",
+        "evt_2026_3655"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 15,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0129",
+        "record_hash": "sha256:3d31ac9e3c1730d5caf11754e82cd80892e364eec7c20d9abe36202d8ddc75d8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK457",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_1964",
+        "record_hash": "sha256:d6a54895d08815f49bbbc34863fbd2e7bad90a9fa94c9d7799d98ca213591ba3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ457",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2205",
+        "record_hash": "sha256:c2e1bbac98513508a580648d9dd4ce3993e8695e5ccebec6c52cf2c042a57ab2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD457",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2659",
+        "record_hash": "sha256:0e365e1c7eed4c3211f317c5e8d610370264743e79ad21cd023b3515e755c51b",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO457",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2876",
+        "record_hash": "sha256:7b42a896f747c034d0574d91439293db1c2f883c310fb6b68048ca0bcd18f796",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA457",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2896",
+        "record_hash": "sha256:1df2debcb825374a6dc2fd6bf6b108d07f448c8a2b9406718eca6266bde10a0d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK457",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_3655",
+        "record_hash": "sha256:4c4d8969f8597f47feb9e1d8e99378426dec2e6b3de581386646960316ab43aa",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD457",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=california_state_university_fullerton&signal_id=sig_eb35908813d334d7bd87",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_eb35908813d334d7bd87/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: California State University-Fullerton. Across 7 certified ED cells, the reported geography totals are on-campus (7), residence-hall (6), noncampus (1), public-property (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_eb35908813d334d7bd87/",
+    "proactive_reply": "Relevant certified public-data context for California State University-Fullerton: https://campusevidencelab.org/signals/sig_eb35908813d334d7bd87/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

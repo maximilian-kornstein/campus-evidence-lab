@@ -1,0 +1,137 @@
+{
+  "id": "sig_4eb72c260ffe10d5ee98",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_af6ba8fb984f26123f15",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_5003f7c8fdfaa50eb010",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/york_college_of_pennsylvania/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "york_college_of_pennsylvania"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Harassment or threat (5)."
+  },
+  "institution": {
+    "id": "york_college_of_pennsylvania",
+    "name": "York College of Pennsylvania",
+    "city": "YORK",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0650",
+    "evt_2026_1052",
+    "evt_2026_1912",
+    "evt_2026_3234",
+    "evt_2026_3678"
+  ],
+  "bounded_claims": [
+    {
+      "text": "York College of Pennsylvania: Across 5 certified ED cells, the documented category totals are Harassment or threat (5).",
+      "supporting_record_ids": [
+        "evt_2026_0650",
+        "evt_2026_1052",
+        "evt_2026_1912",
+        "evt_2026_3234",
+        "evt_2026_3678"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0650",
+        "record_hash": "sha256:a47c6a329fd8ec7dad89b75ddceefdc9dea06a850f531c27edf06bead7b3a007",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NO5607",
+        "column": "INTIM_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1052",
+        "record_hash": "sha256:d9c1f2126c9cc3d15a854445c0fa2bb9c63d8d94472c85ccf741f816ad2ba336",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5607",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1912",
+        "record_hash": "sha256:02ab79ba5da6a2f1ac9c456ee3f6319036e628dfcbe311ebfd37fd4106cc36ba",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5607",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3234",
+        "record_hash": "sha256:8e6456d925af0ee883800d91c2bc9281d90028f639f8e5761623f5f9a5cdc4eb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5607",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3678",
+        "record_hash": "sha256:32f2417bd4d2d9c861caefb49171255456163d63c547b9043270ffce37bb0f9c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5607",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=york_college_of_pennsylvania&signal_id=sig_4eb72c260ffe10d5ee98",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4eb72c260ffe10d5ee98/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: York College of Pennsylvania. Across 5 certified ED cells, the documented category totals are Harassment or threat (5). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_4eb72c260ffe10d5ee98/",
+    "proactive_reply": "Relevant certified public-data context for York College of Pennsylvania: https://campusevidencelab.org/signals/sig_4eb72c260ffe10d5ee98/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

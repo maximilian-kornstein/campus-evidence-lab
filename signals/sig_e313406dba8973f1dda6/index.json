@@ -1,0 +1,137 @@
+{
+  "id": "sig_e313406dba8973f1dda6",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_ee6bb19c734acaebc209",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_2a8b97d1cadedc519a53",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/clarkson_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "clarkson_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (4), residence-hall (3)."
+  },
+  "institution": {
+    "id": "clarkson_university",
+    "name": "Clarkson University",
+    "city": "POTSDAM",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0440",
+    "evt_2026_1935",
+    "evt_2026_2167",
+    "evt_2026_3525",
+    "evt_2026_3657"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Clarkson University: Across 5 certified ED cells, the reported geography totals are on-campus (4), residence-hall (3).",
+      "supporting_record_ids": [
+        "evt_2026_0440",
+        "evt_2026_1935",
+        "evt_2026_2167",
+        "evt_2026_3525",
+        "evt_2026_3657"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0440",
+        "record_hash": "sha256:744eac49abe8d29f390f32b6f02f13139cce4d7a3db5ef395b3e10c9d4f0d5c2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK4153",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1935",
+        "record_hash": "sha256:b7c076e01001ef652caac268493c232493e65695fc33c13794595311abebe6dc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4153",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2167",
+        "record_hash": "sha256:87113852db163d0cb800df3cd191d1ba5b4b034ab63e710745d3c100e55bd781",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4153",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3525",
+        "record_hash": "sha256:9f622d686bc6b9fd71409a3474735a5d464e006897ff34cd76c098db03f43f66",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK4153",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3657",
+        "record_hash": "sha256:e095fed826528eadc3bc22508375c0230594dd631f4b3ce2b67712d95067545c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4153",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=clarkson_university&signal_id=sig_e313406dba8973f1dda6",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e313406dba8973f1dda6/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Clarkson University. Across 5 certified ED cells, the reported geography totals are on-campus (4), residence-hall (3). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e313406dba8973f1dda6/",
+    "proactive_reply": "Relevant certified public-data context for Clarkson University: https://campusevidencelab.org/signals/sig_e313406dba8973f1dda6/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

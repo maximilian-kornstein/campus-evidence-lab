@@ -1,0 +1,269 @@
+{
+  "id": "sig_5a11fe13664172c0a2ce",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_21289579bbe20e7746fa",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_4615a85cb95df618a7ef",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/rutgers_university_new_brunswick/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "rutgers_university_new_brunswick"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 16 certified ED cells, the documented category totals are Harassment or threat (20), Vandalism (5), Other source-backed civil rights event (2)."
+  },
+  "institution": {
+    "id": "rutgers_university_new_brunswick",
+    "name": "Rutgers University-New Brunswick",
+    "city": "NEW BRUNSWICK",
+    "state": "NJ"
+  },
+  "record_ids": [
+    "evt_2026_0298",
+    "evt_2026_1326",
+    "evt_2026_1464",
+    "evt_2026_1638",
+    "evt_2026_1750",
+    "evt_2026_1817",
+    "evt_2026_1856",
+    "evt_2026_1882",
+    "evt_2026_1908",
+    "evt_2026_1934",
+    "evt_2026_2452",
+    "evt_2026_2603",
+    "evt_2026_2636",
+    "evt_2026_2648",
+    "evt_2026_2787",
+    "evt_2026_3257"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Rutgers University-New Brunswick: Across 16 certified ED cells, the documented category totals are Harassment or threat (20), Vandalism (5), Other source-backed civil rights event (2).",
+      "supporting_record_ids": [
+        "evt_2026_0298",
+        "evt_2026_1326",
+        "evt_2026_1464",
+        "evt_2026_1638",
+        "evt_2026_1750",
+        "evt_2026_1817",
+        "evt_2026_1856",
+        "evt_2026_1882",
+        "evt_2026_1908",
+        "evt_2026_1934",
+        "evt_2026_2452",
+        "evt_2026_2603",
+        "evt_2026_2636",
+        "evt_2026_2648",
+        "evt_2026_2787",
+        "evt_2026_3257"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 27,
+    "certified_cell_count": 16,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0298",
+        "record_hash": "sha256:6179c4a330e5b9895ae1f277404c31452f37da8fe69559f9f68dd7544f2d88ec",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL4001",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1326",
+        "record_hash": "sha256:c1a9fd7fe23e87ccc49cccb11fc58e07de2bc78dbca6376a04f886007f20a13d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LS4001",
+        "column": "BURGLA_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1464",
+        "record_hash": "sha256:899109ce2afe76bc0bdb2c01946a01b06b743ff07c522b9d3b3ab076ae1c9eb8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR4001",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1638",
+        "record_hash": "sha256:e824590fa09cfcdad5c69830439eb121777b27619e224ef91824b643e79ea865",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT4001",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1750",
+        "record_hash": "sha256:df9b79cd62526dfbff6e154d4557f7231159ffaa4c4da8c552016b3b3e392077",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA4001",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1817",
+        "record_hash": "sha256:8ec11a758019ce0252ba546784bb9126d0e87ae8b662a3e294b2eb49593e9590",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4001",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1856",
+        "record_hash": "sha256:99bfc732e6c1ecb4de8556ee37fa2073c433b19cf2b3ab2ad39e45d733bcbf2a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4001",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1882",
+        "record_hash": "sha256:2e018551832c81546b05a3794cc17a9a6b8406e94a3705e4476d8f07492bf925",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ4001",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_1908",
+        "record_hash": "sha256:9285bb9493225d35cefd3b97c65a89bb2cc6fc694a27bc885829e792b47b811b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4001",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_1934",
+        "record_hash": "sha256:5c81dc853c11c478a6476d5f5adfb3a09ced93d2c4dba56a186a6d6e66c4c3b8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA4001",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2452",
+        "record_hash": "sha256:b44c94a3f9a19ec41921b1c7961fcae421081f00fe0ba3554eb5e2589c6e8924",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL4001",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_2603",
+        "record_hash": "sha256:b62e0400a172a88588adb4de200b300b0cc4d1c34538b6c644fb667dd6e85156",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI4001",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2636",
+        "record_hash": "sha256:a38d80b67a8a0c7507bd56acf39f24e43de1b7deee946aaae34c59387003b3e4",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4001",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2648",
+        "record_hash": "sha256:0ab8ce764dedcf3e5262314d824c8a24cf6a6e0a0e2f8a538565b90efbca1a4a",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4001",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2787",
+        "record_hash": "sha256:fb2a36e8fc5ff2d7aaf7040320f3e2dce0db12e2a760140255a9352a424ea957",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4001",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3257",
+        "record_hash": "sha256:e8fe21086d27a36cbacf3548e6e8a4d97d839d3b2cc1ff8bef4e90a7e52cef41",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4001",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=rutgers_university_new_brunswick&signal_id=sig_5a11fe13664172c0a2ce",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5a11fe13664172c0a2ce/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Rutgers University-New Brunswick. Across 16 certified ED cells, the documented category totals are Harassment or threat (20), Vandalism (5), Other source-backed civil rights ev… Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_5a11fe13664172c0a2ce/",
+    "proactive_reply": "Relevant certified public-data context for Rutgers University-New Brunswick: https://campusevidencelab.org/signals/sig_5a11fe13664172c0a2ce/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

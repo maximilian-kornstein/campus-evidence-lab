@@ -1,0 +1,125 @@
+{
+  "id": "sig_eca322b962fe72bd417b",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_0e8241e6e3f0b1f40a3c",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_87ee0e56a9b46527f44a",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/california_state_university_stanislaus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "california_state_university_stanislaus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Race (4), LGBTQ+ (1), Religion (1)."
+  },
+  "institution": {
+    "id": "california_state_university_stanislaus",
+    "name": "California State University-Stanislaus",
+    "city": "Turlock",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_2309",
+    "evt_2026_2359",
+    "evt_2026_2399",
+    "evt_2026_3659"
+  ],
+  "bounded_claims": [
+    {
+      "text": "California State University-Stanislaus: Across 4 certified ED cells, the source-supported affected-community totals are Race (4), LGBTQ+ (1), Religion (1).",
+      "supporting_record_ids": [
+        "evt_2026_2309",
+        "evt_2026_2359",
+        "evt_2026_2399",
+        "evt_2026_3659"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2309",
+        "record_hash": "sha256:99f9a0927e6a4fef35379577a746d8e363f2617044efe0dc5f7333b70d5d853a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS447",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2359",
+        "record_hash": "sha256:692bfb003c225bbcadf242cd4af2957bebd2bfd617509de76df46443a46ff68c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU447",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2399",
+        "record_hash": "sha256:be136829b67835e2b91f7c63a11422aa2e9e64ed629089dd8b1e5ca7c6208a33",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC447",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3659",
+        "record_hash": "sha256:d9b9db5e36616c0973e3014f64fdfe029c8ce38e2e6ada6224d68d04f376f40f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS447",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=california_state_university_stanislaus&signal_id=sig_eca322b962fe72bd417b",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_eca322b962fe72bd417b/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: California State University-Stanislaus. Across 4 certified ED cells, the source-supported affected-community totals are Race (4), LGBTQ+ (1), Religion (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_eca322b962fe72bd417b/",
+    "proactive_reply": "Relevant certified public-data context for California State University-Stanislaus: https://campusevidencelab.org/signals/sig_eca322b962fe72bd417b/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

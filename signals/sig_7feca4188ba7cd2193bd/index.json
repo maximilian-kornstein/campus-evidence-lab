@@ -1,0 +1,157 @@
+{
+  "id": "sig_7feca4188ba7cd2193bd",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_5699aa4d458b05c5ceeb",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_09a9b7a3e89c9a6a1d27",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/albion_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "albion_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the source-supported affected-community totals are Race (8), LGBTQ+ (1), Students with disabilities (1)."
+  },
+  "institution": {
+    "id": "albion_college",
+    "name": "Albion College",
+    "city": "ALBION",
+    "state": "MI"
+  },
+  "record_ids": [
+    "evt_2026_0243",
+    "evt_2026_2444",
+    "evt_2026_2483",
+    "evt_2026_3134",
+    "evt_2026_3299",
+    "evt_2026_3762"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Albion College: Across 6 certified ED cells, the source-supported affected-community totals are Race (8), LGBTQ+ (1), Students with disabilities (1).",
+      "supporting_record_ids": [
+        "evt_2026_0243",
+        "evt_2026_2444",
+        "evt_2026_2483",
+        "evt_2026_3134",
+        "evt_2026_3299",
+        "evt_2026_3762"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0243",
+        "record_hash": "sha256:e91b3f16854c30429c33f290067915daea4beb60c6d388f88cc7435ef307ab03",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3083",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2444",
+        "record_hash": "sha256:31b793279a263486ed5d8bdb5e98fe7109291895120c83652c6eefadef51bf6f",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3083",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2483",
+        "record_hash": "sha256:81e11566859acccb80e7b24e481c662f573c3112d3670e90e967dcb64c320e6d",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3083",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3134",
+        "record_hash": "sha256:815ee2b1e019387b57e15b02e06e6aaa85875cc4e4d4fe7d6712d1bce07bc612",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT3083",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3299",
+        "record_hash": "sha256:9aa77191e11fec97110c3b01685f970e20250814b499c28bc008fbd29aa581d3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3083",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3762",
+        "record_hash": "sha256:e148d52f5700e1ca8da2063ffad841b9a1e074057097fbd79fb891f166e1fcc1",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3109",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 5
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=albion_college&signal_id=sig_7feca4188ba7cd2193bd",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7feca4188ba7cd2193bd/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Albion College. Across 6 certified ED cells, the source-supported affected-community totals are Race (8), LGBTQ+ (1), Students with disabilities (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7feca4188ba7cd2193bd/",
+    "proactive_reply": "Relevant certified public-data context for Albion College: https://campusevidencelab.org/signals/sig_7feca4188ba7cd2193bd/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

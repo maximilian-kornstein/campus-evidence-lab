@@ -1,0 +1,125 @@
+{
+  "id": "sig_ddcf97db2ef1346b28ce",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_280e7c30b8ae4dfa413a",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_2b088ce43ce79708ed9f",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/ulster_county_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "ulster_county_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Religion (3), Gender (1), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "ulster_county_community_college",
+    "name": "Ulster County Community College",
+    "city": "STONE RIDGE",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0535",
+    "evt_2026_1805",
+    "evt_2026_2137",
+    "evt_2026_2245"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Ulster County Community College: Across 4 certified ED cells, the source-supported affected-community totals are Religion (3), Gender (1), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_0535",
+        "evt_2026_1805",
+        "evt_2026_2137",
+        "evt_2026_2245"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0535",
+        "record_hash": "sha256:f536f3f40061849fc6610f189a5896703d73e795558414be4f592355a701ff07",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4510",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1805",
+        "record_hash": "sha256:658af08ac271f05a56b33211ba588d4b3da1f2287e8bab96e44685d03f14ce52",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN4510",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2137",
+        "record_hash": "sha256:8e6b67627bf5dda9993c9e73cd3eeeb19079b039b0743bda67b48f8eea577e34",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX4510",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2245",
+        "record_hash": "sha256:f6de96719526fccb9b38cc998ce52e54a0a2d8c33b9e33277e85f7530ad89ca3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4510",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=ulster_county_community_college&signal_id=sig_ddcf97db2ef1346b28ce",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ddcf97db2ef1346b28ce/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Ulster County Community College. Across 4 certified ED cells, the source-supported affected-community totals are Religion (3), Gender (1), LGBTQ+ (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ddcf97db2ef1346b28ce/",
+    "proactive_reply": "Relevant certified public-data context for Ulster County Community College: https://campusevidencelab.org/signals/sig_ddcf97db2ef1346b28ce/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

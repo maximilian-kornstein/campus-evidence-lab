@@ -1,0 +1,149 @@
+{
+  "id": "sig_dd2b020c8e3b13f77d13",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_b4c01ff29278fed9a8a1",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_a45f7c66b6634590a07b",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/jacksonville_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "jacksonville_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the source-supported affected-community totals are Gender (4), Race (4)."
+  },
+  "institution": {
+    "id": "jacksonville_university",
+    "name": "Jacksonville University",
+    "city": "JACKSONVILLE",
+    "state": "FL"
+  },
+  "record_ids": [
+    "evt_2026_0318",
+    "evt_2026_0950",
+    "evt_2026_1284",
+    "evt_2026_3293",
+    "evt_2026_3337",
+    "evt_2026_3377"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Jacksonville University: Across 6 certified ED cells, the source-supported affected-community totals are Gender (4), Race (4).",
+      "supporting_record_ids": [
+        "evt_2026_0318",
+        "evt_2026_0950",
+        "evt_2026_1284",
+        "evt_2026_3293",
+        "evt_2026_3337",
+        "evt_2026_3377"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0318",
+        "record_hash": "sha256:1e263117662da38ed90f2e7eed113ee1d97ef5ad302d796e6ecb75655cc2b2f0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT1336",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0950",
+        "record_hash": "sha256:4ad0dc05e694fce8c13b8701742632e63c7d75b2e2f9acd95acfbd68df4108dc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV1336",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1284",
+        "record_hash": "sha256:833938d6c1354020f82f60c0b00c0cc45fde6d07bebf2619fac195b64799b31d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1336",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3293",
+        "record_hash": "sha256:52faa945fcc46addfce3922a955fd51421410322430a78cc26613cd8a03d85da",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT1336",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3337",
+        "record_hash": "sha256:dcbf661dad944f92055f93ad0869a5c9d18936b9aad4858ecabece80c8fb60af",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV1336",
+        "column": "INTIM_GEN22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3377",
+        "record_hash": "sha256:cb0db7a9b0c3698cbdaa2941d74eb1f56b1d53877afae1574211497d945a9f15",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1336",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=jacksonville_university&signal_id=sig_dd2b020c8e3b13f77d13",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_dd2b020c8e3b13f77d13/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Jacksonville University. Across 6 certified ED cells, the source-supported affected-community totals are Gender (4), Race (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_dd2b020c8e3b13f77d13/",
+    "proactive_reply": "Relevant certified public-data context for Jacksonville University: https://campusevidencelab.org/signals/sig_dd2b020c8e3b13f77d13/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

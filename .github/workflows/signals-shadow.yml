@@ -1,0 +1,53 @@
+name: CEL Signals Shadow Run
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */3 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cel-signals-shadow
+  cancel-in-progress: false
+
+jobs:
+  shadow:
+    runs-on: ubuntu-latest
+    env:
+      SIGNALS_WORKER_URL: ${{ secrets.SIGNALS_WORKER_URL }}
+      SIGNALS_ADMIN_TOKEN: ${{ secrets.SIGNALS_ADMIN_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run signals:collect
+      - run: npm run signals:data
+      - run: npm run test:signals
+      - run: npm run signals:dry-run > signals-dry-run.json
+      - name: Sync shadow runtime when configured
+        if: ${{ env.SIGNALS_WORKER_URL != '' && env.SIGNALS_ADMIN_TOKEN != '' }}
+        run: npm run signals:sync -- --apply
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cel-signals-shadow-${{ github.run_id }}
+          path: |
+            data/signal-triggers.json
+            data/signal-eligibility.json
+            data/signals.json
+            data/signal-dossiers.json
+            data/signal-shadow-review.json
+            data/institution-identity-index.json
+            signals-dry-run.json
+      - name: Persist safe generated artifacts
+        run: |
+          git config user.name "cel-signals-bot"
+          git config user.email "signals-bot@users.noreply.github.com"
+          git add data/signal-triggers.json data/signal-eligibility.json data/signals.json data/signal-dossiers.json data/signal-shadow-review.json data/institution-identity-index.json signals/
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: refresh CEL Signals shadow artifacts"
+          git push

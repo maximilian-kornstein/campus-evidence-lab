@@ -1,0 +1,125 @@
+{
+  "id": "sig_3393aa3c8fa3cbe56399",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_638d83bbca65a2aae17f",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_f6cb070180f1f0284456",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_maryland_global_campus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_maryland_global_campus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (6)."
+  },
+  "institution": {
+    "id": "university_of_maryland_global_campus",
+    "name": "University of Maryland Global Campus",
+    "city": "College Park",
+    "state": "MD"
+  },
+  "record_ids": [
+    "evt_2026_0144",
+    "evt_2026_0959",
+    "evt_2026_1320",
+    "evt_2026_1481"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Maryland Global Campus: Across 4 certified ED cells, the reported geography totals are on-campus (6).",
+      "supporting_record_ids": [
+        "evt_2026_0144",
+        "evt_2026_0959",
+        "evt_2026_1320",
+        "evt_2026_1481"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0144",
+        "record_hash": "sha256:10d7eda2e9d278bb7d39bf3ca51ce466a36cccf25bc32b6cf738c43ff31d3b20",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA2843",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0959",
+        "record_hash": "sha256:ff52ed01a6bba88662f72407bb9a53fb8d1498d36df03547b3775d0dd449d50d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN2843",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1320",
+        "record_hash": "sha256:f64f8ad2c0420a231cc680f13000aa0ebc083ac01fb336c3065667b812aa52aa",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2843",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1481",
+        "record_hash": "sha256:565af82ab0d76406c6084c4e6699fddcf74050cbcf493454edd2f8e82fe5efee",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI2843",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_maryland_global_campus&signal_id=sig_3393aa3c8fa3cbe56399",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3393aa3c8fa3cbe56399/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Maryland Global Campus. Across 4 certified ED cells, the reported geography totals are on-campus (6). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3393aa3c8fa3cbe56399/",
+    "proactive_reply": "Relevant certified public-data context for University of Maryland Global Campus: https://campusevidencelab.org/signals/sig_3393aa3c8fa3cbe56399/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

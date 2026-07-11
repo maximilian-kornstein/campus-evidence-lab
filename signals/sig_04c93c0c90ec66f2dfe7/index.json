@@ -1,0 +1,125 @@
+{
+  "id": "sig_04c93c0c90ec66f2dfe7",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_547633a36d75e493281b",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_79a5ec0ae76223499bc1",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/baylor_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "baylor_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (4), residence-hall (1)."
+  },
+  "institution": {
+    "id": "baylor_university",
+    "name": "Baylor University",
+    "city": "Waco",
+    "state": "TX"
+  },
+  "record_ids": [
+    "evt_2026_0166",
+    "evt_2026_1016",
+    "evt_2026_1783",
+    "evt_2026_3330"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Baylor University: Across 4 certified ED cells, the reported geography totals are on-campus (4), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0166",
+        "evt_2026_1016",
+        "evt_2026_1783",
+        "evt_2026_3330"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0166",
+        "record_hash": "sha256:a388ef9a3bca428a57604d9accfc95deb85c666d1129aa85ed598e208f672e48",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS6000",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1016",
+        "record_hash": "sha256:e12e9f0bc97dca9635e31db15a1632edeb2dc247afeecdca65033dd5ec8030a1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6000",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1783",
+        "record_hash": "sha256:27aed73912d9d05c5d966db67845c80719285f55cda44cfb10c532dd8222b0eb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6000",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3330",
+        "record_hash": "sha256:71ae301aa012f9f2c3a422c022a0b881a9c77a50a713e62fee7d9725ffe70ff1",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6000",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=baylor_university&signal_id=sig_04c93c0c90ec66f2dfe7",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_04c93c0c90ec66f2dfe7/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Baylor University. Across 4 certified ED cells, the reported geography totals are on-campus (4), residence-hall (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_04c93c0c90ec66f2dfe7/",
+    "proactive_reply": "Relevant certified public-data context for Baylor University: https://campusevidencelab.org/signals/sig_04c93c0c90ec66f2dfe7/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

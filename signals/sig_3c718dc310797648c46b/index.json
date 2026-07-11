@@ -1,0 +1,125 @@
+{
+  "id": "sig_3c718dc310797648c46b",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f089c82a328a01261b17",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_87fee315981b801c9009",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/urban_college_of_boston/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "urban_college_of_boston"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the documented category totals are Harassment or threat (5)."
+  },
+  "institution": {
+    "id": "urban_college_of_boston",
+    "name": "Urban College of Boston",
+    "city": "BOSTON",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_2705",
+    "evt_2026_2729",
+    "evt_2026_2735",
+    "evt_2026_2741"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Urban College of Boston: Across 4 certified ED cells, the documented category totals are Harassment or threat (5).",
+      "supporting_record_ids": [
+        "evt_2026_2705",
+        "evt_2026_2729",
+        "evt_2026_2735",
+        "evt_2026_2741"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2705",
+        "record_hash": "sha256:6a57343cf20fb103618fa7a13ae4a31ec13d3752cd75a01c9129c525e0be303b",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LO8050",
+        "column": "AGG_A_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2729",
+        "record_hash": "sha256:13859eeb43e6bbe347581ba92fd6c161475b2e5dd0eaeb6a4dbb77e7a4fffc76",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LK8050",
+        "column": "AGG_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2735",
+        "record_hash": "sha256:78f67e08367cd15b9a5b8c055339139af2da3d0c04c296e3a68e61d6c2baabfa",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY8050",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2741",
+        "record_hash": "sha256:a9710aa9a52cb93b978ab7fb651c7f1ea21f28717731b7067e46be19318197de",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA8050",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=urban_college_of_boston&signal_id=sig_3c718dc310797648c46b",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3c718dc310797648c46b/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Urban College of Boston. Across 4 certified ED cells, the documented category totals are Harassment or threat (5). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3c718dc310797648c46b/",
+    "proactive_reply": "Relevant certified public-data context for Urban College of Boston: https://campusevidencelab.org/signals/sig_3c718dc310797648c46b/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

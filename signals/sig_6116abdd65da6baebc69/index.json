@@ -1,0 +1,149 @@
+{
+  "id": "sig_6116abdd65da6baebc69",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_341d3a5a34a416148ed0",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_c2f2a191c63a4cbb18f0",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/loyola_marymount_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "loyola_marymount_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2), National origin (2)."
+  },
+  "institution": {
+    "id": "loyola_marymount_university",
+    "name": "Loyola Marymount University",
+    "city": "LOS ANGELES",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0403",
+    "evt_2026_2157",
+    "evt_2026_2273",
+    "evt_2026_2377",
+    "evt_2026_2415",
+    "evt_2026_3355"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Loyola Marymount University: Across 6 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2), National origin (2).",
+      "supporting_record_ids": [
+        "evt_2026_0403",
+        "evt_2026_2157",
+        "evt_2026_2273",
+        "evt_2026_2377",
+        "evt_2026_2415",
+        "evt_2026_3355"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0403",
+        "record_hash": "sha256:04db2a361b9bc3f2b26d854c676fd04897ffdf25b1d1378e5dfd376817adb51e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND664",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2157",
+        "record_hash": "sha256:f0f15e4563334660c0f7f183896b394fa6001709786f3ae1d9b41b158b3ec367",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI664",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2273",
+        "record_hash": "sha256:63b6b37c2154acf37507fbb939e1eb0725a4d9539884bf248a02731807537187",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA664",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2377",
+        "record_hash": "sha256:9c2becc427bc185d425df5df4a00271c5d845f2ad08742004ce0768ded2061a6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT664",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2415",
+        "record_hash": "sha256:260f28a28f6772518043001400914d0b15f2165702b565de220653b7f6f6f08e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB664",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3355",
+        "record_hash": "sha256:aab09fae567e7a7408e45acc31dfdbe978ddec6d643077e2568bffbaea299e3e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB664",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=loyola_marymount_university&signal_id=sig_6116abdd65da6baebc69",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6116abdd65da6baebc69/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Loyola Marymount University. Across 6 certified ED cells, the source-supported affected-community totals are Race (3), LGBTQ+ (2), National origin (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6116abdd65da6baebc69/",
+    "proactive_reply": "Relevant certified public-data context for Loyola Marymount University: https://campusevidencelab.org/signals/sig_6116abdd65da6baebc69/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

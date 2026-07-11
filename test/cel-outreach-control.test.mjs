@@ -57,6 +57,7 @@ test("initializes outreach control database with required tables", () => {
     "relationship_events",
     "send_attempts",
     "target_pool",
+    "signals_partner_events",
   ]);
 });
 

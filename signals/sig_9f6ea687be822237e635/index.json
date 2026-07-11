@@ -1,0 +1,173 @@
+{
+  "id": "sig_9f6ea687be822237e635",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_07ba379f953c695faba9",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_9da86869c366cb041093",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/ithaca_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "ithaca_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "ithaca_college",
+    "name": "Ithaca College",
+    "city": "Ithaca",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1235",
+    "evt_2026_2107",
+    "evt_2026_2218",
+    "evt_2026_2284",
+    "evt_2026_2358",
+    "evt_2026_2392",
+    "evt_2026_3073",
+    "evt_2026_3605"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Ithaca College: Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_1235",
+        "evt_2026_2107",
+        "evt_2026_2218",
+        "evt_2026_2284",
+        "evt_2026_2358",
+        "evt_2026_2392",
+        "evt_2026_3073",
+        "evt_2026_3605"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1235",
+        "record_hash": "sha256:4b7dc0e8d235fca4a4f69939eb743e894ffe2984d6c28caf53e7b990d90bbf86",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK4260",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2107",
+        "record_hash": "sha256:630795d351a7b5b16893f6adef4bf828373b82fc742a3cc1a17bab60d64d38bb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NF4260",
+        "column": "LAR_T_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2218",
+        "record_hash": "sha256:665d88f40fcad4aeb7deb50981f3c19a96ca6f1e5e9097e9d16010c406060f69",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4260",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2284",
+        "record_hash": "sha256:e8d925b9a900ece1695c9c3c39e4ef27e691fc8df930bd16ad2b4ea4a6170f03",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4260",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2358",
+        "record_hash": "sha256:37397c523427f4298aa6213f6d3135801929f585d9266d389f8d064b50b78644",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4260",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2392",
+        "record_hash": "sha256:655df8c69c08e29f4b4c59fa761d4ff933fd5f33ea4a89f215449446c60322a5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4260",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_3073",
+        "record_hash": "sha256:7847342fb881d86e0a75f110fc322db3c7c4627dad6d1ecf4429217f51fedace",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NF4260",
+        "column": "LAR_T_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3605",
+        "record_hash": "sha256:ba1828d7f721037b664484fc94e48619479f08762713fbed5895dfb99ca2a695",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4260",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=ithaca_college&signal_id=sig_9f6ea687be822237e635",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_9f6ea687be822237e635/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Ithaca College. Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_9f6ea687be822237e635/",
+    "proactive_reply": "Relevant certified public-data context for Ithaca College: https://campusevidencelab.org/signals/sig_9f6ea687be822237e635/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

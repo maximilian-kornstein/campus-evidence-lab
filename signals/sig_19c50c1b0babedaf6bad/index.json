@@ -1,0 +1,245 @@
+{
+  "id": "sig_19c50c1b0babedaf6bad",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e87cc40d6230e6deae6e",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_367bd75549c47cde0838",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/northeastern_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "northeastern_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 14 certified ED cells, the source-supported affected-community totals are National origin (8), LGBTQ+ (4), Religion (3), Race (2)."
+  },
+  "institution": {
+    "id": "northeastern_university",
+    "name": "Northeastern University",
+    "city": "BOSTON",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0433",
+    "evt_2026_0833",
+    "evt_2026_1401",
+    "evt_2026_1802",
+    "evt_2026_1932",
+    "evt_2026_2075",
+    "evt_2026_2099",
+    "evt_2026_2647",
+    "evt_2026_2686",
+    "evt_2026_2708",
+    "evt_2026_3025",
+    "evt_2026_3522",
+    "evt_2026_3614",
+    "evt_2026_3656"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Northeastern University: Across 14 certified ED cells, the source-supported affected-community totals are National origin (8), LGBTQ+ (4), Religion (3), Race (2).",
+      "supporting_record_ids": [
+        "evt_2026_0433",
+        "evt_2026_0833",
+        "evt_2026_1401",
+        "evt_2026_1802",
+        "evt_2026_1932",
+        "evt_2026_2075",
+        "evt_2026_2099",
+        "evt_2026_2647",
+        "evt_2026_2686",
+        "evt_2026_2708",
+        "evt_2026_3025",
+        "evt_2026_3522",
+        "evt_2026_3614",
+        "evt_2026_3656"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 18,
+    "certified_cell_count": 14,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0433",
+        "record_hash": "sha256:7af6921a2eb2c9594cdb71b557804a52cd20b01e11a5fee2a3c952e73206a914",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA3027",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0833",
+        "record_hash": "sha256:a62b49a55041da14b24524b6707fbc92995dfe4b50136e4b13d767e18375ffe9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3027",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1401",
+        "record_hash": "sha256:36a4bbd2d388a2645552226374a487407f7d18c07da0b0b6b9ed37162e28e00b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP3027",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1802",
+        "record_hash": "sha256:efdbb324cd6e5926ac56e0a10dc6fe67350526abce5fd3bbe1908e1ee7c23436",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3027",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1932",
+        "record_hash": "sha256:75388bd44d8da78f02c189eec6a05332322bc9e6b6bda2e133160961d567273d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY3027",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2075",
+        "record_hash": "sha256:462e2351e7b6a6bc9781c723377b0337eb5c6510c7448107f6166804ece0c14e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ3027",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 5
+      },
+      {
+        "event_id": "evt_2026_2099",
+        "record_hash": "sha256:4f115f23234bcf112b617d7821d290847eefeb60293353d4bcafb0bedf855c5b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3027",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2647",
+        "record_hash": "sha256:0b4e6259a0d374102fa4e5e1ccde60f3d487cbf1abc450926bdbe570fe37c9b5",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU3027",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2686",
+        "record_hash": "sha256:44fa02b8ffd0c394adff56f4016b01f350a65828aea9621d2d55924d1e222d1f",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3027",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2708",
+        "record_hash": "sha256:1e99e87ed6b52c7b800a9012a151842008d4521b4041d7bcaa5614983ba6e249",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DH3027",
+        "column": "SIM_A_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3025",
+        "record_hash": "sha256:4578c4e77bda5527b6e33d1145db79589d73a7df6a4d87c88794bd94f08ac327",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA3027",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3522",
+        "record_hash": "sha256:48d5dbcdc23054ac4f10828fb032c512e4d03505071022c67abccf6da0a8d8f9",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3027",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3614",
+        "record_hash": "sha256:c6e3d8bab023ac6567a2ee591ee6de1ea67924a4121b330063a5ac9531d4173b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3027",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3656",
+        "record_hash": "sha256:7ff8238dbdd89fc05ef4bd656f31b6f39e64b43d0780a2e209f55efedb5bbe8e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY3027",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=northeastern_university&signal_id=sig_19c50c1b0babedaf6bad",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_19c50c1b0babedaf6bad/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Northeastern University. Across 14 certified ED cells, the source-supported affected-community totals are National origin (8), LGBTQ+ (4), Religion (3), Race (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_19c50c1b0babedaf6bad/",
+    "proactive_reply": "Relevant certified public-data context for Northeastern University: https://campusevidencelab.org/signals/sig_19c50c1b0babedaf6bad/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

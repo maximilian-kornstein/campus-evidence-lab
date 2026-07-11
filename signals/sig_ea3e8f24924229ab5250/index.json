@@ -1,0 +1,337 @@
+{
+  "id": "sig_ea3e8f24924229ab5250",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_98a4b0f8265507873123",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_f254acb992a168c0e4a1",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_new_mexico_main_campus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_new_mexico_main_campus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 21 certified ED cells, the source-supported affected-community totals are LGBTQ+ (32), Religion (10), Race (8), Ethnicity (2)."
+  },
+  "institution": {
+    "id": "university_of_new_mexico_main_campus",
+    "name": "University of New Mexico-Main Campus",
+    "city": "ALBUQUERQUE",
+    "state": "NM"
+  },
+  "record_ids": [
+    "evt_2026_0091",
+    "evt_2026_0705",
+    "evt_2026_0798",
+    "evt_2026_0843",
+    "evt_2026_0886",
+    "evt_2026_0927",
+    "evt_2026_0968",
+    "evt_2026_1008",
+    "evt_2026_1048",
+    "evt_2026_1088",
+    "evt_2026_1127",
+    "evt_2026_1164",
+    "evt_2026_1200",
+    "evt_2026_1234",
+    "evt_2026_1267",
+    "evt_2026_2952",
+    "evt_2026_3108",
+    "evt_2026_3141",
+    "evt_2026_3771",
+    "evt_2026_3819",
+    "evt_2026_3860"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of New Mexico-Main Campus: Across 21 certified ED cells, the source-supported affected-community totals are LGBTQ+ (32), Religion (10), Race (8), Ethnicity (2).",
+      "supporting_record_ids": [
+        "evt_2026_0091",
+        "evt_2026_0705",
+        "evt_2026_0798",
+        "evt_2026_0843",
+        "evt_2026_0886",
+        "evt_2026_0927",
+        "evt_2026_0968",
+        "evt_2026_1008",
+        "evt_2026_1048",
+        "evt_2026_1088",
+        "evt_2026_1127",
+        "evt_2026_1164",
+        "evt_2026_1200",
+        "evt_2026_1234",
+        "evt_2026_1267",
+        "evt_2026_2952",
+        "evt_2026_3108",
+        "evt_2026_3141",
+        "evt_2026_3771",
+        "evt_2026_3819",
+        "evt_2026_3860"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 54,
+    "certified_cell_count": 21,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0091",
+        "record_hash": "sha256:e750e2f131dd54d8a330b13ef2f345743e86cab11d1c214892f8868a3f6ce7da",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS4076",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0705",
+        "record_hash": "sha256:aaac5ea26c6262cc81ad1482c8f7fe47ba5a9928857a3f21f63e99f4a589339a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4076",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0798",
+        "record_hash": "sha256:73af27a8c22eba6a56da503f687fee348422c59854372f35aed8b034c4561f44",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4076",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0843",
+        "record_hash": "sha256:65ec3d328a2c6eaa221752f7fefac5ade8c56bad1480d1d4f9eeb25e85ba24c5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV4076",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0886",
+        "record_hash": "sha256:4ae76d38c85af95cd2bb8e919b9b7b23137f4f93f0b57b6dbae5ff03291aa279",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4076",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0927",
+        "record_hash": "sha256:48585899f5cc5d49f66a10317e5e68a0acb6d69863df1e7e19187955ba7b756f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4076",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0968",
+        "record_hash": "sha256:6624d9a63ee50895341a4e135f0f9c0be34ee9cdead801f941b79c7308cc59d6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IC4076",
+        "column": "SIM_A_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1008",
+        "record_hash": "sha256:a72d8823208edad0da56240a2c27c2e040591164158313b278cb3ed3de28ee12",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX4076",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1048",
+        "record_hash": "sha256:4ba4cee31daf30021e0bb8ce22b9c2ad2f1a33a32d46c8278dbccc9eec4f3df3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY4076",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1088",
+        "record_hash": "sha256:42049e0f9be8c2818d0c1df668dea6d58e008fe02ad1a86908315c4227526774",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JA4076",
+        "column": "VANDAL_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1127",
+        "record_hash": "sha256:756793e3a254edb66fc2f4447f521ec78025e43e0078daea43b7041cec978a46",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE4076",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1164",
+        "record_hash": "sha256:5a5f2ab0d324c77e4459c1858214e0f026b0f56786d8918d98f57a337ca301bb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DL4076",
+        "column": "LAR_T_SEX22",
+        "year": "2022",
+        "value": 23
+      },
+      {
+        "event_id": "evt_2026_1200",
+        "record_hash": "sha256:3631df0fb830ed6abba4e44b763a66bb5a3960f6cc028f0dace53092fcdb1c1a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4076",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 6
+      },
+      {
+        "event_id": "evt_2026_1234",
+        "record_hash": "sha256:8b4e51cd2e5c3440947981c33a2ce35eef616e737ab0dd8defdd32581d26f8e2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4076",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1267",
+        "record_hash": "sha256:3964fbf52bdc383ede743d3ea45b56b5efb034c80d491013d0b9808fadcfe693",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA4076",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2952",
+        "record_hash": "sha256:147c0f883b750804d483a2de75a9bf846dcfeb8edfc0599ca4214c1d0f8caaa8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4076",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3108",
+        "record_hash": "sha256:091b7c9362fbf545c9816731d5274b3e5c86b92afdb71d05341f56668fafbcac",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4076",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3141",
+        "record_hash": "sha256:4ab981f37b4d61809641a1305eaf579e1ebc995df83d6719fb6de8cd3c1a68c5",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4076",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3771",
+        "record_hash": "sha256:ae7656e00745cdbb02f9a283cfe425aa673a76847bfa369b43b6bd68d83a7703",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DG4190",
+        "column": "SIM_A_ET21",
+        "year": "2021",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3819",
+        "record_hash": "sha256:8730be528151287744ececd04320542f5dfa544b0a94589525f30c1dab0836cf",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DB4190",
+        "column": "SIM_A_REL21",
+        "year": "2021",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3860",
+        "record_hash": "sha256:013be4c9eecda2eaa8987e34b949b673779ea89ca5148531ac7e71b6820226f0",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4190",
+        "column": "VANDAL_REL21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_new_mexico_main_campus&signal_id=sig_ea3e8f24924229ab5250",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ea3e8f24924229ab5250/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of New Mexico-Main Campus. Across 21 certified ED cells, the source-supported affected-community totals are LGBTQ+ (32), Religion (10), Race (8), Ethnicity (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ea3e8f24924229ab5250/",
+    "proactive_reply": "Relevant certified public-data context for University of New Mexico-Main Campus: https://campusevidencelab.org/signals/sig_ea3e8f24924229ab5250/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

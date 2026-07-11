@@ -1,0 +1,173 @@
+{
+  "id": "sig_e4b654d1560fc38702bb",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_cb2b450309e7e141a599",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_a23b097b51aebaf09de8",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/ursinus_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "ursinus_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the source-supported affected-community totals are Ethnicity (2), LGBTQ+ (2), Race (2), Religion (2)."
+  },
+  "institution": {
+    "id": "ursinus_college",
+    "name": "Ursinus College",
+    "city": "COLLEGEVILLE",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_2032",
+    "evt_2026_2126",
+    "evt_2026_2195",
+    "evt_2026_2225",
+    "evt_2026_2683",
+    "evt_2026_3408",
+    "evt_2026_3628",
+    "evt_2026_3700"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Ursinus College: Across 8 certified ED cells, the source-supported affected-community totals are Ethnicity (2), LGBTQ+ (2), Race (2), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_2032",
+        "evt_2026_2126",
+        "evt_2026_2195",
+        "evt_2026_2225",
+        "evt_2026_2683",
+        "evt_2026_3408",
+        "evt_2026_3628",
+        "evt_2026_3700"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2032",
+        "record_hash": "sha256:831fdadb033cda675474d56d04970e1327869bf6c674debad40d52d195c21049",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5581",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2126",
+        "record_hash": "sha256:f636ecada74db327f62c70672a7cbead4fe0e66c0351f37a073d895a44aaf0a6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB5581",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2195",
+        "record_hash": "sha256:acba40073abf754968fab62400fe6724ae6f8d44c2cfe7e4f81cf3f568ef286d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5581",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2225",
+        "record_hash": "sha256:616d7afa73ad3c65970fe22340ea2a036ee79e24d6834159150f07d6f0d0cd71",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DP5581",
+        "column": "LAR_T_ET22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2683",
+        "record_hash": "sha256:a402e8553898e147ed89a0e6109547bed66349eeb7b7df4d6875a55a5b00ca04",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5581",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3408",
+        "record_hash": "sha256:4faced6dbeaaeb166176ca47c194a59fa4e6871588458017dce30dbddb2b39b3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB5581",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3628",
+        "record_hash": "sha256:038ab5e6063917c9081e09e19ffd02ed172221666cd4dec74e26d188f34051bf",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5581",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3700",
+        "record_hash": "sha256:771df6a2a813ac1dac6a35f786275e97cd0f393bae5d3032991bc869a8ccb33d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DP5581",
+        "column": "LAR_T_ET22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=ursinus_college&signal_id=sig_e4b654d1560fc38702bb",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e4b654d1560fc38702bb/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Ursinus College. Across 8 certified ED cells, the source-supported affected-community totals are Ethnicity (2), LGBTQ+ (2), Race (2), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e4b654d1560fc38702bb/",
+    "proactive_reply": "Relevant certified public-data context for Ursinus College: https://campusevidencelab.org/signals/sig_e4b654d1560fc38702bb/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

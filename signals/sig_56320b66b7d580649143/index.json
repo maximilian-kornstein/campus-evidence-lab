@@ -1,0 +1,221 @@
+{
+  "id": "sig_56320b66b7d580649143",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_bf3fa919160cf45c2f37",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_d7aefbf5889af3f721be",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/portland_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "portland_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 12 certified ED cells, the source-supported affected-community totals are Race (5), Ethnicity (4), LGBTQ+ (3), Religion (2)."
+  },
+  "institution": {
+    "id": "portland_state_university",
+    "name": "Portland State University",
+    "city": "Portland",
+    "state": "OR"
+  },
+  "record_ids": [
+    "evt_2026_0801",
+    "evt_2026_1203",
+    "evt_2026_1467",
+    "evt_2026_1621",
+    "evt_2026_1724",
+    "evt_2026_1807",
+    "evt_2026_1872",
+    "evt_2026_1937",
+    "evt_2026_1979",
+    "evt_2026_2007",
+    "evt_2026_2039",
+    "evt_2026_2525"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Portland State University: Across 12 certified ED cells, the source-supported affected-community totals are Race (5), Ethnicity (4), LGBTQ+ (3), Religion (2).",
+      "supporting_record_ids": [
+        "evt_2026_0801",
+        "evt_2026_1203",
+        "evt_2026_1467",
+        "evt_2026_1621",
+        "evt_2026_1724",
+        "evt_2026_1807",
+        "evt_2026_1872",
+        "evt_2026_1937",
+        "evt_2026_1979",
+        "evt_2026_2007",
+        "evt_2026_2039",
+        "evt_2026_2525"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 15,
+    "certified_cell_count": 12,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0801",
+        "record_hash": "sha256:81c7acd37447ce21d4ec957a2706aa7e214299bfe55f988e89c79e61e56892af",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5265",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1203",
+        "record_hash": "sha256:e827488aad84b865e26c518e9ebc6b88a258fe28ef91f6a0c106e9659d22c5e1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ5265",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1467",
+        "record_hash": "sha256:4625df6384d74dcf349fad216cc8e399ad85d86fba64d0ec2fcc8687b6a79a6b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM5265",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1621",
+        "record_hash": "sha256:aa5bd33b78434408594e590b0f8b4786be3dcab4478f76a56bf08919e73a3762",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ5265",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1724",
+        "record_hash": "sha256:d04599c1927ccb6e894172ed5e09e47b1ae29d758d14ef8cb0c00da093f1e185",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU5265",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1807",
+        "record_hash": "sha256:0bdfd331d9b4daf4af171bbaa3be2fa22dc956a57f2d932f621d83c5cdf3a320",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JD5265",
+        "column": "VANDAL_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1872",
+        "record_hash": "sha256:e9217d45ad2ead1daaa16cb1f91a1702c724c5c3b3118d5c1bdc2a38c98f71ed",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5265",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1937",
+        "record_hash": "sha256:e2c2801ffbded10eb13036226ef70b8cc23a45c372621253bc7e845d4c3ac2bb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5265",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1979",
+        "record_hash": "sha256:303f6967336e92f7b78609771b0c67697238e546566f552baf6164b26e1c7064",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP5265",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2007",
+        "record_hash": "sha256:7f00bd5b7028d220491b13e9e49cefc53133177322709060fbceae57a9cd010e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY5265",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2039",
+        "record_hash": "sha256:7a4c50ac214772fc639849dbc0b2719c22e912b6a5ca00661b0914a41f024678",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE5265",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2525",
+        "record_hash": "sha256:0575f8b64338e56a3a1a4daf8ecf8ce1241f068ec8714898c9e4fdf18e9863bb",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ5265",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=portland_state_university&signal_id=sig_56320b66b7d580649143",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_56320b66b7d580649143/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Portland State University. Across 12 certified ED cells, the source-supported affected-community totals are Race (5), Ethnicity (4), LGBTQ+ (3), Religion (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_56320b66b7d580649143/",
+    "proactive_reply": "Relevant certified public-data context for Portland State University: https://campusevidencelab.org/signals/sig_56320b66b7d580649143/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

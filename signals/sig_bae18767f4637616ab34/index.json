@@ -1,0 +1,161 @@
+{
+  "id": "sig_bae18767f4637616ab34",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_53b7176ee941c8646832",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_2f3541292301f6c1813b",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/college_of_western_idaho/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "college_of_western_idaho"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Ethnicity (1), Students with disabilities (1)."
+  },
+  "institution": {
+    "id": "college_of_western_idaho",
+    "name": "College of Western Idaho",
+    "city": "Nampa",
+    "state": "ID"
+  },
+  "record_ids": [
+    "evt_2026_0104",
+    "evt_2026_0736",
+    "evt_2026_0827",
+    "evt_2026_0912",
+    "evt_2026_0993",
+    "evt_2026_1073",
+    "evt_2026_1149"
+  ],
+  "bounded_claims": [
+    {
+      "text": "College of Western Idaho: Across 7 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Ethnicity (1), Students with disabilities (1).",
+      "supporting_record_ids": [
+        "evt_2026_0104",
+        "evt_2026_0736",
+        "evt_2026_0827",
+        "evt_2026_0912",
+        "evt_2026_0993",
+        "evt_2026_1073",
+        "evt_2026_1149"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0104",
+        "record_hash": "sha256:acdb0d668c9e549f7b2a05e87f9238c583bf52938159924b0abc592352f8a98b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM8733",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0736",
+        "record_hash": "sha256:552e24bba8fdc828d414ea2085764a78c5ccd01572d649690f50cacaa82323d1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ8733",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0827",
+        "record_hash": "sha256:234bbc0ca1e1ae3fb5dee49714c3c8961b27bd20e33dc700c374dfc324a45a26",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IT8732",
+        "column": "INTIM_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0912",
+        "record_hash": "sha256:0c2e6352adb40de8b19b5bcffc3d702b22954fdf02a548bb509be90b10576946",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS8732",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0993",
+        "record_hash": "sha256:c20d3858eb957bebd0ae719c28ea37db8efe2f437ba950746230aa3cbacb921d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ8732",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1073",
+        "record_hash": "sha256:bdf937adf51629162b8717fb7ab31ad825052075613ba261c0b0bf629ea23db0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ8734",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1149",
+        "record_hash": "sha256:65dba241613bd73b76c46a41c5c2e6f30aff1d36d4ff0741186cd7d254d52a07",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW8732",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=college_of_western_idaho&signal_id=sig_bae18767f4637616ab34",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_bae18767f4637616ab34/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: College of Western Idaho. Across 7 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Ethnicity (1), Students with disabilities (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_bae18767f4637616ab34/",
+    "proactive_reply": "Relevant certified public-data context for College of Western Idaho: https://campusevidencelab.org/signals/sig_bae18767f4637616ab34/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

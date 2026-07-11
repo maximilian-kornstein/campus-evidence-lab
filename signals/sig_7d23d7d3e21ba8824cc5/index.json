@@ -1,0 +1,241 @@
+{
+  "id": "sig_7d23d7d3e21ba8824cc5",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_dcfae586ee3fc0924e60",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_56d3ae60fbe66f990bbf",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/plymouth_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "plymouth_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 13 certified ED cells, the source-supported affected-community totals are Race (9), Religion (8), LGBTQ+ (2)."
+  },
+  "institution": {
+    "id": "plymouth_state_university",
+    "name": "Plymouth State University",
+    "city": "PLYMOUTH",
+    "state": "NH"
+  },
+  "record_ids": [
+    "evt_2026_0090",
+    "evt_2026_0796",
+    "evt_2026_0925",
+    "evt_2026_1086",
+    "evt_2026_1162",
+    "evt_2026_1232",
+    "evt_2026_2920",
+    "evt_2026_3032",
+    "evt_2026_3139",
+    "evt_2026_3201",
+    "evt_2026_3256",
+    "evt_2026_3302",
+    "evt_2026_3817"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Plymouth State University: Across 13 certified ED cells, the source-supported affected-community totals are Race (9), Religion (8), LGBTQ+ (2).",
+      "supporting_record_ids": [
+        "evt_2026_0090",
+        "evt_2026_0796",
+        "evt_2026_0925",
+        "evt_2026_1086",
+        "evt_2026_1162",
+        "evt_2026_1232",
+        "evt_2026_2920",
+        "evt_2026_3032",
+        "evt_2026_3139",
+        "evt_2026_3201",
+        "evt_2026_3256",
+        "evt_2026_3302",
+        "evt_2026_3817"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 19,
+    "certified_cell_count": 13,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0090",
+        "record_hash": "sha256:20348ac187692531bde92c831898c39c877750bb97ee489fb4ef83d84b1272ed",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3888",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0796",
+        "record_hash": "sha256:4ce1caf02e4a7884c7b73969dafaabf0f3d1b20f68d02522421b220b1525d33e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX3888",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0925",
+        "record_hash": "sha256:0ecf6224d866a6e0bfbad23e2cc1413d297a6af670bb930311de1d6dd844191a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3888",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1086",
+        "record_hash": "sha256:ee3ba0e635c8ad2debac93d2653d85951948688361732d3ea6f6b6f553e487a8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3888",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1162",
+        "record_hash": "sha256:3adb50fde1deb8a6b9fbbad30cb766c8b707fe5a92d115b30fb673ac510b3b33",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC3888",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1232",
+        "record_hash": "sha256:5de056e2485c39f2077e81166657d117493b18ccb9d3b1bdd7cc86072f04fcc3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED3888",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2920",
+        "record_hash": "sha256:37a58ab5463816b9134429cda31f20887fe37a839bb8a14de6fe44ae11d618cc",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3888",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_3032",
+        "record_hash": "sha256:1c39dc3cef7e08feed487d2e0656e45cc2ed6b58ed1566b2bd220ffba0dbbc44",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX3888",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3139",
+        "record_hash": "sha256:e95b40782e5bb451ab0b46b969b5ef044c7e1d23d74f5afcea8933f172f75572",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3888",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3201",
+        "record_hash": "sha256:dd890b594c34a06f5f768a4f4c7bd8f4d25690d13ca11e96dbddbddc05e1d131",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3888",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3256",
+        "record_hash": "sha256:339fe085af92f6a06f681eb0ce7df4195a392b6d62249184a72111b8397ebb10",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC3888",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3302",
+        "record_hash": "sha256:97933e8e7f4ce0a47fb8446b9182037a1bf171f3c7a620d5b2c7cc66ba7c329b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED3888",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3817",
+        "record_hash": "sha256:63f5dadfbf043e27968c9696010fef7aa04541915272715c722efd02e784143d",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3987",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 3
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=plymouth_state_university&signal_id=sig_7d23d7d3e21ba8824cc5",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7d23d7d3e21ba8824cc5/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Plymouth State University. Across 13 certified ED cells, the source-supported affected-community totals are Race (9), Religion (8), LGBTQ+ (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7d23d7d3e21ba8824cc5/",
+    "proactive_reply": "Relevant certified public-data context for Plymouth State University: https://campusevidencelab.org/signals/sig_7d23d7d3e21ba8824cc5/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

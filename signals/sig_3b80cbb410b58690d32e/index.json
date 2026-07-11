@@ -1,0 +1,173 @@
+{
+  "id": "sig_3b80cbb410b58690d32e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_7b439944b0d1af0b1482",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8111dccd9ae9b60c661c",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_new_hampshire_main_campus/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_new_hampshire_main_campus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (2)."
+  },
+  "institution": {
+    "id": "university_of_new_hampshire_main_campus",
+    "name": "University of New Hampshire-Main Campus",
+    "city": "DURHAM",
+    "state": "NH"
+  },
+  "record_ids": [
+    "evt_2026_0249",
+    "evt_2026_0750",
+    "evt_2026_0884",
+    "evt_2026_1006",
+    "evt_2026_3106",
+    "evt_2026_3229",
+    "evt_2026_3280",
+    "evt_2026_3324"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of New Hampshire-Main Campus: Across 8 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (2).",
+      "supporting_record_ids": [
+        "evt_2026_0249",
+        "evt_2026_0750",
+        "evt_2026_0884",
+        "evt_2026_1006",
+        "evt_2026_3106",
+        "evt_2026_3229",
+        "evt_2026_3280",
+        "evt_2026_3324"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0249",
+        "record_hash": "sha256:821122a801cbee5b604c2504d1c6293f7159ca9256c7a64740c7714b71c8865b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3882",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0750",
+        "record_hash": "sha256:704e31ec5a0b40027c3c32f00b655e4735399606a71e9fdee373b520f299def6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM3882",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0884",
+        "record_hash": "sha256:93dd16064dbfed629cf55758e2bdd2c8d75bc33f3f51263580357b444b7b1b12",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3882",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1006",
+        "record_hash": "sha256:25161eed814072dd636d4de7b25afca921c5075363a9492a898d53125b0cffc7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3882",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3106",
+        "record_hash": "sha256:d046ed2ed751a4ceddd567b129490ae6876f0413aabe5a568b453cbeead11519",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3882",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3229",
+        "record_hash": "sha256:ab109dcbbf23c1c0f6be15901c71d979d9a9672829054d89bf7caa4fe7f2e9da",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM3882",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3280",
+        "record_hash": "sha256:835b03a69498d05d0a9da3f9440b5d1e6756b4754bb5d4436dec2f7faa6e5a5a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3882",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3324",
+        "record_hash": "sha256:7b6d7eccbcf53e00c92965a43d74cf6bc2748d8bb216e8ac88a22fc62f4a9ea1",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3882",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_new_hampshire_main_campus&signal_id=sig_3b80cbb410b58690d32e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3b80cbb410b58690d32e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of New Hampshire-Main Campus. Across 8 certified ED cells, the documented category totals are Harassment or threat (6), Vandalism (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3b80cbb410b58690d32e/",
+    "proactive_reply": "Relevant certified public-data context for University of New Hampshire-Main Campus: https://campusevidencelab.org/signals/sig_3b80cbb410b58690d32e/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

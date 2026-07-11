@@ -1,0 +1,185 @@
+{
+  "id": "sig_26b31614d35173466da4",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e484f549e8bbd46be77b",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_132b56fc1245ccd04841",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/san_diego_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "san_diego_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (3), Other source-backed civil rights event (1)."
+  },
+  "institution": {
+    "id": "san_diego_state_university",
+    "name": "San Diego State University",
+    "city": "SAN DIEGO",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1758",
+    "evt_2026_2169",
+    "evt_2026_2337",
+    "evt_2026_2383",
+    "evt_2026_2419",
+    "evt_2026_3454",
+    "evt_2026_3471",
+    "evt_2026_3534",
+    "evt_2026_3646"
+  ],
+  "bounded_claims": [
+    {
+      "text": "San Diego State University: Across 9 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (3), Other source-backed civil rights event (1).",
+      "supporting_record_ids": [
+        "evt_2026_1758",
+        "evt_2026_2169",
+        "evt_2026_2337",
+        "evt_2026_2383",
+        "evt_2026_2419",
+        "evt_2026_3454",
+        "evt_2026_3471",
+        "evt_2026_3534",
+        "evt_2026_3646"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1758",
+        "record_hash": "sha256:485abcf874183c9d81e4a4c445ad33a79982406c1fb857c98e9501b6c669e774",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LK833",
+        "column": "AGG_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2169",
+        "record_hash": "sha256:0336b1eaa57f4fe1bc19450b62f9e38b3d14943dde58c34e3cc14c08069a70a0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS833",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2337",
+        "record_hash": "sha256:00ae82a647e26a0a2ce75eb8a8960fbf49dab581675d99b5043a86f182051a93",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT833",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2383",
+        "record_hash": "sha256:db14636292a00db6bfda91e12248b2ff3f86b06fe877da307d62b5e435688951",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT833",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2419",
+        "record_hash": "sha256:1910914fd59237b79aabe85ab2a5c808e6f98327e62174bb8484ce3a08b2d9fc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BW833",
+        "column": "AGG_A_ET22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3454",
+        "record_hash": "sha256:dba23bfb51537f92c8f72e95311988b8e2f53c19586d893a05ade6cc92c40bb1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "Z833",
+        "column": "RAPE_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3471",
+        "record_hash": "sha256:d2a85644bab3e66b9c0709d936f6f28aac6017005fd2f0fd3091c320830d601c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC833",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3534",
+        "record_hash": "sha256:61e3c045b787883547d40174a0e21f64ab303d3bd3b94c703a044fbb238ea613",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT833",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3646",
+        "record_hash": "sha256:b9402166b4305bac2bb3e67fb9453b5df82226c101507495f2415a3d74b79c0f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BW833",
+        "column": "AGG_A_ET22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=san_diego_state_university&signal_id=sig_26b31614d35173466da4",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_26b31614d35173466da4/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: San Diego State University. Across 9 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (3), Other source-backed civil rights event (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_26b31614d35173466da4/",
+    "proactive_reply": "Relevant certified public-data context for San Diego State University: https://campusevidencelab.org/signals/sig_26b31614d35173466da4/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

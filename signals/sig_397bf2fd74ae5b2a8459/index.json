@@ -1,0 +1,125 @@
+{
+  "id": "sig_397bf2fd74ae5b2a8459",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_045c7550ffc0f6f8ba64",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_4ede7d4b8dce835d9200",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/community_college_of_denver/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "community_college_of_denver"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (2), public-property (2)."
+  },
+  "institution": {
+    "id": "community_college_of_denver",
+    "name": "Community College of Denver",
+    "city": "DENVER",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0473",
+    "evt_2026_1027",
+    "evt_2026_2471",
+    "evt_2026_2613"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Community College of Denver: Across 4 certified ED cells, the reported geography totals are on-campus (2), public-property (2).",
+      "supporting_record_ids": [
+        "evt_2026_0473",
+        "evt_2026_1027",
+        "evt_2026_2471",
+        "evt_2026_2613"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0473",
+        "record_hash": "sha256:542721ba23a3f0e7270ae21f4544e22f22fd83cedd6bbf5392c56e352d55c866",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "FG988",
+        "column": "FOND_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1027",
+        "record_hash": "sha256:e4516982eeebb686f59058f856fad199bd4a54f470af13b5438ad9cfe9aba24a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS988",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2471",
+        "record_hash": "sha256:02974bfe29f6266190d47d464d209c19d947dc96bcbcd4d3cd077d770e177104",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE988",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2613",
+        "record_hash": "sha256:a37c92493d9fb82bdbbacf7c2e6bef02c108fdd8e1089dbb9eb2f5f5963254c9",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ988",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=community_college_of_denver&signal_id=sig_397bf2fd74ae5b2a8459",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_397bf2fd74ae5b2a8459/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Community College of Denver. Across 4 certified ED cells, the reported geography totals are on-campus (2), public-property (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_397bf2fd74ae5b2a8459/",
+    "proactive_reply": "Relevant certified public-data context for Community College of Denver: https://campusevidencelab.org/signals/sig_397bf2fd74ae5b2a8459/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,137 @@
+{
+  "id": "sig_d62d77f8c2b379b12d08",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_b33038a80e1415b910c0",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_db6523cd30c6300d837a",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/davenport_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "davenport_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the source-supported affected-community totals are Gender (2), LGBTQ+ (2), Race (1)."
+  },
+  "institution": {
+    "id": "davenport_university",
+    "name": "Davenport University",
+    "city": "Grand Rapids",
+    "state": "MI"
+  },
+  "record_ids": [
+    "evt_2026_0548",
+    "evt_2026_1321",
+    "evt_2026_1482",
+    "evt_2026_3383",
+    "evt_2026_3523"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Davenport University: Across 5 certified ED cells, the source-supported affected-community totals are Gender (2), LGBTQ+ (2), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_0548",
+        "evt_2026_1321",
+        "evt_2026_1482",
+        "evt_2026_3383",
+        "evt_2026_3523"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0548",
+        "record_hash": "sha256:cb50a52e2f30c12428a0d618ade71a9053ed2084bc7ddaa2e10b988d5b3b7a51",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR3142",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1321",
+        "record_hash": "sha256:df45c78bbe573343fdca607f3b643f01210b91c72881c8222a1f8fc8e3adcfaa",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3142",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1482",
+        "record_hash": "sha256:4ebc0efc650f74b53750e6ef0a8cd01c892e6364ba7b76b96bc4cf106eb55997",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3142",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3383",
+        "record_hash": "sha256:f8967a7233135b6abf880e1322236e604f2c19a93f0430c04cfe1bbd3063a9ca",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR3142",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3523",
+        "record_hash": "sha256:8b49b203f82202d8a60dd0779388df1eb10aa258afcf8a85cc5e66e0aeb02761",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3142",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=davenport_university&signal_id=sig_d62d77f8c2b379b12d08",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_d62d77f8c2b379b12d08/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Davenport University. Across 5 certified ED cells, the source-supported affected-community totals are Gender (2), LGBTQ+ (2), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_d62d77f8c2b379b12d08/",
+    "proactive_reply": "Relevant certified public-data context for Davenport University: https://campusevidencelab.org/signals/sig_d62d77f8c2b379b12d08/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

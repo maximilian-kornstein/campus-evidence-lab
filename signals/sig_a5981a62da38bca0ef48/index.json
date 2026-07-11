@@ -1,0 +1,173 @@
+{
+  "id": "sig_a5981a62da38bca0ef48",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_5d5c6686c5cba23b8c88",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6c2626c680dc990a0b8d",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/northern_virginia_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "northern_virginia_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the source-supported affected-community totals are Race (5), LGBTQ+ (2), National origin (1), Students with disabilities (1)."
+  },
+  "institution": {
+    "id": "northern_virginia_community_college",
+    "name": "Northern Virginia Community College",
+    "city": "Alexandria",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_0399",
+    "evt_2026_1018",
+    "evt_2026_1538",
+    "evt_2026_1712",
+    "evt_2026_1836",
+    "evt_2026_1888",
+    "evt_2026_1940",
+    "evt_2026_2850"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Northern Virginia Community College: Across 8 certified ED cells, the source-supported affected-community totals are Race (5), LGBTQ+ (2), National origin (1), Students with disabilities (1).",
+      "supporting_record_ids": [
+        "evt_2026_0399",
+        "evt_2026_1018",
+        "evt_2026_1538",
+        "evt_2026_1712",
+        "evt_2026_1836",
+        "evt_2026_1888",
+        "evt_2026_1940",
+        "evt_2026_2850"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0399",
+        "record_hash": "sha256:fe5d7b2c824610c9919577a186167b526d1ceb7f78a47c833e29cde8dc6a936c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK6636",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1018",
+        "record_hash": "sha256:ba50d7e6006b32b1a470f1f24c2ffe8a7c42328f21d1a4a9076a78f8daa37697",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6637",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1538",
+        "record_hash": "sha256:035a6bc0388b2c1f46cf7eba05c0dac701d19e324991e804c302ec2deba4273a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IB6636",
+        "column": "SIM_A_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1712",
+        "record_hash": "sha256:0e377076d08f792411d2fe6913337c3ebbd14642f71730c986c25a0b63eba9c4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6637",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1836",
+        "record_hash": "sha256:873faa267d2d7146a0c3300e5b565892791d9098d8c35f8db84f03d63fcb1805",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS6635",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1888",
+        "record_hash": "sha256:2c2e431b9472aa371cd4f870bc96cdd8d624aee6af4f46590142014dc3527bb4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ6635",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1940",
+        "record_hash": "sha256:dc8031ca285452bfe1e1fffe027ec3ff788281b547be61f233944113ebcf38fb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6636",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2850",
+        "record_hash": "sha256:501ca2ad99023df6cb24bfa92574e96fb593ecb41b51f6946a774a2a68e7d514",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "Z6643",
+        "column": "RAPE_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=northern_virginia_community_college&signal_id=sig_a5981a62da38bca0ef48",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_a5981a62da38bca0ef48/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Northern Virginia Community College. Across 8 certified ED cells, the source-supported affected-community totals are Race (5), LGBTQ+ (2), National origin (1), Students with di… Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_a5981a62da38bca0ef48/",
+    "proactive_reply": "Relevant certified public-data context for Northern Virginia Community College: https://campusevidencelab.org/signals/sig_a5981a62da38bca0ef48/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

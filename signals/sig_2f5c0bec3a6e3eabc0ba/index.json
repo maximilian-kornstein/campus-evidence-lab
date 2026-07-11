@@ -1,0 +1,173 @@
+{
+  "id": "sig_2f5c0bec3a6e3eabc0ba",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_40fbb6452f17f6bbaf59",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1d385ed6e592f80894a7",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/california_state_university_monterey_bay/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "california_state_university_monterey_bay"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "california_state_university_monterey_bay",
+    "name": "California State University-Monterey Bay",
+    "city": "SEASIDE",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0356",
+    "evt_2026_2247",
+    "evt_2026_2313",
+    "evt_2026_2930",
+    "evt_2026_3414",
+    "evt_2026_3453",
+    "evt_2026_3679",
+    "evt_2026_3689"
+  ],
+  "bounded_claims": [
+    {
+      "text": "California State University-Monterey Bay: Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0356",
+        "evt_2026_2247",
+        "evt_2026_2313",
+        "evt_2026_2930",
+        "evt_2026_3414",
+        "evt_2026_3453",
+        "evt_2026_3679",
+        "evt_2026_3689"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0356",
+        "record_hash": "sha256:d628589163bd5a595c932c405a899b81959816358d8afa8fc178238eb366ff66",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK7755",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2247",
+        "record_hash": "sha256:68ed5c36b069f0009b59d5c53e0ae0549f448adaa00a6b7e89e4a8b6210cbdeb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU7755",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2313",
+        "record_hash": "sha256:cbef434d02876d320d46cf9e73e2959c2a4ac9fe8cf07fc23f44b55e3b8523a9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DD7755",
+        "column": "SIM_A_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2930",
+        "record_hash": "sha256:f38a835be6c333714e2bfb8904fc948b2b6c5f64078804b9c1afdf4674718bac",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK7755",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3414",
+        "record_hash": "sha256:607b97698fdc4766f4873158d4677c509bf0eda890e649aae0629364ccf7cc7e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU7755",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3453",
+        "record_hash": "sha256:06853aff19f369e2b7a0cbdd3fc6afc2964746cb73ccbbffcda3992fe8481f57",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DC7755",
+        "column": "SIM_A_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3679",
+        "record_hash": "sha256:aa7ebf6b3d842c22476e5307dd7e3d8073566080c85a536861bbc6284ae12fa3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DD7755",
+        "column": "SIM_A_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3689",
+        "record_hash": "sha256:222cf3072c68982cb69c10425f96b4eed745797ab6a9c28dea3f0a80f32c5669",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DC7755",
+        "column": "SIM_A_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=california_state_university_monterey_bay&signal_id=sig_2f5c0bec3a6e3eabc0ba",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_2f5c0bec3a6e3eabc0ba/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: California State University-Monterey Bay. Certified ED workbook cells document 4 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_2f5c0bec3a6e3eabc0ba/",
+    "proactive_reply": "Relevant certified public-data context for California State University-Monterey Bay: https://campusevidencelab.org/signals/sig_2f5c0bec3a6e3eabc0ba/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

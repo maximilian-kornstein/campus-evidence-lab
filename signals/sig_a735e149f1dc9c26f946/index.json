@@ -1,0 +1,169 @@
+{
+  "id": "sig_a735e149f1dc9c26f946",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_3b84068febc61fc8d082",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1489a30c43f1850cd689",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/chapman_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "chapman_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Religion (3), National origin (2), Race (2), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "chapman_university",
+    "name": "Chapman University",
+    "city": "Orange",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1607",
+    "evt_2026_2151",
+    "evt_2026_2375",
+    "evt_2026_2413",
+    "evt_2026_3438",
+    "evt_2026_3590",
+    "evt_2026_3877"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Chapman University: Across 7 certified ED cells, the source-supported affected-community totals are Religion (3), National origin (2), Race (2), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_1607",
+        "evt_2026_2151",
+        "evt_2026_2375",
+        "evt_2026_2413",
+        "evt_2026_3438",
+        "evt_2026_3590",
+        "evt_2026_3877"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1607",
+        "record_hash": "sha256:e5cb339559b6f58188289b109b7960ab0dd869389c1e93137280ff81af24c80e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT517",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2151",
+        "record_hash": "sha256:5307412b76f47d806a015dfca3d104cd9b094dc786bd8e07343d90a3b2576b1d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA517",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2375",
+        "record_hash": "sha256:83fa3469e9daba09b3e565c866a3924c704be839e90b2141aecfb6a73955054e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IM517",
+        "column": "LAR_T_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2413",
+        "record_hash": "sha256:d7f265e679b0a52ed3fe407d292176fdf0404db80fef978e84965f120445adfe",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY517",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3438",
+        "record_hash": "sha256:055497319e4020e2ceb6b72a8b28b84539dc694aa3a3e6adb91e5155f3bacf95",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY517",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3590",
+        "record_hash": "sha256:a559f34f83c9144ffb166619cca10a7e1705c9bc92aa4951ec32d719a79f3cfc",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY517",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3877",
+        "record_hash": "sha256:8c1f8bc6be61d4efa257450597163942e567a94bd0146344cab0e2ecb6cd3eec",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB520",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=chapman_university&signal_id=sig_a735e149f1dc9c26f946",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_a735e149f1dc9c26f946/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Chapman University. Across 7 certified ED cells, the source-supported affected-community totals are Religion (3), National origin (2), Race (2), LGBTQ+ (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_a735e149f1dc9c26f946/",
+    "proactive_reply": "Relevant certified public-data context for Chapman University: https://campusevidencelab.org/signals/sig_a735e149f1dc9c26f946/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

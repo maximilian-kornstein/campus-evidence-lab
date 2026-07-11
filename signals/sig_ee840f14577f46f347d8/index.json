@@ -1,0 +1,145 @@
+{
+  "id": "sig_ee840f14577f46f347d8",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_91f320fabbdfb54f1b89",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_403e6c2ca092f570702f",
+    "title": "2023 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/keuka_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "keuka_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2023."
+  },
+  "institution": {
+    "id": "keuka_college",
+    "name": "Keuka College",
+    "city": "Keuka Park",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1988",
+    "evt_2026_2176",
+    "evt_2026_3282",
+    "evt_2026_3718",
+    "evt_2026_3773"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Keuka College: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2023.",
+      "supporting_record_ids": [
+        "evt_2026_1988",
+        "evt_2026_2176",
+        "evt_2026_3282",
+        "evt_2026_3718",
+        "evt_2026_3773"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1988",
+        "record_hash": "sha256:efce5072c5c5fcd6608637983efc2245a85ba7a4284c300c8c56be5f80c1daa7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4270",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2176",
+        "record_hash": "sha256:c07c405e016ce2e325a9384ac720da44d73326af9ba56be8b593eb02b1183ad4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4270",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3282",
+        "record_hash": "sha256:0c40671df42c0c5f38fcfb70fd6ce9d48b564165a50b88eb0e2fbfef1b2387fd",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4270",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3718",
+        "record_hash": "sha256:ab0a9593594f4cac4480e3d4b1d80bde46116f3d4228ba1a2d051ff6da5a4a6f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4270",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3773",
+        "record_hash": "sha256:9cf74f9a3bb7d1c3171c4ef013fb87284a93592b8cf8e904af60bb94c7b47693",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4386",
+        "column": "VANDAL_SEX21",
+        "year": "2021",
+        "value": 3
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=keuka_college&signal_id=sig_ee840f14577f46f347d8",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ee840f14577f46f347d8/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Keuka College. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2023. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ee840f14577f46f347d8/",
+    "proactive_reply": "Relevant certified public-data context for Keuka College: https://campusevidencelab.org/signals/sig_ee840f14577f46f347d8/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

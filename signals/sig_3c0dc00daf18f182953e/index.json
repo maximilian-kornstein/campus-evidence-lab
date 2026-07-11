@@ -1,0 +1,193 @@
+{
+  "id": "sig_3c0dc00daf18f182953e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_1e8e61009ea8ebc1fd36",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_3cd322a4b48739ea5747",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/depauw_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "depauw_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the source-supported affected-community totals are Race (7), LGBTQ+ (6), National origin (1)."
+  },
+  "institution": {
+    "id": "depauw_university",
+    "name": "DePauw University",
+    "city": "GREENCASTLE",
+    "state": "IN"
+  },
+  "record_ids": [
+    "evt_2026_0409",
+    "evt_2026_2596",
+    "evt_2026_2633",
+    "evt_2026_2646",
+    "evt_2026_2775",
+    "evt_2026_2854",
+    "evt_2026_2870",
+    "evt_2026_3097",
+    "evt_2026_3756"
+  ],
+  "bounded_claims": [
+    {
+      "text": "DePauw University: Across 9 certified ED cells, the source-supported affected-community totals are Race (7), LGBTQ+ (6), National origin (1).",
+      "supporting_record_ids": [
+        "evt_2026_0409",
+        "evt_2026_2596",
+        "evt_2026_2633",
+        "evt_2026_2646",
+        "evt_2026_2775",
+        "evt_2026_2854",
+        "evt_2026_2870",
+        "evt_2026_3097",
+        "evt_2026_3756"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 14,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0409",
+        "record_hash": "sha256:38cf410dbc74e51e09753fa6fe98cba14e84595f526eb61aacda3317b73723db",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU2075",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2596",
+        "record_hash": "sha256:51baee26ad2cffc2ad6f8a56ee00142cf00171f5ed18eceee0350bf7f2b88d42",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2075",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2633",
+        "record_hash": "sha256:4575d3eb9969664ad4edc8ad0c35e4c9dadc5669d15fa38e0c65cb646dfdf6c4",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2075",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2646",
+        "record_hash": "sha256:aaf223f21e4838b0d6e37687581dea1222eadb5311961f4bad7b498e60b5c84a",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS2075",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2775",
+        "record_hash": "sha256:2dd094ac322f3521c3d6c6b441cb5dcf1ccee46b75549cf80d5ee97388bacdcd",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM2075",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2854",
+        "record_hash": "sha256:aff30fec5491e8479a4fadd9e40bfe3cdafca94e11e70f8877f6dbd0989e2bd4",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV2075",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2870",
+        "record_hash": "sha256:e068f95df12089eedbcfaf7f78627017e5ea4d672ea9266876b4250c19b1d39f",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ2075",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3097",
+        "record_hash": "sha256:30b951e5f1c9d47881f7a3fe8731bf3385cf69fc578c6d6b3efc87ef2d23b7af",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU2075",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3756",
+        "record_hash": "sha256:454be5672cc30febb85eee0157384cec454d03dd65b6dc1634bf2701775392a4",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS2082",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=depauw_university&signal_id=sig_3c0dc00daf18f182953e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3c0dc00daf18f182953e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: DePauw University. Across 9 certified ED cells, the source-supported affected-community totals are Race (7), LGBTQ+ (6), National origin (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3c0dc00daf18f182953e/",
+    "proactive_reply": "Relevant certified public-data context for DePauw University: https://campusevidencelab.org/signals/sig_3c0dc00daf18f182953e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

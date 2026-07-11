@@ -1,0 +1,181 @@
+{
+  "id": "sig_b735f7f310a79526f5c3",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_b4c01dc8ea21edf963f3",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1f8753221c842d8fd209",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/dawson_community_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "dawson_community_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the source-supported affected-community totals are Race (5), Ethnicity (1), Gender (1), National origin (1)."
+  },
+  "institution": {
+    "id": "dawson_community_college",
+    "name": "Dawson Community College",
+    "city": "GLENDIVE",
+    "state": "MT"
+  },
+  "record_ids": [
+    "evt_2026_0294",
+    "evt_2026_0881",
+    "evt_2026_1083",
+    "evt_2026_1229",
+    "evt_2026_1406",
+    "evt_2026_2990",
+    "evt_2026_3104",
+    "evt_2026_3765"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Dawson Community College: Across 8 certified ED cells, the source-supported affected-community totals are Race (5), Ethnicity (1), Gender (1), National origin (1).",
+      "supporting_record_ids": [
+        "evt_2026_0294",
+        "evt_2026_0881",
+        "evt_2026_1083",
+        "evt_2026_1229",
+        "evt_2026_1406",
+        "evt_2026_2990",
+        "evt_2026_3104",
+        "evt_2026_3765"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0294",
+        "record_hash": "sha256:bd39b6dd3da10605456ea6e1ba1c5ad3e0dd7916de5a6be8bca5415a1d5aebe6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3733",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0881",
+        "record_hash": "sha256:cf5a75d356a956e96104ae0918e95546bd643575c52521e6f942dfca9b9c2868",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX3733",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1083",
+        "record_hash": "sha256:16af7575b4702c040e7a2895952a05f9c3f7f6a003fc1588e9bdd2024b2bcdfd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DY3733",
+        "column": "INTIM_ET22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1229",
+        "record_hash": "sha256:f457594666ce7c5c6af07dfd5912b382c27150b6b1ca097c7ee6de70777488bf",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ3733",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1406",
+        "record_hash": "sha256:697fbac0a004738ad689a0a13997946f47ebe322dae1f0b101505e51267c1aed",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3733",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2990",
+        "record_hash": "sha256:95d9951ccd36a80fe6cbbf7d626f69d9cb2f9a434b0cfa03c850fb4bdc9eaeb5",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3733",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3104",
+        "record_hash": "sha256:358f11fd9a1a33fd23a7dcb08ce830fa49adbe351d555f6ced705a527e18c2fa",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX3733",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3765",
+        "record_hash": "sha256:e53409b74ab7908ebf38a6096d8a34957e8245db9e3d967075068f99c8e5f6b5",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DV3830",
+        "column": "INTIM_GEN21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=dawson_community_college&signal_id=sig_b735f7f310a79526f5c3",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b735f7f310a79526f5c3/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Dawson Community College. Across 8 certified ED cells, the source-supported affected-community totals are Race (5), Ethnicity (1), Gender (1), National origin (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_b735f7f310a79526f5c3/",
+    "proactive_reply": "Relevant certified public-data context for Dawson Community College: https://campusevidencelab.org/signals/sig_b735f7f310a79526f5c3/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

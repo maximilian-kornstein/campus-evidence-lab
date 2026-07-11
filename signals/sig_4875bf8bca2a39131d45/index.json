@@ -1,0 +1,233 @@
+{
+  "id": "sig_4875bf8bca2a39131d45",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d5678b90065ab6f0c57a",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_5d2d00252f1158ff836b",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/yeshiva_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "yeshiva_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 13 certified ED cells, the source-supported affected-community totals are Religion (19), LGBTQ+ (1), Race (1)."
+  },
+  "institution": {
+    "id": "yeshiva_university",
+    "name": "Yeshiva University",
+    "city": "NEW YORK",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0571",
+    "evt_2026_1883",
+    "evt_2026_2155",
+    "evt_2026_2256",
+    "evt_2026_2306",
+    "evt_2026_2368",
+    "evt_2026_2396",
+    "evt_2026_2724",
+    "evt_2026_2745",
+    "evt_2026_2758",
+    "evt_2026_3231",
+    "evt_2026_3677",
+    "evt_2026_3699"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Yeshiva University: Across 13 certified ED cells, the source-supported affected-community totals are Religion (19), LGBTQ+ (1), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_0571",
+        "evt_2026_1883",
+        "evt_2026_2155",
+        "evt_2026_2256",
+        "evt_2026_2306",
+        "evt_2026_2368",
+        "evt_2026_2396",
+        "evt_2026_2724",
+        "evt_2026_2745",
+        "evt_2026_2758",
+        "evt_2026_3231",
+        "evt_2026_3677",
+        "evt_2026_3699"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 21,
+    "certified_cell_count": 13,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0571",
+        "record_hash": "sha256:36bd068e66a59dd25b5812bed199545d948c66c4e79a322da7c934344b87b014",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL4545",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1883",
+        "record_hash": "sha256:37811b4ee56d019428ee7bffd6b7dab3dc7b4ed8a7891098784ca94e8277659a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK4545",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2155",
+        "record_hash": "sha256:5d1cecd3c84dda5beebad72b5500a506964fd61909a4ca471b6cf8357031202b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4546",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2256",
+        "record_hash": "sha256:20b2829b70f618a8eb27e5e72f019216645b12cf47beeae8ea80037cb83e41cc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4545",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2306",
+        "record_hash": "sha256:dfc53aab627bf340a63abec8d4116741c74f1f7b1cb862fc1014c2d2079893f8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ4547",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2368",
+        "record_hash": "sha256:ce6ebc2d5802425fa468cb7dd3ee5a7dd79bb6793eac574a6c89fa000d63768b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4545",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_2396",
+        "record_hash": "sha256:01b4a53465b7d142a29e37996b8d84e3eb53937538d37b7229aa8840d03ce9b7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4545",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2724",
+        "record_hash": "sha256:9b740dcd955afa9904671ede60017aa965a64505f7189b78c26b2c9420a07b7d",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4545",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_2745",
+        "record_hash": "sha256:e00826451a1a92fcd2dab12f34975f2321282866970a308c51018b91044aa76b",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4545",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2758",
+        "record_hash": "sha256:0be5522d9f52257b9531db03a1d6c74146b7a65a8a36196626ee3c100afa56e4",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4545",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3231",
+        "record_hash": "sha256:66f58501bab72ab2f2c5e4237839e3b26b0a9ec745cb649a17c863dbeee61dec",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4546",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3677",
+        "record_hash": "sha256:aa6a29c70b6fa6d54c96fdf86257d478ead13559a5e0ffd1c45f5de65aab1306",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4545",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3699",
+        "record_hash": "sha256:606b4bc0cb6e7817de7fe1319ac826668acf626e6fd1bd69f76e981a75c3fdcb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4545",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=yeshiva_university&signal_id=sig_4875bf8bca2a39131d45",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4875bf8bca2a39131d45/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Yeshiva University. Across 13 certified ED cells, the source-supported affected-community totals are Religion (19), LGBTQ+ (1), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_4875bf8bca2a39131d45/",
+    "proactive_reply": "Relevant certified public-data context for Yeshiva University: https://campusevidencelab.org/signals/sig_4875bf8bca2a39131d45/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

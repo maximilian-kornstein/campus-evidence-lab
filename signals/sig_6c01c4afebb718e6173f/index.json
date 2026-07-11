@@ -1,0 +1,137 @@
+{
+  "id": "sig_6c01c4afebb718e6173f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_1c57dbe211c689e9ac52",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_336386ebd0c721ac5668",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/touro_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "touro_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Harassment or threat (4), Vandalism (1)."
+  },
+  "institution": {
+    "id": "touro_university",
+    "name": "Touro University",
+    "city": "Central Islip",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_2038",
+    "evt_2026_2622",
+    "evt_2026_2703",
+    "evt_2026_2750",
+    "evt_2026_2759"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Touro University: Across 5 certified ED cells, the documented category totals are Harassment or threat (4), Vandalism (1).",
+      "supporting_record_ids": [
+        "evt_2026_2038",
+        "evt_2026_2622",
+        "evt_2026_2703",
+        "evt_2026_2750",
+        "evt_2026_2759"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_2038",
+        "record_hash": "sha256:21893690a0200b37b426b0b445f0c96e5857c12ca8f21bdcef19276110d20a02",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ4499",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2622",
+        "record_hash": "sha256:97306b0d724d8a49c0eb46ea0e76339d784be428afd577111f6d6cf1e432cc8a",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL4500",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2703",
+        "record_hash": "sha256:da1f3cd4ebdb272d6959df4e1e31fe3006471e52c2b93607e88d96b1761c6061",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT4497",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2750",
+        "record_hash": "sha256:cdd35bc3bf537464c8d8b265c74db40177b5673560f8b5cc3b0a76989b68f7d8",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4491",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2759",
+        "record_hash": "sha256:d3641426e9152f24ab412a5deb3fe73b7dcdb4dc9bdba6456b848a3166c315d9",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4500",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=touro_university&signal_id=sig_6c01c4afebb718e6173f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6c01c4afebb718e6173f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Touro University. Across 5 certified ED cells, the documented category totals are Harassment or threat (4), Vandalism (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6c01c4afebb718e6173f/",
+    "proactive_reply": "Relevant certified public-data context for Touro University: https://campusevidencelab.org/signals/sig_6c01c4afebb718e6173f/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

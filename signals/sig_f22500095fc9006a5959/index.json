@@ -1,0 +1,125 @@
+{
+  "id": "sig_f22500095fc9006a5959",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_3220c8c71fe0aa70c45b",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_d2d049fa3eedfdd4ce53",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/california_state_university_sacramento/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "california_state_university_sacramento"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (4)."
+  },
+  "institution": {
+    "id": "california_state_university_sacramento",
+    "name": "California State University, Sacramento",
+    "city": "Sacramento",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1179",
+    "evt_2026_1586",
+    "evt_2026_2148",
+    "evt_2026_2269"
+  ],
+  "bounded_claims": [
+    {
+      "text": "California State University, Sacramento: Across 4 certified ED cells, the reported geography totals are on-campus (4).",
+      "supporting_record_ids": [
+        "evt_2026_1179",
+        "evt_2026_1586",
+        "evt_2026_2148",
+        "evt_2026_2269"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1179",
+        "record_hash": "sha256:fc249a84cd75c75d1b4dcc7340718fb22860b1c01bbc7069c2bd583e05a8f903",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI467",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1586",
+        "record_hash": "sha256:606713aaaa9ea12454c97f110538c4f2f3cf0953bf4e901042d1a63cec015f0b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA467",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2148",
+        "record_hash": "sha256:befc846d3f612762a795b3f993af96d224bc576db7164b04f4e5b658f20d00df",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT467",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2269",
+        "record_hash": "sha256:d59d3694992e004faeed7ef5e0afd429b9af9023d63ec529409986b7c83ee24d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV467",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=california_state_university_sacramento&signal_id=sig_f22500095fc9006a5959",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f22500095fc9006a5959/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: California State University, Sacramento. Across 4 certified ED cells, the reported geography totals are on-campus (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_f22500095fc9006a5959/",
+    "proactive_reply": "Relevant certified public-data context for California State University, Sacramento: https://campusevidencelab.org/signals/sig_f22500095fc9006a5959/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

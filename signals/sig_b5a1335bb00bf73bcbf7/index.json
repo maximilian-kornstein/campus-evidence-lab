@@ -1,0 +1,125 @@
+{
+  "id": "sig_b5a1335bb00bf73bcbf7",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_8dca2bd995a25a130e4b",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_35d45936adf18c4291b2",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/concordia_university_chicago/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "concordia_university_chicago"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Race (4), Gender (2)."
+  },
+  "institution": {
+    "id": "concordia_university_chicago",
+    "name": "Concordia University-Chicago",
+    "city": "RIVER FOREST",
+    "state": "IL"
+  },
+  "record_ids": [
+    "evt_2026_0274",
+    "evt_2026_0913",
+    "evt_2026_2938",
+    "evt_2026_3521"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Concordia University-Chicago: Across 4 certified ED cells, the source-supported affected-community totals are Race (4), Gender (2).",
+      "supporting_record_ids": [
+        "evt_2026_0274",
+        "evt_2026_0913",
+        "evt_2026_2938",
+        "evt_2026_3521"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0274",
+        "record_hash": "sha256:0c9cc4035ae3d50bdad474e827d1fdb9cea64939939465b198d85bbb54e14120",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT1831",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0913",
+        "record_hash": "sha256:b71aa229a73c85c6282d0d6c194cc5020d279c132294e06888d890a67349de20",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN1831",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2938",
+        "record_hash": "sha256:cb4347883b1fe75b71c1a5d7f7a015c087f8ce6029b6cd84faf2bca05eeff6e7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT1831",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3521",
+        "record_hash": "sha256:a539535044abdea0ce3a2056d903e22172fd9ac71fbab0f52faa0fc669d420af",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN1831",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=concordia_university_chicago&signal_id=sig_b5a1335bb00bf73bcbf7",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b5a1335bb00bf73bcbf7/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Concordia University-Chicago. Across 4 certified ED cells, the source-supported affected-community totals are Race (4), Gender (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_b5a1335bb00bf73bcbf7/",
+    "proactive_reply": "Relevant certified public-data context for Concordia University-Chicago: https://campusevidencelab.org/signals/sig_b5a1335bb00bf73bcbf7/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

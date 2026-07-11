@@ -1,0 +1,149 @@
+{
+  "id": "sig_ce9d5ddf61c4a4ca932a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f784ff5a76c05bfd8fc9",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_8e1f3dc4fca1fb476646",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/upstate_medical_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "upstate_medical_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the source-supported affected-community totals are Race (9), Religion (1)."
+  },
+  "institution": {
+    "id": "upstate_medical_university",
+    "name": "Upstate Medical University",
+    "city": "SYRACUSE",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1857",
+    "evt_2026_2149",
+    "evt_2026_2304",
+    "evt_2026_2815",
+    "evt_2026_2857",
+    "evt_2026_2872"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Upstate Medical University: Across 6 certified ED cells, the source-supported affected-community totals are Race (9), Religion (1).",
+      "supporting_record_ids": [
+        "evt_2026_1857",
+        "evt_2026_2149",
+        "evt_2026_2304",
+        "evt_2026_2815",
+        "evt_2026_2857",
+        "evt_2026_2872"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1857",
+        "record_hash": "sha256:cb7afbfd3874061c4b818e7ebd66b8a15c9324586cd9c7c1b68ea6b048f7b33a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4473",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2149",
+        "record_hash": "sha256:77dd90640f3ae4ee54a9634b66fd10018e86343838bdcd75250c61b62e6a4c7d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4473",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2304",
+        "record_hash": "sha256:b7974344bdacb8e815ffa37595b97697a8883b391b6321af9c4540c388cd490a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4473",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2815",
+        "record_hash": "sha256:b1ae62625f58b86f671a97a235237eba8ed25b02dc22869135c10c6eac37d35c",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4473",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2857",
+        "record_hash": "sha256:b2e210c1c2bba51ed39a53c43718743d4c554cafcf7599ab12ac770f8539612b",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB4473",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_2872",
+        "record_hash": "sha256:06f5ba15253d181931cae79faafea204831e1fb31f3a58851421806bfb210acd",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4473",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=upstate_medical_university&signal_id=sig_ce9d5ddf61c4a4ca932a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ce9d5ddf61c4a4ca932a/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Upstate Medical University. Across 6 certified ED cells, the source-supported affected-community totals are Race (9), Religion (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ce9d5ddf61c4a4ca932a/",
+    "proactive_reply": "Relevant certified public-data context for Upstate Medical University: https://campusevidencelab.org/signals/sig_ce9d5ddf61c4a4ca932a/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

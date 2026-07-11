@@ -1,0 +1,145 @@
+{
+  "id": "sig_ae1e1a553c003baf467e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e910ae85d2e06b054b41",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_7f56a1c4413d59a04e42",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/missouri_university_of_science_and_technology/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "missouri_university_of_science_and_technology"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (6), residence-hall (2)."
+  },
+  "institution": {
+    "id": "missouri_university_of_science_and_technology",
+    "name": "Missouri University of Science and Technology",
+    "city": "ROLLA",
+    "state": "MO"
+  },
+  "record_ids": [
+    "evt_2026_0437",
+    "evt_2026_0921",
+    "evt_2026_1405",
+    "evt_2026_3067",
+    "evt_2026_3764"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Missouri University of Science and Technology: Across 5 certified ED cells, the reported geography totals are on-campus (6), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0437",
+        "evt_2026_0921",
+        "evt_2026_1405",
+        "evt_2026_3067",
+        "evt_2026_3764"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0437",
+        "record_hash": "sha256:8a3fc4e8b06fb503d581eee43fcc1556402126901b8e91114e22f54d23fa1434",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MU3615",
+        "column": "SIM_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0921",
+        "record_hash": "sha256:871aae67a885a88a48d205dc890dc04342e2d2cbf742b7a49220c9ae4b1967e6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB3615",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1405",
+        "record_hash": "sha256:0fd86cace51794f6edff47043871d754a5e3ca78a9fce37ad12e1e55534e92c1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX3615",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3067",
+        "record_hash": "sha256:539b1affd5b1bd045478d98b1a12c74bb938334d70369351990f439ff2d5024b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB3615",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3764",
+        "record_hash": "sha256:92af9aabfa68bec4d8b20b04ec1a76c2200393347c92c82e1c3df990f1a9eb0a",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3697",
+        "column": "VANDAL_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=missouri_university_of_science_and_technology&signal_id=sig_ae1e1a553c003baf467e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ae1e1a553c003baf467e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Missouri University of Science and Technology. Across 5 certified ED cells, the reported geography totals are on-campus (6), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_ae1e1a553c003baf467e/",
+    "proactive_reply": "Relevant certified public-data context for Missouri University of Science and Technology: https://campusevidencelab.org/signals/sig_ae1e1a553c003baf467e/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

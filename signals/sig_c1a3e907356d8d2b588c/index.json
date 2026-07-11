@@ -1,0 +1,137 @@
+{
+  "id": "sig_c1a3e907356d8d2b588c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_4fd4bcdd43c73c8af536",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_49903ba507d1672ac7d7",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/california_state_university_los_angeles/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "california_state_university_los_angeles"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (4), residence-hall (2)."
+  },
+  "institution": {
+    "id": "california_state_university_los_angeles",
+    "name": "California State University-Los Angeles",
+    "city": "LOS ANGELES",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_0326",
+    "evt_2026_1142",
+    "evt_2026_2115",
+    "evt_2026_3053",
+    "evt_2026_3612"
+  ],
+  "bounded_claims": [
+    {
+      "text": "California State University-Los Angeles: Across 5 certified ED cells, the reported geography totals are on-campus (4), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0326",
+        "evt_2026_1142",
+        "evt_2026_2115",
+        "evt_2026_3053",
+        "evt_2026_3612"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0326",
+        "record_hash": "sha256:159f1acb960ca310490caef53bc0b2333ba1de043c91a9f079c3b0d3206c4001",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU463",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1142",
+        "record_hash": "sha256:8d313ca64c8c205c34a849dcdc9f707bbddc51e4e372448832650a4f3aa6abb0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT463",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2115",
+        "record_hash": "sha256:933f1da986881b6916476f39f798d10cedabb79900db5c0957d5e9ff2203b030",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU463",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3053",
+        "record_hash": "sha256:7aea97bee3781e6377d320ec703911fb965162916b018a925ac708ef68d71bd4",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT463",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3612",
+        "record_hash": "sha256:048b3eea585016f0c63486f2bfb7b4c5c5eb3fff304c11a63ae054d5fb8fc189",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU463",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=california_state_university_los_angeles&signal_id=sig_c1a3e907356d8d2b588c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_c1a3e907356d8d2b588c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: California State University-Los Angeles. Across 5 certified ED cells, the reported geography totals are on-campus (4), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_c1a3e907356d8d2b588c/",
+    "proactive_reply": "Relevant certified public-data context for California State University-Los Angeles: https://campusevidencelab.org/signals/sig_c1a3e907356d8d2b588c/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

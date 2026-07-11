@@ -1,0 +1,145 @@
+{
+  "id": "sig_12bcdbe26606bf4d65ed",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_aa273188532a098ffbbf",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_110dadde82a2bdf922a5",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/mercer_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "mercer_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 1 reported statistic across 1 distinct cell for 2024."
+  },
+  "institution": {
+    "id": "mercer_university",
+    "name": "Mercer University",
+    "city": "Macon",
+    "state": "GA"
+  },
+  "record_ids": [
+    "evt_2026_0319",
+    "evt_2026_1147",
+    "evt_2026_1315",
+    "evt_2026_3127",
+    "evt_2026_3882"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Mercer University: Certified ED workbook cells document 1 reported statistic across 1 distinct cell for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0319",
+        "evt_2026_1147",
+        "evt_2026_1315",
+        "evt_2026_3127",
+        "evt_2026_3882"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0319",
+        "record_hash": "sha256:7f582f6a01c05faff9f74639ed695e759feb4354ae047e0f368bff61bce551ea",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN1680",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1147",
+        "record_hash": "sha256:25cd079dc9d900490bd4d885919e0fe845d8619268a4faf60055be22d817e607",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX1680",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1315",
+        "record_hash": "sha256:d30fd3389734ef38dc3508bdce907b271fb6ac75c7b175ca84191c465ef7ce73",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU1680",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3127",
+        "record_hash": "sha256:c7cb20cb8eb2b37e5538161d6814a173b7faf6b2420eb8572151a93e923fd0cf",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU1680",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3882",
+        "record_hash": "sha256:4ea9ba91dc9ce94c0754ea7922bb575213ac94383e511b40cbc2b1507bae8a28",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1685",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=mercer_university&signal_id=sig_12bcdbe26606bf4d65ed",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_12bcdbe26606bf4d65ed/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Mercer University. Certified ED workbook cells document 1 reported statistic across 1 distinct cell for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_12bcdbe26606bf4d65ed/",
+    "proactive_reply": "Relevant certified public-data context for Mercer University: https://campusevidencelab.org/signals/sig_12bcdbe26606bf4d65ed/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

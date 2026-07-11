@@ -1,0 +1,137 @@
+{
+  "id": "sig_9a4afd89a8271bde6a16",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c15d2d1a7da05a0c4ebe",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ee2e8923ce681dd23add",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/providence_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "providence_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "providence_college",
+    "name": "Providence College",
+    "city": "PROVIDENCE",
+    "state": "RI"
+  },
+  "record_ids": [
+    "evt_2026_0209",
+    "evt_2026_0759",
+    "evt_2026_0933",
+    "evt_2026_2496",
+    "evt_2026_3207"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Providence College: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0209",
+        "evt_2026_0759",
+        "evt_2026_0933",
+        "evt_2026_2496",
+        "evt_2026_3207"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0209",
+        "record_hash": "sha256:4e6e0bfdc57c4710abb9758e0d23cb1a4f532c887ba4fe5df23ecd08a6f39fd2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT5618",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0759",
+        "record_hash": "sha256:0dfd129f30aabf63d560599166d8aa8da9bc3aa4ff8d01915bfe399613bf02b0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV5618",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0933",
+        "record_hash": "sha256:89cf99db8a8b505c9078de377238b40d40cf631d04f15f3037514925fdfe232f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5618",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2496",
+        "record_hash": "sha256:69df06eb27fa1f5ab6da6df396fa0c3a91208c690eb52a312307b1d17bbdea1d",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5618",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3207",
+        "record_hash": "sha256:ba7707cca7430e0c4e39981b5b07c9aa0a6f1c67b44729b8917f0ba219db442c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5618",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=providence_college&signal_id=sig_9a4afd89a8271bde6a16",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_9a4afd89a8271bde6a16/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Providence College. Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_9a4afd89a8271bde6a16/",
+    "proactive_reply": "Relevant certified public-data context for Providence College: https://campusevidencelab.org/signals/sig_9a4afd89a8271bde6a16/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

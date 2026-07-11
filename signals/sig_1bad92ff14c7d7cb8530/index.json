@@ -1,0 +1,149 @@
+{
+  "id": "sig_1bad92ff14c7d7cb8530",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e927ff8b96493a8c6123",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6cbb76babe6f2c00be02",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/wake_forest_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "wake_forest_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the source-supported affected-community totals are Race (3), National origin (2), LGBTQ+ (1), Religion (1)."
+  },
+  "institution": {
+    "id": "wake_forest_university",
+    "name": "Wake Forest University",
+    "city": "Winston-Salem",
+    "state": "NC"
+  },
+  "record_ids": [
+    "evt_2026_0533",
+    "evt_2026_1044",
+    "evt_2026_1230",
+    "evt_2026_1353",
+    "evt_2026_2814",
+    "evt_2026_2845"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Wake Forest University: Across 6 certified ED cells, the source-supported affected-community totals are Race (3), National origin (2), LGBTQ+ (1), Religion (1).",
+      "supporting_record_ids": [
+        "evt_2026_0533",
+        "evt_2026_1044",
+        "evt_2026_1230",
+        "evt_2026_1353",
+        "evt_2026_2814",
+        "evt_2026_2845"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0533",
+        "record_hash": "sha256:fdc5e10b06a930e0f1b97e568e961ac99859a98e7a2a89c242e5dc7e70683750",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL4767",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1044",
+        "record_hash": "sha256:f52ad5bd1cb1338fcd20fa19c684354eacc6b68183f02447a58c3f9d7780c5fa",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV4767",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1230",
+        "record_hash": "sha256:3fe9baa361f852f3236b986343b70aa9cf001c1cd98be0ac7b405460f4bf223b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4767",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1353",
+        "record_hash": "sha256:fe0df17b9da9fa596a04a3d1f4c61fad810c26b908872dd9087b95a84c508984",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ4767",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2814",
+        "record_hash": "sha256:960b73f1594f35d7b9061251223d4b3f83f33707b85d9fa90006bf72b629115a",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK4768",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2845",
+        "record_hash": "sha256:f230b5de0a5711b41e6c9d4f62a37c5e0807604d372334d0fd985d60633b6bc1",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4768",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=wake_forest_university&signal_id=sig_1bad92ff14c7d7cb8530",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_1bad92ff14c7d7cb8530/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Wake Forest University. Across 6 certified ED cells, the source-supported affected-community totals are Race (3), National origin (2), LGBTQ+ (1), Religion (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_1bad92ff14c7d7cb8530/",
+    "proactive_reply": "Relevant certified public-data context for Wake Forest University: https://campusevidencelab.org/signals/sig_1bad92ff14c7d7cb8530/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

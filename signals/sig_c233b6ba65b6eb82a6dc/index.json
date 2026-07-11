@@ -1,0 +1,137 @@
+{
+  "id": "sig_c233b6ba65b6eb82a6dc",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_35520e5f3136c83f99fc",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_f08bce6206647774d2c5",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/millersville_university_of_pennsylvania/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "millersville_university_of_pennsylvania"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (1)."
+  },
+  "institution": {
+    "id": "millersville_university_of_pennsylvania",
+    "name": "Millersville University of Pennsylvania",
+    "city": "Millersville",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_1990",
+    "evt_2026_2111",
+    "evt_2026_2159",
+    "evt_2026_2189",
+    "evt_2026_3329"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Millersville University of Pennsylvania: Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (1).",
+      "supporting_record_ids": [
+        "evt_2026_1990",
+        "evt_2026_2111",
+        "evt_2026_2159",
+        "evt_2026_2189",
+        "evt_2026_3329"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1990",
+        "record_hash": "sha256:b745eef3d00cda98b45bd27e9dc5a608bd61d2be756571c42e026831e9d6d4f4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB5450",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2111",
+        "record_hash": "sha256:1cb999d8b5c083525fde2f9293673820424d2269b9ae4bf723db807ac241cd89",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE5450",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2159",
+        "record_hash": "sha256:a72d1c2be6b6fb7123cf6db9a560ca30d474f4b6980d709a0357d911ded10fcb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5450",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2189",
+        "record_hash": "sha256:2f343905e68c692041b22490811d57c9649989d281d9eda29e19865934709bd2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5450",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3329",
+        "record_hash": "sha256:2734f441bb46c54f644e4cc18d598eb7e93bd2eeec19891fb2bad2256dde8375",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JE5450",
+        "column": "VANDAL_NAT23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=millersville_university_of_pennsylvania&signal_id=sig_c233b6ba65b6eb82a6dc",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_c233b6ba65b6eb82a6dc/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Millersville University of Pennsylvania. Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_c233b6ba65b6eb82a6dc/",
+    "proactive_reply": "Relevant certified public-data context for Millersville University of Pennsylvania: https://campusevidencelab.org/signals/sig_c233b6ba65b6eb82a6dc/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

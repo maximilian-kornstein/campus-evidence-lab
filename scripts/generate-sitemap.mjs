@@ -4,7 +4,6 @@ import { paths, readJson, rootDir } from "./lib.mjs";
 import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registry.mjs";
 
 const baseUrl = (process.env.SITE_URL || "https://campusevidencelab.org").replace(/\/+$/, "");
-
 async function readJsonFilesFromDir(dir) {
   try {
     const entries = await readdir(dir, { withFileTypes: true });
@@ -20,12 +19,13 @@ async function readJsonFilesFromDir(dir) {
   }
 }
 
-const [events, schools, briefs, sources, importWaves] = await Promise.all([
+const [events, schools, briefs, sources, importWaves, signalsArtifact] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),
   readJson(paths.briefs),
   readJson(paths.sources),
-  readJsonFilesFromDir(paths.importWavesDir)
+  readJsonFilesFromDir(paths.importWavesDir),
+  readJson(paths.signals).catch(() => ({ signals: [] }))
 ]);
 
 const staticPaths = [
@@ -35,6 +35,7 @@ const staticPaths = [
   "/events/",
   "/schools/",
   "/briefs/",
+  "/signals/",
   "/sources/",
   "/quality/",
   "/import-waves/",
@@ -91,7 +92,8 @@ const schoolPaths = schools.map((school) => `/schools/${school.id}/`);
 const briefPaths = briefs.map((brief) => `/briefs/${brief.id}/`);
 const sourcePaths = sources.map((source) => `/sources/${source.id}/`);
 const importWavePaths = importWaves.map((wave) => `/import-waves/${wave.id}/`);
-const urls = [...staticPaths, ...eventPaths, ...schoolPaths, ...briefPaths, ...sourcePaths, ...importWavePaths];
+const signalPaths = (signalsArtifact.signals ?? []).map((signal) => `/signals/${signal.id}/`);
+const urls = [...staticPaths, ...eventPaths, ...schoolPaths, ...briefPaths, ...sourcePaths, ...importWavePaths, ...signalPaths];
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

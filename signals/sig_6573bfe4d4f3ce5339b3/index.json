@@ -1,0 +1,185 @@
+{
+  "id": "sig_6573bfe4d4f3ce5339b3",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e62dee1f162e487b9c3f",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_0f5440b874bfd5d13ece",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/cuny_hunter_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "cuny_hunter_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the documented category totals are Harassment or threat (10), Other source-backed civil rights event (1)."
+  },
+  "institution": {
+    "id": "cuny_hunter_college",
+    "name": "CUNY Hunter College",
+    "city": "New York",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_0489",
+    "evt_2026_1946",
+    "evt_2026_2312",
+    "evt_2026_2348",
+    "evt_2026_2372",
+    "evt_2026_2388",
+    "evt_2026_2656",
+    "evt_2026_2709",
+    "evt_2026_2752"
+  ],
+  "bounded_claims": [
+    {
+      "text": "CUNY Hunter College: Across 9 certified ED cells, the documented category totals are Harassment or threat (10), Other source-backed civil rights event (1).",
+      "supporting_record_ids": [
+        "evt_2026_0489",
+        "evt_2026_1946",
+        "evt_2026_2312",
+        "evt_2026_2348",
+        "evt_2026_2372",
+        "evt_2026_2388",
+        "evt_2026_2656",
+        "evt_2026_2709",
+        "evt_2026_2752"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0489",
+        "record_hash": "sha256:219d6674b71b00bbed1f3a60fdbaf14f0086dae80dbef0b154bd3589960a155f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ4201",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1946",
+        "record_hash": "sha256:41cd1ef64d4cf1b6265119144efa9a2c9fce826c2292b9f26381465a0f4143f2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU4201",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2312",
+        "record_hash": "sha256:9a58c21ede2fde7f4f7f918474b133b909c7d9ef88239793e75b320c05575402",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4201",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2348",
+        "record_hash": "sha256:db99614810a418cfae909218962423769f885ef255b7e0a146b60e652deee732",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ4201",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2372",
+        "record_hash": "sha256:06513330278e372da1bc7b429a423d86da41ebda0231fd5ea8f033fddfc2e048",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW4204",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2388",
+        "record_hash": "sha256:57317d3e3365133417522e62596a5ca13e72d5adaf683869e6a3064f3b918ce4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4201",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2656",
+        "record_hash": "sha256:e8cae9fad8a0763688beb9f2d89b549faf4c83f4280d76f38f9081ca8adf4705",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU4201",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2709",
+        "record_hash": "sha256:326d38157ca77fcce4475064e2b60e64ab0efc26930e90297d7b499d0b6646a4",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4201",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2752",
+        "record_hash": "sha256:f0b8aa1849efefc67065338cb17e4c0cb7c7a89d5cc78dd404e8e0614b9f6be9",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BH4203",
+        "column": "ROBBE_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=cuny_hunter_college&signal_id=sig_6573bfe4d4f3ce5339b3",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6573bfe4d4f3ce5339b3/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: CUNY Hunter College. Across 9 certified ED cells, the documented category totals are Harassment or threat (10), Other source-backed civil rights event (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6573bfe4d4f3ce5339b3/",
+    "proactive_reply": "Relevant certified public-data context for CUNY Hunter College: https://campusevidencelab.org/signals/sig_6573bfe4d4f3ce5339b3/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sig_a053d23a1fc4f2d513a3",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_91a308d6213893c6a2b5",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_593a85b79a1a750c1556",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/west_virginia_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "west_virginia_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are National origin (2), Religion (2), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "west_virginia_university",
+    "name": "West Virginia University",
+    "city": "MORGANTOWN",
+    "state": "WV"
+  },
+  "record_ids": [
+    "evt_2026_0098",
+    "evt_2026_0769",
+    "evt_2026_0814",
+    "evt_2026_2968"
+  ],
+  "bounded_claims": [
+    {
+      "text": "West Virginia University: Across 4 certified ED cells, the source-supported affected-community totals are National origin (2), Religion (2), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_0098",
+        "evt_2026_0769",
+        "evt_2026_0814",
+        "evt_2026_2968"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0098",
+        "record_hash": "sha256:41f4c6a02317c14c54a58adaadd5068de1c4a5f525028db4d6881ffc6a1446b2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA6933",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0769",
+        "record_hash": "sha256:02c61b54ca8ab72b39fd10cff55ec92561c5e0b6fc6d4503c5ea61f5cafd8df4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GO6933",
+        "column": "AGG_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0814",
+        "record_hash": "sha256:510a5d770a324252dda621e5b4ff681dd6f8fcdfbe6549acb99b82fb8fe1cd10",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6933",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2968",
+        "record_hash": "sha256:96995f2b1a6e21db139551d637269b14321926c275d362c2e27ef7dcbd40b5e2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY6933",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=west_virginia_university&signal_id=sig_a053d23a1fc4f2d513a3",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_a053d23a1fc4f2d513a3/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: West Virginia University. Across 4 certified ED cells, the source-supported affected-community totals are National origin (2), Religion (2), LGBTQ+ (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_a053d23a1fc4f2d513a3/",
+    "proactive_reply": "Relevant certified public-data context for West Virginia University: https://campusevidencelab.org/signals/sig_a053d23a1fc4f2d513a3/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

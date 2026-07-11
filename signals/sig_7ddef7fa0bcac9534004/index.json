@@ -1,0 +1,125 @@
+{
+  "id": "sig_7ddef7fa0bcac9534004",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_b9c2352ed725d07d1b18",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_cfc76b9e582679c724eb",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/juniata_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "juniata_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), Race (1)."
+  },
+  "institution": {
+    "id": "juniata_college",
+    "name": "Juniata College",
+    "city": "HUNTINGDON",
+    "state": "PA"
+  },
+  "record_ids": [
+    "evt_2026_0513",
+    "evt_2026_1782",
+    "evt_2026_2171",
+    "evt_2026_2836"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Juniata College: Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_0513",
+        "evt_2026_1782",
+        "evt_2026_2171",
+        "evt_2026_2836"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0513",
+        "record_hash": "sha256:9884d90b64c688ccd65e74fe15ed0508c6eb972af53ea5515236335e6642712c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5409",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1782",
+        "record_hash": "sha256:5bc7ba4356524523b929e4b6a1530b7c03819d881c89e9775a0785c9b9f584e3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED5409",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2171",
+        "record_hash": "sha256:a04f08f0ab71978c9d1994a75dc8839f61fb96d833ef685b68246ca871606dcf",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DL5409",
+        "column": "LAR_T_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2836",
+        "record_hash": "sha256:570921f587ffd5df1f7b92db32a3108c4cae2b2953876256172dd330d554fb43",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU5409",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=juniata_college&signal_id=sig_7ddef7fa0bcac9534004",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7ddef7fa0bcac9534004/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Juniata College. Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (4), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7ddef7fa0bcac9534004/",
+    "proactive_reply": "Relevant certified public-data context for Juniata College: https://campusevidencelab.org/signals/sig_7ddef7fa0bcac9534004/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

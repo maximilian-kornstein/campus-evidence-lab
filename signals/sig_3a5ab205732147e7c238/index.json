@@ -1,0 +1,173 @@
+{
+  "id": "sig_3a5ab205732147e7c238",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_ba83f703094ed1cae5b3",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_fe369561f68bb118cc71",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/olivet_nazarene_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "olivet_nazarene_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the reported geography totals are on-campus (5), residence-hall (4)."
+  },
+  "institution": {
+    "id": "olivet_nazarene_university",
+    "name": "Olivet Nazarene University",
+    "city": "Bourbonnais",
+    "state": "IL"
+  },
+  "record_ids": [
+    "evt_2026_0595",
+    "evt_2026_0994",
+    "evt_2026_1631",
+    "evt_2026_1760",
+    "evt_2026_3246",
+    "evt_2026_3360",
+    "evt_2026_3537",
+    "evt_2026_3567"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Olivet Nazarene University: Across 8 certified ED cells, the reported geography totals are on-campus (5), residence-hall (4).",
+      "supporting_record_ids": [
+        "evt_2026_0595",
+        "evt_2026_0994",
+        "evt_2026_1631",
+        "evt_2026_1760",
+        "evt_2026_3246",
+        "evt_2026_3360",
+        "evt_2026_3537",
+        "evt_2026_3567"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0595",
+        "record_hash": "sha256:992d41f7cd4a68c47d0a562ef149216267ddc44adf9133defe1e1bc36e567ad0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1988",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0994",
+        "record_hash": "sha256:ec119ae9cf74b4f36d4ff3e3177c15afe3776e821393ded79933b085202b41ba",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT1988",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1631",
+        "record_hash": "sha256:390c0ef1baaf3929b8c4267e22718568b2dd2ef67aa399e62222143fc61cf476",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1988",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1760",
+        "record_hash": "sha256:679581cf061d253af0ae06d6b1bbd753e76991d1d8328282b25ea870c010d937",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB1988",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3246",
+        "record_hash": "sha256:a6f1e75eee6ec4fe40ab2fc55a0ab2a3d7fd0c74fc3b998461feb77cb3bc991a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1988",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3360",
+        "record_hash": "sha256:e4a30ec376038f671773fe8779685e3530964bf971dddac0c2a2cdb65eea02f4",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT1988",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3537",
+        "record_hash": "sha256:848ba20a48a5f3876c81ee7e1c2df9e36777b430ecaa98a7171d0cb72ea7fece",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1988",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3567",
+        "record_hash": "sha256:577d145bce45ccd9c22552b21b8b87afb16890b03271c0caf84858ea66fcfebb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB1988",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=olivet_nazarene_university&signal_id=sig_3a5ab205732147e7c238",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3a5ab205732147e7c238/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Olivet Nazarene University. Across 8 certified ED cells, the reported geography totals are on-campus (5), residence-hall (4). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_3a5ab205732147e7c238/",
+    "proactive_reply": "Relevant certified public-data context for Olivet Nazarene University: https://campusevidencelab.org/signals/sig_3a5ab205732147e7c238/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

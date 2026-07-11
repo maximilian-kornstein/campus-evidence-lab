@@ -1,0 +1,137 @@
+{
+  "id": "sig_6fbb5d2da1fd0f2efee2",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_2d8990b0308b8fb7fc4a",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_6854aa713752b028db26",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/farmingdale_state_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "farmingdale_state_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (2)."
+  },
+  "institution": {
+    "id": "farmingdale_state_college",
+    "name": "Farmingdale State College",
+    "city": "Farmingdale",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1165",
+    "evt_2026_1576",
+    "evt_2026_2104",
+    "evt_2026_2215",
+    "evt_2026_2328"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Farmingdale State College: Across 5 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (2).",
+      "supporting_record_ids": [
+        "evt_2026_1165",
+        "evt_2026_1576",
+        "evt_2026_2104",
+        "evt_2026_2215",
+        "evt_2026_2328"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1165",
+        "record_hash": "sha256:cb60e4e384388b242050fc9850d2784f5400639ffbdfca7edc842cab68231111",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NP4434",
+        "column": "INTIM_DIS24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1576",
+        "record_hash": "sha256:45ba9ba325a920ce7d5d1b459ea91f7ec836c37ad3273388fea3bc5bf6c7e1ec",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL4434",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2104",
+        "record_hash": "sha256:d60f3eaf3da34785275e64d75431049b35f5e3d3a34dd99a6b5db23a895080f1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4434",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2215",
+        "record_hash": "sha256:bfeedf770b6adf29395f6b59e2d6d68ef1a33b570d21ebe1706e572dcfc8cff4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC4434",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2328",
+        "record_hash": "sha256:db00d0d20fda5cd10d61ed900c853296085cb0f12d9cb6643a465cab666c467b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4434",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=farmingdale_state_college&signal_id=sig_6fbb5d2da1fd0f2efee2",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6fbb5d2da1fd0f2efee2/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Farmingdale State College. Across 5 certified ED cells, the documented category totals are Harassment or threat (3), Vandalism (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6fbb5d2da1fd0f2efee2/",
+    "proactive_reply": "Relevant certified public-data context for Farmingdale State College: https://campusevidencelab.org/signals/sig_6fbb5d2da1fd0f2efee2/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

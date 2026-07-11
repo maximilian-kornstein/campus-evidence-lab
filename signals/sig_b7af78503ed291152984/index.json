@@ -1,0 +1,125 @@
+{
+  "id": "sig_b7af78503ed291152984",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_bf85a55fc8e417b3c47b",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_011bc854644648ba01f7",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/stevens_institute_of_technology/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "stevens_institute_of_technology"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Race (3), Gender (1)."
+  },
+  "institution": {
+    "id": "stevens_institute_of_technology",
+    "name": "Stevens Institute of Technology",
+    "city": "HOBOKEN",
+    "state": "NJ"
+  },
+  "record_ids": [
+    "evt_2026_0570",
+    "evt_2026_1087",
+    "evt_2026_1408",
+    "evt_2026_3107"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Stevens Institute of Technology: Across 4 certified ED cells, the source-supported affected-community totals are Race (3), Gender (1).",
+      "supporting_record_ids": [
+        "evt_2026_0570",
+        "evt_2026_1087",
+        "evt_2026_1408",
+        "evt_2026_3107"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0570",
+        "record_hash": "sha256:aeba2792cd48e29fddeacc7ed9b6470fa18322707f625ba620a38613404fd1a0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK4035",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1087",
+        "record_hash": "sha256:6557ef53957c555a0a0d634b36ee49ba238e13134ccde89d985c459f9748e2e3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR4035",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1408",
+        "record_hash": "sha256:97a9a968ff869f319e2336b23e9b42954412a41f496677a1e14861563c8a83bd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4035",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3107",
+        "record_hash": "sha256:def348ff26ab3e0cfaa7029485060cc5f89ec281a3a92f13ce15353edc8005eb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO4035",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=stevens_institute_of_technology&signal_id=sig_b7af78503ed291152984",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b7af78503ed291152984/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Stevens Institute of Technology. Across 4 certified ED cells, the source-supported affected-community totals are Race (3), Gender (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_b7af78503ed291152984/",
+    "proactive_reply": "Relevant certified public-data context for Stevens Institute of Technology: https://campusevidencelab.org/signals/sig_b7af78503ed291152984/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,133 @@
+{
+  "id": "sig_972c4ad170d83628eb24",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c2e572c0ef474baee113",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_82e16e3145fb0e52fcca",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_connecticut/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_connecticut"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Ethnicity (3), Race (1)."
+  },
+  "institution": {
+    "id": "university_of_connecticut",
+    "name": "University of Connecticut",
+    "city": "STORRS",
+    "state": "CT"
+  },
+  "record_ids": [
+    "evt_2026_0317",
+    "evt_2026_1107",
+    "evt_2026_3055",
+    "evt_2026_3879"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Connecticut: Across 4 certified ED cells, the source-supported affected-community totals are Ethnicity (3), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_0317",
+        "evt_2026_1107",
+        "evt_2026_3055",
+        "evt_2026_3879"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0317",
+        "record_hash": "sha256:b6a811072a922828fe5a4b96139ea5980a3c76c07221904e1fe23726ba0efb11",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DY1055",
+        "column": "INTIM_ET22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1107",
+        "record_hash": "sha256:4c6e2f8e0953c71a6e6841c827fc4db3645fe02676158d1a427fa6681780c76f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS1055",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3055",
+        "record_hash": "sha256:e7b9ddd8b7d5dcbdabbfd930feb58dcdedbdfa4ae579b3ee2df7a6db00423441",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DY1055",
+        "column": "INTIM_ET22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3879",
+        "record_hash": "sha256:328e30b86ec03afabaca997dd49d82aa2ab9bd3a41814fc7b340d40417c72306",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DY1059",
+        "column": "INTIM_ET21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_connecticut&signal_id=sig_972c4ad170d83628eb24",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_972c4ad170d83628eb24/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Connecticut. Across 4 certified ED cells, the source-supported affected-community totals are Ethnicity (3), Race (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_972c4ad170d83628eb24/",
+    "proactive_reply": "Relevant certified public-data context for University of Connecticut: https://campusevidencelab.org/signals/sig_972c4ad170d83628eb24/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

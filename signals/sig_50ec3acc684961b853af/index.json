@@ -1,0 +1,125 @@
+{
+  "id": "sig_50ec3acc684961b853af",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_265471830f7aef204632",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_1b5d5417c6baaff234ed",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/life_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "life_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "life_university",
+    "name": "Life University",
+    "city": "Marietta",
+    "state": "GA"
+  },
+  "record_ids": [
+    "evt_2026_0283",
+    "evt_2026_0780",
+    "evt_2026_2935",
+    "evt_2026_3189"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Life University: Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0283",
+        "evt_2026_0780",
+        "evt_2026_2935",
+        "evt_2026_3189"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0283",
+        "record_hash": "sha256:dbbca01971cb27871e52adae9da5d400e9fae1fd617bbf38387d4d5918281933",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1669",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0780",
+        "record_hash": "sha256:29f0d8e4e2f9c33926eab581db83864c4ebec501e1319af245e261cfea098ce3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NE1669",
+        "column": "LAR_T_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2935",
+        "record_hash": "sha256:2c1ecd5d3af00afa6caf78e12f698d780bcb7f858d211eda688c903f452a03fb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1669",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3189",
+        "record_hash": "sha256:9a7cda7ea3ea6a9364233a8ffb887df803be871c6d6e92b5633aef01a38cf6c3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NE1669",
+        "column": "LAR_T_GEN24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=life_university&signal_id=sig_50ec3acc684961b853af",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_50ec3acc684961b853af/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Life University. Certified ED workbook cells document 4 reported statistics across 4 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_50ec3acc684961b853af/",
+    "proactive_reply": "Relevant certified public-data context for Life University: https://campusevidencelab.org/signals/sig_50ec3acc684961b853af/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

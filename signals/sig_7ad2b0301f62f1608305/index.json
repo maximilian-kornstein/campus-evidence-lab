@@ -1,0 +1,137 @@
+{
+  "id": "sig_7ad2b0301f62f1608305",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_0fead462555214c9ff84",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_d799564e329e06a7e234",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/webster_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "webster_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the reported geography totals are on-campus (3), noncampus (2)."
+  },
+  "institution": {
+    "id": "webster_university",
+    "name": "Webster University",
+    "city": "SAINT LOUIS",
+    "state": "MO"
+  },
+  "record_ids": [
+    "evt_2026_0507",
+    "evt_2026_0880",
+    "evt_2026_1228",
+    "evt_2026_2813",
+    "evt_2026_2832"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Webster University: Across 5 certified ED cells, the reported geography totals are on-campus (3), noncampus (2).",
+      "supporting_record_ids": [
+        "evt_2026_0507",
+        "evt_2026_0880",
+        "evt_2026_1228",
+        "evt_2026_2813",
+        "evt_2026_2832"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0507",
+        "record_hash": "sha256:2d17eb9d24c263c7a626bc010e8b6e9d2cea8825fae4209ee595f22eddbadb76",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM3714",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0880",
+        "record_hash": "sha256:61b763c68f01657cbbfe2aa968a0f936517fb8d9028b66e81985118db387eb96",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV3714",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1228",
+        "record_hash": "sha256:9a4c51559d407e1282c1c77ae1e49b96bd7ef3223f6eafbd3962317e48222496",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ3714",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2813",
+        "record_hash": "sha256:89b7788c964ed47b45db8a31bbefec5706dc18c366064666610eaffacec4c736",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DY3714",
+        "column": "INTIM_ET22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2832",
+        "record_hash": "sha256:741a29046b0de6a70ac006bc3c559ddd5b9e368975c84bf4f165b7e23446c799",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT3714",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=webster_university&signal_id=sig_7ad2b0301f62f1608305",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7ad2b0301f62f1608305/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Webster University. Across 5 certified ED cells, the reported geography totals are on-campus (3), noncampus (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7ad2b0301f62f1608305/",
+    "proactive_reply": "Relevant certified public-data context for Webster University: https://campusevidencelab.org/signals/sig_7ad2b0301f62f1608305/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

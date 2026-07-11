@@ -1,0 +1,161 @@
+{
+  "id": "sig_be20282c2105e2d82640",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_32d430253cf6663fd9ac",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_9dd563f17a8ade8bec82",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/seton_hall_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "seton_hall_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 6 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "seton_hall_university",
+    "name": "Seton Hall University",
+    "city": "South Orange",
+    "state": "NJ"
+  },
+  "record_ids": [
+    "evt_2026_0342",
+    "evt_2026_1047",
+    "evt_2026_1597",
+    "evt_2026_1804",
+    "evt_2026_2951",
+    "evt_2026_3325",
+    "evt_2026_3385"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Seton Hall University: Certified ED workbook cells document 6 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0342",
+        "evt_2026_1047",
+        "evt_2026_1597",
+        "evt_2026_1804",
+        "evt_2026_2951",
+        "evt_2026_3325",
+        "evt_2026_3385"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0342",
+        "record_hash": "sha256:9f2cd0dd46a2ee19db9b2b4fd012f157ec076cb2cbb1df2781aad88bd146bb3c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK4028",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1047",
+        "record_hash": "sha256:73145dd59d3de5d1db5a8cf8dafb624a643a1573d29f8cfd6a96818b50e1785f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ4028",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1597",
+        "record_hash": "sha256:2af051094648a0f1aacdfae0a19bf1d7e5c93aa343f6a1d53b1dd0a1269ee16b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4028",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1804",
+        "record_hash": "sha256:221719036080b5b69347a53b4b8c8892d5a09d1c4a6d2fc7c9778efc0ff3f42c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4028",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2951",
+        "record_hash": "sha256:37a465cf8f8d9fd85f33b56f3b08fede101cfd7f13948e29ce5b8c834a8c4f65",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK4028",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_3325",
+        "record_hash": "sha256:094d341a9d993dc488a706c105c8679037d1769dafefa2201aa5b51226f3654c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS4028",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3385",
+        "record_hash": "sha256:10a58ec4f190b67d0ddbe28c73a9dfb90c3271a3cce5e410928f0ad706269caa",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT4028",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=seton_hall_university&signal_id=sig_be20282c2105e2d82640",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_be20282c2105e2d82640/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Seton Hall University. Certified ED workbook cells document 6 reported statistics across 2 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_be20282c2105e2d82640/",
+    "proactive_reply": "Relevant certified public-data context for Seton Hall University: https://campusevidencelab.org/signals/sig_be20282c2105e2d82640/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

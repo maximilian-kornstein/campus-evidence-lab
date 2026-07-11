@@ -1,0 +1,157 @@
+{
+  "id": "sig_e42eb054ed41a02b119e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_df821df7ca2ed58b6801",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_348fc7fdeb4647d74ab2",
+    "title": "2023 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/lamar_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "lamar_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2023."
+  },
+  "institution": {
+    "id": "lamar_university",
+    "name": "Lamar University",
+    "city": "BEAUMONT",
+    "state": "TX"
+  },
+  "record_ids": [
+    "evt_2026_0665",
+    "evt_2026_1558",
+    "evt_2026_1755",
+    "evt_2026_3148",
+    "evt_2026_3598",
+    "evt_2026_3869"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Lamar University: Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2023.",
+      "supporting_record_ids": [
+        "evt_2026_0665",
+        "evt_2026_1558",
+        "evt_2026_1755",
+        "evt_2026_3148",
+        "evt_2026_3598",
+        "evt_2026_3869"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0665",
+        "record_hash": "sha256:9614cf912c853958d4115ce5103da3edf4ae4edc19824119e99820144a43fed0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6160",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1558",
+        "record_hash": "sha256:c67032f8c5f76bfdde9467e05409a9608af338f44550f6724d3cd89e6485af9b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ6160",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1755",
+        "record_hash": "sha256:cd002873292b20871f989370615e1bc27504e13503c79add33c6b834514f5f03",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EE6160",
+        "column": "VANDAL_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3148",
+        "record_hash": "sha256:f7ef5b28e68d0803675f52dc00a6836f99e07ab230a658e1cb731aa135ff60a2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO6160",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3598",
+        "record_hash": "sha256:c78387d0c3a83820fa19ffc781be2edffbf14b04c8bbd5c9b40931faf2b793e3",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EE6160",
+        "column": "VANDAL_GEN22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3869",
+        "record_hash": "sha256:fd6a88ecffa6d4251b0eaaf9b543f48ffc04b070b8b768818a80c00b7f98fcc8",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS6303",
+        "column": "INTIM_RAC21",
+        "year": "2021",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=lamar_university&signal_id=sig_e42eb054ed41a02b119e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_e42eb054ed41a02b119e/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Lamar University. Certified ED workbook cells document 4 reported statistics across 3 distinct cells for 2023. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_e42eb054ed41a02b119e/",
+    "proactive_reply": "Relevant certified public-data context for Lamar University: https://campusevidencelab.org/signals/sig_e42eb054ed41a02b119e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

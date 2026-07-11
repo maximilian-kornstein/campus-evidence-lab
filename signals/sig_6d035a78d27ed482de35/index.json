@@ -1,0 +1,149 @@
+{
+  "id": "sig_6d035a78d27ed482de35",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_9e4420268da084e7e2d4",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_34c3c7dbbdb2ff82ef7e",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/northern_arizona_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "northern_arizona_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the reported geography totals are on-campus (10), residence-hall (7), public-property (1)."
+  },
+  "institution": {
+    "id": "northern_arizona_university",
+    "name": "Northern Arizona University",
+    "city": "FLAGSTAFF",
+    "state": "AZ"
+  },
+  "record_ids": [
+    "evt_2026_0220",
+    "evt_2026_0679",
+    "evt_2026_1025",
+    "evt_2026_1247",
+    "evt_2026_2469",
+    "evt_2026_3052"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Northern Arizona University: Across 6 certified ED cells, the reported geography totals are on-campus (10), residence-hall (7), public-property (1).",
+      "supporting_record_ids": [
+        "evt_2026_0220",
+        "evt_2026_0679",
+        "evt_2026_1025",
+        "evt_2026_1247",
+        "evt_2026_2469",
+        "evt_2026_3052"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 18,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0220",
+        "record_hash": "sha256:89507d77898c801bbc39da7bfcc9ffea564035ae85982b2aefc08ee7657321d6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR228",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0679",
+        "record_hash": "sha256:cc76bad735aeacaf9505b48d2c440a9d2dbc21ea7139e1ecdad6d7fd4bd7c140",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU228",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1025",
+        "record_hash": "sha256:8b2830271d75f07a4056a35f62ac188a46d3907dc2861897f1475649bc8a2551",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX228",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1247",
+        "record_hash": "sha256:48cef4288dd69902879b0dc9f01158d518e7e2ab84862f5f5823f5b4d52e30a9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DL228",
+        "column": "LAR_T_SEX22",
+        "year": "2022",
+        "value": 7
+      },
+      {
+        "event_id": "evt_2026_2469",
+        "record_hash": "sha256:1748bb9e5a15342e1a3b32c3437da1faaef58b6393a8cbaa84800a096152bf33",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BH228",
+        "column": "ROBBE_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3052",
+        "record_hash": "sha256:4013daf3244189e087d2d1a1d2473aaaca1f51bbd2b369247bcd90e270a521dd",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DL228",
+        "column": "LAR_T_SEX22",
+        "year": "2022",
+        "value": 7
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=northern_arizona_university&signal_id=sig_6d035a78d27ed482de35",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6d035a78d27ed482de35/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Northern Arizona University. Across 6 certified ED cells, the reported geography totals are on-campus (10), residence-hall (7), public-property (1). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6d035a78d27ed482de35/",
+    "proactive_reply": "Relevant certified public-data context for Northern Arizona University: https://campusevidencelab.org/signals/sig_6d035a78d27ed482de35/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,161 @@
+{
+  "id": "sig_19a46486cbd3273e7b6f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d5044a64590b42848208",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_ee100ce958bc1b2033f8",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_arkansas/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "university_of_arkansas"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are Race (4), Ethnicity (2), LGBTQ+ (2)."
+  },
+  "institution": {
+    "id": "university_of_arkansas",
+    "name": "University of Arkansas",
+    "city": "FAYETTEVILLE",
+    "state": "AR"
+  },
+  "record_ids": [
+    "evt_2026_0101",
+    "evt_2026_0772",
+    "evt_2026_0944",
+    "evt_2026_2799",
+    "evt_2026_2840",
+    "evt_2026_2972",
+    "evt_2026_3051"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Arkansas: Across 7 certified ED cells, the source-supported affected-community totals are Race (4), Ethnicity (2), LGBTQ+ (2).",
+      "supporting_record_ids": [
+        "evt_2026_0101",
+        "evt_2026_0772",
+        "evt_2026_0944",
+        "evt_2026_2799",
+        "evt_2026_2840",
+        "evt_2026_2972",
+        "evt_2026_3051"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0101",
+        "record_hash": "sha256:f9a94600ee1bf56c6b4a3ad83a0197072c70daba419d8266f1a38368fa005e89",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT302",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0772",
+        "record_hash": "sha256:f52551d9e7769ceb54119bf12e8a113878902140dfae5e2deff2b5fc56d06897",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV302",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0944",
+        "record_hash": "sha256:b163647d062fdc87d72835b5678314e3ca2d26ce6f5a626ee4d50a11b437a02e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GS302",
+        "column": "AGG_A_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2799",
+        "record_hash": "sha256:2e6274f366e302b5c5e6de9c0cdc57d72547b4067c7e3fb5126a42b4fc07589f",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK302",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2840",
+        "record_hash": "sha256:e6ad00127234c41b963382d65206ddd7171f6ea92926f9a496a26f63a5503fda",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM302",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2972",
+        "record_hash": "sha256:1f87b1a8101b2d0c7fa5c8e0b874c9a4a8eb0a7e75a852079813d31017ee1a2c",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT302",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3051",
+        "record_hash": "sha256:17523a526f170f2950d3f907b982356606165ca0beae9a4b2b5ddce746214306",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GS302",
+        "column": "AGG_A_ET23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_arkansas&signal_id=sig_19a46486cbd3273e7b6f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_19a46486cbd3273e7b6f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: University of Arkansas. Across 7 certified ED cells, the source-supported affected-community totals are Race (4), Ethnicity (2), LGBTQ+ (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_19a46486cbd3273e7b6f/",
+    "proactive_reply": "Relevant certified public-data context for University of Arkansas: https://campusevidencelab.org/signals/sig_19a46486cbd3273e7b6f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

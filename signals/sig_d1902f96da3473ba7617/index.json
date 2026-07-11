@@ -1,0 +1,161 @@
+{
+  "id": "sig_d1902f96da3473ba7617",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_451913663296e112d2ad",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_3adf777f5b195928825f",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/community_college_of_baltimore_county/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "community_college_of_baltimore_county"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (2)."
+  },
+  "institution": {
+    "id": "community_college_of_baltimore_county",
+    "name": "Community College of Baltimore County",
+    "city": "Catonsville",
+    "state": "MD"
+  },
+  "record_ids": [
+    "evt_2026_0336",
+    "evt_2026_0834",
+    "evt_2026_1434",
+    "evt_2026_1634",
+    "evt_2026_1734",
+    "evt_2026_1816",
+    "evt_2026_1855"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Community College of Baltimore County: Across 7 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (2).",
+      "supporting_record_ids": [
+        "evt_2026_0336",
+        "evt_2026_0834",
+        "evt_2026_1434",
+        "evt_2026_1634",
+        "evt_2026_1734",
+        "evt_2026_1816",
+        "evt_2026_1855"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0336",
+        "record_hash": "sha256:10821d59a0a254cd6f33fb57df597943fa953c089ba30b7d68822b4987e26692",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR8125",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0834",
+        "record_hash": "sha256:5f312e2eb50eef10c2e1ceb223c4e13c16b6996c6fb0c6b1bf8800b67deac683",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK8125",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1434",
+        "record_hash": "sha256:a8f268a66ced3ccb4b1e4976b81c086ff1bad50bbc8d8820ab8bd63be49d5019",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX8125",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1634",
+        "record_hash": "sha256:729a57ae29c32acee3c6039b2cef3ffb987c38acfbd969ca907ceab986f3e8db",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU8125",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1734",
+        "record_hash": "sha256:36ae2283318c914ad4afc5e96297fd6be4da19e43dba2e465b53c4f5411b4c58",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IS8126",
+        "column": "INTIM_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1816",
+        "record_hash": "sha256:0c0f5d541eb8d4d87a7215b4e84733276a747b8fc35f3e140afbaa9bfeb999e1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DY8125",
+        "column": "INTIM_ET22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1855",
+        "record_hash": "sha256:c0e260cf6ee98caadfaf2e0cc25f3613eeaeded4cf09b31e3738270753d4aae8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB8127",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=community_college_of_baltimore_county&signal_id=sig_d1902f96da3473ba7617",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_d1902f96da3473ba7617/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Community College of Baltimore County. Across 7 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_d1902f96da3473ba7617/",
+    "proactive_reply": "Relevant certified public-data context for Community College of Baltimore County: https://campusevidencelab.org/signals/sig_d1902f96da3473ba7617/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

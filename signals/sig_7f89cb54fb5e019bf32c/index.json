@@ -1,0 +1,161 @@
+{
+  "id": "sig_7f89cb54fb5e019bf32c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_35005a3ba1b9032a896c",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_fa290879d6a5ce8ab65b",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/mount_vernon_nazarene_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "mount_vernon_nazarene_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 1 reported statistic across 1 distinct cell for 2024."
+  },
+  "institution": {
+    "id": "mount_vernon_nazarene_university",
+    "name": "Mount Vernon Nazarene University",
+    "city": "Mount Vernon",
+    "state": "OH"
+  },
+  "record_ids": [
+    "evt_2026_0511",
+    "evt_2026_0970",
+    "evt_2026_1356",
+    "evt_2026_1555",
+    "evt_2026_1723",
+    "evt_2026_3110",
+    "evt_2026_3327"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Mount Vernon Nazarene University: Certified ED workbook cells document 1 reported statistic across 1 distinct cell for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0511",
+        "evt_2026_0970",
+        "evt_2026_1356",
+        "evt_2026_1555",
+        "evt_2026_1723",
+        "evt_2026_3110",
+        "evt_2026_3327"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 7,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0511",
+        "record_hash": "sha256:169de363b0758ff6cda9d20bebddbabe90d287ccdaa148ac8edd2cd9bb497019",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR5001",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0970",
+        "record_hash": "sha256:e54602b5f03e5c32db115c9676d0512dd30f0f50be39a96fd1ab853a6071091c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV5001",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1356",
+        "record_hash": "sha256:9a07bd88a2f4db29713e2d18f06ad0189b970fe4f4364a0ce987eae3a93dda7f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5001",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1555",
+        "record_hash": "sha256:eda8f616fd2c2ae4ff7c80cbb90d094a0a2b80dd79add73469802a3266204522",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5001",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1723",
+        "record_hash": "sha256:0804f5c839353024d1f69f65e9efe762b66772b720d51d3af5fd74c089b93549",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU5001",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3110",
+        "record_hash": "sha256:aacd27c4cee442a37f2e56513ba7f76775fcc8b5e38de506afbf05185fbea29b",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV5001",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3327",
+        "record_hash": "sha256:b4e156e3095c597ff5accfe2429b6f70496aa5f7128bbaaab3243d58a6232f37",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU5001",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=mount_vernon_nazarene_university&signal_id=sig_7f89cb54fb5e019bf32c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7f89cb54fb5e019bf32c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Mount Vernon Nazarene University. Certified ED workbook cells document 1 reported statistic across 1 distinct cell for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7f89cb54fb5e019bf32c/",
+    "proactive_reply": "Relevant certified public-data context for Mount Vernon Nazarene University: https://campusevidencelab.org/signals/sig_7f89cb54fb5e019bf32c/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

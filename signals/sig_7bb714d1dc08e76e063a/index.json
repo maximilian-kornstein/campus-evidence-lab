@@ -1,0 +1,193 @@
+{
+  "id": "sig_7bb714d1dc08e76e063a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_ef4b56769165762f5c1f",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_b7c75af425985ed51a00",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/george_washington_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "george_washington_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 5 reported statistics across 5 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "george_washington_university",
+    "name": "George Washington University",
+    "city": "WASHINGTON",
+    "state": "DC"
+  },
+  "record_ids": [
+    "evt_2026_0224",
+    "evt_2026_0822",
+    "evt_2026_0989",
+    "evt_2026_1145",
+    "evt_2026_1283",
+    "evt_2026_2432",
+    "evt_2026_2507",
+    "evt_2026_2568",
+    "evt_2026_3917"
+  ],
+  "bounded_claims": [
+    {
+      "text": "George Washington University: Certified ED workbook cells document 5 reported statistics across 5 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0224",
+        "evt_2026_0822",
+        "evt_2026_0989",
+        "evt_2026_1145",
+        "evt_2026_1283",
+        "evt_2026_2432",
+        "evt_2026_2507",
+        "evt_2026_2568",
+        "evt_2026_3917"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files",
+        "src_ed_campus_safety_2024_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    },
+    {
+      "id": "src_ed_campus_safety_2024_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2024 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2024EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0224",
+        "record_hash": "sha256:4f52283920a6e55484a1058fa4176aa00dd735a19d883c3af7f90d43d69a9600",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT1146",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0822",
+        "record_hash": "sha256:e23b69f370648653410fc6dc3c65fc8d1fed5d3a1790996ed6330f5055da4adf",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA1146",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0989",
+        "record_hash": "sha256:33f4c6fedddade908dd4065c7cd471f6fb8eed7611be6a72ae0dedbaf151a028",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1146",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1145",
+        "record_hash": "sha256:bb1e1b4c08a89470822dd8786d8ab4aa2b8ae522bef99424d6f77d974a02c4f7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY1146",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1283",
+        "record_hash": "sha256:ad29bda1ba8f3743c1598d3c77414d181922f3277908e484bdf04d2795018a9f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC1146",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2432",
+        "record_hash": "sha256:725150a27ac73f23954d33328379fd534fbf7bf52da0fe35854f0825869dd867",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT1146",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2507",
+        "record_hash": "sha256:78e09a112aece5333f3c85dab57ab70eb4460883fdee97d82b04102c1b3b8dfe",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU1146",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2568",
+        "record_hash": "sha256:3082a014e7fc128179eefd7544f4a97d3c4fc146a2e30fd33125e8fa2ef2a8c9",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC1146",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3917",
+        "record_hash": "sha256:cdc5d22bbb1636526bcb5d22d4811d063b2439b00f40b94d73d8c8e749cc0537",
+        "workbook": "Oncampushate212223.xlsx",
+        "sheet": "sheet1",
+        "cell": "CA1150",
+        "column": "BURGLA_REL21",
+        "year": "2021",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=george_washington_university&signal_id=sig_7bb714d1dc08e76e063a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_7bb714d1dc08e76e063a/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: George Washington University. Certified ED workbook cells document 5 reported statistics across 5 distinct cells for 2024. Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_7bb714d1dc08e76e063a/",
+    "proactive_reply": "Relevant certified public-data context for George Washington University: https://campusevidencelab.org/signals/sig_7bb714d1dc08e76e063a/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

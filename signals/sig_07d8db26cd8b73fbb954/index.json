@@ -1,0 +1,233 @@
+{
+  "id": "sig_07d8db26cd8b73fbb954",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_e03aabcddf1d60d34c0e",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_677391e6e66c03efb204",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/new_york_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "new_york_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 13 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Religion (5), Ethnicity (2), Gender (2)."
+  },
+  "institution": {
+    "id": "new_york_university",
+    "name": "New York University",
+    "city": "Mineola",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1299",
+    "evt_2026_1639",
+    "evt_2026_2113",
+    "evt_2026_2224",
+    "evt_2026_2288",
+    "evt_2026_2332",
+    "evt_2026_2727",
+    "evt_2026_2748",
+    "evt_2026_2755",
+    "evt_2026_2760",
+    "evt_2026_3326",
+    "evt_2026_3625",
+    "evt_2026_3681"
+  ],
+  "bounded_claims": [
+    {
+      "text": "New York University: Across 13 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Religion (5), Ethnicity (2), Gender (2).",
+      "supporting_record_ids": [
+        "evt_2026_1299",
+        "evt_2026_1639",
+        "evt_2026_2113",
+        "evt_2026_2224",
+        "evt_2026_2288",
+        "evt_2026_2332",
+        "evt_2026_2727",
+        "evt_2026_2748",
+        "evt_2026_2755",
+        "evt_2026_2760",
+        "evt_2026_3326",
+        "evt_2026_3625",
+        "evt_2026_3681"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 15,
+    "certified_cell_count": 13,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1299",
+        "record_hash": "sha256:a8fac7056e75e042fb2e6f4bbf3ff8d1d081e7fbdaa4974eba939c24f9bdf7ce",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND4344",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1639",
+        "record_hash": "sha256:64660b9c509fa23d6349355f55edc393c70fd0e8a6d303a1be07a07fbe489d76",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU4328",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2113",
+        "record_hash": "sha256:76a0aaa6f20025e1a8ab71dbaf72774ff121a9cf69114c45bab70bab18a372c2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4328",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2224",
+        "record_hash": "sha256:6a6f857a79c8d4a2d32180144c32e59a323955ca54e440bb100a4382552b392a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY4328",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2288",
+        "record_hash": "sha256:9a61a7e6a9fb8148917d9f72f9194f13ccb15e9a3411fedfb09af8352baa21bc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU4328",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2332",
+        "record_hash": "sha256:afaf80ea1119a7f805094b3ecba6b0919998676220a85dd32b2d786ad712f49d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DY4328",
+        "column": "INTIM_ET22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2727",
+        "record_hash": "sha256:406543f41d312b4ece9c2dd6d4768a561f67a010e5a58dcb1296c47cbc621407",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MV4328",
+        "column": "SIM_A_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2748",
+        "record_hash": "sha256:c325dd24f0a2e33d71576d1f0f5799ab382be1d71eefb58d975fd28febbcb6ac",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT4329",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2755",
+        "record_hash": "sha256:7fc939c529c78ada44062f301725511535b7a70fa77f95dc784fd3c3c4151ccd",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HO4328",
+        "column": "ARSON_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2760",
+        "record_hash": "sha256:32bc8c14718a8fd3b57f3602f8d1381756313db238889c3bcbfc9dae06dd1bdf",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HZ4328",
+        "column": "SIM_A_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3326",
+        "record_hash": "sha256:6350e903d4f94106b4f680de73e5e4fff8e4e995978e36b7f8625c4327ce8053",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP4328",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3625",
+        "record_hash": "sha256:3f6665fe82802b6826058bf315639ab51f831d0ba7ba6e5d810197046f1164fa",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU4328",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3681",
+        "record_hash": "sha256:1e47aee64c6e4a771121473078cf8b24d84ac9a5fa056825354fd01fd11211fb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DY4328",
+        "column": "INTIM_ET22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=new_york_university&signal_id=sig_07d8db26cd8b73fbb954",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_07d8db26cd8b73fbb954/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: New York University. Across 13 certified ED cells, the source-supported affected-community totals are LGBTQ+ (5), Religion (5), Ethnicity (2), Gender (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_07d8db26cd8b73fbb954/",
+    "proactive_reply": "Relevant certified public-data context for New York University: https://campusevidencelab.org/signals/sig_07d8db26cd8b73fbb954/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

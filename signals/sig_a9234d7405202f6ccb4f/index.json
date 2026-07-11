@@ -1,0 +1,137 @@
+{
+  "id": "sig_a9234d7405202f6ccb4f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c91584b797227bbb8f7d",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_0104cc1bac5418fbcfe8",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/santa_monica_college/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "santa_monica_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2)."
+  },
+  "institution": {
+    "id": "santa_monica_college",
+    "name": "Santa Monica College",
+    "city": "Santa Monica",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1812",
+    "evt_2026_2283",
+    "evt_2026_2341",
+    "evt_2026_2387",
+    "evt_2026_2423"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Santa Monica College: Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2).",
+      "supporting_record_ids": [
+        "evt_2026_1812",
+        "evt_2026_2283",
+        "evt_2026_2341",
+        "evt_2026_2387",
+        "evt_2026_2423"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1812",
+        "record_hash": "sha256:a48122853c5794e108e91d31555e0078228e5a8907352eb449455e6b2dfe82d2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK869",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2283",
+        "record_hash": "sha256:14079ff5f77b21a57c65e6ee99e3d7fd9946ac46a4870c9e95f3470c6558317a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MU869",
+        "column": "SIM_A_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2341",
+        "record_hash": "sha256:478a0b1f3c4f9b6ef01e275469c67945c962c06bfe698175840786c390351de2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA869",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2387",
+        "record_hash": "sha256:06221addf3e2c1d9afa5bbb5cf8d504562249dc70679facd2ed4dd8d9fe2a11e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV869",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2423",
+        "record_hash": "sha256:7967cdae6ff1dd86939d54241db5d916166f4a47466753d038045eab781ca180",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY869",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=santa_monica_college&signal_id=sig_a9234d7405202f6ccb4f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_a9234d7405202f6ccb4f/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Santa Monica College. Across 5 certified ED cells, the documented category totals are Vandalism (4), Harassment or threat (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_a9234d7405202f6ccb4f/",
+    "proactive_reply": "Relevant certified public-data context for Santa Monica College: https://campusevidencelab.org/signals/sig_a9234d7405202f6ccb4f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}

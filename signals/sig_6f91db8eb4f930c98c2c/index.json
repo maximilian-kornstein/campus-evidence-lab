@@ -1,0 +1,125 @@
+{
+  "id": "sig_6f91db8eb4f930c98c2c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_fff01a0a33096b1c3c07",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "trigger": {
+    "id": "trg_72f0ebd20b09e08f7e19",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/grand_valley_state_university/",
+    "published_at": "2026-07-11",
+    "detected_at": "2026-07-11T18:49:30.592Z",
+    "institution_ids": [
+      "grand_valley_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2)."
+  },
+  "institution": {
+    "id": "grand_valley_state_university",
+    "name": "Grand Valley State University",
+    "city": "Allendale",
+    "state": "MI"
+  },
+  "record_ids": [
+    "evt_2026_0365",
+    "evt_2026_0835",
+    "evt_2026_2944",
+    "evt_2026_3224"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Grand Valley State University: Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0365",
+        "evt_2026_0835",
+        "evt_2026_2944",
+        "evt_2026_3224"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0365",
+        "record_hash": "sha256:4138147b725e1856245d88aa728441c90fc3d3d8e399bf53dade9c8da133be8d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LJ3175",
+        "column": "AGG_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0835",
+        "record_hash": "sha256:0eae0f7dc7e4fd377af337d7f475e4c1802cb7fed5301d0475d697f2edbefc59",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL3175",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2944",
+        "record_hash": "sha256:773f1c11d0636ab1ac84b51270498095cf4e68e60b0d637ba8c387b8750a39b1",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LJ3175",
+        "column": "AGG_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3224",
+        "record_hash": "sha256:5db7050758a04446462504d3d4e511ac7f7c1b581f4f88a80ef3020d3c9bbd53",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL3175",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=grand_valley_state_university&signal_id=sig_6f91db8eb4f930c98c2c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6f91db8eb4f930c98c2c/",
+  "distribution_copy": {
+    "bluesky_original": "ED data context: Grand Valley State University. Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2). Certified cells, limits, and corrections: https://campusevidencelab.org/signals/sig_6f91db8eb4f930c98c2c/",
+    "proactive_reply": "Relevant certified public-data context for Grand Valley State University: https://campusevidencelab.org/signals/sig_6f91db8eb4f930c98c2c/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-11T18:49:30.592Z",
+  "updated_at": "2026-07-11T18:49:30.592Z",
+  "correction_status": "none"
+}
