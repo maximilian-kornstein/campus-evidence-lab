@@ -233,12 +233,12 @@ async function captureFollowers(env) {
   return { followers: profile.followersCount || 0 };
 }
 
-function rampCap(state) {
+export function rampCap(state, currentTime = Date.now()) {
   if (!state.activated_at) return 0;
-  const days = Math.floor((Date.now() - new Date(state.activated_at).valueOf()) / 86_400_000);
-  if (days < 3) return 5;
-  if (days < 7) return 10;
-  return 20;
+  const days = Math.floor((currentTime - new Date(state.activated_at).valueOf()) / 86_400_000);
+  if (days < 3) return 7;
+  if (days < 7) return 12;
+  return 22;
 }
 
 async function sendPartnerOutreach(env) {
@@ -304,7 +304,7 @@ async function activate(env) {
     env.SIGNALS_DB.prepare("UPDATE controls SET value='false',updated_at=? WHERE key='global_pause'").bind(activatedAt),
     env.SIGNALS_DB.prepare("UPDATE controls SET value='live',updated_at=? WHERE key='partner_outreach_status'").bind(activatedAt),
   ]);
-  return { ok: true, activated_at: activatedAt, initial_daily_cap: 5 };
+  return { ok: true, activated_at: activatedAt, initial_daily_cap: 7 };
 }
 
 async function publishDue(env) {
