@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import { buildCertifiedDossiers, institutionHoldout } from "../scripts/signals/dossiers.mjs";
 import { buildIdentityIndex, resolveInstitutions } from "../scripts/signals/identity.mjs";
 import { runShadowReview } from "../scripts/signals/shadow-review.mjs";
+import { rampCap } from "../cloudflare/signals/worker.mjs";
 
 const signalArtifact = JSON.parse(await readFile(new URL("../data/signals.json", import.meta.url)));
 const reviewArtifact = JSON.parse(await readFile(new URL("../data/signal-shadow-review.json", import.meta.url)));
@@ -34,6 +35,18 @@ test("automated shadow gate approves at least 30 signals across 20 institutions"
   assert.ok(reviewArtifact.passing_signals >= 30);
   assert.ok(reviewArtifact.passing_institutions >= 20);
   assert.equal(reviewArtifact.decisions.some((row) => !row.passed), false);
+});
+
+test("activation ramp adds two originals at every stage", () => {
+  const activatedAt = "2026-07-01T12:00:00.000Z";
+  const state = { activated_at: activatedAt };
+  const atDay = (day) => Date.parse(activatedAt) + day * 86_400_000;
+  assert.equal(rampCap(state, atDay(0)), 7);
+  assert.equal(rampCap(state, atDay(2)), 7);
+  assert.equal(rampCap(state, atDay(3)), 12);
+  assert.equal(rampCap(state, atDay(6)), 12);
+  assert.equal(rampCap(state, atDay(7)), 22);
+  assert.ok(rampCap(state, atDay(30)) <= 25);
 });
 
 test("identity resolver accepts unique aliases and rejects ambiguous aliases", () => {

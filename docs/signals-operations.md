@@ -29,7 +29,7 @@ npm run signals:sync -- --apply
 npm run signals:activate -- --confirm-live
 ```
 
-The ramp is automatic: five originals daily on days 1–3, ten on days 4–7, and twenty daily from week two, bounded by eligibility, cooldown, holdout, freshness, and safety gates. Scheduled Worker jobs also poll mentions, answer direct `Ask CEL` questions, queue at most three proactive replies daily, snapshot followers, and process partner outreach.
+The ramp is automatic: seven originals daily on days 1–3, twelve on days 4–7, and twenty-two daily from week two, bounded by the 25-post hard ceiling plus eligibility, cooldown, holdout, freshness, and safety gates. Scheduled Worker jobs also poll mentions, answer direct `Ask CEL` questions, queue at most three proactive replies daily, snapshot followers, and process partner outreach.
 
 ## Partner queue
 
