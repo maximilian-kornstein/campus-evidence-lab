@@ -40,7 +40,9 @@ test("compiler creates fully supported bounded Signal and rejects institution mi
   assert.equal(compiled.accepted, true);
   assert.equal(compiled.signal.bounded_claims.every((claim) => claim.supporting_record_ids.includes(event.id)), true);
   assert.match(compiled.signal.claim_limit, /not a finding/i);
-  assert.match(compiled.signal.distribution_copy.bluesky_original, /Sources, response status, limits/);
+  assert.match(compiled.signal.distribution_copy.bluesky_original, /Example University announced a voluntary agreement/);
+  assert.match(compiled.signal.distribution_copy.bluesky_original, /Details\/limits:/);
+  assert.equal(compiled.signal.distribution_policy_version, "cel-social-content-v2");
   assert.ok(compiled.signal.distribution_copy.bluesky_original.length <= 300);
   const mismatch = compileSignal({ trigger: { ...trigger, institution_ids: ["other"] }, event, school, sources: [source], eligibility });
   assert.deepEqual(mismatch.reason_codes, ["trigger_institution_mismatch"]);

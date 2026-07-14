@@ -1,5 +1,6 @@
 const PROHIBITED = /\b(safest|most dangerous|worst campus|best campus|safety score|severity score|prevalence estimate|proved discrimination|guilty|liable|cover[- ]?up)\b/i;
 const SENSITIVE = /\b(victim's full name|home address|personal phone|private message|direct message)\b/i;
+const TECHNICAL_PROVENANCE = /\b(?:cell|cells|row|rows|workbook|workbooks|locator|locators|calculation|calculations)\b/i;
 
 export function reviewSignal(signal) {
   const reasons = [];
@@ -8,10 +9,15 @@ export function reviewSignal(signal) {
   if (!signal.sources?.length || signal.sources.some((source) => !/^https?:\/\//.test(source.url ?? ""))) reasons.push("invalid_source");
   if (!signal.canonical_url || !signal.correction_url) reasons.push("missing_public_routes");
   if (!signal.distribution_copy?.bluesky_original || signal.distribution_copy.bluesky_original.length > 300 || !signal.distribution_copy.bluesky_original.includes(signal.canonical_url)) reasons.push("invalid_social_copy");
+  if (signal.distribution_policy_version !== "cel-social-content-v2") reasons.push("invalid_distribution_policy_version");
+  if (TECHNICAL_PROVENANCE.test(signal.distribution_copy?.bluesky_original ?? "")) reasons.push("technical_provenance_in_social_copy");
+  if ((signal.distribution_copy?.bluesky_original ?? "").includes("…")) reasons.push("truncated_social_copy");
+  if (!(signal.distribution_copy?.bluesky_original ?? "").includes(signal.institution?.name ?? "")) reasons.push("institution_missing_from_social_copy");
   const allText = JSON.stringify([signal.bounded_claims, signal.unknowns, signal.distribution_copy]);
   if (PROHIBITED.test(allText)) reasons.push("prohibited_claim");
   if (SENSITIVE.test(allText)) reasons.push("sensitive_identity_risk");
   if (signal.signal_type === "dataset_context") {
+    if (!signal.semantic_facts?.length || signal.semantic_facts.some((fact) => !fact.year || !fact.category || !Number.isFinite(Number(fact.value)) || !fact.supporting_record_ids?.length)) reasons.push("missing_semantic_facts");
     const evidence = signal.calculation?.evidence ?? [];
     const cells = new Set(evidence.map((row) => `${row.workbook}|${row.sheet}|${row.cell}`));
     const total = evidence.reduce((sum, row) => sum + Number(row.value), 0);

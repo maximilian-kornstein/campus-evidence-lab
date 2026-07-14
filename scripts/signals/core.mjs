@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { DISTRIBUTION_POLICY_VERSION, contentFirstCopy, safeSourceClauses } from "./social-copy.mjs";
 
 export const SIGNAL_POLICY_VERSION = "cel-signals-v1";
 export const SHADOW_SIGNAL_MINIMUM = 30;
@@ -99,14 +100,6 @@ function boundedLead(event, school) {
   return `${school.name} has a public record that warrants context: ${action}.`;
 }
 
-function blueskyCopy(school, context, canonicalUrl) {
-  const prefix = `Public-record context: ${school.name}. `;
-  const suffix = ` Sources, response status, limits, and correction route: ${canonicalUrl}`;
-  const available = Math.max(0, 300 - prefix.length - suffix.length);
-  const clipped = context.length <= available ? context : `${context.slice(0, Math.max(0, available - 1)).trimEnd()}…`;
-  return `${prefix}${clipped}${suffix}`;
-}
-
 export function compileSignal({ trigger, event, school, sources, eligibility, siteUrl = "https://campusevidencelab.org" }) {
   if (!eligibility?.eligible) return { accepted: false, reason_codes: eligibility?.reason_codes ?? ["missing_eligibility_decision"] };
   const normalizedTrigger = normalizeTrigger(trigger);
@@ -120,7 +113,7 @@ export function compileSignal({ trigger, event, school, sources, eligibility, si
   const unknown = event.institutional_response
     ? "CEL reports only the public response located in the cited record; it does not independently evaluate the underlying conduct."
     : "CEL has not located a substantive public institutional response in this record. That does not establish that no response occurred.";
-  const socialCopy = blueskyCopy(school, context, canonicalUrl);
+  const socialCopy = contentFirstCopy({ lead: `${school.name}:`, clauses: safeSourceClauses(context), canonicalUrl });
   if (PROHIBITED_CLAIMS.test(socialCopy)) return { accepted: false, reason_codes: ["prohibited_generated_claim"] };
 
   const supportingIds = sourceRows.map((source) => source.id);
@@ -130,6 +123,7 @@ export function compileSignal({ trigger, event, school, sources, eligibility, si
       id: signalId,
       status: "shadow",
       policy_version: SIGNAL_POLICY_VERSION,
+      distribution_policy_version: DISTRIBUTION_POLICY_VERSION,
       trigger: normalizedTrigger,
       institution: { id: school.id, name: school.name, city: school.city ?? "", state: school.state ?? "" },
       record_ids: [event.id],
@@ -145,7 +139,8 @@ export function compileSignal({ trigger, event, school, sources, eligibility, si
       claim_limit: "Public-source documentation is not a finding of misconduct, prevalence measure, school ranking, safety score, or legal conclusion by CEL.",
       correction_url: `${siteUrl.replace(/\/$/, "")}/submit/?record_id=${encodeURIComponent(event.id)}`,
       canonical_url: canonicalUrl,
-      distribution_copy: { bluesky_original: socialCopy, proactive_reply: `Relevant public-record context from CEL: ${canonicalUrl}` },
+      semantic_facts: [{ year: event.date?.slice(0, 4) ?? "", category: event.category ?? "", affected_communities: event.affected_communities ?? [], geography: "", value: null, supporting_record_ids: [event.id] }],
+      distribution_copy: { bluesky_original: socialCopy, proactive_reply: socialCopy },
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       correction_status: "none",

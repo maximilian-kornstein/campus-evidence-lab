@@ -21,6 +21,19 @@ export async function createBlueskyPost({ session, text, reply }) {
   return response.json();
 }
 
+export async function deleteBlueskyPost({ session, uri }) {
+  const match = String(uri ?? "").match(/^at:\/\/([^/]+)\/([^/]+)\/([^/]+)$/);
+  if (!match) throw new Error("invalid_bluesky_record_uri");
+  const [, repo, collection, rkey] = match;
+  const response = await fetch("https://bsky.social/xrpc/com.atproto.repo.deleteRecord", {
+    method: "POST",
+    headers: { authorization: `Bearer ${session.accessJwt}`, "content-type": "application/json" },
+    body: JSON.stringify({ repo, collection, rkey }),
+  });
+  if (!response.ok) throw new Error(`bluesky_delete_${response.status}`);
+  return { uri, deleted: true };
+}
+
 export async function listNotifications(session, cursor = "") {
   const url = new URL("https://bsky.social/xrpc/app.bsky.notification.listNotifications");
   url.searchParams.set("limit", "50");

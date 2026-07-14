@@ -1,4 +1,4 @@
-import { createBlueskyPost, createBlueskySession, getBlueskyProfile, listNotifications, searchBluesky } from "./bluesky.mjs";
+import { createBlueskyPost, createBlueskySession, deleteBlueskyPost, getBlueskyProfile, listNotifications, searchBluesky } from "./bluesky.mjs";
 import { gmailAccessToken, gmailSearch, gmailThread, sendPartnerEmail, threadHasInboundReply } from "./gmail.mjs";
 
 const json = (value, status = 200, headers = {}) => new Response(JSON.stringify(value, null, 2), { status, headers: { "content-type": "application/json; charset=utf-8", "access-control-allow-origin": "*", ...headers } });
@@ -130,6 +130,34 @@ async function postBluesky(text, env) {
   return createBlueskyPost({ session: await createBlueskySession(env), text });
 }
 
+export async function withdrawDistributions(request, env) {
+  if (!authorized(request, env)) return json({ error: "unauthorized" }, 401);
+  const body = await request.json();
+  const signalIds = [...new Set((body.signal_ids ?? []).map(String).filter(Boolean))];
+  if (!signalIds.length || signalIds.length > 10 || !body.reason) return json({ error: "one_to_ten_signal_ids_and_reason_required" }, 400);
+  const session = await createBlueskySession(env);
+  const results = [];
+  for (const signalId of signalIds) {
+    const event = await env.SIGNALS_DB.prepare("SELECT id,signal_id,channel,external_id FROM distribution_events WHERE signal_id=? AND channel='bluesky' AND result='sent' ORDER BY attempted_at DESC LIMIT 1").bind(signalId).first();
+    if (!event) { results.push({ signal_id: signalId, result: "not_found" }); continue; }
+    const existing = await env.SIGNALS_DB.prepare("SELECT result FROM distribution_withdrawals WHERE distribution_event_id=?").bind(event.id).first();
+    if (existing?.result === "withdrawn") { results.push({ signal_id: signalId, result: "already_withdrawn" }); continue; }
+    const withdrawalId = `wd_${(await hash(event.id)).slice(0, 20)}`;
+    await env.SIGNALS_DB.prepare("INSERT INTO distribution_withdrawals (id,distribution_event_id,signal_id,channel,external_id,reason,requested_at,result) VALUES (?,?,?,?,?,?,?,'pending') ON CONFLICT(distribution_event_id) DO UPDATE SET reason=excluded.reason,requested_at=excluded.requested_at,result='pending',detail=''")
+      .bind(withdrawalId, event.id, signalId, event.channel, event.external_id, String(body.reason).slice(0, 200), now()).run();
+    try {
+      await deleteBlueskyPost({ session, uri: event.external_id });
+      await env.SIGNALS_DB.prepare("UPDATE distribution_withdrawals SET result='withdrawn',completed_at=?,detail='' WHERE distribution_event_id=?").bind(now(), event.id).run();
+      results.push({ signal_id: signalId, result: "withdrawn" });
+    } catch (error) {
+      await env.SIGNALS_DB.prepare("UPDATE distribution_withdrawals SET result='error',completed_at=?,detail=? WHERE distribution_event_id=?").bind(now(), String(error.message || error).slice(0, 500), event.id).run();
+      results.push({ signal_id: signalId, result: "error", detail: String(error.message || error) });
+    }
+  }
+  const failed = results.some((row) => ["error", "not_found"].includes(row.result));
+  return json({ ok: !failed, results }, failed ? 409 : 200);
+}
+
 function normalized(value) { return String(value ?? "").toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim(); }
 
 async function resolveInstitution(text, env) {
@@ -153,7 +181,7 @@ async function enqueueReply({ notification, actionType, institutionId, signal, e
   if (existing?.opted_out || Number(existing?.action_count || 0) >= 2) return false;
   const key = `reply_${(await hash(`${actionType}|${threadId}|${notification.uri}`)).slice(0, 20)}`;
   const payload = JSON.parse(signal.payload);
-  const copy = actionType === "ask_cel" ? `CEL found bounded public-record context for ${payload.institution.name}: ${payload.canonical_url}` : payload.distribution_copy.proactive_reply;
+  const copy = payload.distribution_copy.proactive_reply;
   await env.SIGNALS_DB.prepare("INSERT INTO reply_queue (id,signal_id,action_type,actor_id,thread_id,parent_uri,parent_cid,root_uri,root_cid,institution_id,copy,status,idempotency_key,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,'ready',?,?) ON CONFLICT(idempotency_key) DO NOTHING")
     .bind(`rpl_${crypto.randomUUID()}`, signal.id, actionType, actorId, threadId, parentUri, parentCid, root.uri, root.cid, institutionId, copy, key, now()).run();
   return true;
@@ -347,6 +375,7 @@ export default {
       return json(await readiness(env));
     }
     if (url.pathname === "/api/metrics") return metrics(env);
+    if (url.pathname === "/api/distributions/withdraw" && request.method === "POST") return withdrawDistributions(request, env);
     if (url.pathname === "/api/signals/ingest" && request.method === "POST") return ingest(request, env);
     const ingestMatch = url.pathname.match(/^\/api\/ingest\/(identity|dossiers|reviews|partners|triggers)$/);
     if (ingestMatch && request.method === "POST") return ingestAuxiliary(request, env, ingestMatch[1]);
