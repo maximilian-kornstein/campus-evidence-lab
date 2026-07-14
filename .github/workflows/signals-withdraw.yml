@@ -30,9 +30,11 @@ jobs:
       - name: Withdraw exact distributions
         shell: bash
         run: |
+          base_url="${SIGNALS_WORKER_URL%/}"
+          base_url="${base_url%/api}"
           payload="$(jq -n --arg ids "$SIGNAL_IDS" --arg reason "$WITHDRAWAL_REASON" '{signal_ids:($ids|split(",")|map(gsub("^\\s+|\\s+$";""))|map(select(length>0))),reason:$reason}')"
           response="$(curl --fail-with-body --silent --show-error \
-            -X POST "$SIGNALS_WORKER_URL/api/distributions/withdraw" \
+            -X POST "$base_url/api/distributions/withdraw" \
             -H "Authorization: Bearer $SIGNALS_ADMIN_TOKEN" \
             -H "Content-Type: application/json" \
             --data "$payload")"
