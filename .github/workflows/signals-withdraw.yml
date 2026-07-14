@@ -38,4 +38,4 @@ jobs:
             -H "Authorization: Bearer $SIGNALS_ADMIN_TOKEN" \
             -H "Content-Type: application/json" \
             --data "$payload")"
-          jq -e '.ok == true and (.results | length > 0) and all(.result == "withdrawn" or .result == "already_withdrawn")' <<<"$response"
+          jq -e '.ok == true and (.results | length > 0) and (.results | all(.result == "withdrawn" or .result == "already_withdrawn"))' <<<"$response"
