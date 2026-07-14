@@ -12,7 +12,7 @@ export const SYNC_ARTIFACT_SPECS = [
     route: "/api/ingest/identity",
     file: "data/institution-identity-index.json",
     collection: "aliases",
-    maxRows: 40,
+    maxRows: 20,
   },
   {
     route: "/api/ingest/dossiers",
