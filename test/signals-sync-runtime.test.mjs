@@ -17,6 +17,7 @@ test("runtime sync partitions every artifact below the free-tier D1 statement li
     assert.ok(batches.length > 0);
     assert.equal(batches.every((batch) => batch.estimatedStatements <= MAX_D1_STATEMENTS_PER_REQUEST), true, spec.route);
     if (spec.collection === "decisions") assert.equal(batches.every((batch) => batch.body.decisions.length <= 20), true);
+    if (spec.collection === "aliases") assert.equal(batches.every((batch) => batch.body.aliases.length <= 20), true);
   }
 });
 
