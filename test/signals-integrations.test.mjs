@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { collectGdelt, collectSitemap } from "../scripts/signals/collectors.mjs";
 import { threadHasInboundReply } from "../cloudflare/signals/gmail.mjs";
+import { deleteBlueskyPost } from "../cloudflare/signals/bluesky.mjs";
 
 test("GDELT adapter normalizes free public-news results", async () => {
   const response = { articles: [{ title: "Example University civil rights review", url: "https://news.test/story", seendate: "20260701T120000Z", language: "English", domain: "news.test" }] };
@@ -22,4 +23,17 @@ test("Gmail follow-up guard detects inbound replies", () => {
   const thread = { messages: [{ payload: { headers: [{ name: "From", value: "Campus Evidence Lab <cel@example.org>" }] } }, { payload: { headers: [{ name: "From", value: "Editor <editor@news.org>" }] } }] };
   assert.equal(threadHasInboundReply(thread, "cel@example.org"), true);
   assert.equal(threadHasInboundReply({ messages: thread.messages.slice(0, 1) }, "cel@example.org"), false);
+});
+
+test("Bluesky withdrawal deletes the exact AT Protocol record", async () => {
+  const originalFetch = globalThis.fetch;
+  let request;
+  globalThis.fetch = async (url, options) => { request = { url, options }; return new Response("{}", { status: 200 }); };
+  try {
+    const uri = "at://did:plc:example/app.bsky.feed.post/record123";
+    const result = await deleteBlueskyPost({ session: { accessJwt: "token" }, uri });
+    assert.deepEqual(result, { uri, deleted: true });
+    assert.match(request.url, /com\.atproto\.repo\.deleteRecord$/);
+    assert.deepEqual(JSON.parse(request.options.body), { repo: "did:plc:example", collection: "app.bsky.feed.post", rkey: "record123" });
+  } finally { globalThis.fetch = originalFetch; }
 });

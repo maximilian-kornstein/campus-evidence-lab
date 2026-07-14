@@ -1,0 +1,39 @@
+name: CEL Signals Distribution Withdrawal
+
+on:
+  workflow_dispatch:
+    inputs:
+      signal_ids:
+        description: "Comma-separated Signal IDs to withdraw (maximum 10)"
+        required: true
+        type: string
+      reason:
+        description: "Durable withdrawal reason"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  withdraw:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SIGNALS_WORKER_URL: ${{ secrets.SIGNALS_WORKER_URL }}
+      SIGNALS_ADMIN_TOKEN: ${{ secrets.SIGNALS_ADMIN_TOKEN }}
+      SIGNAL_IDS: ${{ inputs.signal_ids }}
+      WITHDRAWAL_REASON: ${{ inputs.reason }}
+    steps:
+      - name: Validate secret configuration
+        run: test -n "$SIGNALS_WORKER_URL" && test -n "$SIGNALS_ADMIN_TOKEN"
+      - name: Withdraw exact distributions
+        shell: bash
+        run: |
+          payload="$(jq -n --arg ids "$SIGNAL_IDS" --arg reason "$WITHDRAWAL_REASON" '{signal_ids:($ids|split(",")|map(gsub("^\\s+|\\s+$";""))|map(select(length>0))),reason:$reason}')"
+          response="$(curl --fail-with-body --silent --show-error \
+            -X POST "$SIGNALS_WORKER_URL/api/distributions/withdraw" \
+            -H "Authorization: Bearer $SIGNALS_ADMIN_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data "$payload")"
+          jq -e '.ok == true and (.results | length > 0) and all(.result == "withdrawn" or .result == "already_withdrawn")' <<<"$response"

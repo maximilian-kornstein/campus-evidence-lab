@@ -5,6 +5,7 @@ import { buildCertifiedDossiers, institutionHoldout } from "../scripts/signals/d
 import { buildIdentityIndex, resolveInstitutions } from "../scripts/signals/identity.mjs";
 import { runShadowReview } from "../scripts/signals/shadow-review.mjs";
 import { rampCap } from "../cloudflare/signals/worker.mjs";
+import { TECHNICAL_PROVENANCE } from "../scripts/signals/social-copy.mjs";
 
 const signalArtifact = JSON.parse(await readFile(new URL("../data/signals.json", import.meta.url)));
 const reviewArtifact = JSON.parse(await readFile(new URL("../data/signal-shadow-review.json", import.meta.url)));
@@ -18,6 +19,10 @@ test("generated inventory sustains aggressive volume with institution-level hold
   for (const signal of signalArtifact.signals) {
     const set = groups.get(signal.institution.id) ?? new Set(); set.add(signal.distribution_group); groups.set(signal.institution.id, set);
     assert.ok(signal.distribution_copy.bluesky_original.length <= 300);
+    assert.equal(TECHNICAL_PROVENANCE.test(signal.distribution_copy.bluesky_original), false);
+    assert.equal(signal.distribution_copy.bluesky_original.includes("…"), false);
+    assert.ok(signal.distribution_copy.bluesky_original.endsWith(signal.canonical_url));
+    assert.equal(signal.distribution_policy_version, "cel-social-content-v2");
   }
   assert.equal([...groups.values()].some((set) => set.size > 1), false);
 });
@@ -67,5 +72,18 @@ test("dossier builder emits four bounded angles from certified cell evidence", (
   assert.equal(result.dossiers[0].reported_statistic_total, 10);
   assert.equal(new Set(result.signals.map((row) => row.dossier_angle)).size, 4);
   assert.equal(result.signals.every((row) => row.distribution_group === institutionHoldout("example")), true);
+  assert.equal(result.signals.every((row) => row.semantic_facts.length > 0), true);
+  assert.match(result.signals[0].distribution_copy.bluesky_original, /Federal 2024 data, Example University:/);
+  assert.match(result.signals[0].distribution_copy.bluesky_original, /statistic/);
+  assert.equal(TECHNICAL_PROVENANCE.test(result.signals[0].distribution_copy.bluesky_original), false);
   assert.equal(runShadowReview(result.signals, { minimumSignals: 4, minimumInstitutions: 1 }).gate_ready, true);
+});
+
+test("Kansas State social copy leads with supported record content", () => {
+  const signal = signalArtifact.signals.find((row) => row.signal_type === "dataset_context" && row.institution.name === "Kansas State University" && row.dossier_angle === "latest_year");
+  assert.ok(signal);
+  assert.match(signal.distribution_copy.bluesky_original, /^Federal 2024 data, Kansas State University:/);
+  assert.match(signal.distribution_copy.bluesky_original, /3 on-campus vandalism statistics labeled LGBTQ\+/);
+  assert.match(signal.distribution_copy.bluesky_original, /1 on-campus harassment\/threat statistic labeled Race/);
+  assert.match(signal.distribution_copy.bluesky_original, /3 residence-hall vandalism statistics labeled LGBTQ\+/);
 });

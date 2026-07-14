@@ -52,6 +52,22 @@ CREATE TABLE IF NOT EXISTS distribution_events (
 CREATE INDEX IF NOT EXISTS idx_distribution_signal ON distribution_events(signal_id);
 CREATE INDEX IF NOT EXISTS idx_distribution_day ON distribution_events(channel, attempted_at);
 
+CREATE TABLE IF NOT EXISTS distribution_withdrawals (
+  id TEXT PRIMARY KEY,
+  distribution_event_id TEXT NOT NULL UNIQUE,
+  signal_id TEXT NOT NULL,
+  channel TEXT NOT NULL,
+  external_id TEXT NOT NULL,
+  reason TEXT NOT NULL,
+  requested_at TEXT NOT NULL,
+  completed_at TEXT NOT NULL DEFAULT '',
+  result TEXT NOT NULL DEFAULT 'pending',
+  detail TEXT NOT NULL DEFAULT '',
+  FOREIGN KEY (distribution_event_id) REFERENCES distribution_events(id),
+  FOREIGN KEY (signal_id) REFERENCES signals(id)
+);
+CREATE INDEX IF NOT EXISTS idx_withdrawals_signal ON distribution_withdrawals(signal_id);
+
 CREATE TABLE IF NOT EXISTS interactions (
   id TEXT PRIMARY KEY,
   platform TEXT NOT NULL,
