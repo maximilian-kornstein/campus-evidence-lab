@@ -1,0 +1,123 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-07-15",
+  "status_definitions": {
+    "production_live": "Publicly reachable and operated by an automated production workflow.",
+    "published_static": "Published and usable as static files or generated pages; not a hosted transactional service.",
+    "verification_ready": "Built and inspectable, but its strongest credibility claim still awaits outside use or review.",
+    "configured_not_adopted": "Operational machinery exists, but CEL has not verified external adoption.",
+    "local_only": "Implemented for local verification only; no public network deployment is claimed."
+  },
+  "summary": {
+    "capabilities": 7,
+    "production_live": 2,
+    "published_static": 2,
+    "verification_ready": 1,
+    "configured_not_adopted": 1,
+    "local_only": 1,
+    "verified_external_adoptions": 0,
+    "completed_external_reviews": 0
+  },
+  "capabilities": [
+    {
+      "id": "public_evidence_archive",
+      "name": "Public evidence archive",
+      "status": "production_live",
+      "claim": "A public static archive exposes 4,000 event records, institution pages, source metadata, limitations, and correction routes.",
+      "metrics": [
+        { "label": "event records", "value": 4000, "source_artifact": "/data/events.json" },
+        { "label": "institution directory records", "value": 5470, "source_artifact": "/data/schools.json" },
+        { "label": "source records", "value": 25, "source_artifact": "/data/sources.json" }
+      ],
+      "evidence": ["/events/", "/downloads/", "/data/snapshot-manifest.json"],
+      "last_verified_at": "2026-07-15",
+      "external_adoption_count": 0,
+      "claim_boundary": "Record count measures published documentation, not incident prevalence, school quality, safety, or independent verification."
+    },
+    {
+      "id": "certification_and_provenance",
+      "name": "Certification and cell-level provenance",
+      "status": "published_static",
+      "claim": "Deterministic gates certify source locators and record support for 3,810 records; a separate quality audit still marks 3,908 records as needing internal review.",
+      "metrics": [
+        { "label": "certified records", "value": 3810, "source_artifact": "/data/certification-ledger.json" },
+        { "label": "records needing internal review", "value": 3908, "source_artifact": "/data/record-quality-audit.json" },
+        { "label": "ED rows with matched workbook provenance", "value": 3802, "source_artifact": "/data/ed-dataset-provenance-audit.json" }
+      ],
+      "evidence": ["/certification/", "/ed-provenance/", "/review-debt/"],
+      "last_verified_at": "2026-07-15",
+      "external_adoption_count": 0,
+      "claim_boundary": "Certification is a deterministic support-and-provenance gate. It is not equivalent to completed human review or outside validation."
+    },
+    {
+      "id": "research_exports",
+      "name": "Research exports and static API",
+      "status": "published_static",
+      "claim": "Snapshot-bound JSON, CSV, research exports, schemas, and versioned static API files are publicly downloadable.",
+      "metrics": [
+        { "label": "API model", "value": "static files", "source_artifact": "/api/v1/index.json" },
+        { "label": "current snapshot", "value": "snapshot_2026_06_03_4000_records", "source_artifact": "/data/snapshot-manifest.json" }
+      ],
+      "evidence": ["/downloads/", "/api/v1/index.json", "/replicate/"],
+      "last_verified_at": "2026-07-15",
+      "external_adoption_count": 0,
+      "claim_boundary": "The v1 API is a static public-data interface, not a continuously queried application server."
+    },
+    {
+      "id": "cel_signals",
+      "name": "CEL Signals accountability engine",
+      "status": "production_live",
+      "claim": "An autonomous engine compiles evidence-bounded Signals, publishes to Bluesky, exposes RSS/JSON, and persists distribution state with safety and withdrawal controls.",
+      "metrics": [
+        { "label": "shadow candidates", "value": 1345, "source_artifact": "/data/signals.json" },
+        { "label": "institutions represented", "value": 339, "source_artifact": "/data/signals.json" },
+        { "label": "active-distribution institutions", "value": 260, "source_artifact": "/data/signals.json" }
+      ],
+      "evidence": ["/signals/", "/signals/feeds/all.json", "https://bsky.app/profile/campusevidencelab.bsky.social"],
+      "last_verified_at": "2026-07-15",
+      "external_adoption_count": 0,
+      "claim_boundary": "Operational publication does not itself demonstrate reporting reuse, institutional response, audience conversion, or other downstream impact."
+    },
+    {
+      "id": "external_review_infrastructure",
+      "name": "External review infrastructure",
+      "status": "verification_ready",
+      "claim": "CEL publishes bounded reviewer packets and review instructions, but records no completed external review or approved public acknowledgment.",
+      "metrics": [
+        { "label": "records in external-review packet", "value": 17, "source_artifact": "/data/external-review-packet.json" },
+        { "label": "completed external reviews", "value": 0, "source_artifact": "/data/credibility-status.json" }
+      ],
+      "evidence": ["/external-review/", "/reviewer-brief/", "/credibility/"],
+      "last_verified_at": "2026-07-15",
+      "external_adoption_count": 0,
+      "claim_boundary": "A review packet is infrastructure for review. It is not evidence that review occurred or that a reviewer endorsed CEL."
+    },
+    {
+      "id": "partner_distribution",
+      "name": "Partner syndication and outreach",
+      "status": "configured_not_adopted",
+      "claim": "Duplicate-controlled partner outreach and feed proposals are implemented; CEL currently publishes no verified subscription, embed, webhook, or reuse adoption.",
+      "metrics": [
+        { "label": "verified partner adoptions", "value": 0, "source_artifact": "/data/capability-ledger.json" }
+      ],
+      "evidence": ["/signals/", "/impact/"],
+      "last_verified_at": "2026-07-15",
+      "external_adoption_count": 0,
+      "claim_boundary": "Configured outreach capacity is not a partnership, adoption, citation, or impact outcome."
+    },
+    {
+      "id": "snapshot_registry_contract",
+      "name": "Snapshot registry smart contract",
+      "status": "local_only",
+      "claim": "A minimal owner-controlled Solidity registry can attest snapshot hashes in local tests; CEL claims no public-chain deployment.",
+      "metrics": [
+        { "label": "public deployment addresses", "value": 0, "source_artifact": "/contracts/SnapshotRegistry.sol" }
+      ],
+      "evidence": ["/contracts/SnapshotRegistry.sol", "/protocol/"],
+      "last_verified_at": "2026-07-15",
+      "external_adoption_count": 0,
+      "deployment": { "networks": [] },
+      "claim_boundary": "Local contract code and tests do not establish decentralization, immutability of CEL's source data, public-chain deployment, or third-party use."
+    }
+  ]
+}

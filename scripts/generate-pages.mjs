@@ -22,6 +22,7 @@ const [
   certificationBatches,
   institutionImportWaveSummary,
   accountabilitySignals,
+  capabilityLedger,
   ...edCertificationReviews
 ] = await Promise.all([
   readJson(paths.events),
@@ -38,6 +39,7 @@ const [
   readJson(paths.certificationBatches),
   readJson(paths.institutionImportWaveSummary),
   readJson(paths.accountabilitySignals),
+  readJson(path.join(rootDir, "data", "capability-ledger.json")),
   ...ED_CERTIFICATION_REVIEW_SPECS.map((spec) => readJson(paths[spec.dataPathKey]))
 ]);
 
@@ -61,6 +63,7 @@ const accountabilityRoomDir = path.join(rootDir, "accountability-room");
 const proofDir = path.join(rootDir, "proof");
 const policiesDir = path.join(rootDir, "policies");
 const protocolDir = path.join(rootDir, "protocol");
+const capabilitiesDir = path.join(rootDir, "capabilities");
 const detailDepth = 2;
 
 const POLICY_DOCUMENTS = [
@@ -1222,6 +1225,55 @@ for (const wave of importWaveReports) {
     )
   );
 }
+
+await mkdir(capabilitiesDir, { recursive: true });
+await writeFile(
+  path.join(capabilitiesDir, "index.html"),
+  page(
+    "Capability Ledger",
+    `
+      <p class="page-kicker">Capability Ledger · Updated ${escapeHtml(capabilityLedger.updated_at)}</p>
+      <h1 class="page-title page-title--small">What is real, what is local, and what is still unproven.</h1>
+      <p class="page-intro">This ledger separates software existence from live operation, and live operation from outside adoption or impact. Every capability has a bounded status, inspectable evidence, a verification date, and an explicit claim limit. There is no composite score.</p>
+      <section class="section section--tight">
+        <div class="metric-grid">
+          <div class="metric"><span class="metric__value">${capabilityLedger.summary.production_live}</span><span class="metric__label">Production live</span></div>
+          <div class="metric"><span class="metric__value">${capabilityLedger.summary.published_static}</span><span class="metric__label">Published static</span></div>
+          <div class="metric"><span class="metric__value">${capabilityLedger.summary.local_only}</span><span class="metric__label">Local only</span></div>
+          <div class="metric"><span class="metric__value">${capabilityLedger.summary.verified_external_adoptions}</span><span class="metric__label">Verified external adoptions</span></div>
+          <div class="metric"><span class="metric__value">${capabilityLedger.summary.completed_external_reviews}</span><span class="metric__label">Completed external reviews</span></div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="section-header"><h2 class="section-title">Status definitions</h2><p class="section-note">Maturity categories, not quality rankings</p></div>
+        <dl>${Object.entries(capabilityLedger.status_definitions).map(([status, definition]) => dataLine(status.replaceAll("_", " "), escapeHtml(definition))).join("")}</dl>
+      </section>
+      <section class="section">
+        <div class="section-header"><h2 class="section-title">Inspectable capabilities</h2><p class="section-note">Proof before promotion</p></div>
+        <div class="capability-ledger">
+          ${capabilityLedger.capabilities.map((capability) => `
+            <article class="capability-entry" id="${escapeHtml(capability.id)}">
+              <div class="capability-entry__header">
+                <div><p class="page-kicker">${escapeHtml(capability.status.replaceAll("_", " "))}</p><h3>${escapeHtml(capability.name)}</h3></div>
+                <p class="mono">Verified ${escapeHtml(capability.last_verified_at)}</p>
+              </div>
+              <p class="capability-entry__claim">${escapeHtml(capability.claim)}</p>
+              <div class="capability-entry__details">
+                <div><h4>Measured state</h4><dl>${capability.metrics.map((metric) => dataLine(escapeHtml(metric.label), `<a href="${sitePath(metric.source_artifact, 1)}">${escapeHtml(metric.value)}</a>`)).join("")}</dl></div>
+                <div><h4>Evidence</h4><ul class="evidence-list">${capability.evidence.map((href) => `<li><a href="${href.startsWith("/") ? sitePath(href, 1) : escapeHtml(href)}"${href.startsWith("http") ? ' target="_blank" rel="noreferrer"' : ""}>${escapeHtml(href)}</a></li>`).join("")}</ul></div>
+              </div>
+              <aside class="known-limit"><strong>Claim boundary</strong><p>${escapeHtml(capability.claim_boundary)}</p></aside>
+            </article>
+          `).join("")}
+        </div>
+      </section>
+      <section class="section section--tight">
+        <div class="hero-actions"><a class="button-link button-link--primary" href="${sitePath("/data/capability-ledger.json", 1)}">Open machine-readable ledger</a><a class="button-link" href="${sitePath("/credibility/", 1)}">Credibility boundaries</a><a class="button-link" href="${sitePath("/known-limits/", 1)}">Known limits</a></div>
+      </section>
+    `,
+    1
+  )
+);
 
 await mkdir(protocolDir, { recursive: true });
 await writeFile(
