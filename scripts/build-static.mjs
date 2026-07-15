@@ -52,6 +52,7 @@ const publicPaths = [
   "coverage",
   "replicate",
   "credibility",
+  "capabilities",
   "policies",
   "protocol",
   "downloads",

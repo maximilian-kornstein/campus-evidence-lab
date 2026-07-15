@@ -70,6 +70,7 @@ const staticPaths = [
   "/coverage/",
   "/replicate/",
   "/credibility/",
+  "/capabilities/",
   "/policies/",
   "/policies/terms-of-use/",
   "/policies/privacy-policy/",

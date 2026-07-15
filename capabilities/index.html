@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capability Ledger / Campus Evidence Lab</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+  </head>
+  <body>
+
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="../">
+          <span class="brand__name">Campus Evidence Lab</span>
+          <span class="brand__tag">Public evidence infrastructure</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="../">Dashboard</a>
+          <a href="../accountability-room/">Accountability</a>
+          <a href="../proof/">Proof</a>
+          <a href="../events/">Events</a>
+          <a href="../schools/">Schools</a>
+          <a href="../briefs/">Briefs</a>
+          <a href="../sources/">Sources</a>
+          <a href="../quality/">Quality</a>
+          <a href="../review-debt/">Review Debt</a>
+          <a href="../certification/">Certification</a>
+          <a href="../certification-batches/">Batches</a>
+          <a href="../ed-certification-batch-001/">ED Review</a>
+          <a href="../external-review/">External Review</a>
+          <a href="../methodology/">Methodology</a>
+          <a href="../impact/">Impact</a>
+          <a href="../guide/">Guide</a>
+          <a href="../downloads/">Data</a>
+          <a href="../policies/">Policies</a>
+          <a href="../protocol/">Protocol</a>
+          <a href="../submit/">Submit</a>
+          <a href="../about/">About</a>
+          <a href="../license/">License</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <p class="page-kicker">Capability Ledger · Updated 2026-07-15</p>
+      <h1 class="page-title page-title--small">What is real, what is local, and what is still unproven.</h1>
+      <p class="page-intro">This ledger separates software existence from live operation, and live operation from outside adoption or impact. Every capability has a bounded status, inspectable evidence, a verification date, and an explicit claim limit. There is no composite score.</p>
+      <section class="section section--tight">
+        <div class="metric-grid">
+          <div class="metric"><span class="metric__value">2</span><span class="metric__label">Production live</span></div>
+          <div class="metric"><span class="metric__value">2</span><span class="metric__label">Published static</span></div>
+          <div class="metric"><span class="metric__value">1</span><span class="metric__label">Local only</span></div>
+          <div class="metric"><span class="metric__value">0</span><span class="metric__label">Verified external adoptions</span></div>
+          <div class="metric"><span class="metric__value">0</span><span class="metric__label">Completed external reviews</span></div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="section-header"><h2 class="section-title">Status definitions</h2><p class="section-note">Maturity categories, not quality rankings</p></div>
+        <dl>
+    <div class="data-line">
+      <dt>production live</dt>
+      <dd>Publicly reachable and operated by an automated production workflow.</dd>
+    </div>
+
+    <div class="data-line">
+      <dt>published static</dt>
+      <dd>Published and usable as static files or generated pages; not a hosted transactional service.</dd>
+    </div>
+
+    <div class="data-line">
+      <dt>verification ready</dt>
+      <dd>Built and inspectable, but its strongest credibility claim still awaits outside use or review.</dd>
+    </div>
+
+    <div class="data-line">
+      <dt>configured not adopted</dt>
+      <dd>Operational machinery exists, but CEL has not verified external adoption.</dd>
+    </div>
+
+    <div class="data-line">
+      <dt>local only</dt>
+      <dd>Implemented for local verification only; no public network deployment is claimed.</dd>
+    </div>
+  </dl>
+      </section>
+      <section class="section">
+        <div class="section-header"><h2 class="section-title">Inspectable capabilities</h2><p class="section-note">Proof before promotion</p></div>
+        <div class="capability-ledger">
+
+            <article class="capability-entry" id="public_evidence_archive">
+              <div class="capability-entry__header">
+                <div><p class="page-kicker">production live</p><h3>Public evidence archive</h3></div>
+                <p class="mono">Verified 2026-07-15</p>
+              </div>
+              <p class="capability-entry__claim">A public static archive exposes 4,000 event records, institution pages, source metadata, limitations, and correction routes.</p>
+              <div class="capability-entry__details">
+                <div><h4>Measured state</h4><dl>
+    <div class="data-line">
+      <dt>event records</dt>
+      <dd><a href="../data/events.json">4000</a></dd>
+    </div>
+
+    <div class="data-line">
+      <dt>institution directory records</dt>
+      <dd><a href="../data/schools.json">5470</a></dd>
+    </div>
+
+    <div class="data-line">
+      <dt>source records</dt>
+      <dd><a href="../data/sources.json">25</a></dd>
+    </div>
+  </dl></div>
+                <div><h4>Evidence</h4><ul class="evidence-list"><li><a href="../events/">/events/</a></li><li><a href="../downloads/">/downloads/</a></li><li><a href="../data/snapshot-manifest.json">/data/snapshot-manifest.json</a></li></ul></div>
+              </div>
+              <aside class="known-limit"><strong>Claim boundary</strong><p>Record count measures published documentation, not incident prevalence, school quality, safety, or independent verification.</p></aside>
+            </article>
+
+            <article class="capability-entry" id="certification_and_provenance">
+              <div class="capability-entry__header">
+                <div><p class="page-kicker">published static</p><h3>Certification and cell-level provenance</h3></div>
+                <p class="mono">Verified 2026-07-15</p>
+              </div>
+              <p class="capability-entry__claim">Deterministic gates certify source locators and record support for 3,810 records; a separate quality audit still marks 3,908 records as needing internal review.</p>
+              <div class="capability-entry__details">
+                <div><h4>Measured state</h4><dl>
+    <div class="data-line">
+      <dt>certified records</dt>
+      <dd><a href="../data/certification-ledger.json">3810</a></dd>
+    </div>
+
+    <div class="data-line">
+      <dt>records needing internal review</dt>
+      <dd><a href="../data/record-quality-audit.json">3908</a></dd>
+    </div>
+
+    <div class="data-line">
+      <dt>ED rows with matched workbook provenance</dt>
+      <dd><a href="../data/ed-dataset-provenance-audit.json">3802</a></dd>
+    </div>
+  </dl></div>
+                <div><h4>Evidence</h4><ul class="evidence-list"><li><a href="../certification/">/certification/</a></li><li><a href="../ed-provenance/">/ed-provenance/</a></li><li><a href="../review-debt/">/review-debt/</a></li></ul></div>
+              </div>
+              <aside class="known-limit"><strong>Claim boundary</strong><p>Certification is a deterministic support-and-provenance gate. It is not equivalent to completed human review or outside validation.</p></aside>
+            </article>
+
+            <article class="capability-entry" id="research_exports">
+              <div class="capability-entry__header">
+                <div><p class="page-kicker">published static</p><h3>Research exports and static API</h3></div>
+                <p class="mono">Verified 2026-07-15</p>
+              </div>
+              <p class="capability-entry__claim">Snapshot-bound JSON, CSV, research exports, schemas, and versioned static API files are publicly downloadable.</p>
+              <div class="capability-entry__details">
+                <div><h4>Measured state</h4><dl>
+    <div class="data-line">
+      <dt>API model</dt>
+      <dd><a href="../api/v1/index.json">static files</a></dd>
+    </div>
+
+    <div class="data-line">
+      <dt>current snapshot</dt>
+      <dd><a href="../data/snapshot-manifest.json">snapshot_2026_06_03_4000_records</a></dd>
+    </div>
+  </dl></div>
+                <div><h4>Evidence</h4><ul class="evidence-list"><li><a href="../downloads/">/downloads/</a></li><li><a href="../api/v1/index.json">/api/v1/index.json</a></li><li><a href="../replicate/">/replicate/</a></li></ul></div>
+              </div>
+              <aside class="known-limit"><strong>Claim boundary</strong><p>The v1 API is a static public-data interface, not a continuously queried application server.</p></aside>
+            </article>
+
+            <article class="capability-entry" id="cel_signals">
+              <div class="capability-entry__header">
+                <div><p class="page-kicker">production live</p><h3>CEL Signals accountability engine</h3></div>
+                <p class="mono">Verified 2026-07-15</p>
+              </div>
+              <p class="capability-entry__claim">An autonomous engine compiles evidence-bounded Signals, publishes to Bluesky, exposes RSS/JSON, and persists distribution state with safety and withdrawal controls.</p>
+              <div class="capability-entry__details">
+                <div><h4>Measured state</h4><dl>
+    <div class="data-line">
+      <dt>shadow candidates</dt>
+      <dd><a href="../data/signals.json">1345</a></dd>
+    </div>
+
+    <div class="data-line">
+      <dt>institutions represented</dt>
+      <dd><a href="../data/signals.json">339</a></dd>
+    </div>
+
+    <div class="data-line">
+      <dt>active-distribution institutions</dt>
+      <dd><a href="../data/signals.json">260</a></dd>
+    </div>
+  </dl></div>
+                <div><h4>Evidence</h4><ul class="evidence-list"><li><a href="../signals/">/signals/</a></li><li><a href="../signals/feeds/all.json">/signals/feeds/all.json</a></li><li><a href="https://bsky.app/profile/campusevidencelab.bsky.social" target="_blank" rel="noreferrer">https://bsky.app/profile/campusevidencelab.bsky.social</a></li></ul></div>
+              </div>
+              <aside class="known-limit"><strong>Claim boundary</strong><p>Operational publication does not itself demonstrate reporting reuse, institutional response, audience conversion, or other downstream impact.</p></aside>
+            </article>
+
+            <article class="capability-entry" id="external_review_infrastructure">
+              <div class="capability-entry__header">
+                <div><p class="page-kicker">verification ready</p><h3>External review infrastructure</h3></div>
+                <p class="mono">Verified 2026-07-15</p>
+              </div>
+              <p class="capability-entry__claim">CEL publishes bounded reviewer packets and review instructions, but records no completed external review or approved public acknowledgment.</p>
+              <div class="capability-entry__details">
+                <div><h4>Measured state</h4><dl>
+    <div class="data-line">
+      <dt>records in external-review packet</dt>
+      <dd><a href="../data/external-review-packet.json">17</a></dd>
+    </div>
+
+    <div class="data-line">
+      <dt>completed external reviews</dt>
+      <dd><a href="../data/credibility-status.json">0</a></dd>
+    </div>
+  </dl></div>
+                <div><h4>Evidence</h4><ul class="evidence-list"><li><a href="../external-review/">/external-review/</a></li><li><a href="../reviewer-brief/">/reviewer-brief/</a></li><li><a href="../credibility/">/credibility/</a></li></ul></div>
+              </div>
+              <aside class="known-limit"><strong>Claim boundary</strong><p>A review packet is infrastructure for review. It is not evidence that review occurred or that a reviewer endorsed CEL.</p></aside>
+            </article>
+
+            <article class="capability-entry" id="partner_distribution">
+              <div class="capability-entry__header">
+                <div><p class="page-kicker">configured not adopted</p><h3>Partner syndication and outreach</h3></div>
+                <p class="mono">Verified 2026-07-15</p>
+              </div>
+              <p class="capability-entry__claim">Duplicate-controlled partner outreach and feed proposals are implemented; CEL currently publishes no verified subscription, embed, webhook, or reuse adoption.</p>
+              <div class="capability-entry__details">
+                <div><h4>Measured state</h4><dl>
+    <div class="data-line">
+      <dt>verified partner adoptions</dt>
+      <dd><a href="../data/capability-ledger.json">0</a></dd>
+    </div>
+  </dl></div>
+                <div><h4>Evidence</h4><ul class="evidence-list"><li><a href="../signals/">/signals/</a></li><li><a href="../impact/">/impact/</a></li></ul></div>
+              </div>
+              <aside class="known-limit"><strong>Claim boundary</strong><p>Configured outreach capacity is not a partnership, adoption, citation, or impact outcome.</p></aside>
+            </article>
+
+            <article class="capability-entry" id="snapshot_registry_contract">
+              <div class="capability-entry__header">
+                <div><p class="page-kicker">local only</p><h3>Snapshot registry smart contract</h3></div>
+                <p class="mono">Verified 2026-07-15</p>
+              </div>
+              <p class="capability-entry__claim">A minimal owner-controlled Solidity registry can attest snapshot hashes in local tests; CEL claims no public-chain deployment.</p>
+              <div class="capability-entry__details">
+                <div><h4>Measured state</h4><dl>
+    <div class="data-line">
+      <dt>public deployment addresses</dt>
+      <dd><a href="../contracts/SnapshotRegistry.sol">0</a></dd>
+    </div>
+  </dl></div>
+                <div><h4>Evidence</h4><ul class="evidence-list"><li><a href="../contracts/SnapshotRegistry.sol">/contracts/SnapshotRegistry.sol</a></li><li><a href="../protocol/">/protocol/</a></li></ul></div>
+              </div>
+              <aside class="known-limit"><strong>Claim boundary</strong><p>Local contract code and tests do not establish decentralization, immutability of CEL&#039;s source data, public-chain deployment, or third-party use.</p></aside>
+            </article>
+
+        </div>
+      </section>
+      <section class="section section--tight">
+        <div class="hero-actions"><a class="button-link button-link--primary" href="../data/capability-ledger.json">Open machine-readable ledger</a><a class="button-link" href="../credibility/">Credibility boundaries</a><a class="button-link" href="../known-limits/">Known limits</a></div>
+      </section>
+
+    </main>
+    <footer class="site-footer">Campus Evidence Lab / Public-source records / Import-wave QA / Corrections and right-of-reply</footer>
+  </body>
+</html>

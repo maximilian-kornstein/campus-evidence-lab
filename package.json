@@ -16,7 +16,8 @@
     "test:researcher-kit": "node --test test/researcher-kit.test.mjs",
     "test:verify-public": "node --test test/verify-public.test.mjs",
     "test:workflows": "node --test test/workflows.test.mjs",
-    "test:release-credibility": "node --test test/release-credibility.test.mjs",
+    "test:release-credibility": "node --test test/release-credibility.test.mjs test/capability-ledger.test.mjs",
+    "test:capabilities": "node --test test/capability-ledger.test.mjs",
     "test:robustness": "node --test test/robustness-metrics.test.mjs",
     "test:flagship": "node --test test/flagship-report.test.mjs",
     "test:record-quality-audit": "node --test test/record-quality-audit.test.mjs",
@@ -100,7 +101,7 @@
     "ed-certification-batch-016-review:data": "node scripts/generate-ed-certification-batch-016-review.mjs",
     "signals:data": "node scripts/generate-signals.mjs",
     "signals:collect": "node scripts/collect-signal-triggers.mjs",
-    "test:signals": "node --test test/signals.test.mjs test/signals-collectors.test.mjs test/signals-partner-outreach.test.mjs test/signals-worker-contract.test.mjs test/signals-aggressive.test.mjs test/signals-integrations.test.mjs test/signals-sync-runtime.test.mjs",
+    "test:signals": "node --test test/signals.test.mjs test/signals-collectors.test.mjs test/signals-partner-outreach.test.mjs test/signals-worker-contract.test.mjs test/signals-aggressive.test.mjs test/signals-integrations.test.mjs test/signals-sync-runtime.test.mjs test/signals-artifact-stability.test.mjs",
     "signals:dry-run": "node scripts/signals/dry-run.mjs",
     "signals:sync": "node scripts/signals/sync-runtime.mjs",
     "signals:activate": "node scripts/signals/activate.mjs",
@@ -110,6 +111,6 @@
   },
   "devDependencies": {
     "jsdom": "^29.1.1",
-    "xlsx": "^0.18.5"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
 }

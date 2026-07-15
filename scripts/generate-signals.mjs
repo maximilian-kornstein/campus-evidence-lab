@@ -5,6 +5,7 @@ import { compileSignal, evaluateEvidenceEligibility, SIGNAL_POLICY_VERSION } fro
 import { buildCertifiedDossiers, institutionHoldout } from "./signals/dossiers.mjs";
 import { buildIdentityIndex } from "./signals/identity.mjs";
 import { runShadowReview } from "./signals/shadow-review.mjs";
+import { preserveArtifactTimestamp, preserveStableRows, semanticallyEqual } from "./artifact-stability.mjs";
 
 const baseUrl = (process.env.SITE_URL || "https://campusevidencelab.org").replace(/\/$/, "");
 const signalsApiUrl = (process.env.SIGNALS_API_URL || "https://signals-api.campusevidencelab.org").replace(/\/$/, "");
@@ -20,14 +21,26 @@ const triggerArtifact = await readJson(path.join(rootDir, "data", "signal-trigge
 const generatedAt = triggerArtifact.generated_at || `${manifest.generated_at || manifest.snapshot_date || "2026-06-03"}T12:00:00.000Z`;
 const aliasOverrides = await readJson(path.join(rootDir, "config", "institution-aliases.json"));
 const identityIndex = buildIdentityIndex(schools, aliasOverrides);
+const signalPath = path.join(rootDir, "data", "signals.json");
+const eligibilityPath = path.join(rootDir, "data", "signal-eligibility.json");
+const dossierPath = path.join(rootDir, "data", "signal-dossiers.json");
+const reviewPath = path.join(rootDir, "data", "signal-shadow-review.json");
+const identityPath = path.join(rootDir, "data", "institution-identity-index.json");
+const [previousSignals, previousEligibility, previousDossiers, previousReview, previousIdentity] = await Promise.all([
+  readJson(signalPath).catch(() => undefined),
+  readJson(eligibilityPath).catch(() => undefined),
+  readJson(dossierPath).catch(() => undefined),
+  readJson(reviewPath).catch(() => undefined),
+  readJson(identityPath).catch(() => undefined),
+]);
 
-const decisions = events.map((event) => evaluateEvidenceEligibility({
+const decisions = preserveStableRows(events.map((event) => evaluateEvidenceEligibility({
   event,
   certification: certificationById.get(event.id),
   audit: auditById.get(event.id),
   sources,
   sourceAudit: sourceAudit.entries ?? sourceAudit,
-}));
+})), previousEligibility?.decisions, (row) => row.event_id);
 
 const signals = [];
 const eligibleDecisions = decisions.filter((row) => row.eligible);
@@ -77,6 +90,14 @@ if (shadowReview.gate_ready) {
   for (const signal of signals) if (passingSignalIds.has(signal.id)) signal.status = "approved";
 }
 
+const stableSignals = signals.map((signal) => {
+  const previous = previousSignals?.signals?.find((row) => row.id === signal.id);
+  if (semanticallyEqual(signal, previous)) return previous;
+  if (previous?.created_at) signal.created_at = previous.created_at;
+  signal.updated_at = generatedAt;
+  return signal;
+});
+
 const artifact = {
   id: "cel_signals_v1",
   policy_version: SIGNAL_POLICY_VERSION,
@@ -84,26 +105,35 @@ const artifact = {
   generated_at: generatedAt,
   mode: shadowReview.gate_ready ? "ready_for_activation" : "shadow",
   totals: { evaluated_records: decisions.length, eligible_source_records: decisions.filter((row) => row.eligible).length, dataset_dossiers: datasetResult.dossiers.length, shadow_signals: signals.length, represented_institutions: new Set(signals.map((row) => row.institution.id)).size, active_distribution_institutions: new Set(signals.filter((row) => row.distribution_group === "active_distribution").map((row) => row.institution.id)).size },
-  signals,
+  signals: stableSignals,
 };
-await writeJson(path.join(rootDir, "data", "signals.json"), artifact);
-await writeJson(path.join(rootDir, "data", "signal-dossiers.json"), { policy_version: SIGNAL_POLICY_VERSION, generated_at: generatedAt, dossiers: datasetResult.dossiers });
-await writeJson(path.join(rootDir, "data", "signal-shadow-review.json"), { policy_version: SIGNAL_POLICY_VERSION, generated_at: generatedAt, ...shadowReview });
-await writeJson(path.join(rootDir, "data", "signal-eligibility.json"), { policy_version: SIGNAL_POLICY_VERSION, generated_at: generatedAt, decisions });
-await writeJson(path.join(rootDir, "data", "institution-identity-index.json"), { generated_at: generatedAt, alias_count: identityIndex.aliases.length, ambiguous_count: identityIndex.ambiguous.length, ...identityIndex });
+artifact.generated_at = preserveArtifactTimestamp(artifact, previousSignals, generatedAt);
+const dossierArtifact = { policy_version: SIGNAL_POLICY_VERSION, generated_at: generatedAt, dossiers: datasetResult.dossiers };
+dossierArtifact.generated_at = preserveArtifactTimestamp(dossierArtifact, previousDossiers, generatedAt);
+const reviewArtifact = { policy_version: SIGNAL_POLICY_VERSION, generated_at: generatedAt, ...shadowReview };
+reviewArtifact.generated_at = preserveArtifactTimestamp(reviewArtifact, previousReview, generatedAt);
+const eligibilityArtifact = { policy_version: SIGNAL_POLICY_VERSION, generated_at: generatedAt, decisions };
+eligibilityArtifact.generated_at = preserveArtifactTimestamp(eligibilityArtifact, previousEligibility, generatedAt);
+const identityArtifact = { generated_at: generatedAt, alias_count: identityIndex.aliases.length, ambiguous_count: identityIndex.ambiguous.length, ...identityIndex };
+identityArtifact.generated_at = preserveArtifactTimestamp(identityArtifact, previousIdentity, generatedAt);
+await writeJson(signalPath, artifact);
+await writeJson(dossierPath, dossierArtifact);
+await writeJson(reviewPath, reviewArtifact);
+await writeJson(eligibilityPath, eligibilityArtifact);
+await writeJson(identityPath, identityArtifact);
 
 function esc(value) { return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;"); }
-function date(value) { return new Date(value || generatedAt).toUTCString(); }
+function date(value) { return new Date(value || artifact.generated_at).toUTCString(); }
 function feed(items, title, description, link) {
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>${esc(title)}</title><link>${link}</link><description>${esc(description)}</description><lastBuildDate>${date(generatedAt)}</lastBuildDate>${items.map((signal) => `<item><title>${esc(signal.institution.name)} public-record context</title><link>${signal.canonical_url}</link><guid isPermaLink="true">${signal.canonical_url}</guid><pubDate>${date(signal.created_at)}</pubDate><description>${esc(signal.bounded_claims.map((row) => row.text).join(" "))}</description></item>`).join("")}</channel></rss>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>${esc(title)}</title><link>${link}</link><description>${esc(description)}</description><lastBuildDate>${date(artifact.generated_at)}</lastBuildDate>${items.map((signal) => `<item><title>${esc(signal.institution.name)} public-record context</title><link>${signal.canonical_url}</link><guid isPermaLink="true">${signal.canonical_url}</guid><pubDate>${date(signal.created_at)}</pubDate><description>${esc(signal.bounded_claims.map((row) => row.text).join(" "))}</description></item>`).join("")}</channel></rss>\n`;
 }
 
 const feedsDir = path.join(rootDir, "signals", "feeds");
 await mkdir(feedsDir, { recursive: true });
-await writeFile(path.join(feedsDir, "all.xml"), feed(signals, "CEL Signals", "Source-traceable campus civil-rights context.", `${baseUrl}/signals/`));
-await writeJson(path.join(feedsDir, "all.json"), { version: "https://jsonfeed.org/version/1.1", title: "CEL Signals", home_page_url: `${baseUrl}/signals/`, feed_url: `${baseUrl}/signals/feeds/all.json`, items: signals.map((signal) => ({ id: signal.id, url: signal.canonical_url, title: `${signal.institution.name} public-record context`, content_text: signal.bounded_claims.map((row) => row.text).join(" "), date_published: signal.created_at, tags: signal.trigger.topics })) });
+await writeFile(path.join(feedsDir, "all.xml"), feed(stableSignals, "CEL Signals", "Source-traceable campus civil-rights context.", `${baseUrl}/signals/`));
+await writeJson(path.join(feedsDir, "all.json"), { version: "https://jsonfeed.org/version/1.1", title: "CEL Signals", home_page_url: `${baseUrl}/signals/`, feed_url: `${baseUrl}/signals/feeds/all.json`, items: stableSignals.map((signal) => ({ id: signal.id, url: signal.canonical_url, title: `${signal.institution.name} public-record context`, content_text: signal.bounded_claims.map((row) => row.text).join(" "), date_published: signal.created_at, tags: signal.trigger.topics })) });
 
-for (const signal of signals) {
+for (const signal of stableSignals) {
   const dir = path.join(rootDir, "signals", signal.id);
   await mkdir(dir, { recursive: true });
   await writeJson(path.join(dir, "index.json"), signal);

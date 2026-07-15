@@ -65,7 +65,7 @@ const pages = [
       "Records by Source Type",
       "not incident prevalence, school safety, or legal conclusions"
     ],
-    linkChecks: ["/accountability-room/", "/events/?focus=search", "/methodology/", "/impact/", "/trust/", "/flagship/", "/gold-records/", "/protocol/", "/reviewer-brief/", "/guide/", "/research-guide/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
+    linkChecks: ["/accountability-room/", "/events/?focus=search", "/methodology/", "/impact/", "/trust/", "/flagship/", "/gold-records/", "/protocol/", "/capabilities/", "/reviewer-brief/", "/guide/", "/research-guide/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
     dashboardSmoke: true
   },
   {
@@ -378,8 +378,8 @@ async function renderPage(page, index) {
     if (trendPanels.length !== 3) {
       errors.push(`${page.file} rendered ${trendPanels.length} trend panels; expected 3`);
     }
-    if (actionLinks.length !== 24) {
-      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 24`);
+    if (actionLinks.length !== 25) {
+      errors.push(`${page.file} rendered ${actionLinks.length} research entry links; expected 25`);
     }
     if (!dashboardHrefs.includes(packetHref)) {
       errors.push(`${page.file} did not render focused reporting-packet link`);

@@ -976,6 +976,10 @@ function renderDashboard() {
           <span>CLE Protocol</span>
           <span>See the evidence-integrity layer: canonical hashes, signed manifests, Merkle proofs, local verification, responsible-use checks, and optional chain adapters.</span>
         </a>
+        <a class="action-link" href="${sitePath("/capabilities/")}">
+          <span>Capability Ledger</span>
+          <span>Separate production systems, static infrastructure, local-only code, outside adoption, and still-unproven claims.</span>
+        </a>
         <a class="action-link" href="${sitePath("/downloads/")}">
           <span>Data Path</span>
           <span>Choose the smallest useful artifact: packet, CSV, research JSON, manifest, or archived snapshot.</span>
