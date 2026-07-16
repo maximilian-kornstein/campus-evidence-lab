@@ -127,6 +127,24 @@ const pages = [
     checks: ["Proof Summary", "Selected Milestones", "Research Infrastructure", "Auditability and Correction", "How To Inspect This Work", "Documentation, Not Prevalence", "Claims Not Made", String(events.length), String(schools.length)],
   },
   {
+    route: "/capabilities/",
+    file: "capabilities/index.html",
+    checks: ["Inspect the working system", "Evidence records", "Documented feedback contributions", "ProofGraph protocol", "Claim boundary"],
+    linkChecks: ["../proof-graph/", "../partner-kit/", "../data/external-feedback-summary.json"]
+  },
+  {
+    route: "/proof-graph/?record=evt_2024_0001",
+    file: "proof-graph/index.html",
+    checks: ["Trace a public claim", "Load and verify", "Registry root", "Machine-readable protocol", "Hash verification is not truth adjudication"],
+    linkChecks: ["index.json", "registry.json", "schema.json", "../contracts/ProofGraphRegistry.sol"]
+  },
+  {
+    route: "/partner-kit/",
+    file: "partner-kit/index.html",
+    checks: ["Partner integration kit", "Live embed", "Direct feeds", "Correction behavior", "not evidence of adoption"],
+    linkChecks: ["../signals/feeds/all.json", "../signals/feeds/all.xml", "manifest.json"]
+  },
+  {
     route: "/updates/",
     file: "updates/index.html",
     checks: ["Public product updates", "What This Page Tracks", "Cadence", "Recent Product Work", "Institutional response visibility upgrade", "Product consistency log", "Impact page"]

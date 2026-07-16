@@ -40,7 +40,7 @@ function hasAccessibleName(element, document) {
   const id = element.getAttribute("id");
   if (element.getAttribute("aria-label")) return true;
   if (element.getAttribute("aria-labelledby")) return true;
-  if (id && document.querySelector(`label[for="${CSS.escape(id)}"]`)) return true;
+  if (id && [...document.querySelectorAll("label[for]")].some((label) => label.getAttribute("for") === id)) return true;
   return Boolean(element.closest("label"));
 }
 

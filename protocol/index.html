@@ -45,7 +45,7 @@
 
       <p class="page-kicker">Protocol</p>
       <h1 class="page-title page-title--small">Local verification before public claims.</h1>
-      <p class="page-intro">The CLE Protocol page explains how canonical data files, hashes, signed manifests, archived snapshots, local verification, and optional proof adapters fit together. It is a verification layer for the public archive, not a blockchain deployment claim.</p>
+      <p class="page-intro">The CLE Protocol connects canonical data, record hashes, archived snapshots, typed ProofGraphs, browser verification, and an optional challenge-capable contract. It makes integrity and claim boundaries inspectable without turning a hash into a truth claim.</p>
       <section class="detail-panel">
         <div class="detail-grid">
           <div>
@@ -55,7 +55,9 @@
               <li>Record hashes and dataset hashes regenerated from the current source files.</li>
               <li>Snapshot manifests archived in <code>data/snapshots/</code>.</li>
               <li>Release verification artifacts that record the commands and limits for each public package.</li>
-              <li>Optional smart-contract or external proof adapters can attest to a snapshot hash without changing the archive's source-of-truth files.</li>
+              <li>ProofGraph compiles every record into typed source, claim, response, limitation, and certification nodes.</li>
+              <li>A snapshot-wide Merkle registry proves that each record graph belongs to the published registry root.</li>
+              <li>The optional smart contract records commitments, registered attestations, permissionless challenges, responses, and supersession lineage.</li>
             </ul>
             <h2 class="section-title section-title--spaced">Verification Commands</h2>
             <ul class="evidence-list">
@@ -63,6 +65,7 @@
               <li><code>node scripts/hash-dataset.mjs --check</code> checks committed hashes against current data.</li>
               <li><code>npm run validate:data</code> validates canonical data and schema consistency.</li>
               <li><code>npm run check</code> runs the broader local release gate.</li>
+              <li><code>npm run proofgraph:verify -- --all</code> recomputes every graph and registry inclusion proof.</li>
             </ul>
           </div>
           <aside>
@@ -93,8 +96,20 @@
 
 
     <div class="data-line">
-      <dt>Snapshot registry contract</dt>
-      <dd><a href="../contracts/SnapshotRegistry.sol">Open contract</a></dd>
+      <dt>ProofGraph explorer</dt>
+      <dd><a href="../proof-graph/">Open browser verifier</a></dd>
+    </div>
+
+
+    <div class="data-line">
+      <dt>ProofGraph registry</dt>
+      <dd><a href="../proof-graph/registry.json">Open registry JSON</a></dd>
+    </div>
+
+
+    <div class="data-line">
+      <dt>ProofGraph contract</dt>
+      <dd><a href="../contracts/ProofGraphRegistry.sol">Open contract</a></dd>
     </div>
 
 

@@ -47,3 +47,10 @@ test("workflow conditionals never reference secrets directly", async () => {
   assert.doesNotMatch(workflow, /if:\s*\$\{\{[^\n]*secrets\./);
   assert.match(workflow, /if:\s*\$\{\{\s*env\.SIGNALS_WORKER_URL/);
 });
+
+test("withdrawal workflow normalizes the Worker base URL and validates each result object", async () => {
+  const workflow = await readFile(new URL("../.github/workflows/signals-withdraw.yml", import.meta.url), "utf8");
+  assert.match(workflow, /base_url="\$\{base_url%\/api\}"/);
+  assert.match(workflow, /\.results \| all\(\.result == "withdrawn" or \.result == "already_withdrawn"\)/);
+  assert.doesNotMatch(workflow, /and all\(\.result/);
+});
