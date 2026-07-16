@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ProofGraph / Campus Evidence Lab</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <header class="site-header"><div class="site-header__inner"><a class="brand" href="../"><span class="brand__name">Campus Evidence Lab</span><span class="brand__tag">Public evidence infrastructure</span></a><nav class="nav" aria-label="Primary navigation"><a href="../proof/">Proof</a><a href="../events/">Events</a><a href="../capabilities/">Capabilities</a><a href="../protocol/">Protocol</a></nav></div></header>
+  <main class="main proofgraph-main">
+    <p class="page-kicker">ProofGraph · 4,000 record graphs</p>
+    <h1 class="page-title page-title--small">Trace a public claim to its sources, boundaries, response, and certification.</h1>
+    <p class="page-intro">Every CEL record is compiled into a typed evidence graph. Node and edge hashes produce a record root; every record root is included in one snapshot-wide Merkle registry. Verification runs in your browser.</p>
+    <section class="proofgraph-console" aria-labelledby="proofgraph-title">
+      <div>
+        <h2 id="proofgraph-title">Verify a record</h2>
+        <form id="proofgraph-form" class="proofgraph-form">
+          <label for="proofgraph-record">Record ID</label>
+          <div><input id="proofgraph-record" name="record" value="evt_2024_0001" pattern="evt_[A-Za-z0-9_]+" required><button type="submit">Load and verify</button></div>
+        </form>
+      </div>
+      <dl class="proofgraph-registry"><div><dt>Registry root</dt><dd class="mono">sha256:bd8051d18444a0c53bc8c9b634706856be859c6f01bc88fbfe033d4d66fd05cb</dd></div><div><dt>Snapshot</dt><dd>snapshot_2026_06_03_4000_records</dd></div><div><dt>Graphs</dt><dd>4,000</dd></div><div><dt>Typed nodes</dt><dd>36,000</dd></div></dl>
+    </section>
+    <section id="proofgraph-result" class="proofgraph-result" aria-live="polite"><p>Enter a record ID to inspect its graph.</p></section>
+    <section class="section section--tight"><div class="section-header"><h2 class="section-title">Machine-readable protocol</h2><p class="section-note">Deterministic, downloadable, independently recomputable</p></div><div class="hero-actions"><a class="button-link button-link--primary" href="index.json">Open graph index</a><a class="button-link" href="registry.json">Open registry</a><a class="button-link" href="schema.json">Open schema</a><a class="button-link" href="../contracts/ProofGraphRegistry.sol">Open Solidity registry</a></div><aside class="known-limit"><strong>Claim boundary</strong><p>A valid ProofGraph proves that a published graph matches its committed hashes and snapshot registry root. It does not prove that the underlying claim is true, independently reviewed, or immutable outside CEL's published artifacts.</p></aside></section>
+  </main>
+  <footer class="site-footer">Campus Evidence Lab / Hash verification is not truth adjudication</footer>
+  <script type="module" src="../assets/proof-graph.js"></script>
+</body>
+</html>

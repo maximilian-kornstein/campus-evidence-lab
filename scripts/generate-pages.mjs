@@ -1233,15 +1233,14 @@ await writeFile(
     "Capability Ledger",
     `
       <p class="page-kicker">Capability Ledger · Updated ${escapeHtml(capabilityLedger.updated_at)}</p>
-      <h1 class="page-title page-title--small">What is real, what is local, and what is still unproven.</h1>
-      <p class="page-intro">This ledger separates software existence from live operation, and live operation from outside adoption or impact. Every capability has a bounded status, inspectable evidence, a verification date, and an explicit claim limit. There is no composite score.</p>
+      <h1 class="page-title page-title--small">Inspect the working system behind every public capability.</h1>
+      <p class="page-intro">This ledger reports what CEL publishes, operates, verifies, and has changed in response to outside feedback. Every capability has inspectable evidence, a verification date, and an explicit claim limit. Readiness, feedback, and integrity are reported separately from adoption or downstream impact.</p>
       <section class="section section--tight">
         <div class="metric-grid">
-          <div class="metric"><span class="metric__value">${capabilityLedger.summary.production_live}</span><span class="metric__label">Production live</span></div>
-          <div class="metric"><span class="metric__value">${capabilityLedger.summary.published_static}</span><span class="metric__label">Published static</span></div>
-          <div class="metric"><span class="metric__value">${capabilityLedger.summary.local_only}</span><span class="metric__label">Local only</span></div>
-          <div class="metric"><span class="metric__value">${capabilityLedger.summary.verified_external_adoptions}</span><span class="metric__label">Verified external adoptions</span></div>
-          <div class="metric"><span class="metric__value">${capabilityLedger.summary.completed_external_reviews}</span><span class="metric__label">Completed external reviews</span></div>
+          <div class="metric"><span class="metric__value">${formatNumber(events.length)}</span><span class="metric__label">Evidence records</span></div>
+          <div class="metric"><span class="metric__value">${formatNumber(certificationLedger.totals.certified)}</span><span class="metric__label">Deterministically certified</span></div>
+          <div class="metric"><span class="metric__value">${formatNumber(capabilityLedger.summary.proof_graphs)}</span><span class="metric__label">ProofGraphs</span></div>
+          <div class="metric"><span class="metric__value">${formatNumber(capabilityLedger.summary.documented_external_feedback_contributions)}</span><span class="metric__label">Documented feedback contributions</span></div>
         </div>
       </section>
       <section class="section">
@@ -1283,7 +1282,7 @@ await writeFile(
     `
       <p class="page-kicker">Protocol</p>
       <h1 class="page-title page-title--small">Local verification before public claims.</h1>
-      <p class="page-intro">The CLE Protocol page explains how canonical data files, hashes, signed manifests, archived snapshots, local verification, and optional proof adapters fit together. It is a verification layer for the public archive, not a blockchain deployment claim.</p>
+      <p class="page-intro">The CLE Protocol connects canonical data, record hashes, archived snapshots, typed ProofGraphs, browser verification, and an optional challenge-capable contract. It makes integrity and claim boundaries inspectable without turning a hash into a truth claim.</p>
       <section class="detail-panel">
         <div class="detail-grid">
           <div>
@@ -1293,7 +1292,9 @@ await writeFile(
               <li>Record hashes and dataset hashes regenerated from the current source files.</li>
               <li>Snapshot manifests archived in <code>data/snapshots/</code>.</li>
               <li>Release verification artifacts that record the commands and limits for each public package.</li>
-              <li>Optional smart-contract or external proof adapters can attest to a snapshot hash without changing the archive's source-of-truth files.</li>
+              <li>ProofGraph compiles every record into typed source, claim, response, limitation, and certification nodes.</li>
+              <li>A snapshot-wide Merkle registry proves that each record graph belongs to the published registry root.</li>
+              <li>The optional smart contract records commitments, registered attestations, permissionless challenges, responses, and supersession lineage.</li>
             </ul>
             <h2 class="section-title section-title--spaced">Verification Commands</h2>
             <ul class="evidence-list">
@@ -1301,6 +1302,7 @@ await writeFile(
               <li><code>node scripts/hash-dataset.mjs --check</code> checks committed hashes against current data.</li>
               <li><code>npm run validate:data</code> validates canonical data and schema consistency.</li>
               <li><code>npm run check</code> runs the broader local release gate.</li>
+              <li><code>npm run proofgraph:verify -- --all</code> recomputes every graph and registry inclusion proof.</li>
             </ul>
           </div>
           <aside>
@@ -1309,7 +1311,9 @@ await writeFile(
               ${dataLine("Full snapshot hash", escapeHtml(manifest.hashes.full_snapshot), "mono")}
               ${dataLine("Snapshot manifest", `<a href="${sitePath("/data/snapshot-manifest.json", 1)}">Open JSON</a>`)}
               ${dataLine("Release verification", `<a href="${sitePath("/data/release-verification.json", 1)}">Open JSON</a>`)}
-              ${dataLine("Snapshot registry contract", `<a href="${sitePath("/contracts/SnapshotRegistry.sol", 1)}">Open contract</a>`)}
+              ${dataLine("ProofGraph explorer", `<a href="${sitePath("/proof-graph/", 1)}">Open browser verifier</a>`)}
+              ${dataLine("ProofGraph registry", `<a href="${sitePath("/proof-graph/registry.json", 1)}">Open registry JSON</a>`)}
+              ${dataLine("ProofGraph contract", `<a href="${sitePath("/contracts/ProofGraphRegistry.sol", 1)}">Open contract</a>`)}
               ${dataLine("Replication guide", `<a href="${sitePath("/replicate/", 1)}">Open replication page</a>`)}
             </dl>
           </aside>
@@ -1392,6 +1396,7 @@ for (const event of events) {
               <h2 class="section-title section-title--spaced">Correction</h2>
               <p><a href="${sitePath(`/submit/?record_id=${encodeURIComponent(event.id)}`, detailDepth)}">Request a source-backed correction</a></p>${challengePacketEventIds.has(event.id) ? `
               <p><a href="${sitePath(`/challenge/?packet=${encodeURIComponent(event.id)}`, detailDepth)}">Challenge this record</a></p>` : ""}
+              <p><a href="${sitePath(`/proof-graph/?record=${encodeURIComponent(event.id)}`, detailDepth)}">Verify this record in ProofGraph</a></p>
               <h2 class="section-title section-title--spaced">Changelog</h2>
               <ul class="source-list">${changelog}</ul>
             </aside>

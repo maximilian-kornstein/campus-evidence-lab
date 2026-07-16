@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Signals Partner Kit / Campus Evidence Lab</title><link rel="stylesheet" href="../assets/styles.css"></head>
+<body>
+  <header class="site-header"><div class="site-header__inner"><a class="brand" href="../"><span class="brand__name">Campus Evidence Lab</span><span class="brand__tag">Public evidence infrastructure</span></a><nav class="nav" aria-label="Primary navigation"><a href="../signals/">Signals</a><a href="../proof-graph/">ProofGraph</a><a href="../capabilities/">Capabilities</a></nav></div></header>
+  <main class="main">
+    <p class="page-kicker">Partner integration kit</p>
+    <h1 class="page-title page-title--small">Put evidence-bounded campus context in your newsroom, newsletter, or research hub.</h1>
+    <p class="page-intro">Use a live embed, subscribe to RSS, or consume structured JSON. Corrections propagate through the feed instead of leaving copied context stranded.</p>
+    <section class="section section--tight"><div class="section-header"><h2 class="section-title">Live embed</h2><p class="section-note">Two lines; no account or paid service</p></div><pre><code>&lt;div data-cel-signals data-limit="3"&gt;&lt;/div&gt;
+&lt;script async src="https://campusevidencelab.org/assets/cel-signals-embed.js"&gt;&lt;/script&gt;</code></pre><div data-cel-signals data-limit="3"><p>Loading current CEL Signals…</p></div></section>
+    <section class="section"><div class="section-header"><h2 class="section-title">Direct feeds</h2><p class="section-note">Continuous public distribution</p></div><div class="hero-actions"><a class="button-link button-link--primary" href="../signals/feeds/all.json">JSON Feed</a><a class="button-link" href="../signals/feeds/all.xml">RSS</a><a class="button-link" href="manifest.json">Machine-readable manifest</a></div></section>
+    <section class="section section--tight"><div class="section-header"><h2 class="section-title">Configuration</h2><p class="section-note">Bounded and portable</p></div><dl><div class="data-line"><dt>data-limit</dt><dd>Show 1–10 current Signals; defaults to 3.</dd></div><div class="data-line"><dt>data-feed</dt><dd>Point the embed at another CEL institution or topic JSON Feed.</dd></div><div class="data-line"><dt>Correction behavior</dt><dd>The embed fetches current feed content on each page load.</dd></div></dl><aside class="known-limit"><strong>Claim boundary</strong><p>The kit is ready for independent integration. Its availability is not evidence of adoption, partnership, endorsement, citation, or impact.</p></aside></section>
+  </main>
+  <footer class="site-footer">Campus Evidence Lab / Public feeds / Evidence before promotion</footer>
+  <script async src="../assets/cel-signals-embed.js"></script>
+</body>
+</html>

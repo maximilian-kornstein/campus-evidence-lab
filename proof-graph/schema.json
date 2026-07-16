@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://campusevidencelab.org/proof-graph/schema.json",
+  "title": "CEL ProofGraph",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "graph_id",
+    "record_id",
+    "snapshot_id",
+    "snapshot_hash",
+    "nodes",
+    "edges",
+    "graph_root",
+    "registry"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "graph_id": {
+      "type": "string",
+      "pattern": "^proofgraph:"
+    },
+    "record_id": {
+      "type": "string",
+      "pattern": "^evt_"
+    },
+    "snapshot_id": {
+      "type": "string"
+    },
+    "snapshot_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "label",
+          "data",
+          "hash"
+        ]
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "from",
+          "to",
+          "hash"
+        ]
+      }
+    },
+    "graph_root": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "registry": {
+      "type": "object",
+      "required": [
+        "root",
+        "leaf_hash",
+        "leaf_index",
+        "leaf_count",
+        "proof"
+      ]
+    }
+  }
+}

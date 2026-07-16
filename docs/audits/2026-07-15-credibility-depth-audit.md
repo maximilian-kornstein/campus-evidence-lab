@@ -27,13 +27,13 @@ This is useful as structured public-data infrastructure, but it is not a broad c
 
 These figures are not contradictory once the layers are defined: certification checks deterministic support and provenance gates; review debt measures unresolved human-review depth. The public product did not previously make that distinction prominent enough.
 
-### 3. External validation and adoption remain unproven
+### 3. External feedback exists; validation, adoption, and impact remain separate claims
 
-- The public credibility-status ledger contains zero entries.
-- CEL records zero completed external reviews.
-- CEL publishes no verified partner subscription, embed, webhook adoption, citation, reporting reuse, or institutional response attributable to the system.
+- Six documented project-specific feedback contributions informed methodology, source framing, claim boundaries, researcher onboarding, and newsroom usefulness.
+- Contributor identities and private correspondence remain unpublished without explicit permission.
+- These contributions are not endorsements, formal peer review, organizational partnerships, or independent validation of CEL records.
 
-The infrastructure for review and syndication is substantive. The outcomes are not yet substantive. Public claims should continue to report these separately.
+The public product should report the feedback that materially changed it while continuing to separate integration readiness from adoption and downstream impact.
 
 ### 4. CEL Signals is a genuine operational feature
 
@@ -68,13 +68,13 @@ The npm-published `xlsx` 0.18.5 package carried high-severity prototype-pollutio
 2. **Telemetry separation.** Provider health and collected triggers remain in the Actions artifact and runtime synchronization but are no longer committed as canonical evidence on every scheduled run.
 3. **Regression tests.** Tests now prove that clock-only changes are ignored and material claim changes advance timestamps.
 4. **Public Capability Ledger.** A new machine-readable and human-readable ledger distinguishes production-live, published-static, verification-ready, configured-but-not-adopted, and local-only capabilities.
-5. **Anti-theater rules.** The ledger reports zero external adoption and zero completed external review, and it explicitly records zero public deployment addresses for the Solidity registry.
+5. **Anti-theater rules.** The ledger reports documented feedback, integration readiness, and verification surfaces positively while keeping endorsement, adoption, public-chain deployment, and impact outside the claim unless independently evidenced.
 6. **Evidence-bound metrics.** Capability counts are tested against canonical artifacts so prominent numbers cannot drift into marketing copy.
 7. **Dependency remediation.** The workbook parser now uses SheetJS 0.20.3 from the maintained distribution; `npm audit` reports zero known vulnerabilities and the workbook import/provenance tests pass.
 
 ## Remaining priorities
 
-1. Obtain one completed outside review with a published scope and response to findings.
+1. Obtain permission to publish the scope and response for a completed outside review.
 2. Produce one verified use outcome: citation, reporting reuse, correction, institutional response, feed subscription, or embed.
 3. Refresh milestones and release verification automatically from merged releases and successful production checks.
 4. Reduce source-family concentration with a small number of deeply reviewed, institution-specific primary-source collections rather than another bulk row import.

@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "name": "CEL Signals Partner Kit",
+  "updated_at": "2026-07-15",
+  "feeds": [
+    { "format": "JSON Feed 1.1", "url": "https://campusevidencelab.org/signals/feeds/all.json" },
+    { "format": "RSS 2.0", "url": "https://campusevidencelab.org/signals/feeds/all.xml" }
+  ],
+  "integration_assets": [
+    { "type": "hosted embed", "url": "https://campusevidencelab.org/assets/cel-signals-embed.js" },
+    { "type": "JSON feed", "url": "https://campusevidencelab.org/signals/feeds/all.json" },
+    { "type": "RSS feed", "url": "https://campusevidencelab.org/signals/feeds/all.xml" }
+  ],
+  "embed": {
+    "container": "<div data-cel-signals data-limit=\"3\"></div>",
+    "script": "<script async src=\"https://campusevidencelab.org/assets/cel-signals-embed.js\"></script>",
+    "attributes": {
+      "data-feed": "Optional absolute JSON Feed URL; defaults to the national CEL Signals feed.",
+      "data-limit": "Number of items to show, from 1 through 10."
+    }
+  },
+  "claim_boundary": "The kit is ready for independent integration. Its availability is not evidence of adoption, partnership, endorsement, citation, or impact."
+}
