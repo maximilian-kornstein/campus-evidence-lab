@@ -28,7 +28,7 @@ const pages = [
       String(events.length),
       "Accountability Room",
       "150,000 accepted import-wave QA candidates",
-      "4,000 public event records",
+      "10,000 canonical public records",
       "No rankings. No safety scores. No legal findings.",
       "Source collections",
       "Current snapshot hash",
@@ -65,13 +65,13 @@ const pages = [
       "Records by Source Type",
       "not incident prevalence, school safety, or legal conclusions"
     ],
-    linkChecks: ["/accountability-room/", "/events/?focus=search", "/methodology/", "/impact/", "/trust/", "/flagship/", "/gold-records/", "/protocol/", "/capabilities/", "/reviewer-brief/", "/guide/", "/research-guide/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_06_16_methodology_stress_test/"],
+    linkChecks: ["/accountability-room/", "/events/?focus=search", "/methodology/", "/impact/", "/trust/", "/flagship/", "/gold-records/", "/protocol/", "/capabilities/", "/reviewer-brief/", "/guide/", "/research-guide/", "/reviewer-queue/", "/downloads/", "/briefs/brief_2026_07_16_canonical_10k_expansion/"],
     dashboardSmoke: true
   },
   {
     route: "/accountability-room/",
     file: "accountability-room/index.html",
-    checks: ["Accountability Room", "150,000 accepted import-wave QA candidates", "4,000 public event records", "5,470 generated institution pages", "No rankings. No safety scores. No legal findings.", "Open an Institution", "ED Campus Safety", "OCR Open Investigation"],
+    checks: ["Accountability Room", "150,000 accepted import-wave QA candidates", "10,000 canonical public records", "5,470 generated institution pages", "No rankings. No safety scores. No legal findings.", "Open an Institution", "ED Campus Safety", "OCR Open Investigation"],
     linkChecks: ["../schools/", "../import-waves/", "../methodology/", "../submit/"]
   },
   {

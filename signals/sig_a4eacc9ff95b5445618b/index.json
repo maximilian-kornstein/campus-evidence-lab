@@ -1,0 +1,248 @@
+{
+  "id": "sig_a4eacc9ff95b5445618b",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_2ed024255a7090385c21",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_69b5b1a69fdfd8d64442",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/washington_university_in_st_louis/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "washington_university_in_st_louis"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (3)."
+  },
+  "institution": {
+    "id": "washington_university_in_st_louis",
+    "name": "Washington University in St Louis",
+    "city": "SAINT LOUIS",
+    "state": "MO"
+  },
+  "record_ids": [
+    "evt_2026_0339",
+    "evt_2026_0837",
+    "evt_2026_1194",
+    "evt_2026_1379",
+    "evt_2026_1484",
+    "evt_2026_3168",
+    "evt_2026_3253"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Washington University in St Louis: Across 7 certified ED cells, the documented category totals are Harassment or threat (5), Vandalism (3).",
+      "supporting_record_ids": [
+        "evt_2026_0339",
+        "evt_2026_0837",
+        "evt_2026_1194",
+        "evt_2026_1379",
+        "evt_2026_1484",
+        "evt_2026_3168",
+        "evt_2026_3253"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0339",
+        "record_hash": "sha256:6b252060b9dc161d97544acc3ef1c18c88eb233a641786575867ba1c3dac0847",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU3710",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0837",
+        "record_hash": "sha256:f237eb5f0311c880795816616bae6272889352f3e717922412924c8bf25c2bf8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3710",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1194",
+        "record_hash": "sha256:cb6504e5ba3f98bbc1b90001b1be2d2d138dfca3842c7b0d049b00b1925fe9f1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3710",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1379",
+        "record_hash": "sha256:fe3197da0d44f8bf71c037a16610d69a3728cb6404dad48a8f90e9968d0bec96",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3710",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1484",
+        "record_hash": "sha256:d43077f5a3bffd03d91b14b671e198c60c6eafb20632ad971fb4625f797c58db",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY3710",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3168",
+        "record_hash": "sha256:b3a4a1caedc83e0f5ffe8d17fe9da3c177335a10bddad2b7f3d04e2240b19316",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3710",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3253",
+        "record_hash": "sha256:f1ea65d2c5d698443f714365a80658439c056b63e10132d7ba423db6ce9e6b1a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3710",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0339"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0837"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1194"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1379"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1484"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3168"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3253"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=washington_university_in_st_louis&signal_id=sig_a4eacc9ff95b5445618b",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_a4eacc9ff95b5445618b/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Washington University in St Louis: 2 on-campus vandalism statistics labeled Religion. 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus harassment/threat statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_a4eacc9ff95b5445618b/",
+    "proactive_reply": "Federal 2024 data, Washington University in St Louis: 2 on-campus vandalism statistics labeled Religion. 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus harassment/threat statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_a4eacc9ff95b5445618b/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

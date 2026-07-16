@@ -1,0 +1,176 @@
+{
+  "id": "sig_595c5b954cc91069f682",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_561cc95f70cbafa561d5",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_0ed006405aeceb48a52a",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/minneapolis_community_and_technical_college/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "minneapolis_community_and_technical_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (3), public-property (1)."
+  },
+  "institution": {
+    "id": "minneapolis_community_and_technical_college",
+    "name": "Minneapolis Community and Technical College",
+    "city": "MINNEAPOLIS",
+    "state": "MN"
+  },
+  "record_ids": [
+    "evt_2026_0386",
+    "evt_2026_0791",
+    "evt_2026_1041",
+    "evt_2026_2547"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Minneapolis Community and Technical College: Across 4 certified ED cells, the reported geography totals are on-campus (3), public-property (1).",
+      "supporting_record_ids": [
+        "evt_2026_0386",
+        "evt_2026_0791",
+        "evt_2026_1041",
+        "evt_2026_2547"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0386",
+        "record_hash": "sha256:5ff90b078ac2e147803fa1eb504decc7df70772c40b98c5643ebf7cccb6722c4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM3378",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0791",
+        "record_hash": "sha256:d206d7276423d972bcd7ac281f088b2701b24102a0e181303375f1f7f6632baa",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS3378",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1041",
+        "record_hash": "sha256:3bb9fba28c1b772da045e18e3274379b58a163a3428bee26b94e8b573417254f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ3378",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2547",
+        "record_hash": "sha256:aebb21d7f5f74dc5ec780abb89a88d6871ed730cd325f2476ea5b310b67d6681",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3378",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0386"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0791"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1041"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "public-property",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2547"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=minneapolis_community_and_technical_college&signal_id=sig_595c5b954cc91069f682",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_595c5b954cc91069f682/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Minneapolis Community and Technical College: 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus harassment/threat statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_595c5b954cc91069f682/",
+    "proactive_reply": "Federal 2024 data, Minneapolis Community and Technical College: 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus harassment/threat statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_595c5b954cc91069f682/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

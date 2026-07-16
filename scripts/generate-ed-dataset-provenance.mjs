@@ -1,4 +1,5 @@
-import { paths, readJson, writeJson } from "./lib.mjs";
+import path from "node:path";
+import { paths, readJson, rootDir, writeJson } from "./lib.mjs";
 import { buildEdDatasetProvenanceAudit, validateEdDatasetProvenanceAudit } from "./ed-dataset-provenance-lib.mjs";
 
 const packagePaths = {
@@ -6,12 +7,17 @@ const packagePaths = {
   2025: process.env.ED_CAMPUS_SAFETY_2025_ZIP || process.argv[3] || "/tmp/cel-range-2025.bin"
 };
 
-const [events, manifest] = await Promise.all([readJson(paths.events), readJson(paths.manifest)]);
+const [events, manifest, sourceVerification] = await Promise.all([
+  readJson(paths.events),
+  readJson(paths.manifest),
+  readJson(path.join(rootDir, "data", "canonical-expansion-source-verification.json")).catch(() => null)
+]);
 
 const audit = buildEdDatasetProvenanceAudit({
   events,
   manifest,
-  packagePaths
+  packagePaths,
+  sourceVerification
 });
 
 const errors = validateEdDatasetProvenanceAudit({ audit, events, manifest });

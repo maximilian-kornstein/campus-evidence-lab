@@ -220,7 +220,7 @@ export function buildExternalReviewPacket({
         batch_size: 25,
         record_ids: [],
         review_standard:
-          "Scale the remaining 4,000-record review in source-family batches from data/review-debt-ledger.json. Do not call a batch certified until every record in that batch clears the same source locator, date, category, affected-label, response-depth, and rationale gates."
+          "Scale the remaining review debt in source-family batches from data/review-debt-ledger.json. Do not call a batch certified until every record in that batch clears the same source locator, date, category, affected-label, response-depth, and rationale gates."
       }
     ],
     challenge_templates: CHALLENGE_TEMPLATES,

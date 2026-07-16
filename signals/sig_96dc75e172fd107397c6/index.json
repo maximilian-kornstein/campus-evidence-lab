@@ -1,0 +1,224 @@
+{
+  "id": "sig_96dc75e172fd107397c6",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d8dce60c7ba2e9786d27",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_2f5cd53c9f4af504219d",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/chapman_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "chapman_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "chapman_university",
+    "name": "Chapman University",
+    "city": "Orange",
+    "state": "CA"
+  },
+  "record_ids": [
+    "evt_2026_1607",
+    "evt_2026_2151",
+    "evt_2026_2375",
+    "evt_2026_2413",
+    "evt_2026_3438",
+    "evt_2026_3590"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Chapman University: Certified ED workbook cells document 2 reported statistics across 2 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_1607",
+        "evt_2026_2151",
+        "evt_2026_2375",
+        "evt_2026_2413",
+        "evt_2026_3438",
+        "evt_2026_3590"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1607",
+        "record_hash": "sha256:e5cb339559b6f58188289b109b7960ab0dd869389c1e93137280ff81af24c80e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT517",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2151",
+        "record_hash": "sha256:5307412b76f47d806a015dfca3d104cd9b094dc786bd8e07343d90a3b2576b1d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA517",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2375",
+        "record_hash": "sha256:83fa3469e9daba09b3e565c866a3924c704be839e90b2141aecfb6a73955054e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IM517",
+        "column": "LAR_T_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2413",
+        "record_hash": "sha256:d7f265e679b0a52ed3fe407d292176fdf0404db80fef978e84965f120445adfe",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY517",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3438",
+        "record_hash": "sha256:055497319e4020e2ceb6b72a8b28b84539dc694aa3a3e6adb91e5155f3bacf95",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY517",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3590",
+        "record_hash": "sha256:a559f34f83c9144ffb166619cca10a7e1705c9bc92aa4951ec32d719a79f3cfc",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY517",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1607"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2151"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2375"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2413"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3438"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3590"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=chapman_university&signal_id=sig_96dc75e172fd107397c6",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_96dc75e172fd107397c6/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Chapman University: 1 on-campus harassment/threat statistic labeled Religion. 1 on-campus vandalism statistic labeled National origin. Details/limits: https://campusevidencelab.org/signals/sig_96dc75e172fd107397c6/",
+    "proactive_reply": "Federal 2024 data, Chapman University: 1 on-campus harassment/threat statistic labeled Religion. 1 on-campus vandalism statistic labeled National origin. Details/limits: https://campusevidencelab.org/signals/sig_96dc75e172fd107397c6/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

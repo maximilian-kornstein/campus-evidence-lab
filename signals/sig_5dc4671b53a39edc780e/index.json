@@ -1,0 +1,272 @@
+{
+  "id": "sig_5dc4671b53a39edc780e",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_ce4f47a599fd1201646e",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_f2c4788391d57b5f1740",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/depauw_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "depauw_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the reported geography totals are public-property (5), noncampus (3), on-campus (2), residence-hall (2)."
+  },
+  "institution": {
+    "id": "depauw_university",
+    "name": "DePauw University",
+    "city": "GREENCASTLE",
+    "state": "IN"
+  },
+  "record_ids": [
+    "evt_2026_0409",
+    "evt_2026_2596",
+    "evt_2026_2633",
+    "evt_2026_2646",
+    "evt_2026_2775",
+    "evt_2026_2854",
+    "evt_2026_2870",
+    "evt_2026_3097"
+  ],
+  "bounded_claims": [
+    {
+      "text": "DePauw University: Across 8 certified ED cells, the reported geography totals are public-property (5), noncampus (3), on-campus (2), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0409",
+        "evt_2026_2596",
+        "evt_2026_2633",
+        "evt_2026_2646",
+        "evt_2026_2775",
+        "evt_2026_2854",
+        "evt_2026_2870",
+        "evt_2026_3097"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0409",
+        "record_hash": "sha256:38cf410dbc74e51e09753fa6fe98cba14e84595f526eb61aacda3317b73723db",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU2075",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2596",
+        "record_hash": "sha256:51baee26ad2cffc2ad6f8a56ee00142cf00171f5ed18eceee0350bf7f2b88d42",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2075",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2633",
+        "record_hash": "sha256:4575d3eb9969664ad4edc8ad0c35e4c9dadc5669d15fa38e0c65cb646dfdf6c4",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO2075",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2646",
+        "record_hash": "sha256:aaf223f21e4838b0d6e37687581dea1222eadb5311961f4bad7b498e60b5c84a",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS2075",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2775",
+        "record_hash": "sha256:2dd094ac322f3521c3d6c6b441cb5dcf1ccee46b75549cf80d5ee97388bacdcd",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM2075",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2854",
+        "record_hash": "sha256:aff30fec5491e8479a4fadd9e40bfe3cdafca94e11e70f8877f6dbd0989e2bd4",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IV2075",
+        "column": "INTIM_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2870",
+        "record_hash": "sha256:e068f95df12089eedbcfaf7f78627017e5ea4d672ea9266876b4250c19b1d39f",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ2075",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3097",
+        "record_hash": "sha256:30b951e5f1c9d47881f7a3fe8731bf3385cf69fc578c6d6b3efc87ef2d23b7af",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU2075",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 2
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0409"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "public-property",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2596"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "public-property",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_2633"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "public-property",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_2646"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "noncampus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2775"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "noncampus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2854"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "noncampus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2870"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_3097"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=depauw_university&signal_id=sig_5dc4671b53a39edc780e",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5dc4671b53a39edc780e/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, DePauw University: 2 on-campus harassment/threat statistics labeled LGBTQ+. 2 public-property harassment/threat statistics labeled Race. 2 public-property harassment/threat statistics labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_5dc4671b53a39edc780e/",
+    "proactive_reply": "Federal 2024 data, DePauw University: 2 on-campus harassment/threat statistics labeled LGBTQ+. 2 public-property harassment/threat statistics labeled Race. 2 public-property harassment/threat statistics labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_5dc4671b53a39edc780e/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

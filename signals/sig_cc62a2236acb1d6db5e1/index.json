@@ -1,0 +1,176 @@
+{
+  "id": "sig_cc62a2236acb1d6db5e1",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_2929dc1affd32f71f4be",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_8fd1110cb4ec6d158f56",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/mercer_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "mercer_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), Gender (1), Race (1)."
+  },
+  "institution": {
+    "id": "mercer_university",
+    "name": "Mercer University",
+    "city": "Macon",
+    "state": "GA"
+  },
+  "record_ids": [
+    "evt_2026_0319",
+    "evt_2026_1147",
+    "evt_2026_1315",
+    "evt_2026_3127"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Mercer University: Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), Gender (1), Race (1).",
+      "supporting_record_ids": [
+        "evt_2026_0319",
+        "evt_2026_1147",
+        "evt_2026_1315",
+        "evt_2026_3127"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0319",
+        "record_hash": "sha256:7f582f6a01c05faff9f74639ed695e759feb4354ae047e0f368bff61bce551ea",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN1680",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1147",
+        "record_hash": "sha256:25cd079dc9d900490bd4d885919e0fe845d8619268a4faf60055be22d817e607",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX1680",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1315",
+        "record_hash": "sha256:d30fd3389734ef38dc3508bdce907b271fb6ac75c7b175ca84191c465ef7ce73",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU1680",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3127",
+        "record_hash": "sha256:c7cb20cb8eb2b37e5538161d6814a173b7faf6b2420eb8572151a93e923fd0cf",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU1680",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Gender"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0319"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1147"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1315"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3127"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=mercer_university&signal_id=sig_cc62a2236acb1d6db5e1",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_cc62a2236acb1d6db5e1/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Mercer University: 1 on-campus harassment/threat statistic labeled Gender. 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus vandalism statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_cc62a2236acb1d6db5e1/",
+    "proactive_reply": "Federal 2024 data, Mercer University: 1 on-campus harassment/threat statistic labeled Gender. 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus vandalism statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_cc62a2236acb1d6db5e1/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

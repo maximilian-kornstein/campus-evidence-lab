@@ -1,0 +1,309 @@
+{
+  "id": "sig_ed9608feceb50baea29a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_40c1f953634ad5dcc93a",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_a8faa39c1bf951c60820",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/amherst_college/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "amherst_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 10 certified ED cells, the documented category totals are Vandalism (6), Other source-backed civil rights event (3), Harassment or threat (1)."
+  },
+  "institution": {
+    "id": "amherst_college",
+    "name": "Amherst College",
+    "city": "AMHERST",
+    "state": "MA"
+  },
+  "record_ids": [
+    "evt_2026_0289",
+    "evt_2026_1154",
+    "evt_2026_1569",
+    "evt_2026_1906",
+    "evt_2026_1996",
+    "evt_2026_2044",
+    "evt_2026_2661",
+    "evt_2026_3222",
+    "evt_2026_3568",
+    "evt_2026_3660"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Amherst College: Across 10 certified ED cells, the documented category totals are Vandalism (6), Other source-backed civil rights event (3), Harassment or threat (1).",
+      "supporting_record_ids": [
+        "evt_2026_0289",
+        "evt_2026_1154",
+        "evt_2026_1569",
+        "evt_2026_1906",
+        "evt_2026_1996",
+        "evt_2026_2044",
+        "evt_2026_2661",
+        "evt_2026_3222",
+        "evt_2026_3568",
+        "evt_2026_3660"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 10,
+    "certified_cell_count": 10,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0289",
+        "record_hash": "sha256:afe423648d32131cd10b1a0c904e6c1a9da3f37f2628d1785fc46cb1c8e4f3f5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI2899",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1154",
+        "record_hash": "sha256:22f5c189d38ef388da2a52ffefe84abfce2cc9783e46df5c82441f3fccb9f09f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IM2899",
+        "column": "LAR_T_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1569",
+        "record_hash": "sha256:047e27f6fa5d715dac69185e7da925ab1c6d2807b584c4bbf5897ed29dc7f60d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JB2899",
+        "column": "VANDAL_GID23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1906",
+        "record_hash": "sha256:9e0b043dba4d76be3f577866886ac76fd6c2278540777307abe98f10cf607ac7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX2899",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1996",
+        "record_hash": "sha256:3d55d246fcf7f9bbaddbaadc4693efe1a6b0c2e4c453118d4bd03e5d114b4ce0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ2899",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2044",
+        "record_hash": "sha256:77df53df636bda639bcdc92a9af8f2b6097d1dab8192dad27307c3e53e68ccf1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF2899",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2661",
+        "record_hash": "sha256:a698bc5e4b6ee7f3e5f3a36f8f9360d7f483071ccfe5e2905d909f0d5e0e55d9",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BS2899",
+        "column": "AGG_A_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3222",
+        "record_hash": "sha256:13d5432c9d01e36e610bb92ba2079577b7740de33a2ac168c8a5a88644e573a6",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IM2899",
+        "column": "LAR_T_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3568",
+        "record_hash": "sha256:745f45a5269bc56bb8361dc563d992a3d8a25078ee5a592ba2cfbc04c6d037ba",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX2899",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3660",
+        "record_hash": "sha256:015951cc98156e86a4a82b2fe579872757c30f0d17b60e966dbd675521ab1788",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ2899",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0289"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1154"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1569",
+        "evt_2026_1996"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1906"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2044"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "public-property",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2661"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3222"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3568"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3660"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=amherst_college&signal_id=sig_ed9608feceb50baea29a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_ed9608feceb50baea29a/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Amherst College: 2 on-campus vandalism statistics labeled LGBTQ+. 1 on-campus other source-backed civil rights event statistic labeled National origin. 1 on-campus vandalism statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_ed9608feceb50baea29a/",
+    "proactive_reply": "Federal 2024 data, Amherst College: 2 on-campus vandalism statistics labeled LGBTQ+. 1 on-campus other source-backed civil rights event statistic labeled National origin. 1 on-campus vandalism statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_ed9608feceb50baea29a/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

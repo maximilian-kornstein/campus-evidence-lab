@@ -1,0 +1,261 @@
+{
+  "id": "sig_81ad540b25ad416d6b5f",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_6fcad40b186c9e536dbc",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_b7e95d54e216b2ec2c87",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_alaska_fairbanks/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "university_of_alaska_fairbanks"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the reported geography totals are on-campus (5), noncampus (2), residence-hall (1)."
+  },
+  "institution": {
+    "id": "university_of_alaska_fairbanks",
+    "name": "University of Alaska Fairbanks",
+    "city": "FAIRBANKS",
+    "state": "AK"
+  },
+  "record_ids": [
+    "evt_2026_0100",
+    "evt_2026_0724",
+    "evt_2026_0815",
+    "evt_2026_0901",
+    "evt_2026_0982",
+    "evt_2026_2798",
+    "evt_2026_2823",
+    "evt_2026_2970"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Alaska Fairbanks: Across 8 certified ED cells, the reported geography totals are on-campus (5), noncampus (2), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0100",
+        "evt_2026_0724",
+        "evt_2026_0815",
+        "evt_2026_0901",
+        "evt_2026_0982",
+        "evt_2026_2798",
+        "evt_2026_2823",
+        "evt_2026_2970"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0100",
+        "record_hash": "sha256:4b912d721526a0c9d175b40475857deb93fa08e15216938bf6fb43546405fc44",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND126",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0724",
+        "record_hash": "sha256:4f3bdfc9190e8bfc560976ca334630683e4766ef62510d0611b4b58313e6239b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT126",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0815",
+        "record_hash": "sha256:828d351f04cac091addba616c5afd305e1614df387cc6c8391479fe752f3f1c0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV126",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0901",
+        "record_hash": "sha256:0ca52b6a44d3a1eadfb8d5f58b52423d7d39c523a08bd2e9c3d945e5749800d4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GO126",
+        "column": "AGG_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0982",
+        "record_hash": "sha256:7131592d227c5f8c0df1dbd68284a663085289663ea3e0da705778328b7f2d2c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX126",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2798",
+        "record_hash": "sha256:84cc15103520c5651a39a4fc759805f96b8859990fb96e988fb9d103c3226788",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "BQ131",
+        "column": "AGG_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2823",
+        "record_hash": "sha256:10568f9f6f8bf83ba3097e1c884ea8bc659e322d3931ebc639829f6a2cf5bca7",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS131",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2970",
+        "record_hash": "sha256:ed6525646bb5295e18b9786078bfdd1c434de337604a89664ab257a5a2d791f1",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX126",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0100"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0724"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0815"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0901"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0982"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "noncampus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_2798",
+        "evt_2026_2823"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2970"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_alaska_fairbanks&signal_id=sig_81ad540b25ad416d6b5f",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_81ad540b25ad416d6b5f/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, University of Alaska Fairbanks: 2 non-campus harassment/threat statistics labeled Race. 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus vandalism statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_81ad540b25ad416d6b5f/",
+    "proactive_reply": "Federal 2024 data, University of Alaska Fairbanks: 2 non-campus harassment/threat statistics labeled Race. 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus vandalism statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_81ad540b25ad416d6b5f/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

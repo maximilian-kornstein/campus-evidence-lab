@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "updated_at": "2026-07-15",
+  "updated_at": "2026-07-16",
   "status_definitions": {
     "production_live": "Publicly reachable and operated by an automated production workflow.",
     "published_static": "Published and usable as static files or generated pages; not a hosted transactional service.",
@@ -16,35 +16,67 @@
     "integration_ready": 1,
     "verifiable_prototype": 1,
     "documented_external_feedback_contributions": 6,
-    "proof_graphs": 4000
+    "proof_graphs": 10000
   },
   "capabilities": [
     {
       "id": "public_evidence_archive",
       "name": "Public evidence archive",
       "status": "production_live",
-      "claim": "A public static archive exposes 4,000 event records, institution pages, source metadata, limitations, and correction routes.",
+      "claim": "A public static archive exposes 10,000 canonical records, institution pages, source metadata, limitations, and correction routes.",
       "metrics": [
-        { "label": "event records", "value": 4000, "source_artifact": "/data/events.json" },
-        { "label": "institution directory records", "value": 5470, "source_artifact": "/data/schools.json" },
-        { "label": "source records", "value": 25, "source_artifact": "/data/sources.json" }
+        {
+          "label": "event records",
+          "value": 10000,
+          "source_artifact": "/data/events.json"
+        },
+        {
+          "label": "institution directory records",
+          "value": 5470,
+          "source_artifact": "/data/schools.json"
+        },
+        {
+          "label": "source records",
+          "value": 25,
+          "source_artifact": "/data/sources.json"
+        }
       ],
-      "evidence": ["/events/", "/downloads/", "/data/snapshot-manifest.json"],
-      "last_verified_at": "2026-07-15",
+      "evidence": [
+        "/events/",
+        "/downloads/",
+        "/data/snapshot-manifest.json"
+      ],
+      "last_verified_at": "2026-07-16",
       "claim_boundary": "Record count measures published documentation, not incident prevalence, school quality, safety, or independent verification."
     },
     {
       "id": "certification_and_provenance",
       "name": "Certification and cell-level provenance",
       "status": "published_static",
-      "claim": "Deterministic gates certify source locators and record support for 3,810 records; a separate quality audit still marks 3,908 records as needing internal review.",
+      "claim": "Deterministic gates internally certify 3,629 records; 6,138 remain awaiting review, including the source-family-checked expansion lane.",
       "metrics": [
-        { "label": "certified records", "value": 3810, "source_artifact": "/data/certification-ledger.json" },
-        { "label": "records needing internal review", "value": 3908, "source_artifact": "/data/record-quality-audit.json" },
-        { "label": "ED rows with matched workbook provenance", "value": 3802, "source_artifact": "/data/ed-dataset-provenance-audit.json" }
+        {
+          "label": "certified records",
+          "value": 3629,
+          "source_artifact": "/data/certification-ledger.json"
+        },
+        {
+          "label": "records needing internal review",
+          "value": 3908,
+          "source_artifact": "/data/record-quality-audit.json"
+        },
+        {
+          "label": "ED rows with matched workbook provenance",
+          "value": 9620,
+          "source_artifact": "/data/ed-dataset-provenance-audit.json"
+        }
       ],
-      "evidence": ["/certification/", "/ed-provenance/", "/review-debt/"],
-      "last_verified_at": "2026-07-15",
+      "evidence": [
+        "/certification/",
+        "/ed-provenance/",
+        "/review-debt/"
+      ],
+      "last_verified_at": "2026-07-16",
       "claim_boundary": "Certification is a deterministic support-and-provenance gate. It is not equivalent to completed human review or outside validation."
     },
     {
@@ -53,11 +85,23 @@
       "status": "published_static",
       "claim": "Snapshot-bound JSON, CSV, research exports, schemas, and versioned static API files are publicly downloadable.",
       "metrics": [
-        { "label": "API model", "value": "static files", "source_artifact": "/api/v1/index.json" },
-        { "label": "current snapshot", "value": "snapshot_2026_06_03_4000_records", "source_artifact": "/data/snapshot-manifest.json" }
+        {
+          "label": "API model",
+          "value": "static files",
+          "source_artifact": "/api/v1/index.json"
+        },
+        {
+          "label": "current snapshot",
+          "value": "snapshot_2026_06_03_10000_records",
+          "source_artifact": "/data/snapshot-manifest.json"
+        }
       ],
-      "evidence": ["/downloads/", "/api/v1/index.json", "/replicate/"],
-      "last_verified_at": "2026-07-15",
+      "evidence": [
+        "/downloads/",
+        "/api/v1/index.json",
+        "/replicate/"
+      ],
+      "last_verified_at": "2026-07-16",
       "claim_boundary": "The v1 API is a static public-data interface, not a continuously queried application server."
     },
     {
@@ -66,12 +110,28 @@
       "status": "production_live",
       "claim": "An autonomous engine compiles evidence-bounded Signals, publishes to Bluesky, exposes RSS/JSON, and persists distribution state with safety and withdrawal controls.",
       "metrics": [
-        { "label": "shadow candidates", "value": 1345, "source_artifact": "/data/signals.json" },
-        { "label": "institutions represented", "value": 339, "source_artifact": "/data/signals.json" },
-        { "label": "active-distribution institutions", "value": 260, "source_artifact": "/data/signals.json" }
+        {
+          "label": "shadow candidates",
+          "value": 1305,
+          "source_artifact": "/data/signals.json"
+        },
+        {
+          "label": "institutions represented",
+          "value": 329,
+          "source_artifact": "/data/signals.json"
+        },
+        {
+          "label": "active-distribution institutions",
+          "value": 254,
+          "source_artifact": "/data/signals.json"
+        }
       ],
-      "evidence": ["/signals/", "/signals/feeds/all.json", "https://bsky.app/profile/campusevidencelab.bsky.social"],
-      "last_verified_at": "2026-07-15",
+      "evidence": [
+        "/signals/",
+        "/signals/feeds/all.json",
+        "https://bsky.app/profile/campusevidencelab.bsky.social"
+      ],
+      "last_verified_at": "2026-07-16",
       "claim_boundary": "Operational publication does not itself demonstrate reporting reuse, institutional response, audience conversion, or other downstream impact."
     },
     {
@@ -80,11 +140,23 @@
       "status": "feedback_informed",
       "claim": "Six documented, project-specific external feedback contributions informed CEL's methodology, source framing, claim boundaries, researcher onboarding, and newsroom usefulness.",
       "metrics": [
-        { "label": "records in external-review packet", "value": 17, "source_artifact": "/data/external-review-packet.json" },
-        { "label": "documented feedback contributions", "value": 6, "source_artifact": "/data/external-feedback-summary.json" }
+        {
+          "label": "records in external-review packet",
+          "value": 17,
+          "source_artifact": "/data/external-review-packet.json"
+        },
+        {
+          "label": "documented feedback contributions",
+          "value": 6,
+          "source_artifact": "/data/external-feedback-summary.json"
+        }
       ],
-      "evidence": ["/external-review/", "/reviewer-brief/", "/data/external-feedback-summary.json"],
-      "last_verified_at": "2026-07-15",
+      "evidence": [
+        "/external-review/",
+        "/reviewer-brief/",
+        "/data/external-feedback-summary.json"
+      ],
+      "last_verified_at": "2026-07-16",
       "claim_boundary": "The documented contributions are private feedback, not endorsements, formal peer review, organizational partnerships, or independent validation of CEL records."
     },
     {
@@ -93,11 +165,23 @@
       "status": "integration_ready",
       "claim": "CEL publishes a copy-ready embed, documented JSON/RSS feeds, and a machine-readable partner manifest backed by duplicate-controlled outreach machinery.",
       "metrics": [
-        { "label": "public feed formats", "value": 2, "source_artifact": "/partner-kit/manifest.json" },
-        { "label": "ready-to-use integration assets", "value": 3, "source_artifact": "/partner-kit/manifest.json" }
+        {
+          "label": "public feed formats",
+          "value": 2,
+          "source_artifact": "/partner-kit/manifest.json"
+        },
+        {
+          "label": "ready-to-use integration assets",
+          "value": 3,
+          "source_artifact": "/partner-kit/manifest.json"
+        }
       ],
-      "evidence": ["/partner-kit/", "/partner-kit/manifest.json", "/signals/feeds/all.json"],
-      "last_verified_at": "2026-07-15",
+      "evidence": [
+        "/partner-kit/",
+        "/partner-kit/manifest.json",
+        "/signals/feeds/all.json"
+      ],
+      "last_verified_at": "2026-07-16",
       "claim_boundary": "Integration readiness means the public assets work as documented. It does not imply a partnership, adoption, citation, or impact outcome."
     },
     {
@@ -106,12 +190,28 @@
       "status": "verifiable_prototype",
       "claim": "CEL compiles every public record into a typed evidence graph with hashed nodes and edges, a per-record Merkle root, snapshot-wide inclusion proof, browser verifier, and challenge-capable Solidity registry.",
       "metrics": [
-        { "label": "record ProofGraphs", "value": 4000, "source_artifact": "/proof-graph/index.json" },
-        { "label": "typed nodes", "value": 36000, "source_artifact": "/proof-graph/index.json" },
-        { "label": "typed edges", "value": 60000, "source_artifact": "/proof-graph/index.json" }
+        {
+          "label": "record ProofGraphs",
+          "value": 10000,
+          "source_artifact": "/proof-graph/index.json"
+        },
+        {
+          "label": "typed nodes",
+          "value": 90000,
+          "source_artifact": "/proof-graph/index.json"
+        },
+        {
+          "label": "typed edges",
+          "value": 150000,
+          "source_artifact": "/proof-graph/index.json"
+        }
       ],
-      "evidence": ["/proof-graph/", "/proof-graph/registry.json", "/contracts/ProofGraphRegistry.sol"],
-      "last_verified_at": "2026-07-15",
+      "evidence": [
+        "/proof-graph/",
+        "/proof-graph/registry.json",
+        "/contracts/ProofGraphRegistry.sol"
+      ],
+      "last_verified_at": "2026-07-16",
       "claim_boundary": "Hash consistency and Merkle inclusion prove artifact integrity, not factual truth, independent review, decentralization, permanence of source material, or third-party use."
     }
   ]

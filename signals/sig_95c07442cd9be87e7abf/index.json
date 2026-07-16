@@ -1,0 +1,695 @@
+{
+  "id": "sig_95c07442cd9be87e7abf",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_dfdc399187f805e943e4",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_82e31ceff95a90f7e509",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/ohio_state_university_main_campus/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "ohio_state_university_main_campus"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 27 certified ED cells, the source-supported affected-community totals are Race (11), Religion (9), LGBTQ+ (6), National origin (4)."
+  },
+  "institution": {
+    "id": "ohio_state_university_main_campus",
+    "name": "Ohio State University-Main Campus",
+    "city": "COLUMBUS",
+    "state": "OH"
+  },
+  "record_ids": [
+    "evt_2026_0206",
+    "evt_2026_0708",
+    "evt_2026_1202",
+    "evt_2026_1442",
+    "evt_2026_1692",
+    "evt_2026_1738",
+    "evt_2026_1793",
+    "evt_2026_1819",
+    "evt_2026_1832",
+    "evt_2026_1845",
+    "evt_2026_1858",
+    "evt_2026_1871",
+    "evt_2026_1884",
+    "evt_2026_1897",
+    "evt_2026_1910",
+    "evt_2026_1923",
+    "evt_2026_1936",
+    "evt_2026_1947",
+    "evt_2026_1958",
+    "evt_2026_2605",
+    "evt_2026_2638",
+    "evt_2026_2925",
+    "evt_2026_3074",
+    "evt_2026_3305",
+    "evt_2026_3425",
+    "evt_2026_3583",
+    "evt_2026_3616"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Ohio State University-Main Campus: Across 27 certified ED cells, the source-supported affected-community totals are Race (11), Religion (9), LGBTQ+ (6), National origin (4).",
+      "supporting_record_ids": [
+        "evt_2026_0206",
+        "evt_2026_0708",
+        "evt_2026_1202",
+        "evt_2026_1442",
+        "evt_2026_1692",
+        "evt_2026_1738",
+        "evt_2026_1793",
+        "evt_2026_1819",
+        "evt_2026_1832",
+        "evt_2026_1845",
+        "evt_2026_1858",
+        "evt_2026_1871",
+        "evt_2026_1884",
+        "evt_2026_1897",
+        "evt_2026_1910",
+        "evt_2026_1923",
+        "evt_2026_1936",
+        "evt_2026_1947",
+        "evt_2026_1958",
+        "evt_2026_2605",
+        "evt_2026_2638",
+        "evt_2026_2925",
+        "evt_2026_3074",
+        "evt_2026_3305",
+        "evt_2026_3425",
+        "evt_2026_3583",
+        "evt_2026_3616"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 33,
+    "certified_cell_count": 27,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0206",
+        "record_hash": "sha256:1cc616a97124e1b11f45c3bcda577bfdc51c8686585fd0ff92ca51296bc2bf14",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5026",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_0708",
+        "record_hash": "sha256:770fc39c7481abc2820854b46111303baec2bfa103f4be1cdabd542966201fc5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ5026",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1202",
+        "record_hash": "sha256:bffbb93e3ab8e5dfa2cd1c06e5c2129ed8c3dfe6ab5ffb0bba8b4d1cda923920",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL5026",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1442",
+        "record_hash": "sha256:edbbc194173a6c5fcbc63bc539626b80ec40a8be71a0984941587992f84bf2b3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC5026",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1692",
+        "record_hash": "sha256:c16b41eb608e169e35216e2cb19d435ae012bd6d89ac4b31a4288c34598fca20",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MZ5026",
+        "column": "SIM_A_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1738",
+        "record_hash": "sha256:93d8125ad6886d5387c8599c7961b6104c3e7cdb5c31a7f7064ce7b238b1b1a0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT5026",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1793",
+        "record_hash": "sha256:b5c3fa6423dabf318205adfb7c271297014780ab293aa625cde6426f87ce423c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA5026",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1819",
+        "record_hash": "sha256:655f45dcb814319feb0f59c9d468b7c866af9796a4cdacfd8e257b4e67481207",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT5026",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1832",
+        "record_hash": "sha256:f2b58fdc07e2daa00aa8f084cf28b22ef0bcc4fbd7676df056c86b0d2fbeaa51",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HW5026",
+        "column": "SIM_A_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1845",
+        "record_hash": "sha256:36ad312ca49089d895b935730e58478b74d35044829767d0a4f04c8aa42ba4a0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5026",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1858",
+        "record_hash": "sha256:3e580b1dcd925e3ead09ef0e13909ab278c9be573e619dbd3c9ead248606dcd6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ5026",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1871",
+        "record_hash": "sha256:b0661be31744221d705744480040d83ab47beb12a356cdd7edaea8f8822814f6",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ID5026",
+        "column": "SIM_A_NAT23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1884",
+        "record_hash": "sha256:763b75f2f74059309600bee5595fc7094c66fca298570d15141c24fd4349815d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX5026",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1897",
+        "record_hash": "sha256:aea83e1b1027a8b5375af442891dfd34a8391d262efec51c0869ea6bbcf52089",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY5026",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1910",
+        "record_hash": "sha256:dd9b88ef93a13d023d31974e6de3c748ed02ef3f939c8f6959a4e2b46d138600",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "AK5026",
+        "column": "FOND_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1923",
+        "record_hash": "sha256:08c71ee29f45c9b5fece418c7108e7cf55eeb1779b07fc5cb7fae5f1448ca58a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS5026",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1936",
+        "record_hash": "sha256:1b36a9a73266608ea3edf37173b5514cf736beb9816cf0060e7efad93ba4bef2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT5026",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1947",
+        "record_hash": "sha256:83fcc054314353cfe3e8d2d2eba3920a6c9c2da68bc4ced36f63de80de77c490",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5026",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1958",
+        "record_hash": "sha256:269c722a549b4989effdecbdab49dcb9e07f9168e605576d3ad09bf7055bbd20",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED5026",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2605",
+        "record_hash": "sha256:f504c2544776c5f51052627abf542a7674c20d2e9b803adf72350f260c3536a9",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT5026",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2638",
+        "record_hash": "sha256:f0243b86720ac9ac067ce5df4164abf405ecb1295f4bb61976f40e6d1ca3d00a",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HX5026",
+        "column": "SIM_A_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2925",
+        "record_hash": "sha256:ee269b5a11e54635124eb203d0cd6531b9bae0caa74e9c94ad7e9ac17fa4c110",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK5026",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3074",
+        "record_hash": "sha256:8b48061690eba6635b078cbda5c1fb2b3efe10fc4beaa659f682bcd40f6a9b5e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NQ5026",
+        "column": "INTIM_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3305",
+        "record_hash": "sha256:8fda4a5187c3f295c9f4aaec2debf30f860e976720d9bbcf435b8ea7ce490ce5",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA5026",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3425",
+        "record_hash": "sha256:55a3f8ab06f5fe4e561a72025de537dac6f52ad196f0e2d75aa449b878341e3d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT5026",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3583",
+        "record_hash": "sha256:47f90f1629cbec4c45c5d5ff9229d4cd38a141080b11226b1bd685971247a269",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ5026",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3616",
+        "record_hash": "sha256:a23aa993ad2256889192a50171fbeacafa4e5b4ecbb8ce75b71878dc2b08f821",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED5026",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 3,
+      "supporting_record_ids": [
+        "evt_2026_0206"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Ethnicity"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0708"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1202",
+        "evt_2026_1738"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1442"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1692"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1793"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1819"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 3,
+      "supporting_record_ids": [
+        "evt_2026_1832",
+        "evt_2026_1845"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1858",
+        "evt_2026_1897"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1871"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1884"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1910"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1923"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1936"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1947"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1958"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "public-property",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2605"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "public-property",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_2638"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_2925"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Ethnicity"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3074"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3305"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3425"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3583"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3616"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=ohio_state_university_main_campus&signal_id=sig_95c07442cd9be87e7abf",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_95c07442cd9be87e7abf/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Ohio State University-Main Campus: 3 on-campus harassment/threat statistics labeled Race. 3 on-campus harassment/threat statistics labeled Race. 2 on-campus harassment/threat statistics labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_95c07442cd9be87e7abf/",
+    "proactive_reply": "Federal 2024 data, Ohio State University-Main Campus: 3 on-campus harassment/threat statistics labeled Race. 3 on-campus harassment/threat statistics labeled Race. 2 on-campus harassment/threat statistics labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_95c07442cd9be87e7abf/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

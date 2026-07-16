@@ -2,7 +2,7 @@ import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { paths, readJson, rootDir } from "./lib.mjs";
 
-const currentDate = "2026-06-03";
+const currentDate = "2026-07-16";
 const [events, schools, sources, briefs, corrections, manifest] = await Promise.all([
   readJson(paths.events),
   readJson(paths.schools),

@@ -1,0 +1,224 @@
+{
+  "id": "sig_4c8a7c142ca7337efd4c",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d6c05210ac8207e98db9",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_e32b02109ab0012bd375",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/colorado_college/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "colorado_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 6 certified ED cells, the reported geography totals are on-campus (8), residence-hall (1)."
+  },
+  "institution": {
+    "id": "colorado_college",
+    "name": "Colorado College",
+    "city": "COLORADO SPRINGS",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0119",
+    "evt_2026_0729",
+    "evt_2026_1215",
+    "evt_2026_1476",
+    "evt_2026_1629",
+    "evt_2026_3015"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Colorado College: Across 6 certified ED cells, the reported geography totals are on-campus (8), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0119",
+        "evt_2026_0729",
+        "evt_2026_1215",
+        "evt_2026_1476",
+        "evt_2026_1629",
+        "evt_2026_3015"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0119",
+        "record_hash": "sha256:50d0e9522a0de3918ceafaefe4f40d85abe3ef47705ceccfaa44fe17afd9f822",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU975",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0729",
+        "record_hash": "sha256:ad1611dbe641d5597bbf23bbf94864e20b1af1210d7198c2d5a96089ae555d2f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR975",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1215",
+        "record_hash": "sha256:a3246e48145751ec804dade69a7ce9be7d4cbc353db2d0abce80f3f4ee24eeef",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NZ975",
+        "column": "VANDAL_ET24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1476",
+        "record_hash": "sha256:80aed1127a1696b169da4d8acc6a798c7e35ec87fb41266f0e0186c54a63a4e5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IU975",
+        "column": "INTIM_ET23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1629",
+        "record_hash": "sha256:64e821d4d6b2706e7d67e14d939fb3af93b317d583e96c8b0624914a535740a9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ975",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3015",
+        "record_hash": "sha256:09c8539b963e8054d8877615a48c0f197057756003ec4a4d0ec966b6d03b2dc7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR975",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0119"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0729"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Ethnicity"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1215"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Ethnicity"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1476"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1629"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3015"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=colorado_college&signal_id=sig_4c8a7c142ca7337efd4c",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4c8a7c142ca7337efd4c/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Colorado College: 2 on-campus harassment/threat statistics labeled Ethnicity. 2 on-campus harassment/threat statistics labeled LGBTQ+. 2 on-campus vandalism statistics labeled Religion. Details/limits: https://campusevidencelab.org/signals/sig_4c8a7c142ca7337efd4c/",
+    "proactive_reply": "Federal 2024 data, Colorado College: 2 on-campus harassment/threat statistics labeled Ethnicity. 2 on-campus harassment/threat statistics labeled LGBTQ+. 2 on-campus vandalism statistics labeled Religion. Details/limits: https://campusevidencelab.org/signals/sig_4c8a7c142ca7337efd4c/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

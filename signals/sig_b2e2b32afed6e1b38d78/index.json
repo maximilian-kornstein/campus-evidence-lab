@@ -1,0 +1,274 @@
+{
+  "id": "sig_b2e2b32afed6e1b38d78",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_49140e93cc94f33d3c01",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_749202e9823a8d8d1ca5",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_wisconsin_stevens_point/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "university_of_wisconsin_stevens_point"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 9 certified ED cells, the reported geography totals are on-campus (5), residence-hall (5), public-property (2)."
+  },
+  "institution": {
+    "id": "university_of_wisconsin_stevens_point",
+    "name": "University of Wisconsin-Stevens Point",
+    "city": "STEVENS POINT",
+    "state": "WI"
+  },
+  "record_ids": [
+    "evt_2026_0497",
+    "evt_2026_0981",
+    "evt_2026_1392",
+    "evt_2026_1497",
+    "evt_2026_2502",
+    "evt_2026_3121",
+    "evt_2026_3374",
+    "evt_2026_3563",
+    "evt_2026_3589"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Wisconsin-Stevens Point: Across 9 certified ED cells, the reported geography totals are on-campus (5), residence-hall (5), public-property (2).",
+      "supporting_record_ids": [
+        "evt_2026_0497",
+        "evt_2026_0981",
+        "evt_2026_1392",
+        "evt_2026_1497",
+        "evt_2026_2502",
+        "evt_2026_3121",
+        "evt_2026_3374",
+        "evt_2026_3563",
+        "evt_2026_3589"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 9,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0497",
+        "record_hash": "sha256:b164c0a3f75d3d11891ba204581c028a6e778ac42caa6a83e938978595a9694d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ7081",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0981",
+        "record_hash": "sha256:a4c8dc16e95d145e86e725fc4bf81c23609f69fadaab26051b122fabf46d8f1a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF7081",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1392",
+        "record_hash": "sha256:af1a4d55735a8a02816d5e577efac27567e9a235d565f5df0292df7bcee86b39",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB7081",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1497",
+        "record_hash": "sha256:2399ba3f1a62d7dc0752206f76024811dc382555209be1e63d1a0c70be820a86",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED7081",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2502",
+        "record_hash": "sha256:e0956beb29d343f17501b26d1548fca2b14f0e9c35b67d1f28137f09c0f799bc",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM7081",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3121",
+        "record_hash": "sha256:60264377b358b626f90f25652f445b1bccb02ebcda6dacd0ae1b0ebfa0e14c91",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ7081",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3374",
+        "record_hash": "sha256:998ce42f2b4b3e479f8e4695c73aae86dd181c11cb14f49d22107b7f9f4318b8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EF7081",
+        "column": "VANDAL_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3563",
+        "record_hash": "sha256:6f1acc6d3bf8ff48dfc70f907e1eb402eca02dfc15da4043c224e08278e09f11",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB7081",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3589",
+        "record_hash": "sha256:e50dc03768adb18577d1d1684323e2ba01d205f49ff906f2a0b8c265bec206be",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED7081",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0497"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0981",
+        "evt_2026_1497"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1392"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "public-property",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_2502"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_3121"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_3374",
+        "evt_2026_3589"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3563"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_wisconsin_stevens_point&signal_id=sig_b2e2b32afed6e1b38d78",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b2e2b32afed6e1b38d78/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, University of Wisconsin-Stevens Point: 2 on-campus vandalism statistics labeled LGBTQ+. 2 on-campus vandalism statistics labeled LGBTQ+. 2 public-property harassment/threat statistics labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_b2e2b32afed6e1b38d78/",
+    "proactive_reply": "Federal 2024 data, University of Wisconsin-Stevens Point: 2 on-campus vandalism statistics labeled LGBTQ+. 2 on-campus vandalism statistics labeled LGBTQ+. 2 public-property harassment/threat statistics labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_b2e2b32afed6e1b38d78/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

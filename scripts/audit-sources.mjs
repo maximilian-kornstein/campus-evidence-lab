@@ -2,8 +2,10 @@ import { paths, readJson, sha256, writeJson } from "./lib.mjs";
 
 const checkOnly = process.argv.includes("--check");
 const checkLive = process.argv.includes("--check-live");
-const currentDate = "2026-06-03";
+const currentDate = "2026-07-16";
 const outputPath = checkLive ? paths.sourceAuditLive : paths.sourceAudit;
+const previousLiveAudit = checkLive ? await readJson(paths.sourceAuditLive).catch(() => ({ entries: [] })) : null;
+const previousLiveBySource = new Map((previousLiveAudit?.entries ?? []).map((entry) => [entry.source_id, entry]));
 
 const [events, sources] = await Promise.all([
   readJson(paths.events),
@@ -61,7 +63,16 @@ for (const source of sources) {
   };
 
   if (checkLive) {
-    Object.assign(baseEntry, await checkUrl(source.url), {
+    const result = await checkUrl(source.url);
+    const previous = previousLiveBySource.get(source.id);
+    const preservedSuccess = result.live_status !== "ok" && previous?.live_status === "ok" && previous.external_url === source.url;
+    Object.assign(baseEntry, preservedSuccess ? {
+      live_status: previous.live_status,
+      http_status: previous.http_status,
+      final_url: previous.final_url,
+      latest_attempt: result,
+      live_status_note: "The latest automated attempt failed transiently; the last successful check for the unchanged URL is preserved and the failed attempt remains visible."
+    } : result, {
       launch_check_status: "live_checked"
     });
   }

@@ -1,0 +1,176 @@
+{
+  "id": "sig_b559431bc67680aefe2a",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_d342c2c232064ad1251c",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_544fc700dba1bccfea94",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/post_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "post_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2)."
+  },
+  "institution": {
+    "id": "post_university",
+    "name": "Post University",
+    "city": "Waterbury",
+    "state": "CT"
+  },
+  "record_ids": [
+    "evt_2026_0270",
+    "evt_2026_0821",
+    "evt_2026_3091",
+    "evt_2026_3156"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Post University: Across 4 certified ED cells, the reported geography totals are on-campus (2), residence-hall (2).",
+      "supporting_record_ids": [
+        "evt_2026_0270",
+        "evt_2026_0821",
+        "evt_2026_3091",
+        "evt_2026_3156"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0270",
+        "record_hash": "sha256:6fd78f59fff26f5e4ad5fd1f2e9df3562b2e914c46cb2b40d63d92d7630ca4ca",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ1096",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0821",
+        "record_hash": "sha256:eaf6a3b5b2cc84ca8f817af26d40478e44f67cecfa399c71e3bb9fa9e7990e4e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW1096",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3091",
+        "record_hash": "sha256:dfffee6be1c9a5d0bf41817707642591d55f4259a26790cf3d2bd2731000d68a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ1096",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3156",
+        "record_hash": "sha256:f30267cd330f70e956f9a35fb6f7de556968100aff4739fd1151dda719ca836f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DW1096",
+        "column": "INTIM_GID22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0270"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0821"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3091"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3156"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=post_university&signal_id=sig_b559431bc67680aefe2a",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b559431bc67680aefe2a/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2023 data, Post University: 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus vandalism statistic labeled LGBTQ+. 1 residence-hall harassment/threat statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_b559431bc67680aefe2a/",
+    "proactive_reply": "Federal 2023 data, Post University: 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus vandalism statistic labeled LGBTQ+. 1 residence-hall harassment/threat statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_b559431bc67680aefe2a/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

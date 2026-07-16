@@ -1,0 +1,405 @@
+{
+  "id": "sig_5d4ea69a808b37487305",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f4b94ba925a48e3a2e88",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_37c198ba4c396a6306fc",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_michigan_ann_arbor/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "university_of_michigan_ann_arbor"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 14 certified ED cells, the reported geography totals are on-campus (17), residence-hall (4)."
+  },
+  "institution": {
+    "id": "university_of_michigan_ann_arbor",
+    "name": "University of Michigan-Ann Arbor",
+    "city": "ANN ARBOR",
+    "state": "MI"
+  },
+  "record_ids": [
+    "evt_2026_0145",
+    "evt_2026_0744",
+    "evt_2026_1080",
+    "evt_2026_1259",
+    "evt_2026_1377",
+    "evt_2026_1459",
+    "evt_2026_1505",
+    "evt_2026_1549",
+    "evt_2026_1593",
+    "evt_2026_1635",
+    "evt_2026_3101",
+    "evt_2026_3277",
+    "evt_2026_3363",
+    "evt_2026_3421"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Michigan-Ann Arbor: Across 14 certified ED cells, the reported geography totals are on-campus (17), residence-hall (4).",
+      "supporting_record_ids": [
+        "evt_2026_0145",
+        "evt_2026_0744",
+        "evt_2026_1080",
+        "evt_2026_1259",
+        "evt_2026_1377",
+        "evt_2026_1459",
+        "evt_2026_1505",
+        "evt_2026_1549",
+        "evt_2026_1593",
+        "evt_2026_1635",
+        "evt_2026_3101",
+        "evt_2026_3277",
+        "evt_2026_3363",
+        "evt_2026_3421"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 21,
+    "certified_cell_count": 14,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0145",
+        "record_hash": "sha256:b17f9925811ae0fbb7a442d40e2b28ae6593c85d03d3c1fa7e682c8300cfaab9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR3219",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0744",
+        "record_hash": "sha256:0f10665f6fa5f9fa229f7348d080a6571e3967f0f0d053fcf8e6386b04aa51fe",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3219",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1080",
+        "record_hash": "sha256:5147a68892d667d32fc0d991abed5142dee3ce4cbb582ac99cfea0d94645eda1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LI3219",
+        "column": "AGG_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1259",
+        "record_hash": "sha256:d67218e1840716dceed5b46485130a4e4794948d9e9854dda01be3040f1b10c9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM3219",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1377",
+        "record_hash": "sha256:9d8b56b4f738462b7866259c3ebe233e79785eafc505865ca3f75cafc1560a6e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA3219",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1459",
+        "record_hash": "sha256:70d686324c9eb3843b65c0292cca30d2f5ce66c3a7bc1b884aa500ffd75b7ecf",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP3219",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1505",
+        "record_hash": "sha256:befeabdf60fba87916caa5d33f85929ce482c65b482d79290912fa4b1d023f40",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3219",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1549",
+        "record_hash": "sha256:dd484558cec22cc62072b98e3feb95af7a7bf20e60d4b0ff443e7f5ad124515a",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3219",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 3
+      },
+      {
+        "event_id": "evt_2026_1593",
+        "record_hash": "sha256:607ed05bf6622365ed4ad318ced1edfa7f01b547c635ea77d0214789f52c6960",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT3219",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1635",
+        "record_hash": "sha256:c6fe5d1db9662d5e1ff1897531d1f66b24216e221efa9e052ae8e49e0632656c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3219",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3101",
+        "record_hash": "sha256:64b6acf51fba4a4ac830f331b9e9b16ab8ed3e7fa63c5bea98522e6a1b223b3d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR3219",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3277",
+        "record_hash": "sha256:ada4d735822a87621ff03402d43e34d9d6ead34baa4b3bc1e091a3c6efd23da4",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK3219",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3363",
+        "record_hash": "sha256:fdaee5efc4ed591b425a1270fabe0399afc4cdf5bdeeda947f8d45fd8d611a9a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3219",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3421",
+        "record_hash": "sha256:65255087c1fbf2afbd17cc9b28b658f616f2f4fe0652a6cbbb55559f8ee4f5cc",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3219",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0145"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 3,
+      "supporting_record_ids": [
+        "evt_2026_0744",
+        "evt_2026_1080"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1259"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1377"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1459"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1505"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 3,
+      "supporting_record_ids": [
+        "evt_2026_1549"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1593"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1635"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3101"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3277"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3363"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3421"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_michigan_ann_arbor&signal_id=sig_5d4ea69a808b37487305",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5d4ea69a808b37487305/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, University of Michigan-Ann Arbor: 3 on-campus harassment/threat statistics labeled Race. 3 on-campus harassment/threat statistics labeled Race. 2 on-campus vandalism statistics labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_5d4ea69a808b37487305/",
+    "proactive_reply": "Federal 2024 data, University of Michigan-Ann Arbor: 3 on-campus harassment/threat statistics labeled Race. 3 on-campus harassment/threat statistics labeled Race. 2 on-campus vandalism statistics labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_5d4ea69a808b37487305/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

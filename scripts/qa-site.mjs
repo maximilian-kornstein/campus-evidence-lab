@@ -341,7 +341,7 @@ for (const homepageCopy of [
   "Public evidence infrastructure",
   "Accountability Room",
   "accountability-room/",
-  "4,000 public event records",
+  "10,000 canonical public records",
   "150,000 accepted import-wave QA candidates",
   "Search Records",
   "events/?focus=search",
@@ -608,7 +608,7 @@ for (const schoolDossierFilterCopy of [
 for (const accountabilityCopy of [
   "Accountability Room",
   "150,000 accepted import-wave QA candidates",
-  "4,000 public event records",
+  "10,000 canonical public records",
   "No rankings. No safety scores. No legal findings.",
   "Open an Institution"
 ]) {
