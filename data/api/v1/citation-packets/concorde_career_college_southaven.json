@@ -1,7 +1,7 @@
 {
   "api_version": "v1",
   "generated_at": "2026-06-03",
-  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "snapshot_id": "snapshot_2026_06_03_10000_records",
   "school_id": "concorde_career_college_southaven",
   "name": "Concorde Career College-Southaven",
   "public_use_limits": [
@@ -9,8 +9,38 @@
     "Accepted import-wave QA candidates are official-source rows that passed deterministic QA; they are not individual human certification.",
     "Public event records remain separate from accepted import-wave QA candidates."
   ],
-  "events": [],
-  "sources": [],
+  "events": [
+    {
+      "id": "evt_2026_9192",
+      "date": "2023-01-01",
+      "category": "Official aggregate safety statistic",
+      "record_hash": "sha256:d0b62751635a02f3740f51bdf7c12a7784f6526ef3c16f738fe5119299fc86ab",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "route": "/events/evt_2026_9192/"
+    },
+    {
+      "id": "evt_2026_9550",
+      "date": "2022-01-01",
+      "category": "Official aggregate safety statistic",
+      "record_hash": "sha256:7272cabb682876b107a10cc8328ba6e4616a15980362f3e891949905b2c43afe",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "route": "/events/evt_2026_9550/"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset",
+      "route": "/sources/src_ed_campus_safety_2025_hate_crime_data_files/"
+    }
+  ],
   "source_locators": [],
   "routes": {
     "institution_api": "/api/v1/institutions/concorde_career_college_southaven.json",

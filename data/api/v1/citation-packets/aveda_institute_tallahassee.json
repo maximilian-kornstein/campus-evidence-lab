@@ -1,7 +1,7 @@
 {
   "api_version": "v1",
   "generated_at": "2026-06-03",
-  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "snapshot_id": "snapshot_2026_06_03_10000_records",
   "school_id": "aveda_institute_tallahassee",
   "name": "Aveda Institute-Tallahassee",
   "public_use_limits": [
@@ -9,8 +9,38 @@
     "Accepted import-wave QA candidates are official-source rows that passed deterministic QA; they are not individual human certification.",
     "Public event records remain separate from accepted import-wave QA candidates."
   ],
-  "events": [],
-  "sources": [],
+  "events": [
+    {
+      "id": "evt_2026_4391",
+      "date": "2024-01-01",
+      "category": "Official aggregate safety statistic",
+      "record_hash": "sha256:5a98ee705392d5299c5e93f5444595bc596ecbc6b31e612b1b17e1442d1bb11d",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "route": "/events/evt_2026_4391/"
+    },
+    {
+      "id": "evt_2026_5566",
+      "date": "2022-01-01",
+      "category": "Official aggregate safety statistic",
+      "record_hash": "sha256:ec0eb12a60da3f4d010e678d80888781a02c70304c31788adba71469885f691f",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "route": "/events/evt_2026_5566/"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset",
+      "route": "/sources/src_ed_campus_safety_2025_hate_crime_data_files/"
+    }
+  ],
   "source_locators": [],
   "routes": {
     "institution_api": "/api/v1/institutions/aveda_institute_tallahassee.json",

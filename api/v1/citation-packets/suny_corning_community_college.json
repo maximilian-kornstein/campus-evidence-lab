@@ -1,7 +1,7 @@
 {
   "api_version": "v1",
   "generated_at": "2026-06-03",
-  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "snapshot_id": "snapshot_2026_06_03_10000_records",
   "school_id": "suny_corning_community_college",
   "name": "SUNY Corning Community College",
   "public_use_limits": [
@@ -9,8 +9,38 @@
     "Accepted import-wave QA candidates are official-source rows that passed deterministic QA; they are not individual human certification.",
     "Public event records remain separate from accepted import-wave QA candidates."
   ],
-  "events": [],
-  "sources": [],
+  "events": [
+    {
+      "id": "evt_2026_8487",
+      "date": "2022-01-01",
+      "category": "Official aggregate safety statistic",
+      "record_hash": "sha256:657795dc25c089e2f2163f6bc7d6d772654ae33b5e21b28234f638b4862cf925",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "route": "/events/evt_2026_8487/"
+    },
+    {
+      "id": "evt_2026_8603",
+      "date": "2022-01-01",
+      "category": "Official aggregate safety statistic",
+      "record_hash": "sha256:3de7a9fd3e5727ba12fdf2245297a28cbf099acb3f9e57690056aeea81d23bf5",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "route": "/events/evt_2026_8603/"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset",
+      "route": "/sources/src_ed_campus_safety_2025_hate_crime_data_files/"
+    }
+  ],
   "source_locators": [],
   "routes": {
     "institution_api": "/api/v1/institutions/suny_corning_community_college.json",

@@ -1,7 +1,7 @@
 {
   "api_version": "v1",
   "generated_at": "2026-06-03",
-  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "snapshot_id": "snapshot_2026_06_03_10000_records",
   "school_id": "arizona_state_university_campus_immersion_104151014",
   "name": "Arizona State University Campus Immersion",
   "public_use_limits": [
@@ -9,8 +9,38 @@
     "Accepted import-wave QA candidates are official-source rows that passed deterministic QA; they are not individual human certification.",
     "Public event records remain separate from accepted import-wave QA candidates."
   ],
-  "events": [],
-  "sources": [],
+  "events": [
+    {
+      "id": "evt_2026_4275",
+      "date": "2024-01-01",
+      "category": "Official aggregate safety statistic",
+      "record_hash": "sha256:1a4ca82d6cfd9af4dba7c426c246d40903667fde57d932553111cb6fa1179165",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "route": "/events/evt_2026_4275/"
+    },
+    {
+      "id": "evt_2026_5545",
+      "date": "2022-01-01",
+      "category": "Official aggregate safety statistic",
+      "record_hash": "sha256:cb84b62f5772a6e8574f155d1fb9ca68002075db56f7d59ff9473f9058c0fbea",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "route": "/events/evt_2026_5545/"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset",
+      "route": "/sources/src_ed_campus_safety_2025_hate_crime_data_files/"
+    }
+  ],
   "source_locators": [],
   "routes": {
     "institution_api": "/api/v1/institutions/arizona_state_university_campus_immersion_104151014.json",

@@ -9,7 +9,7 @@ test("accountability room index exposes scale, limits, and institution entry", a
 
   assert.match(html, /Accountability Room/);
   assert.match(html, /150,000 accepted import-wave QA candidates/);
-  assert.match(html, /4,000 public event records/);
+  assert.match(html, /10,000 canonical public records/);
   assert.match(html, /5,470 generated institution pages/);
   assert.match(html, /No rankings\. No safety scores\. No legal findings\./);
   assert.match(html, /Open an Institution/);
@@ -35,7 +35,7 @@ test("homepage reflects current scale without stale institution counts", async (
   const html = await readFile(path.join(rootDir, "index.html"), "utf8");
 
   assert.match(html, /150,000 accepted import-wave QA candidates/);
-  assert.match(html, /4,000 public event records/);
+  assert.match(html, /10,000 canonical public records/);
   assert.match(html, /Accountability Room/);
   assert.doesNotMatch(html, /947 schools/);
   assert.doesNotMatch(html, /Human review required/);

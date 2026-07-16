@@ -1,7 +1,7 @@
 {
   "api_version": "v1",
   "generated_at": "2026-06-03",
-  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "snapshot_id": "snapshot_2026_06_03_10000_records",
   "school_id": "the_master_s_university_and_seminary",
   "name": "The Master's University and Seminary",
   "public_use_limits": [
@@ -9,8 +9,38 @@
     "Accepted import-wave QA candidates are official-source rows that passed deterministic QA; they are not individual human certification.",
     "Public event records remain separate from accepted import-wave QA candidates."
   ],
-  "events": [],
-  "sources": [],
+  "events": [
+    {
+      "id": "evt_2026_7983",
+      "date": "2023-01-01",
+      "category": "Official aggregate safety statistic",
+      "record_hash": "sha256:d324ff95f4a0632dbb889643caf98fc51a43eeb0e19a64b44a2d69cf2f01fffd",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "route": "/events/evt_2026_7983/"
+    },
+    {
+      "id": "evt_2026_8431",
+      "date": "2023-01-01",
+      "category": "Official aggregate safety statistic",
+      "record_hash": "sha256:d928ce70660e0fcb7d5a03f4162f52aca9f9c315b79eeb3c9d9f19c51af7fd2c",
+      "source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ],
+      "route": "/events/evt_2026_8431/"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset",
+      "route": "/sources/src_ed_campus_safety_2025_hate_crime_data_files/"
+    }
+  ],
   "source_locators": [],
   "routes": {
     "institution_api": "/api/v1/institutions/the_master_s_university_and_seminary.json",

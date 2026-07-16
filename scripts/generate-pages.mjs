@@ -973,7 +973,7 @@ await writeFile(
     `
       <p class="page-kicker">Institution accountability briefings</p>
       <h1 class="page-title page-title--small">Accountability Room</h1>
-      <p class="page-intro">Open an institution briefing across ${formatNumber(schools.length)} generated institution pages that separates 4,000 public event records from ${formatNumber(institutionImportWaveSummary.accepted_candidate_count)} accepted import-wave QA candidates. The room shows source basis, limits, response evidence, and correction paths without turning records into institutional scores.</p>
+      <p class="page-intro">Open an institution briefing across ${formatNumber(schools.length)} generated institution pages that separates ${formatNumber(events.length)} canonical public records from ${formatNumber(institutionImportWaveSummary.accepted_candidate_count)} accepted import-wave QA candidates. The room shows source basis, limits, response evidence, and correction paths without turning records into institutional scores.</p>
       <p class="limit-line">No rankings. No safety scores. No legal findings.</p>
       <div class="hero-actions accountability-actions" aria-label="Accountability Room actions">
         <a class="button-link button-link--primary" href="${sitePath("/schools/", 1)}">Open an Institution</a>
@@ -2357,7 +2357,7 @@ await writeFile(
     "Certification Batches",
     `
       <p class="page-kicker">Certification batch manifest</p>
-      <h1 class="page-title page-title--small">The 4,000-record review is divided by source-family lane.</h1>
+      <h1 class="page-title page-title--small">The ${formatNumber(events.length)}-record review is divided by source-family lane.</h1>
       <p class="page-intro">Batches organize strict review. They do not certify records by themselves. A batch is complete only when every record has a final visible status and exact open gates.</p>
       <section class="detail-panel">
         <div class="detail-grid">

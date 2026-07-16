@@ -1,0 +1,176 @@
+{
+  "id": "sig_59f49e7e0c21b0ad28e6",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_8ee3fd451875f19df3e1",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_399985589209d60a5df6",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/bryant_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "bryant_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are Race (4)."
+  },
+  "institution": {
+    "id": "bryant_university",
+    "name": "Bryant University",
+    "city": "SMITHFIELD",
+    "state": "RI"
+  },
+  "record_ids": [
+    "evt_2026_0374",
+    "evt_2026_0849",
+    "evt_2026_3039",
+    "evt_2026_3146"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Bryant University: Across 4 certified ED cells, the source-supported affected-community totals are Race (4).",
+      "supporting_record_ids": [
+        "evt_2026_0374",
+        "evt_2026_0849",
+        "evt_2026_3039",
+        "evt_2026_3146"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0374",
+        "record_hash": "sha256:3039f8fe016ac907ad6315e500973d2ed671bfd5b2df35909bf9fe58d740ba41",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5611",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0849",
+        "record_hash": "sha256:96b0a7675a59e1a5365c7f97dbd9e6c901269db3a0340e749261b12ec4fcdf29",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB5611",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3039",
+        "record_hash": "sha256:b826a0111c6696998130a11633bc089bf2995f5f164aeeb6deb2e3a11d3efb45",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5611",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3146",
+        "record_hash": "sha256:7e1d84ad82919260951ee4f29e901e9647a7da2c58b3fbe84335d957fdbc78b8",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB5611",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0374"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0849"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3039"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3146"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=bryant_university&signal_id=sig_59f49e7e0c21b0ad28e6",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_59f49e7e0c21b0ad28e6/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2023 data, Bryant University: 1 on-campus vandalism statistic labeled Race. 1 on-campus vandalism statistic labeled Race. 1 residence-hall vandalism statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_59f49e7e0c21b0ad28e6/",
+    "proactive_reply": "Federal 2023 data, Bryant University: 1 on-campus vandalism statistic labeled Race. 1 on-campus vandalism statistic labeled Race. 1 residence-hall vandalism statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_59f49e7e0c21b0ad28e6/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

@@ -17,6 +17,13 @@ export const CATEGORY_DEFINITIONS = {
   "Harassment or threat": definition("Harassment or threat", "a public-source record about harassment, threats, intimidation, or source-described hostile treatment"),
   "Institutional response": definition("Institutional response", "a public action, notice, finding, statement, policy step, or response by an institution or agency"),
   "OCR complaint": definition("OCR complaint", "a public-source record involving an OCR complaint, investigation, resolution, letter, or monitoring action"),
+  "Official aggregate safety statistic": {
+    definition: "Official aggregate safety statistic means an institution-level numeric value transcribed from an identified cell in an official Department of Education Campus Safety and Security workbook.",
+    use_when: "Use this category only when the institution, reporting year, scope, statistic, workbook, semantic column, exact cell, and positive numeric value are reproducible from the official source release.",
+    do_not_use_when: "Do not use this category for an individual incident, allegation, case, narrative account, inferred trend, rate, prevalence estimate, comparison, or finding about institutional conduct.",
+    evidence_required: "The record must retain the official source URL, source-release hash, workbook and sheet names, row, semantic column, cell address, institution identity, year, scope, statistic, and exact numeric value.",
+    common_mistake: "The common mistake is treating one aggregate count as an incident record, a measure of prevalence, a safety score, a trend, or evidence of institutional quality or wrongdoing."
+  },
   "Other source-backed civil rights event": definition(
     "Other source-backed civil rights event",
     "a campus civil-rights record that is source-supported but does not fit a narrower category"
@@ -30,6 +37,13 @@ export const COMMUNITY_DEFINITIONS = {
   Arab: definition("Arab", "an affected-community label for records where Arab people or Arab identity are named or directly described"),
   Asian: definition("Asian", "an affected-community label for records where Asian people or Asian identity are named or directly described"),
   Black: definition("Black", "an affected-community label for records where Black people or Black identity are named or directly described"),
+  "Campus community": {
+    definition: "Campus community is a bounded institution-level label for official aggregate statistical records that do not identify a person or a specific protected community.",
+    use_when: "Use Campus community only for institution-level aggregate source rows where a narrower affected-community label is neither named nor safely supported by the source.",
+    do_not_use_when: "Do not use Campus community to imply that every campus member was affected, to replace a source-supported protected-community label, or to characterize an individual incident.",
+    evidence_required: "The official aggregate source must identify the institution and statistical scope while containing no supported basis for naming an individual or narrower affected community.",
+    common_mistake: "The common mistake is reading Campus community as a claim of universal impact rather than a conservative label for a non-person-specific institution-level statistic."
+  },
   Ethnicity: definition("Ethnicity", "a broad affected-community label for source-backed ethnicity-related records that cannot be narrowed safely"),
   Gender: definition("Gender", "a broad affected-community label for source-backed gender or sex-related records that cannot be narrowed safely"),
   Indigenous: definition("Indigenous", "an affected-community label for records where Indigenous people or identity are named or directly described"),

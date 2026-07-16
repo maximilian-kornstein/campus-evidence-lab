@@ -1,6 +1,6 @@
 {
   "id": "ed_certification_batch_002_review_v1",
-  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "snapshot_id": "snapshot_2026_06_03_10000_records",
   "generated_at": "2026-06-03",
   "review_batch_id": "ed_certification_batch_002",
   "source_batch_id": "ed_dataset_batch_001",
@@ -12,17 +12,22 @@
   "completion_rule": "Every included record receives a visible status. A certified status requires every gate to pass and an explicit batch-review certification basis; unresolved source-cell locators are blocked.",
   "totals": {
     "records": 250,
-    "certified": 250,
+    "certified": 231,
     "not_certified": 0,
-    "blocked": 0,
+    "blocked": 19,
     "awaiting_review": 0
   },
   "status_counts": {
-    "certified": 250
+    "certified": 231,
+    "blocked": 19
   },
-  "open_gate_counts": {},
+  "open_gate_counts": {
+    "rationale_specificity": 19,
+    "source_locator_specificity": 19
+  },
   "provenance_status_counts": {
-    "matched": 250
+    "matched": 231,
+    "unmatched": 19
   },
   "records": [
     {
@@ -19435,27 +19440,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 14,
-        "column": "AGG_A_RAC21",
-        "column_letter": "BQ",
-        "cell": "BQ14",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 14 > column AGG_A_RAC21 > cell BQ14"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "agg-a-rac21",
       "expected_column": "AGG_A_RAC21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -19463,9 +19461,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell BQ14 in Oncampushate212223.xlsx, sheet1 row 14, column AGG_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -19493,9 +19491,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -19506,9 +19504,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code AGG_A_RAC21 is for Aggravated assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in agg-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 14 > column AGG_A_RAC21 > cell BQ14. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3743/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3743",
       "challenge_url": "/challenge/?record=evt_2026_3743"
@@ -19519,27 +19517,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 1136,
-        "column": "SIM_A_ET21",
-        "column_letter": "DG",
-        "cell": "DG1136",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 1136 > column SIM_A_ET21 > cell DG1136"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-et21",
       "expected_column": "SIM_A_ET21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -19547,9 +19538,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DG1136 in Oncampushate212223.xlsx, sheet1 row 1136, column SIM_A_ET21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -19577,9 +19568,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -19590,9 +19581,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_ET21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-et21 maps directly to Ethnicity; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 1136 > column SIM_A_ET21 > cell DG1136. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3749/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3749",
       "challenge_url": "/challenge/?record=evt_2026_3749"
@@ -19603,27 +19594,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 2767,
-        "column": "AGG_A_GEN21",
-        "column_letter": "BT",
-        "cell": "BT2767",
-        "cell_value": "3",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 2767 > column AGG_A_GEN21 > cell BT2767"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "agg-a-gen21",
       "expected_column": "AGG_A_GEN21",
       "expected_count": 3,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -19631,9 +19615,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell BT2767 in Oncampushate212223.xlsx, sheet1 row 2767, column AGG_A_GEN21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -19661,9 +19645,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -19674,9 +19658,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code AGG_A_GEN21 is for Aggravated assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in agg-a-gen21 maps directly to Gender; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 2767 > column AGG_A_GEN21 > cell BT2767. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3761/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3761",
       "challenge_url": "/challenge/?record=evt_2026_3761"
@@ -19687,27 +19671,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 4931,
-        "column": "SIM_A_RAC21",
-        "column_letter": "DA",
-        "cell": "DA4931",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 4931 > column SIM_A_RAC21 > cell DA4931"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-rac21",
       "expected_column": "SIM_A_RAC21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -19715,9 +19692,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DA4931 in Oncampushate212223.xlsx, sheet1 row 4931, column SIM_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -19745,9 +19722,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -19758,9 +19735,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_RAC21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 4931 > column SIM_A_RAC21 > cell DA4931. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3767/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3767",
       "challenge_url": "/challenge/?record=evt_2026_3767"
@@ -19771,27 +19748,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 4190,
-        "column": "SIM_A_ET21",
-        "column_letter": "DG",
-        "cell": "DG4190",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 4190 > column SIM_A_ET21 > cell DG4190"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-et21",
       "expected_column": "SIM_A_ET21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -19799,9 +19769,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DG4190 in Oncampushate212223.xlsx, sheet1 row 4190, column SIM_A_ET21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -19829,9 +19799,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -19842,9 +19812,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_ET21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-et21 maps directly to Ethnicity; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 4190 > column SIM_A_ET21 > cell DG4190. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3771/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3771",
       "challenge_url": "/challenge/?record=evt_2026_3771"
@@ -19855,27 +19825,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 6516,
-        "column": "AGG_A_RAC21",
-        "column_letter": "BQ",
-        "cell": "BQ6516",
-        "cell_value": "4",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 6516 > column AGG_A_RAC21 > cell BQ6516"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "agg-a-rac21",
       "expected_column": "AGG_A_RAC21",
       "expected_count": 4,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -19883,9 +19846,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell BQ6516 in Oncampushate212223.xlsx, sheet1 row 6516, column AGG_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -19913,9 +19876,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -19926,9 +19889,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code AGG_A_RAC21 is for Aggravated assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in agg-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 6516 > column AGG_A_RAC21 > cell BQ6516. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3783/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3783",
       "challenge_url": "/challenge/?record=evt_2026_3783"
@@ -19939,27 +19902,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 7120,
-        "column": "SIM_A_RAC21",
-        "column_letter": "DA",
-        "cell": "DA7120",
-        "cell_value": "2",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 7120 > column SIM_A_RAC21 > cell DA7120"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-rac21",
       "expected_column": "SIM_A_RAC21",
       "expected_count": 2,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -19967,9 +19923,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DA7120 in Oncampushate212223.xlsx, sheet1 row 7120, column SIM_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -19997,9 +19953,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20010,9 +19966,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_RAC21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 7120 > column SIM_A_RAC21 > cell DA7120. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3788/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3788",
       "challenge_url": "/challenge/?record=evt_2026_3788"
@@ -20023,27 +19979,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 979,
-        "column": "SIM_A_RAC21",
-        "column_letter": "DA",
-        "cell": "DA979",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 979 > column SIM_A_RAC21 > cell DA979"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-rac21",
       "expected_column": "SIM_A_RAC21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20051,9 +20000,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DA979 in Oncampushate212223.xlsx, sheet1 row 979, column SIM_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -20081,9 +20030,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20094,9 +20043,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_RAC21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 979 > column SIM_A_RAC21 > cell DA979. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3795/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3795",
       "challenge_url": "/challenge/?record=evt_2026_3795"
@@ -20107,27 +20056,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 2716,
-        "column": "AGG_A_RAC21",
-        "column_letter": "BQ",
-        "cell": "BQ2716",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 2716 > column AGG_A_RAC21 > cell BQ2716"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "agg-a-rac21",
       "expected_column": "AGG_A_RAC21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20135,9 +20077,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell BQ2716 in Oncampushate212223.xlsx, sheet1 row 2716, column AGG_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -20165,9 +20107,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20178,9 +20120,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code AGG_A_RAC21 is for Aggravated assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in agg-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 2716 > column AGG_A_RAC21 > cell BQ2716. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3806/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3806",
       "challenge_url": "/challenge/?record=evt_2026_3806"
@@ -20191,27 +20133,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 2847,
-        "column": "SIM_A_RAC21",
-        "column_letter": "DA",
-        "cell": "DA2847",
-        "cell_value": "2",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 2847 > column SIM_A_RAC21 > cell DA2847"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-rac21",
       "expected_column": "SIM_A_RAC21",
       "expected_count": 2,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20219,9 +20154,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DA2847 in Oncampushate212223.xlsx, sheet1 row 2847, column SIM_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -20249,9 +20184,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20262,9 +20197,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_RAC21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 2847 > column SIM_A_RAC21 > cell DA2847. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3808/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3808",
       "challenge_url": "/challenge/?record=evt_2026_3808"
@@ -20275,27 +20210,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 4190,
-        "column": "SIM_A_REL21",
-        "column_letter": "DB",
-        "cell": "DB4190",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 4190 > column SIM_A_REL21 > cell DB4190"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-rel21",
       "expected_column": "SIM_A_REL21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20303,9 +20231,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DB4190 in Oncampushate212223.xlsx, sheet1 row 4190, column SIM_A_REL21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -20333,9 +20261,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20346,9 +20274,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_REL21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-rel21 maps directly to Religion; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 4190 > column SIM_A_REL21 > cell DB4190. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3819/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3819",
       "challenge_url": "/challenge/?record=evt_2026_3819"
@@ -20359,27 +20287,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 1052,
-        "column": "SIM_A_RAC21",
-        "column_letter": "DA",
-        "cell": "DA1052",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 1052 > column SIM_A_RAC21 > cell DA1052"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-rac21",
       "expected_column": "SIM_A_RAC21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20387,9 +20308,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DA1052 in Oncampushate212223.xlsx, sheet1 row 1052, column SIM_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -20417,9 +20338,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20430,9 +20351,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_RAC21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 1052 > column SIM_A_RAC21 > cell DA1052. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3839/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3839",
       "challenge_url": "/challenge/?record=evt_2026_3839"
@@ -20443,27 +20364,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 1978,
-        "column": "SIM_A_RAC21",
-        "column_letter": "DA",
-        "cell": "DA1978",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 1978 > column SIM_A_RAC21 > cell DA1978"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-rac21",
       "expected_column": "SIM_A_RAC21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20471,9 +20385,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DA1978 in Oncampushate212223.xlsx, sheet1 row 1978, column SIM_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -20501,9 +20415,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20514,9 +20428,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_RAC21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 1978 > column SIM_A_RAC21 > cell DA1978. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3846/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3846",
       "challenge_url": "/challenge/?record=evt_2026_3846"
@@ -20527,27 +20441,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 5573,
-        "column": "AGG_A_ET21",
-        "column_letter": "BW",
-        "cell": "BW5573",
-        "cell_value": "2",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 5573 > column AGG_A_ET21 > cell BW5573"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "agg-a-et21",
       "expected_column": "AGG_A_ET21",
       "expected_count": 2,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20555,9 +20462,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell BW5573 in Oncampushate212223.xlsx, sheet1 row 5573, column AGG_A_ET21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -20585,9 +20492,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20598,9 +20505,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code AGG_A_ET21 is for Aggravated assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in agg-a-et21 maps directly to Ethnicity; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 5573 > column AGG_A_ET21 > cell BW5573. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3865/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3865",
       "challenge_url": "/challenge/?record=evt_2026_3865"
@@ -20611,27 +20518,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 3,
-        "column": "AGG_A_RAC21",
-        "column_letter": "BQ",
-        "cell": "BQ3",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 3 > column AGG_A_RAC21 > cell BQ3"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "agg-a-rac21",
       "expected_column": "AGG_A_RAC21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20639,9 +20539,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell BQ3 in Oncampushate212223.xlsx, sheet1 row 3, column AGG_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -20669,9 +20569,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20682,9 +20582,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code AGG_A_RAC21 is for Aggravated assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in agg-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 3 > column AGG_A_RAC21 > cell BQ3. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3875/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3875",
       "challenge_url": "/challenge/?record=evt_2026_3875"
@@ -20695,27 +20595,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 3797,
-        "column": "SIM_A_RAC21",
-        "column_letter": "DA",
-        "cell": "DA3797",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 3797 > column SIM_A_RAC21 > cell DA3797"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-rac21",
       "expected_column": "SIM_A_RAC21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20723,9 +20616,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DA3797 in Oncampushate212223.xlsx, sheet1 row 3797, column SIM_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -20753,9 +20646,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20766,9 +20659,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_RAC21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 3797 > column SIM_A_RAC21 > cell DA3797. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3893/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3893",
       "challenge_url": "/challenge/?record=evt_2026_3893"
@@ -20779,27 +20672,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 6074,
-        "column": "AGG_A_RAC21",
-        "column_letter": "BQ",
-        "cell": "BQ6074",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 6074 > column AGG_A_RAC21 > cell BQ6074"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "agg-a-rac21",
       "expected_column": "AGG_A_RAC21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20807,9 +20693,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell BQ6074 in Oncampushate212223.xlsx, sheet1 row 6074, column AGG_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -20837,9 +20723,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20850,9 +20736,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code AGG_A_RAC21 is for Aggravated assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in agg-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 6074 > column AGG_A_RAC21 > cell BQ6074. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3905/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3905",
       "challenge_url": "/challenge/?record=evt_2026_3905"
@@ -20863,27 +20749,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 6664,
-        "column": "SIM_A_RAC21",
-        "column_letter": "DA",
-        "cell": "DA6664",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 6664 > column SIM_A_RAC21 > cell DA6664"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-rac21",
       "expected_column": "SIM_A_RAC21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20891,9 +20770,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DA6664 in Oncampushate212223.xlsx, sheet1 row 6664, column SIM_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -20921,9 +20800,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -20934,9 +20813,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_RAC21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 6664 > column SIM_A_RAC21 > cell DA6664. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3907/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3907",
       "challenge_url": "/challenge/?record=evt_2026_3907"
@@ -20947,27 +20826,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_002",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_002_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 1890,
-        "column": "SIM_A_RAC21",
-        "column_letter": "DA",
-        "cell": "DA1890",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 1890 > column SIM_A_RAC21 > cell DA1890"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "sim-a-rac21",
       "expected_column": "SIM_A_RAC21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -20975,9 +20847,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DA1890 in Oncampushate212223.xlsx, sheet1 row 1890, column SIM_A_RAC21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -21005,9 +20877,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -21018,9 +20890,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code SIM_A_RAC21 is for Simple assault; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in sim-a-rac21 maps directly to Race; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 1890 > column SIM_A_RAC21 > cell DA1890. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3921/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3921",
       "challenge_url": "/challenge/?record=evt_2026_3921"

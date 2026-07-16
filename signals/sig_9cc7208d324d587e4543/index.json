@@ -1,0 +1,261 @@
+{
+  "id": "sig_9cc7208d324d587e4543",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_8037c2d310f5f1f01f38",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_8082e1ce09b0a032c033",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/brigham_young_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "brigham_young_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the reported geography totals are on-campus (5), noncampus (1), public-property (1), residence-hall (1)."
+  },
+  "institution": {
+    "id": "brigham_young_university",
+    "name": "Brigham Young University",
+    "city": "PROVO",
+    "state": "UT"
+  },
+  "record_ids": [
+    "evt_2026_0308",
+    "evt_2026_0764",
+    "evt_2026_0896",
+    "evt_2026_1017",
+    "evt_2026_1097",
+    "evt_2026_2462",
+    "evt_2026_2794",
+    "evt_2026_3005"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Brigham Young University: Across 8 certified ED cells, the reported geography totals are on-campus (5), noncampus (1), public-property (1), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0308",
+        "evt_2026_0764",
+        "evt_2026_0896",
+        "evt_2026_1017",
+        "evt_2026_1097",
+        "evt_2026_2462",
+        "evt_2026_2794",
+        "evt_2026_3005"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0308",
+        "record_hash": "sha256:12f2076310f99ae06343f0bd70a20f26f4b3156c5966fd967ca8a29d737ddb14",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GO6452",
+        "column": "AGG_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0764",
+        "record_hash": "sha256:83f58672aa3f1420bbe88a3ae4e028a0e2375d2fc4cb4eff6775a50006b62cfd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ6452",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0896",
+        "record_hash": "sha256:6ac5fc1f8bb1fd48872cd91a9ce16f24ec723d06720820cefdd08be4f3c971b3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ6452",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1017",
+        "record_hash": "sha256:8917ac1d4d978cf2c4399204e79b8543cfa38ac97c7f14344d56a7f3e794054b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS6452",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1097",
+        "record_hash": "sha256:32dc1a102d492c276bfdf1a671984e0b62d7534cd79591ab1b55493f88e58dea",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6452",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2462",
+        "record_hash": "sha256:a4de3375fb3533f04b428f3968ee10d4ce407e9bf2bd9ab9ef3adc403c594989",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ6452",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2794",
+        "record_hash": "sha256:faf0b96c35732d50403bc1f4388d6932ed9d61377dc553790c2a6874199c0049",
+        "workbook": "Noncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ6452",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3005",
+        "record_hash": "sha256:bda3a4c2ab56d8307cff5f7a366daeb24f19930c03bb1282984c03005d4a8b0d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DU6452",
+        "column": "INTIM_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0308",
+        "evt_2026_0764"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0896"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1017"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1097"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "public-property",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2462"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "noncampus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2794"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3005"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=brigham_young_university&signal_id=sig_9cc7208d324d587e4543",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_9cc7208d324d587e4543/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2023 data, Brigham Young University: 2 on-campus harassment/threat statistics labeled LGBTQ+. 1 non-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus harassment/threat statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_9cc7208d324d587e4543/",
+    "proactive_reply": "Federal 2023 data, Brigham Young University: 2 on-campus harassment/threat statistics labeled LGBTQ+. 1 non-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus harassment/threat statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_9cc7208d324d587e4543/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

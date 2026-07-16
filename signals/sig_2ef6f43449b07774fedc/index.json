@@ -1,0 +1,248 @@
+{
+  "id": "sig_2ef6f43449b07774fedc",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_7c7029c67504330d1367",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_a7fdea2231f86c558f9f",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/middle_tennessee_state_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "middle_tennessee_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the source-supported affected-community totals are LGBTQ+ (3), Religion (3), Race (2), National origin (1)."
+  },
+  "institution": {
+    "id": "middle_tennessee_state_university",
+    "name": "Middle Tennessee State University",
+    "city": "MURFREESBORO",
+    "state": "TN"
+  },
+  "record_ids": [
+    "evt_2026_0349",
+    "evt_2026_0807",
+    "evt_2026_1015",
+    "evt_2026_1171",
+    "evt_2026_1273",
+    "evt_2026_3003",
+    "evt_2026_3080"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Middle Tennessee State University: Across 7 certified ED cells, the source-supported affected-community totals are LGBTQ+ (3), Religion (3), Race (2), National origin (1).",
+      "supporting_record_ids": [
+        "evt_2026_0349",
+        "evt_2026_0807",
+        "evt_2026_1015",
+        "evt_2026_1171",
+        "evt_2026_1273",
+        "evt_2026_3003",
+        "evt_2026_3080"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0349",
+        "record_hash": "sha256:9d155ff1a17c8cc5ceee7696d1c7116698bf5022a8afb2604b7f2bad29937ab3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NI5871",
+        "column": "LAR_T_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0807",
+        "record_hash": "sha256:f9d06cb1a1a9ad5cc0f5f5e891c6ef26fc34d362ed4d6cc63c4446336fe5a27c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY5871",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1015",
+        "record_hash": "sha256:fe2918adf74ee6151e060637324540fa072ec79533d92fc5ac4936e0602071ca",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5871",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1171",
+        "record_hash": "sha256:59321f73800ea13d60d359a1a1c65ae9b67b8e04635ebdd9d83784de837312f9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5871",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1273",
+        "record_hash": "sha256:f50b9e83c2ff04ff106d456b71862b297d55e74f4468efeb2e3d0a18cba27f34",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5871",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3003",
+        "record_hash": "sha256:123199fc03d46927c26ab17df68a4a58f7f27af020cf5dfbb02db20505bf14ae",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5871",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3080",
+        "record_hash": "sha256:c30e800f9ba81218061f07c089e9dde56d707faf5878715af84445914abd9382",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5871",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0349"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0807"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1015"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1171"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1273"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3003"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3080"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=middle_tennessee_state_university&signal_id=sig_2ef6f43449b07774fedc",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_2ef6f43449b07774fedc/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Middle Tennessee State University: 2 on-campus vandalism statistics labeled LGBTQ+. 2 on-campus vandalism statistics labeled Religion. 1 on-campus vandalism statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_2ef6f43449b07774fedc/",
+    "proactive_reply": "Federal 2024 data, Middle Tennessee State University: 2 on-campus vandalism statistics labeled LGBTQ+. 2 on-campus vandalism statistics labeled Religion. 1 on-campus vandalism statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_2ef6f43449b07774fedc/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

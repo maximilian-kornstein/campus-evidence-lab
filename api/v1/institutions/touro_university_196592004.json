@@ -1,14 +1,15 @@
 {
   "api_version": "v1",
   "generated_at": "2026-06-03",
-  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "snapshot_id": "snapshot_2026_06_03_10000_records",
   "school_id": "touro_university_196592004",
   "name": "Touro University",
   "city": "Brooklyn",
   "state": "NY",
-  "public_event_count": 0,
+  "public_event_count": 1,
   "accepted_candidate_count": 2,
   "source_family_counts": {
+    "Government dataset": 1,
     "ed_campus_safety_dataset": 2
   },
   "record_lane_counts": {
@@ -19,10 +20,21 @@
   ],
   "accountability_signals": [
     {
+      "id": "source_backed_event_records",
+      "label": "source-backed event records present",
+      "detail": "Public event records exist for this institution.",
+      "count": 1
+    },
+    {
       "id": "accepted_official_source_qa_candidates",
       "label": "accepted official-source QA candidates present",
       "detail": "Official-source rows passed deterministic import-wave QA for this institution.",
       "count": 2
+    },
+    {
+      "id": "multiple_official_source_families",
+      "label": "multiple official source families represented",
+      "detail": "More than one public source family is represented."
     },
     {
       "id": "no_response_evidence_in_current_snapshot",
@@ -39,7 +51,9 @@
   "response_evidence": {
     "status": "no_response_evidence_in_current_snapshot",
     "label": "current snapshot has no institution response evidence",
-    "response_depth_counts": {}
+    "response_depth_counts": {
+      "missing_response_depth": 1
+    }
   },
   "correction_posture": {
     "status": "correction_path_available",
@@ -50,7 +64,6 @@
     "Accountability Signals describe source basis, response evidence, correction posture, and unresolved limits.",
     "They are not rankings, safety scores, severity scores, prevalence estimates, or legal findings.",
     "Accepted import-wave QA candidates are not individual human certification of every row.",
-    "The current snapshot has no public event records for this institution.",
     "No institution response evidence appears in the current snapshot; this does not claim no response exists outside the dataset."
   ],
   "public_use_limits": [
@@ -58,8 +71,12 @@
     "They are not rankings, safety scores, severity scores, prevalence estimates, or legal findings.",
     "Accepted import-wave QA candidates are not individual human certification of every row."
   ],
-  "event_ids": [],
-  "source_ids": [],
+  "event_ids": [
+    "evt_2026_9637"
+  ],
+  "source_ids": [
+    "src_ed_campus_safety_2025_hate_crime_data_files"
+  ],
   "routes": {
     "school": "/schools/touro_university_196592004/",
     "accountability_room": "/schools/touro_university_196592004/",

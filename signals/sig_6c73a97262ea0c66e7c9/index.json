@@ -1,0 +1,248 @@
+{
+  "id": "sig_6c73a97262ea0c66e7c9",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c50d3dc1b3c46bef0a87",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_322fb9fbb6bd7c5969dd",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_missouri_kansas_city/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "university_of_missouri_kansas_city"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the reported geography totals are on-campus (6), public-property (1), residence-hall (1)."
+  },
+  "institution": {
+    "id": "university_of_missouri_kansas_city",
+    "name": "University of Missouri-Kansas City",
+    "city": "KANSAS CITY",
+    "state": "MO"
+  },
+  "record_ids": [
+    "evt_2026_0293",
+    "evt_2026_1158",
+    "evt_2026_1461",
+    "evt_2026_1529",
+    "evt_2026_1573",
+    "evt_2026_2518",
+    "evt_2026_3226"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Missouri-Kansas City: Across 7 certified ED cells, the reported geography totals are on-campus (6), public-property (1), residence-hall (1).",
+      "supporting_record_ids": [
+        "evt_2026_0293",
+        "evt_2026_1158",
+        "evt_2026_1461",
+        "evt_2026_1529",
+        "evt_2026_1573",
+        "evt_2026_2518",
+        "evt_2026_3226"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 8,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0293",
+        "record_hash": "sha256:2f98bc072f549bfc0ab2a91fa031515ce9f6fbadd9b7ace6ba84a8e3dc5ccd9f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NL3610",
+        "column": "INTIM_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1158",
+        "record_hash": "sha256:303d4d40122f46d9d3e35823a137f571e4982f077e11ea9418e1e77cd8f87ad7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN3610",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1461",
+        "record_hash": "sha256:ebd19833fda8985f1dee740814003593b1b19eae1a216fafa4c7b80947a1e3e3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR3610",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1529",
+        "record_hash": "sha256:79e286ae47c1bd7c31b539b26e9d5614fd1148986ab15920b3903f9a6ad0b4c9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EB3610",
+        "column": "VANDAL_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1573",
+        "record_hash": "sha256:5ff3508281c634436d1e0657df4d48cd81f51f5c3c87a9fc09a40a1366e39838",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED3610",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2518",
+        "record_hash": "sha256:bca8ae2a39df5e8b337b603ba92c960973bdabf3f4a1d740d25f62cd0923255c",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IP3610",
+        "column": "INTIM_REL23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3226",
+        "record_hash": "sha256:31f0dfb6d4526ba0da4e9f8b08c8575e995b4b79b7bc59ef9d5d8048ed977277",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED3610",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0293"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Gender"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1158"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1461"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1529"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1573"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "public-property",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2518"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3226"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_missouri_kansas_city&signal_id=sig_6c73a97262ea0c66e7c9",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6c73a97262ea0c66e7c9/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, University of Missouri-Kansas City: 2 on-campus harassment/threat statistics labeled Religion. 1 on-campus harassment/threat statistic labeled Gender. 1 on-campus vandalism statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_6c73a97262ea0c66e7c9/",
+    "proactive_reply": "Federal 2024 data, University of Missouri-Kansas City: 2 on-campus harassment/threat statistics labeled Religion. 1 on-campus harassment/threat statistic labeled Gender. 1 on-campus vandalism statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_6c73a97262ea0c66e7c9/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

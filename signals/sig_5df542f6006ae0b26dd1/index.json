@@ -1,0 +1,320 @@
+{
+  "id": "sig_5df542f6006ae0b26dd1",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_7266128673dccf26ecdb",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_68684538a770df94a5fa",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/university_of_south_carolina_columbia/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "university_of_south_carolina_columbia"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 10 certified ED cells, the reported geography totals are on-campus (9), residence-hall (2), public-property (1)."
+  },
+  "institution": {
+    "id": "university_of_south_carolina_columbia",
+    "name": "University of South Carolina-Columbia",
+    "city": "COLUMBIA",
+    "state": "SC"
+  },
+  "record_ids": [
+    "evt_2026_0113",
+    "evt_2026_0760",
+    "evt_2026_0893",
+    "evt_2026_1054",
+    "evt_2026_1094",
+    "evt_2026_1133",
+    "evt_2026_1170",
+    "evt_2026_2459",
+    "evt_2026_3001",
+    "evt_2026_3114"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of South Carolina-Columbia: Across 10 certified ED cells, the reported geography totals are on-campus (9), residence-hall (2), public-property (1).",
+      "supporting_record_ids": [
+        "evt_2026_0113",
+        "evt_2026_0760",
+        "evt_2026_0893",
+        "evt_2026_1054",
+        "evt_2026_1094",
+        "evt_2026_1133",
+        "evt_2026_1170",
+        "evt_2026_2459",
+        "evt_2026_3001",
+        "evt_2026_3114"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 12,
+    "certified_cell_count": 10,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0113",
+        "record_hash": "sha256:ddab688ae20b00bcda69647b48bc62e496534786601b2d9c225a8372ffb8b756",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "OA5717",
+        "column": "VANDAL_NAT24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0760",
+        "record_hash": "sha256:a275e2714b60084f0298e3beb4d8ac075cb0736cb657efdf50d6c8e8d4b73831",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MS5717",
+        "column": "SIM_A_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0893",
+        "record_hash": "sha256:3cf8cb4cc4c29300b97d788d18e475348a08672dd9dcfd29f06ce59aa1e01f2b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU5717",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1054",
+        "record_hash": "sha256:c2bd0ab7364626ed129f890f912f500800c56817e71df351cc8874b5d0ba4a9b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5717",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1094",
+        "record_hash": "sha256:af113634a1a082e3fa0a2a02a81890341ee0c7549a95ce4896ac3684fc175e3d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO5717",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1133",
+        "record_hash": "sha256:efd2d0f19687d349682bf103d0ade82d76ca5502cd6d0b364237317027b672d0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ5717",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1170",
+        "record_hash": "sha256:411988744cd01444910b1fed97a11222ef0d5f69f12b647703f1e4222a21f100",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC5717",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2459",
+        "record_hash": "sha256:ee8bef865305dc793823226e4739f3e5f11917218ea09f38657841bf3ff0564f",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NT5717",
+        "column": "VANDAL_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3001",
+        "record_hash": "sha256:04ad0bf7d2fd6d3d7312d5b1f1a694a3db653327234963ad8e901a34e9dd8d7e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU5717",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3114",
+        "record_hash": "sha256:8bbb507e9947abadbacf5bdcb99131d027b1e18ba7f56265cc551f9f1ce39da2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX5717",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0113"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0760"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0893"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1054"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1094"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1133"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1170"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "public-property",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2459"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3001"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3114"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_south_carolina_columbia&signal_id=sig_5df542f6006ae0b26dd1",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5df542f6006ae0b26dd1/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, University of South Carolina-Columbia: 2 on-campus vandalism statistics labeled National origin. 2 on-campus vandalism statistics labeled Race. 1 on-campus harassment/threat statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_5df542f6006ae0b26dd1/",
+    "proactive_reply": "Federal 2024 data, University of South Carolina-Columbia: 2 on-campus vandalism statistics labeled National origin. 2 on-campus vandalism statistics labeled Race. 1 on-campus harassment/threat statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_5df542f6006ae0b26dd1/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

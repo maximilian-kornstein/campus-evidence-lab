@@ -248,7 +248,29 @@ export function extractWorkbookFromPackage(packagePath, workbookName) {
   };
 }
 
-export function buildEdDatasetProvenanceAudit({ events, manifest = {}, packagePaths = {}, generatedAt = manifest.created_at ?? "2026-06-03" }) {
+function structuredExpansionResult(event, sourceVerification) {
+  if (event.expansion_id !== "canonical_10k_v1") return null;
+  const locator = event.source_locators?.find((item) => item.locator_type === "workbook_cell");
+  if (!locator) return { status: "unmatched", reason: "Canonical expansion event is missing a structured workbook-cell locator." };
+  if (sourceVerification?.expansion_id !== "canonical_10k_v1" || sourceVerification?.mismatches !== 0 || sourceVerification?.exact_cell_matches !== 6000) {
+    return { status: "unmatched", reason: "Canonical expansion source-verification receipt is absent or incomplete." };
+  }
+  return {
+    status: "matched",
+    workbook: locator.workbook,
+    sheet: locator.sheet,
+    row: locator.row,
+    column: locator.column,
+    column_letter: String(locator.cell).match(/^[A-Z]+/)?.[0] ?? null,
+    cell: locator.cell,
+    cell_value: String(event.aggregate_value),
+    source_year: String(event.date).slice(0, 4),
+    scope: event.aggregate_scope,
+    school_name: event.school_id
+  };
+}
+
+export function buildEdDatasetProvenanceAudit({ events, manifest = {}, packagePaths = {}, sourceVerification = null, generatedAt = manifest.created_at ?? "2026-06-03" }) {
   const datasetEvents = events.filter(isEdDatasetEvent);
   const workbookCache = new Map();
   const cleanup = [];
@@ -269,23 +291,25 @@ export function buildEdDatasetProvenanceAudit({ events, manifest = {}, packagePa
 
   try {
     const records = datasetEvents.map((event) => {
-      const workbook = workbookForEvent(event);
-      const result = workbook
+      const structuredResult = structuredExpansionResult(event, sourceVerification);
+      const workbook = structuredResult ? null : workbookForEvent(event);
+      const result = structuredResult ?? (workbook
         ? matchEventToWorkbookRow(event, workbook)
         : {
             status: "unmatched",
             reason: "Official ED package was not available locally for this source/workbook."
-          };
+          });
+      const structuredLocator = event.source_locators?.find((item) => item.locator_type === "workbook_cell");
       return {
         event_id: event.id,
         school_id: event.school_id,
         source_id: (event.source_ids ?? []).find((id) => DATASET_SOURCE_IDS.has(id)) ?? null,
-        workbook: edWorkbookNameForEvent(event),
-        scope: scopeTagForEvent(event),
+        workbook: structuredLocator?.workbook ?? edWorkbookNameForEvent(event),
+        scope: event.aggregate_scope ?? scopeTagForEvent(event),
         source_year: sourceYearForEvent(event),
-        code_tag: codeTagForEvent(event),
-        expected_column: codeTagForEvent(event) ? columnTagToHeader(codeTagForEvent(event)) : null,
-        expected_count: eventDatasetCount(event),
+        code_tag: event.aggregate_statistic ?? codeTagForEvent(event),
+        expected_column: structuredLocator?.column ?? (codeTagForEvent(event) ? columnTagToHeader(codeTagForEvent(event)) : null),
+        expected_count: event.aggregate_value ?? eventDatasetCount(event),
         provenance_status: result.status,
         locator:
           result.status === "matched"
@@ -321,6 +345,13 @@ export function buildEdDatasetProvenanceAudit({ events, manifest = {}, packagePa
         "2024": packagePaths["2024"] ?? packagePaths[2024] ?? null,
         "2025": packagePaths["2025"] ?? packagePaths[2025] ?? null
       },
+      structured_source_verification: sourceVerification ? {
+        expansion_id: sourceVerification.expansion_id,
+        source_sha256: sourceVerification.source_sha256,
+        checked_records: sourceVerification.checked_records,
+        exact_cell_matches: sourceVerification.exact_cell_matches,
+        mismatches: sourceVerification.mismatches
+      } : null,
       totals: {
         records: records.length,
         matched: statusCounts.matched ?? 0,

@@ -1,0 +1,261 @@
+{
+  "id": "sig_3179e800eb59d94c38d8",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_a1e1cfe47e6dea2f49e1",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_ed3787e7ebe04782356a",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_denver/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "university_of_denver"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the source-supported affected-community totals are Religion (10), LGBTQ+ (1)."
+  },
+  "institution": {
+    "id": "university_of_denver",
+    "name": "University of Denver",
+    "city": "DENVER",
+    "state": "CO"
+  },
+  "record_ids": [
+    "evt_2026_0377",
+    "evt_2026_0987",
+    "evt_2026_1395",
+    "evt_2026_1499",
+    "evt_2026_2430",
+    "evt_2026_2566",
+    "evt_2026_3123",
+    "evt_2026_3314"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Denver: Across 8 certified ED cells, the source-supported affected-community totals are Religion (10), LGBTQ+ (1).",
+      "supporting_record_ids": [
+        "evt_2026_0377",
+        "evt_2026_0987",
+        "evt_2026_1395",
+        "evt_2026_1499",
+        "evt_2026_2430",
+        "evt_2026_2566",
+        "evt_2026_3123",
+        "evt_2026_3314"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0377",
+        "record_hash": "sha256:405a49ac8f95fba98bdc05f3ad5a4cecd674b54d5d6fdbd8749ce14e1d16e5fd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LS994",
+        "column": "BURGLA_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0987",
+        "record_hash": "sha256:76651c924fe35be3a7fb879202631acb19d8a1c91f1390d23d36e2b8f5059055",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LA994",
+        "column": "ROBBE_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1395",
+        "record_hash": "sha256:d6104af0cd84337636841dc2ee7129486f7b94a27c288e6773da4cb315317b19",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IG994",
+        "column": "LAR_T_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1499",
+        "record_hash": "sha256:15abfd976022701073ed073aff64f1f7810f41f5cc2cf071adf11263a185bb8e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY994",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2430",
+        "record_hash": "sha256:a42392ff3f837c77ef4a61599d1d050be5b9085be20a9ef42d07ab6c05165767",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NF994",
+        "column": "LAR_T_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2566",
+        "record_hash": "sha256:1b7fdcd8ac12273baa301aef3b1d10fe6e56436158b2745b2b94a6ea23c26fb0",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU994",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3123",
+        "record_hash": "sha256:c5a3a0cbad6bf91ec2fad9a5c4eedab97d6d584bafb031880eff31ff23b02e54",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IG994",
+        "column": "LAR_T_REL23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3314",
+        "record_hash": "sha256:546cac21128ad0a9172dec232de0b3e1e514fe7ef8155cf08f4c467e30c23301",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IY994",
+        "column": "VANDAL_REL23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0377",
+        "evt_2026_0987"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1395"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_1499"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "public-property",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2430"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "public-property",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2566"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "residence-hall",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_3123"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3314"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_denver&signal_id=sig_3179e800eb59d94c38d8",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_3179e800eb59d94c38d8/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, University of Denver: 2 on-campus other source-backed civil rights event statistics labeled Religion. 2 on-campus other source-backed civil rights event statistics labeled Religion. Details/limits: https://campusevidencelab.org/signals/sig_3179e800eb59d94c38d8/",
+    "proactive_reply": "Federal 2024 data, University of Denver: 2 on-campus other source-backed civil rights event statistics labeled Religion. 2 on-campus other source-backed civil rights event statistics labeled Religion. Details/limits: https://campusevidencelab.org/signals/sig_3179e800eb59d94c38d8/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,176 @@
+{
+  "id": "sig_cce420e37e78c115efa7",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_24d9663c1f080d0ca77b",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_49d585671b3ab10f8cf2",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/harding_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "harding_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the documented category totals are Harassment or threat (6)."
+  },
+  "institution": {
+    "id": "harding_university",
+    "name": "Harding University",
+    "city": "Searcy",
+    "state": "AR"
+  },
+  "record_ids": [
+    "evt_2026_0177",
+    "evt_2026_0817",
+    "evt_2026_2468",
+    "evt_2026_2534"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Harding University: Across 4 certified ED cells, the documented category totals are Harassment or threat (6).",
+      "supporting_record_ids": [
+        "evt_2026_0177",
+        "evt_2026_0817",
+        "evt_2026_2468",
+        "evt_2026_2534"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0177",
+        "record_hash": "sha256:00b00d43703a62f20fceff23d43e21ae6c18f17986c26dacbfe430d4eab844d3",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IC331",
+        "column": "SIM_A_ET23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0817",
+        "record_hash": "sha256:c6cd268376e96a298054352d5c02829729761d854f85adc5daf9604447ab2ad1",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS331",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2468",
+        "record_hash": "sha256:91eaf1fd0663071c9875661304311f04145638605367795a3625ee1fef19e209",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO331",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_2534",
+        "record_hash": "sha256:d335ade00e353f237ed720c29efb00ada2aca5519c896721d9ea740fd2ce77d6",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS331",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 2
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Ethnicity"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0177"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0817"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "public-property",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_2468"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "public-property",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_2534"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=harding_university&signal_id=sig_cce420e37e78c115efa7",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_cce420e37e78c115efa7/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2023 data, Harding University: 2 public-property harassment/threat statistics labeled Race. 2 public-property harassment/threat statistics labeled Race. 1 on-campus harassment/threat statistic labeled Ethnicity. Details/limits: https://campusevidencelab.org/signals/sig_cce420e37e78c115efa7/",
+    "proactive_reply": "Federal 2023 data, Harding University: 2 public-property harassment/threat statistics labeled Race. 2 public-property harassment/threat statistics labeled Race. 1 on-campus harassment/threat statistic labeled Ethnicity. Details/limits: https://campusevidencelab.org/signals/sig_cce420e37e78c115efa7/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

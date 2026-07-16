@@ -1,0 +1,176 @@
+{
+  "id": "sig_6bb3387d4cb950aaa5a9",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_2df71dcb4b18e716f0cd",
+  "dossier_angle": "geography",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_7510fc01c0b9e4f0de5b",
+    "title": "Documented geography context",
+    "url": "https://campusevidencelab.org/schools/washington_and_lee_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "washington_and_lee_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the reported geography totals are on-campus (4)."
+  },
+  "institution": {
+    "id": "washington_and_lee_university",
+    "name": "Washington and Lee University",
+    "city": "LEXINGTON",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_0559",
+    "evt_2026_0897",
+    "evt_2026_1494",
+    "evt_2026_1696"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Washington and Lee University: Across 4 certified ED cells, the reported geography totals are on-campus (4).",
+      "supporting_record_ids": [
+        "evt_2026_0559",
+        "evt_2026_0897",
+        "evt_2026_1494",
+        "evt_2026_1696"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0559",
+        "record_hash": "sha256:53ddf3e2df47fbf4f801b8e045aebac9b80d60616598e97863ee26ccf57b68b2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NM6748",
+        "column": "INTIM_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0897",
+        "record_hash": "sha256:6b3ec6c7c53f054ba5ef9e1dc02a868f07bc50770d48c9032ba76027316e1929",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ND6748",
+        "column": "LAR_T_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1494",
+        "record_hash": "sha256:cdb39930e38813c7e580593606d87b94bb08562c8520b79eab61b5d6d080beed",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NW6748",
+        "column": "VANDAL_GEN24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1696",
+        "record_hash": "sha256:ae084509864ffc93865b837205aa55dcfbe20bcf90923d2567793c336d9b285d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV6748",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0559"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0897"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Gender"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1494"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1696"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=washington_and_lee_university&signal_id=sig_6bb3387d4cb950aaa5a9",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_6bb3387d4cb950aaa5a9/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Washington and Lee University: 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus other source-backed civil rights event statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_6bb3387d4cb950aaa5a9/",
+    "proactive_reply": "Federal 2024 data, Washington and Lee University: 1 on-campus harassment/threat statistic labeled LGBTQ+. 1 on-campus other source-backed civil rights event statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_6bb3387d4cb950aaa5a9/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

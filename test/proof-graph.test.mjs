@@ -35,8 +35,8 @@ test("canonical hashes survive JSON serialization when optional fields are absen
 
 test("committed ProofGraphs verify and a changed claim is detected", async () => {
   const index = await read("proof-graph/index.json");
-  assert.equal(index.graph_count, 4000);
-  assert.equal(index.graphs.length, 4000);
+  assert.equal(index.graph_count, 10000);
+  assert.equal(index.graphs.length, 10000);
   const graph = await read("proof-graph/graphs/evt_2024_0001.json");
   assert.equal(verifyEvidenceGraph(graph).valid, true);
   graph.nodes.find((node) => node.type === "bounded_claim").data.value = "tampered";

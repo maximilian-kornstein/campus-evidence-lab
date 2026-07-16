@@ -55,7 +55,7 @@ test("api-check verifies the public API artifact set", async () => {
   const stdout = await runCli(["api-check"]);
 
   assert.match(stdout, /API integrity check passed/);
-  assert.match(stdout, /snapshot_2026_06_03_4000_records/);
+  assert.match(stdout, /snapshot_2026_06_03_10000_records/);
   assert.match(stdout, /institution endpoints/i);
   assert.match(stdout, /citation packets/i);
 });

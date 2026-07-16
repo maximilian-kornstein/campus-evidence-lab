@@ -1,0 +1,176 @@
+{
+  "id": "sig_f98e694ba032827f63d9",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f899175258d6fb387bbf",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_0f209c2022a7fd706a7d",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/university_of_richmond/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "university_of_richmond"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), Race (2)."
+  },
+  "institution": {
+    "id": "university_of_richmond",
+    "name": "University of Richmond",
+    "city": "University of Richmond",
+    "state": "VA"
+  },
+  "record_ids": [
+    "evt_2026_1058",
+    "evt_2026_1560",
+    "evt_2026_1727",
+    "evt_2026_3209"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Richmond: Across 4 certified ED cells, the source-supported affected-community totals are LGBTQ+ (2), Race (2).",
+      "supporting_record_ids": [
+        "evt_2026_1058",
+        "evt_2026_1560",
+        "evt_2026_1727",
+        "evt_2026_3209"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1058",
+        "record_hash": "sha256:64346da936cd91b652b95d183c5c5deefdf3bc87c412b5bc4d62b6e1add489ea",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX6675",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1560",
+        "record_hash": "sha256:a5c948258ef5c3ef45c268c3a858fabf645d145aa39f1818e5759ff1a26480f2",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ6675",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1727",
+        "record_hash": "sha256:75fcb0c88f8071dd25a0d35ffcddf52523f04d908c1a64a51e480466b8175d84",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA6675",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3209",
+        "record_hash": "sha256:0bce6a21cd3254397e484f482819f9ebc824f6e987308a6102dfa26879b8746e",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IZ6675",
+        "column": "VANDAL_SEX23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1058"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1560"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1727"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3209"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_richmond&signal_id=sig_f98e694ba032827f63d9",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f98e694ba032827f63d9/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2023 data, University of Richmond: 1 on-campus harassment/threat statistic labeled Race. 1 on-campus vandalism statistic labeled LGBTQ+. 1 on-campus vandalism statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_f98e694ba032827f63d9/",
+    "proactive_reply": "Federal 2023 data, University of Richmond: 1 on-campus harassment/threat statistic labeled Race. 1 on-campus vandalism statistic labeled LGBTQ+. 1 on-campus vandalism statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_f98e694ba032827f63d9/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

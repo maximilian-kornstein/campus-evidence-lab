@@ -1,6 +1,6 @@
 {
   "id": "ed_certification_batch_016_review_v1",
-  "snapshot_id": "snapshot_2026_06_03_4000_records",
+  "snapshot_id": "snapshot_2026_06_03_10000_records",
   "generated_at": "2026-06-03",
   "review_batch_id": "ed_certification_batch_016",
   "source_batch_id": "ed_dataset_batch_001",
@@ -12,22 +12,22 @@
   "completion_rule": "Every included record receives a visible status. A certified status requires every gate to pass and an explicit batch-review certification basis; unresolved source-cell locators are blocked.",
   "totals": {
     "records": 86,
-    "certified": 85,
+    "certified": 52,
     "not_certified": 0,
-    "blocked": 1,
+    "blocked": 34,
     "awaiting_review": 0
   },
   "status_counts": {
-    "certified": 85,
-    "blocked": 1
+    "certified": 52,
+    "blocked": 34
   },
   "open_gate_counts": {
-    "rationale_specificity": 1,
-    "source_locator_specificity": 1
+    "rationale_specificity": 34,
+    "source_locator_specificity": 34
   },
   "provenance_status_counts": {
-    "matched": 85,
-    "unmatched": 1
+    "matched": 52,
+    "unmatched": 34
   },
   "records": [
     {
@@ -4404,27 +4404,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 2306,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU2306",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 2306 > column INTIM_SEX21 > cell DU2306"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -4432,9 +4425,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU2306 in Oncampushate212223.xlsx, sheet1 row 2306, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -4462,9 +4455,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -4475,9 +4468,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 2306 > column INTIM_SEX21 > cell DU2306. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3753/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3753",
       "challenge_url": "/challenge/?record=evt_2026_3753"
@@ -4488,27 +4481,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 2673,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED2673",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 2673 > column VANDAL_SEX21 > cell ED2673"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -4516,9 +4502,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED2673 in Oncampushate212223.xlsx, sheet1 row 2673, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -4546,9 +4532,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -4559,9 +4545,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 2673 > column VANDAL_SEX21 > cell ED2673. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3758/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3758",
       "challenge_url": "/challenge/?record=evt_2026_3758"
@@ -4572,27 +4558,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 3405,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU3405",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 3405 > column INTIM_SEX21 > cell DU3405"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -4600,9 +4579,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU3405 in Oncampushate212223.xlsx, sheet1 row 3405, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -4630,9 +4609,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -4643,9 +4622,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 3405 > column INTIM_SEX21 > cell DU3405. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3763/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3763",
       "challenge_url": "/challenge/?record=evt_2026_3763"
@@ -4656,27 +4635,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 4678,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED4678",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 4678 > column VANDAL_SEX21 > cell ED4678"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -4684,9 +4656,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED4678 in Oncampushate212223.xlsx, sheet1 row 4678, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -4714,9 +4686,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -4727,9 +4699,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 4678 > column VANDAL_SEX21 > cell ED4678. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3766/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3766",
       "challenge_url": "/challenge/?record=evt_2026_3766"
@@ -4740,27 +4712,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 4386,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED4386",
-        "cell_value": "3",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 4386 > column VANDAL_SEX21 > cell ED4386"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 3,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -4768,9 +4733,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED4386 in Oncampushate212223.xlsx, sheet1 row 4386, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -4798,9 +4763,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -4811,9 +4776,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 4386 > column VANDAL_SEX21 > cell ED4386. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3773/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3773",
       "challenge_url": "/challenge/?record=evt_2026_3773"
@@ -4824,27 +4789,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 7290,
-        "column": "INTIM_DIS21",
-        "column_letter": "DX",
-        "cell": "DX7290",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 7290 > column INTIM_DIS21 > cell DX7290"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-dis21",
       "expected_column": "INTIM_DIS21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -4852,9 +4810,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DX7290 in Oncampushate212223.xlsx, sheet1 row 7290, column INTIM_DIS21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -4882,9 +4840,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -4895,9 +4853,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_DIS21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-dis21 maps directly to Students with disabilities; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 7290 > column INTIM_DIS21 > cell DX7290. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3778/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3778",
       "challenge_url": "/challenge/?record=evt_2026_3778"
@@ -4908,27 +4866,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 6683,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED6683",
-        "cell_value": "2",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 6683 > column VANDAL_SEX21 > cell ED6683"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 2,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -4936,9 +4887,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED6683 in Oncampushate212223.xlsx, sheet1 row 6683, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -4966,9 +4917,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -4979,9 +4930,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 6683 > column VANDAL_SEX21 > cell ED6683. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3786/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3786",
       "challenge_url": "/challenge/?record=evt_2026_3786"
@@ -4992,27 +4943,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 7025,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU7025",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 7025 > column INTIM_SEX21 > cell DU7025"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5020,9 +4964,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU7025 in Oncampushate212223.xlsx, sheet1 row 7025, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5050,9 +4994,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5063,9 +5007,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 7025 > column INTIM_SEX21 > cell DU7025. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3789/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3789",
       "challenge_url": "/challenge/?record=evt_2026_3789"
@@ -5076,27 +5020,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 126,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED126",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 126 > column VANDAL_SEX21 > cell ED126"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5104,9 +5041,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED126 in Oncampushate212223.xlsx, sheet1 row 126, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5134,9 +5071,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5147,9 +5084,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 126 > column VANDAL_SEX21 > cell ED126. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3790/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3790",
       "challenge_url": "/challenge/?record=evt_2026_3790"
@@ -5160,27 +5097,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 1182,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED1182",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 1182 > column VANDAL_SEX21 > cell ED1182"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5188,9 +5118,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED1182 in Oncampushate212223.xlsx, sheet1 row 1182, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5218,9 +5148,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5231,9 +5161,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 1182 > column VANDAL_SEX21 > cell ED1182. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3799/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3799",
       "challenge_url": "/challenge/?record=evt_2026_3799"
@@ -5244,27 +5174,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 1754,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU1754",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 1754 > column INTIM_SEX21 > cell DU1754"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5272,9 +5195,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU1754 in Oncampushate212223.xlsx, sheet1 row 1754, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5302,9 +5225,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5315,9 +5238,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 1754 > column INTIM_SEX21 > cell DU1754. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3802/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3802",
       "challenge_url": "/challenge/?record=evt_2026_3802"
@@ -5328,27 +5251,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 3845,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU3845",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 3845 > column INTIM_SEX21 > cell DU3845"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5356,9 +5272,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU3845 in Oncampushate212223.xlsx, sheet1 row 3845, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5386,9 +5302,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5399,9 +5315,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 3845 > column INTIM_SEX21 > cell DU3845. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3813/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3813",
       "challenge_url": "/challenge/?record=evt_2026_3813"
@@ -5412,27 +5328,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 3913,
-        "column": "INTIM_GID21",
-        "column_letter": "DW",
-        "cell": "DW3913",
-        "cell_value": "2",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 3913 > column INTIM_GID21 > cell DW3913"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-gid21",
       "expected_column": "INTIM_GID21",
       "expected_count": 2,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5440,9 +5349,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DW3913 in Oncampushate212223.xlsx, sheet1 row 3913, column INTIM_GID21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5470,9 +5379,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5483,9 +5392,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_GID21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-gid21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 3913 > column INTIM_GID21 > cell DW3913. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3816/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3816",
       "challenge_url": "/challenge/?record=evt_2026_3816"
@@ -5496,27 +5405,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 5957,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU5957",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 5957 > column INTIM_SEX21 > cell DU5957"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5524,9 +5426,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU5957 in Oncampushate212223.xlsx, sheet1 row 5957, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5554,9 +5456,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5567,9 +5469,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 5957 > column INTIM_SEX21 > cell DU5957. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3827/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3827",
       "challenge_url": "/challenge/?record=evt_2026_3827"
@@ -5580,27 +5482,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 6888,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED6888",
-        "cell_value": "2",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 6888 > column VANDAL_SEX21 > cell ED6888"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 2,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5608,9 +5503,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED6888 in Oncampushate212223.xlsx, sheet1 row 6888, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5638,9 +5533,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5651,9 +5546,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 6888 > column VANDAL_SEX21 > cell ED6888. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3832/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3832",
       "challenge_url": "/challenge/?record=evt_2026_3832"
@@ -5664,27 +5559,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 5,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED5",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 5 > column VANDAL_SEX21 > cell ED5"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5692,9 +5580,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED5 in Oncampushate212223.xlsx, sheet1 row 5, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5722,9 +5610,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5735,9 +5623,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 5 > column VANDAL_SEX21 > cell ED5. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3834/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3834",
       "challenge_url": "/challenge/?record=evt_2026_3834"
@@ -5748,27 +5636,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 1125,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU1125",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 1125 > column INTIM_SEX21 > cell DU1125"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5776,9 +5657,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU1125 in Oncampushate212223.xlsx, sheet1 row 1125, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5806,9 +5687,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5819,9 +5700,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 1125 > column INTIM_SEX21 > cell DU1125. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3841/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3841",
       "challenge_url": "/challenge/?record=evt_2026_3841"
@@ -5832,27 +5713,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 1652,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED1652",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 1652 > column VANDAL_SEX21 > cell ED1652"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5860,9 +5734,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED1652 in Oncampushate212223.xlsx, sheet1 row 1652, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5890,9 +5764,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5903,9 +5777,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 1652 > column VANDAL_SEX21 > cell ED1652. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3843/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3843",
       "challenge_url": "/challenge/?record=evt_2026_3843"
@@ -5916,27 +5790,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 1750,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU1750",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 1750 > column INTIM_SEX21 > cell DU1750"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -5944,9 +5811,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU1750 in Oncampushate212223.xlsx, sheet1 row 1750, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -5974,9 +5841,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -5987,9 +5854,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 1750 > column INTIM_SEX21 > cell DU1750. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3845/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3845",
       "challenge_url": "/challenge/?record=evt_2026_3845"
@@ -6000,27 +5867,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 2897,
-        "column": "VANDAL_GID21",
-        "column_letter": "EF",
-        "cell": "EF2897",
-        "cell_value": "2",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 2897 > column VANDAL_GID21 > cell EF2897"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-gid21",
       "expected_column": "VANDAL_GID21",
       "expected_count": 2,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -6028,9 +5888,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell EF2897 in Oncampushate212223.xlsx, sheet1 row 2897, column VANDAL_GID21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -6058,9 +5918,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -6071,9 +5931,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_GID21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-gid21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 2897 > column VANDAL_GID21 > cell EF2897. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3851/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3851",
       "challenge_url": "/challenge/?record=evt_2026_3851"
@@ -6084,27 +5944,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 3710,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU3710",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 3710 > column INTIM_SEX21 > cell DU3710"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -6112,9 +5965,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU3710 in Oncampushate212223.xlsx, sheet1 row 3710, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -6142,9 +5995,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -6155,9 +6008,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 3710 > column INTIM_SEX21 > cell DU3710. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3855/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3855",
       "challenge_url": "/challenge/?record=evt_2026_3855"
@@ -6168,27 +6021,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 6700,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU6700",
-        "cell_value": "2",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 6700 > column INTIM_SEX21 > cell DU6700"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 2,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -6196,9 +6042,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU6700 in Oncampushate212223.xlsx, sheet1 row 6700, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -6226,9 +6072,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -6239,9 +6085,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 6700 > column INTIM_SEX21 > cell DU6700. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3871/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3871",
       "challenge_url": "/challenge/?record=evt_2026_3871"
@@ -6252,27 +6098,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 6677,
-        "column": "INTIM_GID21",
-        "column_letter": "DW",
-        "cell": "DW6677",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 6677 > column INTIM_GID21 > cell DW6677"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-gid21",
       "expected_column": "INTIM_GID21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -6280,9 +6119,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DW6677 in Oncampushate212223.xlsx, sheet1 row 6677, column INTIM_GID21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -6310,9 +6149,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -6323,9 +6162,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_GID21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-gid21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 6677 > column INTIM_GID21 > cell DW6677. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3872/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3872",
       "challenge_url": "/challenge/?record=evt_2026_3872"
@@ -6336,27 +6175,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 6906,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED6906",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 6906 > column VANDAL_SEX21 > cell ED6906"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -6364,9 +6196,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED6906 in Oncampushate212223.xlsx, sheet1 row 6906, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -6394,9 +6226,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -6407,9 +6239,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 6906 > column VANDAL_SEX21 > cell ED6906. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3873/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3873",
       "challenge_url": "/challenge/?record=evt_2026_3873"
@@ -6423,7 +6255,7 @@
       "certification_status": "blocked",
       "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": "source_locator_specificity: Multiple workbook rows matched yavapai_college, INTIM_DIS21, and count 1.",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
       "source_locator": null,
       "provenance_status": "unmatched",
       "code_tag": "intim-dis21",
@@ -6442,7 +6274,7 @@
         },
         "source_locator_specificity": {
           "status": "block",
-          "detail": "Multiple workbook rows matched yavapai_college, INTIM_DIS21, and count 1.",
+          "detail": "Official ED package was not available locally for this source/workbook.",
           "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
@@ -6497,27 +6329,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 1750,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED1750",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 1750 > column VANDAL_SEX21 > cell ED1750"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -6525,9 +6350,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED1750 in Oncampushate212223.xlsx, sheet1 row 1750, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -6555,9 +6380,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -6568,9 +6393,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 1750 > column VANDAL_SEX21 > cell ED1750. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3884/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3884",
       "challenge_url": "/challenge/?record=evt_2026_3884"
@@ -6581,27 +6406,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 3904,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED3904",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 3904 > column VANDAL_SEX21 > cell ED3904"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -6609,9 +6427,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED3904 in Oncampushate212223.xlsx, sheet1 row 3904, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -6639,9 +6457,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -6652,9 +6470,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 3904 > column VANDAL_SEX21 > cell ED3904. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3895/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3895",
       "challenge_url": "/challenge/?record=evt_2026_3895"
@@ -6665,27 +6483,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 4078,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU4078",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 4078 > column INTIM_SEX21 > cell DU4078"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -6693,9 +6504,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU4078 in Oncampushate212223.xlsx, sheet1 row 4078, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -6723,9 +6534,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -6736,9 +6547,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 4078 > column INTIM_SEX21 > cell DU4078. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3897/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3897",
       "challenge_url": "/challenge/?record=evt_2026_3897"
@@ -6749,27 +6560,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 5620,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED5620",
-        "cell_value": "2",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 5620 > column VANDAL_SEX21 > cell ED5620"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 2,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -6777,9 +6581,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED5620 in Oncampushate212223.xlsx, sheet1 row 5620, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -6807,9 +6611,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -6820,9 +6624,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 5620 > column VANDAL_SEX21 > cell ED5620. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3902/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3902",
       "challenge_url": "/challenge/?record=evt_2026_3902"
@@ -6833,27 +6637,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 6916,
-        "column": "INTIM_GID21",
-        "column_letter": "DW",
-        "cell": "DW6916",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 6916 > column INTIM_GID21 > cell DW6916"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-gid21",
       "expected_column": "INTIM_GID21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -6861,9 +6658,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DW6916 in Oncampushate212223.xlsx, sheet1 row 6916, column INTIM_GID21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -6891,9 +6688,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -6904,9 +6701,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_GID21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-gid21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 6916 > column INTIM_GID21 > cell DW6916. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3910/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3910",
       "challenge_url": "/challenge/?record=evt_2026_3910"
@@ -6917,27 +6714,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 998,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU998",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 998 > column INTIM_SEX21 > cell DU998"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -6945,9 +6735,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU998 in Oncampushate212223.xlsx, sheet1 row 998, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -6975,9 +6765,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -6988,9 +6778,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 998 > column INTIM_SEX21 > cell DU998. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3915/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3915",
       "challenge_url": "/challenge/?record=evt_2026_3915"
@@ -7001,27 +6791,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 1085,
-        "column": "INTIM_SEX21",
-        "column_letter": "DU",
-        "cell": "DU1085",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 1085 > column INTIM_SEX21 > cell DU1085"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "intim-sex21",
       "expected_column": "INTIM_SEX21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -7029,9 +6812,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell DU1085 in Oncampushate212223.xlsx, sheet1 row 1085, column INTIM_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -7059,9 +6842,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -7072,9 +6855,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code INTIM_SEX21 is for Intimidation; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in intim-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 1085 > column INTIM_SEX21 > cell DU1085. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3916/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3916",
       "challenge_url": "/challenge/?record=evt_2026_3916"
@@ -7085,27 +6868,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 2306,
-        "column": "VANDAL_GID21",
-        "column_letter": "EF",
-        "cell": "EF2306",
-        "cell_value": "1",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 2306 > column VANDAL_GID21 > cell EF2306"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-gid21",
       "expected_column": "VANDAL_GID21",
       "expected_count": 1,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -7113,9 +6889,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell EF2306 in Oncampushate212223.xlsx, sheet1 row 2306, column VANDAL_GID21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -7143,9 +6919,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -7156,9 +6932,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_GID21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-gid21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 2306 > column VANDAL_GID21 > cell EF2306. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3920/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3920",
       "challenge_url": "/challenge/?record=evt_2026_3920"
@@ -7169,27 +6945,20 @@
       "source_family": "ed_campus_safety_dataset",
       "review_batch_id": "ed_certification_batch_016",
       "certification_standard_version": "certification_rules_v1",
-      "certification_status": "certified",
-      "certification_basis": "ed_certification_batch_016_internal_source_to_record_review",
+      "certification_status": "blocked",
+      "certification_basis": null,
       "not_certified_reason": null,
-      "blocked_reason": null,
-      "source_locator": {
-        "locator_type": "workbook_cell",
-        "workbook": "Oncampushate212223.xlsx",
-        "sheet": "sheet1",
-        "row": 2428,
-        "column": "VANDAL_SEX21",
-        "column_letter": "ED",
-        "cell": "ED2428",
-        "cell_value": "2",
-        "locator": "Oncampushate212223.xlsx > sheet1 row 2428 > column VANDAL_SEX21 > cell ED2428"
-      },
-      "provenance_status": "matched",
+      "blocked_reason": "source_locator_specificity: Official ED package was not available locally for this source/workbook.",
+      "source_locator": null,
+      "provenance_status": "unmatched",
       "code_tag": "vandal-sex21",
       "expected_column": "VANDAL_SEX21",
       "expected_count": 2,
       "source_year": "2021",
-      "open_gates": [],
+      "open_gates": [
+        "source_locator_specificity",
+        "rationale_specificity"
+      ],
       "gate_reviews": {
         "source_availability": {
           "status": "pass",
@@ -7197,9 +6966,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "source_locator_specificity": {
-          "status": "pass",
-          "detail": "Matched official ED workbook cell ED2428 in Oncampushate212223.xlsx, sheet1 row 2428, column VANDAL_SEX21.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "block",
+          "detail": "Official ED package was not available locally for this source/workbook.",
+          "required_action": "Keep blocked until workbook, sheet, row, column, and cell provenance is resolved."
         },
         "institution_support": {
           "status": "pass",
@@ -7227,9 +6996,9 @@
           "required_action": "No deterministic action required for this reviewed gate."
         },
         "rationale_specificity": {
-          "status": "pass",
-          "detail": "The batch review supplies source-specific category, community, and confidence rationales tied to the ED workbook cell.",
-          "required_action": "No deterministic action required for this reviewed gate."
+          "status": "review",
+          "detail": "Source-specific rationales cannot be completed without matched code-tag and source-cell support.",
+          "required_action": "Keep not certified until source-specific rationales can be supplied."
         },
         "overclaim_risk": {
           "status": "pass",
@@ -7240,9 +7009,9 @@
       "source_specific_rationales": {
         "classification_rationale": "The ED source-cell code VANDAL_SEX21 is for Destruction/damage/vandalism; the stored category is certified only when that source offense maps directly to the public category.",
         "community_rationale": "The affected-community label is certified only when the ED bias-code suffix in vandal-sex21 maps directly to LGBTQ+; no broader affected label is inferred.",
-        "confidence_rationale": "Certification confidence is limited to source-to-record support from Oncampushate212223.xlsx > sheet1 row 2428 > column VANDAL_SEX21 > cell ED2428. It is not a severity rating, prevalence estimate, safety score, or legal finding."
+        "confidence_rationale": "Certification confidence is limited to source-to-record support from unresolved ED workbook cell. It is not a severity rating, prevalence estimate, safety score, or legal finding."
       },
-      "next_action": "No certification action required for this batch-review version; continue normal periodic source checks.",
+      "next_action": "Repair the blocker gate before this record can be certified.",
       "event_url": "/events/evt_2026_3923/",
       "workspace_url": "/research-workspace/?record_ids=evt_2026_3923",
       "challenge_url": "/challenge/?record=evt_2026_3923"

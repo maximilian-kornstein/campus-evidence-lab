@@ -1,0 +1,200 @@
+{
+  "id": "sig_b1a1bf93556ff1ae3eed",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_c498e1a989ff1e14a5e6",
+  "dossier_angle": "community_labels",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_668377ff8ca077766279",
+    "title": "Source-supported community-label context",
+    "url": "https://campusevidencelab.org/schools/montclair_state_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "montclair_state_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 5 certified ED cells, the source-supported affected-community totals are Race (4), National origin (1)."
+  },
+  "institution": {
+    "id": "montclair_state_university",
+    "name": "Montclair State University",
+    "city": "MONTCLAIR",
+    "state": "NJ"
+  },
+  "record_ids": [
+    "evt_2026_0661",
+    "evt_2026_1575",
+    "evt_2026_1721",
+    "evt_2026_3071",
+    "evt_2026_3423"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Montclair State University: Across 5 certified ED cells, the source-supported affected-community totals are Race (4), National origin (1).",
+      "supporting_record_ids": [
+        "evt_2026_0661",
+        "evt_2026_1575",
+        "evt_2026_1721",
+        "evt_2026_3071",
+        "evt_2026_3423"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 5,
+    "certified_cell_count": 5,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0661",
+        "record_hash": "sha256:df9ac5add0d9dffa2b91eb81477a315441a2936f74db1331e89ae60f67fa84c4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3976",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1575",
+        "record_hash": "sha256:91e11c6240b7f48795cda575b938567f75d4c9a99e3ede18ecf27f691e689569",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DZ3976",
+        "column": "INTIM_NAT22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1721",
+        "record_hash": "sha256:a3d24053a9012d5f886e83f12d5c6fb7052c98ac772b40987a0dbe328dcbf5a0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3976",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3071",
+        "record_hash": "sha256:ac542eb6ccf08035efd79f5cdafacbe940792a172e054b737938512f61e152c7",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IO3976",
+        "column": "INTIM_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3423",
+        "record_hash": "sha256:6c233259352948fea5eb86485d4a4ba543d8330277efd630c3ba6fa49f3f560d",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DS3976",
+        "column": "INTIM_RAC22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0661"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1575"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1721"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3071"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3423"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=montclair_state_university&signal_id=sig_b1a1bf93556ff1ae3eed",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_b1a1bf93556ff1ae3eed/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2023 data, Montclair State University: 1 on-campus harassment/threat statistic labeled National origin. 1 on-campus harassment/threat statistic labeled Race. 1 on-campus harassment/threat statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_b1a1bf93556ff1ae3eed/",
+    "proactive_reply": "Federal 2023 data, Montclair State University: 1 on-campus harassment/threat statistic labeled National origin. 1 on-campus harassment/threat statistic labeled Race. 1 on-campus harassment/threat statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_b1a1bf93556ff1ae3eed/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

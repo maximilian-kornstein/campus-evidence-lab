@@ -1,0 +1,346 @@
+{
+  "id": "sig_4c2a1a18376546f358be",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f0c3d63eb72f64c9eddc",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_236c62d417ae5c39fd32",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/university_of_northern_iowa/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "university_of_northern_iowa"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 12 certified ED cells, the documented category totals are Other source-backed civil rights event (6), Harassment or threat (4), Vandalism (4)."
+  },
+  "institution": {
+    "id": "university_of_northern_iowa",
+    "name": "University of Northern Iowa",
+    "city": "CEDAR FALLS",
+    "state": "IA"
+  },
+  "record_ids": [
+    "evt_2026_0120",
+    "evt_2026_0735",
+    "evt_2026_0992",
+    "evt_2026_1148",
+    "evt_2026_1253",
+    "evt_2026_1316",
+    "evt_2026_2476",
+    "evt_2026_2980",
+    "evt_2026_3218",
+    "evt_2026_3317",
+    "evt_2026_3379",
+    "evt_2026_3417"
+  ],
+  "bounded_claims": [
+    {
+      "text": "University of Northern Iowa: Across 12 certified ED cells, the documented category totals are Other source-backed civil rights event (6), Harassment or threat (4), Vandalism (4).",
+      "supporting_record_ids": [
+        "evt_2026_0120",
+        "evt_2026_0735",
+        "evt_2026_0992",
+        "evt_2026_1148",
+        "evt_2026_1253",
+        "evt_2026_1316",
+        "evt_2026_2476",
+        "evt_2026_2980",
+        "evt_2026_3218",
+        "evt_2026_3317",
+        "evt_2026_3379",
+        "evt_2026_3417"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 14,
+    "certified_cell_count": 12,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0120",
+        "record_hash": "sha256:c05f41a7602fc82ec89207ec12dc66ee7143265a18fbe6f49a669fb3d6bfa85d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC2303",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0735",
+        "record_hash": "sha256:de0cfb379bd55917981cec5827306f71b7ba76050226d857a595c2aea24c09e0",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK2303",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0992",
+        "record_hash": "sha256:9fd9dca9c2c342c5242a6086b3c38993adced960b58bb015551fd88c6ef8a7ad",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX2303",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1148",
+        "record_hash": "sha256:5342cf52722f5c684d922d634e81a9e976f72d9235f2ad377c0acd768f9a583e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV2303",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1253",
+        "record_hash": "sha256:feb6d7527125c41bf0cf6528f8a7cadc9775dcd4c38af53982aa4bcdcb01a87c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ2303",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1316",
+        "record_hash": "sha256:0dc47a351bcbb503fc88e7cbf9c9e48748771e22001bb002f9f866c1934c9c3f",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DN2303",
+        "column": "LAR_T_GID22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2476",
+        "record_hash": "sha256:451e07d0915c2225b43bc0cc7b40537e477171c50859ffd760e5c4db311e8e7d",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HY2303",
+        "column": "SIM_A_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2980",
+        "record_hash": "sha256:8523665f4972cc9ff5ff91ecf45444ae36588f4c039e627042452b2d99dd4e80",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NC2303",
+        "column": "LAR_T_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_3218",
+        "record_hash": "sha256:070a5ed40a7b5420e94b450ea1dbe0e4885a196f6b438cadd32243d24ff7fbff",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NX2303",
+        "column": "VANDAL_GID24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3317",
+        "record_hash": "sha256:438890828f5917e8d560e3d6a2e682e3958b9d319f9747cf9bbe8bf147ffdcbb",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV2303",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3379",
+        "record_hash": "sha256:2e13ada82022d41882dee20215db770fe069505e586c22ad6bc85fa2f3500964",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ2303",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3417",
+        "record_hash": "sha256:e56862eab264ed7f9ab5eebcae774dd5e140de224fc1b0bddb89296f3168c153",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DN2303",
+        "column": "LAR_T_GID22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0120"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0735"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0992",
+        "evt_2026_1148"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1253"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1316"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "public-property",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2476"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "residence-hall",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_2980"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_3218",
+        "evt_2026_3317"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3379"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3417"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=university_of_northern_iowa&signal_id=sig_4c2a1a18376546f358be",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4c2a1a18376546f358be/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, University of Northern Iowa: 2 on-campus other source-backed civil rights event statistics labeled Religion. 2 on-campus vandalism statistics labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_4c2a1a18376546f358be/",
+    "proactive_reply": "Federal 2024 data, University of Northern Iowa: 2 on-campus other source-backed civil rights event statistics labeled Religion. 2 on-campus vandalism statistics labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_4c2a1a18376546f358be/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

@@ -1,0 +1,261 @@
+{
+  "id": "sig_4155e343e45a657eab55",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_bc51bb058c7e8498cafb",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_ffa54bfe0d674435d5aa",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/auburn_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "auburn_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the documented category totals are Harassment or threat (12), Vandalism (2), Other source-backed civil rights event (1)."
+  },
+  "institution": {
+    "id": "auburn_university",
+    "name": "Auburn University",
+    "city": "Auburn",
+    "state": "AL"
+  },
+  "record_ids": [
+    "evt_2026_0126",
+    "evt_2026_0677",
+    "evt_2026_0860",
+    "evt_2026_0943",
+    "evt_2026_0983",
+    "evt_2026_1023",
+    "evt_2026_1063",
+    "evt_2026_1102"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Auburn University: Across 8 certified ED cells, the documented category totals are Harassment or threat (12), Vandalism (2), Other source-backed civil rights event (1).",
+      "supporting_record_ids": [
+        "evt_2026_0126",
+        "evt_2026_0677",
+        "evt_2026_0860",
+        "evt_2026_0943",
+        "evt_2026_0983",
+        "evt_2026_1023",
+        "evt_2026_1063",
+        "evt_2026_1102"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 15,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0126",
+        "record_hash": "sha256:767bb4aa97c7a277b11b20e0199472299b0f217c84241959b7e8db06768b96bb",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NN14",
+        "column": "INTIM_GEN24",
+        "year": "2024",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_0677",
+        "record_hash": "sha256:e2fd9da3b927e709f34f72f3f46f0f5ad951a1003786dc0120ebd92e2a25ec3d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK14",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 4
+      },
+      {
+        "event_id": "evt_2026_0860",
+        "record_hash": "sha256:f62a382a98dfc278a2d11f0c58ae1a5c5c074ac9449d82cda1008402fdc50456",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "LI14",
+        "column": "AGG_A_RAC24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0943",
+        "record_hash": "sha256:6abdf4531c9390962f42ae6803e020a114d2ee7fafdf31faedbf3c9451614a8c",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR14",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0983",
+        "record_hash": "sha256:b3fd79d9d7ad1f2eeccc26066a358ec5a52796acd3144ee2e26f1d0159b73e20",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NV14",
+        "column": "VANDAL_SEX24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1023",
+        "record_hash": "sha256:ce7543dabe53ad9a9dcca16d7444ca80427d689649bb3bf9fa987fa45ef877ca",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "GV14",
+        "column": "BURGLA_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1063",
+        "record_hash": "sha256:92721e48ecd75e41f0b621cad600001a01b5d91ef9e57afacf3784e29e6a4bdc",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IQ14",
+        "column": "INTIM_SEX23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1102",
+        "record_hash": "sha256:afa908fd59f5f33720ce82167c9951ef63afe0561f260803b8148fb14fd1bbd5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX14",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Gender"
+      ],
+      "geography": "on-campus",
+      "value": 4,
+      "supporting_record_ids": [
+        "evt_2026_0126"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 6,
+      "supporting_record_ids": [
+        "evt_2026_0677",
+        "evt_2026_0860"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0943"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0983"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1023"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1063"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1102"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=auburn_university&signal_id=sig_4155e343e45a657eab55",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_4155e343e45a657eab55/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Auburn University: 6 on-campus harassment/threat statistics labeled Race. 4 on-campus harassment/threat statistics labeled Gender. 1 on-campus harassment/threat statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_4155e343e45a657eab55/",
+    "proactive_reply": "Federal 2024 data, Auburn University: 6 on-campus harassment/threat statistics labeled Race. 4 on-campus harassment/threat statistics labeled Gender. 1 on-campus harassment/threat statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_4155e343e45a657eab55/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

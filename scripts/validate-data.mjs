@@ -23,6 +23,7 @@ import { ED_CERTIFICATION_REVIEW_SPECS } from "./ed-certification-review-registr
 import { validateImportManifestCoverage } from "./import-manifest-lib.mjs";
 import { validateImportWaveArtifacts } from "./import-wave-lib.mjs";
 import { validateReviewTierRecord, REVIEW_TIERS } from "./review-tier-model-lib.mjs";
+import { CANONICAL_EXPANSION_ID, validateCanonicalExpansion } from "./canonical-expansion-lib.mjs";
 
 const allowedCommunities = new Set([
   "Jewish",
@@ -351,6 +352,22 @@ for (const event of events) {
     errors.push(`Event ${event.id} missing record_hash. Run npm run hash:data`);
   } else if (event.record_hash !== sha256(eventForHash(event))) {
     errors.push(`Event ${event.id} record_hash is stale. Run npm run hash:data`);
+  }
+}
+
+const canonicalExpansionEvents = events.filter((event) => event.expansion_id === CANONICAL_EXPANSION_ID);
+if (canonicalExpansionEvents.length > 0) {
+  for (const error of validateCanonicalExpansion(canonicalExpansionEvents)) errors.push(`canonical expansion: ${error}`);
+  for (const event of canonicalExpansionEvents) {
+    for (const field of ["candidate_id", "raw_source_hash", "source_family", "aggregate_scope", "aggregate_statistic"]) {
+      if (!event[field]) errors.push(`Event ${event.id} canonical expansion missing ${field}`);
+    }
+    if (event.source_ids.length !== 1 || event.source_ids[0] !== "src_ed_campus_safety_2025_hate_crime_data_files") {
+      errors.push(`Event ${event.id} canonical expansion must use the official 2025 ED release source`);
+    }
+    if (event.verification_status !== "Verified from public source" || event.review_tier !== "source_family_checked") {
+      errors.push(`Event ${event.id} canonical expansion overstates or understates its verification tier`);
+    }
   }
 }
 

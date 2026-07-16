@@ -1,0 +1,237 @@
+{
+  "id": "sig_50da367c553ee68a5041",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_cc76d90b264a5dce2401",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_d46916b75dbdcbf0390e",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/inter_american_university_of_puerto_rico_san_german/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "inter_american_university_of_puerto_rico_san_german"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 7 certified ED cells, the documented category totals are Vandalism (5), Harassment or threat (4), Other source-backed civil rights event (2)."
+  },
+  "institution": {
+    "id": "inter_american_university_of_puerto_rico_san_german",
+    "name": "Inter American University of Puerto Rico-San German",
+    "city": "SAN GERMAN",
+    "state": "PR"
+  },
+  "record_ids": [
+    "evt_2026_0094",
+    "evt_2026_0711",
+    "evt_2026_0758",
+    "evt_2026_0803",
+    "evt_2026_0848",
+    "evt_2026_0891",
+    "evt_2026_0932"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Inter American University of Puerto Rico-San German: Across 7 certified ED cells, the documented category totals are Vandalism (5), Harassment or threat (4), Other source-backed civil rights event (2).",
+      "supporting_record_ids": [
+        "evt_2026_0094",
+        "evt_2026_0711",
+        "evt_2026_0758",
+        "evt_2026_0803",
+        "evt_2026_0848",
+        "evt_2026_0891",
+        "evt_2026_0932"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 11,
+    "certified_cell_count": 7,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0094",
+        "record_hash": "sha256:77681644e70eee1984c2237aa296e7e66070dab1a9f8053f8901ab36e92af8bd",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NW7150",
+        "column": "VANDAL_GEN24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0711",
+        "record_hash": "sha256:035020db46acfc6dcc22cbde2b06b4b1f458f98beabc54d9fd6c78893cd76a3e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IR7150",
+        "column": "INTIM_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0758",
+        "record_hash": "sha256:28409c2130c75257b2f6e589462cde9c11c464fde0c1955bac71fb4318de4db9",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "HZ7150",
+        "column": "SIM_A_GEN23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0803",
+        "record_hash": "sha256:0e515819f2066467866b1e391827789ed7e2e8a17b71fdde5a3d13ce4c23ebed",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "JC7150",
+        "column": "VANDAL_DIS23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_0848",
+        "record_hash": "sha256:e901c019af45b3a99c34bceb9492eef56f164c5d61d6c77cef9a5e3c299556d5",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DX7150",
+        "column": "INTIM_DIS22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0891",
+        "record_hash": "sha256:9965ba493a86b1953ff4a1b51dca6cb87bf9831ff67d01555c7b70dfd4dbd4d8",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DM7150",
+        "column": "LAR_T_GEN22",
+        "year": "2022",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_0932",
+        "record_hash": "sha256:a6a2a0c9d08c3f396773e28e0c7c988789e3180bc53389bb8bbed7de414985f7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EE7150",
+        "column": "VANDAL_GEN22",
+        "year": "2022",
+        "value": 2
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Gender"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0094"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Gender"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0711",
+        "evt_2026_0758"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Students with disabilities"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0803"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Students with disabilities"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0848"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Other source-backed civil rights event",
+      "affected_communities": [
+        "Gender"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0891"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Gender"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0932"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=inter_american_university_of_puerto_rico_san_german&signal_id=sig_50da367c553ee68a5041",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_50da367c553ee68a5041/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Inter American University of Puerto Rico-San German: 2 on-campus harassment/threat statistics labeled Gender. 2 on-campus harassment/threat statistics labeled Students with disabilities. Details/limits: https://campusevidencelab.org/signals/sig_50da367c553ee68a5041/",
+    "proactive_reply": "Federal 2024 data, Inter American University of Puerto Rico-San German: 2 on-campus harassment/threat statistics labeled Gender. 2 on-campus harassment/threat statistics labeled Students with disabilities. Details/limits: https://campusevidencelab.org/signals/sig_50da367c553ee68a5041/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

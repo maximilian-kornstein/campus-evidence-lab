@@ -1,0 +1,176 @@
+{
+  "id": "sig_5777ac0aa4b3cda815ca",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_f84984628a0aae4051a2",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_582d9344e6d9bb2a4e7b",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/keuka_college/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "keuka_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 4 certified ED cells, the documented category totals are Vandalism (4)."
+  },
+  "institution": {
+    "id": "keuka_college",
+    "name": "Keuka College",
+    "city": "Keuka Park",
+    "state": "NY"
+  },
+  "record_ids": [
+    "evt_2026_1988",
+    "evt_2026_2176",
+    "evt_2026_3282",
+    "evt_2026_3718"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Keuka College: Across 4 certified ED cells, the documented category totals are Vandalism (4).",
+      "supporting_record_ids": [
+        "evt_2026_1988",
+        "evt_2026_2176",
+        "evt_2026_3282",
+        "evt_2026_3718"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 4,
+    "certified_cell_count": 4,
+    "evidence": [
+      {
+        "event_id": "evt_2026_1988",
+        "record_hash": "sha256:efce5072c5c5fcd6608637983efc2245a85ba7a4284c300c8c56be5f80c1daa7",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4270",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2176",
+        "record_hash": "sha256:c07c405e016ce2e325a9384ac720da44d73326af9ba56be8b593eb02b1183ad4",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4270",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3282",
+        "record_hash": "sha256:0c40671df42c0c5f38fcfb70fd6ce9d48b564165a50b88eb0e2fbfef1b2387fd",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "IX4270",
+        "column": "VANDAL_RAC23",
+        "year": "2023",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3718",
+        "record_hash": "sha256:ab0a9593594f4cac4480e3d4b1d80bde46116f3d4228ba1a2d051ff6da5a4a6f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "ED4270",
+        "column": "VANDAL_SEX22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1988"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2176"
+      ]
+    },
+    {
+      "year": "2023",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3282"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "LGBTQ+"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3718"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=keuka_college&signal_id=sig_5777ac0aa4b3cda815ca",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_5777ac0aa4b3cda815ca/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2023 data, Keuka College: 1 on-campus vandalism statistic labeled LGBTQ+. 1 on-campus vandalism statistic labeled Race. 1 residence-hall vandalism statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_5777ac0aa4b3cda815ca/",
+    "proactive_reply": "Federal 2023 data, Keuka College: 1 on-campus vandalism statistic labeled LGBTQ+. 1 on-campus vandalism statistic labeled Race. 1 residence-hall vandalism statistic labeled LGBTQ+. Details/limits: https://campusevidencelab.org/signals/sig_5777ac0aa4b3cda815ca/"
+  },
+  "distribution_group": "passive_holdout",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

@@ -138,7 +138,7 @@ for (const source of sources) {
 const publicHtmlChecks = [
   {
     file: "index.html",
-    required: ["150,000 accepted import-wave QA candidates", "4,000 public event records", "No rankings. No safety scores. No legal findings."]
+    required: ["150,000 accepted import-wave QA candidates", "10,000 canonical public records", "No rankings. No safety scores. No legal findings."]
   },
   {
     file: path.join("accountability-room", "index.html"),

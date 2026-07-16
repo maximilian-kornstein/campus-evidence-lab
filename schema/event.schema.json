@@ -120,6 +120,29 @@
         "externally_reviewed"
       ]
     },
+    "expansion_id": { "type": "string" },
+    "record_lane": { "type": "string", "enum": ["aggregate_safety_stat"] },
+    "source_family": { "type": "string" },
+    "aggregate_stat_subtype": {
+      "type": "string",
+      "enum": ["arrest_stat", "reported_crime_stat", "disciplinary_referral_stat", "vawa_stat"]
+    },
+    "aggregate_value": { "type": "integer", "minimum": 1 },
+    "aggregate_unit": { "type": "string", "enum": ["reported count"] },
+    "aggregate_scope": { "type": "string" },
+    "aggregate_statistic": { "type": "string" },
+    "aggregate_calculation": {
+      "type": "object",
+      "required": ["method", "source_cell", "value"],
+      "properties": {
+        "method": { "type": "string", "enum": ["direct_cell_value"] },
+        "source_cell": { "type": "string", "pattern": "^[A-Z]+[0-9]+$" },
+        "value": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "candidate_id": { "type": "string" },
+    "raw_source_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "selection_method": { "type": "string" },
     "tags": {
       "type": "array",
       "items": { "type": "string" }

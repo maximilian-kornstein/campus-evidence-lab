@@ -1,0 +1,272 @@
+{
+  "id": "sig_12396d7ee67301fd150d",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_8d2f94901719657d9173",
+  "dossier_angle": "category_composition",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_b527101ca83643f2137d",
+    "title": "Source-supported category context",
+    "url": "https://campusevidencelab.org/schools/middlebury_college/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "middlebury_college"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Across 8 certified ED cells, the documented category totals are Vandalism (5), Harassment or threat (4)."
+  },
+  "institution": {
+    "id": "middlebury_college",
+    "name": "Middlebury College",
+    "city": "Middlebury",
+    "state": "VT"
+  },
+  "record_ids": [
+    "evt_2026_0719",
+    "evt_2026_1138",
+    "evt_2026_1495",
+    "evt_2026_1539",
+    "evt_2026_2561",
+    "evt_2026_3181",
+    "evt_2026_3310",
+    "evt_2026_3392"
+  ],
+  "bounded_claims": [
+    {
+      "text": "Middlebury College: Across 8 certified ED cells, the documented category totals are Vandalism (5), Harassment or threat (4).",
+      "supporting_record_ids": [
+        "evt_2026_0719",
+        "evt_2026_1138",
+        "evt_2026_1495",
+        "evt_2026_1539",
+        "evt_2026_2561",
+        "evt_2026_3181",
+        "evt_2026_3310",
+        "evt_2026_3392"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 9,
+    "certified_cell_count": 8,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0719",
+        "record_hash": "sha256:8e4e0da55f2e089ee48928641084e1c1fce4e9d438d03e2a4bbd301d1ef7067d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU6533",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 2
+      },
+      {
+        "event_id": "evt_2026_1138",
+        "record_hash": "sha256:5c4b4de8ae2f83cc79edcf9115c87cb367f54e55253847352fb2a40b3e29ad7b",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "MT6533",
+        "column": "SIM_A_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1495",
+        "record_hash": "sha256:0fa6bd41321f8cdc21fe29495116b743adb8b9d0cee5210b4ab68b29a6f3a269",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT6533",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1539",
+        "record_hash": "sha256:5508cf791b087aafa085bb87f94581bd72b9f68422cdc515279eb880ab4e5bec",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC6533",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_2561",
+        "record_hash": "sha256:b9a90e83a8a4f399179e7feadc3a604396735b7898b9bf91694eee2fd505c200",
+        "workbook": "Publicpropertyhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DA6533",
+        "column": "SIM_A_RAC22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3181",
+        "record_hash": "sha256:cd789cba2bf1b3ba0ae6c24f29f7c1d9ba1c6cc4b19f4547b470e5b070cb62a2",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NU6533",
+        "column": "VANDAL_REL24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3310",
+        "record_hash": "sha256:2ffcdc8c004543fa6220f0197e507635e809ed3a1ba8b5ddb12ec154db7a7646",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "DT6533",
+        "column": "INTIM_REL22",
+        "year": "2022",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3392",
+        "record_hash": "sha256:fba7f7abdb83b9d60858e60be2a6cbd7dfa04158f827f4f0670be3ec701eb05a",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "EC6533",
+        "column": "VANDAL_REL22",
+        "year": "2022",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 2,
+      "supporting_record_ids": [
+        "evt_2026_0719"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1138"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1495"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1539"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "public-property",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_2561"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3181"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3310"
+      ]
+    },
+    {
+      "year": "2022",
+      "category": "Vandalism",
+      "affected_communities": [
+        "Religion"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3392"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=middlebury_college&signal_id=sig_12396d7ee67301fd150d",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_12396d7ee67301fd150d/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, Middlebury College: 2 on-campus vandalism statistics labeled Religion. 1 on-campus harassment/threat statistic labeled Religion. 1 on-campus harassment/threat statistic labeled Religion. Details/limits: https://campusevidencelab.org/signals/sig_12396d7ee67301fd150d/",
+    "proactive_reply": "Federal 2024 data, Middlebury College: 2 on-campus vandalism statistics labeled Religion. 1 on-campus harassment/threat statistic labeled Religion. 1 on-campus harassment/threat statistic labeled Religion. Details/limits: https://campusevidencelab.org/signals/sig_12396d7ee67301fd150d/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}

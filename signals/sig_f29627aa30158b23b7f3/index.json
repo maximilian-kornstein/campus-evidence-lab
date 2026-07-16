@@ -1,0 +1,224 @@
+{
+  "id": "sig_f29627aa30158b23b7f3",
+  "signal_type": "dataset_context",
+  "dossier_id": "dos_17560ec28f330b2a275e",
+  "dossier_angle": "latest_year",
+  "status": "approved",
+  "policy_version": "cel-signals-v1",
+  "distribution_policy_version": "cel-social-content-v2",
+  "trigger": {
+    "id": "trg_8daf4120109001a301ad",
+    "title": "2024 certified-cell context",
+    "url": "https://campusevidencelab.org/schools/mckendree_university/",
+    "published_at": "2026-07-15",
+    "detected_at": "2026-07-15T16:44:00.911Z",
+    "institution_ids": [
+      "mckendree_university"
+    ],
+    "topics": [
+      "ed-campus-safety-data",
+      "public-documentation"
+    ],
+    "source_kind": "certified_dataset_context",
+    "summary": "Certified ED workbook cells document 6 reported statistics across 6 distinct cells for 2024."
+  },
+  "institution": {
+    "id": "mckendree_university",
+    "name": "McKendree University",
+    "city": "LEBANON",
+    "state": "IL"
+  },
+  "record_ids": [
+    "evt_2026_0564",
+    "evt_2026_1424",
+    "evt_2026_1431",
+    "evt_2026_3219",
+    "evt_2026_3340",
+    "evt_2026_3418"
+  ],
+  "bounded_claims": [
+    {
+      "text": "McKendree University: Certified ED workbook cells document 6 reported statistics across 6 distinct cells for 2024.",
+      "supporting_record_ids": [
+        "evt_2026_0564",
+        "evt_2026_1424",
+        "evt_2026_1431",
+        "evt_2026_3219",
+        "evt_2026_3340",
+        "evt_2026_3418"
+      ],
+      "supporting_source_ids": [
+        "src_ed_campus_safety_2025_hate_crime_data_files"
+      ]
+    }
+  ],
+  "unknowns": [
+    "These workbook cells do not establish the underlying number of incidents, experiences, reports to other offices, or institutional response outcomes."
+  ],
+  "sources": [
+    {
+      "id": "src_ed_campus_safety_2025_hate_crime_data_files",
+      "title": "Campus Safety and Security Data Analysis Cutting Tool 2025 Excel data files",
+      "url": "https://ope.ed.gov/campussafety/api/dataFiles/file?fileName=Crime2025EXCEL.zip",
+      "publisher": "U.S. Department of Education Office of Postsecondary Education",
+      "source_type": "Government dataset"
+    }
+  ],
+  "institutional_response": {
+    "status": "not_applicable_to_dataset_context",
+    "text": "This Signal summarizes certified government workbook cells and does not characterize institutional response.",
+    "date": ""
+  },
+  "calculation": {
+    "operation": "sum_distinct_certified_cells",
+    "reported_statistic_total": 6,
+    "certified_cell_count": 6,
+    "evidence": [
+      {
+        "event_id": "evt_2026_0564",
+        "record_hash": "sha256:253511b3751bd6afd5155d4c8ef7a1e7a085fb57436d11de031b7cc6ecc22839",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NP1949",
+        "column": "INTIM_DIS24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1424",
+        "record_hash": "sha256:7d17de9fb87471efb759ed5dbecc4822a6899085929fc2326d4c0e9e41bfb47d",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR1949",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_1431",
+        "record_hash": "sha256:5f711372340d53141ca9e6d3a7630eadb3111e598aefe55ae982198863c2414e",
+        "workbook": "Oncampushate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1949",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3219",
+        "record_hash": "sha256:07249f6cf48c462f00c246197dee979067e96f25792d8c23721014628426a800",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NP1949",
+        "column": "INTIM_DIS24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3340",
+        "record_hash": "sha256:05b5871d632c378baa8515464fa911b03775b51187c85659b14049cf680cdf9f",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NR1949",
+        "column": "INTIM_NAT24",
+        "year": "2024",
+        "value": 1
+      },
+      {
+        "event_id": "evt_2026_3418",
+        "record_hash": "sha256:fd10fa97edfc0ef2a56b8eca10879e0fd932a367b67779c5804b5ad9e9d0d666",
+        "workbook": "Residencehallhate222324.xlsx",
+        "sheet": "sheet1",
+        "cell": "NK1949",
+        "column": "INTIM_RAC24",
+        "year": "2024",
+        "value": 1
+      }
+    ]
+  },
+  "semantic_facts": [
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Students with disabilities"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_0564"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1424"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "on-campus",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_1431"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Students with disabilities"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3219"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "National origin"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3340"
+      ]
+    },
+    {
+      "year": "2024",
+      "category": "Harassment or threat",
+      "affected_communities": [
+        "Race"
+      ],
+      "geography": "residence-hall",
+      "value": 1,
+      "supporting_record_ids": [
+        "evt_2026_3418"
+      ]
+    }
+  ],
+  "claim_limit": "These are reported public-documentation statistics from certified Department of Education workbook cells, not a prevalence estimate, incident census, school ranking, safety score, or finding by CEL.",
+  "correction_url": "https://campusevidencelab.org/submit/?school_id=mckendree_university&signal_id=sig_f29627aa30158b23b7f3",
+  "canonical_url": "https://campusevidencelab.org/signals/sig_f29627aa30158b23b7f3/",
+  "distribution_copy": {
+    "bluesky_original": "Federal 2024 data, McKendree University: 1 on-campus harassment/threat statistic labeled National origin. 1 on-campus harassment/threat statistic labeled Race. 1 residence-hall harassment/threat statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_f29627aa30158b23b7f3/",
+    "proactive_reply": "Federal 2024 data, McKendree University: 1 on-campus harassment/threat statistic labeled National origin. 1 on-campus harassment/threat statistic labeled Race. 1 residence-hall harassment/threat statistic labeled Race. Details/limits: https://campusevidencelab.org/signals/sig_f29627aa30158b23b7f3/"
+  },
+  "distribution_group": "active_distribution",
+  "created_at": "2026-07-15T16:44:00.911Z",
+  "updated_at": "2026-07-15T16:44:00.911Z",
+  "correction_status": "none"
+}
