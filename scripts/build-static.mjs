@@ -20,6 +20,7 @@ const publicPaths = [
   "schools",
   "briefs",
   "signals",
+  "demo",
   "sources",
   "quality",
   "import-waves",
