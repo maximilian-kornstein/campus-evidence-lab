@@ -108,6 +108,7 @@ for (const route of [
   "signals/feeds/all.xml",
   "signals/feeds/all.json",
   "sources/index.html",
+  "demo/index.html",
   "quality/index.html",
   "import-waves/index.html",
   "import-waves/ed-campus-safety-wave-001/index.html",
@@ -961,6 +962,7 @@ for (const brief of briefs) {
 }
 for (const policyUrl of [
   "/accountability-room/",
+  "/demo/",
   "/policies/",
   "/policies/terms-of-use/",
   "/policies/privacy-policy/",

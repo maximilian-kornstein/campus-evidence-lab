@@ -37,6 +37,7 @@ const staticPaths = [
   "/schools/",
   "/briefs/",
   "/signals/",
+  "/demo/",
   "/sources/",
   "/quality/",
   "/import-waves/",
