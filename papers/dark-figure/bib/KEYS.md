@@ -15,6 +15,8 @@ Citing: `\citet{key}` / `\citep{key}`. Before adding a key to your own bib/<owne
 - fienberg1972 -- Fienberg 1972 Biometrika 59: log-linear models for incomplete 2^k tables (K-list MSE)
 - bishop1975 -- Bishop, Fienberg, Holland 1975 MIT Press: Discrete Multivariate Analysis (book)
 - chao1987 -- Chao 1987 Biometrics 43: lower bound under unequal catchability (heterogeneity)
+- chao2005 -- Chao 2005, Encyclopedia of Statistical Sciences 2nd ed. vol 12: species estimation (bias-corrected Chao bound used by the code). ADDED by fact-check
+- turek2012 -- Turek & Fletcher 2012 CSDA 56(9): model-averaged (MATA) Wald intervals, used by loglinear_bma. ADDED by fact-check
 - huggins1989 -- Huggins 1989 Biometrika 76: conditional likelihood with individual covariates
 - alho1990 -- Alho 1990 Biometrics 46: logistic regression in capture-recapture
 - international1995 -- IWGDMF 1995 Am J Epidemiol 142: capture-recapture and multiple-record systems I: history and theory
@@ -34,7 +36,7 @@ Citing: `\citet{key}` / `\citep{key}`. Before adding a key to your own bib/<owne
 ## Record linkage
 - fellegi1969 -- Fellegi & Sunter 1969 JASA 64: a theory for record linkage
 - winkler1990 -- Winkler 1990 ASA SRMS Proceedings: string comparators (Jaro-Winkler) in the FS model
-- ding1994 -- Ding & Fienberg 1994 Survey Methodology 20(2): dual-system estimation with matching error
+- ding1994 -- Ding & Fienberg 1994 Survey Methodology 20(2): dual-system estimation with matching error (first author is Ye Ding, per Statistics Canada; corrected from "Yiping")
 - diconsiglio2015 -- Di Consiglio & Tuoto 2015 JOS 31: coverage evaluation on probabilistically linked data
 - sadinle2017 -- Sadinle 2017 JASA 112: Bayesian bipartite matchings
 - sadinle2018 -- Sadinle 2018 AoAS 12: propagating linkage uncertainty into population-size estimation (El Salvador)

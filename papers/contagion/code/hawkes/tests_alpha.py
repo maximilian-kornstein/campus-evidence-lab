@@ -77,6 +77,7 @@ def lrt_alpha_zero(
     tol: float = 1e-9,
     max_iter: int = 2000,
     return_fits: bool = False,
+    multistart_null: bool = True,
     **fit_kwargs,
 ):
     """LR test of H0: alpha[k, j] = 0 with the chi-bar-square null.
@@ -90,6 +91,9 @@ def lrt_alpha_zero(
         "fixed" (beta fixed at the alternative's estimate in both fits; with
         ``beta_structure="matrix"`` in fit_kwargs this is the pairwise model).
     fit_alt : an existing unrestricted fit to reuse.
+    multistart_null : besides starting the null fit from the alternative
+        optimum (with alpha_kj = 0), also run the default profile-grid
+        multistart and keep the better null optimum ("common" mode).
 
     Returns
     -------
@@ -111,6 +115,12 @@ def lrt_alpha_zero(
     if beta_mode == "fixed":
         kw0["beta_fixed"] = fit_alt.spec.beta_matrix
     fit_null = fit_em(events, T, M, **common, alpha_mask=mask, init=_null_init(fit_alt.spec, k, j), **kw0)
+    if multistart_null and beta_mode == "common":
+        # a null fit stuck in a local mode would inflate the statistic: also
+        # run the profile-grid multistart and keep the better optimum
+        fn2 = fit_em(events, T, M, **common, alpha_mask=mask, **kw0)
+        if fn2.loglik > fit_null.loglik:
+            fit_null = fn2
     if fit_null.loglik > fit_alt.loglik + 1e-9:
         # the alternative nests the null: restart it from the null optimum
         kwa = {kk: v for kk, v in fit_kwargs.items() if kk != "init"}

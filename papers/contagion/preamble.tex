@@ -1,4 +1,10 @@
-% Shared preamble — owned by LEAD. Section authors: do not add packages; request them in NOTES-<owner>.md.
+% =====================================================================
+%  Shared preamble -- owned by LEAD.
+%  Section authors: do not add packages here; request them in NOTES-<owner>.md.
+%  Ported from Paper 1 (The Dark Figure) so that the two papers read as a series.
+% =====================================================================
+
+% ---- fonts & encoding (amsthm MUST precede newtxmath) ----------------
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,mathtools,amsthm}
@@ -7,46 +13,221 @@
 }{%
   \usepackage{mathptmx}\usepackage{amssymb}%
 }
-\usepackage[letterpaper,margin=1.05in,headheight=14pt]{geometry}
+% newtx's TS1 (text-companion) metrics, ts1-qtm*, are not installed here; map
+% TS1 onto Adobe Times (psnfss) so \textbullet, \textdegree, etc. still work.
+% Without this, a plain itemize (\textbullet) aborts the run.
+\DeclareFontFamily{TS1}{ntxtlf}{}
+\DeclareFontShape{TS1}{ntxtlf}{m}{n}{<->ssub * ptm/m/n}{}
+\DeclareFontShape{TS1}{ntxtlf}{m}{it}{<->ssub * ptm/m/it}{}
+\DeclareFontShape{TS1}{ntxtlf}{m}{sl}{<->ssub * ptm/m/it}{}
+\DeclareFontShape{TS1}{ntxtlf}{m}{sc}{<->ssub * ptm/m/n}{}
+\DeclareFontShape{TS1}{ntxtlf}{b}{n}{<->ssub * ptm/b/n}{}
+\DeclareFontShape{TS1}{ntxtlf}{b}{it}{<->ssub * ptm/b/it}{}
+\DeclareFontShape{TS1}{ntxtlf}{b}{sl}{<->ssub * ptm/b/it}{}
+\DeclareFontShape{TS1}{ntxtlf}{b}{sc}{<->ssub * ptm/b/n}{}
+\DeclareFontShape{TS1}{ntxtlf}{bx}{n}{<->ssub * ptm/b/n}{}
+\DeclareFontShape{TS1}{ntxtlf}{bx}{it}{<->ssub * ptm/b/it}{}
+\DeclareFontShape{TS1}{ntxtlf}{bx}{sl}{<->ssub * ptm/b/it}{}
+\DeclareFontShape{TS1}{ntxtlf}{bx}{sc}{<->ssub * ptm/b/n}{}
+\usepackage[letterpaper,margin=1.05in,headheight=14pt,headsep=18pt,footskip=30pt]{geometry}
+\usepackage{etoolbox}
 \usepackage{thmtools}
 \usepackage{bm}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{microtype}
-\usepackage{booktabs,array,tabularx}
+\usepackage[dvipsnames,table]{xcolor}
+
+% ---- house palette (deep navy + one burnt-orange accent) -------------
+%  Same values as Paper 1. Navy carries structure and the endogenous
+%  (contagion); the accent marks the exogenous (salient external events and
+%  the incidents they trigger directly); light navy marks the background.
+\definecolor{LabNavy}{HTML}{14284B}
+\definecolor{LabNavyMid}{HTML}{3D5A80}
+\definecolor{LabNavyLight}{HTML}{8DA1BE}
+\definecolor{LabAccent}{HTML}{B8460E}   % print-safe variant of the lab orange
+\definecolor{LabInk}{HTML}{1B1D22}
+\definecolor{LabGrey}{HTML}{6B7079}
+\definecolor{LabRule}{HTML}{C8CEDA}
+\definecolor{LabTint}{HTML}{F2F4F8}
+\definecolor{LabSand}{HTML}{FBF7F3}
+
+% ---- microtypography --------------------------------------------------
+\usepackage[final,protrusion=true,expansion=true,tracking=true,
+            factor=1100,stretch=12,shrink=12]{microtype}
+\SetTracking{encoding={*},shape=sc}{45}
+\linespread{1.06}
+\setlength{\emergencystretch}{1.5em}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+\usepackage{booktabs,array,tabularx,multirow}
 \usepackage{graphicx}
 \usepackage{caption,subcaption}
 \usepackage[shortlabels]{enumitem}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,fit,backgrounds,decorations.pathreplacing}
-\usepackage[numbers,sort&compress]{natbib}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,fit,
+  backgrounds,decorations.pathreplacing,matrix,fadings}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{titlesec}
+\usepackage[authoryear,round,sort]{natbib}
 \usepackage{fancyhdr}
-\usepackage[colorlinks=true,linkcolor=MidnightBlue,citecolor=MidnightBlue,urlcolor=MidnightBlue]{hyperref}
+\usepackage{xurl}        % long URLs/DOIs in the bibliography may break anywhere
+\usepackage[colorlinks=true,linkcolor=LabNavy,citecolor=LabNavy,
+            urlcolor=LabNavyMid,bookmarksnumbered=true,pdfdisplaydoctitle=true,
+            hypertexnames=false]{hyperref}
 \usepackage[capitalise,noabbrev,nameinlink]{cleveref}
+% Unique hyperref anchors for algorithm lines (several algorithms number their
+% lines from 1; without this hyperref reports duplicate destinations).
+\makeatletter\def\theHALG@line{\arabic{algorithm}.\arabic{ALG@line}}\makeatother
 
-\captionsetup{font=small,labelfont=bf,labelsep=period}
+% ---- bibliography -----------------------------------------------------
+\urlstyle{same}
+\setlength{\bibsep}{2.5pt plus 1pt}
+\renewcommand{\bibfont}{\small}
+\setlength{\bibhang}{1.2em}
+
+% ---- captions ---------------------------------------------------------
+\DeclareCaptionLabelFormat{labnavy}{\textcolor{LabNavy}{\bfseries #1~#2}}
+\captionsetup{font=small,labelformat=labnavy,labelsep=period,
+  justification=justified,singlelinecheck=true,skip=6pt}
+\captionsetup[table]{position=top,skip=4pt}
+\captionsetup[sub]{font=small,labelformat=parens,labelfont=bf}
+\captionsetup[algorithm]{font=normalsize,labelformat=labnavy,labelsep=space}
+
 \setlength{\parskip}{0pt}
 \setlist{itemsep=2pt,topsep=4pt}
+\setlist[itemize,1]{label={\color{LabNavy}\small$\bullet$}}
+\setlist[itemize,2]{label={\color{LabNavyMid}\textendash}}
+\setlist[itemize,3]{label={\color{LabNavyMid}\small$\circ$}}
+\renewcommand{\arraystretch}{1.12}
+\setlength{\aboverulesep}{0.5ex}
+\setlength{\belowrulesep}{0.6ex}
 
-% ---- theorem environments (one shared counter) ----
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}
+% ---- section headings ---------------------------------------------------
+%  Navy titles, accent-coloured numbers; a hairline under each section.
+%  \nobreak keeps the hairline (and the text) with the title: without it a
+%  page can break between a section title and its rule.
+\titleformat{\section}[hang]
+  {\normalfont\Large\bfseries\color{LabNavy}}
+  {\textcolor{LabAccent}{\thesection}}{0.65em}{}
+  [{\nobreak\vspace{2pt}\nobreak\color{LabRule}\nobreak\titlerule[0.5pt]}]
+\titlespacing*{\section}{0pt}{3.0ex plus 1ex minus .3ex}{1.6ex plus .3ex}
+\titleformat{\subsection}[hang]
+  {\normalfont\large\bfseries\color{LabNavy}}
+  {\textcolor{LabNavyMid}{\thesubsection}}{0.6em}{}
+\titlespacing*{\subsection}{0pt}{2.4ex plus .8ex minus .3ex}{1.0ex plus .2ex}
+\titleformat{\subsubsection}[hang]
+  {\normalfont\normalsize\bfseries\itshape\color{LabNavy}}
+  {\thesubsubsection}{0.55em}{}
+\titlespacing*{\subsubsection}{0pt}{2.0ex plus .6ex minus .2ex}{0.7ex plus .2ex}
+% Run-in heads end with a period unless the author already typed one
+% (\paragraph{Streams} and \paragraph{Streams.} both give "Streams.").
+\makeatletter
+\newcommand{\labparatitle}[1]{#1\@addpunct{.}}
+\makeatother
+\titleformat{\paragraph}[runin]
+  {\normalfont\normalsize\bfseries\color{LabNavy}}{\theparagraph}{0.5em}{\labparatitle}
+\titlespacing*{\paragraph}{0pt}{1.4ex plus .5ex minus .2ex}{0.6em}
+% Appendix sections read "Appendix A  Title".
+\appto\appendix{%
+  \titleformat{\section}[hang]
+    {\normalfont\Large\bfseries\color{LabNavy}}
+    {\textcolor{LabAccent}{\appendixname~\thesection}}{0.65em}{}
+    [{\nobreak\vspace{2pt}\nobreak\color{LabRule}\nobreak\titlerule[0.5pt]}]%
+}
+
+% ---- running heads --------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\scshape\color{LabGrey}Shock and Contagion}
+\fancyhead[R]{\footnotesize\color{LabGrey}Kornstein Lab for Antisemitism Research
+  \enspace\textcolor{LabRule}{|}\enspace\textcolor{LabNavy}{\bfseries\thepage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{LabRule}%
+  \hrule width\headwidth height\headrulewidth \vskip-\headrulewidth}}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\footnotesize\color{LabGrey}\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\headrule}{}%
+}
+
+% ---- footnotes ----------------------------------------------------------------
+\renewcommand{\footnoterule}{{\color{LabRule}\kern-3pt\hrule width 0.28\columnwidth height 0.4pt\kern 2.6pt}}
+
+% ---- abstract & keywords ---------------------------------------------------
+\renewenvironment{abstract}{%
+  \par\vspace{2pt}%
+  \begin{list}{}{\leftmargin=0pt\rightmargin=0pt\topsep=0pt\partopsep=0pt}%
+  \item[]{\footnotesize\scshape\bfseries\color{LabAccent}Abstract}\par\vspace{3pt}%
+  \small\noindent\ignorespaces}%
+ {\par\end{list}}
+\newcommand{\keywords}[1]{\par\vspace{5pt}\noindent{\small
+  {\scshape\bfseries\color{LabNavy}Keywords}\enspace #1}\par}
+
+% ---- theorem environments (one shared counter, numbered within section) ---
+\newtheoremstyle{labplain}{4pt}{4pt}{\itshape}{}{\bfseries\color{LabNavy}}{.}{.5em}
+  {\thmname{#1}\thmnumber{ #2}\thmnote{\normalfont\color{LabNavy}\ (#3)}}
+\newtheoremstyle{labdef}{4pt}{4pt}{\normalfont}{}{\bfseries\color{LabNavy}}{.}{.5em}
+  {\thmname{#1}\thmnumber{ #2}\thmnote{\normalfont\color{LabNavy}\ (#3)}}
+\newtheoremstyle{labremark}{6pt}{6pt}{\normalfont}{}{\itshape\color{LabNavy}}{.}{.5em}
+  {\thmname{#1}\thmnumber{ #2}\thmnote{\ (#3)}}
+
+\theoremstyle{labplain}
+\newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
-\theoremstyle{definition}
+\theoremstyle{labdef}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{assumption}{Assumption}
 \renewcommand{\theassumption}{A\arabic{assumption}}
+\theoremstyle{labremark}
 \newtheorem{example}[theorem]{Example}
-\theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 \crefname{assumption}{Assumption}{Assumptions}
 \crefname{algorithm}{Algorithm}{Algorithms}
 \crefname{appendix}{Appendix}{Appendices}
+\numberwithin{equation}{section}
 
-% ---- notation macros (see SPEC.md) ----
+% Subtle left rule for formal results: navy for theorem-like statements,
+% light navy for definitions and assumptions. Breakable across pages.
+\tcbset{labbar/.style={blanker,breakable,
+  left=9pt,right=0pt,top=1pt,bottom=1pt,
+  before skip=8pt plus 2pt,after skip=8pt plus 2pt,
+  borderline west={1.1pt}{0pt}{#1}}}
+% thmtools hooks (not \tcolorboxenvironment) so that restatable/restated
+% results receive the same rule.
+\newcommand{\labbarthm}[2]{%
+  \addtotheorempreheadhook[#1]{\tcolorbox[labbar=#2]}%
+  \addtotheorempostfoothook[#1]{\endtcolorbox}}
+\labbarthm{theorem}{LabNavy}
+\labbarthm{proposition}{LabNavy}
+\labbarthm{corollary}{LabNavy}
+\labbarthm{lemma}{LabNavyMid}
+\labbarthm{definition}{LabNavyLight}
+\labbarthm{assumption}{LabAccent!70}
+
+% Algorithms: navy rules and caption label.
+\makeatletter
+\renewcommand\fs@ruled{\def\@fs@cfont{\bfseries\color{LabNavy}}\let\@fs@capt\floatc@ruled
+  \def\@fs@pre{{\color{LabNavy}\hrule height.8pt depth0pt}\kern2pt}%
+  \def\@fs@post{\kern2pt{\color{LabNavy}\hrule height.5pt}\relax}%
+  \def\@fs@mid{\kern2pt{\color{LabNavy!60}\hrule height.4pt}\kern2pt}%
+  \let\@fs@iftopcapt\iftrue}
+\makeatother
+
+\renewcommand{\qedsymbol}{\textcolor{LabNavyMid}{\ensuremath{\square}}}
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep{\itshape\color{LabNavy}#1}\@addpunct{.}]\ignorespaces
+}{\popQED\endtrivlist\@endpefalse}
+\makeatother
+
+% ---- notation macros (Paper 1; kept because section authors may use them) --
 \newcommand{\E}{\mathbb{E}}
 \renewcommand{\Pr}{\mathbb{P}}
 \newcommand{\Var}{\operatorname{Var}}

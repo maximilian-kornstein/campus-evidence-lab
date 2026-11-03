@@ -1,0 +1,138 @@
+% =====================================================================
+%  Figure: a multivariate excitation network and its multiplier (LEAD).
+%  Illustrative values chosen for legibility -- NOT estimates.
+%  M = (I - A)^{-1} computed exactly (numpy.linalg.inv) and rounded to 2 dp:
+%    A (rows = child k, cols = parent j; order on, R1, R2, R3)
+%      0.50 0    0    0   | 0.08 0.30 0.08 0.05 | 0.05 0.10 0.25 0 | 0.03 0 0.06 0.20
+%    M = 2.00 0 0 0 | 0.25 1.45 0.16 0.09 | 0.17 0.19 1.35 0.01 | 0.09 0.01 0.10 1.25
+%    spectral radius rho(A) = 0.50 (block triangular: max of 0.50 and 0.377)
+%  Requires the house colours defined in preamble.tex.
+% =====================================================================
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,
+    off/.style={circle,fill=LabNavy,text=white,minimum size=0.92cm,inner sep=0pt,
+                font=\small},
+    onl/.style={circle,fill=white,draw=LabNavy,line width=1.1pt,text=LabNavy,
+                minimum size=0.92cm,inner sep=0pt,font=\small},
+    exc/.style={LabNavyMid,-{Stealth[length=5pt,width=4pt]},shorten >=1pt,shorten <=1pt},
+    wt/.style={font=\scriptsize,text=LabNavy,fill=white,inner sep=0.8pt,rounded corners=1pt},
+    shk/.style={LabAccent,line width=0.7pt,dash pattern=on 2pt off 1.3pt,
+                -{Stealth[length=4pt,width=3.4pt]}},
+    capt/.style={font=\scriptsize,text=LabGrey,inner sep=1pt},
+    panel/.style={font=\footnotesize\bfseries,text=LabNavy,anchor=south west,inner sep=0pt},
+  ]
+
+  % ============================ (a) network ============================
+  \node[panel] at (-0.6,3.75) {(a)\enspace Excitation network $\Amat=[\alpha_{kj}]$};
+  \node[onl] (on) at (3.0,2.3) {on};
+  \node[off] (r1) at (0.85,0) {$R_1$};
+  \node[off] (r2) at (5.15,0) {$R_2$};
+  \node[off] (r3) at (3.0,-2.15) {$R_3$};
+  \node[capt,anchor=west] at ([xshift=3pt,yshift=-5pt]on.east) {online stream};
+  \node[capt,anchor=west] at ([xshift=3pt]r3.east) {offline regions};
+
+  % self-loops (width grows with alpha: 0.4pt + 3pt * alpha)
+  \foreach \nd/\a/\o/\i/\lx/\ly in {on/0.50/118/62/0/1.27, r1/0.30/208/152/-1.42/0,
+                                     r2/0.25/-28/28/1.42/0, r3/0.20/-62/-118/0/-1.27}{
+    \pgfmathsetmacro{\lw}{0.4+3*\a}
+    \draw[exc,line width=\lw pt] (\nd) to[out=\o,in=\i,looseness=6] (\nd);
+    \node[wt] at ($(\nd)+(\lx,\ly)$) {$\a$};}
+
+  % online -> offline (alpha_{k,on})
+  \foreach \tgt/\a/\pos in {r1/0.08/0.5,r2/0.05/0.5,r3/0.03/0.2}{
+    \pgfmathsetmacro{\lw}{0.4+3*\a}
+    \draw[exc,line width=\lw pt] (on) -- (\tgt) node[wt,pos=\pos] {$\a$};}
+
+  % cross-region excitation
+  \foreach \src/\tgt/\a/\bend/\pos in {r1/r2/0.10/16/0.3, r2/r1/0.08/16/0.3,
+                                       r2/r3/0.06/14/0.5, r3/r1/0.05/14/0.5}{
+    \pgfmathsetmacro{\lw}{0.4+3*\a}
+    \draw[exc,line width=\lw pt] (\src) to[bend left=\bend] node[wt,pos=\pos] {$\a$} (\tgt);}
+
+  % exogenous input: every stream also responds to salient external events
+  \draw[shk] ([xshift=-0.95cm]on.west) -- (on.west);
+  \draw[shk] ($(r1)+(-1.0,-1.25)$) -- (r1.-125);
+  \draw[shk] ($(r2)+(1.0,-1.25)$) -- (r2.-55);
+  \draw[shk] ([xshift=-0.95cm]r3.west) -- (r3.west);
+  \node[font=\scriptsize,text=LabAccent,anchor=east,align=right,inner sep=1pt]
+    at ([xshift=-0.98cm]on.west) {shock\\[-2pt]$\beta_kS_e\psi_k$};
+
+  % ============================ (b) matrices ===========================
+  \def\cs{0.5}          % cell size
+  \def\Ax{8.45}         % left edge of A
+  \def\Mx{12.65}        % left edge of M
+  \def\Ty{2.72}         % top edge of both matrices
+  \node[panel] at (\Ax-0.6,3.75) {(b)\enspace From direct excitation to the
+    contagion multiplier};
+  % \hmat{x}{vmax}{rows}: 4x4 heat map; a zero prints as a centred dot
+  \newcommand{\hmat}[3]{%
+    \foreach \row [count=\i from 0] in {#3}{%
+      \foreach \v [count=\j from 0] in \row {%
+        \pgfmathsetmacro{\shade}{\v>0 ? 10+72*sqrt(\v/#2) : 0}%
+        \pgfmathsetmacro{\dark}{\shade>48 ? 1 : 0}%
+        \fill[LabNavy!\shade] (#1+\j*\cs,\Ty-\i*\cs) rectangle ++(\cs,-\cs);
+        \pgfmathparse{\v>0 ? 1 : 0}%
+        \ifnum\pgfmathresult=1
+          \ifnum\dark=1
+            \node[font=\tiny,text=white,inner sep=0pt] at (#1+\j*\cs+\cs/2,\Ty-\i*\cs-\cs/2)
+              {\pgfmathprintnumber[fixed,precision=2,fixed zerofill]{\v}};
+          \else
+            \node[font=\tiny,text=LabInk,inner sep=0pt] at (#1+\j*\cs+\cs/2,\Ty-\i*\cs-\cs/2)
+              {\pgfmathprintnumber[fixed,precision=2,fixed zerofill]{\v}};
+          \fi
+        \else
+          \node[font=\tiny,text=LabGrey,inner sep=0pt] at (#1+\j*\cs+\cs/2,\Ty-\i*\cs-\cs/2) {$\cdot$};
+        \fi
+      }}%
+    \draw[LabRule,line width=0.3pt,step=\cs,shift={(#1,\Ty-4*\cs)}] (0,0) grid (4*\cs,4*\cs);
+    \draw[LabNavy,line width=0.5pt] (#1,\Ty) rectangle ++(4*\cs,-4*\cs);
+    \foreach \lab [count=\j from 0] in {on,$R_1$,$R_2$,$R_3$}{%
+      \node[font=\tiny,text=LabGrey,anchor=south,inner sep=1.5pt] at (#1+\j*\cs+\cs/2,\Ty) {\lab};
+      \node[font=\tiny,text=LabGrey,anchor=east,inner sep=1.5pt] at (#1,\Ty-\j*\cs-\cs/2) {\lab};}%
+  }
+  \hmat{\Ax}{0.5}{{0.50,0,0,0},{0.08,0.30,0.08,0.05},{0.05,0.10,0.25,0},{0.03,0,0.06,0.20}}
+  \hmat{\Mx}{2.0}{{2.00,0,0,0},{0.25,1.45,0.16,0.09},{0.17,0.19,1.35,0.01},{0.09,0.01,0.10,1.25}}
+  % titles
+  \node[font=\small,text=LabNavy,anchor=south] at (\Ax+2*\cs,\Ty+0.32) {$\Amat$};
+  \node[font=\small,text=LabNavy,anchor=south] at (\Mx+2*\cs,\Ty+0.32)
+    {$\Mmat=(\Imat-\Amat)^{-1}$};
+  \node[font=\tiny,text=LabGrey,anchor=south east,inner sep=1pt] at (\Ax-0.05,\Ty+0.02) {$k\backslash j$};
+  \node[font=\tiny,text=LabGrey,anchor=south east,inner sep=1pt] at (\Mx-0.05,\Ty+0.02) {$k\backslash j$};
+  % the passage from A to M
+  \draw[-{Stealth[length=5pt]},LabNavy,line width=0.8pt]
+    (\Ax+4*\cs+0.18,\Ty-2*\cs) -- (\Mx-0.42,\Ty-2*\cs);
+  \node[font=\scriptsize,text=LabNavy,anchor=south,align=center,inner sep=1.5pt]
+    at ({(\Ax+4*\cs+\Mx-0.24)/2},\Ty-2*\cs) {$\displaystyle\sum_{m\ge0}\Amat^{m}$};
+  % highlight the online -> offline spillover column
+  \draw[LabAccent,line width=0.9pt,rounded corners=1pt]
+    (\Ax,\Ty-\cs) rectangle ++(\cs,-3*\cs);
+  \draw[LabAccent,line width=0.9pt,rounded corners=1pt]
+    (\Mx,\Ty-\cs) rectangle ++(\cs,-3*\cs);
+  % reading guide
+  \node[font=\scriptsize,text=LabInk,anchor=north west,align=left,text width=7.05cm,inner sep=0pt]
+    at (\Ax-0.55,\Ty-4*\cs-0.32)
+    {$\alpha_{kj}$: expected \emph{direct} offspring in stream $k$ of one stream-$j$
+     incident.\\[1pt]
+     $\Mmat_{kj}$: expected stream-$k$ incidents in the whole cascade started by one
+     stream-$j$ incident, root included.\\[1pt]
+     \textcolor{LabAccent}{Online$\,\to\,$offline} (outlined): $0.08+0.05+0.03=0.16$
+     direct, but $0.25+0.17+0.09=0.51$ in total, because online items excite further
+     online items and offline incidents propagate across regions.\\[1pt]
+     Stationarity: $\spr(\Amat)=0.50<1$.};
+\end{tikzpicture}
+\caption{\textbf{A multivariate excitation network and its contagion
+multiplier.} \emph{(a)} Four streams: an online stream and three offline
+regions. A directed edge $j\to k$ carries the branching coefficient
+$\alpha_{kj}$, the expected number of stream-$k$ incidents directly triggered
+by one stream-$j$ incident; edge width grows with $\alpha_{kj}$. Loops are
+self-excitation. Every stream also responds directly to salient external
+events, with loading $\beta_k$ (dashed, orange). \emph{(b)} The branching
+matrix $\Amat$ (rows: child stream $k$; columns: parent stream $j$) and the
+multiplier $\Mmat=(\Imat-\Amat)^{-1}=\sum_{m\ge0}\Amat^m$, which counts
+incidents along paths of every length (\cref{sec:th-hawkes}). Shading grows with
+the entry. The orange outline marks the online-to-offline spillover: direct
+coefficients in $\Amat$, total cascade effects in $\Mmat$. The values are
+illustrative, chosen for legibility; they are not estimates.}
+\label{fig:network}
+\end{figure}

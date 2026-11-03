@@ -60,7 +60,7 @@ Without training data, $m$ and $u$ are estimated from the candidate pairs as a t
 \begin{algorithm}[t]
 \caption{Fellegi--Sunter EM under conditional independence}\label{alg:fsem}
 \begin{algorithmic}[1]
-\Require Comparison vectors $\gamma_\ell$ for candidate pairs $\ell\in\mathcal P$; field levels $\{0,\dots,L_f\}$, $f=1,\dots,F$; tolerance $\eta$
+\Require Comparison vectors $\gamma_\ell$ for candidate pairs $\ell\in\mathcal P$; field levels $\{0,\dots,L_f\}$, $f=1,\dots,F$; tolerance $\mathrm{tol}$
 \Ensure Estimates of $p=\Pr(\mathrm M)$, $m_f$, $u_f$; match probabilities $\zeta_\ell$; weights $w_\ell$
 \State Initialise $p\in(0,\tfrac12)$, and $m_f,u_f$ with $m_f$ placing more mass than $u_f$ on the agreement levels
 \Repeat
@@ -72,7 +72,7 @@ Without training data, $m$ and $u$ are estimated from the candidate pairs as a t
     \State $m_f(j)\gets\sum_{\ell:f\in O_\ell}\zeta_\ell\ind{\gamma^f_\ell=j}\big/\sum_{\ell:f\in O_\ell}\zeta_\ell$
     \State $u_f(j)\gets\sum_{\ell:f\in O_\ell}(1-\zeta_\ell)\ind{\gamma^f_\ell=j}\big/\sum_{\ell:f\in O_\ell}(1-\zeta_\ell)$
   \EndFor
-\Until{the observed-data log-likelihood increases by less than $\eta$}
+\Until{the observed-data log-likelihood increases by less than $\mathrm{tol}$}
 \State If necessary swap the labels so that $m$ is the component with more agreement
 \State \Return $p$, $m_f$, $u_f$, $\zeta_\ell$, and $w_\ell=\sum_{f\in O_\ell}\log\{m_f(\gamma_\ell^f)/u_f(\gamma_\ell^f)\}$
 \end{algorithmic}
@@ -94,9 +94,9 @@ A posterior over $\Link$ is what MSE needs because the estimand depends on $\Lin
 
 \begin{definition}[Canonical linkage-error model, LE]\label{def:link-le}
 Let $\delta,\varepsilon\in[0,1)$. Starting from $\Link^\star$, the estimated structure $\Linkhat$ is produced in two steps.
-\begin{itemize}[leftmargin=2.6em]
-  \item[(D)] \emph{Detachment (false non-matches).} Each record detaches independently with probability $\delta$. Within each block of $\Link^\star$, the records that do not detach stay together as one cluster (if there are any), and each detached record forms a singleton cluster. Call the result $\tilde\Link$ and write $\tilde{\bm n}=\bm n(\tilde\Link)$.
-  \item[(M)] \emph{Merging (false matches).} Each singleton cluster of $\tilde\Link$ is selected independently with probability $\varepsilon$. The selected singletons are processed in a uniformly random order. When a selected singleton from list $k$ is processed, and is still a singleton, it merges with a cluster drawn uniformly from the current clusters whose support excludes $k$; if there is none, nothing happens. A selected singleton that has absorbed another singleton before its turn is no longer a singleton and does not merge. The result is $\Linkhat$, and $\bm n=\bm n(\Linkhat)$.
+\begin{itemize}[leftmargin=4.2em]
+  \item[(LE-D)] \emph{Detachment (false non-matches).} Each record detaches independently with probability $\delta$. Within each block of $\Link^\star$, the records that do not detach stay together as one cluster (if there are any), and each detached record forms a singleton cluster. Call the result $\tilde\Link$ and write $\tilde{\bm n}=\bm n(\tilde\Link)$.
+  \item[(LE-M)] \emph{Merging (false matches).} Each singleton cluster of $\tilde\Link$ is selected independently with probability $\varepsilon$. The selected singletons are processed in a uniformly random order. When a selected singleton from list $k$ is processed, and is still a singleton, it merges with a cluster drawn uniformly from the current clusters whose support excludes $k$; if there is none, nothing happens. A selected singleton that has absorbed another singleton before its turn is no longer a singleton and does not merge. The result is $\Linkhat$, and $\bm n=\bm n(\Linkhat)$.
 \end{itemize}
 \end{definition}
 
@@ -113,7 +113,7 @@ is the change in the table when the list-$k$ record splits off an incident with 
 be the number of clusters into which a list-$k$ singleton can merge. Here and below, sums over $g$ run over non-empty $g\subseteq\Kset$.
 
 \begin{proposition}[The detachment operator]\label{prop:link-detach}
-Under (D), $\E[\tilde{\bm n}\mid\Link^\star]=\mathcal D_\delta\bm t$, where $\mathcal D_\delta$ is the linear map with matrix
+Under (LE-D), $\E[\tilde{\bm n}\mid\Link^\star]=\mathcal D_\delta\bm t$, where $\mathcal D_\delta$ is the linear map with matrix
 \begin{equation}\label{eq:link-D}
   (\mathcal D_\delta)_{gh}=\ind{g\subseteq h}(1-\delta)^{|g|}\delta^{|h|-|g|}+\delta\,\ind{g=\{k\}\text{ for some }k\in h},\qquad g,h\in\Hobs .
 \end{equation}
@@ -140,26 +140,26 @@ Merging is not linear, but its first-order effect is explicit. Define the \emph{
 The singleton cell $\{k\}$ loses $\varepsilon x_{\{k\}}$, and each cell $g\not\ni k$ sends $\varepsilon x_{\{k\}}x_g/C_k(\bm x)$ to $g\cup k$.
 
 \begin{lemma}[Merging to first order]\label{lem:link-merge}
-Let $\tilde\Link$ be any linkage structure with table $\tilde{\bm n}$. Let $A=\sum_k\tilde n_{\{k\}}$ be its number of singletons and suppose $C_{\min}=\min_kC_k(\tilde{\bm n})>0$. Under (M),
+Let $\tilde\Link$ be any linkage structure with table $\tilde{\bm n}$. Let $A=\sum_k\tilde n_{\{k\}}$ be its number of singletons and suppose $C_{\min}=\min_kC_k(\tilde{\bm n})>0$. Under (LE-M),
 \[
   \bm n=\tilde{\bm n}+\varepsilon\,\bm q(\tilde{\bm n})+\bm\xi+\bm\zeta,
 \]
 where $\E[\bm\xi\mid\tilde\Link]=\bm 0$, $\E[\|\bm\xi\|_2^2\mid\tilde\Link]\le3\varepsilon A$ and $\E[\|\bm\zeta\|_1\mid\tilde\Link]\le24\,\varepsilon^2A^2/C_{\min}$. In particular, $\|\E[\bm n\mid\tilde\Link]-\tilde{\bm n}-\varepsilon\bm q(\tilde{\bm n})\|_1\le24\,\varepsilon^2A^2/C_{\min}$.
 \end{lemma}
 
-The proof couples (M) with an idealised process in which every selected singleton merges independently into a uniformly chosen cluster of the \emph{initial} configuration. The two processes differ only when two merges interact, and the expected number of such interactions is $O(\varepsilon^2A^2/C_{\min})$. \Cref{prop:link-detach,lem:link-merge} motivate the following definition.
+The proof couples (LE-M) with an idealised process in which every selected singleton merges independently into a uniformly chosen cluster of the \emph{initial} configuration. The two processes differ only when two merges interact, and the expected number of such interactions is $O(\varepsilon^2A^2/C_{\min})$. \Cref{prop:link-detach,lem:link-merge} motivate the following definition.
 
 \begin{definition}[Linkage operator]\label{def:link-T}
 The linkage operator is $\Lop_{\delta,\varepsilon}(\bm x)=\mathcal D_\delta\bm x+\varepsilon\,\bm q(\mathcal D_\delta\bm x)$.
 \end{definition}
 
-$\Lop_{\delta,0}=\mathcal D_\delta$ is exact. $\Lop_{\delta,\varepsilon}$ is positively homogeneous of degree one and preserves list margins. It is the forward map that the correction of \cref{cor:linkcorrect} inverts, and the simulation code uses it in that role. All asymptotic statements refer to the following regime. It conditions on the true table, so it covers both sampling models of \cref{def:fw-models}. Under (M), for example, $\bm t/N\to\bm\pi_+$ almost surely.
+$\Lop_{\delta,0}=\mathcal D_\delta$ is exact. $\Lop_{\delta,\varepsilon}$ is positively homogeneous of degree one and preserves list margins. It is the forward map that the correction of \cref{cor:linkcorrect} inverts, and the simulation code uses it in that role. All asymptotic statements refer to the following regime. It conditions on the true table, so it covers both sampling models of \cref{def:fw-models}. Under the multinomial model of \cref{def:fw-models}, for example, $\bm t/N\to\bm\pi_+$ almost surely.
 
 \begin{assumption}[Large-population regime for linkage]\label{ass:link-pop}
 There is a sequence of populations, indexed by $N\to\infty$, with true tables $\bm t=\bm t^{(N)}$ such that $\bm\tau_N:=\bm t/N\to\bm\tau$ with $\tau_h>0$ for every $h\in\Hobs$. The rates $(\delta,\varepsilon)$ do not depend on $N$.
 \end{assumption}
 
-We write $R_N=O_p^{\mathrm u}(r)$ when for every $\eta>0$ there are constants $c_\eta$ and $\eta_0>0$ such that $\Pr(|R_N|>c_\eta r)\le\eta$ for all large $N$ and all $(\delta,\varepsilon)\in[0,\eta_0]^2$. The remainder is small in probability, uniformly in small error rates. For a differentiable function $F$ of a table, $\partial_{h,k}F(\bm x)=\nabla F(\bm x)^{\top}\bm d_{h,k}$ is its derivative along the split $(h,k)$.
+We write $R_N=O_p^{\mathrm u}(r)$ when for every $\nu>0$ there are constants $c_\nu$ and $r_0>0$ such that $\Pr(|R_N|>c_\nu r)\le\nu$ for all large $N$ and all $(\delta,\varepsilon)\in[0,r_0]^2$. The remainder is small in probability, uniformly in small error rates. For a differentiable function $F$ of a table, $\partial_{h,k}F(\bm x)=\nabla F(\bm x)^{\top}\bm d_{h,k}$ is its derivative along the split $(h,k)$.
 
 \begin{lemma}[Split--merge calculus]\label{lem:link-response}
 Let $F$ be positively homogeneous of degree one and twice continuously differentiable near $\bm\tau$. Under LE and \cref{ass:link-pop},
@@ -191,7 +191,7 @@ Assume LE.
     &=\Bigl[(1-\delta)^2(1-2\varepsilon)+\varepsilon\Bigl(\frac1{\hat p_1}+\frac1{\hat p_2}\Bigr)\Bigr]^{-1}+O_p^{\mathrm u}\bigl(\varepsilon^2+N^{-1/2}\bigr)\notag\\
     &=1+2\delta-\varepsilon\Bigl(\frac1{\hat p_1}+\frac1{\hat p_2}-2\Bigr)+O_p^{\mathrm u}\bigl((\delta+\varepsilon)^2+N^{-1/2}\bigr).\label{eq:link-LP}
   \end{align}
-  If $\varepsilon=0$ the result is exact in distribution: $n_{11}\sim\Bin(t_{11},(1-\delta)^2)$. The same holds for Lincoln--Petersen applied to any two lists $j\ne k$ of a $K$-list system, $\Nhat^{(jk)}_{\mathrm{LP}}(\bm n)=\Nhat^{(jk)}_{\mathrm{LP}}(\bm t)\,t_{jk}/n_{jk}$ with $n_{jk}\sim\Bin(t_{jk},(1-\delta)^2)$.
+  If $\varepsilon=0$ the result is exact in distribution: $n_{11}\sim\Bin(t_{11},(1-\delta)^2)$. For Lincoln--Petersen applied to two lists $j\ne k$ of a $K$-list system, the identity $\Nhat^{(jk)}_{\mathrm{LP}}(\bm n)=\Nhat^{(jk)}_{\mathrm{LP}}(\bm t)\,t_{jk}/n_{jk}$ holds for every realisation, and if $\varepsilon=0$ then $n_{jk}\sim\Bin(t_{jk},(1-\delta)^2)$.
   \item \emph{$K$ lists.} For the closed-form estimator $\widehat n_{\zero}(\omega)$ of \cref{thm:closed} and under \cref{ass:link-pop},
   \begin{equation}\label{eq:link-Kbias}
     \frac{\widehat n_{\zero}(\omega;\bm n)}{\widehat n_{\zero}(\omega;\bm t)}=1+\delta\,\beta_\delta(\bm t)+\varepsilon\,\beta_\varepsilon(\bm t)+O_p^{\mathrm u}\bigl((\delta+\varepsilon)^2+N^{-1/2}\bigr),
@@ -205,27 +205,28 @@ Assume LE.
     b_k(\bm t)=\frac{t_{k+}}{t_{\{k\}}}-1 .\notag
   \end{align}
   The coefficients are scale-free, so $\beta(\bm t)=\beta(\bm\tau_N)$, and they do not depend on $\omega$.
-  \item \emph{Direction.} If
+  \item \emph{Direction.} Say that a positive table $\bm x$ satisfies condition \eqref{eq:link-H} if
   \begin{equation}\label{eq:link-H}
-    a_k(\bm t)\ge0\quad\text{and}\quad\bar a_k(\bm t)\ge-1\qquad\text{for every }k\in\Kset,\tag{H}
+    a_k(\bm x)\ge0\quad\text{and}\quad\bar a_k(\bm x)\ge-1\qquad\text{for every }k\in\Kset.\tag{H}
   \end{equation}
-  then $\beta_\delta(\bm t)\ge K$ and $\beta_\varepsilon(\bm t)\le-K$: to first order, false non-matches inflate the dark figure by at least $K\delta$ and false matches deflate it by at least $K\varepsilon$. Condition \eqref{eq:link-H} always holds for $K=2$. For general $K$ it holds whenever, for every $k$, the observed conditional odds of capture by list $k$ factorise as $t_{g\cup k}/t_g=c_k\prod_{j\in g}\phi_{jk}$ ($g\not\ni k$) with pairwise factors $\phi_{jk}\in[\frac12,2]$ (\cref{lem:link-H}). This includes independent capture.
+  If $\bm t$ satisfies \eqref{eq:link-H}, then $\beta_\delta(\bm t)\ge K$ and $\beta_\varepsilon(\bm t)\le-K$: to first order, false non-matches inflate the dark figure by at least $K\delta$ and false matches deflate it by at least $K\varepsilon$. If $\bm\tau$ satisfies \eqref{eq:link-H} with strict inequalities, then so does $\bm t$ for all large $N$. Every positive table satisfies \eqref{eq:link-H} when $K=2$. For general $K$, $\bm\tau$ satisfies it strictly whenever, for every $k$, the conditional odds of capture by list $k$ factorise as $\tau_{g\cup k}/\tau_g=c_k\prod_{j\in g}\phi_{jk}$ ($g\not\ni k$) with pairwise factors $\phi_{jk}\in(\frac12,2)$ (\cref{lem:link-H}). This includes independent capture, where $\phi_{jk}\equiv1$.
 \end{enumerate}
 \end{theorem}
 
-For $K=2$, \eqref{eq:link-betas} reduces to $\beta_\delta=2(1+t_{11}/t_{10}+t_{11}/t_{01})$ and $\beta_\varepsilon=-\{2+t_{10}/t_{01}+t_{01}/t_{10}+(t_{10}+t_{01})/t_{11}\}$. For $K=3$, every positive table has the factorised form required in (iv): it is the no-three-way-interaction parametrisation of the observed cells. The pairwise factor $\phi_{jk}$ is then the observable conditional odds ratio $t_{\{j,k,l\}}t_{\{l\}}/(t_{\{j,l\}}t_{\{k,l\}})$ between lists $j$ and $k$ among incidents recorded by the third list $l$. So for $K=3$, condition \eqref{eq:link-H} holds whenever these three odds ratios lie in $[\frac12,2]$.
+For $K=2$, \eqref{eq:link-betas} reduces to $\beta_\delta=2(1+t_{11}/t_{10}+t_{11}/t_{01})$ and $\beta_\varepsilon=-\{2+t_{10}/t_{01}+t_{01}/t_{10}+(t_{10}+t_{01})/t_{11}\}$. For $K=3$, every positive table has the factorised form required in (iv): it is the no-three-way-interaction parametrisation of the observed cells. The pairwise factor $\phi_{jk}$ is then the observable conditional odds ratio $t_{\{j,k,l\}}t_{\{l\}}/(t_{\{j,l\}}t_{\{k,l\}})$ between lists $j$ and $k$ among incidents recorded by the third list $l$. So for $K=3$, the table $\bm t$ itself satisfies \eqref{eq:link-H} whenever these three odds ratios lie in $[\frac12,2]$. For $K\ge4$ the factorisation is a genuine restriction: it rules out interactions of order three or more among the observed cells, so a realised table essentially never factorises exactly, even under independent capture. This is why part (iv) places the condition on $\bm\tau$. In practice, \eqref{eq:link-H} involves only observed cells and can be checked directly on the corrected table $\hat{\bm t}$ of \cref{cor:linkcorrect}.
 
 \begin{corollary}[Independent capture]\label{cor:link-indep}
-Suppose $t_h\propto\prod_{k\in h}p_k\prod_{k\notin h}(1-p_k)$ with $p_k\in(0,1)$, and let $q_{-k}=\prod_{j\neq k}(1-p_j)$ be the probability of being missed by every list other than $k$. Then
-\[
-  \beta_\delta=\sum_{k}\frac{p_k}{1-p_k}+\sum_k\frac1{q_{-k}},\qquad
-  \beta_\varepsilon=-K-\sum_k\frac{q_{-k}}{(1-p_k)(1-q_{-k})} .
-\]
-As $\max_kp_k\to0$, $\beta_\delta\to K$, while $\beta_\varepsilon=-\{1+o(1)\}\sum_k\bigl(\sum_{j\ne k}p_j\bigr)^{-1}\to-\infty$.
+Suppose $\tau_h\propto\prod_{k\in h}p_k\prod_{k\notin h}(1-p_k)$ with $p_k\in(0,1)$. Let $\theta_k=p_k/(1-p_k)$, and let $q_{-k}=\prod_{j\neq k}(1-p_j)$ be the probability of being missed by every list other than $k$. Then $\beta(\bm t)\to\beta(\bm\tau)$, where
+\begin{align*}
+  \beta_\delta(\bm\tau)&=\sum_{k}\theta_k+\sum_k\frac1{q_{-k}},\qquad
+  \beta_\varepsilon(\bm\tau)=-K-\sum_k\frac{q_{-k}}{(1-p_k)(1-q_{-k})},\\
+  \beta_\delta(\bm\tau)+\beta_\varepsilon(\bm\tau)&=\sum_k\frac{(1-2q_{-k})(\theta_k+q_{-k}^{-1})}{1-q_{-k}} .
+\end{align*}
+Hence missed links have the larger first-order effect, $\beta_\delta>|\beta_\varepsilon|$, if $q_{-k}<\frac12$ for every $k$, and false matches have the larger effect if $q_{-k}>\frac12$ for every $k$. With equal capture probabilities $p$ the crossover is at $p^\ast=1-2^{-1/(K-1)}$, that is $0.5$, $0.293$ and $0.206$ for $K=2,3,4$. As $\max_kp_k\to0$, $\beta_\delta\to K$, while $\beta_\varepsilon=-\{1+o(1)\}\sum_k\bigl(\sum_{j\ne k}p_j\bigr)^{-1}\to-\infty$.
 \end{corollary}
 
 \begin{remark}[Reading the theorem]\label{rem:link-reading}
-The two error types are not symmetric. Detachment moves incidents from overlaps into singletons at a rate proportional to the overlaps, and its relative effect on the dark figure is of order $K\delta$. Merging moves singletons into overlaps at a rate proportional to the \emph{singletons}. When lists capture small fractions of incidents, singletons outnumber overlaps by a factor of order $1/p$, and $|\beta_\varepsilon|$ is of order $1/p$. Take a hypothetical two-list example with $p_1=p_2=0.1$. \Cref{cor:link-indep} gives $\beta_\delta\approx2.4$ and $\beta_\varepsilon=-22$. A false-match rate of $1\%$ would then deflate the estimated dark figure by about a fifth, while a false-non-match rate of $1\%$ would inflate it by about $2\%$. For the dark figure, linkage thresholds should therefore err towards not linking, and audits should give priority to false matches. Since the expansion \eqref{eq:link-Kbias} is linear, it is informative only when $\delta|\beta_\delta|$ and $\varepsilon|\beta_\varepsilon|$ are small. Beyond that range we recommend the plug-in $F(\Lop_{\delta,\varepsilon}(\bm t))$, which is exact in $\delta$.
+The two error types are not symmetric, and which one matters more depends on how sparse the lists are. Detachment moves incidents from overlaps into singletons at a rate proportional to the overlaps. Merging moves singletons into overlaps at a rate proportional to the \emph{singletons}. When lists capture small fractions of incidents, singletons outnumber overlaps by a factor of order $1/p$. Then $|\beta_\varepsilon|$ is of order $1/p$, while $\beta_\delta$ is close to $K$. Take a hypothetical two-list example with $p_1=p_2=0.1$. \Cref{cor:link-indep} gives $\beta_\delta\approx2.4$ and $\beta_\varepsilon=-22$. A false-match rate of $1\%$ would then deflate the estimated dark figure by about a fifth, while a false-non-match rate of $1\%$ would inflate it by about $2.4\%$. Dense lists reverse the ranking. Under independent capture with equal $p$, $\beta_\delta$ grows like $(1-p)^{-(K-1)}$, and missed links dominate once $p$ exceeds $p^\ast=1-2^{-1/(K-1)}$, which is about $0.21$ for $K=4$. With $K=4$ and $p=0.5$, for instance, $\beta_\delta=36$ and $\beta_\varepsilon\approx-5.1$. The plug-in $F(\Lop_{\delta,\varepsilon}(\bm t))$ then gives $+41\%$ for $\delta=1\%$ against $-5\%$ for $\varepsilon=1\%$. No uniform rule such as ``err towards not linking'' is therefore justified. We recommend computing $\beta_\delta$ and $\beta_\varepsilon$ from the corrected table $\hat{\bm t}$ of \cref{cor:linkcorrect}, which estimates them consistently up to $O(\varepsilon^2)$, and using them to choose linkage thresholds and audit priorities. Since the expansion \eqref{eq:link-Kbias} is linear, it is informative only when $\delta|\beta_\delta|$ and $\varepsilon|\beta_\varepsilon|$ are small. Beyond that range we recommend the plug-in $F(\Lop_{\delta,\varepsilon}(\hat{\bm t}))$, which is exact in $\delta$.
 \end{remark}
 
 \begin{remark}[The direction can reverse for $K\ge3$]\label{rem:link-reversal}
@@ -233,7 +234,7 @@ Condition \eqref{eq:link-H} cannot simply be dropped. Take $K=3$ and $t_{\{k\}}=
 \end{remark}
 
 \begin{remark}[Relation to the literature]\label{rem:link-lit}
-For $K=2$, part (ii) has the affine structure of the dual-system model with matching error of \citet{ding1994}. Write $\E[n_{11}]=\alpha t_{11}+\beta_1(t_{1+}-t_{11})+\beta_2(t_{2+}-t_{11})$. For any mechanism of this affine form whose matched count concentrates, the argument of part (ii) gives $\Nhat_{\mathrm{LP}}(\bm n)/\Nhat_{\mathrm{LP}}(\bm t)\to\{\alpha-\beta_1-\beta_2+\beta_1/\hat p_2+\beta_2/\hat p_1\}^{-1}$. LE has $\alpha=(1-\delta)^2(1-2\varepsilon)+2\varepsilon$ and $\beta_1=\beta_2=\varepsilon$ to first order in $\varepsilon$, which recovers \eqref{eq:link-LP}. In the Ding--Fienberg model, a true match is recovered with probability $\alpha$ and a record of one list without a true match is falsely matched with probability $\beta$, which corresponds to $\beta_1=0$. Inverting the affine map gives
+For $K=2$, LE shares the affine structure of the dual-system model with matching error of \citet{ding1994}. In both, $\E[n_{11}]=\alpha t_{11}+\beta_1(t_{1+}-t_{11})+\beta_2(t_{2+}-t_{11})$ for constants $\alpha$, $\beta_1$ and $\beta_2$. For any mechanism of this form whose matched count concentrates, the argument of part (ii) gives $\Nhat_{\mathrm{LP}}(\bm n)/\Nhat_{\mathrm{LP}}(\bm t)\to\{\alpha-\beta_1-\beta_2+\beta_1/\hat p_2+\beta_2/\hat p_1\}^{-1}$. To first order in $\varepsilon$, LE has $\alpha=(1-\delta)^2(1-2\varepsilon)+2\varepsilon$ and $\beta_1=\beta_2=\varepsilon$, which gives \eqref{eq:link-LP}. In the Ding--Fienberg model, a true match is recovered with probability $\alpha$ and a record of one list without a true match is falsely matched with probability $\beta$, so $\beta_1=0$ and $\beta_2=\beta$. The two models are not nested, and $\E[n_{11}]$ alone does not identify $(\alpha,\beta_1,\beta_2)$. Under LE, for example, an unmatched list-$k$ singleton is falsely linked with probability about $\varepsilon(1+A_j/A_k)$, where $A_k$ is the number of list-$k$ singletons after detachment and $j\ne k$, because it can merge into another cluster or have another singleton merge into it. Inverting the affine map gives
 \[
   \Nhat=\frac{t_{1+}t_{2+}(\alpha-\beta_1-\beta_2)}{n_{11}-\beta_1t_{1+}-\beta_2t_{2+}},
 \]
@@ -241,7 +242,7 @@ which for $\beta_1=0$ is their corrected estimator; \citet{diconsiglio2015} use 
 \end{remark}
 
 \begin{remark}[List-specific rates]\label{rem:link-listspecific}
-If records of list $k$ detach with probability $\delta_k$ and list-$k$ singletons merge with probability $\varepsilon_k$, replace $\delta^{|h|-|g|}(1-\delta)^{|g|}$ in \eqref{eq:link-D} by $\prod_{j\in h\setminus g}\delta_j\prod_{j\in g}(1-\delta_j)$ and the coefficient $(-\delta)^{|g|-|h|}(1-\delta)^{-|g|}$ in \eqref{eq:link-mobius} by $\prod_{j\in g\setminus h}(-\delta_j)\prod_{j\in g}(1-\delta_j)^{-1}$. In \eqref{eq:link-response}, weight the split $(h,k)$ by $\delta_k$ and the merges of list-$k$ singletons by $\varepsilon_k$. The proofs are unchanged. List-specific rates are natural here, because police records are typically more complete than self-reports.
+If records of list $k$ detach with probability $\delta_k$ and list-$k$ singletons merge with probability $\varepsilon_k$, replace $\delta^{|h|-|g|}(1-\delta)^{|g|}$ in \eqref{eq:link-D} by $\prod_{j\in h\setminus g}\delta_j\prod_{j\in g}(1-\delta_j)$, the singleton term $\delta\,\ind{g=\{k\},k\in h}$ by $\delta_k\ind{g=\{k\},k\in h}$, and the coefficient $(-\delta)^{|g|-|h|}(1-\delta)^{-|g|}$ in \eqref{eq:link-mobius} by $\prod_{j\in g\setminus h}(-\delta_j)\prod_{j\in g}(1-\delta_j)^{-1}$. In \eqref{eq:link-response}, weight the split $(h,k)$ by $\delta_k$ and the merges of list-$k$ singletons by $\varepsilon_k$. The proofs are unchanged. List-specific rates are natural here, because police records are typically more complete than self-reports.
 \end{remark}
 
 \begin{remark}[Deduplication errors]\label{rem:link-dedup}
@@ -263,19 +264,23 @@ Assume LE and \cref{ass:link-pop}. Let $F$ be positively homogeneous of degree o
     \frac{v_{\mathrm{cap}}+v_{\mathrm{link}}}{v_{\mathrm{cap}}}=1+\frac{(1-\delta)^{-2}-1}{(1-p_1)(1-p_2)},
   \end{equation}
   and the corrected estimator is $(1-\delta)^2n_{1+}n_{2+}/n_{11}$.
-  \item \emph{Both error types.} There is $\eta>0$ such that for $(\delta,\varepsilon)\in[0,\eta]^2$, with probability tending to one, the equation $\Lop_{\delta,\varepsilon}(\bm x)=\bm n$ has a unique solution $\hat{\bm t}$ in the ball $\|\bm x-\bm t\|_1\le\eta N$. It satisfies
+  \item \emph{Both error types.} There are $r_0,r>0$ such that for $(\delta,\varepsilon)\in[0,r_0]^2$, with probability tending to one, the equation $\Lop_{\delta,\varepsilon}(\bm x)=\bm n$ has a unique solution $\hat{\bm t}$ in the ball $\|\bm x-\bm t\|_1\le2rN$. It satisfies
   \[
     \frac{F(\hat{\bm t})-F(\bm t)}{N}=O_p^{\mathrm u}\bigl(\varepsilon^2+N^{-1/2}\bigr).
   \]
   The first-order bias of \cref{thm:linkbias} is removed. A bias of order $\varepsilon^2$ remains, because $\Lop_{\delta,\varepsilon}$ is exact only to first order in $\varepsilon$.
-  \item \emph{Estimated rates.} Suppose $\hat\theta=(\hat\delta,\hat\varepsilon)$ is independent of $\bm n$ given $\Link^\star$, as when it comes from a separate audit, and that $\sqrt m(\hat\theta-\theta)\Rightarrow\mathrm N(0,V_\theta)$ for an audit size $m$ with $m/N\to\kappa\in(0,\infty)$. Then $N^{-1/2}\{F(\hat{\bm t}(\hat\theta))-F(\hat{\bm t}(\theta))\}\Rightarrow\mathrm N(0,\kappa^{-1}\bm c^{\top}V_\theta\bm c)$, independently of the term in (i), where
+  \item \emph{Estimated rates from an independent audit.} Suppose $\hat\theta=(\hat\delta,\hat\varepsilon)$ is independent of $\bm n$ given $\Link^\star$, as when it comes from auditing an independent linkage run or a separate validation sample, and that $\sqrt m(\hat\theta-\theta)\Rightarrow\mathrm N(0,V_\theta)$ for an audit size $m$ with $m/N\to\kappa\in(0,\infty)$. Then $N^{-1/2}\{F(\hat{\bm t}(\hat\theta))-F(\hat{\bm t}(\theta))\}\Rightarrow\mathrm N(0,\kappa^{-1}\bm c^{\top}V_\theta\bm c)$, independently of the term in (i), where
   \[
     \bm c=-\Bigl[\nabla F(\bm\tau)^{\top}\bigl\{\nabla_{\bm x}\Lop_\theta(\bm\tau)\bigr\}^{-1}\partial_\theta\Lop_\theta(\bm\tau)\Bigr]^{\top} .
   \]
 \end{enumerate}
 \end{corollary}
 
-Part (ii) defines the estimator that the simulation code computes. That code solves $\Lop_{\delta,\varepsilon}(\bm x)=\bm n$ by the damped fixed-point iteration $\bm x\gets\max\{\bm 0,\bm x+(\bm n-\Lop_{\delta,\varepsilon}(\bm x))\}$. For $\varepsilon=0$ the iteration matrix $I-\mathcal D_\delta$ is triangular with spectral radius $1-(1-\delta)^K<1$, so the iteration converges geometrically to \eqref{eq:link-mobius}--\eqref{eq:link-singleinv}. Correction trades bias for variance. In \eqref{eq:link-vif} with $\delta=0.05$ and $p_1=p_2=0.3$, the variance grows by about $22\%$, whereas the uncorrected estimator has a relative bias of about $+11\%$ that does not shrink with $N$. The same decomposition into a capture term and a linkage term reappears in Bayesian form below.
+\begin{remark}[Auditing the same linkage]\label{rem:link-sameaudit}
+The audit of \cref{sec:link-review} samples pairs from the linkage that produced $\bm n$. Then $\hat\theta$ and $\bm n$ are dependent and part (iii) does not apply. Such an audit estimates the \emph{realised} error rates of that linkage, which removes part of $v_{\mathrm{link}}$. Take $K=2$, $\varepsilon=0$ and an audit of a simple random fraction $f$ of the $t_{11}$ true pairs, and let $\varrho=(1-\delta)^2$. Then $\Var(\log\hat t_{11}-\log t_{11})=\{1+o(1)\}(1-\varrho)(f^{-1}-1)/(\varrho\,t_{11})$, whereas adding the variances of (i) and (iii) gives $(1-\varrho)(f^{-1}+1)/(\varrho\,t_{11})$. A census audit ($f=1$) recovers $t_{11}$ exactly (\cref{app:link-correct}). In this case the sum overstates the variance by twice the linkage variance of (i), so it is conservative. We do not derive the joint variance in general. A parametric bootstrap that regenerates both the LE errors at $\hat\theta$ and the audit sample estimates it.
+\end{remark}
+
+Part (ii) defines the estimator that the simulation code computes. That code solves $\Lop_{\delta,\varepsilon}(\bm x)=\bm n$ by the projected fixed-point iteration $\bm x\gets\max\{\bm 0,\bm x+(\bm n-\Lop_{\delta,\varepsilon}(\bm x))\}$, with step length one, halved whenever the residual grows. For $\varepsilon=0$ and without the projection, the iteration matrix $I-\mathcal D_\delta$ is triangular with spectral radius $1-(1-\delta)^K<1$, so the iteration converges geometrically to \eqref{eq:link-mobius}--\eqref{eq:link-singleinv}. With the projection, it can converge to that solution only if $\mathcal D_\delta^{-1}\bm n\ge\bm0$. If some cell of $\mathcal D_\delta^{-1}\bm n$ is negative, which can happen when a cell is small and $\delta$ is large, the equation has no non-negative solution and the code reports non-convergence. Correction trades bias for variance. In \eqref{eq:link-vif} with $\delta=0.05$ and $p_1=p_2=0.3$, the variance grows by about $22\%$, whereas the uncorrected estimator has a relative bias of about $+11\%$ that does not shrink with $N$. The same decomposition into a capture term and a linkage term reappears in Bayesian form below.
 
 \begin{proposition}[Total-variance decomposition]\label{prop:totalvar}
 Let $p(N,\Link\mid D)$ be a posterior given the data $D$ (records and comparison vectors). It may come from a joint model or from linkage-averaging, in which $\Link$ is drawn from a linkage-only posterior. Let $G(\Link)=\E[N\mid\Link,D]$, $V(\Link)=\Var(N\mid\Link,D)$, and assume second moments are finite.
@@ -286,12 +291,12 @@ Let $p(N,\Link\mid D)$ be a posterior given the data $D$ (records and comparison
     \E\bigl[\{N-G(\Linkhat)\}^2\mid D\bigr]=V_w+V_b+\bigl\{\E[N\mid D]-G(\Linkhat)\bigr\}^2 .
   \]
   If $V(\Link)$ does not depend on $\Link$ on the support of $p(\Link\mid D)$, the reported variance falls short by at least $V_b$.
-  \item Suppose $N\mid D$ is normal and $V(\Linkhat)=V_w$. Then the nominal $(1-\alpha)$ plug-in interval $G(\Linkhat)\pm z_{\alpha/2}V_w^{1/2}$ has posterior coverage at most $2\Phi\{z_{\alpha/2}(1+V_b/V_w)^{-1/2}\}-1$. The bound is attained when $G(\Linkhat)=\E[N\mid D]$.
+  \item Suppose $N\mid D$ is normal and $V(\Linkhat)=V_w$. Then the nominal $(1-\alpha)$ plug-in interval $G(\Linkhat)\pm z_{1-\alpha/2}V_w^{1/2}$ has posterior coverage at most $2\Phi\{z_{1-\alpha/2}(1+V_b/V_w)^{-1/2}\}-1$. The bound is attained when $G(\Linkhat)=\E[N\mid D]$.
   \item \emph{Rubin's rules.} Let $\Link^{(1)},\dots,\Link^{(M)}$ be independent draws from $p(\Link\mid D)$, independent of $N$ given $D$. Let $\bar Q=M^{-1}\sum_mG(\Link^{(m)})$, $\bar U=M^{-1}\sum_mV(\Link^{(m)})$, and let $B_M$ be the sample variance of the $G(\Link^{(m)})$. Then
   \[
     \E\bigl[(N-\bar Q)^2\mid D\bigr]=V_w+\bigl(1+M^{-1}\bigr)V_b=\E\bigl[\bar U+(1+M^{-1})B_M\mid D\bigr].
   \]
-  Rubin's total variance $T_M=\bar U+(1+M^{-1})B_M$ \citep{rubin1987} is therefore unbiased for the posterior mean-squared error of the multiple-imputation estimate $\bar Q$.
+  Rubin's total variance $T_M=\bar U+(1+M^{-1})B_M$ \citep{rubin1987} is therefore unbiased, over the imputation draws given $D$, for the posterior mean-squared error of the multiple-imputation estimate $\bar Q$. This assumes exact independent posterior draws and that $V(\Link)$ is the exact conditional posterior variance. It is a statement about the posterior given $D$. It says nothing about the frequentist coverage of the resulting intervals, which requires the imputation and analysis models to be congenial \citep{meng1994}.
 \end{enumerate}
 \end{proposition}
 
@@ -329,7 +334,7 @@ Assume (R1)--(R2).
     |\Delta_\ell-g_\ell|\le H\bar v^2\bigl(1+S_1^{1/2}\bigr),\qquad
     I_{\mathrm{int}}\le\tfrac14H^2\bar v^4\bigl(S_1+3S_1^2\bigr).
   \]
-  Ranking by $g_\ell^2\pi_\ell(1-\pi_\ell)$ is therefore exactly optimal for the linearised objective $\sum_{\ell\notin S}g_\ell^2\pi_\ell(1-\pi_\ell)$. For $F=\Nhat$, which is homogeneous of degree one, $H=O(N^{-1})$. With $S_1=O(N)$ the suboptimality $I_{\mathrm{int}}$ is $O(1)$, while the linkage variance is of order $N$.
+  Ranking by $g_\ell^2\pi_\ell(1-\pi_\ell)$ is therefore exactly optimal for the linearised objective $\sum_{\ell\notin S}g_\ell^2\pi_\ell(1-\pi_\ell)$. For $F=\Nhat$, which is homogeneous of degree one, $H=O(N^{-1})$ provided the convex hull of the attainable tables lies in $\{\bm x:x_h\ge cN\ \forall h\}$ for some $c>0$. If uncertain links can empty a cell, $H$ is unbounded and the bound is void. Under the proviso and with $S_1=O(N)$, the suboptimality $I_{\mathrm{int}}$ is $O(1)$, while the linkage variance is of order $N$.
   \item \emph{General costs.} Maximising $\sum_{u\in S}\sigma_u^2$ subject to $\sum_{u\in S}c_u\le B$ is a $0$--$1$ knapsack problem with optimum $W^\star$. Order the units by $\sigma_u^2/c_u$, let $S_{\mathrm g}$ be the longest prefix that fits the budget, and let $j$ be the first unit that does not fit. Then $\sum_{u\in S_{\mathrm g}}\sigma_u^2\ge W^\star-\sigma_j^2$. If $c_j\le B$, the better of $S_{\mathrm g}$ and $\{j\}$ achieves at least $W^\star/2$.
 \end{enumerate}
 \end{theorem}
@@ -362,18 +367,18 @@ Targeted review is not a probability sample, so it cannot estimate $(\delta,\var
   \delta=1-\Bigl(\frac{\mathrm{TP}}{\mathrm{TP}+\mathrm{FN}}\Bigr)^{1/2},\qquad
   \varepsilon=\frac{\mathrm{FE}}{f_1+\mathrm{FE}} .
 \end{equation}
-The first equation inverts the pairwise retention probability $(1-\delta)^2$ of \cref{prop:link-detach}(iv). The second uses the fact that each false merge consumes one singleton, so that the number of singletons before merging is approximately the observed number $f_1$ of singleton clusters plus the number of false merges. This approximation is exact to first order in $\varepsilon$. Let $\hat{\bm Y}=\sum_hN_h\bar{\bm y}_h$ be the stratified expansion estimator, $\hat\theta=\psi(\hat{\bm Y})$, and let $\bm a=\partial F(\hat{\bm t}(\theta))/\partial\theta$ be the sensitivity of the corrected estimator of \cref{cor:linkcorrect} to the rates. The audit should minimise the variance that $\hat\theta$ contributes to $F(\hat{\bm t}(\hat\theta))$. Its linearisation is the design variance of the total of the composite variable $z_\ell=\bm a^{\top}\nabla\psi(\bm Y)\bm y_\ell$.
+The first equation inverts the pairwise retention probability $(1-\delta)^2$ of \cref{prop:link-detach}(iv). For the second, let $M$ be the number of false merges and $A$ the number of singletons before merging. Under LE, $\E M=\varepsilon A\{1+O(\varepsilon)\}$. A merge consumes one singleton, or two when its target is itself a singleton, which for $K=2$ is always the case. So $A=f_1+M+M_s$, where $f_1$ is the observed number of singleton clusters and $M_s\le M$ counts merges into singletons. Since $M_s=O(\varepsilon A)$, dropping it changes $\varepsilon$ by $O(\varepsilon^2)$, and \eqref{eq:link-psi} is correct to first order in $\varepsilon$. Let $\hat{\bm Y}=\sum_hN_h\bar{\bm y}_h$ be the stratified expansion estimator, $\hat\theta=\psi(\hat{\bm Y})$, and let $\bm a=\partial F(\hat{\bm t}(\theta))/\partial\theta$ be the sensitivity of the corrected estimator of \cref{cor:linkcorrect} to the rates. Conditionally on the linkage, the audit sample is the only source of randomness in $\hat\theta$. The audit should minimise the resulting design variance of $F(\hat{\bm t}(\hat\theta))$. Its linearisation is the design variance of the total of the composite variable $z_\ell=\bm a^{\top}\nabla\psi(\bm Y)\bm y_\ell$. Because $\hat\theta$ then estimates the realised error rates, this variance should not simply be added to $v_{\mathrm{link}}$ (\cref{rem:link-sameaudit}).
 
 \begin{proposition}[Neyman-allocated audit]\label{prop:link-audit}
 In the design above, let $S_{z,h}^2=(N_h-1)^{-1}\sum_{\ell\in\mathcal P_h}(z_\ell-\bar z_h)^2$.
 \begin{enumerate}[(i)]
   \item $\hat{\bm Y}$ is design-unbiased for $\bm Y$, and $\hat\theta$ is design-consistent as $\min_hn_h\to\infty$.
-  \item The linearised audit variance $V_{\mathrm{aud}}=\sum_hN_h^2(1-n_h/N_h)S_{z,h}^2/n_h$ is minimised, subject to $\sum_hc_hn_h=C$ and ignoring integrality, by the Neyman allocation $n_h\propto N_hS_{z,h}/\sqrt{c_h}$. The minimum is $(\sum_hN_hS_{z,h}\sqrt{c_h})^2/C-\sum_hN_hS_{z,h}^2$.
-  \item If all pairs in stratum $h$ share one decision status, then $z_\ell=\alpha_h+\lambda_hI_\ell$ and $S_{z,h}=|\lambda_h|S_{I,h}$. If, in addition, the posterior is calibrated within strata, then $S_{I,h}^2=\bar\pi_h(1-\bar\pi_h)N_h/(N_h-1)$, where $\bar\pi_h$ is the mean of $\pi_\ell$ over the stratum. The allocation becomes $n_h\propto N_h|\lambda_h|\{\bar\pi_h(1-\bar\pi_h)/c_h\}^{1/2}$.
+  \item The linearised audit variance $V_{\mathrm{aud}}=\sum_hN_h^2(1-n_h/N_h)S_{z,h}^2/n_h$ is minimised, subject to $\sum_hc_hn_h=C$ and ignoring integrality, by the Neyman allocation $n_h\propto N_hS_{z,h}/\sqrt{c_h}$. The minimum is $(\sum_hN_hS_{z,h}\sqrt{c_h})^2/C-\sum_hN_hS_{z,h}^2$. With the bounds $2\le n_h\le N_h$ the problem stays convex, and its solution is $n_h=\min\{N_h,\max(2,N_hS_{z,h}/\sqrt{\lambda c_h})\}$, with $\lambda>0$ chosen to exhaust the budget.
+  \item If all pairs in stratum $h$ share one decision status, then $z_\ell=\alpha_h+\lambda_hI_\ell$ and $S_{z,h}=|\lambda_h|S_{I,h}$. Here $S_{I,h}^2=P_h(1-P_h)N_h/(N_h-1)$, where $P_h$ is the proportion of true matches in the stratum. If the posterior is calibrated within strata, then $\E[P_h\mid D]=\bar\pi_h$, the mean of $\pi_\ell$ over the stratum. This suggests the working allocation $n_h\propto N_h|\lambda_h|\{\bar\pi_h(1-\bar\pi_h)N_h/((N_h-1)c_h)\}^{1/2}$.
 \end{enumerate}
 \end{proposition}
 
-The optimal allocation (ii) is classical \citep{neyman1934,cochran1977}. The point of (iii) is the choice of target. Strata are weighted by their posterior uncertainty, as in targeted review, and also by the leverage $|\lambda_h|$ of their error type on the dark figure. \Cref{rem:link-reading} implies that this leverage is much larger for false links than for missed links when capture probabilities are small. The estimates in (i) are design-based, so they remain valid when the linkage model is miscalibrated \citep{belin1995}. Calibration affects only efficiency, through the proxy for $S_{z,h}$ in (iii). The simulation uses (iii) with $|\lambda_h|\equiv1$ and $c_h\equiv1$. Two practical points complete the design. First, pairs resolved by targeted review are known with certainty and can be removed from the audit frame, so that the audit measures the residual error. Second, true matches outside every block are invisible to a pair-based audit. A small record-level stratum, in which a reviewer searches all lists for a sampled record's counterparts, estimates the blocking component of $\delta$.
+The optimal allocation (ii) is classical \citep{neyman1934,cochran1977}. The point of (iii) is the choice of target. Strata are weighted by their posterior uncertainty, as in targeted review, and also by the leverage $|\lambda_h|$ of their error type on the dark figure. By \cref{rem:link-reading,cor:link-indep}, this leverage is much larger for false links than for missed links when the lists are sparse, and smaller when they are dense. The estimated coefficients $\beta(\hat{\bm t})$ show which case applies. The estimates in (i) are design-based, so they remain valid when the linkage model is miscalibrated \citep{belin1995}. Calibration affects only efficiency, through the proxy for $S_{z,h}$ in (iii). The simulation code uses (iii) with $|\lambda_h|\equiv1$ and $c_h\equiv1$, drops the factor $N_h/(N_h-1)$, and floors the proxy at $S_{I,h}\ge0.01$. It allocates at least two pairs per stratum, caps $n_h$ at $N_h$, and re-allocates the remainder, as in (ii). Two practical points complete the design. First, pairs resolved by targeted review are known with certainty and can be removed from the audit frame, so that the audit measures the residual error. Second, true matches outside every block are invisible to a pair-based audit. A small record-level stratum, in which a reviewer searches all lists for a sampled record's counterparts, estimates the blocking component of $\delta$.
 
 \subsection{Privacy-preserving linkage}\label{sec:link-pprl}
 

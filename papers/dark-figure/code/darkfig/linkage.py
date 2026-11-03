@@ -1,29 +1,46 @@
 """Record linkage for the dark-figure simulation study.
 
-Pipeline (see Alg. alg:fsem / alg:review in Sec. sec:linkage):
+Pipeline (cf. Alg. alg:fsem and the random audit of Prop. prop:link-audit in Sec. sec:linkage):
   1. normalise record attributes (venue text, type crosswalk);
   2. blocking: candidate pairs share a county neighbourhood (same or adjacent
      county, or either county unknown) and have |date difference| <= window;
   3. comparison vectors gamma with discrete levels for date difference,
      hour-of-day difference, location, harmonised type and venue
-     Jaro-Winkler similarity;
+     Jaro-Winkler similarity (hour and venue have an explicit "missing on
+     either side" level; location has an "unknown county" level);
   4. Fellegi-Sunter EM (unsupervised m/u) giving posterior match
      probabilities pi_{rr'}. Default: a 3-class latent model (match, related
      non-match, unrelated non-match; conditional independence within class,
-     date / hour distributions shared by the two non-match classes); the
-     classical 2-class CI model is available with n_classes=2;
+     date / hour distributions tied across the two non-match classes); the
+     classical 2-class CI model is available with n_classes=2. The full
+     specification is in FS_EM_SPEC (recorded in the results JSON);
   5. within-list de-duplication (union-find on within-list pairs whose
      posterior >= 0.5, using the class-conditional distributions fitted on
      the cross-list pairs with class proportions re-estimated on the
      within-list pairs);
   6. constrained clustering into incidents: greedy merging by descending
-     posterior above a threshold with at most one record per list per cluster;
-  7. approximate posterior linkage draws for multiple imputation: independent
-     Bernoulli(pi) draws on the candidate links, applied in random order under
-     the same constraint;
-  8. clerical-review simulator: a stratified sample of B candidate pairs with
-     Neyman allocation over (link status x posterior) strata, truth revealed,
-     giving estimates of the LE-model rates (delta, eps).
+     posterior above a threshold with at most one record per list per cluster
+     (the single best / "naive" linkage);
+  7. linkage draws for multiple imputation (gibbs_linkage): a single-record
+     Gibbs sampler over partitions of the de-duplicated records that targets
+     the plug-in Fellegi-Sunter pairwise posterior
+        p(Lambda | gamma) propto prod_{pairs r~r' in one cluster} pi/(1-pi)
+     restricted to partitions with <= 1 record per list per cluster in which
+     every within-cluster pair is a candidate pair with pi >= tau. These are
+     approximate posterior draws (empirical Bayes: m, u, p fixed at the FS-EM
+     values; pairwise composite likelihood; edges with pi < tau truncated).
+     The run-1 sampler (independent Bernoulli(pi) link proposals resolved
+     greedily under the constraint, sample_linkage_bernoulli) is kept for
+     reference only: it is NOT a posterior sampler;
+  8. clerical-review simulator (clerical_review): the RANDOM stratified audit
+     of Prop. prop:link-audit -- a stratified simple random sample of B
+     candidate pairs with Neyman allocation over (link status x posterior)
+     strata, truth revealed, giving design-based estimates of the LE-model
+     rates (delta, eps) on the candidate-pair frame. It is not the targeted
+     review of Alg. alg:review, and reviewed links are NOT fixed in the
+     linkage afterwards. Its estimand is computed from the truth on the same
+     frame by audit_frame_truth; true matches outside every block are
+     invisible to it (blocking recall is reported separately).
 
 Empirical linkage-error rates are expressed in the parametrisation of the
 canonical LE model of SPEC.md:
@@ -48,6 +65,45 @@ from .world import CROSSWALK, Records
 # ---------------------------------------------------------------------------
 
 def jaro(s1: str, s2: str) -> float:
+    """Jaro similarity. Each character of s1 is matched to the first unmatched equal
+    character of s2 within the match window (str.find does the scan in C; the result
+    is identical to the textbook double loop, see tests)."""
+    if s1 == s2:
+        return 1.0 if s1 else 0.0
+    l1, l2 = len(s1), len(s2)
+    if l1 == 0 or l2 == 0:
+        return 0.0
+    match_dist = max(max(l1, l2) // 2 - 1, 0)
+    flags = bytearray(l2)
+    s1_matched = []
+    find = s2.find
+    for i, c in enumerate(s1):
+        lo = i - match_dist if i > match_dist else 0
+        hi = i + match_dist + 1
+        if hi > l2:
+            hi = l2
+        j = find(c, lo, hi)
+        while j != -1 and flags[j]:
+            j = find(c, j + 1, hi)
+        if j != -1:
+            flags[j] = 1
+            s1_matched.append(c)
+    m = len(s1_matched)
+    if m == 0:
+        return 0.0
+    t = 0
+    k = 0
+    for j in range(l2):
+        if flags[j]:
+            if s2[j] != s1_matched[k]:
+                t += 1
+            k += 1
+    t = t / 2.0
+    return (m / l1 + m / l2 + (m - t) / m) / 3.0
+
+
+def _jaro_reference(s1: str, s2: str) -> float:
+    """Textbook double-loop Jaro similarity (run-1 implementation; used in tests only)."""
     if s1 == s2:
         return 1.0 if s1 else 0.0
     l1, l2 = len(s1), len(s2)
@@ -58,9 +114,7 @@ def jaro(s1: str, s2: str) -> float:
     s1_matched = []
     for i, c in enumerate(s1):
         lo = i - match_dist if i > match_dist else 0
-        hi = i + match_dist + 1
-        if hi > l2:
-            hi = l2
+        hi = min(i + match_dist + 1, l2)
         for j in range(lo, hi):
             if not s2_flags[j] and s2[j] == c:
                 s2_flags[j] = True
@@ -425,12 +479,172 @@ def greedy_link(n, list_id, pairs, post, threshold=0.5):
     return cluster_constrained(n, list_id, pairs, order)
 
 
-def sample_linkage(n, list_id, pairs, post, rng):
-    """One approximate posterior linkage draw: Bernoulli(pi) link proposals in random order."""
+def sample_linkage_bernoulli(n, list_id, pairs, post, rng):
+    """Run-1 imputation (kept for reference; NOT a posterior sampler).
+
+    Independent Bernoulli(pi) link proposals applied in random order under the
+    one-record-per-list constraint. Transitive closure of the accepted proposals
+    joins records whose own pair has a low posterior, so with miscalibrated FS
+    posteriors it produces far more false merges than the point linkage.
+    """
     on = np.flatnonzero(rng.random(len(post)) < post)
     order = on[rng.permutation(len(on))]
     labels, _ = cluster_constrained(n, list_id, pairs, order)
     return labels
+
+
+sample_linkage = sample_linkage_bernoulli   # backwards-compatible name
+
+
+def _connected(nodes, nbr):
+    """Whether ``nodes`` (a small set of records) is connected in the retained-edge graph."""
+    if len(nodes) <= 1:
+        return True
+    it = iter(nodes)
+    seen = {next(it)}
+    stack = list(seen)
+    while stack:
+        x = stack.pop()
+        nx = nbr[x]
+        for y in nodes:
+            if y not in seen and y in nx:
+                seen.add(y)
+                stack.append(y)
+    return len(seen) == len(nodes)
+
+
+def gibbs_linkage(n, list_id, pairs, post, rng, n_draws=20, burn=10, thin=2, init_labels=None,
+                  tau=1e-3, return_trace=False):
+    """Approximate posterior linkage draws by single-record Gibbs sampling over partitions.
+
+    Target (plug-in empirical-Bayes Fellegi-Sunter posterior with a pairwise
+    composite likelihood)::
+
+        p(Lambda | gamma) propto prod_{r < r' in one cluster of Lambda} omega_rr'
+
+    with ``omega = pi / (1 - pi)`` for candidate pairs with ``pi >= tau``
+    ("retained edges") and the floor ``omega_0 = tau / (1 - tau)`` for every
+    other within-cluster pair (non-candidate pairs and candidate pairs with
+    ``pi < tau``), on the partitions in which every cluster holds at most one
+    record per list and is connected in the retained-edge graph (the support of
+    the greedy point linkage, which only follows edges with pi >= 0.5). For an
+    isolated candidate pair the target reproduces the FS posterior pi exactly.
+    For a record that could join a multi-record cluster C, the joining odds are
+    the product of its pairwise odds with *every* member of C, so -- unlike the
+    run-1 Bernoulli/greedy imputation -- weak links are not chained transitively.
+
+    One sweep visits every record that has at least one retained edge, in random
+    order, and resamples its cluster from its full conditional: {own singleton}
+    and the clusters that contain a retained neighbour and no record of its list,
+    subject to the cluster it leaves staying connected (if it would not, the
+    record stays). The chain starts from ``init_labels`` (default: all
+    singletons; clusters of ``init_labels`` that are not admissible are split
+    into singletons). Draws are taken every ``thin`` sweeps after ``burn`` sweeps.
+
+    Returns a list of ``n_draws`` label arrays (and, with ``return_trace``, a dict
+    with the number of links Sum_c (|c| - 1) after every sweep, the number of
+    records that changed cluster per sweep and sizes of the sampler).
+    """
+    n = int(n)
+    list_id = np.asarray(list_id)
+    keep = post >= tau
+    pk = np.clip(post[keep], tau, 1.0 - 1e-12)
+    lw = (np.log(pk) - np.log1p(-pk)).tolist()
+    w0 = float(np.log(tau) - np.log1p(-tau))
+    nbr = [dict() for _ in range(n)]
+    for i, j, w in zip(pairs[keep, 0].tolist(), pairs[keep, 1].tolist(), lw):
+        nbr[i][j] = w
+        nbr[j][i] = w
+    bit = (1 << list_id.astype(np.int64)).tolist()
+    # ---- initial state
+    lab = list(range(n))
+    if init_labels is not None:
+        groups = {}
+        for r, c in enumerate(np.asarray(init_labels).tolist()):
+            groups.setdefault(c, []).append(r)
+        for mem in groups.values():
+            mask = 0
+            ok = True
+            for r in mem:
+                if mask & bit[r]:
+                    ok = False
+                mask |= bit[r]
+            if ok and _connected(set(mem), nbr):
+                for r in mem:
+                    lab[r] = mem[0]
+    members = {}
+    for r, c in enumerate(lab):
+        members.setdefault(c, set()).add(r)
+    lmask = {c: 0 for c in members}
+    for r, c in enumerate(lab):
+        lmask[c] |= bit[r]
+    free = [c for c in range(n) if c not in members]
+    active = np.array([r for r in range(n) if nbr[r]], dtype=np.int64)
+    draws, trace_links, trace_moves = [], [], []
+    n_sweeps = burn + n_draws * thin
+    exp = np.exp
+    for sweep in range(n_sweeps):
+        moves = 0
+        order = active[rng.permutation(len(active))].tolist()
+        us = rng.random(len(order)).tolist()
+        for r, u in zip(order, us):
+            c = lab[r]
+            mem = members[c]
+            nr = nbr[r]
+            if len(mem) > 2:
+                rest = mem - {r}
+                if not _connected(rest, nbr):
+                    continue        # leaving would disconnect the cluster: r stays (forced)
+            mem.discard(r)
+            if mem:
+                lmask[c] ^= bit[r]
+            else:
+                del members[c]
+                del lmask[c]
+                free.append(c)
+            br = bit[r]
+            opts = [-1]
+            vals = [0.0]
+            seen = set()
+            for q in nr:
+                cq = lab[q]
+                if cq in seen or cq == -1:
+                    continue
+                seen.add(cq)
+                if lmask[cq] & br:
+                    continue
+                sc = 0.0
+                for y in members[cq]:
+                    sc += nr.get(y, w0)
+                opts.append(cq)
+                vals.append(sc)
+            if len(opts) == 1:
+                choice = -1
+            else:
+                v = np.asarray(vals)
+                pr = exp(v - v.max())
+                cs = np.cumsum(pr)
+                choice = opts[int(np.searchsorted(cs, u * cs[-1], side="right"))]
+            if choice == -1:
+                cn = free.pop()
+                members[cn] = {r}
+                lmask[cn] = br
+            else:
+                cn = choice
+                members[cn].add(r)
+                lmask[cn] |= br
+            if cn != c:
+                moves += 1
+            lab[r] = cn
+        if return_trace:
+            trace_links.append(n - len(members))
+            trace_moves.append(moves)
+        if sweep >= burn and (sweep - burn + 1) % thin == 0:
+            draws.append(np.array(lab, dtype=np.int64))
+    if return_trace:
+        return draws, dict(n_links=trace_links, n_moves=trace_moves, n_active=int(len(active)),
+                           n_edges=int(keep.sum()), tau=tau, burn=burn, thin=thin)
+    return draws
 
 
 def table_from_labels(labels: np.ndarray, list_id: np.ndarray, K: int = 4, keep=None):
@@ -518,15 +732,41 @@ def linkage_error(labels: np.ndarray, true_id: np.ndarray, list_id: np.ndarray):
 
 
 # ---------------------------------------------------------------------------
-# clerical review simulator (Alg. alg:review)
+# clerical review simulator: the random stratified audit of Prop. prop:link-audit
+# (NOT the targeted review of Alg. alg:review; reviewed links are not fixed)
 # ---------------------------------------------------------------------------
+def audit_frame_truth(pairs: np.ndarray, labels: np.ndarray, accepted: np.ndarray, true_id: np.ndarray):
+    """The audit's estimand computed from the truth on the SAME frame (all candidate pairs).
+
+    TP = true-match candidate pairs in one cluster, FN = true-match candidate pairs
+    split, FE = false accepted edges (false spanning-forest edges = false merges
+    along accepted links), S = singleton clusters. delta_frame = 1 - sqrt(TP/(TP+FN)),
+    eps_frame = FE/(S + FE): what clerical_review estimates without design error.
+    """
+    same = labels[pairs[:, 0]] == labels[pairs[:, 1]]
+    truth = true_id[pairs[:, 0]] == true_id[pairs[:, 1]]
+    TP = int((same & truth).sum())
+    FN = int((~same & truth).sum())
+    FE = int((accepted & ~truth).sum())
+    S = int((np.unique(labels, return_counts=True)[1] == 1).sum())
+    rec = TP / (TP + FN) if TP + FN else 1.0
+    return dict(TP=TP, FN=FN, FE=FE, singletons=S, recall_frame=float(rec),
+                delta_frame=float(1.0 - np.sqrt(rec)), eps_frame=float(FE / (S + FE)) if S + FE else 0.0)
+
+
 REVIEW_BREAKS = (1e-4, 1e-3, 0.01, 0.05, 0.2, 0.5, 0.8, 0.95, 0.99)
 
 
 def clerical_review(pairs: np.ndarray, post: np.ndarray, labels: np.ndarray, accepted: np.ndarray,
                     true_id: np.ndarray, B: int, rng, s_floor: float = 0.01,
                     min_per_stratum: int = 2):
-    """Stratified clerical review of B candidate pairs with Neyman allocation.
+    """Random stratified audit of B candidate pairs with Neyman allocation (Prop. prop:link-audit).
+
+    This is the design-based audit of the error rates, not the targeted review of
+    Alg. alg:review: pairs are a probability sample, and the reviewed outcomes are
+    used only to estimate (delta, eps); the reviewed links are not fixed in the
+    linkage. The estimand is defined on the candidate-pair frame (see
+    audit_frame_truth); true matches outside every block are not in the frame.
 
     Strata = link status (A: accepted edge, L: same cluster but not an edge,
     U: different clusters) x posterior bins REVIEW_BREAKS. The allocation is
@@ -624,6 +864,55 @@ def clerical_review(pairs: np.ndarray, post: np.ndarray, labels: np.ndarray, acc
 # ---------------------------------------------------------------------------
 # full linkage run
 # ---------------------------------------------------------------------------
+def _n_true_cross_pairs(true_id, list_id):
+    """Number of record pairs from different lists that belong to the same true incident."""
+    true_id = np.asarray(true_id, dtype=np.int64)
+    list_id = np.asarray(list_id, dtype=np.int64)
+    if len(true_id) == 0:
+        return 0
+    _, inv = np.unique(true_id, return_inverse=True)
+    C = np.zeros((inv.max() + 1, int(list_id.max()) + 1), dtype=np.int64)
+    np.add.at(C, (inv, list_id), 1)
+    tot = C.sum(axis=1)
+    return int(((tot ** 2 - (C ** 2).sum(axis=1)) // 2).sum())
+
+
+# Full specification of the Fellegi-Sunter EM used in run_linkage (recorded in the results JSON
+# so that the paper can describe it).
+FS_EM_SPEC = dict(
+    fields=dict(
+        date=dict(levels=4, definition="|date difference| in days: 0 | 1-2 | 3-7 | >=8 (up to the blocking window)"),
+        hour=dict(levels=4, definition="circular |hour difference|: <=1 | 2-3 | >=4 | missing on either side",
+                  missing_level=3),
+        location=dict(levels=3, definition="same county | different (adjacent) county | county unknown on either side",
+                      missing_level=2),
+        type=dict(levels=3, definition="harmonised type sets: both single and equal | overlapping | disjoint"),
+        venue=dict(levels=5, definition="Jaro-Winkler similarity of normalised venue strings: >=0.96 | >=0.90 | "
+                                        ">=0.80 | <0.80 | missing on either side", missing_level=4)),
+    missing_handling="'missing' is an explicit comparison level with its own m and u probabilities "
+                     "(no missing-at-random marginalisation)",
+    n_classes=3,
+    classes=["match (m)", "related non-match (shares venue/location/type, e.g. repeat targets)",
+             "unrelated non-match"],
+    tied_fields=["date", "hour"],
+    tie_rule="the two non-match classes share one date and one hour distribution (M-step pools their "
+             "expected counts); the related class can only explain venue/location/type agreement",
+    conditional_independence="fields independent given the class (within each of the 3 classes)",
+    pseudo_count=1e-3, max_iter=5000, tol="relative log-likelihood change < 1e-9",
+    init="match class: geometric agreement profile 0.25^level (missing levels at their overall frequency); "
+         "related class: agreement profile on location/type/venue, overall date/hour; unrelated class: "
+         "overall frequencies; weights (0.04, 0.04, 0.92)",
+    match_class_identification="class with the largest P(exact date agreement)",
+    fit_sequence="(1) EM on all cross-list candidate pairs; (2) within-list de-duplication with the class-"
+                 "conditional distributions held fixed and class proportions re-estimated by EM on the within-"
+                 "list pairs, union-find on posterior >= 0.5; (3) EM refit, warm-started at (1), on cross-list "
+                 "pairs among the de-duplicated representatives",
+    posterior="pi = P(match class | gamma) with the fitted class proportions",
+    blocking="same or adjacent county (or either unknown) and |date difference| <= 14 days",
+    point_linkage="greedy merging by descending pi over pairs with pi >= 0.5, at most one record per list per cluster",
+)
+
+
 @dataclass
 class LinkageConfig:
     window: int = 14
@@ -701,11 +990,18 @@ def run_linkage(records: Records, adjacency: np.ndarray, cfg: LinkageConfig = Li
     # blocking recall: true cross-list record pairs that are candidate pairs
     pa, pb = pairs_all[:, 0], pairs_all[:, 1]
     n_true_cand = int((cross & (tid[pa] == tid[pb])).sum())
+    n_true_cross_all = _n_true_cross_pairs(tid, lid)
+    # the same on the de-duplicated representatives (the audit / linkage frame)
+    n_true_cand_rep = int((tid[rep_idx][pairs[:, 0]] == tid[rep_idx][pairs[:, 1]]).sum())
+    n_true_cross_rep = _n_true_cross_pairs(tid[rep_idx], rl)
     info = dict(n_records=int(n), n_reps=int(len(rep_idx)), n_candidate_pairs_all=int(len(pairs_all)),
                 n_cross_pairs=int(len(pairs)), within_weights=[float(x) for x in w_w],
                 n_dedup_merged=int(n - len(rep_idx)), n_false_dedup=n_false_dedup,
                 n_missed_dup=n_missed_dup, n_true_dups=int(records.is_dup.sum()),
-                n_true_cross_candidates=n_true_cand,
+                n_true_cross_candidates=n_true_cand, n_true_cross_pairs=n_true_cross_all,
+                blocking_recall=float(n_true_cand / n_true_cross_all) if n_true_cross_all else 1.0,
+                n_true_cross_candidates_reps=n_true_cand_rep, n_true_cross_pairs_reps=n_true_cross_rep,
+                blocking_recall_reps=float(n_true_cand_rep / n_true_cross_rep) if n_true_cross_rep else 1.0,
                 fs_weights=[float(x) for x in model.weights], fs_iter=int(model.n_iter),
                 fs_converged=bool(model.converged))
     return LinkageResult(rep_idx=rep_idx, rep_of=rep_of, pairs=pairs, post=post, labels=labels,

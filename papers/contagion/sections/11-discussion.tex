@@ -1,0 +1,125 @@
+\section{Discussion}\label{sec:discussion}
+
+\paragraph{What the framework makes possible}
+After a salient external event, the public argument is usually about whether
+the event ``caused'' the surge that followed. The framework replaces that
+single question with several that have precise answers under a stated model.
+How many incidents in the window would have occurred anyway, how many
+responded directly to the event, and how many were set off by other incidents
+(\cref{thm:attribution})? How much of that cascade passed through online
+streams (\cref{prop:at-channel})? How large is the cascade that one incident
+starts in each stream, as measured by the multiplier $\Mmat$? Each answer
+comes with an interval and with the assumptions it rests on.
+
+The framework is equally explicit about what the data cannot settle. The
+autocorrelation of counts cannot tell contagion from clustered shocks
+(\cref{thm:equiv}), and an incomplete event calendar or a rigid background
+manufactures contagion (\cref{thm:spurious}). Identification has to come from
+outside the counts: from a calendar of events fixed blind to the outcome, from
+higher-order information that only the full likelihood exploits, or from
+provenance links between incidents (\cref{cor:equiv-id}). The analysis plan
+is built around that requirement (\cref{sec:plan-events}). The companion
+paper enters at a precise point. Recorded incidents are a thinned version of
+all incidents, and thinning attenuates apparent contagion in a known way
+(\cref{thm:thinning}). A contagion estimate is therefore only as good as the
+coverage estimate behind it, and the uncertainty about coverage sets a floor
+under its precision (\cref{cor:th-darkfig}). For those who must act on a
+forecast, the alert rule makes the trade-off between false alarms and missed
+surges an explicit choice, agreed with the people who bear its costs
+(\cref{thm:alert}), and the nowcast keeps reporting delays from hiding a surge
+that is already under way (\cref{prop:nowcast}).
+
+\paragraph{Limitations}
+We stress six.
+
+\emph{Linearity and the absence of inhibition.} In a linear Hawkes process an
+incident can only raise the rate of later incidents. Deterrence, protective
+deployment after an alert, arrests and saturation all lower it, and the model
+cannot represent them. Where they operate, the fitted excitation is a net
+effect, and an alert that prompts successful protection makes itself look
+like a false alarm (\cref{sec:ethics-risks}). Nonlinear Hawkes processes,
+which allow inhibitory kernels through a link function \citep{bremaud1996},
+remove this restriction at the cost of the cluster representation on which
+the surge decomposition rests.
+
+\emph{Stationarity and constant parameters.} The theory assumes
+$\spr(\Amat)<1$ and parameters that do not change over the study period.
+Contagion may itself change, for example after a major event or a shift in
+how incidents are publicised, and recording probabilities can move with
+attention and with breaks in reporting systems (\cref{sec:data-incidents}).
+The change-point monitor of \cref{rem:fc-cusum} can detect such shifts but
+does not model them. Estimates close to criticality deserve particular
+caution, since a misspecified background pushes the apparent branching ratio
+towards one (\cref{rem:th-spurious}).
+
+\emph{Pre-specification of events.} Everything rests on the event calendar.
+Events missing from it are absorbed into $\Amat$ (\cref{thm:spurious}). The
+salience index and its threshold are choices, and the sensitivity analysis can
+vary them but not remove them (\cref{sec:plan-sens}). More fundamentally, the
+shock term treats event times as exogenous. Some candidate events, such as
+public statements, may themselves respond to a wave of incidents. Such
+reverse dependence violates the model, and blind coding of the calendar does
+not prevent it.
+
+\emph{Classifier error in online streams.} An online stream is the output of
+a classifier applied to a defined corpus. It measures that corpus, not
+platform-wide prevalence, and its error rates may change after salient events
+precisely when they matter most (\cref{eq:data-classerr}). Independent errors
+cannot create online-to-offline Granger causality under the null, but they
+dilute it under the alternative, and errors that move with common shocks can
+mimic it (\cref{rem:th-granger-caveats}). Every online-to-offline coefficient
+is a statement about predictive dependence between measured series, not about
+the influence of online speech on offline behaviour.
+
+\emph{Ecological interpretation.} The streams are aggregates over recording
+areas and offence categories. A coefficient $\alpha_{kj}$ summarises how the
+counts of two streams move together in time. It does not say who influenced
+whom, and it says nothing about the people who live in a region. The
+mechanisms that could produce self-excitation (imitation, emboldenment,
+diffusion through networks, repeat targeting) are hypotheses that the model
+does not separate (\cref{sec:th-meaning}). Family trees reconstructed by EM
+are probabilistic summaries under the model, not findings about individual
+incidents.
+
+\emph{Independent recording.} The thinning results assume that each incident
+is recorded independently of the history. If salient events raise the
+propensity to report, or if severe incidents are both more productive and
+more often recorded, the correction can err in either direction
+(\cref{prop:th-hetthin}). The plan treats these departures as sensitivity
+analyses, not as solved problems.
+
+\paragraph{Extensions}
+Four extensions seem most valuable. First, \emph{spatio-temporal kernels} of
+the epidemic-type aftershock (ETAS) kind \citep{ogata1988,mohler2011} would
+replace a fixed partition into regions by a kernel in space and time
+\citep{reinhart2018}. Their outputs would have to respect the ethics protocol,
+which rules out street- or venue-level maps (\cref{sec:ethics-risks}). Second,
+\emph{marked and typed incidents}: letting the productivity of an incident
+depend on its offence type, severity or target addresses the bias of
+\cref{prop:th-hetthin} directly, and with many streams, sparse or low-rank
+estimates of $\Amat$ \citep{zhou2013,hansen2015} become essential. Third,
+\emph{nonlinear Hawkes processes} with inhibitory kernels
+\citep{bremaud1996}, whose Granger-causal graphs remain available
+\citep{eichler2017}, would let deterrence and protection enter the model
+rather than its residuals. Fourth, and closest to this series, \emph{joint
+estimation with the dark-figure model}. Here the recording probability enters
+as a plug-in from the companion paper. A joint model would treat each list as
+a delayed, time-varying thinning of one latent self-exciting process, so that
+linked records from several lists inform both the dark figure and the
+dynamics. The companion paper names continuous-time, open-population
+estimation as its own leading extension \citep{kornsteinlab2026darkfigure};
+the framework developed here supplies the point process it needs.
+
+\paragraph{Why model the dynamics}
+A count says how many incidents were recorded. It does not say where they
+came from. A surge that is mostly a direct reaction to an event calls for
+vigilance in the days after similar events. A surge sustained by contagion
+calls for breaking the chain early, because every incident prevented also
+prevents the incidents it would have triggered. A surge that travels from
+online to offline calls for watching the online streams. These are different
+claims about how hostility spreads, and they carry different
+responsibilities. The data can support some of these claims, and on some
+questions they cannot decide between rival explanations. Stating which is
+which, with assumptions in the open and a plan fixed before the data are
+seen, is how a measurement programme can take seriously both the people who
+live through a surge and the evidence about it.

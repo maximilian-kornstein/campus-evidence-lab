@@ -125,11 +125,11 @@ Suppose there are no shocks, $\mu_k(t)\equiv\mu_k>0$ for every $k$, and
     are offspring is $1-\mu_k/\bar\Lambda_k=(\Amat\bar{\bm\Lambda})_k/\bar\Lambda_k$.
   \item Conversely, if a stationary solution with finite mean intensity exists, then
     $\spr(\Amat)<1$.
-  \item In the univariate case, the cluster size $S$ (immigrant included) has the
+  \item In the univariate case, the cluster size $\mathcal S$ (immigrant included) has the
     Borel distribution
-    $\Pr(S=k)=e^{-nk}(nk)^{k-1}/k!$, $k\ge1$, with $\E S=(1-n)^{-1}$,
-    $\E S^2=(1-n)^{-3}$, $\E S^3=(1+2n)(1-n)^{-5}$ and
-    $\E S^4=(1+8n+6n^2)(1-n)^{-7}$. Moreover $\E e^{\theta S}<\infty$ for
+    $\Pr(\mathcal S=k)=e^{-nk}(nk)^{k-1}/k!$, $k\ge1$, with $\E \mathcal S=(1-n)^{-1}$,
+    $\E \mathcal S^2=(1-n)^{-3}$, $\E \mathcal S^3=(1+2n)(1-n)^{-5}$ and
+    $\E \mathcal S^4=(1+8n+6n^2)(1-n)^{-7}$. Moreover $\E e^{\theta \mathcal S}<\infty$ for
     $\theta\le n-1-\log n$, and $n-1-\log n>0$ for $n\in(0,1)$.
 \end{enumerate}
 \end{proposition}
@@ -161,9 +161,9 @@ $z=1$. Stirling's formula gives $\Pr(S=k)\asymp k^{-3/2}(ne^{1-n})^k$, which yie
 exponential-moment bound.
 \end{proof}
 
-The converse (b) needs the finite-mean condition. Without a background, critical
-processes ($\spr(\Amat)=1$) can be stationary \citep[cf.][]{bremaud1996}. In our setting
-$\mu_k>0$ excludes this case.
+Part (b) uses $\mu_k>0$. Without immigrants, critical processes with finite mean
+intensity can be stationary under heavy-tailed kernels \citep{bremaud2001}. In our
+setting $\mu_k>0$ excludes this case.
 
 \subsection{Second-order structure}\label{sec:th-second}
 
@@ -273,7 +273,7 @@ hypothesis that online hostility precedes offline incidents.
     perpetrator.
   \item A positive $\alpha_{kj}$ is not proof of a causal mechanism.
     \Cref{sec:identification} shows that unobserved common shocks can mimic contagion
-    exactly at second order. It also shows that under-recording attenuates contagion,
+    exactly at second order, for exponential and completely monotone kernels. It also shows that under-recording attenuates contagion,
     and that common drivers can induce online-to-offline Granger causality without any
     direct link.
   \item Shocks are modelled as \emph{salient external events} whose timing is taken

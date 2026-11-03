@@ -1,0 +1,110 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\hypersetup{
+  pdftitle={Shock and Contagion: Self-Exciting Point Processes for Surges in Antisemitic Incidents},
+  pdfauthor={Kornstein Lab for Antisemitism Research},
+  pdfsubject={Methods paper with simulation study on synthetic data and a pre-registered analysis plan; no empirical estimates from real incident data},
+  pdfkeywords={Hawkes process, self-exciting point process, contagion, identification, under-reporting, surge attribution, forecasting, hate crime, antisemitism}
+}
+
+\begin{document}
+
+% ======================= title block =======================
+\thispagestyle{plain}
+\begingroup
+\raggedright
+{\footnotesize\scshape\color{LabAccent}Kornstein Lab for Antisemitism Research%
+ \enspace\textcolor{LabRule}{|}\enspace\textcolor{LabGrey}{Methods paper}%
+ \enspace\textcolor{LabRule}{|}\enspace\textcolor{LabGrey}{Companion to
+ \textup{\itshape The Dark Figure}}\par}
+\vspace{5pt}
+{\color{LabNavy}\rule{\textwidth}{1.3pt}}\par
+\vspace{16pt}
+{\fontsize{34}{38}\selectfont\color{LabNavy}Shock and Contagion%
+ \textsuperscript{\normalsize\color{LabAccent}$\ast$}\par}
+\vspace{8pt}
+{\fontsize{15.5}{19}\selectfont\color{LabInk}Self-Exciting Point Processes
+ for Surges in Antisemitic Incidents\par}
+\vspace{14pt}
+{\normalsize\color{LabInk}Kornstein Lab for Antisemitism Research\par}
+\vspace{2pt}
+{\small\color{LabGrey}November 2026\par}
+\vspace{8pt}
+\endgroup
+% A schematic conditional intensity: one salient external event (orange),
+% followed by a cascade. Title-page ornament; not data.
+\IfFileExists{figures/fig-title-strip.tex}{\input{figures/fig-title-strip}}{}
+\begingroup
+\renewcommand{\thefootnote}{\ensuremath{\ast}}
+\footnotetext[1]{\textbf{Status.} Methods paper; simulation study on
+synthetic data; pre-registered analysis plan; no empirical estimates. Every
+number in \cref{sec:simulation} is computed from synthetic data with known
+ground truth; the real-data analysis of \cref{sec:plan} is pre-registered and
+has not been carried out. The companion paper \citep{kornsteinlab2026darkfigure}
+estimates how many incidents go unrecorded; this paper uses its output.}
+\endgroup
+
+% ======================= abstract =======================
+\begin{tcolorbox}[enhanced,breakable,colback=LabTint,frame hidden,boxrule=0pt,
+  sharp corners,left=12pt,right=12pt,top=9pt,bottom=9pt,
+  borderline west={2pt}{0pt}{LabNavy},before skip=4pt,after skip=12pt]
+\begin{abstract}
+Surges in antisemitic incidents often follow salient external events.
+Communities and security planners need to know how much of a surge is a
+direct reaction to the event, how much is incidents triggering further
+incidents, and whether online hostility spills over into offline incidents.
+This is a methods paper. It models incident streams across regions, offence
+types and online and offline channels as a multivariate Hawkes process with
+exogenous shocks, and makes three traps precise. The autocorrelation of
+counts cannot distinguish contagion from clustered shocks that go
+unrecorded. A rigid background produces spurious contagion, with an explicit
+pseudo-true branching ratio. Under-reporting attenuates apparent contagion
+through a closed-form map that the companion paper's dark-figure estimates
+can invert. Identification is restored by a pre-specified calendar of
+events, by higher-order information or by provenance links. We decompose
+the expected surge after an event into background, direct and contagion
+components, isolate the online-to-offline channel, and derive a
+Bayes-optimal alert rule whose state is corrected for reporting delays.
+Estimation uses EM over the latent branching structure, Bayesian shrinkage,
+boundary-corrected likelihood-ratio tests and time-rescaling diagnostics. A
+simulation study on synthetic data with known ground truth evaluates these
+tools, and a pre-registered plan with an ethics protocol specifies the
+real-data analysis. We report no empirical estimates from real data.
+\end{abstract}
+\keywords{Hawkes processes; self-exciting point processes; contagion;
+identification; under-reporting; surge attribution; early warning; hate
+crime; antisemitism.}
+\end{tcolorbox}
+\suppressfloats[t]
+
+% ======================= body =======================
+% Figure 1 (cluster representation) and Table 1 (notation) are \input from
+% sections/01-introduction.tex so that they float next to their first mention.
+\IfFileExists{sections/01-introduction.tex}{\input{sections/01-introduction}}{}
+\IfFileExists{sections/02-data.tex}{\input{sections/02-data}}{}
+% Figure: the excitation network and the contagion multiplier (Section 3).
+\IfFileExists{figures/fig-network.tex}{\input{figures/fig-network}}{}
+\IfFileExists{sections/03-framework.tex}{\input{sections/03-framework}}{}
+\IfFileExists{sections/04-identification.tex}{\input{sections/04-identification}}{}
+% Figure: stylised surge decomposition (Section 5).
+\IfFileExists{figures/fig-attribution.tex}{\input{figures/fig-attribution}}{}
+\IfFileExists{sections/05-attribution.tex}{\input{sections/05-attribution}}{}
+\IfFileExists{sections/06-estimation.tex}{\input{sections/06-estimation}}{}
+\IfFileExists{sections/07-forecasting.tex}{\input{sections/07-forecasting}}{}
+\IfFileExists{sections/08-simulation.tex}{\input{sections/08-simulation}}{}
+\IfFileExists{sections/09-analysis-plan.tex}{\input{sections/09-analysis-plan}}{}
+\IfFileExists{sections/10-ethics.tex}{\input{sections/10-ethics}}{}
+\IfFileExists{sections/11-discussion.tex}{\input{sections/11-discussion}}{}
+
+\bibliographystyle{plainnat}
+\bibliography{refs,bib/sources,bib/theory,bib/attribution,bib/estimation,bib/lead}
+
+\clearpage
+\appendix
+\IfFileExists{appendix/A1-identification-proofs.tex}{\input{appendix/A1-identification-proofs}}{}
+\IfFileExists{appendix/A2-attribution-proofs.tex}{\input{appendix/A2-attribution-proofs}}{}
+\IfFileExists{appendix/B-computation.tex}{\input{appendix/B-computation}}{}
+\IfFileExists{appendix/C-simulation-details.tex}{\input{appendix/C-simulation-details}}{}
+
+\end{document}

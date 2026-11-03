@@ -8,10 +8,12 @@ incident data: many shocks are never recorded in any event calendar, and many in
 are never recorded at all (the dark figure of Paper~1). This section gives four sets of
 results.
 \begin{enumerate}[(1)]
-  \item Without a shock calendar, the autocorrelation of counts cannot distinguish
-    contagion from clustered exogenous shocks
-    (\cref{thm:equiv,prop:th-cm,prop:th-mv}). Omitting shocks therefore creates
-    apparent contagion (\cref{thm:spurious}).
+  \item Without a shock calendar, and for exponential or completely monotone kernels
+    with no excite-only streams, the autocorrelation of counts cannot distinguish
+    contagion from clustered exogenous shocks (\cref{thm:equiv,prop:th-cm}). Delayed
+    kernels and excite-only streams do leave second-order traces
+    (\cref{rem:th-noncm,prop:th-mv}). Omitting shocks creates apparent contagion
+    (\cref{thm:spurious}).
   \item Identification is restored by a recorded shock calendar, by higher-order
     information, or by provenance links (\cref{cor:equiv-id}).
   \item Independent under-recording attenuates apparent contagion in closed form, which
@@ -36,44 +38,44 @@ is the asymptotic index of dispersion (\cref{sec:th-second}).
 Unrecorded shocks are modelled as random.
 
 \begin{definition}[Shot-noise Cox process]\label{def:th-sncox}
-Let $\nu\ge0$ and $\eta,a,\gamma>0$. Let $\{c_\ell\}$ be a homogeneous Poisson process
-on $\mathbb R$ with rate $\eta$; these are the times of unrecorded shocks. Define
+Let $\nu\ge0$ and $r,a,\gamma>0$. Let $\{c_\ell\}$ be a homogeneous Poisson process
+on $\mathbb R$ with rate $r$; these are the times of unrecorded shocks. Define
 \[
 \xi(t)=\nu+\sum_{\ell:\,c_\ell\le t}a\,e^{-\gamma(t-c_\ell)} .
 \]
 Conditionally on $\xi$, let $N$ be a Poisson process with intensity $\xi$. We write
-$N\sim C(\nu,\eta,a,\gamma)$ \citep{cox1955,moller2003}.
+$N\sim C(\nu,r,a,\gamma)$ \citep{cox1955,moller2003}.
 \end{definition}
 
 The process $C$ has no contagion: given the shocks, incidents occur independently.
 Each shock produces $\Pois(m)$ incidents, $m=a/\gamma$, at independent
 $\mathrm{Exp}(\gamma)$ delays, so $C$ is also a Neyman--Scott cluster process with mean
-$\nu+\eta m$. Any stationary Cox process directed by $\xi$ has Bartlett spectrum
+$\nu+r m$. Any stationary Cox process directed by $\xi$ has Bartlett spectrum
 $(2\pi)^{-1}[\bar\Lambda+\hat c_\xi(\omega)]$, where $c_\xi$ is the covariance function
 of $\xi$ and $\hat c_\xi\ge0$ (\cref{lem:th-cox2}). By Campbell's theorem,
-$c_\xi(u)=\{\eta a^2/(2\gamma)\}e^{-\gamma|u|}$ for $C$, so
+$c_\xi(u)=\{r a^2/(2\gamma)\}e^{-\gamma|u|}$ for $C$, so
 \begin{equation}\label{eq:th-fC}
-  f_C(\omega)=\frac1{2\pi}\Big[\nu+\frac{\eta a}{\gamma}+\frac{\eta a^2}{\gamma^2+\omega^2}\Big].
+  f_C(\omega)=\frac1{2\pi}\Big[\nu+\frac{r a}{\gamma}+\frac{r a^2}{\gamma^2+\omega^2}\Big].
 \end{equation}
 
 \begin{theorem}[Second-order observational equivalence]\label{thm:equiv}
-Let $H=H(\mu,n,\beta)$ and $C=C(\nu,\eta,a,\gamma)$.
+Let $H=H(\mu,n,\beta)$ and $C=C(\nu,r,a,\gamma)$.
 \begin{enumerate}[(a)]
   \item $H$ and $C$ are second-order equivalent if and only if
   \begin{equation}\label{eq:th-match}
-    \gamma=\beta(1-n),\qquad \nu+\frac{\eta a}{\gamma}=\bar\Lambda,\qquad
-    \eta a^2=\bar\Lambda\,\beta^2 n(2-n).
+    \gamma=\beta(1-n),\qquad \nu+\frac{r a}{\gamma}=\bar\Lambda,\qquad
+    r a^2=\bar\Lambda\,\beta^2 n(2-n).
   \end{equation}
   \item For given $H$, the solutions of \eqref{eq:th-match} form a one-parameter
   family, indexed by the shock amplitude $a\in[a_{\min},\infty)$ with
   $a_{\min}=\beta n(2-n)/(1-n)$:
   \[
     \gamma=\beta(1-n),\qquad
-    \eta=\frac{\bar\Lambda\beta^2 n(2-n)}{a^2},\qquad
+    r=\frac{\bar\Lambda\beta^2 n(2-n)}{a^2},\qquad
     \nu=\bar\Lambda\Big(1-\frac{a_{\min}}{a}\Big).
   \]
   Equivalently, the mean number of incidents per shock, $m=a/\gamma$, satisfies
-  $m\ge m_{\min}=n(2-n)/(1-n)^2=F_\infty-1$, and $\eta m^2=\bar\Lambda(F_\infty-1)$.
+  $m\ge m_{\min}=n(2-n)/(1-n)^2=F_\infty-1$, and $r m^2=\bar\Lambda(F_\infty-1)$.
   The lower bound $a=a_{\min}$ gives $\nu=0$: every incident is then shock-driven.
   \item For any matched pair and any bin width $\Delta>0$, the binned counts of $H$
   and of $C$ have the same mean and autocovariance function. Hence they also share
@@ -105,18 +107,18 @@ Let $H$ be the stationary Hawkes process with background $\mu$ and kernel
 $\varphi=ng$, where $n\in(0,1)$ and $g$ is a completely monotone probability density
 on $(0,\infty)$ with $g(0+)<\infty$.
 \begin{enumerate}[(a)]
-  \item The resolvent $R=\sum_{m\ge1}\varphi^{*m}$ is completely monotone. The
+  \item The resolvent $R=\sum_{j\ge1}\varphi^{*j}$ is completely monotone. The
   covariance density of $H$ has the form $c_H(u)=\int e^{-b|u|}\,\mathcal K(\dd b)$ for a
   positive measure $\mathcal K$ with $Z:=\int \mathcal K(\dd b)/b=\bar\Lambda(F_\infty-1)/2$. If $g$ is a
   mixture of $K$ exponentials, then $\mathcal K$ has at most $K$ atoms.
-  \item Fix $A\ge F_\infty-1=n(2-n)/(1-n)^2$. Let $\{c_\ell\}$ be Poisson with rate
-  $\eta=2Z/A^2$, and give the shocks independent rates $B_\ell$ with law
+  \item Fix $m\ge F_\infty-1=n(2-n)/(1-n)^2$. Let $\{c_\ell\}$ be Poisson with rate
+  $r=2Z/m^2$, and give the shocks independent decay rates $\Gamma_\ell$ with law
   $\pi(\dd b)=\mathcal K(\dd b)/(bZ)$. The Cox process directed by
   \[
-  \xi(t)=\nu+\sum_{\ell:\,c_\ell\le t}A\,B_\ell\,e^{-B_\ell(t-c_\ell)},
-  \qquad \nu=\bar\Lambda-\eta A\ \ (\ge0),
+  \xi(t)=\nu+\sum_{\ell:\,c_\ell\le t}m\,\Gamma_\ell\,e^{-\Gamma_\ell(t-c_\ell)},
+  \qquad \nu=\bar\Lambda-r m\ \ (\ge0),
   \]
-  is second-order equivalent to $H$. Each shock produces $\Pois(A)$ incidents with an
+  is second-order equivalent to $H$. Each shock produces $\Pois(m)$ incidents with an
   exponential response at a random rate, and there is no contagion.
   \item In particular, $f_H(\omega)\ge\bar\Lambda/(2\pi)$ for every $\omega$.
 \end{enumerate}
@@ -156,13 +158,16 @@ for the \emph{excess spectral matrix}.
   ($\alpha_{jk}>0$). Then $\bm E_H(\omega)$ is not positive semidefinite for $\omega$
   near $0$, and no $M$-variate Cox process, with any common or idiosyncratic shocks, is
   second-order equivalent to it.
-  \item Consider common shocks with random loadings
-  $\bm a_\ell\in[0,\infty)^M$ and stream-specific response shapes $s_k\ge0$:
+  \item Let $\{c_\ell\}$ be a homogeneous Poisson process of rate $r$ (common
+  unrecorded shocks), with i.i.d.\ random loadings $\bm a_\ell\in[0,\infty)^M$,
+  independent of $\{c_\ell\}$ and with $\E|\bm a_\ell|^2<\infty$. Let the response
+  shapes $s_k\ge0$ be square-integrable and stream-specific, and let $\bm a$ denote a
+  generic loading:
   \[
   \xi_k(t)=\nu_k+\sum_\ell a_{\ell k}\,s_k(t-c_\ell).
   \]
   The cross-covariance is
-  $c_{kj}(u)=\eta\,\E[a_ka_j]\int s_k(t+u)s_j(t)\,\dd t$. It is symmetric in $u$ when
+  $c_{kj}(u)=r\,\E[a_ka_j]\int s_k(t+u)s_j(t)\,\dd t$, where $\bm a=(a_k)$. It is symmetric in $u$ when
   $s_k=s_j$, but asymmetric in general. Lead--lag cross-correlation between two streams
   is therefore not, by itself, evidence of directional excitation.
 \end{enumerate}
@@ -188,8 +193,8 @@ Define the \emph{burstiness index}
     n^{*}=1-(1+\kappa)^{-1/2},\qquad \beta^{*}=\gamma(1+\kappa)^{1/2},\qquad
     \mu^{*}=\bar\Lambda(1+\kappa)^{-1/2},
   \end{equation}
-  where $\kappa=2\sigma^2/(\bar\Lambda\gamma)$. For $C(\nu,\eta,a,\gamma)$,
-  $\kappa=\eta a^2/(\bar\Lambda\gamma^2)$. The second-order structure of a two-state
+  where $\kappa=2\sigma^2/(\bar\Lambda\gamma)$. For $C(\nu,r,a,\gamma)$,
+  $\kappa=r a^2/(\bar\Lambda\gamma^2)$. The second-order structure of a two-state
   regime-switching rate is also exponential: if $\xi$ switches between $\lambda_0$
   and $\lambda_1$ at rates $q_{01}$ and $q_{10}$, with
   $\pi_1=q_{01}/(q_{01}+q_{10})$, then
@@ -219,14 +224,14 @@ Define the \emph{burstiness index}
   \sup_{\theta:\,n>0}L(\theta)>\sup_{\theta:\,n=0}L(\theta)=\bar\Lambda\log\bar\Lambda-\bar\Lambda .
   \]
   Hence every maximiser of $L$, that is, every pseudo-true value of the misspecified
-  maximum likelihood estimator, has $n>0$. For $C(\nu,\eta,a,\gamma)$ with exponential
-  $g_\beta$, $\int g_\beta c=\eta a^2\beta/\{2\gamma(\beta+\gamma)\}>0$ for every $\beta$.
+  maximum likelihood estimator, has $n>0$. For $C(\nu,r,a,\gamma)$ with exponential
+  $g_\beta$, $\int g_\beta c=r a^2\beta/\{2\gamma(\beta+\gamma)\}>0$ for every $\beta$.
 \end{enumerate}
 \end{theorem}
 
 \begin{remark}[Reading \cref{thm:spurious}]\label{rem:th-spurious}
 \begin{enumerate}[(i)]
-  \item \emph{Interpreting $\kappa$.} For $C$, $\kappa=s\,m$, where $s=\eta m/\bar\Lambda$
+  \item \emph{Interpreting $\kappa$.} For $C$, $\kappa=s\,m$, where $s=r m/\bar\Lambda$
   is the share of incidents triggered by unrecorded shocks and $m$ is the mean number
   of incidents per shock. Hence $n^*=1-(1+sm)^{-1/2}$. As a purely arithmetical
   illustration, $s=0.3$ and $m=10$ give $n^*=1/2$. Rare, large shocks and slow regime
@@ -234,9 +239,12 @@ Define the \emph{burstiness index}
   is consistent with the ``apparent criticality'' that \citet{filimonov2015} discuss
   for Hawkes fits to data with non-stationary activity.
   \item \emph{What is and is not claimed.} Parts (a)--(c) concern second-order
-  estimators. These include variance-time and autocovariance fits, and spectral
-  (Whittle-type) estimators from binned counts \citep{cheysson2022}, whose population
-  contrast is minimised where the model spectrum equals the true one. Part (d) proves
+  estimators, such as variance-time and autocovariance fits. Spectral (Whittle-type)
+  estimators from binned counts \citep{cheysson2022} use the whole periodogram, so they
+  are not covered by (b) as stated. Their population contrast
+  $\int\{\log f_\theta+f/f_\theta\}$ is minimised exactly where $f_\theta=f$, which in
+  case (a) happens only at $\theta^*$. Under the usual M-estimation conditions, which we
+  do not verify, they therefore also converge to $\theta^*$. Part (d) proves
   only that the likelihood pseudo-true value has $n>0$. That value depends on the law
   of $N$ beyond second order, so it need not equal $n^*$. Nothing forces the members of
   the matched family of \cref{thm:equiv}, which all share $n^*$, to share it. The
@@ -265,23 +273,32 @@ Define the \emph{burstiness index}
   \begin{itemize}
     \item each kernel family is determined by its restriction to $(0,T)$, as
       exponential, gamma and power-law families are;
-    \item the map $(\theta_k,\beta_k,\psi_k)\mapsto m_k$ is injective. This holds,
-      for instance, when $\tau_1>0$, some $S_e>0$, $\mu_k$ is constant (or
-      analytic in $t$ with linearly independent basis functions), and $\psi_k$
-      belongs to a family determined by its restriction to an interval.
+    \item the map $(\theta_k,\beta_k,\psi_k)\mapsto m_k$ is injective. The data on
+      $[\tau_1,\tau_2)$ identify only the product $\beta_kS_1\psi_k$ there. Injectivity
+      therefore holds, for instance, when $\tau_1>0$, $S_1>0$, $\mu_k$ is constant
+      (or analytic in $t$ with linearly independent basis functions), and the
+      \emph{scaled} family $\{c\,\psi:c>0,\psi\in\Psi_k\}$ is determined by its
+      restriction to an interval. An example is $\Psi_k$ consisting of functions that
+      are analytic on $(0,\infty)$; then $\int\psi_k=1$ pins down $\beta_k$. A
+      family such as $\psi_s=s^{-1}\mathbf 1_{[0,s]}$ fails this condition.
   \end{itemize}
+  Spline backgrounds are not analytic, so this sufficient condition does not cover the
+  working model of \cref{ass:th-model}(i). There, separating background from shock
+  response rests on the shock responses not being representable in the spline space,
+  for example through a jump at $\tau_e$ when $\psi_k(0+)>0$ and no knot sits at
+  $\tau_e$. We do not formalise this.
   In particular, when the $g_{kj}$ do not vanish on $(0,T)$, $\Amat=\zero$ is
   distinguishable from every $\Amat\ne\zero$: clustering explained by recorded shocks
   is not confounded with contagion.
-  \item \emph{Higher-order information.} Let $C=C(\nu,\eta,a,\gamma)$ be arbitrary.
+  \item \emph{Higher-order information.} Let $C=C(\nu,r,a,\gamma)$ be arbitrary.
   Then $\Pr_H\neq\Pr_C$. Counts over long windows already reveal this. The limits
-  $\varkappa_j=\lim_{T\to\infty}T^{-1}\operatorname{cum}_j N(0,T]$ are
-  $\mu\E S^j$ ($S\sim$ Borel$(n)$) for $H$ and $\nu+\eta\E[\Pois(m)^j]$ for $C$.
-  Matching $\varkappa_1,\varkappa_2,\varkappa_3$ determines $(\nu,\eta,m)$
+  $\chi_j=\lim_{T\to\infty}T^{-1}\operatorname{cum}_j N(0,T]$ are
+  $\mu\E\mathcal S^j$ ($\mathcal S\sim$ Borel$(n)$) for $H$ and $\nu+r\E[\Pois(m)^j]$ for $C$.
+  Matching $\chi_1,\chi_2,\chi_3$ determines $(\nu,r,m)$
   uniquely, with $\gamma$ free. With $\gamma=\beta(1-n)$, this choice is a member of
   the family of \cref{thm:equiv}. For every such $C$,
   \[
-  \varkappa_4^{H}-\varkappa_4^{C}=\frac{\mu\,n^3\,Q(1-n)}{(1-n)^7(2-n)}>0,\qquad
+  \chi_4^{H}-\chi_4^{C}=\frac{\mu\,n^3\,Q(1-n)}{(1-n)^7(2-n)}>0,\qquad
   Q(u)=2u^4+8u^3+15u^2+16u+6 ,
   \]
   so no shot-noise Cox process matches the first four cumulant rates of $H$.
@@ -316,7 +333,9 @@ Learning about an unobserved shock looks like self-excitation.
 What does separate the models is the \emph{form} of the filter. For a Hawkes process
 the observable intensity is affine in the past. \Cref{lem:th-affine} shows that, among
 all stationary laws second-order equivalent to $H$, $\Pr_H$ is the only one whose
-observable intensity is affine in the past (with a square-integrable kernel). By (ii),
+observable intensity is affine in the past. Here ``affine'' means
+$\lambda(t)=c+\int_{(-\infty,t)}h(t-s)\,\dN(s)$ with $c>0$, $h\ge0$,
+$h\in L^1\cap L^2$ and $\int h<1$. By (ii),
 the filter of every matched $C$ is therefore nonlinear. The information that separates
 contagion from shocks lies in this nonlinearity.
 \end{remark}
@@ -343,7 +362,9 @@ is recorded independently, with probability $p\in(0,1]$, independently of $H$.
   \begin{equation}\label{eq:th-hp}
     n'=h_p(n)=1-\frac{1-n}{\sqrt{(1-n)^2+p\,n(2-n)}} .
   \end{equation}
-  Equivalently, $F'_\infty-1=p\,(F_\infty-1)$: thinning scales the excess dispersion by $p$.
+  Equivalently, $F'_\infty-1=p\,(F_\infty-1)$: thinning scales the excess dispersion by
+  $p$. We write $n'$ for the observed (apparent) branching ratio, called $n_{\mathrm{obs}}$
+  in the overview of contributions.
   \item For $p\in(0,1)$, $h_p$ is a strictly increasing bijection of $[0,1)$, and
   $pn<h_p(n)<n$ for $n\in(0,1)$. Moreover $h_p(n)=pn+O(n^2)$ as $n\downarrow0$,
   $h_p(n)\to1$ as $n\uparrow1$, $h_p(n)\to0$ as $p\downarrow0$, $h_1(n)=n$, and

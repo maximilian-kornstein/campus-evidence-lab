@@ -1,0 +1,240 @@
+\section{Computational details}\label{app:computation}
+
+This appendix collects the recursions, quadrature rules, simulation algorithms and error
+calculations behind \cref{sec:estimation}. The notation is that of
+\cref{sec:est-mle,sec:est-em}. Exponential kernels
+$g_{kj}(u)=\beta_{kj}e^{-\beta_{kj}u}$ and exponential shock responses
+$\psi_k(u)=\eta_ke^{-\eta_ku}$ are assumed unless stated otherwise. The methods are
+implemented in the accompanying code (\texttt{code/hawkes}).
+
+\subsection{Recursions for exponential kernels}\label{app:comp-rec}
+
+Let $s_1<\dots<s_n$ be the merged event times, $d_m$ the stream of $s_m$, and
+$\Delta_m=s_m-s_{m-1}$. For each pair $(k,j)$ define the decay sums
+\[
+  R_{kj}(t)=\sum_{l:\,t^j_l<t}e^{-\beta_{kj}(t-t^j_l)},\qquad
+  R^{(1)}_{kj}(t)=\sum_{l:\,t^j_l<t}(t-t^j_l)\,e^{-\beta_{kj}(t-t^j_l)} .
+\]
+Write $t-t^j_l=\Delta_m+(s_{m-1}-t^j_l)$ for $t=s_m$, and note that the incident at
+$s_{m-1}$ contributes lag $\Delta_m$. This gives
+\begin{equation}\label{eq:app-rec}
+  R_{kj}(s_m)=e^{-\beta_{kj}\Delta_m}\big\{R_{kj}(s_{m-1})+\ind{d_{m-1}=j}\big\},\qquad
+  R^{(1)}_{kj}(s_m)=e^{-\beta_{kj}\Delta_m}R^{(1)}_{kj}(s_{m-1})+\Delta_m\,R_{kj}(s_m),
+\end{equation}
+with $R_{kj}(s_1)=R^{(1)}_{kj}(s_1)=0$. These two recursions give every quantity that
+\cref{sec:estimation} needs at the incidents $t^k_i$.
+\begin{itemize}
+  \item \emph{Likelihood.} The intensity $\lambda_k(t^k_i)$ is given by
+    \eqref{eq:est-lambda} and the compensator by \eqref{eq:est-comp}.
+  \item \emph{Compensator at the incidents} (for time rescaling). Since
+    $\sum_{t^j_l<t}\{1-e^{-\beta_{kj}(t-t^j_l)}\}=N_j(t-)-R_{kj}(t)$,
+    \[
+      \Lam_k(t)=\int_0^t\mu_k+\beta_k\sum_eS_e\{\Psi_k(t-\tau_e)-\Psi_k(-\tau_e)\}
+      +\sum_j\alpha_{kj}\{N_j(t-)-R_{kj}(t)\}.
+    \]
+  \item \emph{Gradient.} With $\lambda=\lambda_k(t^k_i)$ and sums over the incidents of
+    stream $k$,
+    \begin{align*}
+      \frac{\partial\ell_T}{\partial\alpha_{kj}}&=\sum_i\frac{\beta_{kj}R_{kj}(t^k_i)}{\lambda}-G_{kj},\\
+      \frac{\partial\ell_T}{\partial\beta_{kj}}&=\alpha_{kj}\sum_i\frac{R_{kj}(t^k_i)-\beta_{kj}R^{(1)}_{kj}(t^k_i)}{\lambda}
+        -\alpha_{kj}\sum_l(T-t^j_l)e^{-\beta_{kj}(T-t^j_l)},\\
+      \frac{\partial\ell_T}{\partial\theta_k}&=\sum_i\frac{\mu_k(t^k_i)B(t^k_i)}{\lambda}-\int_0^T\mu_k(t)B(t)\,\dd t,\\
+      \frac{\partial\ell_T}{\partial\beta_k}&=\sum_i\frac{\sum_eS_e\psi_k(t^k_i-\tau_e)}{\lambda}-\sum_eS_e\Psi^T_k(e).
+    \end{align*}
+    The derivative in $\eta_k$ uses the shock analogues of $R$ and $R^{(1)}$ below.
+  \item \emph{EM statistics.} $N_{kj}$ and $W_{kj}$ of \eqref{eq:est-stats} are the sums
+    over $i$ of $\alpha_{kj}\beta_{kj}R_{kj}(t^k_i)/\lambda$ and
+    $\alpha_{kj}\beta_{kj}R^{(1)}_{kj}(t^k_i)/\lambda$.
+  \item \emph{Shocks.} The shock terms use the same recursions, with the calendar merged
+    into the event sequence. The decay sum is
+    $R^{\mathrm{sh}}_k(t)=\sum_{\tau_e<t}S_ee^{-\eta_k(t-\tau_e)}$, which jumps by $S_e$
+    after $\tau_e$. For short calendars, direct summation over $e$ is simpler.
+\end{itemize}
+
+\paragraph{Numerical stability and vectorisation.} The sequential recursion multiplies by
+factors $e^{-\beta\Delta_m}\le1$ and is stable. Our implementation vectorises it. Source
+events are cut into chunks that span at most $200/\beta_{kj}$ time units. Within a chunk,
+$R_{kj}$ is a cumulative sum of $e^{\beta_{kj}(t^j_l-a)}$ relative to an anchor $a$ at
+the start of the chunk. A short loop over chunks carries the state forward. The result is
+exact up to rounding, with relative error of order $10^{-13}$; there is no truncation
+window.
+
+\paragraph{Ties.} All sums use the strict past. If two incidents share a time stamp, the
+recursion with $\Delta_m=0$ would count one as the parent of the other. Ties are therefore
+broken first, by randomisation within the recorded resolution (\cref{sec:plan-sens}).
+
+\paragraph{Parallelism.} If no parameter is shared across rows of the model, the
+likelihood separates by target stream (\cref{sec:est-mle}). Each row can then be fitted
+on its own processor.
+
+\subsection{Background integrals}\label{app:comp-bg}
+
+The log-linear background needs $\int_0^Te^{B(t)^{\top}\theta}\,\dd t$, together with its
+gradient $\int Be^{B^{\top}\theta}$ and Hessian $\int BB^{\top}e^{B^{\top}\theta}$. On
+each knot interval the exponent is a polynomial, so the integrand is smooth. We use a
+composite 8-point Gauss--Legendre rule, with each knot interval split into 16 cells, and
+reuse the same nodes for all three integrals. Seasonal (Fourier) bases use uniform cells.
+The M-step for $\theta_k$ (\cref{prop:est-mstep}(a)) takes Newton steps with gradient
+$\sum_ip^{k,0}_iB(t^k_i)-\int B\mu_k-\lambda^{\mathrm{pen}}_kP\theta_k$ and negative
+Hessian $\int BB^{\top}\mu_k+\lambda^{\mathrm{pen}}_kP$. Step halving ensures that the
+M-step objective increases, so the iteration remains a generalised EM and
+\cref{prop:est-mstep}(d) applies.
+
+\subsection{Simulation}\label{app:comp-sim}
+
+Synthetic data for the simulation study, and parametric bootstrap replicates, are drawn by
+one of two exact algorithms.
+
+\paragraph{Ogata's thinning.} Between incidents and away from calendar times, every term
+of $\lambda_k$ is nonincreasing. The excitation and shock terms decay exponentially, and
+the background is bounded by $\bar\mu_k\ge\sup_{[0,T]}\mu_k$. So the total intensity
+evaluated just after the current time bounds the future intensity until the next
+incident or calendar time. \Cref{alg:ogata} exploits this. Candidates come from a Poisson
+process at the current bound and are accepted with probability $\lambda/\bar\lambda$.
+By the thinning theorem \citep{lewis1979,ogata1981}, the accepted points have intensity
+$\lambda$. After a rejection the bound is recomputed at the new time, which is valid
+because exponential waiting times are memoryless. At a calendar time the shock term jumps
+up, so the algorithm restarts there.
+
+\begin{algorithm}[t]
+\caption{Ogata's thinning for the shock-augmented model with exponential kernels.}\label{alg:ogata}
+\begin{algorithmic}[1]
+\Require $\vartheta$; calendar $\{(\tau_e,S_e)\}$; horizon $T$; bounds
+  $\bar\mu_k\ge\sup_{[0,T]}\mu_k$.
+\Ensure Events $\mathcal S$ on $[0,T]$ with intensity \eqref{eq:est-lambda}.
+\State $t\gets0$; $R_{kj}\gets0$ for all $(k,j)$; $\mathcal S\gets\emptyset$.
+\Loop
+  \State $h_k\gets\beta_k\sum_{\tau_e\le t}S_e\eta_ke^{-\eta_k(t-\tau_e)}$ for all $k$;\quad
+    $\bar\lambda\gets\sum_k\{\bar\mu_k+h_k+\sum_j\alpha_{kj}\beta_{kj}R_{kj}\}$.
+  \State Draw $E\sim\mathrm{Exp}(\bar\lambda)$; $s\gets t+E$; let $\tau^+$ be the first
+    calendar time in $(t,T]$ (or $+\infty$).
+  \If{$\tau^+\le s$}
+    \State $R_{kj}\gets R_{kj}e^{-\beta_{kj}(\tau^+-t)}$ for all $(k,j)$; $t\gets\tau^+$;
+      \textbf{next iteration}.
+  \EndIf
+  \If{$s>T$} \State \Return $\mathcal S$ \EndIf
+  \State $R_{kj}\gets R_{kj}e^{-\beta_{kj}(s-t)}$ for all $(k,j)$; $t\gets s$.
+  \State $\lambda_k\gets\mu_k(t)+\beta_k\sum_{\tau_e<t}S_e\eta_ke^{-\eta_k(t-\tau_e)}
+    +\sum_j\alpha_{kj}\beta_{kj}R_{kj}$ for all $k$; draw $U\sim U(0,1)$.
+  \If{$U\bar\lambda\le\sum_k\lambda_k$}
+    \State Draw $k$ with probability $\lambda_k/\sum_{k'}\lambda_{k'}$; add $(t,k)$ to
+      $\mathcal S$; $R_{k'k}\gets R_{k'k}+1$ for all $k'$.
+  \EndIf
+\EndLoop
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Exact cluster simulation.} The cluster representation (\cref{sec:th-cluster})
+gives a second exact algorithm. It is our default, because it is faster and records the
+true branching labels.
+\begin{enumerate}[(1)]
+  \item \emph{Background immigrants.} Draw a Poisson process with intensity $\mu_k$ on
+    $[0,T]$ for each stream. A piecewise-constant $\mu_k$ is sampled directly; any other
+    $\mu_k$ by thinning against $\bar\mu_k$.
+  \item \emph{Shock immigrants.} For each $(e,k)$, draw $\Pois\{\beta_kS_e\Psi^T_k(e)\}$
+    points at $\tau_e$ plus delays from $\psi_k$, truncated to the window. The delays are
+    drawn by inverting the truncated distribution function.
+  \item \emph{Offspring.} Proceed generation by generation. Each point of stream $j$ at
+    $s$ has $\Pois(\alpha_{kj})$ children in each stream $k$, placed at $s$ plus
+    independent $g_{kj}$ delays. Children after $T$ are discarded; all their descendants
+    would also lie after $T$.
+\end{enumerate}
+When $\spr(\Amat)<1$, the generations form a subcritical multitype Galton--Watson process.
+The algorithm then terminates almost surely, after an expected $\Mmat\bm m$ points, where
+$\bm m$ is the vector of expected immigrant counts. Each generation is a vectorised
+operation, so the cost is $O(Mn)$. For a stationary start, either simulate on $[-T_0,T]$
+and discard $[-T_0,0)$, or use perfect simulation \citep{moller2005}. The burn-in error
+decays with the cascade memory $1/\{\beta(1-n)\}$ (\cref{prop:th-spectrum}). Comparing the
+two algorithms on the same parameters is a useful unit test, since they share no code
+beyond the model specification.
+
+\subsection{Standard errors}\label{app:comp-se}
+
+Standard errors come from the observed information
+$\hat{\bm I}_{\mathrm{obs}}=-\nabla^2\ell_T(\hat\vartheta)$. Our implementation computes it
+by central differences of the exact log-likelihood, with relative step $10^{-4}$.
+Differencing the analytic gradient of \cref{app:comp-rec} is more accurate: it needs only
+$p$ gradient evaluations for $p$ free parameters, with $O(h^2)$ error in each entry. Two
+further details matter.
+\begin{itemize}
+  \item \emph{Boundary parameters.} Free parameters estimated on or near the boundary
+    ($\hat\alpha_{kj}\approx0$, $\hat\beta_k\approx0$) are excluded from the inversion and
+    flagged. Their sampling distribution is not normal (\cref{prop:lrt}(b)). Intervals for
+    them come from the profile likelihood, the parametric bootstrap, or the posterior.
+  \item \emph{Alternatives.} The information can also be assembled from complete-data
+    quantities via Louis's identity \citep{louis1982}. The predictable-variation form
+    $\sum_k\sum_i\lambda_k^{-2}\nabla\lambda_k\nabla\lambda_k^{\top}(t^k_i)$ is also
+    available, and it is positive semidefinite by construction.
+\end{itemize}
+Derived quantities use the delta method. For the multiplier,
+$\partial\Mmat/\partial\alpha_{kj}=\Mmat\bm e_k\bm e_j^{\top}\Mmat$ (\cref{eq:at-grad}).
+If $\spr(\Amat)$ is a simple eigenvalue (for example, if $\Amat$ is irreducible) with
+right and left Perron vectors $\bm v$ and $\bm w$, then
+$\partial\spr(\Amat)/\partial\alpha_{kj}=w_kv_j/(\bm w^{\top}\bm v)$. Near criticality and
+near the boundary the delta method is unreliable (\cref{sec:at-uncertainty}), and we use
+bootstrap or posterior draws instead.
+
+\subsection{Tests and calibration}\label{app:comp-tests}
+
+\paragraph{Likelihood-ratio tests.} The null fit fixes $\alpha_{kj}=0$ exactly. The
+alternative is started from the null optimum with a small positive $\alpha_{kj}$, and also
+from the default multistart. Because the alternative nests the null, a null log-likelihood
+above the alternative's signals a local optimum. The alternative is then refitted from the
+null optimum. The statistic is $\max\{0,2(\hat\ell_1-\hat\ell_0)\}$.
+
+\paragraph{Score process for the Davies problem.} At the null fit $\tilde\vartheta$, the
+score in the nuisance parameters vanishes when they are interior. The standardised
+efficient score at decay $\beta$ is therefore
+\[
+  \hat Z(\beta)=\frac{U_\alpha(\beta)}{\{I_{\alpha\alpha}(\beta)-I_{\alpha\xi}(\beta)I_{\xi\xi}^{-1}I_{\xi\alpha}(\beta)\}^{1/2}},\qquad
+  U_\alpha(\beta)=\sum_i\frac{\beta R_{kj}(t^k_i;\beta)}{\tilde\lambda_k(t^k_i)}-G_{kj}(\beta).
+\]
+The information blocks are those of the predictable-variation form in
+\cref{app:comp-se}, with $\partial\lambda_k/\partial\alpha_{kj}=\beta R_{kj}(\cdot;\beta)$.
+Each grid point costs one recursion \eqref{eq:app-rec}. The whole path, and with it the
+sup-score statistic and the bound $p_{\mathrm D}$ of \cref{sec:est-lrt}, needs a single
+null fit. The same holds in every bootstrap replicate, which makes the score-based
+bootstrap cheaper than the likelihood-ratio version by a factor of about the grid size.
+
+\paragraph{Placebo calendars.} Each placebo calendar requires one refit of the selected
+model with an extra shock class. The refits are independent and run in parallel. Starting
+each refit from the fit to the real calendar, with the placebo loading set to a small
+positive value, reduces the number of EM iterations substantially.
+
+\subsection{Complexity and memory}\label{app:comp-cost}
+
+\Cref{tab:app-cost} summarises the costs. Here $n$ is the number of incidents, $M$ the
+number of streams, $E$ the number of calendar events, $K_b$ the background basis size,
+$Q$ the number of quadrature nodes, $p$ the number of free parameters, $G$ the size of a
+decay grid, and $B$ the number of bootstrap or placebo replicates. No step stores an
+$n\times n$ array. Direct summation over pairs of incidents, by contrast, needs $O(n^2)$
+time, and $O(n^2)$ memory if the parent probabilities are stored.
+
+\begin{table}[t]
+\centering
+\caption{Computational cost of the main steps (exponential kernels unless stated).}\label{tab:app-cost}
+\small
+\begin{tabularx}{\textwidth}{@{}Xll@{}}
+\toprule
+Step & Time & Memory\\
+\midrule
+Log-likelihood or gradient & $O(Mn+nE+QK_bM)$ & $O(n+M^2+QK_b)$\\
+EM iteration (E-step, M-step root solves) & $O(Mn+nE+r\,Mn)$, $r$ bisection steps & $O(n+M^2)$\\
+Background Newton step (stream $k$) & $O\{(n_k+Q)K_b^2\}$ & $O\{(n_k+Q)K_b\}$\\
+Gibbs sweep (labels, conjugate updates) & $O(Mn+n\log n)$ & $O(n+M^2)$\\
+Histogram or spline kernels (any shape) & $O(nw)$ per EM iteration & $O(n)$\\
+Ogata thinning (\cref{alg:ogata}) & $O(M^2n_{\mathrm{cand}})$ & $O(n+M^2)$\\
+Cluster simulation & $O(Mn)$ expected & $O(n)$\\
+Observed information by differences & $O(p^2)$ likelihood evaluations & $O(p^2)$\\
+Sup-LR test, bootstrap & $O(BG)$ fits & as a fit\\
+Sup-score test, bootstrap & $O\{B(\text{null fit}+GMn)\}$ & as a fit\\
+INAR($p_{\ell}$) by CLS, $N_{\mathrm{bin}}$ bins & $O(p_\ell N_{\mathrm{bin}}M^2+p_\ell^3M^3)$ & $O(p_\ell^2M^2)$\\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{\textwidth}\footnotesize
+$w$: mean number of incidents within the kernel support. $n_{\mathrm{cand}}$: number of
+thinning candidates, $n\int\bar\lambda/\int\lambda$ in expectation. $p_\ell$: number of
+INAR lags.
+\end{minipage}
+\end{table}

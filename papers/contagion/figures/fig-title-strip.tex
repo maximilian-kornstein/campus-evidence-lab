@@ -1,0 +1,37 @@
+% =====================================================================
+%  Title-page ornament (LEAD): a schematic conditional intensity across the
+%  text width. ONE seeded synthetic realisation (numpy default_rng(9);
+%  mu = 0.2, n = 0.5, kernel rate 1.0, one shock at t = 57 with 10 expected
+%  direct incidents, response rate 0.6), drawn exactly in TikZ from its event
+%  times. It is decoration, not data.
+% =====================================================================
+\par\noindent
+\begin{tikzpicture}[x=0.0098\textwidth,y=0.112cm]
+  \def\kmu{0.2}\def\kn{0.5}\def\kbeta{1.0}\def\kgam{0.6}\def\kjump{6.0}
+  \xdef\tp{0}\xdef\Hs{0}\xdef\Ss{0}
+  \foreach \t/\k in {0.56/1,2.66/1,6.52/1,27.97/1,29.92/1,31.56/1,43.72/1,
+      44.97/1,48.49/1,55.45/1,55.47/1,56.40/1,57.00/2,57.09/1,57.11/1,57.24/1,
+      57.25/1,57.41/1,57.71/1,57.72/1,57.80/1,58.36/1,58.56/1,58.67/1,58.72/1,
+      58.73/1,59.11/1,59.39/1,59.49/1,60.21/1,60.24/1,60.31/1,60.79/1,61.12/1,
+      61.21/1,61.43/1,61.46/1,63.57/1,70.53/1,70.82/1,71.01/1,71.36/1,71.61/1,
+      74.07/1,74.51/1,76.67/1,77.75/1,78.26/1,78.46/1,83.06/1,84.33/1,86.04/1,
+      88.29/1,91.28/1,91.54/1,91.82/1,92.08/1,98.33/1,98.62/1,98.77/1,99.17/1,
+      100/0}{
+    \fill[LabTint]
+      plot[domain=\tp:\t,samples=10]
+        (\x,{\kmu+\Ss*exp(-\kgam*(\x-\tp))+\Hs*exp(-\kbeta*(\x-\tp))})
+      -- (\t,0) -- (\tp,0) -- cycle;
+    \draw[LabNavyMid,line width=0.45pt,line join=round]
+      plot[domain=\tp:\t,samples=10]
+        (\x,{\kmu+\Ss*exp(-\kgam*(\x-\tp))+\Hs*exp(-\kbeta*(\x-\tp))});
+    \pgfmathsetmacro{\Hn}{\Hs*exp(-\kbeta*(\t-\tp))+(\k==1)*\kn*\kbeta}
+    \pgfmathsetmacro{\Sn}{\Ss*exp(-\kgam*(\t-\tp))+(\k==2)*\kjump}
+    \pgfmathsetmacro{\Lold}{\kmu+\Ss*exp(-\kgam*(\t-\tp))+\Hs*exp(-\kbeta*(\t-\tp))}
+    \pgfmathsetmacro{\Lnew}{\kmu+\Sn+\Hn}
+    \ifnum\k>0 \draw[LabNavyMid,line width=0.45pt] (\t,\Lold) -- (\t,\Lnew);\fi
+    \ifnum\k=1 \draw[LabNavyLight,line width=0.4pt] (\t,-0.5) -- (\t,-1.6);\fi
+    \xdef\tp{\t}\xdef\Hs{\Hn}\xdef\Ss{\Sn}
+  }
+  \draw[LabRule,line width=0.4pt] (0,0) -- (100,0);
+  \fill[LabAccent] (57,-1.05) -- ++(0.32,0.55) -- ++(0.32,-0.55) -- ++(-0.32,-0.55) -- cycle;
+\end{tikzpicture}\par

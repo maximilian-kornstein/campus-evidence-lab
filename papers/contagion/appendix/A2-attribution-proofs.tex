@@ -1,0 +1,555 @@
+\section{Proofs for Sections~\ref{sec:attribution} and~\ref{sec:forecasting}}\label{app:attrproofs}
+
+Throughout this appendix, inequalities between vectors, matrices and matrix functions
+hold entrywise, and $\mathbf 1$ is the vector of ones. For nonnegative functions,
+integrals and sums are exchanged by Tonelli's theorem without further comment.
+
+\subsection{Auxiliary lemmas}\label{app:at-aux}
+
+\begin{lemma}[Convolution bounds]\label{lem:at-young}
+Let $\bm F,\bm G\ge0$ be locally integrable matrix functions on $[0,\infty)$ of
+compatible sizes. For every $T\in(0,\infty]$,
+$\int_0^T(\bm F*\bm G)\le\bigl(\int_0^T\bm F\bigr)\bigl(\int_0^T\bm G\bigr)$, with
+equality when $T=\infty$.
+\end{lemma}
+
+\begin{proof}
+By Tonelli's theorem,
+$\int_0^T\!\int_0^t\bm F(t-s)\bm G(s)\,\dd s\,\dd t=\int_0^T\bigl(\int_0^{T-s}\bm F\bigr)\bm G(s)\,\dd s$.
+The inner integral is at most $\int_0^T\bm F$, and it equals $\int_0^\infty\bm F$ when
+$T=\infty$.
+\end{proof}
+
+\begin{lemma}[Splitting and pruning cluster processes]\label{lem:at-split}
+Consider the cluster construction of \cref{sec:th-cluster} with immigrant intensity
+$\bm\nu\ge0$ and kernel matrix $\Phik$.
+\begin{enumerate}[(a)]
+  \item If $\bm\nu=\bm\nu^1+\bm\nu^2$ with $\bm\nu^i\ge0$, the process is the
+  superposition of two independent cluster processes with immigrant intensities
+  $\bm\nu^1$ and $\bm\nu^2$ and kernel $\Phik$.
+  \item Let $\mathcal E$ be a set of index pairs $(k,j)$. In every cluster, delete each
+  stream-$k$ child of a stream-$j$ parent with $(k,j)\in\mathcal E$, together with all
+  of its descendants. The remaining points form a cluster process with the same
+  immigrants and kernel $\Phik^{\mathcal E}$, where
+  $\varphi^{\mathcal E}_{kj}=\varphi_{kj}\ind{(k,j)\notin\mathcal E}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) A Poisson process with intensity $\bm\nu^1+\bm\nu^2$ is the superposition of
+independent Poisson processes with intensities $\bm\nu^1$ and $\bm\nu^2$; this is the
+colouring theorem. Clusters are generated independently given their roots.
+
+(b) Given a stream-$j$ parent at $s$, its children in the different streams $k$ form
+independent Poisson processes with intensities $\varphi_{kj}(\cdot-s)$. Deleting the
+processes with $(k,j)\in\mathcal E$ leaves independent Poisson processes with
+intensities $\varphi^{\mathcal E}_{kj}(\cdot-s)$. Every retained child generates its
+own offspring in the same way, so by induction over generations the retained points
+follow the cluster construction with kernel $\Phik^{\mathcal E}$.
+\end{proof}
+
+\begin{lemma}[A Hurwitz criterion]\label{lem:at-hurwitz}
+Let $\bm{\mathfrak D}=\operatorname{diag}(\mathfrak d_1,\dots,\mathfrak d_m)$ with
+$\mathfrak d_i>0$, and let $\bm P\in[0,\infty)^{m\times M}$ and
+$\bm S\in[0,\infty)^{M\times m}$ satisfy $\spr(\bm S\bm{\mathfrak D}^{-1}\bm P)<1$. Then
+every eigenvalue of $\bm Q=-\bm{\mathfrak D}+\bm P\bm S$ has negative real part.
+\end{lemma}
+
+\begin{proof}
+The matrices $\bm T=\bm{\mathfrak D}^{-1}\bm P\bm S$ and $\bm S\bm{\mathfrak D}^{-1}\bm P$
+have the same nonzero eigenvalues, so $\spr(\bm T)<1$. Choose
+$r\in(\spr(\bm T),1)$, and let
+$\bm v=\sum_{n\ge0}(\bm T/r)^n\mathbf 1=(\Imat-\bm T/r)^{-1}\mathbf 1\ge\mathbf 1$.
+Then $\bm T\bm v=r(\bm v-\mathbf 1)$, and so
+\[
+\bm Q\bm v=\bm{\mathfrak D}(\bm T\bm v-\bm v)
+=-\bm{\mathfrak D}\{(1-r)\bm v+r\mathbf 1\}<\zero .
+\]
+The off-diagonal entries of $\bm Q$ are those of $\bm P\bm S$, which are nonnegative.
+Since $(\bm Q\bm v)_i<0$, it follows that $Q_{ii}<0$ and
+$\sum_{l\neq i}Q_{il}v_l<-Q_{ii}v_i$.
+
+Let $\bm Q\bm x=\lambda\bm x$ with $\bm x\neq\zero$, and choose $i$ to maximise
+$|x_i|/v_i$. Then
+$|\lambda-Q_{ii}|\,|x_i|=|\sum_{l\neq i}Q_{il}x_l|\le\sum_{l\neq i}Q_{il}v_l\,|x_i|/v_i$.
+Hence $|\lambda-Q_{ii}|<-Q_{ii}$. So $\lambda$ lies in an open disc centred at
+$Q_{ii}<0$ with radius $|Q_{ii}|$, and $\operatorname{Re}\lambda<0$.
+\end{proof}
+
+\begin{lemma}[Resolvent of an exponential-sum kernel]\label{lem:at-expkernel}
+Let $\bm{\mathfrak D}$, $\bm P$ and $\bm S$ be as in \cref{lem:at-hurwitz}, let
+$\Phik(t)=\bm S e^{-\bm{\mathfrak D}t}\bm P$, and assume that
+$\spr(\int_0^\infty\Phik)=\spr(\bm S\bm{\mathfrak D}^{-1}\bm P)<1$. Then
+$\Rker(t)=\bm S e^{\bm Qt}\bm P$, where $\bm Q=-\bm{\mathfrak D}+\bm P\bm S$.
+\end{lemma}
+
+\begin{proof}
+Let $\tilde\Rker(t)=\bm Se^{\bm Qt}\bm P$. Define
+$\bm U(t)=e^{\bm Qt}\bm P-e^{-\bm{\mathfrak D}t}\bm P$ and
+$\bm V(t)=\int_0^te^{-\bm{\mathfrak D}(t-s)}\bm P\bm Se^{\bm Qs}\bm P\,\dd s$. Both vanish
+at $t=0$. Moreover,
+\[
+\bm U'=\bm Qe^{\bm Qt}\bm P+\bm{\mathfrak D}e^{-\bm{\mathfrak D}t}\bm P
+=-\bm{\mathfrak D}\bm U+\bm P\bm Se^{\bm Qt}\bm P,
+\qquad
+\bm V'=-\bm{\mathfrak D}\bm V+\bm P\bm Se^{\bm Qt}\bm P .
+\]
+The two functions solve the same linear equation with the same initial value, so
+$\bm U=\bm V$. Multiplying on the left by $\bm S$ gives
+$\tilde\Rker-\Phik=\bm S\bm V=\Phik*\tilde\Rker$. Since $\tilde\Rker$ is continuous,
+uniqueness in \cref{lem:at-mean}(a) gives $\tilde\Rker=\Rker$.
+\end{proof}
+
+\subsection{Proof of \texorpdfstring{\cref{lem:at-mean}}{the mean-intensity lemma}}\label{app:at-mean}
+
+(a) By \cref{lem:at-young} with $T=\infty$ and induction,
+$\int_0^\infty\Phik^{*m}=\Amat^m$. Since $\spr(\Amat)<1$, the series
+$\sum_{m\ge1}\Amat^m=\Mmat-\Imat$ converges. By monotone convergence, the nonnegative
+partial sums of $\sum_m\Phik^{*m}$ therefore converge in $L^1$ to $\Rker$, with
+$\int\Rker=\Mmat-\Imat$. Monotone convergence inside the convolution integral gives
+$\Phik*\Rker=\sum_{m\ge1}\Phik^{*(m+1)}=\Rker-\Phik$. Convolution is associative, so
+$\Phik^{*m}*\Phik=\Phik^{*(m+1)}$, and the same argument gives $\Rker*\Phik=\Rker-\Phik$.
+
+For uniqueness, let $\tilde\Rker$ be another locally integrable solution, and let
+$\bm\Delta=\Rker-\tilde\Rker$. Then $\bm\Delta=\Phik*\bm\Delta$, and by iteration
+$\bm\Delta=\Phik^{*m}*\bm\Delta$, so $|\bm\Delta|\le\Phik^{*m}*|\bm\Delta|$ entrywise. For
+$T>0$, \cref{lem:at-young} gives
+\[
+\int_0^T|\bm\Delta|\le\Bigl(\int_0^T\Phik^{*m}\Bigr)\Bigl(\int_0^T|\bm\Delta|\Bigr)
+\le\Amat^m\int_0^T|\bm\Delta|\xrightarrow[m\to\infty]{}\zero .
+\]
+Hence $\bm\Delta=\zero$ almost everywhere.
+
+(b) Generation $0$ is a Poisson process with intensity $\bm\nu$. Let $\bm m_g$ be the
+mean intensity of generation $g$. Given generations $0,\dots,g$, generation $g+1$ is a
+superposition of independent Poisson processes with total intensity
+$\sum\Phik_{\cdot j}(t-s)$, summed over the points $(s,j)$ of generation $g$. By
+Campbell's theorem its mean intensity is $\bm m_{g+1}=\Phik*\bm m_g$, so
+$\bm m_g=\Phik^{*g}*\bm\nu$. Summing over $g$ by monotone convergence gives
+$\E\,\dN(t)=(\bm\nu+\Rker*\bm\nu)(t)\,\dd t=(\mathcal K\bm\nu)(t)\,\dd t$. By
+\cref{lem:at-young},
+$\int_0^T\mathcal K\bm\nu\le(\Imat+\int_0^T\Rker)\int_0^T\bm\nu\le\Mmat\int_0^T\bm\nu<\infty$,
+so the process is locally finite. That it has the stated intensity is the result of
+\citet{hawkes1974} recalled in \cref{sec:th-cluster}.
+
+Using $\Phik*\Rker=\Rker-\Phik$,
+$\bm\nu+\Phik*\mathcal K\bm\nu=\bm\nu+\Phik*\bm\nu+(\Rker-\Phik)*\bm\nu=\mathcal K\bm\nu$,
+so $\mathcal K\bm\nu$ solves the renewal equation. If $\tilde{\bm m}$ is another
+locally integrable solution, the difference $\bm\delta$ satisfies $\bm\delta=\Phik*\bm\delta$,
+and the argument of (a) gives $\bm\delta=\zero$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{thm:attribution}}{the attribution theorem}}\label{app:at-thm}
+
+(a) By \cref{lem:at-split}(a), $N=N^{\mu}+N^{e}+N^{-e}$, a superposition of independent
+cluster processes with immigrant intensities $\bm\mu$, $\bm\nu_e$ and $\bm\nu_{-e}$.
+Every incident belongs to exactly one of them. In $N^e$, generation $0$ consists of the
+immigrants of event $e$, with intensity $\bm\nu_e$. By \cref{lem:at-mean}(b), the
+later generations have total mean intensity $\Rker*\bm\nu_e$. Integrating over $W_e$
+gives
+$D_k=\beta_kS_e\int_{\tau_e}^{\tau_e+H}\psi_k(t-\tau_e)\,\dd t=\beta_kS_e\Psi_k(H)$ and
+the first expression in \eqref{eq:at-C}.
+
+For the second expression, $\bm\nu_e$ vanishes before $\tau_e$, so
+$(\Rker*\bm\nu_e)(\tau_e+u)=\int_0^u\Rker(u-v)\bm\nu_e(\tau_e+v)\,\dd v$. Hence
+\[
+\int_0^H\!\!\int_0^u\Rker(u-v)\bm\nu_e(\tau_e+v)\,\dd v\,\dd u
+=\int_0^H\bar\Rker(H-v)\,\bm\nu_e(\tau_e+v)\,\dd v ,
+\qquad \bm\nu_e(\tau_e+v)=S_e\bigl(\beta_k\psi_k(v)\bigr)_k .
+\]
+The same lemma applied to $N^\mu$ and $N^{-e}$ gives $\bm B^\mu$ and $\bm O$. Setting
+$S_e=0$ removes $N^e$ and leaves the law of $N^\mu+N^{-e}$ unchanged, so
+$B_k=\E_{S_e=0}N_k(W_e)$.
+
+(b) Since $\int\psi_k=1$, $D_k(H)\uparrow\beta_kS_e$. In \eqref{eq:at-C}, for each $v$
+the integrand $\ind{v\le H}\bar\Rker(H-v)$ increases with $H$ to
+$\int_0^\infty\Rker=\Mmat-\Imat$. By monotone convergence,
+$\bm C(H)\uparrow(\Mmat-\Imat)S_e\int_0^\infty(\beta_k\psi_k)_k=(\Mmat-\Imat)\bm d_e$.
+From $\Mmat(\Imat-\Amat)=\Imat$ we get $\Mmat-\Imat=\Mmat\Amat=\Amat\Mmat$, because $\Mmat$
+is a power series in $\Amat$. In the univariate case, $\Mmat=(1-n)^{-1}$ and
+$C(\infty)/\{D(\infty)+C(\infty)\}=(\Mmat-1)d_e/(\Mmat d_e)=1-(1-n)=n$.
+
+(c) Let $\bm g_r(u)=(\Phik^{*r}*\bm\nu_e)(\tau_e+u)$ be the mean intensity of
+generation $r$ of $N^e$ at lag $u$, and let $\bm G_r(H)=\int_0^H\bm g_r$. Then
+$\bm G_0=\bm D(H)$ and $\bm g_{r+1}(u)=\int_0^u\Phik(u-v)\bm g_r(v)\,\dd v$, so
+\[
+\bm G_{r+1}(H)=\int_0^H\Bigl(\int_0^{H-v}\Phik\Bigr)\bm g_r(v)\,\dd v\le\Amat\,\bm G_r(H).
+\]
+Since $\Amat\ge0$ preserves entrywise inequalities, induction gives
+$\bm G_r(H)\le\Amat^r\bm D(H)$. Therefore
+$\bm C(H)=\sum_{r\ge1}\bm G_r(H)\le\sum_{r\ge1}\Amat^r\bm D(H)=(\Mmat-\Imat)\bm D(H)$.
+
+In the univariate case $C\le\frac{n}{1-n}D$. Since $x\mapsto x/(D+x)$ is increasing,
+\[
+\frac{C}{D+C}\le\frac{\tfrac{n}{1-n}D}{D+\tfrac{n}{1-n}D}=n .
+\]
+The limit follows from (b).
+
+(d) Apply \cref{lem:fc-future} at time $\tau_e$, proved in \cref{app:fc-future}.
+Conditionally on $\Hist_{\tau_e}$, the incidents after $\tau_e$ form a cluster process
+with immigrant intensity $\bm\mu+\bm\nu_e+\bm\nu_{-e}+\bm h_{\tau_e}$ on
+$(\tau_e,\infty)$. Split it by source using \cref{lem:at-split}(a), and apply
+\cref{lem:at-mean}(b) to each part with time origin $\tau_e$, so that $\mathcal K$
+becomes $\mathcal K_{\tau_e}$. The part rooted at event $e$ has immigrant intensity
+$\bm\nu_e$, exactly as in (a), so $D_k$ and $C_k$ are unchanged. The remaining part gives
+$\bm B^{\mid e}$. \qed
+
+\subsection{Derivations for \texorpdfstring{\cref{rem:at-background,rem:at-expost}}{the remarks of Section 5}}\label{app:at-remarks}
+
+\emph{Background bound.} We can write
+$(\Rker*\bm\mu)(t)-(\Mmat-\Imat)\bm\mu(t)=\int_0^t\Rker(u)\{\bm\mu(t-u)-\bm\mu(t)\}\,\dd u-(\int_t^\infty\Rker)\bm\mu(t)$.
+Each entry of $\bm\mu(t-u)-\bm\mu(t)$ is bounded in absolute value by $Lu$, and the
+second term is nonnegative. For the exponential kernel,
+$\int_0^\infty u\,n\beta e^{-\gamma u}\,\dd u=n\beta/\gamma^2=n/\{\beta(1-n)^2\}$.
+
+\emph{Realised attribution.} Label each incident $i$ by its parent: an earlier
+incident, an event, or the background. The joint density of the event times and the
+labels is $\prod_ic_i(\ell_i)\exp\{-\sum_k\int\lambda_k\}$, where $c_i(\ell)$ is the
+contribution of label $\ell$ to $\lambda_{k_i}(t_i)$
+\citep{veen2008}. Summing over labels recovers \eqref{eq:th-loglik}. Conditionally on
+the times, the labels are therefore independent, with
+$\Pr(\ell_i=\ell)=c_i(\ell)/\lambda_{k_i}(t_i)$.
+
+The root of $i$ is an immigrant of $e$ if and only if either $\ell_i=e$, or $\ell_i=j$
+and the root of $j$ is an immigrant of $e$. The root of $j$ is determined by labels of
+incidents earlier than $t_i$, which are independent of $\ell_i$. This gives the
+recursion for $\rho_{ie}$. Taking expectations of the conditional probabilities
+recovers the expected counts in \eqref{eq:at-decomp}, by the tower property.
+
+\subsection{Proof of \texorpdfstring{\cref{prop:irf}}{the impulse-response proposition}}\label{app:at-irf}
+
+Parts (a)--(c) follow from \cref{lem:at-expkernel,lem:at-hurwitz} with three choices
+of $(\bm{\mathfrak D},\bm P,\bm S)$.
+\begin{itemize}
+  \item \emph{(a)} $m=M=1$, $\mathfrak D=\beta$, $P=n\beta$ and $S=1$, so
+  $\Rker(t)=n\beta e^{-\beta(1-n)t}$. Integration gives $\bar\Rker$.
+  \item \emph{(b)} $m=M$, $\bm{\mathfrak D}=\bm\Omega$, $\bm P=\bm\Omega\Amat$ and
+  $\bm S=\Imat$. Then $\Phik(t)=e^{-\bm\Omega t}\bm\Omega\Amat$ has entries
+  $\alpha_{kj}\beta_{k\bullet}e^{-\beta_{k\bullet}t}$,
+  $\bm Q=-\bm\Omega(\Imat-\Amat)$ and $\bm S\bm{\mathfrak D}^{-1}\bm P=\Amat$. The
+  function $\bm y(t)=\int_0^te^{\bm Q(t-s)}\bm\Omega\Amat\bm\nu(s)\,\dd s=(\Rker*\bm\nu)(t)$
+  is the variation-of-constants solution of
+  $\bm y'=\bm Q\bm y+\bm\Omega\Amat\bm\nu$, $\bm y(0)=\zero$. With $\bm\Omega=\beta\Imat$,
+  the matrix $\Amat$ commutes with $e^{-\beta(\Imat-\Amat)t}$.
+  \item \emph{(c)} $m=M^2$, $\bm{\mathfrak D}=\operatorname{diag}(\beta_{kj})$, and
+  $\bm P,\bm S$ as defined. Then
+  $(\bm Se^{-\bm{\mathfrak D}t}\bm P\bm v)_k=\sum_j\alpha_{kj}\beta_{kj}e^{-\beta_{kj}t}v_j$,
+  $(\bm P\bm S\bm z)_{kj}=\alpha_{kj}\beta_{kj}\sum_lz_{jl}$ and
+  $(\bm S\bm{\mathfrak D}^{-1}\bm P\bm v)_k=\sum_j\alpha_{kj}v_j=(\Amat\bm v)_k$. The
+  function $\bm z(t)=\int_0^te^{\bm Q(t-s)}\bm P\bm\nu(s)\,\dd s$ solves
+  $z_{kj}'=-\beta_{kj}z_{kj}+\alpha_{kj}\beta_{kj}m_j$, where
+  $\bm m=\bm\nu+\bm S\bm z=\mathcal K\bm\nu$. Hence
+  $z_{kj}(t)=\int_0^t\varphi_{kj}(t-s)m_j(s)\,\dd s$, the mean excitation of stream
+  $k$ by stream $j$.
+\end{itemize}
+
+(d) \emph{Univariate.} $D(H)=d\,\Psi(H)=d(1-e^{-\eta H})$. By \eqref{eq:at-C} and
+\eqref{eq:at-irf-uni},
+\begin{align*}
+C(H)&=d\int_0^H\eta e^{-\eta v}\,\frac{n}{1-n}\bigl(1-e^{-\gamma(H-v)}\bigr)\,\dd v\\
+&=\frac{n}{1-n}\,d\int_0^H\eta e^{-\eta v}\Pr(X_\gamma\le H-v)\,\dd v
+=\frac{n}{1-n}\,d\,\Pr(X_\eta+X_\gamma\le H).
+\end{align*}
+For $\eta\neq\gamma$, the density of $X_\eta+X_\gamma$ is
+$\dot\chi_{\eta,\gamma}(t)=\eta\gamma(e^{-\eta t}-e^{-\gamma t})/(\gamma-\eta)$.
+Integration gives the distribution function
+\[
+\frac{\gamma(1-e^{-\eta H})-\eta(1-e^{-\gamma H})}{\gamma-\eta},
+\]
+which is \eqref{eq:at-kappa}. For $\eta=\gamma$, the sum has the $\mathrm{Gamma}(2,\gamma)$ law.
+
+The intensity attributable to the event at lag $t$ is
+\[
+d\eta e^{-\eta t}+d\int_0^tn\beta e^{-\gamma(t-v)}\eta e^{-\eta v}\,\dd v
+=d\,\{\eta e^{-\eta t}+\tfrac{n}{1-n}\dot\chi_{\eta,\gamma}(t)\},
+\]
+since $n\beta/\gamma=n/(1-n)$. The density $\dot\chi_{\eta,\gamma}$ vanishes at $0$
+and at infinity. For $\eta\neq\gamma$ its only critical point solves
+$\eta e^{-\eta t}=\gamma e^{-\gamma t}$, namely $t^*=\log(\eta/\gamma)/(\eta-\gamma)>0$.
+At resonance, $\gamma^2te^{-\gamma t}$ is maximised at $1/\gamma$.
+
+\emph{Common rates.} By (b), $\bar\Rker(u)=\beta\Amat\bm G^{-1}(\Imat-e^{-\bm Gu})$ with
+$\bm G=\beta(\Imat-\Amat)$, which is invertible because $\spr(\Amat)<1$. Since
+$\beta\Amat\bm G^{-1}=\Amat(\Imat-\Amat)^{-1}=\Mmat-\Imat$, \eqref{eq:at-C} gives
+$\bm C(H)=(\Mmat-\Imat)\int_0^H\eta e^{-\eta v}(\Imat-e^{-\bm G(H-v)})\,\dd v\,\bm d_e$.
+The scalar map
+$x\mapsto\int_0^H\eta e^{-\eta v}(1-e^{-x(H-v)})\,\dd v$ is entire, with a power series
+that converges absolutely and uniformly on bounded sets. Substituting $\bm G$ into the
+series therefore yields the matrix integral. For real $x>0$ the map equals
+$\chi_{\eta,x}(H)$.
+
+\emph{General case.} The immigrant intensity
+$\bm\nu_e(\tau_e+u)=\operatorname{diag}(\bm\eta)e^{-\operatorname{diag}(\bm\eta)u}\bm d_e$
+solves $\bm\nu'=-\operatorname{diag}(\bm\eta)\bm\nu$. The function
+$\bm z(u)=\int_0^ue^{\bm Q(u-v)}\bm P\bm\nu(v)\,\dd v$ solves
+$\bm z'=\bm Q\bm z+\bm P\bm\nu$ with $\bm z(0)=\zero$, and $\bm S\bm z=\Rker*\bm\nu$ by (c).
+Finally $\bm D'=\bm\nu$ and $\bm C'=\bm S\bm z$. Together these form the linear system
+$\bm w'=\bm Z\bm w$ with $\bm w(0)=\bm w_0$, so $\bm w(H)=e^{H\bm Z}\bm w_0$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{prop:at-channel}}{the channel proposition}}\label{app:at-channel}
+
+(a) Build the cluster process under $\Amat$, and prune it as in
+\cref{lem:at-split}(b) with $\mathcal E$ the online-to-offline pairs. The pruned
+process is the cluster process with branching matrix $\Amat^\circ$, the same kernel
+shapes and the same immigrants. Its descendants of event $e$ are exactly those whose
+ancestral line contains no online-to-offline step. Hence $\bm C(H;\Amat^\circ)$ is the
+expected number of such descendants in $W_e$. Subtracting from $\bm C(H;\Amat)$ leaves
+the expected number of descendants whose line contains at least one such step.
+
+(b) Since $\zero\le\Amat^\circ\le\Amat$, we have $\spr(\Amat^\circ)\le\spr(\Amat)<1$, so
+$\Mmat^\circ=\sum_n(\Amat^\circ)^n\ge\Imat$. Expand
+$\Amat^n=(\Amat^\circ+\bm E)^n$ as a sum of ordered products of $n$ factors, each equal
+to $\Amat^\circ$ or $\bm E$. A product with exactly $r$ factors $\bm E$ can be written
+uniquely as
+$(\Amat^\circ)^{a_r}\bm E(\Amat^\circ)^{a_{r-1}}\bm E\cdots\bm E(\Amat^\circ)^{a_0}$,
+with $a_i\ge0$ and $\sum_ia_i=n-r$. All terms are nonnegative. Rearranging the double
+series over $n$ and over products by the number $r$ of factors $\bm E$ gives
+\[
+\Mmat=\sum_{n\ge0}\Amat^n=\sum_{r\ge0}\ \sum_{a_0,\dots,a_r\ge0}
+(\Amat^\circ)^{a_r}\bm E\cdots\bm E(\Amat^\circ)^{a_0}
+=\sum_{r\ge0}(\Mmat^\circ\bm E)^r\Mmat^\circ .
+\]
+Entry $(k,j)$ of $\Amat^n$ is the sum over walks $j=i_0\to i_1\to\dots\to i_n=k$ of
+$\prod_l\alpha_{i_{l+1}i_l}$. In the expansion, step $l$ carries the factor $\bm E$
+exactly when $i_l$ is online and $i_{l+1}$ is offline, which gives the walk reading
+of the $r$th term.
+
+Because $\Mmat^\circ\ge\Imat$, we have
+$\sum_r(\Mmat^\circ\bm E)^r\le\sum_r(\Mmat^\circ\bm E)^r\Mmat^\circ=\Mmat<\infty$. For a
+nonnegative matrix $\bm T$ with Perron vector $\bm w\ge\zero$, $\bm w\neq\zero$, the
+convergence of $\sum_r\bm T^r\bm w=\sum_r\spr(\bm T)^r\bm w$ forces $\spr(\bm T)<1$.
+Hence $\spr(\Mmat^\circ\bm E)<1$.
+
+Then
+$\Mmat-\Mmat^\circ=\sum_{r\ge1}(\Mmat^\circ\bm E)^r\Mmat^\circ=\Mmat^\circ\bm E\Mmat$.
+The resolvent identity
+$\Mmat-\Mmat^\circ=\Mmat\{(\Imat-\Amat^\circ)-(\Imat-\Amat)\}\Mmat^\circ=\Mmat\bm E\Mmat^\circ$
+gives the other form. By \cref{thm:attribution}(b), applied with $\Amat$ and with
+$\Amat^\circ$,
+$\bm C^{\mathrm{on}}(\infty)=(\Mmat-\Imat)\bm d_e-(\Mmat^\circ-\Imat)\bm d_e=(\Mmat-\Mmat^\circ)\bm d_e$.
+
+(c) The bounds $\zero\le\bm C^{\mathrm{on}}(H)\le\bm C(H)$ hold because (a) counts a
+subset of the descendants that $\bm C(H)$ counts. By (b),
+$C^{\mathrm{on}}_k(\infty)=\sum_{r\ge1}\{(\Mmat^\circ\bm E)^r\Mmat^\circ\bm d_e\}_k$ is a
+sum of products of nonnegative walk weights and the entries $d_{e,j}$. It is positive
+if and only if one of these products is positive, which gives the walk criterion. The
+lower bound is the term $r=1$.
+
+If $\alpha_{kj}=0$ for all $k$ online and $j$ offline, no walk returns from an offline
+stream to an online one. A walk therefore takes at most one online-to-offline step,
+and the terms with $r\ge2$ vanish. With streams ordered (offline, online), this case
+gives
+$\Amat^\circ=\operatorname{diag}(\Amat_{\mathrm{off},\mathrm{off}},\Amat_{\mathrm{on},\mathrm{on}})$
+and $\bm E=\bigl(\begin{smallmatrix}\zero&\Amat_{\mathrm{off},\mathrm{on}}\\\zero&\zero\end{smallmatrix}\bigr)$.
+Multiplying out $\Mmat^\circ\bm E\Mmat^\circ\bm d_e$ gives \eqref{eq:at-chan-nofb}.
+
+(d) Prune one realisation of the cluster process with each of $\mathcal E_1$,
+$\mathcal E_2$ and $\mathcal E_1\cup\mathcal E_2$. By (a), each $\bm C^{\mathcal E}$ is
+the expected number $\E X_{\mathcal E}$ of descendants in $W_e$ whose ancestral line
+uses an entry of $\mathcal E$. Pathwise,
+$X_{\mathcal E_1\cup\mathcal E_2}=X_{\mathcal E_1}+X_{\mathcal E_2}-X_{12}$, where
+$X_{12}$ counts the lines that use both channels, and
+$\max(X_{\mathcal E_1},X_{\mathcal E_2})\le X_{\mathcal E_1\cup\mathcal E_2}$. Taking
+expectations proves (d). \qed
+
+\paragraph{Gradients \eqref{eq:at-grad}} The identity
+$\dd(\Imat-\Amat)^{-1}=(\Imat-\Amat)^{-1}(\dd\Amat)(\Imat-\Amat)^{-1}$ with
+$\dd\Amat=\bm e_k\bm e_j^{\top}$ gives $\partial\Mmat/\partial\alpha_{kj}$. The other
+formulas follow from $\bm d_e=S_e(\beta_1,\dots,\beta_M)^{\top}$. The online-channel
+formula follows because $\Mmat^\circ$ depends on $\alpha_{kj}$ only when $(k,j)$ is not
+an online-to-offline pair.
+
+\subsection{Proof of \texorpdfstring{\cref{lem:fc-future}}{the conditional cluster lemma}}\label{app:fc-future}
+
+For $s>t$, by \eqref{eq:th-intensity}, the intensity of the process on $(t,\infty)$
+with respect to $\Hist_t$ joined with its own history is
+\[
+\bm\lambda(s)=\bm\mu(s)+\bm u_t(s)+\bm h_t(s)+\int_{(t,s)}\Phik(s-r)\,\dN(r).
+\]
+Here $\bm\nu_t=\bm\mu+\bm u_t+\bm h_t$ is $\Hist_t$-measurable. Conditionally on
+$\Hist_t$, this is the intensity of a Hawkes process on $(t,\infty)$ that starts from
+the empty history, with immigrant intensity $\bm\nu_t$ and kernel $\Phik$. The cluster
+process with immigrant intensity $\bm\nu_t$ has this intensity \citep{hawkes1974}, and
+the intensity determines the law of a point process \citep[Ch.~7]{daley2003}. The two
+conditional laws therefore agree. The mean formula is \cref{lem:at-mean}(b) with time
+origin $t$.
+
+For exponential kernels,
+$h_{t,k}(s)=\sum_j\sum_{t^j_i\le t}\alpha_{kj}\beta_{kj}e^{-\beta_{kj}(s-t^j_i)}=\sum_je^{-\beta_{kj}(s-t)}x_{kj}(t)$,
+and $u_{t,k}(s)=e^{-\eta_k(s-t)}u_k(t)$ in the same way. Hence $\bm\nu_t$, and with it
+the conditional law of the future, depends on $\Hist_t$ only through $\bm\xi(t)$. The
+dynamics of $\bm\xi$ follow from \eqref{eq:fc-state}. The predictive mean
+$\int_t^{t+\Delta}\mathcal K_t\bm\nu_t$ is linear in $\bm\nu_t$, which is affine in
+$\bm\xi(t)$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{thm:alert}}{the alerting theorem}}\label{app:fc-alert}
+
+(a) Conditionally on $\mathcal G_t$, alerting costs $c_{\mathrm{FA}}(1-\pi_t)$ in
+expectation and not alerting costs $c_{\mathrm{miss}}\pi_t$. For any
+$\mathcal G_t$-measurable $a_t$,
+\[
+\E\,\mathrm{loss}=\E\bigl[a_tc_{\mathrm{FA}}(1-\pi_t)+(1-a_t)c_{\mathrm{miss}}\pi_t\bigr]
+\ge\E\min\{c_{\mathrm{FA}}(1-\pi_t),c_{\mathrm{miss}}\pi_t\}.
+\]
+Equality holds if and only if $a_t$ selects the minimum almost surely wherever the two
+costs differ. Finally, $c_{\mathrm{FA}}(1-\pi)\le c_{\mathrm{miss}}\pi$ if and only if
+$\pi\ge\pi^*$.
+
+(b) By \cref{lem:fc-future}, the future under $\omega$ is a cluster process with
+immigrant intensity $\bm\nu=\bm\mu+\bm u_t+\bm h^{\omega}_t$. Under $\omega'$ it is a
+cluster process with
+$\bm\nu'=\bm\nu+\sum\Phik_{\cdot j}(\cdot-r)$, where the sum runs over the incidents
+$(r,j)$ in $\omega'\setminus\omega$, so $\bm\nu'-\bm\nu\ge\zero$. Let $\bm N$ be a cluster
+process with immigrant intensity $\bm\nu$, and let $\bm N^+$ be an independent cluster
+process with immigrant intensity $\bm\nu'-\bm\nu$. By \cref{lem:at-split}(a),
+$\bm N'=\bm N+\bm N^+$ has the predictive law under $\omega'$, and
+$\bm N'(t,t+\Delta]\ge\bm N(t,t+\Delta]$ pathwise. For an upper set $\mathcal U$,
+$\{\bm N\in\mathcal U\}\subseteq\{\bm N'\in\mathcal U\}$.
+
+(c) By \cref{lem:fc-future}, $\pi_t=G_t(\bm\xi(t))$, where $G_t(\bm\xi)$ is the
+probability that a cluster process with immigrant intensity
+\[
+\nu^{\bm\xi}_k(s)=\mu_k(s)+u_ke^{-\eta_k(s-t)}+\sum_jx_{kj}e^{-\beta_{kj}(s-t)}
+\]
+has $\bm N(t,t+\Delta]\in\mathcal U$. If $\bm\xi\le\bm\xi'$, then
+$\bm\nu^{\bm\xi'}-\bm\nu^{\bm\xi}\ge\zero$, and the coupling of (b) gives
+$G_t(\bm\xi)\le G_t(\bm\xi')$.
+
+For the Lipschitz bound with $\bm\xi\le\bm\xi'$, write $W=(t,t+\Delta]$. Then
+\[
+|G_t(\bm\xi')-G_t(\bm\xi)|\le\Pr\{\bm N^+(W)\neq\zero\}\le\E\,\mathbf 1^{\top}\bm N^+(W)
+\le\mathbf 1^{\top}\Mmat\int_W(\bm\nu^{\bm\xi'}-\bm\nu^{\bm\xi})
+\le\Delta\max_j(\mathbf 1^{\top}\Mmat)_j\,\|\bm\xi'-\bm\xi\|_1 ,
+\]
+using \cref{lem:at-mean}(b), \cref{lem:at-young} and the fact that each exponential
+factor is at most $1$. If $\spr(\Amat)\ge1$, replace $\Mmat$ by the finite matrix
+$\Imat+\int_0^\Delta\Rker$, where $\Rker$ is the locally integrable resolvent
+\citep[Ch.~2]{gripenberg1990}. For general $\bm\xi,\bm\xi'$, pass through
+$\bm\xi\wedge\bm\xi'$ and note that
+$\|\bm\xi-\bm\xi\wedge\bm\xi'\|_1+\|\bm\xi'-\bm\xi\wedge\bm\xi'\|_1=\|\bm\xi-\bm\xi'\|_1$.
+
+Monotonicity makes $\mathcal A_t$ an upper set, and continuity makes it closed. The
+law of the cluster process on $W$ depends on $t$ only through $\bm\nu^{\bm\xi}$ on $W$.
+The exponential terms depend on $s-t$ alone, so the dependence on $t$ is through
+$\bm\mu$ on $W$ and the future calendar.
+
+(d) Let $M=1$. If $u(t)=0$, then $\nu^{\xi}(s)=\mu(s)+xe^{-\beta(s-t)}$. If $\eta=\beta$,
+then $\nu^{\xi}(s)=\mu(s)+(x+u)e^{-\beta(s-t)}$. In both cases $\pi_t=g(x+u)$ for a
+function $g$ that is nondecreasing and continuous by (c).
+
+For strict monotonicity, let $0\le a<a'$ and couple as in (b), with $N^+$ an
+independent cluster process with immigrant intensity $(a'-a)e^{-\beta(s-t)}$. Then
+\[
+g(a')-g(a)=\Pr(N<c\le N+N^+)\ge\Pr(N=c-1)\Pr(N^+\ge1).
+\]
+Here $\Pr(N^+\ge1)\ge1-\exp\{-(a'-a)(1-e^{-\beta\Delta})/\beta\}>0$. The number of
+immigrants in $W$ is Poisson with mean $m=\int_W\nu^{a}>0$, since $\mu>0$, and each
+immigrant has no offspring at all with probability $e^{-n}$. Hence
+$\Pr(N=c-1)\ge e^{-m}m^{c-1}e^{-n(c-1)}/(c-1)!>0$.
+
+The immigrants contributed by the excitation are Poisson with mean
+$a(1-e^{-\beta\Delta})/\beta\to\infty$, so $g(a)\to1$ as $a\to\infty$. Since $\pi^*<1$,
+the set $\{a:g(a)\ge\pi^*\}$ is therefore a nonempty closed ray $[x^*_t,\infty)$, and
+the rule alerts if and only if $\lambda(t+)-\mu(t)\ge x^*_t$.
+
+The comparative statics follow from three facts. First, $\Pr(N\ge c)$ is nonincreasing
+in $c$. Second, the set $\{g\ge\pi^*\}$ shrinks as $\pi^*$ grows. Third,
+$N(t,t+\Delta]$ is nondecreasing in $\Delta$ on every realisation of the future, whose
+law does not depend on $\Delta$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{prop:nowcast}}{the nowcasting proposition}}\label{app:fc-nowcast}
+
+(a) Mark each incident with its recording indicator $R_i$ and delay $D_i$. By
+\cref{ass:fc-report}, the marks are independent of the incident process and of the
+past, so $\bm\lambda$ remains the $\mathcal G^\circ$-intensity of $\bm N$. The marked
+process has $\mathcal G^\circ$-compensator $\lambda_k(s)\,\dd s$ times the law of the
+marks \citep[Ch.~6--7]{daley2003}. Integrating the indicator
+$\ind{R=1,\ D\le t-s}$ against this compensator gives the compensator
+$\int p_kF_k(t-s)\lambda_k(s)\,\dd s$ for $O^{(t)}_k$, and the complement gives the
+second statement. Taking expectations gives the mean.
+
+(b) For an incident of stream $j$ at $s_i\le t-\delta$, the availability indicator
+$A_i=\ind{R_i=1,\ D_i\le t-s_i}$ is independent of $\Hist_\infty$, with
+$\Pr(A_i=1)=p_jF_j(t-s_i)\ge p_jF_j(\delta)>0$. Hence
+$\E[A_i/\{p_jF_j(t-s_i)\}\mid\Hist_{t-\delta}]=1$, and
+$\E[\hat{\bm h}(s)\mid\Hist_{t-\delta}]=\sum_{s_i\le t-\delta}\Phik_{\cdot j}(s-s_i)=\bm h_{t-\delta}(s)$,
+since the sum is finite almost surely.
+
+The map $\bm f\mapsto\mathcal K_{t-\delta}\bm f(t)$ is linear with a nonnegative kernel.
+By conditional Fubini and \cref{lem:fc-future},
+\[
+\E[\hat{\bm\lambda}(t)\mid\Hist_{t-\delta}]
+=\mathcal K_{t-\delta}(\bm\mu+\bm u_{t-\delta}+\bm h_{t-\delta})(t)
+=\E[\bm\lambda(t)\mid\Hist_{t-\delta}] .
+\]
+The unconditional statement follows by the tower property.
+
+For exponential kernels, the state at $t-\delta$ with weights $A_i/\{p_jF_j(t-s_i)\}$
+is conditionally unbiased for $\bm x(t-\delta)$ by the same argument. The mean
+dynamics $\bm z'=\bm Q\bm z+\bm P(\bm\mu+\bm u)$ of \cref{prop:irf}(c) map the state at
+$t-\delta$ affinely to $\E[\bm x(t)\mid\Hist_{t-\delta}]$, which proves the claim. With
+$\delta=0$, the same computation conditions on $\Hist_t$.
+
+(c) By the independence in (b),
+$\E[\tilde x_{kj}(t)\mid\Hist_t]=\sum_i\varphi_{kj}(t-s_i)\Pr(A_i=1)/p_j=\sum_iF_j(t-s_i)\varphi_{kj}(t-s_i)$.
+This is at most $x_{kj}(t)$ because $F_j\le1$, with the stated case of strict
+inequality. Under stationarity, stream $j$ has constant mean intensity
+$\bar\Lambda_j$. By Campbell's theorem,
+$\E\sum_{s_i\le t}f(t-s_i)=\bar\Lambda_j\int_0^\infty f$ for $f\ge0$. Hence
+\[
+\E\tilde x_{kj}(t)=\bar\Lambda_j\alpha_{kj}\int_0^\infty F_j(u)g_{kj}(u)\,\dd u
+=\Pr(D_j\le U_{kj})\,\alpha_{kj}\bar\Lambda_j,
+\qquad \E x_{kj}(t)=\alpha_{kj}\bar\Lambda_j .
+\]
+For $g_{kj}(u)=\beta_{kj}e^{-\beta_{kj}u}$,
+$\Pr(D_j\le U_{kj})=\E\Pr(U_{kj}\ge D_j\mid D_j)=\E e^{-\beta_{kj}D_j}$.
+
+(d) If $p_k\equiv1$, the available incidents are a subset of all incidents, so
+$\tilde x_{kj}(t)\le x_{kj}(t)$ for every realisation. The event state $\bm u(t)$ is
+known exactly. By \cref{thm:alert}(c),
+$G_t(\tilde{\bm x}(t),\bm u(t))\le G_t(\bm x(t),\bm u(t))$, so the naive rule alerts
+only where the rule based on the true state alerts. \qed
+
+\subsection{Proofs for \texorpdfstring{\cref{sec:fc-eval}}{the evaluation subsection} and \texorpdfstring{\cref{rem:fc-pgf}}{the PGF remark}}\label{app:fc-eval}
+
+\emph{\Cref{lem:fc-pit}.} (a) Let $P=P_t$ and $p(y)=P(y)-P(y-1)$. For $u\in(0,1)$,
+\[
+\Pr(U_t\le u\mid\mathcal G_t)=\sum_{y}p(y)\Pr\Bigl(V\le\frac{u-P(y-1)}{p(y)}\Bigr)
+=\sum_y\min\bigl\{\max\{u-P(y-1),0\},\,p(y)\bigr\}=u ,
+\]
+because the intervals $[P(y-1),P(y))$ partition $[0,1)$. The conditional law does not
+depend on $\mathcal G_t$, so $U_t$ is uniform and independent of $\mathcal G_t$.
+
+(b) Let $\mathcal H_m=\mathcal G_{t_m}\vee\sigma(V_{t_1},\dots,V_{t_{m-1}})$. The
+randomisations are independent of everything else, so $P_{t_m}$ is also the
+conditional law of $Y_{t_m}$ given $\mathcal H_m$. By (a), $U_{t_m}$ is therefore uniform
+and independent of $\mathcal H_m$. Each $U_{t_l}$ with $l<m$ is a function of
+$P_{t_l}$, $Y_{t_l}$ and $V_{t_l}$, all of which are $\mathcal H_m$-measurable by
+assumption. Induction over $m$ gives independence.
+
+\emph{\Cref{rem:fc-pgf}.} Conditionally on its roots, the future is a sum of
+independent cluster counts. For a Poisson process of roots with intensity
+$\bm\nu_t$, the probability generating functional gives
+$\E\prod_if(s_i)=\exp\{-\int(1-f)\,\nu_t\}$ with $f(s)=G_{j}(z;s)$ for roots in stream
+$j$, which is \eqref{eq:fc-pgf}. A root in stream $j$ at $s$ has offspring in each
+stream $i$ forming independent Poisson processes with intensities
+$\varphi_{ij}(\cdot-s)$, and each child roots an independent subcluster. The same
+identity then gives \eqref{eq:fc-pgf-cluster}, with $G_i(z;r)=1$ for $r>t+\Delta$.
+
+In the univariate case,
+$I(s)=\int_s^{t+\Delta}n\beta e^{-\beta(r-s)}\{G(z;r)-1\}\,\dd r$, and differentiation
+gives $I'(s)=\beta I(s)-n\beta\{G(z;s)-1\}$.
+
+The coordinate $\xi_i$ of the state adds the immigrant intensity
+$\xi_ie^{-b_i(s-t)}$ to one stream $k(i)$, with $b_i$ the corresponding decay rate. Its
+factor in \eqref{eq:fc-pgf} is $\exp\{\xi_ic_i(\hat G_i(z)-1)\}$, where
+$c_i=(1-e^{-b_i\Delta})/b_i$ and
+$\hat G_i(z)=c_i^{-1}\int_We^{-b_i(s-t)}G_{k(i)}(z;s)\,\dd s$ is a probability
+generating function. This factor is a compound Poisson law with rate $\xi_ic_i$.
+
+For the aliasing bound, the discrete Fourier transform of the values at the $L$th roots
+of unity returns $\sum_{m\ge0}p(y+mL)$ for $y<L$. Its error is therefore at most
+$\Pr(N\ge L)$.
+
+\emph{\Cref{rem:fc-brier}.} If $Y=1$, then
+$\int_0^1(1-c)\ind{\pi<c}\,\dd c=(1-\pi)^2/2$. If $Y=0$, then
+$\int_0^1c\,\ind{\pi\ge c}\,\dd c=\pi^2/2$.

@@ -1,0 +1,53 @@
+% =====================================================================
+%  Table: notation (LEAD).  Symbols follow SPEC.md and Sections 3--7.
+% =====================================================================
+\begin{table}[t]
+\caption{\textbf{Notation.} Symbols used throughout. Bold capitals are
+$M\times M$ matrices indexed by (child stream $k$, parent stream $j$).}
+\label{tab:notation}
+\small
+\renewcommand{\arraystretch}{1.08}
+\newcommand{\nhead}[1]{\multicolumn{2}{@{}l}{\footnotesize\scshape\bfseries\color{LabNavy}#1}\\[1pt]}
+\begin{minipage}[t]{0.485\textwidth}
+\begin{tabularx}{\linewidth}[t]{@{}>{$}l<{$}@{\hspace{0.8em}}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\nhead{Streams and incidents}
+k,j\in[M] & stream: offline incidents by region or offence type; online volume \\
+t^k_i,\ x^k_i & time and mark of the $i$th stream-$k$ incident on $[0,T]$ \\
+N_k(t),\ \Hist_t & counting process; history of all streams and recorded events \\
+\lambda_k(t),\ \Lam_k(t) & conditional intensity; compensator \\
+\midrule
+\nhead{Self-excitation}
+\varphi_{kj}=\alpha_{kj}g_{kj} & excitation kernel; $g_{kj}$ a probability density \\
+\alpha_{kj} & expected \emph{direct} stream-$k$ offspring of one stream-$j$ incident \\
+\Amat=[\alpha_{kj}],\ \spr(\Amat) & branching matrix; spectral radius, $<1$ for stationarity \\
+\Mmat=(\Imat-\Amat)^{-1} & contagion multiplier: $\Mmat_{kj}$ is the expected stream-$k$ size of a cascade rooted in stream $j$ \\
+\Phik(t),\ \Rker=\sum_{m\ge1}\Phik^{*m} & kernel matrix; resolvent \\
+\beta e^{-\beta t} & exponential kernel with decay rate $\beta$ (or $\beta_{kj}$) \\
+n,\ \bar\Lambda=\mu/(1-n) & univariate branching ratio; stationary mean rate \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\begin{tabularx}{\linewidth}[t]{@{}>{$}l<{$}@{\hspace{0.8em}}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\nhead{Background and salient external events}
+\mu_k(t)=e^{B(t)^{\top}\theta_k} & background; spline or seasonal basis $B$, which carries calendar effects \\
+e;\ \tau_e,\ S_e & salient external event; its time and size \\
+\psi_k,\ \beta_k & response kernel ($\int\psi_k=1$, e.g.\ $\eta_ke^{-\eta_kt}$); loading \\
+\midrule
+\nhead{Recording}
+p_k & recording probability: reciprocal of the companion paper's dark-figure ratio \\
+n'=h_p(n) & apparent branching ratio of the $p$-thinned process \\
+F_k(d) & reporting-delay distribution \\
+\midrule
+\nhead{Attribution and alerting}
+B_k,\ D_k,\ C_k & background, direct and contagion parts of $\E\,N_k(\tau_e,\tau_e+H]$ \\
+\bm C^{\mathrm{on}},\ \sigma_k(H) & online-channel contagion; its share \\
+\Delta,\ c & alert window; count threshold \\
+\pi_t,\ \pi^* & surge probability; alert threshold \\
+c_{\mathrm{FA}},\ c_{\mathrm{miss}} & costs of a false alarm and of a missed surge \\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{table}

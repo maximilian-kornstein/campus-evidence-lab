@@ -227,3 +227,76 @@ def effective_sample_size(x: np.ndarray) -> float:
         s += pair
     tau = max(2.0 * s - 1.0, 1.0 / n)
     return float(n / tau)
+
+
+# --------------------------------------------------------------------------
+# Multi-chain convergence diagnostics (Vehtari, Gelman, Simpson, Carpenter and
+# Buerkner 2021): rank-normalised split-Rhat and bulk / tail effective sample sizes.
+# --------------------------------------------------------------------------
+def _split_chains(x: np.ndarray) -> np.ndarray:
+    x = np.atleast_2d(np.asarray(x, dtype=float))
+    h = x.shape[1] // 2
+    return np.concatenate([x[:, :h], x[:, x.shape[1] - h:]], axis=0)
+
+
+def _rank_normalise(x: np.ndarray) -> np.ndarray:
+    from scipy.stats import norm, rankdata
+    r = rankdata(x.ravel(), method="average").reshape(x.shape)
+    return norm.ppf((r - 0.375) / (x.size + 0.25))
+
+
+def _rhat_basic(x: np.ndarray) -> float:
+    M, n = x.shape
+    if n < 2 or M < 2:
+        return float("nan")
+    W = x.var(axis=1, ddof=1).mean()
+    if W <= 0:
+        return float("nan") if x.var() > 0 else 1.0
+    B = n * x.mean(axis=1).var(ddof=1)
+    return float(np.sqrt(((n - 1) / n * W + B / n) / W))
+
+
+def _ess_multi(x: np.ndarray) -> float:
+    """Multi-chain ESS (Stan's estimator with Geyer's initial monotone sequence)."""
+    M, n = x.shape
+    if n < 4:
+        return float(M * n)
+    xc = x - x.mean(axis=1, keepdims=True)
+    f = np.fft.rfft(xc, n=2 * n, axis=1)
+    acov = np.fft.irfft(f * np.conj(f), axis=1)[:, :n] / n
+    chain_var = acov[:, 0] * n / (n - 1)
+    mean_var = chain_var.mean()
+    var_plus = mean_var * (n - 1) / n + (x.mean(axis=1).var(ddof=1) if M > 1 else 0.0)
+    if var_plus <= 0:
+        return float(M * n)
+    rho = 1.0 - (mean_var - acov.mean(axis=0)) / var_plus
+    rho[0] = 1.0
+    P = []
+    for t in range(0, n - 1, 2):
+        p = rho[t] + rho[t + 1]
+        if p < 0:
+            break
+        P.append(p)
+    P = np.minimum.accumulate(np.asarray(P)) if P else np.array([1.0])
+    tau = max(-1.0 + 2.0 * P.sum(), 1.0 / np.log10(M * n))
+    return float(M * n / tau)
+
+
+def convergence_diagnostics(chains) -> dict:
+    """Rank-normalised split-Rhat (max of bulk and folded) and bulk / tail ESS for a scalar.
+
+    ``chains`` is an (M, n) array of post-burn-in draws (M >= 2 for Rhat).
+    Thresholds of App. app:comp-diag: Rhat < 1.01, bulk and tail ESS >= 400.
+    """
+    x = np.atleast_2d(np.asarray(chains, dtype=float))
+    s = _split_chains(x)
+    z = _rank_normalise(s)
+    rb = _rhat_basic(z)
+    fold = np.abs(s - np.median(s))
+    rf = _rhat_basic(_rank_normalise(fold))
+    ess_bulk = _ess_multi(z)
+    q05, q95 = np.quantile(x, [0.05, 0.95])
+    ess_tail = min(_ess_multi((s <= q05).astype(float)), _ess_multi((s <= q95).astype(float)))
+    return dict(rhat=float(np.nanmax([rb, rf])) if np.isfinite([rb, rf]).any() else float("nan"),
+                rhat_bulk=rb, rhat_fold=rf, ess_bulk=float(ess_bulk), ess_tail=float(ess_tail),
+                n_chains=int(x.shape[0]), n_draws_per_chain=int(x.shape[1]))

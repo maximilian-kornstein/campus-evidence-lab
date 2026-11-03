@@ -1,0 +1,116 @@
+% =====================================================================
+%  Figure: stylised surge decomposition after a salient external event (LEAD).
+%  SCHEMATIC, NOT DATA. Curves are exact expected intensities of a univariate
+%  exponential-kernel Hawkes process with an exponential shock response,
+%  evaluated in TikZ for illustrative parameters:
+%    mu = 1, n = 0.6, kernel rate beta = 0.5 (so Lambda-bar = mu/(1-n) = 2.5),
+%    beta_k S_e = 10 expected direct incidents, response rate gamma = 0.8.
+%  direct     d(t) = beta_k S_e gamma exp(-gamma t)            = 8 exp(-0.8 t)
+%  contagion  c(t) = (R * d)(t), R(t) = n beta exp(-beta(1-n)t)
+%                  = 4 [exp(-0.2 t) - exp(-0.8 t)]
+%  Window H = 14 (the plan's primary horizon): B = 35.0, D = 10.0, C = 13.8
+%  (C_inf = 15; C/(D+C) = 0.58 <= n), checked in Python against prop:irf(d).
+%  Requires the house colours defined in preamble.tex.
+% =====================================================================
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=0.335cm,y=0.37cm,
+    lab/.style={font=\scriptsize,inner sep=1pt},
+    axis/.style={LabNavy,line width=0.5pt},
+    tick/.style={font=\scriptsize,text=LabGrey,inner sep=1pt},
+  ]
+  % ---------------- parameters (illustrative) ----------------
+  \def\Lb{2.5}                         % stationary background level
+  \def\tmin{-6}\def\tmax{30}\def\H{14}
+  % expected intensities (t >= 0)
+  \def\dfun(#1){8*exp(-0.8*(#1))}
+  \def\cfun(#1){4*(exp(-0.2*(#1))-exp(-0.8*(#1)))}
+
+  % ---------------- stacked areas ----------------
+  \fill[LabNavyLight!45] (\tmin,0) rectangle (\tmax,\Lb);
+  \fill[LabAccent!55]
+    plot[domain=0:\tmax,samples=150] (\x,{\Lb+\dfun(\x)})
+    -- (\tmax,\Lb) -- (0,\Lb) -- cycle;
+  \fill[LabNavyMid!80]
+    plot[domain=0:\tmax,samples=150] (\x,{\Lb+\dfun(\x)+\cfun(\x)})
+    -- plot[domain=\tmax:0,samples=150] (\x,{\Lb+\dfun(\x)})
+    -- cycle;
+  % outlines
+  \draw[LabNavy,line width=0.8pt,line join=round]
+    (\tmin,\Lb) -- (0,\Lb) -- (0,{\Lb+8})
+    plot[domain=0:\tmax,samples=150] (\x,{\Lb+\dfun(\x)+\cfun(\x)});
+  \draw[white,line width=0.35pt]
+    plot[domain=0:\tmax,samples=150] (\x,{\Lb+\dfun(\x)});
+
+  % ---------------- axes ----------------
+  \draw[axis,-{Stealth[length=4pt]}] (\tmin,0) -- (\tmax+0.9,0);
+  \draw[axis] (\tmin,0) -- (\tmin,11.3);
+  \foreach \t in {0,7,14,21,28}{
+    \draw[axis] (\t,0) -- (\t,-0.25);
+    \node[tick,anchor=north] at (\t,-0.3) {$\t$};}
+  \node[tick,anchor=north] at (13,-1.3) {days since the event};
+  \node[tick,anchor=south,rotate=90] at (\tmin-1.9,5.6) {expected incidents per day};
+  \draw[axis] (\tmin,\Lb) -- (\tmin-0.3,\Lb);
+  \node[tick,anchor=east] at (\tmin-0.35,\Lb) {$\bar\Lambda_k$};
+
+  % ---------------- the salient external event ----------------
+  \draw[LabAccent,line width=0.7pt,dash pattern=on 2.5pt off 1.5pt] (0,0) -- (0,11.6);
+  \node[lab,text=LabAccent,anchor=south] at (0,11.6) {salient external event $\tau_e$};
+
+  % ---------------- the attribution window ----------------
+  \draw[LabNavy,line width=0.5pt] (0,-2.75) -- (0,-3.15) (\H,-2.75) -- (\H,-3.15);
+  \draw[LabNavy,line width=0.5pt,{Stealth[length=3pt]}-{Stealth[length=3pt]}] (0,-2.95) -- (\H,-2.95);
+  \node[lab,text=LabNavy,fill=white,inner xsep=3pt] at ({\H/2},-2.95) {window $(\tau_e,\tau_e+H]$};
+
+  % ---------------- direct labels ----------------
+  \node[lab,text=LabNavy,anchor=west] at (-5.6,1.25) {background $B_k$};
+  \node[lab,text=LabNavy,anchor=west,align=left] (dl) at (4.2,9.6)
+    {direct response $D_k$\\[-1pt]\textcolor{LabGrey}{shock-triggered immigrants}};
+  \draw[LabAccent,line width=0.4pt] (dl.west) -- (1.0,7.4);
+  \fill[LabAccent] (1.0,7.4) circle (1pt);
+  \node[lab,text=LabNavy,anchor=west,align=left] (cl) at (10.0,6.3)
+    {contagion $C_k$\\[-1pt]\textcolor{LabGrey}{their offspring, all generations}};
+  \draw[LabNavyMid,line width=0.4pt] (cl.west) -- (6.0,3.5);
+  \fill[white] (6.0,3.5) circle (1pt);
+  \node[lab,text=LabGrey,anchor=west,align=left,font=\scriptsize\itshape] at (19.3,3.8)
+    {the cascade decays at rate $\beta(1-n)$,\\[-1pt]more slowly than\\[-1pt]the direct response};
+
+  % ---------------- integrated decomposition over the window ----------------
+  \begin{scope}[shift={(32.6,0)}]
+    \def\u{0.088}   % bar units per expected incident (B = 35.0, D = 10.0, C = 13.8)
+    \fill[LabNavyLight!45] (0,0) rectangle (2.3,{35*\u});
+    \fill[LabAccent!55]    (0,{35*\u}) rectangle (2.3,{45*\u});
+    \fill[LabNavyMid!80]   (0,{45*\u}) rectangle (2.3,{58.8*\u});
+    \draw[LabNavy,line width=0.5pt] (0,0) rectangle (2.3,{58.8*\u});
+    \node[lab,text=LabNavy] at (1.15,{17.5*\u}) {$B_k$};
+    \node[lab,text=LabNavy] at (1.15,{40*\u}) {$D_k$};
+    \node[lab,text=white]   at (1.15,{51.9*\u}) {$C_k$};
+    \draw[LabNavy,line width=0.5pt,decorate,decoration={brace,amplitude=3pt}]
+      (2.65,{58.8*\u}) -- (2.65,{35*\u});
+    \node[lab,text=LabNavy,anchor=west,align=left] at (3.0,{46.9*\u})
+      {attributable\\[-1pt]to the event};
+    \node[lab,text=LabNavy,anchor=south,align=center] at (1.15,{58.8*\u+0.25})
+      {$\E\,N_k(\tau_e,\tau_e+H]$};
+  \end{scope}
+\end{tikzpicture}
+\caption{\textbf{Surge attribution (schematic, not data).} Expected
+incidents per day in stream $k$ before and after a salient external event at
+$\tau_e$, split by the root of each incident's cluster
+(\cref{fig:branching}): the \emph{background} (background immigrants and all
+their descendants, at the stationary level $\bar\Lambda_k$), the
+\emph{direct} response (immigrants triggered by the event) and
+\emph{contagion} (all later generations descending from those immigrants).
+Summing each layer over the window $(\tau_e,\tau_e+H]$ gives
+$\E\,N_k(\tau_e,\tau_e+H]=B_k+D_k+C_k$ (bar, right), which
+\cref{thm:attribution} computes in closed form through the resolvent and the
+multiplier $\Mmat$. The direct response decays at the rate $\eta$ of the
+response kernel, but the cascade it starts decays at the slower cluster rate
+$\beta(1-n)$ (\cref{prop:irf}), so a surge can outlast its trigger and be
+mistaken for a shift in the background. In a univariate model the contagion
+share $C_k/(D_k+C_k)$ rises with $H$ towards the branching ratio $n$.
+Curves are exact expected intensities for illustrative parameters: $\mu=1$,
+$n=0.6$, kernel rate $\beta=0.5$ per day, $\beta_kS_e=10$ expected direct
+incidents, $\psi_k(t)=\eta e^{-\eta t}$ with $\eta=0.8$ per day, and the
+plan's primary horizon $H=14$ days (\cref{sec:plan-estimands}).}
+\label{fig:attribution}
+\end{figure}

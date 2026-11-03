@@ -1,0 +1,514 @@
+\section{Surge attribution: background, shock and contagion}\label{sec:attribution}
+
+A salient external event is often followed by a rise in recorded incidents. Three
+questions then arise. How many incidents in the following days would have occurred
+without the event? How many respond directly to it? How many were triggered by other
+incidents in the cascade that the event set off? Under model \eqref{eq:th-intensity}
+these questions have exact answers in terms of the parameters, because the cluster
+representation (\cref{sec:th-cluster}) assigns every incident to exactly one
+immigrant ancestor.
+
+This section derives those answers.
+\begin{itemize}
+  \item \Cref{thm:attribution} splits the expected count in a post-event window into
+  background, direct and contagion components, using the resolvent $\Rker$.
+  \item \Cref{prop:irf} gives closed forms for exponential kernels, including the
+  totals over a finite horizon.
+  \item \Cref{prop:at-channel} splits the contagion component by channel, in
+  particular the part that passes from online to offline streams.
+\end{itemize}
+All of these quantities are functionals of the model parameters. They describe what the
+fitted model implies, and they inherit the identification limits of
+\cref{sec:identification}. A component labelled ``contagion'' is contagion only if the
+model is correct, including its background and its list of events
+(\cref{rem:at-causal}).
+
+The ingredients are classical. The resolvent and the first-moment formula go back to
+\citet{hawkes1971} (see also \citealp{bacry2015,laub2021}). The split by immigrant
+ancestor is the cluster representation of \citet{hawkes1974}. Resolvents of Volterra
+equations are treated in \citet{gripenberg1990}. Three results are, to our knowledge,
+not previously stated in this form: the finite-horizon bound in
+\cref{thm:attribution}(c); the hypoexponential closed forms in \cref{prop:irf}(d); and
+the channel decomposition, with its path-sum and non-additivity properties.
+\Cref{app:attrproofs} gives the proofs.
+
+\subsection{Set-up}\label{sec:at-setup}
+
+Throughout this section \cref{ass:th-model} holds and $\spr(\Amat)<1$. The process
+starts from the empty history at time $0$, as in \eqref{eq:th-intensity}. Fix an
+event $e$ with time $\tau_e\ge0$ and size $S_e$, a horizon $H\in(0,\infty]$ and the
+post-event window $W_e=(\tau_e,\tau_e+H]$. Inequalities between vectors or matrices
+hold entrywise. We collect the loadings into the \emph{direct-response vector}
+\[
+\bm d_e=S_e\,(\beta_1,\dots,\beta_M)^{\top}.
+\]
+Its $k$th entry is the expected number of stream-$k$ incidents that respond directly to
+event $e$. The immigrant intensities of \cref{sec:th-cluster} split by source into
+\[
+\bm\mu(t),\qquad
+\bm\nu_e(t)=S_e\bigl(\beta_k\psi_k(t-\tau_e)\bigr)_{k\in[M]},\qquad
+\bm\nu_{-e}(t)=\sum_{e'\neq e}\bm\nu_{e'}(t).
+\]
+For a matrix function $\bm F$ and a vector function $\bm f$ on $[0,\infty)$, let
+$(\bm F*\bm f)(t)=\int_0^t\bm F(t-s)\bm f(s)\,\dd s$. Matrix convolution is defined in
+the same way, with $\Phik^{*1}=\Phik$ and $\Phik^{*(m+1)}=\Phik*\Phik^{*m}$. Write
+$\bar\Rker(u)=\int_0^u\Rker$. For $\tau\ge0$, the \emph{cascade operator} maps an
+immigrant intensity to the mean intensity it generates:
+\begin{equation}\label{eq:at-cascade}
+  (\mathcal K_\tau\bm f)(t)=\bm f(t)+\int_\tau^t\Rker(t-s)\,\bm f(s)\,\dd s,
+  \qquad t>\tau,\qquad \mathcal K:=\mathcal K_0 .
+\end{equation}
+
+\begin{lemma}[Resolvent and mean intensity]\label{lem:at-mean}
+Let $\Phik\ge0$ be integrable on $[0,\infty)$, with $\int_0^\infty\Phik=\Amat$ and
+$\spr(\Amat)<1$.
+\begin{enumerate}[(a)]
+  \item The series $\Rker=\sum_{m\ge1}\Phik^{*m}$ converges in $L^1[0,\infty)$, and
+  $\int_0^\infty\Rker=\Mmat-\Imat$. The resolvent $\Rker$ is the unique locally
+  integrable solution of $\Rker=\Phik+\Phik*\Rker$, and it also satisfies
+  $\Rker=\Phik+\Rker*\Phik$.
+  \item Let $N$ have intensity
+  $\bm\lambda(t)=\bm\nu(t)+\int_0^{t-}\Phik(t-s)\,\dN(s)$ for a locally integrable
+  $\bm\nu\ge0$. In the cluster representation, the incidents of generation $m$ have
+  mean intensity $\Phik^{*m}*\bm\nu$, with $\Phik^{*0}*\bm\nu:=\bm\nu$. Hence
+  $\E\,\dN(t)=(\mathcal K\bm\nu)(t)\,\dd t$, and $\mathcal K\bm\nu$ is the unique
+  locally integrable solution of the renewal equation $\bm m=\bm\nu+\Phik*\bm m$.
+\end{enumerate}
+\end{lemma}
+
+\subsection{The decomposition}\label{sec:at-decomp}
+
+\begin{theorem}[Surge attribution]\label{thm:attribution}
+Under the standing assumptions of \cref{sec:at-setup}, let
+$\Psi_k(H)=\int_0^H\psi_k$.
+\begin{enumerate}[(a)]
+  \item \emph{Decomposition.} For every stream $k$,
+  \begin{equation}\label{eq:at-decomp}
+    \E\,N_k(W_e)=B_k+D_k+C_k ,
+  \end{equation}
+  where
+  \begin{align}
+    D_k&=\beta_kS_e\,\Psi_k(H),\label{eq:at-D}\\
+    \bm C&=\int_{W_e}(\Rker*\bm\nu_e)(t)\,\dd t
+      =S_e\int_0^H\bar\Rker(H-v)\,\bigl(\beta_k\psi_k(v)\bigr)_{k\in[M]}\,\dd v,\label{eq:at-C}\\
+    \bm B&=\int_{W_e}\mathcal K(\bm\mu+\bm\nu_{-e})(t)\,\dd t=\bm B^{\mu}+\bm O,
+    \qquad \bm B^{\mu}=\int_{W_e}\mathcal K\bm\mu,\quad \bm O=\int_{W_e}\mathcal K\bm\nu_{-e}.\label{eq:at-B}
+  \end{align}
+  In the cluster representation, $D_k$, $C_k$, $B^{\mu}_k$ and $O_k$ are the
+  expected numbers of stream-$k$ incidents in $W_e$ of four kinds: immigrants of event
+  $e$; descendants, of any generation, of those immigrants; members of clusters rooted
+  in background immigrants; and members of clusters rooted in other events. The
+  baseline $B_k$ is the expected count in $W_e$ under the same model with $S_e=0$, so
+  $D_k+C_k$ is the expected excess attributable to event $e$.
+  \item \emph{Totals.} As $H\to\infty$, $\bm D\uparrow\bm d_e$,
+  $\bm D+\bm C\uparrow\Mmat\bm d_e$ and $\bm C\uparrow(\Mmat-\Imat)\bm d_e=\Amat\Mmat\bm d_e$.
+  In the univariate case, $\Amat=n$ and $d_e>0$. The contagion share of the incidents
+  attributable to the event then equals the branching ratio:
+  \begin{equation}\label{eq:at-share-n}
+    \frac{C(\infty)}{D(\infty)+C(\infty)}=n .
+  \end{equation}
+  \item \emph{Finite horizons.} For every $H$, $\bm C(H)\le(\Mmat-\Imat)\,\bm D(H)$.
+  In the univariate case, $C(H)/\{D(H)+C(H)\}\le n$ for every $H$ with $D(H)>0$, and
+  the ratio tends to $n$ as $H\to\infty$.
+  \item \emph{Conditioning on the history before the event.} Let
+  $\bm h_{\tau_e}(t)=\int_{[0,\tau_e]}\Phik(t-s)\,\dN(s)$, $t>\tau_e$, be the
+  excitation carried over from incidents up to $\tau_e$. Then
+  \begin{equation}\label{eq:at-cond}
+    \E\bigl[N_k(W_e)\mid\Hist_{\tau_e}\bigr]=B^{\mid e}_k+D_k+C_k,\qquad
+    \bm B^{\mid e}=\int_{W_e}\mathcal K_{\tau_e}\bigl(\bm\mu+\bm\nu_{-e}+\bm h_{\tau_e}\bigr)(t)\,\dd t ,
+  \end{equation}
+  with $D_k$ and $C_k$ as in (a). Conditioning on the past changes only the baseline.
+\end{enumerate}
+\end{theorem}
+
+Part (b) gives the branching ratio a direct reading. In a univariate model, the
+fraction of event-attributable incidents that are contagion is $n$, whatever the
+excitation kernel, the response kernel $\psi$ and the size of the event. The fraction is
+a property of the cascade, not of the event. In a multivariate model the stream-$k$
+share is $1-d_{e,k}/(\Mmat\bm d_e)_k$. Through cross-excitation, this share depends on
+how the event loads on the other streams, and it can exceed $\alpha_{kk}$
+(\cref{sec:at-example}).
+
+Part (c) says that contagion takes time. Over a short window, the share is below its
+limit, so shares reported at short horizons understate the eventual contagion. This is
+why the analysis plan reports several horizons (\cref{sec:plan-estimands}).
+
+Part (d) assigns the excitation left by incidents before the event to the baseline, not
+to the event. A surge that begins during an already elevated period is therefore not
+credited to the event. The unconditional version (a) describes the typical event under
+the model. The conditional version (d) is the one to use when decomposing the window
+after a specific event, given the observed history. Decision rule D3 of the analysis
+plan is stated in terms of the share $C_k/(D_k+C_k)$ (\cref{sec:plan-decisions}).
+
+\begin{remark}[Time-varying background]\label{rem:at-background}
+The background-rooted component $\bm B^\mu=\int_{W_e}\bm\mu+\int_{W_e}\Rker*\bm\mu$
+counts background immigrants plus the cascades that they trigger. If $\bm\mu$ is
+constant and the process has run for long enough, or is started in the infinite past
+(\cref{prop:stationary}), then $\mathcal K\bm\mu\to\Mmat\bm\mu$ and
+$\bm B^\mu=H\,\Mmat\bm\mu$.
+
+A time-varying background is passed through a linear filter with impulse response
+$\delta_0\Imat+\Rker$, where $\delta_0$ is the Dirac delta. The filter amplifies slow variation by up to $\Mmat$ and smooths
+it over the cascade time scale. Suppose each $\mu_j$ is Lipschitz with constant $L$.
+Then
+\[
+\bigl|(\Rker*\bm\mu)(t)-(\Mmat-\Imat)\bm\mu(t)\bigr|
+\le L\int_0^t u\,\Rker(u)\,\dd u\;\mathbf 1+\Bigl(\int_t^\infty\Rker\Bigr)\bm\mu(t).
+\]
+For the univariate exponential kernel, $\int_0^\infty u\Rker(u)\,\dd u=n/\{\beta(1-n)^2\}$.
+When the background varies slowly relative to $1/\{\beta(1-n)\}$, the
+background-driven rate therefore tracks $\Mmat\bm\mu(t)$.
+
+A calendar effect that coincides with $\tau_e$ belongs in $\bm\mu$
+(\cref{ass:th-model}(i)). If it is omitted, its incidents are attributed to $\bm D$ and
+$\bm C$. This is a time-local analogue of the spurious contagion of
+\cref{thm:spurious}.
+\end{remark}
+
+\begin{remark}[Attribution of the realised incidents]\label{rem:at-expost}
+\Cref{thm:attribution} decomposes an expectation. For a realised surge, with parameters
+fixed, the latent structure used by EM \citep{veen2008,marsan2008,mohler2011} gives a
+decomposition after the fact. Given the realised event times, each incident $i$ (in
+stream $k_i$ at time $t_i$) independently selects one of the following:
+\begin{itemize}
+  \item an earlier incident $j$ as its parent, with probability
+  $p_{ij}=\varphi_{k_ik_j}(t_i-t_j)/\lambda_{k_i}(t_i)$;
+  \item event $e$, with probability $p_{ie}=\beta_{k_i}S_e\psi_{k_i}(t_i-\tau_e)/\lambda_{k_i}(t_i)$;
+  \item the background or another event, with the remaining probability.
+\end{itemize}
+The probabilities $\rho_{ie}$ that the root of $i$ is an immigrant of event $e$ satisfy
+$\rho_{ie}=p_{ie}+\sum_{j:t_j<t_i}p_{ij}\rho_{je}$. They are computed in one forward
+pass. The realised decomposition over $W_e$ has three parts: the direct part
+$\sum_{i}p_{ie}$; the contagion part $\sum_{i}(\rho_{ie}-p_{ie})$; and the baseline
+$\sum_{i}(1-\rho_{ie})$, each summed over the stream-$k$ incidents in $W_e$. These add up
+to the realised count $N_k(W_e)$. At the true parameters, their expectations are the
+components of \eqref{eq:at-decomp}.
+\end{remark}
+
+\subsection{Impulse responses for exponential kernels}\label{sec:at-irf}
+
+For the exponential kernels of \cref{sec:th-hawkes}, the resolvent, the mean intensity
+and the finite-horizon totals reduce to matrix exponentials.
+
+\begin{proposition}[Impulse responses]\label{prop:irf}
+\begin{enumerate}[(a)]
+  \item \emph{Univariate.} If $M=1$ and $\varphi(t)=n\beta e^{-\beta t}$ with $n<1$,
+  then
+  \begin{equation}\label{eq:at-irf-uni}
+    \Rker(t)=n\beta\,e^{-\beta(1-n)t},\qquad
+    \bar\Rker(t)=\frac{n}{1-n}\bigl(1-e^{-\beta(1-n)t}\bigr).
+  \end{equation}
+  \item \emph{Decay rates set by the receiving stream.} Suppose
+  $\varphi_{kj}(t)=\alpha_{kj}\beta_{k\bullet}e^{-\beta_{k\bullet}t}$, and let
+  $\bm\Omega=\operatorname{diag}(\beta_{1\bullet},\dots,\beta_{M\bullet})$. Then
+  \begin{equation}\label{eq:at-irf-row}
+    \Rker(t)=e^{-\bm\Omega(\Imat-\Amat)t}\,\bm\Omega\Amat,
+  \end{equation}
+  and $-\bm\Omega(\Imat-\Amat)$ is Hurwitz, that is, all its eigenvalues have negative
+  real part. The excitation part $\bm y=\Rker*\bm\nu$ of the mean intensity
+  $\mathcal K\bm\nu=\bm\nu+\bm y$ solves the linear system
+  $\bm y'=-\bm\Omega(\Imat-\Amat)\bm y+\bm\Omega\Amat\bm\nu$ with $\bm y(0)=\zero$.
+  With a common rate, $\bm\Omega=\beta\Imat$, this gives
+  $\Rker(t)=\beta\Amat e^{-\beta(\Imat-\Amat)t}$.
+  \item \emph{General exponential kernels.} Suppose
+  $\varphi_{kj}(t)=\alpha_{kj}\beta_{kj}e^{-\beta_{kj}t}$. Index $\mathbb R^{M^2}$ by
+  pairs $(k,j)$, and define $\bm P:\mathbb R^M\to\mathbb R^{M^2}$,
+  $\bm S:\mathbb R^{M^2}\to\mathbb R^M$ and $\bm Q:\mathbb R^{M^2}\to\mathbb R^{M^2}$ by
+  \[
+    (\bm P\bm v)_{kj}=\alpha_{kj}\beta_{kj}v_j,\qquad
+    (\bm S\bm z)_k=\sum_{j}z_{kj},\qquad
+    (\bm Q\bm z)_{kj}=-\beta_{kj}z_{kj}+\alpha_{kj}\beta_{kj}\sum_{l}z_{jl}.
+  \]
+  Then $\Rker(t)=\bm S\,e^{\bm Qt}\bm P$, and $\bm Q$ is Hurwitz. The coordinate
+  $z_{kj}$ of $\bm z(t)=\int_0^te^{\bm Q(t-s)}\bm P\bm\nu(s)\,\dd s$ is the mean
+  excitation of stream $k$ by stream-$j$ incidents.
+  \item \emph{Finite-horizon totals for exponential shock responses.} Let
+  $\psi_k(t)=\eta_ke^{-\eta_kt}$. For rates $\eta,\gamma>0$, let
+  $\chi_{\eta,\gamma}(H)=\Pr(X_\eta+X_\gamma\le H)$ be the hypoexponential distribution
+  function. Here $X_\eta$ and $X_\gamma$ are independent exponential variables with
+  rates $\eta$ and $\gamma$, and $\dot\chi_{\eta,\gamma}$ denotes the density. Explicitly,
+  \begin{equation}\label{eq:at-kappa}
+    \chi_{\eta,\gamma}(H)=
+    \begin{cases}
+      1-\dfrac{\gamma e^{-\eta H}-\eta e^{-\gamma H}}{\gamma-\eta}, & \eta\neq\gamma,\\[1.6ex]
+      1-(1+\gamma H)\,e^{-\gamma H}, & \eta=\gamma\quad\text{(resonance)}.
+    \end{cases}
+  \end{equation}
+  In the univariate case, let $d=\beta_1S_e$ and $\gamma=\beta(1-n)$. Then
+  \begin{equation}\label{eq:at-DC-uni}
+    D(H)=d\,\bigl(1-e^{-\eta H}\bigr),\qquad
+    C(H)=\frac{n}{1-n}\,d\,\chi_{\eta,\gamma}(H).
+  \end{equation}
+  The intensity attributable to the event at lag $t$ is
+  $d\,\{\eta e^{-\eta t}+\tfrac{n}{1-n}\dot\chi_{\eta,\gamma}(t)\}$. Its contagion
+  part peaks at $t^*=\log(\eta/\gamma)/(\eta-\gamma)$, which equals $1/\gamma$ at
+  resonance.
+
+  If all kernels share one decay rate $\beta$ and all responses share one rate $\eta$, then
+  \begin{equation}\label{eq:at-DC-common}
+    \bm D(H)=\bigl(1-e^{-\eta H}\bigr)\bm d_e,\qquad
+    \bm C(H)=(\Mmat-\Imat)\,\chi_{\eta,\bm G}(H)\,\bm d_e,\qquad
+    \bm G=\beta(\Imat-\Amat).
+  \end{equation}
+  Here
+  $\chi_{\eta,\bm G}(H)=\int_0^H\eta e^{-\eta v}\bigl(\Imat-e^{-\bm G(H-v)}\bigr)\,\dd v$
+  is the matrix function induced by the entire map $x\mapsto\chi_{\eta,x}(H)$.
+
+  In general, with pair-specific $\beta_{kj}$ and stream-specific $\eta_k$, consider
+  the state $\bm w=(\bm\nu_e,\bm z,\bm D,\bm C)$: the event's immigrant intensity, the
+  excitation state of (c), and the two running totals. Then
+  $(\bm D(H),\bm C(H))$ are the last two blocks of $\exp(H\bm Z)\,\bm w_0$, where
+  \begin{equation}\label{eq:at-augmented}
+    \bm Z=\begin{pmatrix}
+      -\operatorname{diag}(\bm\eta) & \zero & \zero & \zero\\
+      \bm P & \bm Q & \zero & \zero\\
+      \Imat & \zero & \zero & \zero\\
+      \zero & \bm S & \zero & \zero
+    \end{pmatrix},
+    \qquad
+    \bm w_0=\begin{pmatrix}\operatorname{diag}(\bm\eta)\,\bm d_e\\ \zero\\ \zero\\ \zero\end{pmatrix}.
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+Three features of \cref{prop:irf} matter for interpretation.
+\begin{enumerate}[(i)]
+  \item \emph{Time scales.} The cascade decays at rate $\gamma=\beta(1-n)$, more
+  slowly than a single kernel, which decays at rate $\beta$. This matches the
+  correlation time in \cref{sec:th-second}. As $n\uparrow1$, $1/\gamma$ diverges and
+  $C(H)$ approaches its total only slowly. Near-critical systems produce long tails
+  after an event, so the horizon $H$ should exceed a few multiples of
+  $\max\{1/\eta,1/\gamma\}$ before shares are compared across events.
+  \item \emph{Two delays in sequence.} Part (d) shows that, in the univariate model,
+  the contagion count up to $H$ is a fixed multiple of the distribution function of a
+  sum of two delays. The first is the delay from the event to a direct response, with
+  rate $\eta$. The second is the delay from that response to a randomly chosen
+  descendant: since $\Rker/\!\int\Rker$ is the $\mathrm{Exp}(\gamma)$ density, this
+  delay has rate $\gamma$.
+  \item \emph{Resonance.} When $\eta=\gamma$, the shock response and the cascade share
+  a time scale. The singularity in \eqref{eq:at-kappa} is removable; near $\eta=\gamma$
+  the first branch should be evaluated by a series. The matrix exponential
+  \eqref{eq:at-augmented} needs no special case \citep{vanloan1978}.
+\end{enumerate}
+The background part $\bm B^\mu$ is computed in the same way, with forcing $\bm\mu$ in
+place of $\bm\nu_e$. The simulation code evaluates \eqref{eq:at-augmented} directly.
+
+\subsection{Online-to-offline spillover: a channel decomposition}\label{sec:at-channel}
+
+Partition the streams into offline streams $\mathcal S_{\mathrm{off}}$ and online
+streams $\mathcal S_{\mathrm{on}}$. Let $\bm E$ keep the online-to-offline entries of
+$\Amat$, $E_{kj}=\alpha_{kj}$ for $k\in\mathcal S_{\mathrm{off}}$ and
+$j\in\mathcal S_{\mathrm{on}}$, with all other entries zero. Set
+$\Amat^\circ=\Amat-\bm E$ and $\Mmat^\circ=(\Imat-\Amat^\circ)^{-1}$. Write
+$\bm C(H;\Amat)$ for the contagion component of \cref{thm:attribution} computed with
+branching matrix $\Amat$, holding fixed every other parameter: the kernel shapes
+$g_{kj}$, the background, the loadings and the response kernels.
+
+\begin{definition}[Online channel]\label{def:at-channel}
+The \emph{online-channel contagion} of event $e$ over horizon $H$ is
+\[
+\bm C^{\mathrm{on}}(H)=\bm C(H;\Amat)-\bm C(H;\Amat^\circ).
+\]
+For an offline stream $k$ with $C_k(H)>0$, its \emph{online-channel share} is
+$\sigma_k(H)=C^{\mathrm{on}}_k(H)/C_k(H)$.
+\end{definition}
+
+The direct component does not depend on $\Amat$. Hence $\bm C^{\mathrm{on}}$ is also the
+reduction in all event-attributable incidents when the online-to-offline entries are
+set to zero.
+
+\begin{proposition}[Path sums and bounds]\label{prop:at-channel}
+Under the standing assumptions:
+\begin{enumerate}[(a)]
+  \item \emph{Ancestral reading.} $C^{\mathrm{on}}_k(H)$ is the expected number of
+  stream-$k$ incidents in $W_e$ that descend from an immigrant of event $e$ along an
+  ancestral line that contains at least one online-to-offline transmission.
+  \item \emph{Path sum.} $\spr(\Mmat^\circ\bm E)<1$ and
+  \begin{equation}\label{eq:at-pathsum}
+    \Mmat=\sum_{r\ge0}(\Mmat^\circ\bm E)^r\,\Mmat^\circ .
+  \end{equation}
+  Entry $(k,j)$ of the $r$th term is the total weight $\prod\alpha$ of the walks from
+  $j$ to $k$ in the excitation graph with exactly $r$ online-to-offline steps.
+  Consequently
+  \begin{equation}\label{eq:at-chan-inf}
+    \bm C^{\mathrm{on}}(\infty)=(\Mmat-\Mmat^\circ)\,\bm d_e
+    =\Mmat\bm E\Mmat^\circ\bm d_e=\Mmat^\circ\bm E\Mmat\bm d_e .
+  \end{equation}
+  \item \emph{Bounds.} For every $H\in(0,\infty]$, $\zero\le\bm C^{\mathrm{on}}(H)\le\bm C(H)$,
+  so $\sigma_k(H)\in[0,1]$. Moreover:
+  \begin{itemize}
+    \item $C^{\mathrm{on}}_k(\infty)>0$ if and only if some walk of positive weight
+    runs from a stream $j$ with $d_{e,j}>0$ to $k$ and contains an online-to-offline
+    step.
+    \item $\bm C^{\mathrm{on}}(\infty)\ge\Mmat^\circ\bm E\Mmat^\circ\bm d_e$, which
+    counts the walks with a single crossing.
+    \item Equality holds when there is no offline-to-online excitation, that is,
+    $\alpha_{kj}=0$ for all $k\in\mathcal S_{\mathrm{on}}$ and
+    $j\in\mathcal S_{\mathrm{off}}$. Then, on the offline streams,
+    \begin{equation}\label{eq:at-chan-nofb}
+      \bm C^{\mathrm{on}}_{\mathrm{off}}(\infty)
+      =(\Imat-\Amat_{\mathrm{off},\mathrm{off}})^{-1}\Amat_{\mathrm{off},\mathrm{on}}
+      (\Imat-\Amat_{\mathrm{on},\mathrm{on}})^{-1}\bm d_{e,\mathrm{on}},
+    \end{equation}
+    which vanishes when the event has no direct online response.
+  \end{itemize}
+  \item \emph{Non-additivity.} Let $\mathcal E_1$ and $\mathcal E_2$ be disjoint sets of
+  entries of $\Amat$, for instance the channels from two platforms. Let
+  $\bm C^{\mathcal E}$ be defined as in \cref{def:at-channel}, with the entries in
+  $\mathcal E$ set to zero. Then, for every $H$,
+  \[
+    \max\bigl(\bm C^{\mathcal E_1},\bm C^{\mathcal E_2}\bigr)\le\bm C^{\mathcal E_1\cup\mathcal E_2}
+    \le\bm C^{\mathcal E_1}+\bm C^{\mathcal E_2}.
+  \]
+  The gap $\bm C^{\mathcal E_1}+\bm C^{\mathcal E_2}-\bm C^{\mathcal E_1\cup\mathcal E_2}$
+  is the expected number of descendants whose ancestral line uses both channels.
+\end{enumerate}
+\end{proposition}
+
+Part (d) means that channel shares are not additive. The shares of two platforms can sum
+to more than the share of both together. Each share answers its own counterfactual
+question. Shares should not be presented as slices of one pie.
+
+\begin{remark}[What the channel decomposition does and does not show]\label{rem:at-causal}
+$\bm C^{\mathrm{on}}$ is a \emph{model-based counterfactual}. It is the expected
+reduction in event-attributable offline incidents if online-to-offline excitation were
+switched off and nothing else changed. It answers a question about the fitted model. It
+becomes a causal statement, for instance about the effect of moderation that removes
+the online stream's influence, only under further assumptions.
+\begin{enumerate}[(i)]
+  \item \emph{Excitation is influence.} The entries of $\Amat_{\mathrm{off},\mathrm{on}}$
+  must reflect influence rather than common drivers that are missing from the event
+  list or the background. By \cref{prop:granger}, $\alpha_{\mathrm{off},\mathrm{on}}>0$
+  is equivalent to Granger causality, which is predictive, not causal. Second-order
+  statistics cannot separate the two (\cref{thm:equiv}), and an omitted driver can
+  create apparent excitation (\cref{thm:spurious}, \cref{rem:th-granger-caveats}(i)).
+  \item \emph{Modularity.} An intervention on the channel must remove exactly the
+  entries in $\bm E$ and leave $\Amat^\circ$, the kernels, the background and the
+  loadings unchanged. Interventions on platforms may displace activity rather than
+  remove it, which violates this assumption.
+  \item \emph{Measurement.} The online stream is the output of a classifier, with
+  errors. Offline streams are thinned. The decomposition should be computed on the
+  true scale (\cref{rem:at-thinning}).
+  \item \emph{Timestamps.} If incidents are dated by report time, online reactions can
+  precede the record of the incident and appear as online-to-offline excitation
+  (\cref{rem:th-granger-caveats}(iv)).
+\end{enumerate}
+In line with the analysis plan (\cref{sec:plan-decisions}), $\bm C^{\mathrm{on}}$ and $\sigma_k$
+are reported as model-based quantities and are not described as causal effects.
+\end{remark}
+
+\subsection{Uncertainty}\label{sec:at-uncertainty}
+
+Every component above is a smooth function $g(\theta)$ of the parameter vector
+$\theta$: the entries of $\Amat$, the kernel rates, the loadings, the response rates and
+the background coefficients, on the region $\spr(\Amat)<1$. Uncertainty in
+$\hat\theta$ can be propagated in two ways.
+
+\paragraph{Delta method} If $\hat\theta$ is asymptotically normal with estimated
+covariance $\hat{\bm V}$ (\cref{sec:estimation}), then
+$\Var g(\hat\theta)\approx\nabla g^{\top}\hat{\bm V}\nabla g$, evaluated at
+$\hat\theta$. Since $\bm B$, $\bm D$ and $\bm C$ share parameters, their joint
+covariance should be computed from the joint gradient. The infinite-horizon totals have
+closed-form gradients:
+\begin{equation}\label{eq:at-grad}
+  \frac{\partial\Mmat}{\partial\alpha_{kj}}=\Mmat\bm e_k\bm e_j^{\top}\Mmat,\qquad
+  \frac{\partial(\Mmat\bm d_e)}{\partial\alpha_{kj}}=(\Mmat\bm d_e)_j\,\Mmat\bm e_k,\qquad
+  \frac{\partial(\Mmat\bm d_e)}{\partial\beta_{j}}=S_e\,\Mmat\bm e_j .
+\end{equation}
+For the online channel, $\partial\bm C^{\mathrm{on}}(\infty)/\partial\alpha_{kj}$ is
+$(\Mmat\bm d_e)_j\Mmat\bm e_k$, minus $(\Mmat^\circ\bm d_e)_j\Mmat^\circ\bm e_k$ if
+$(k,j)$ is not an online-to-offline entry. Finite-horizon gradients are derivatives of
+the matrix exponential in \eqref{eq:at-augmented}. They can be computed by the block
+upper-triangular construction of \citet{vanloan1978} or by automatic differentiation.
+Shares should be handled on the logit scale. The delta method is unreliable in two
+regions: near the boundary $\alpha_{kj}=0$, where the estimator is not asymptotically
+normal (\cref{prop:lrt}); and near criticality, where $\Mmat$ has a pole at
+$\spr(\Amat)=1$.
+
+\paragraph{Posterior or bootstrap draws} Given draws $\theta^{(1)},\dots,\theta^{(R)}$,
+from the posterior or from a parametric bootstrap, compute
+$(\bm B,\bm D,\bm C,\bm C^{\mathrm{on}})^{(r)}$ exactly for each draw, and report
+quantiles. This propagates the dependence between components and respects the
+constraints $\sigma_k\in[0,1]$ and $C/(D+C)\le n$. Infinite-horizon totals are finite
+only for draws with $\spr(\Amat^{(r)})<1$, so the prior must be restricted to that
+region. Otherwise only finite-horizon quantities should be reported. If event sizes
+$S_e$ are measured with error, their uncertainty enters through the draws as well. The
+analysis plan uses this route.
+
+\begin{remark}[Under-recording]\label{rem:at-thinning}
+Suppose each stream-$k$ incident is recorded independently with probability $p_k$. Then
+the expected number of recorded incidents in $W_e$ is $p_k(B_k+D_k+C_k)$. Recording
+scales all three components of a stream by the same factor. The within-stream shares
+$C_k/(D_k+C_k)$ and $\sigma_k$ are therefore invariant to $p_k$, provided they are
+computed from true-scale parameters.
+
+Fitting the recorded streams as if they were complete does not have this invariance. By
+\cref{thm:thinning}, moment-based estimators of the branching ratio from a recorded
+univariate stream converge to $h_p(n)<n$. The contagion share implied by such a fit,
+which equals the fitted branching ratio by \eqref{eq:at-share-n}, understates
+contagion. The dark-figure correction (\cref{cor:th-darkfig}) should therefore precede
+attribution.
+\end{remark}
+
+\subsection{An illustrative example}\label{sec:at-example}
+
+The following parameter values are invented for illustration. They are not estimates,
+and the example describes no real data. Take two streams, online volume (stream 1) and
+offline incidents (stream 2), with time measured in days, and
+\[
+\Amat=\begin{pmatrix}0.5&0\\0.1&0.3\end{pmatrix},\qquad
+\bm\Omega=\operatorname{diag}(2,\,0.5),\qquad
+\bm\mu=(2,\,0.5)^{\top},\qquad
+\bm d_e=(20,\,5)^{\top},\qquad \eta_1=\eta_2=1 .
+\]
+Thus each online item triggers on average $0.1$ offline incidents. Offline incidents
+trigger no online volume. Online excitation decays within about half a day, and
+offline excitation decays over about two days. The background is constant and
+stationary, so $\bm B=H\,\Mmat\bm\mu$ with $\Mmat\bm\mu=(4,\,1.29)^{\top}$ per day.
+\Cref{tab:at-illus} reports the decomposition, computed from
+\eqref{eq:at-irf-row}--\eqref{eq:at-augmented}.
+
+\begin{table}[!htbp]
+\centering
+\caption{Illustrative surge decomposition with invented parameters (not data). $B$,
+$D$ and $C$ are the expected background, direct and contagion counts over $H$ days
+after the event. $C^{\mathrm{on}}$ is the offline contagion that passes through the
+online stream, and $\sigma=C^{\mathrm{on}}/C$ is its share. At $H=\infty$, the
+background total is infinite and is omitted.}
+\label{tab:at-illus}
+\small
+\begin{tabular}{llrrrrrr}
+\toprule
+Stream & $H$ & $B_k$ & $D_k$ & $C_k$ & $\dfrac{C_k}{D_k+C_k}$ & $C^{\mathrm{on}}_k$ & $\sigma_k$\\
+\midrule
+Online  & 7        & 28.00 & 19.98 & 19.85 & 0.498 & ---  & ---   \\
+        & 14       & 56.00 & 20.00 & 20.00 & 0.500 & ---  & ---   \\
+        & $\infty$ & ---   & 20.00 & 20.00 & 0.500 & ---  & ---   \\
+\addlinespace
+Offline & 7        &  9.00 &  5.00 &  6.63 & 0.570 & 4.77 & 0.719 \\
+        & 14       & 18.00 &  5.00 &  7.75 & 0.608 & 5.63 & 0.727 \\
+        & $\infty$ & ---   &  5.00 &  7.86 & 0.611 & 5.71 & 0.727 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Four features of \cref{tab:at-illus} illustrate the results above.
+\begin{enumerate}[(i)]
+  \item The online stream receives no excitation from offline incidents, so it behaves
+  as a univariate process. Its contagion share is at most $n_{\mathrm{on}}=0.5$, and the
+  bound binds in the limit (\cref{thm:attribution}(b),(c)).
+  \item The offline share, $0.611$ in the limit, is about twice $\alpha_{\mathrm{off},\mathrm{off}}=0.3$.
+  Most offline contagion arrives through the online stream ($\sigma=0.727$).
+  \item There is no offline-to-online excitation, so
+  $C^{\mathrm{on}}_{\mathrm{off}}(\infty)=0.7^{-1}\times0.1\times0.5^{-1}\times20=5.71$
+  is exactly the single-crossing term \eqref{eq:at-chan-nofb}. An event with no direct
+  online response, $\bm d_e=(0,5)^{\top}$, would have no online channel at all. With
+  feedback $\alpha_{\mathrm{on},\mathrm{off}}=0.2$, such an event would have
+  $\sigma_{\mathrm{off}}(\infty)=0.168$ (computed from \eqref{eq:at-chan-inf}).
+  \item Over the first week, the expected offline count, $9.00+5.00+6.63=20.62$, is
+  $2.3$ times the baseline.
+\end{enumerate}
+Under the model, the reading is that most of this illustrative surge would be event-driven
+cascade, and most of that cascade would pass through the online stream. A model with
+an omitted common driver of both streams, and no online-to-offline excitation at all,
+could produce similar surges (\cref{rem:at-causal}).

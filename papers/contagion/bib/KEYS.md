@@ -1,6 +1,6 @@
 # refs.bib key index (BIB curator) -- Paper 2, Shock and Contagion
 
-Status: PARTLY VERIFIED (2026-11-03). Keys are stable; cite them freely. Do NOT redefine these
+Status: VERIFIED (fact-check pass, 2026-11-03; no entry is still marked VERIFY). Keys are stable; cite them freely. Do NOT redefine these
 keys in bib/<owner>.bib (bibtex "Repeated entry"). Put extra refs in your own bib file.
 43 entries. Every entry carries a non-printing field `verification`: `web` = authors/title/venue/
 year/volume/pages/DOI confirmed against publisher or indexing records via web search;
@@ -15,9 +15,9 @@ and the shared web-search budget ran out before every entry could be checked.
 - ogata1988 -- Ogata 1988 JASA 83(401), earthquake models (ETAS) and residual analysis [web]
 - daley2003 -- Daley & Vere-Jones 2003, Intro to the Theory of Point Processes Vol. I, 2nd ed., Springer [web]
 - bremaud1996 -- Bremaud & Massoulie 1996 Ann Probab 24(3), stability of nonlinear Hawkes processes [web]
-- bartlett1963 -- Bartlett 1963 JRSS-B 25, spectral analysis of point processes (Bartlett spectrum) [vol/pages web; VERIFY doi, issue]
-- cox1955 -- Cox 1955 JRSS-B 17, series of events (doubly stochastic Poisson / Cox process) [vol/pages web; VERIFY doi, issue]
-- moller2003 -- Moller 2003 Adv Appl Prob 35, shot noise Cox processes [vol/pages web; VERIFY doi, issue]
+- bartlett1963 -- Bartlett 1963 JRSS-B 25(2):264-281 (article; discussion 281-296 is a separate item), Bartlett spectrum [web]
+- cox1955 -- Cox 1955 JRSS-B 17(2):129-157 (article; discussion follows), series of events (Cox process) [web]
+- moller2003 -- Moller 2003 Adv Appl Prob 35, shot noise Cox processes [web]
 
 ## Estimation, branching structure, nonparametric, INAR
 - veen2008 -- Veen & Schoenberg 2008 JASA 103(482), EM for ETAS via latent branching structure [web]
@@ -27,21 +27,21 @@ and the shared web-search budget ran out before every entry could be checked.
 - eichler2017 -- Eichler, Dahlhaus, Dueck 2017 J Time Ser Anal 38(2), Granger-causal graphs for Hawkes [web]
 - kirchner2016 -- Kirchner 2016 SPA 126(8), Hawkes and INAR(infinity) processes [web]
 - kirchner2017 -- Kirchner 2017 Quant Finance 17(4), INAR-based (binned-count) Hawkes estimator [web]
-- bacry2015 -- Bacry, Mastromatteo, Muzy 2015 Market Microstructure and Liquidity, Hawkes in finance (review) [web; VERIFY vol/no/article no.]
+- bacry2015 -- Bacry, Mastromatteo, Muzy 2015 Market Microstructure and Liquidity, Hawkes in finance (review) [web]
 - laub2021 -- Laub, Lee, Taimre 2021, The Elements of Hawkes Processes, Springer (book) [web]
 - reinhart2018 -- Reinhart 2018 Stat Sci 33(3), review of self-exciting spatio-temporal point processes [web]
-- zhou2013 -- Zhou, Zha, Song 2013 AISTATS (PMLR 31), ADM4: sparse low-rank multivariate Hawkes [VERIFY]
-- zhou2013b -- Zhou, Zha, Song 2013 ICML (PMLR 28), learning triggering kernels (nonparametric, MMEL) [venue web; VERIFY pages]
-- linderman2014 -- Linderman & Adams 2014 ICML (PMLR 32), latent network structure in point processes (Bayesian) [VERIFY]
-- hansen2015 -- Hansen, Reynaud-Bouret, Rivoirard 2015 Bernoulli 21(1), Lasso for multivariate point processes [VERIFY]
+- zhou2013 -- Zhou, Zha, Song 2013 AISTATS (PMLR 31), ADM4: sparse low-rank multivariate Hawkes [web]
+- zhou2013b -- Zhou, Zha, Song 2013 ICML (PMLR 28), learning triggering kernels (nonparametric, MMEL) [web]
+- linderman2014 -- Linderman & Adams 2014 ICML (PMLR 32), latent network structure in point processes (Bayesian) [web]
+- hansen2015 -- Hansen, Reynaud-Bouret, Rivoirard 2015 Bernoulli 21(1), Lasso for multivariate point processes [web]
 
 ## Goodness of fit, testing, causality
 - brown2002 -- Brown, Barbieri, Ventura, Kass, Frank 2002 Neural Comput 14(2), time-rescaling theorem [web]
 - papangelou1972 -- Papangelou 1972 Trans AMS 165, random time change to a Poisson process [web]
-- self1987 -- Self & Liang 1987 JASA 82(398), boundary MLE/LRT, chi-bar-square [vol/pages web; VERIFY doi]
+- self1987 -- Self & Liang 1987 JASA 82(398), boundary MLE/LRT, chi-bar-square [web]
 - chernoff1954 -- Chernoff 1954 Ann Math Stat 25(3), LRT at a boundary (50:50 chi-square mixture) [web]
 - davies1987 -- Davies 1987 Biometrika 74(1), nuisance parameter only under the alternative [web]
-- granger1969 -- Granger 1969 Econometrica 37(3), Granger causality [VERIFY]
+- granger1969 -- Granger 1969 Econometrica 37(3), Granger causality [web]
 
 ## Forecast evaluation, nowcasting, sequential detection
 - gneiting2007 -- Gneiting & Raftery 2007 JASA 102(477), strictly proper scoring rules [web]
@@ -49,19 +49,19 @@ and the shared web-search budget ran out before every entry could be checked.
 - dawid1984 -- Dawid 1984 JRSS-A 147(2), prequential approach [web; doi from JSTOR stable id]
 - hohle2014 -- Hohle & an der Heiden 2014 Biometrics 70(4), Bayesian nowcasting under reporting delays [web]
 - mcgough2020 -- McGough, Johansson, Lipsitch, Menzies 2020 PLoS Comput Biol 16(4), NobBS nowcasting [web]
-- page1954 -- Page 1954 Biometrika 41, continuous inspection schemes (CUSUM) [VERIFY]
-- wald1947 -- Wald 1947, Sequential Analysis, Wiley (book; SPRT) [VERIFY]
+- page1954 -- Page 1954 Biometrika 41, continuous inspection schemes (CUSUM) [web]
+- wald1947 -- Wald 1947, Sequential Analysis, Wiley (book; SPRT) [web]
 
 ## Applications: conflict, social media
-- lewis2012 -- Lewis, Mohler, Brantingham, Bertozzi 2012 Security Journal 25(3), Hawkes for civilian deaths in Iraq [VERIFY]
-- rizoiu2017 -- Rizoiu, Lee, Mishra, Xie 2017, tutorial on Hawkes processes for social media (arXiv:1708.06401) [VERIFY]
-- zhao2015 -- Zhao, Erdogdu, He, Rajaraman, Leskovec 2015 KDD, SEISMIC tweet-popularity model [VERIFY]
+- lewis2012 -- Lewis, Mohler, Brantingham, Bertozzi 2012 Security Journal 25(3), Hawkes for civilian deaths in Iraq [web]
+- rizoiu2017 -- Rizoiu, Lee, Mishra, Xie 2017, tutorial on Hawkes processes for social media (arXiv:1708.06401) [web]
+- zhao2015 -- Zhao, Erdogdu, He, Rajaraman, Leskovec 2015 KDD, SEISMIC tweet-popularity model [web]
 
 ## Empirical hate-crime dynamics and contagion (cited also by SOURCES)
-- king2013 -- King & Sutton 2013 Criminology 51(4), temporal clustering of hate crime after trigger events [VERIFY]
-- muller2021 -- Muller & Schwarz 2021 JEEA 19(4), social media and hate crime; 2021 is the journal year per curator knowledge (online 2020) [VERIFY]
-- williams2020 -- Williams, Burnap, Javed, Liu, Ozalp 2020 Br J Criminol 60(1), online hate predicts offline crime [VERIFY]
-- loeffler2018 -- Loeffler & Flaxman 2018 J Quant Criminol 34(4), is gun violence contagious? [VERIFY]
+- king2013 -- King & Sutton 2013 Criminology 51(4), temporal clustering of hate crime after trigger events [web]
+- muller2021 -- Muller & Schwarz 2021 JEEA 19(4), social media and hate crime; 2021 is the journal year per curator knowledge (online 2020) [web]
+- williams2020 -- Williams, Burnap, Javed, Liu, Ozalp 2020 Br J Criminol 60(1), online hate predicts offline crime [web]
+- loeffler2018 -- Loeffler & Flaxman 2018 J Quant Criminol 34(4), is gun violence contagious? [web]
 
 ## Dropped / Replaced / Corrected
 - lewis2011: REPLACED journal citation with @unpublished. The widely copied "Journal of Nonparametric
@@ -76,5 +76,7 @@ and the shared web-search budget ran out before every entry could be checked.
 - wald1947 / page1954: both included (brief said "or"). Prefer page1954 for CUSUM.
 - laub2021: copyright 2021; Springer released the eBook in Jan 2022. Year kept as 2021.
 - hawkes1974: DOI 10.2307/3212693 (JSTOR) used; Cambridge also registers 10.1017/S0021900200096273.
-- moller2003: issue is 3 in the Cambridge listing but 2 in another index; kept 3, VERIFY.
+- moller2003: issue 3 confirmed (Cambridge, JSTOR, Aalborg portal with DOI).
+- bartlett1963 / cox1955: page ranges corrected to the article proper (264-281; 129-157); the
+  longer ranges included the printed discussion.
 - No key renames.

@@ -1,0 +1,232 @@
+\section{Introduction}\label{sec:intro}
+
+Antisemitic incidents do not arrive at a steady rate. They come in surges,
+and surges often follow salient external events. In the United Kingdom, the
+Community Security Trust (CST) recorded an average of five antisemitic
+incidents a day between 1~January and 6~October 2023, and 31 a day from
+7~October, the day of the Hamas attack on Israel, to the end of the year. Its
+daily count peaked at 80 on 11~October, the highest number ever reported to
+CST on a single day \citep{cst2024incidents}. On 2~October 2025, the day of
+a terrorist attack on the Heaton Park synagogue in Manchester, and on the
+following day, CST logged 40 incidents each, its highest daily totals of the
+year. Of those 80 incidents, 42 were antisemitic reactions to the attack
+itself, most of them online \citep{cst2026incidents}. In New York City, an analysis of police
+records found the rate of anti-Jewish hate crimes in the first year of the
+Israel--Hamas war to be about twice that of the preceding years of the study
+period \citep{rosenbaum2025}. Such patterns are not peculiar to antisemitism.
+In the United States, contentious trial verdicts and lethal terrorist attacks
+have preceded spikes in racially or religiously motivated hate crimes
+\citep{king2013}.
+
+A surge raises three questions for the communities affected and for those
+who plan their security. \emph{How much of it is a direct reaction to the
+event?} \emph{How much is incidents begetting incidents}, through imitation,
+emboldenment or repeated targeting? And \emph{does online hostility spill
+over into offline incidents?} The answers call for different responses. A
+direct reaction is concentrated in the days after the event and can be
+anticipated from a calendar of events. Contagion means that each incident
+prevented also prevents some of the incidents it would have triggered, and
+that a surge can outlast its trigger. A spillover from online to offline
+streams would make online monitoring a source of early warning. This paper
+develops the statistical framework needed to ask these questions of incident
+data, to answer them where the data allow, and to say plainly where they do
+not.
+
+\IfFileExists{figures/fig-branching.tex}{\input{figures/fig-branching}}{}%
+\paragraph{Self-exciting point processes}
+The natural model is the self-exciting, or Hawkes, point process
+\citep{hawkes1971}, in which every incident raises the short-run rate of
+further incidents. Its cluster representation \citep{hawkes1974} makes the
+three questions concrete (\cref{fig:branching}). Each incident is either an
+\emph{immigrant}, arriving from a background rate or as a direct response to
+a salient external event, or the \emph{offspring} of an earlier incident.
+The expected numbers of offspring form a branching matrix
+$\Amat=[\alpha_{kj}]$ across streams (regions, offence types, online and
+offline channels), and the multiplier $\Mmat=(\Imat-\Amat)^{-1}$ counts the
+whole cascade that one incident sets off. Self-exciting models are
+established in seismology \citep{ogata1988}, in crime
+\citep{mohler2011,reinhart2018}, in conflict \citep{lewis2012} and in the
+study of online popularity \citep{zhao2015,rizoiu2017}, and related
+spatiotemporal methods have been used to ask whether gun violence is
+contagious \citep{loeffler2018}. Evidence that online content predicts
+offline hate crime comes from studies of anti-refugee posts in Germany
+\citep{muller2021} and of anti-Black and anti-Muslim posts in London
+\citep{williams2020}. As far as we know, no study has estimated a
+multivariate branching matrix for antisemitic incidents, and this paper does
+not either. It builds and tests the tools that such an analysis requires.
+
+\paragraph{Three traps}
+Applied naively, the model is easy to fit and easy to over-read. We
+formalise three traps.
+\begin{enumerate}[(i),leftmargin=2.2em]
+  \item \emph{Contagion and clustered shocks look alike.} A stationary Hawkes
+  process with an exponential kernel has exactly the same mean and Bartlett
+  spectrum as a one-parameter family of shot-noise Cox processes, in which
+  unrecorded shocks trigger incidents that do not trigger one another
+  (\cref{thm:equiv}). The autocorrelation of counts, the variance--time
+  curve and the periodogram therefore cannot tell contagion from clustered
+  exogenous shocks, at any bin width. This is a dynamic counterpart of the
+  old distinction between true and apparent contagion \citep{feller1943}.
+  \item \emph{A rigid background manufactures contagion.} If salient events
+  are missing from the calendar, or the background is too stiff to follow
+  slow variation, a Hawkes model with a constant background has a positive
+  pseudo-true branching ratio even when there is no contagion at all
+  (\cref{thm:spurious}). For second-order estimators the spurious branching
+  ratio is explicit, $n^*=1-(1+\kappa)^{-1/2}$, where $\kappa$ measures the
+  burstiness of the unrecorded driver.
+  \item \emph{Under-reporting masks contagion.} Most incidents are never
+  recorded. That is the subject of the companion paper
+  \citep{kornsteinlab2026darkfigure}, which estimates the size of this dark
+  figure. If each incident is recorded independently with probability $p$,
+  the recorded stream behaves, to second order, like a Hawkes process with
+  an attenuated branching ratio $n'$, with $pn<n'<n$ and a closed-form map
+  between the two (\cref{thm:thinning}). A cascade passes through unrecorded
+  incidents too, so ignoring the dark figure understates contagion. When the
+  most productive incidents are also the most likely to be recorded, the
+  standard correction overshoots instead (\cref{prop:th-hetthin}).
+\end{enumerate}
+Two further cautions are quieter. Aggregating incidents into daily counts
+also attenuates estimated contagion, by an amount that can be computed
+(\cref{prop:est-binning}). And although online-to-offline Granger
+non-causality is equivalent to a zero cross-excitation coefficient
+(\cref{prop:granger}, after \citealp{eichler2017}), unrecorded common shocks,
+classifier error, under-recording and report-time stamps can each distort
+that coefficient (\cref{rem:th-granger-caveats}).
+
+\paragraph{What this paper does, and does not, do}
+This is a methods paper. We set out the model, prove what can and cannot be
+identified, derive the surge decomposition and an alert rule, give
+estimation and testing procedures, evaluate them in a simulation study on
+synthetic data with known ground truth, and pre-register an analysis plan
+for real data. We report \emph{no} empirical estimates. We have fitted no
+model to real incident data, and nothing here should be read as a finding
+that antisemitic incidents are, or are not, contagious. The real-world
+figures quoted above come from their named sources and serve only to
+motivate the questions. \Cref{fig:network} shows the multivariate model and
+its multiplier; notation is collected in \cref{tab:notation}.
+
+\IfFileExists{tables/tab-notation.tex}{\input{tables/tab-notation}}{}%
+\paragraph{Contributions}
+Our contributions are a synthesis, generalisation and application of
+existing ideas to a new and sensitive domain. Classical results are
+attributed where they are used; we flag the results that are, to our
+knowledge, new in the form given.
+\begin{enumerate}[label=\textbf{C\arabic*},ref=C\arabic*,leftmargin=2.4em,itemsep=3pt]
+  \item\label{contrib:framework} \textbf{Framework.} A multivariate Hawkes
+  process with exogenous shocks for incident streams across regions,
+  offence types and online and offline channels
+  (\cref{sec:framework}, \cref{eq:th-intensity}). Salient external events
+  enter through a calendar of times, sizes and stream-specific loadings;
+  calendar effects belong to the background. We restate the stationarity
+  condition $\spr(\Amat)<1$ and the multiplier $\Mmat$ in the form needed
+  later (\cref{prop:stationary}; \citealp{hawkes1974,bremaud1996}), and
+  spell out what ``contagion'' does and does not mean when the model is
+  applied to antisemitic incidents (\cref{sec:th-meaning}).
+  \item\label{contrib:id} \textbf{Identification: contagion versus common
+  shocks.} We make the observational equivalence of contagion and clustered
+  shocks exact. For exponential kernels we give the full matched family of
+  shock processes (\cref{thm:equiv}), extend it to completely monotone
+  kernels (\cref{prop:th-cm}), and show where it breaks: delayed excitation
+  (\cref{rem:th-noncm}) and one-way cross-excitation between streams
+  (\cref{prop:th-mv}) leave second-order traces that no Cox process can
+  reproduce. Identification is restored by a recorded calendar of events, by
+  higher-order information (the fourth cumulant already separates the two
+  models) or by provenance links between incidents (\cref{cor:equiv-id}). A
+  misspecified background yields spurious contagion with an explicit
+  pseudo-true branching ratio for moment-based estimators, and a strictly
+  positive one for maximum likelihood (\cref{thm:spurious}). This is the
+  point-process counterpart of the apparent criticality reported for
+  financial data \citep{filimonov2015}.
+  \item\label{contrib:thin} \textbf{Under-reporting masks contagion.}
+  Independent thinning maps a branching ratio $n$ to an apparent
+  $n'=h_p(n)$ in closed form (\cref{thm:thinning}). Inverting the map with
+  the companion paper's estimate of $p$ gives a dark-figure correction
+  whose variance has a floor set by the uncertainty about coverage
+  (\cref{cor:th-darkfig}). When recording and productivity vary together
+  across incident types, the homogeneous correction overstates contagion
+  (\cref{prop:th-hetthin}).
+  \item\label{contrib:attr} \textbf{Surge attribution.} The expected count
+  after an event splits exactly into background, direct and contagion
+  components, computed through the resolvent and the multiplier
+  (\cref{thm:attribution}, \cref{fig:attribution}). In a univariate model the
+  contagion share of event-attributable incidents equals the branching ratio
+  $n$ in the limit, and stays below it at every finite horizon. For
+  exponential kernels the components have hypoexponential closed forms
+  (\cref{prop:irf}). A channel decomposition isolates the online-to-offline
+  spillover as a sum over paths; channel shares are not additive
+  (\cref{prop:at-channel}). The finite-horizon bound, the closed forms and
+  the channel decomposition are, to our knowledge, new in this form.
+  \item\label{contrib:est} \textbf{Estimation and testing.} Maximum
+  likelihood by EM over the latent branching structure (\cref{alg:em};
+  \citealp{veen2008,marsan2008}), with an exact treatment of the observation
+  window under which the update of each decay rate is a strictly concave
+  one-dimensional problem (\cref{prop:est-mstep}). Bayesian estimation with
+  shrinkage on $\Amat$, in which an entrywise description of the
+  stationarity region $\spr(\Amat)<1$ turns the constraint into a
+  truncated-gamma update (\cref{lem:est-trunc}). A discrete-time INAR
+  approximation for binned counts (\cref{eq:inar}; \citealp{kirchner2016}),
+  with an exact formula for the attenuation of contagion estimates by
+  binning (\cref{prop:est-binning}). Nonparametric kernels; a
+  boundary-corrected likelihood-ratio test of $\alpha_{kj}=0$ with a
+  chi-bar-square reference (\cref{prop:lrt};
+  \citealp{chernoff1954,self1987}); time-rescaling goodness of fit
+  (\cref{prop:rescaling}; \citealp{brown2002}); and placebo calendars that
+  calibrate shock effects even under misspecification
+  (\cref{lem:est-placebo}). The window treatment, the stationarity region
+  and the binning formula are, to our knowledge, new in this form
+  (\cref{sec:estimation}).
+  \item\label{contrib:alert} \textbf{Forecasting and alerting.} Given the
+  past, the future is again a Poisson cluster process. The Bayes-optimal
+  alert rule thresholds the predictive probability of a surge at
+  $\pi^*=c_{\mathrm{FA}}/(c_{\mathrm{FA}}+c_{\mathrm{miss}})$. Under the
+  model an additional incident never switches an alert off, and in the
+  univariate case the rule reduces to a threshold on the current intensity
+  (\cref{thm:alert}). Reporting delays bias the model's state downward, so
+  ignoring them can postpone an alert but never bring one forward; a
+  delay-weighted state corrects the bias (\cref{prop:nowcast},
+  \cref{alg:alert}). Forecasts are evaluated with proper scores and
+  probability integral transforms (\cref{sec:forecasting}).
+  \item\label{contrib:sim} \textbf{A simulation study.} In synthetic worlds
+  with known ground truth we assess recovery of $\Amat$, spurious contagion
+  under a misspecified background, attenuation by thinning and its
+  correction, the accuracy of surge attribution, and the performance of the
+  alert rule (\cref{sec:simulation}).
+  \item\label{contrib:plan} \textbf{A pre-registered analysis plan.} We fix
+  in advance how the analysis would be run on real data, with New York City
+  police hate-crime records as the candidate pilot \citep{nypdhate}. The
+  plan covers the procedure for listing external events, which is completed
+  blind to incident data, the model hierarchy, sensitivity analyses for the
+  background, thinning and the event list, placebo shocks and decision rules
+  (\cref{sec:plan}). An ethics protocol accompanies it (\cref{sec:ethics}).
+\end{enumerate}
+
+\paragraph{Related work}
+The likelihood theory of self-exciting processes goes back to
+\citet{ogata1978} and \citet{ogata1988}, and their stability theory to
+\citet{bremaud1996}. EM over the latent branching structure was developed by
+\citet{veen2008} and, nonparametrically, by \citet{marsan2008}; book-length
+treatments are \citet{daley2003} and \citet{laub2021}. The equivalence of
+Hawkes processes and INAR($\infty$) sequences \citep{kirchner2016} underlies
+our treatment of binned counts, and the Granger-causal graphs of
+\citet{eichler2017} our treatment of online-to-offline dependence. Including
+news events in the background lowers estimated endogeneity in financial
+markets \citep{rambaldi2015}, the empirical face of \cref{thm:spurious}. Our
+nowcasting builds on Bayesian nowcasting in epidemiology
+\citep{hohle2014,mcgough2020}. On the substantive side, temporal clustering
+of hate crime after trigger events \citep{king2013} and online-to-offline
+associations \citep{muller2021,williams2020} motivate the model, and the
+companion paper \citep{kornsteinlab2026darkfigure} supplies the recording
+probabilities that \cref{thm:thinning} needs.
+
+\paragraph{Roadmap}
+\Cref{sec:data} reviews candidate incident streams, event calendars and
+online signals, with attention to time stamps and delays.
+\Cref{sec:framework} defines the model and recalls its cluster and spectral
+structure. \Cref{sec:identification} develops the identification results.
+\Cref{sec:attribution} derives the surge decomposition, \cref{sec:estimation}
+estimation and testing, and \cref{sec:forecasting} forecasting and alerting.
+\Cref{sec:simulation} reports the simulation study, \cref{sec:plan} the
+pre-registered analysis plan and \cref{sec:ethics} the ethics protocol.
+\Cref{sec:discussion} discusses limitations and extensions. Proofs are in
+\cref{app:idproofs,app:attrproofs}, computational details in
+\cref{app:computation} and simulation details in \cref{app:simdetails}.

@@ -228,6 +228,8 @@ class BSplineBasis:
 
     def __call__(self, t) -> np.ndarray:
         t = np.clip(np.atleast_1d(np.asarray(t, dtype=float)), 0.0, self.T)
+        if t.size == 0:
+            return np.zeros((0, self.n_basis))
         return BSpline.design_matrix(t, self.knots, self.degree).toarray()
 
     def cells(self) -> np.ndarray:

@@ -573,6 +573,8 @@ def lcmcr(
     alpha_prior: tuple[float, float] = (0.25, 0.25),
     level: float = 0.95,
     return_samples: bool = False,
+    n_chains: int = 1,
+    init_spread: tuple = (0.5, 1.0, 2.0, 4.0),
 ) -> Estimate:
     """Bayesian nonparametric latent-class MSE (Eq ``eq:lcmcr``; \\citet{manriquevallier2016}).
 
@@ -580,41 +582,65 @@ def lcmcr(
     ``lambda_jk ~ Beta(1,1)``, ``alpha ~ Gamma(alpha_prior)`` (shape, rate),
     ``p(N) ∝ 1/N``; Gibbs sampler with negative-binomial data augmentation for
     ``n_0`` and multinomial class allocation at the cell level (see
-    :mod:`darkfig.lcmcr`).  ``n_iter`` is the total number of iterations
-    including ``burn``.  The defaults (10000 iterations, 2000 burn-in, thin 4,
-    i.e. 2000 retained draws) take ~0.6 s for K = 4 and give an effective
-    sample size for N of roughly 300-400 under independence (the N chain has
-    autocorrelation time ~20 iterations at J = 10).
+    :mod:`darkfig.lcmcr`).  ``n_iter`` is the number of iterations *per chain*
+    including ``burn``.
+
+    ``n_chains > 1`` runs independent chains whose initial ``n_0`` is the
+    Chao-type default times ``init_spread[c]`` (overdispersed starts, App.
+    app:comp-lcmcr), pools their draws, and reports the rank-normalised split
+    R-hat and bulk / tail ESS of N (Vehtari et al. 2021) in ``extra``.  With one
+    chain ``extra["ess"]`` is the single-chain ESS (Geyer).
 
     ``N_hat`` is the posterior median of N; ``(lo, hi)`` the equal-tailed
     ``level`` credible interval.  Non-integer counts (e.g. a linkage-corrected
     table) are rounded to the nearest integer (``extra["rounded"]``).
-    ``extra`` also has the posterior mean/sd, the effective sample size of the N
-    chain, the posterior mean of alpha and of the number of occupied classes.
     """
     y, K = table_to_array(table)
-    yr = np.rint(y)
+    yr = np.rint(np.maximum(y, 0.0))
     rounded = bool(np.any(np.abs(y - yr) > 1e-9))
-    res = _lc.gibbs_lcmcr(yr, K, J=J, n_iter=n_iter, burn=burn, thin=thin, seed=seed, alpha_prior=alpha_prior)
-    Ns = res["N"]
+    ss = np.random.SeedSequence(seed if isinstance(seed, (int, type(None))) else None)
+    chains, alphas, kocc, secs = [], [], [], 0.0
+    base = None
+    if n_chains > 1:
+        f = np.bincount(_lc.popcount(K), weights=np.rint(yr), minlength=K + 1)
+        f1, f2 = f[1], (f[2] if K >= 2 else 0.0)
+        base = f1 * f1 / (2.0 * f2) if f2 > 0 else f1 * max(f1 - 1, 0) / 2.0
+    for c in range(n_chains):
+        if n_chains == 1:
+            sd, n0i = seed, None
+        else:
+            sd = np.random.default_rng(ss.spawn(1)[0])
+            n0i = float(np.clip(base * init_spread[c % len(init_spread)], 1.0, 10.0 * yr.sum()))
+        res = _lc.gibbs_lcmcr(yr, K, J=J, n_iter=n_iter, burn=burn, thin=thin, seed=sd,
+                              alpha_prior=alpha_prior, n0_init=n0i)
+        chains.append(res["N"])
+        alphas.append(res["alpha"])
+        kocc.append(res["k_occ"])
+        secs += float(res["seconds"])
+    Ns = np.concatenate(chains)
     a = 1.0 - level
     lo, med, hi = np.quantile(Ns, [a / 2, 0.5, 1 - a / 2])
     extra = {
         "post_mean": float(Ns.mean()),
         "post_sd": float(Ns.std(ddof=1)) if Ns.size > 1 else 0.0,
-        "ess": _lc.effective_sample_size(Ns),
+        "ess": float(sum(_lc.effective_sample_size(ch) for ch in chains)),
         "n_draws": int(Ns.size),
-        "alpha_mean": float(res["alpha"].mean()),
-        "k_occupied_mean": float(res["k_occ"].mean()),
+        "n_chains": int(n_chains),
+        "alpha_mean": float(np.concatenate(alphas).mean()),
+        "k_occupied_mean": float(np.concatenate(kocc).mean()),
         "J": J,
         "n_iter": n_iter,
         "burn": burn,
         "thin": thin,
         "seed": seed if isinstance(seed, (int, type(None))) else str(seed),
         "rounded": rounded,
-        "seconds": float(res["seconds"]),
+        "seconds": secs,
         "level": level,
     }
+    if n_chains > 1:
+        d = _lc.convergence_diagnostics(np.vstack(chains))
+        extra.update(rhat=d["rhat"], ess_bulk=d["ess_bulk"], ess_tail=d["ess_tail"])
+        extra["chain_medians"] = [float(np.median(ch)) for ch in chains]
     if return_samples:
         extra["samples"] = Ns.tolist()
     return Estimate(
@@ -625,6 +651,36 @@ def lcmcr(
         method="lcmcr",
         extra=extra,
     )
+
+
+def lcmcr_pooled(tables, seed=None, level: float = 0.95, **kw) -> Estimate:
+    """Linkage-averaged LCMCR: one chain per table (e.g. per imputed linkage), draws pooled.
+
+    The pooled draws estimate the mixture of the per-table posteriors (Prop.
+    prop:totalvar, Alg. alg:pipeline line 9). ``n_obs`` is the mean over tables.
+    R-hat is not computed (the chains target different posteriors); ``extra``
+    has the summed per-chain ESS and the between-table spread of the medians.
+    """
+    ss = np.random.SeedSequence(seed if isinstance(seed, (int, type(None))) else None)
+    kw = dict(kw)
+    kw.pop("n_chains", None)
+    S, nobs, ess, secs, meds = [], [], 0.0, 0.0, []
+    for t in tables:
+        e = lcmcr(t, seed=int(ss.spawn(1)[0].generate_state(1)[0]), level=level, return_samples=True,
+                  n_chains=1, **kw)
+        S.append(np.asarray(e.extra["samples"]))
+        nobs.append(float(e.n_obs))
+        ess += e.extra["ess"]
+        secs += e.extra["seconds"]
+        meds.append(e.N_hat)
+    allS = np.concatenate(S)
+    a = 1.0 - level
+    lo, med, hi = np.quantile(allS, [a / 2, 0.5, 1 - a / 2])
+    return Estimate(N_hat=float(med), lo=float(lo), hi=float(hi), n_obs=float(np.mean(nobs)),
+                    method="lcmcr_pooled",
+                    extra=dict(n_tables=len(S), ess=float(ess), seconds=secs, n_draws=int(allS.size),
+                               median_sd_between=float(np.std(meds, ddof=1)) if len(meds) > 1 else 0.0,
+                               samples=allS.tolist(), level=level))
 
 
 # --------------------------------------------------------------------------

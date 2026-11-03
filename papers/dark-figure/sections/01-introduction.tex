@@ -112,15 +112,15 @@ attributed where they are used.
 \begin{enumerate}[label=\textbf{C\arabic*},ref=C\arabic*,leftmargin=2.4em,itemsep=3pt]
   \item\label{contrib:id} \textbf{Identification and sensitivity.} Without a
   restriction on the highest-order interaction $\omega$ of the log-linear
-  model, the dark figure is not identified (\cref{thm:nonid}). Retaining
-  $\omega$ as a sensitivity parameter, we show that the maximum-likelihood
-  estimate of the dark figure has a closed form for every $K$ (whenever every
-  observed cell is positive): an alternating
-  product of cell counts over the Boolean lattice $\{0,1\}^K$, scaled by
-  $e^{\pm\omega}$ (\cref{thm:closed}, \cref{fig:lattice}). It contains the
-  Lincoln--Petersen estimator ($K=2$) and the classical estimator without a
-  $K$-way interaction \citep{fienberg1972,bishop1975} as special cases, and it
-  makes offset-based sensitivity analysis \citep{gerritse2015} analytic. The
+  model, the dark figure is not identified (\cref{thm:nonid}; compare
+  \citealp{aleshinguendel2024}). Without a $K$-way interaction, the
+  maximum-likelihood estimate of the dark figure is an alternating product of
+  cell counts over the Boolean lattice $\{0,1\}^K$, for every $K$
+  \citep{fienberg1972,bishop1975}; it reduces to the Lincoln--Petersen
+  estimator when $K=2$. We retain $\omega$ in this closed form as an explicit
+  sensitivity parameter, which enters as the factor $e^{\pm\omega}$
+  (\cref{thm:closed}, \cref{fig:lattice}) and makes offset-based sensitivity
+  analysis \citep{gerritse2015} analytic. The
   bounds are sharp (\cref{cor:bounds}), and the direction of bias is the sign
   of an oriented interaction (\cref{prop:direction}). We show that, with three
   or more lists, neither positive dependence nor heterogeneous visibility fixes
@@ -141,9 +141,11 @@ attributed where they are used.
   stochastic operator $\Lop(\delta,\varepsilon)$ acting on the true
   capture-history table, where $\delta$ and $\varepsilon$ are the false
   non-match and false match rates. We derive explicit first-order bias
-  coefficients for the $K$-list estimator (\cref{thm:linkbias}). When lists
-  are sparse, false matches do far more damage than missed ones, so linkage
-  should err towards not linking (\cref{rem:link-reading}). Missed matches inflate the two-list dark
+  coefficients for the $K$-list estimator (\cref{thm:linkbias}). Which error
+  does more damage depends on how much the lists overlap. With sparse lists
+  false matches dominate, and with dense lists missed matches do; under
+  independent capture the crossover has a closed form
+  (\cref{cor:link-indep,rem:link-reading}). Missed matches inflate the two-list dark
   figure, but with three or more strongly dependent lists that direction can
   reverse (\cref{rem:link-reversal}). We also propose a linkage-corrected
   estimator (\cref{cor:linkcorrect}) and give a total-variance decomposition

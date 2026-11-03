@@ -15,7 +15,7 @@ Requirements: Python 3.13 with numpy and scipy (pytest for the tests). Nothing e
 
 ```bash
 cd papers/contagion/code
-OPENBLAS_NUM_THREADS=1 nice python -m pytest tests/test_hawkes.py -q                # all 24 tests, ~45-60 s
+OPENBLAS_NUM_THREADS=1 nice python -m pytest tests/test_hawkes.py -q                # all 24 tests, ~75 s (load avg ~11)
 OPENBLAS_NUM_THREADS=1 nice python -m pytest tests/test_hawkes.py -q -m "not slow"  # 21 quick tests, ~20 s
 ```
 
@@ -70,7 +70,9 @@ Import the package with `code/` on `sys.path`, e.g. run from `code/`, or `sys.pa
   * The log-likelihood is non-decreasing (`loglik_trace`).
 * `beta_fixed` is a scalar or an (M, M) array; NaN entries are free.
 * `alpha_mask` is a bool (M, M); `False` fixes the entry at 0.
-* Without `init`/`beta_init`, a short EM run at each β on an 8-point log grid picks the start.
+* The likelihood can be multimodal in β. With weak excitation or slow kernels there is a spurious "tiny α, huge β" mode. So, without `init`/`beta_init`, the **profile** log-likelihood (EM with β fixed, `grid_iter=40`) is evaluated on an `n_grid=8`-point log grid over [min(0.05 n/T, 20/T), 200 n/T]. The free EM then starts from every local maximum of that grid profile (at most `n_starts=3`) and keeps the best optimum. Across 25 datasets, including weak and slow kernels, this came within 0.03 log-lik units of a dense 13-start reference.
+* `accelerate=True` (the default) adds SQUAREM extrapolation (Varadhan & Roland 2008). It is accepted only if it increases the log-likelihood, so the fixed point is the same as plain EM and the trace stays monotone. It cuts EM-map evaluations 2–7x. `n_iter` counts EM-map evaluations.
+* Cost: one E-step is ~1–1.5 ms for 2000 events with M = 3. A full fit with the β grid takes ~0.5–1.5 s on the shared machine; with `init` (warm start) it takes ~0.1 s.
 * `FitResult` fields:
   * `spec`, `loglik`, `n_iter`, `converged`, `loglik_trace`, `n_params`, `aic`, `bic(n)`.
   * `se`: a dict with `mu`/`theta`, `alpha`, `beta`, and, if shocks are present, `shock_beta`/`shock_rate`. It comes from the numerical Hessian of the exact log-likelihood.
@@ -80,9 +82,10 @@ Import the package with `code/` on `sys.path`, e.g. run from `code/`, or `sys.pa
 
 ### `hawkes.tests_alpha`
 
-* `lrt_alpha_zero(events, T, k, j, *, shocks=None, background="const", beta_mode="common"|"fixed", fit_alt=None, tol=1e-9, return_fits=False, **fit_kwargs)` → `(stat, pvalue)`. This is the boundary LRT of H0: α_kj = 0, with the χ̄² null 0.5χ²₀ + 0.5χ²₁ (Self & Liang 1987). Its p-value is 0.5·P(χ²₁ ≥ stat); the 5% critical value is `CHIBAR_CRIT_05` = 2.706.
+* `lrt_alpha_zero(events, T, k, j, *, shocks=None, background="const", beta_mode="common"|"fixed", fit_alt=None, tol=1e-9, return_fits=False, multistart_null=True, **fit_kwargs)` → `(stat, pvalue)`. This is the boundary LRT of H0: α_kj = 0, with the χ̄² null 0.5χ²₀ + 0.5χ²₁ (Self & Liang 1987). Its p-value is 0.5·P(χ²₁ ≥ stat); the 5% critical value is `CHIBAR_CRIT_05` = 2.706.
   * `"common"` (the default): a shared β re-estimated under both hypotheses; regular when another α > 0.
   * `"fixed"`: β fixed at the alternative's estimate in both fits; usable with pairwise β, but ignores the Davies problem.
+  * The null fit is started from the alternative optimum (with α_kj = 0) and, by default, also from the profile-grid multistart. If the null ever beats the alternative, the alternative is refitted from the null optimum.
 * `lrt_alpha_zero_sup(events, T, k, j, beta_grid=None, n_boot=99, rng=None, ...)` → dict(`stat`, `pvalue` (parametric bootstrap from the H0 fit), `pvalue_naive`, `beta_hat`, `lr_profile`, `boot_stats`, `fit_null`, `fit_alt`). This is the Davies-aware sup-LR over a grid of a pair-specific β_kj, while the other entries share a free β.
 * `chibar_pvalue(stat)`.
 
@@ -145,6 +148,14 @@ These formulas are for univariate exponential Hawkes processes (Thm thm:thinning
 * EM recovers μ, A and β (z-scores within 4 observed-information SEs), with a monotone trace.
   * It is also tested with pairwise β, with shocks (loadings and η), and with a spline background. The spline fit beats the constant fit, and the misspecified constant fit inflates ρ(A).
 * LRT: size ≤ 0.15 at nominal 0.05 (R = 40); about half the statistics are 0 (χ̄²); power ≥ 0.75. The Davies bootstrap runs end to end.
+
+Larger offline checks (not part of the suite; scratch scripts, so the numbers are not citable in the paper):
+
+* EM recovery for M = 3, β = 1.5, 50 replicates per size:
+  * T = 1500 (~2100 events): RMSE(μ_k) ≈ 0.02 (7–10% relative); RMSE(α_kj) has mean 0.029 and max 0.039; β has bias +0.019 and RMSE 0.14 (9%).
+  * T = 3000 (~4200 events): RMSE(μ) ≈ 0.015; RMSE(α) has mean 0.020; β has bias +0.004 and RMSE 0.07.
+  * Observed-information SEs: z-score SD 0.93–1.03; 95% coverage 0.94–0.96 at T = 1500.
+* LRT size (M = 2, ~900 events, 200 replicates): 0.085 / 0.03 / 0.01 at nominal 0.10 / 0.05 / 0.01, with P(stat ≈ 0) = 0.565. It is slightly conservative.
 * Time-rescaling KS p-values are uniform under the true model, and a Poisson model is rejected.
 * `decompose_surge` (background, other shocks, direct, contagion and two spillover variants) matches Monte Carlo branching-label counts within 4 SE. IRF integrals equal (I − A)^{-1} − I.
 * Thinned variance-time curves match the formula (the unthinned n is rejected). The shot-noise Cox process matches its equivalent Hawkes process's variance-time curve.
