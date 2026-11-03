@@ -73,7 +73,10 @@ formalise three traps.
   pseudo-true branching ratio even when there is no contagion at all
   (\cref{thm:spurious}). For second-order estimators the spurious branching
   ratio is explicit, $n^*=1-(1+\kappa)^{-1/2}$, where $\kappa$ measures the
-  burstiness of the unrecorded driver.
+  burstiness of the unrecorded driver. Maximum likelihood need not reproduce
+  $n^*$ exactly. In our simulations a more flexible background removes the
+  artefact of slow rate changes but not that of fast unrecorded shocks; only
+  the event times remove it (\cref{sec:sim-spurious}).
   \item \emph{Under-reporting masks contagion.} Most incidents are never
   recorded. That is the subject of the companion paper
   \citep{kornsteinlab2026darkfigure}, which estimates the size of this dark
@@ -197,8 +200,15 @@ knowledge, new in the form given.
   \item\label{contrib:sim} \textbf{A simulation study.} In synthetic worlds
   with known ground truth we assess recovery of $\Amat$, spurious contagion
   under a misspecified background, attenuation by thinning and its
-  correction, the accuracy of surge attribution, and the performance of the
-  alert rule (\cref{sec:simulation}).
+  correction, the accuracy of surge attribution, the boundary test under
+  omitted common shocks, and the performance of the alert rule and the
+  nowcast (\cref{sec:simulation}). Under the model the tools perform as the
+  theory says, with close to nominal coverage. The study also shows their
+  limits: a smoother background does not remove spurious contagion from fast
+  unrecorded shocks, intervals fail when excitation is weak and recording is
+  poor, and forecasts are calibrated only in windows without new external
+  events. The test for a decay identified only under the alternative was not
+  evaluated.
   \item\label{contrib:plan} \textbf{A pre-registered analysis plan.} We fix
   in advance how the analysis would be run on real data, with New York City
   police hate-crime records as the candidate pilot \citep{nypdhate}. The

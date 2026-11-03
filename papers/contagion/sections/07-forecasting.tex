@@ -40,7 +40,7 @@ in stream $k$ form a Poisson process with intensity
 \nu_{t,k}(s)=\mu_k(s)+u_{t,k}(s)+h_{t,k}(s),\qquad s>t,
 \]
 and offspring are generated as in \cref{sec:th-cluster}. If $\spr(\Amat)<1$, then
-$\E[\bm N(t,t+\Delta]\mid\Hist_t]=\int_t^{t+\Delta}(\mathcal K_t\bm\nu_t)(s)\,\dd s$,
+$\E[\bm N(t,t+\Delta_{\mathrm a}]\mid\Hist_t]=\int_t^{t+\Delta_{\mathrm a}}(\mathcal K_t\bm\nu_t)(s)\,\dd s$,
 with $\mathcal K_t$ as in \eqref{eq:at-cascade}.
 
 Suppose in addition that $\varphi_{kj}(u)=\alpha_{kj}\beta_{kj}e^{-\beta_{kj}u}$ and
@@ -65,35 +65,35 @@ $\lambda_k(t+)=\mu_k(t)+u_k(t)+\sum_jx_{kj}(t)$.
 \Cref{lem:fc-future} makes exact forecasting possible, with no discretisation error.
 Generation~0 of the future has three parts:
 \begin{itemize}
-  \item background immigrants on $(t,t+\Delta]$;
+  \item background immigrants on $(t,t+\Delta_{\mathrm a}]$;
   \item the remaining immigrants of past events;
   \item the pending offspring of past incidents.
 \end{itemize}
 The pending offspring of stream $j$ in stream $k$ form a Poisson process with intensity
-$x_{kj}(t)e^{-\beta_{kj}(s-t)}$, so their number on $(t,t+\Delta]$ is Poisson with mean
-$x_{kj}(t)(1-e^{-\beta_{kj}\Delta})/\beta_{kj}$. Each generation-0 point then cascades
-as in \cref{sec:th-cluster}, truncated at $t+\Delta$. Repeating this $J$ times gives a
+$x_{kj}(t)e^{-\beta_{kj}(s-t)}$, so their number on $(t,t+\Delta_{\mathrm a}]$ is Poisson with mean
+$x_{kj}(t)(1-e^{-\beta_{kj}\Delta_{\mathrm a}})/\beta_{kj}$. Each generation-0 point then cascades
+as in \cref{sec:th-cluster}, truncated at $t+\Delta_{\mathrm a}$. Repeating this $J$ times gives a
 Monte Carlo predictive distribution with error of order $J^{-1/2}$. Thinning
 simulation from $\bm\xi(t)$ \citep{ogata1981} is an alternative.
 
 \begin{remark}[Exact predictive distributions]\label{rem:fc-pgf}
 The predictive law can also be computed without simulation. Fix a target stream $k$
-and the window $W=(t,t+\Delta]$. For a cluster rooted at a stream-$j$ incident at time
+and the window $W=(t,t+\Delta_{\mathrm a}]$. For a cluster rooted at a stream-$j$ incident at time
 $s$, let $G_j(z;s)$ be the probability generating function of the number of its members
 in stream $k$ and in $W$, root included. The branching structure gives
 \begin{equation}\label{eq:fc-pgf-cluster}
-  G_j(z;s)=z^{\ind{j=k,\ s\in W}}\exp\Bigl\{\sum_{i=1}^{M}\int_s^{t+\Delta}\varphi_{ij}(r-s)\bigl(G_i(z;r)-1\bigr)\,\dd r\Bigr\},
+  G_j(z;s)=z^{\ind{j=k,\ s\in W}}\exp\Bigl\{\sum_{i=1}^{M}\int_s^{t+\Delta_{\mathrm a}}\varphi_{ij}(r-s)\bigl(G_i(z;r)-1\bigr)\,\dd r\Bigr\},
 \end{equation}
 and the Poisson immigrants of \cref{lem:fc-future} give
 \begin{equation}\label{eq:fc-pgf}
   \E\bigl[z^{N_k(W)}\mid\Hist_t\bigr]
-  =\exp\Bigl\{\sum_{j=1}^{M}\int_t^{t+\Delta}\nu_{t,j}(s)\bigl(G_j(z;s)-1\bigr)\,\dd s\Bigr\}.
+  =\exp\Bigl\{\sum_{j=1}^{M}\int_t^{t+\Delta_{\mathrm a}}\nu_{t,j}(s)\bigl(G_j(z;s)-1\bigr)\,\dd s\Bigr\}.
 \end{equation}
 For exponential kernels, the inner integrals in \eqref{eq:fc-pgf-cluster} satisfy $M^2$
 ordinary differential equations, solved backwards in $s$. In the univariate case,
-$I(s)=\int_s^{t+\Delta}\varphi(r-s)\{G(z;r)-1\}\,\dd r$ solves
+$I(s)=\int_s^{t+\Delta_{\mathrm a}}\varphi(r-s)\{G(z;r)-1\}\,\dd r$ solves
 \[
-I'=\beta I-n\beta\,(ze^{I}-1),\qquad I(t+\Delta)=0,
+I'=\beta I-n\beta\,(ze^{I}-1),\qquad I(t+\Delta_{\mathrm a})=0,
 \]
 and $G=ze^{I}$ on $W$. Evaluating \eqref{eq:fc-pgf} at the $L$th roots of unity and
 applying the discrete Fourier transform gives the predictive probability mass function.
@@ -109,12 +109,12 @@ coordinates of $\bm\xi(t)$. This is the analytic form of the coupling in the pro
 
 \subsection{Bayes-optimal alerting}\label{sec:fc-alert}
 
-Fix a window length $\Delta$ and a \emph{surge set} $\mathcal U\subseteq\mathbb Z_+^M$
+Fix a window length $\Delta_{\mathrm a}$ and a \emph{surge set} $\mathcal U\subseteq\mathbb Z_+^M$
 that is an upper set: if $\bm n\in\mathcal U$ and $\bm n'\ge\bm n$, then
 $\bm n'\in\mathcal U$. The leading example is $\mathcal U=\{\bm n:n_k\ge c\}$, at least
 $c$ incidents in stream $k$. Weighted totals $\{\bm n:\bm w^{\top}\bm n\ge c\}$ with
 $\bm w\ge\zero$ also qualify. The surge indicator is
-$Y_t=\ind{\bm N(t,t+\Delta]\in\mathcal U}$.
+$Y_t=\ind{\bm N(t,t+\Delta_{\mathrm a}]\in\mathcal U}$.
 
 At time $t$ the analyst holds information $\mathcal G_t$. This is the history $\Hist_t$
 when data are complete and timely, and less under reporting delays
@@ -137,7 +137,7 @@ $c_{\mathrm{FA}},c_{\mathrm{miss}}>0$. Let
   parameters and the calendar of events. Let $\omega\subseteq\omega'$ be two histories
   on $[0,t]$, where $\omega'$ contains every incident of $\omega$, with the same stream
   labels, and possibly more. Then there is a coupling of the predictive laws of
-  $\bm N(t,t+\Delta]$ under $\omega$ and $\omega'$, $\bm N$ and $\bm N'$, with
+  $\bm N(t,t+\Delta_{\mathrm a}]$ under $\omega$ and $\omega'$, $\bm N$ and $\bm N'$, with
   $\bm N'\ge\bm N$. In particular $\pi_t(\omega)\le\pi_t(\omega')$ for every upper
   set $\mathcal U$.
   \item \emph{Exponential kernels: a monotone decision region.} Under the
@@ -145,27 +145,27 @@ $c_{\mathrm{FA}},c_{\mathrm{miss}}>0$. Let
   function $G_t$ that is nondecreasing in each coordinate and Lipschitz. The Bayes
   alert region $\mathcal A_t=\{\bm\xi:G_t(\bm\xi)\ge\pi^*\}$ is therefore a closed
   upper set: if the rule alerts at $\bm\xi$, it alerts at every $\bm\xi'\ge\bm\xi$.
-  The function $G_t$ depends on $t$ only through $\bm\mu$ on $(t,t+\Delta]$ and the
+  The function $G_t$ depends on $t$ only through $\bm\mu$ on $(t,t+\Delta_{\mathrm a}]$ and the
   calendar of future events. For constant $\bm\mu$ and no future events it does not
   depend on $t$.
   \item \emph{Univariate case: a threshold curve.} Let $M=1$, with $\mu>0$ on
-  $(t,t+\Delta]$ and $\mathcal U=\{n\ge c\}$ for some $c\ge1$. Then
+  $(t,t+\Delta_{\mathrm a}]$ and $\mathcal U=\{n\ge c\}$ for some $c\ge1$. Then
   $\pi_t=g_t(x(t),u(t))$, where $g_t$ is continuous, nondecreasing in $u$ and strictly
   increasing in $x$. The Bayes rule alerts if and only if
   \[
   x(t)\ \ge\ x^*_t(u(t)),\qquad x^*_t(u)=\inf\{x\ge0:g_t(x,u)\ge\pi^*\}<\infty .
   \]
   The threshold curve $x^*_t(u)$ is nonincreasing in $u$, nondecreasing in $c$ and in
-  $\pi^*$, and nonincreasing in $\Delta$. If $\eta=\beta$, or if no event has occurred
+  $\pi^*$, and nonincreasing in $\Delta_{\mathrm a}$. If $\eta=\beta$, or if no event has occurred
   so that $u\equiv0$, then $g_t$ depends on $x+u$ only. The rule is then a threshold on
   the intensity: alert if and only if $\lambda(t+)\ge\lambda^*_t:=\mu(t)+x^*_t(0)$.
   In general, replacing $u(t)$ by $0$ changes $\pi_t$ by at most $L_tu(t)$, where $L_t$
-  is a Lipschitz constant of $G_t$ in (c), for instance $L_t=\Delta/(1-n)$.
+  is a Lipschitz constant of $G_t$ in (c), for instance $L_t=\Delta_{\mathrm a}/(1-n)$.
 \end{enumerate}
 \end{theorem}
 
 Part (a) is standard Bayes decision theory. Part (b) says that the predictive law of
-$\bm N(t,t+\Delta]$ increases with the history in the usual multivariate stochastic
+$\bm N(t,t+\Delta_{\mathrm a}]$ increases with the history in the usual multivariate stochastic
 order \citep{shaked2007}. The decision depends on the two costs only
 through $\pi^*$, which is agreed with partners. The analysis plan's grid of cost ratios
 $c_{\mathrm{miss}}/c_{\mathrm{FA}}\in\{2,5,10\}$ corresponds to
@@ -276,7 +276,7 @@ stochastic EM, imputes the incidents that are not yet available, using the gener
 structure in (a). This is the self-exciting
 analogue of Bayesian nowcasting \citep{hohle2014,mcgough2020}. There the latent
 quantity is a daily count; here it is an excitation state. A simpler route, adequate
-for estimating $\theta$, restricts the likelihood to the settled part of the record,
+for estimating $\vartheta$, restricts the likelihood to the settled part of the record,
 $s\le t-L$ with $F_k(L)\approx1$. It uses (b) only for the state near $t$.
 
 The size of the bias in (c) can be large. With exponentially distributed delays of mean
@@ -329,13 +329,13 @@ not only near $t$.
 \begin{algorithm}[t]
 \caption{Real-time alerting with imputation of unreported incidents}\label{alg:alert}
 \begin{algorithmic}[1]
-\Require incidents available at $t$; parameter draws $\theta^{(1)},\dots,\theta^{(R)}$;
+\Require incidents available at $t$; parameter draws $\vartheta^{(1)},\dots,\vartheta^{(R)}$;
   recording probabilities $p_k$ and delay distributions $F_k$; imputation window $L$
-  with $F_k(L)\approx1$; window $\Delta$; surge set $\mathcal U$; threshold
+  with $F_k(L)\approx1$; window $\Delta_{\mathrm a}$; surge set $\mathcal U$; threshold
   $\pi^*=c_{\mathrm{FA}}/(c_{\mathrm{FA}}+c_{\mathrm{miss}})$; particles per draw $J$
 \Ensure alert $a_t$ and estimate $\hat\pi_t$ of $\Pr(Y_t=1\mid\mathcal G_t)$
 \For{$r=1,\dots,R$}
-  \State $\hat{\bm h}^{(r)}\gets$ \eqref{eq:fc-ht} with $\delta=L$, under $\theta^{(r)}$
+  \State $\hat{\bm h}^{(r)}\gets$ \eqref{eq:fc-ht} with $\delta=L$, under $\vartheta^{(r)}$
     \Comment{state at $t-L$}
   \For{$\ell=1,\dots,J$}
     \State impute the unavailable incidents in $(t-L,t]$ by thinning with intensity
@@ -364,7 +364,7 @@ Several points about \cref{alg:alert} follow.
   estimated from the spread of the $R$ per-draw estimates, or by the delta method for
   ratio estimators when $R=1$. If $|\hat\pi_t-\pi^*|$ is within two standard errors,
   the simulation size should be increased before deciding.
-  \item \emph{Parameter uncertainty.} With posterior draws of $\theta$, $p_k$ and $F_k$,
+  \item \emph{Parameter uncertainty.} With posterior draws of $\vartheta$, $p_k$ and $F_k$,
   $\hat\pi_t$ estimates the posterior predictive probability. This is $\pi_t$ in
   \cref{thm:alert}(a) when the information includes parameter uncertainty.
   \item \emph{Calibration in practice.} The algorithm is calibrated only if the model
@@ -385,7 +385,7 @@ Several points about \cref{alg:alert} follow.
 Forecasts are evaluated against \emph{settled} counts. These are the counts in each
 window once reporting has essentially completed, not the counts available at the
 forecast origin. Let $P_t$ be the predictive distribution of a count
-$Y_t=N_k(t,t+\Delta]$, with distribution function $P_t(y)=P_t(Y\le y)$.
+$Y_t=N_k(t,t+\Delta_{\mathrm a}]$, with distribution function $P_t(y)=P_t(Y\le y)$.
 
 \paragraph{Proper scoring rules} A scoring rule is strictly proper if the true
 predictive distribution uniquely optimises its expected value \citep{gneiting2007}. We
@@ -419,7 +419,7 @@ with $V_t$ uniform on $(0,1)$ and independent of everything else, and $P_t(-1)=0
 \begin{enumerate}[(a)]
   \item If $P_t$ is the conditional law of $Y_t$ given the forecaster's information
   $\mathcal G_t$, then $U_t$ is uniform on $(0,1)$ and independent of $\mathcal G_t$.
-  \item Suppose forecasts are issued at $t_m=t_0+m\Delta$, so that the windows do not
+  \item Suppose forecasts are issued at $t_m=t_0+m\Delta_{\mathrm a}$, so that the windows do not
   overlap. Suppose also that each past count $Y_{t_l}$, $l<m$, is
   $\mathcal G_{t_m}$-measurable, that is, past windows have settled by the next forecast
   origin. Then $U_{t_1},U_{t_2},\dots$ are independent and uniform on $(0,1)$.
@@ -473,28 +473,28 @@ training period.
 
 \subsection{Detecting regime shifts}\label{sec:fc-cusum}
 
-Alerts concern the next $\Delta$ days with the parameters held fixed. A different
+Alerts concern the next $\Delta_{\mathrm a}$ days with the parameters held fixed. A different
 question is whether the parameters themselves have changed, through a sustained rise
 either in the background or in contagion.
 
 \begin{remark}[A CUSUM monitor]\label{rem:fc-cusum}
-For a pre-change model $\theta_0$ and an alternative $\theta_1$, let
+For a pre-change model $\vartheta_0$ and an alternative $\vartheta_1$, let
 \[
-\ell(t)=\sum_{k=1}^{M}\Bigl[\sum_{i:\,t^k_i\le t}\log\frac{\lambda^{\theta_1}_k(t^k_i)}{\lambda^{\theta_0}_k(t^k_i)}
--\int_0^t\bigl\{\lambda^{\theta_1}_k(s)-\lambda^{\theta_0}_k(s)\bigr\}\,\dd s\Bigr]
+\ell(t)=\sum_{k=1}^{M}\Bigl[\sum_{i:\,t^k_i\le t}\log\frac{\lambda^{\vartheta_1}_k(t^k_i)}{\lambda^{\vartheta_0}_k(t^k_i)}
+-\int_0^t\bigl\{\lambda^{\vartheta_1}_k(s)-\lambda^{\vartheta_0}_k(s)\bigr\}\,\dd s\Bigr]
 \]
 be the log-likelihood ratio of the data on $[0,t]$, with both intensities computed from
 the same observed history. Page's CUSUM statistic
 $\mathcal W(t)=\ell(t)-\min_{s\le t}\ell(s)$ signals at the first $t$ with
 $\mathcal W(t)\ge h$ \citep{page1954}. Two detectors can run in parallel:
 \begin{itemize}
-  \item one whose alternative is a shift in the background, $\bm\mu\mapsto\kappa\bm\mu$
+  \item one whose alternative is a shift in the background, $\bm\mu\mapsto(1+\epsilon_\mu)\bm\mu$
   with $\Amat$ fixed;
   \item one whose alternative is a shift in contagion,
-  $\Amat\mapsto(1+\epsilon)\Amat$ with $\bm\mu$ fixed.
+  $\Amat\mapsto(1+\epsilon_A)\Amat$ with $\bm\mu$ fixed.
 \end{itemize}
 Comparing them shows which kind of change better explains a sustained departure. The
-threshold $h$ is calibrated by simulation under $\theta_0$ to a target average run
+threshold $h$ is calibrated by simulation under $\vartheta_0$ to a target average run
 length to false alarm. The optimality theory of the CUSUM is for independent
 observations; here it serves as a monitoring statistic.
 

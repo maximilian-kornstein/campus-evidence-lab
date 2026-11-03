@@ -228,10 +228,10 @@ def fig_interference(res, path, ref="chron"):
           Line2D([], [], marker="^", color=INK2, ls="none", ms=3.6, label="staggered waves")]
     if sat_key:
         hl.append(Line2D([], [], marker="D", color=INK2, mfc="white", ls="none", ms=3.4, label="saturation extrap."))
-    ax.legend(handles=hl, frameon=False, fontsize=6.3, loc="lower left", handletextpad=0.2, borderaxespad=0.1)
     _tag(ax, f"(c) traffic share {r_show:g}")
     h, l = axes[0].get_legend_handles_labels()
-    fig.legend(h, l, loc="outside lower center", ncol=4, frameon=False, fontsize=7.0, columnspacing=1.0)
+    fig.legend(h + hl, l + [x.get_label() for x in hl], loc="outside lower center", ncol=4, frameon=False,
+               fontsize=6.8, columnspacing=1.0, handletextpad=0.3)
     fig.savefig(path)
     plt.close(fig)
 

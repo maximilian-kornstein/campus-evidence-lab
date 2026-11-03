@@ -1,0 +1,142 @@
+\section{Supplementary results for Section~\ref{sec:linkage}}\label{app:linkdetails}
+
+This appendix collects results, remarks and implementation details that \cref{sec:linkage} states only in summary. We use the notation of that section. Proofs are in \cref{app:linkproofs}.
+
+\subsection{Attributes and comparison levels}\label{app:link-attributes}
+
+The attributes of \cref{sec:link-records} are noisy and heterogeneous across lists in four main ways.
+
+\emph{Dates.} A police record usually carries both the date of the incident and the date it was reported. An NGO or community-security record may carry only the date on which the organisation learned of the incident or published it, and a campus portal records the time of submission. Agreement on dates is therefore agreement up to a reporting lag whose distribution depends on the pair of lists. The comparison levels are defined on absolute date differences, and their match probabilities must be estimated separately for each pair of lists.
+
+\emph{Location.} Granularity differs: a street address or block for police, a city or neighbourhood for an NGO audit, a building for a campus portal, a county or state when details are withheld to protect victims. We compare at the finest resolution that both records share, with levels such as same block or city, same county, and unknown. Agreement at a coarse resolution carries less evidence than agreement at a fine one, and the comparison model must learn this from the data rather than assume it.
+
+\emph{Offence vocabularies.} Police lists use statutory offence categories such as intimidation, simple assault, or destruction, damage or vandalism of property \citep{fbimanual}. NGO audits use their own taxonomies, typically harassment, vandalism and assault. We encode the correspondence as a compatibility relation $\mathcal C_{kk'}\subseteq\mathcal V_k\times\mathcal V_{k'}$ between the vocabularies of lists $k$ and $k'$. It is a relation, not a bijection. An NGO's ``harassment'' may be police ``intimidation'' or no crime at all, and one police incident can carry several offence codes. The comparison distinguishes an identical harmonised category, compatible categories and incompatible categories.
+
+\emph{Target and venue.} Target type (person, institution, property) and venue (synagogue, school, cemetery, residence, campus building) are recorded partly as free text. They are compared with string comparators \citep{winkler1990}, and the similarity is binned.
+
+\subsection{Fellegi--Sunter optimality and the EM algorithm}\label{app:link-fsdetails}
+
+A \emph{decision rule} is a triple of functions $\phi=(\phi_{\mathrm L},\phi_{\mathrm C},\phi_{\mathrm N})$ from $\Gamma$ to $[0,1]$ with $\phi_{\mathrm L}+\phi_{\mathrm C}+\phi_{\mathrm N}=1$. These are the probabilities of linking, of review and of not linking. Its error probabilities are the false-link probability $P_{\mathrm{FL}}(\phi)=\sum_\gamma u(\gamma)\phi_{\mathrm L}(\gamma)$ and the missed-link probability $P_{\mathrm{ML}}(\phi)=\sum_\gamma m(\gamma)\phi_{\mathrm N}(\gamma)$.
+
+\begin{proposition}[Optimality of the Fellegi--Sunter rule; \citealp{fellegi1969}]\label{prop:link-fs}
+Fix thresholds $T_{\mathrm N}<T_{\mathrm L}$ and constants $a,b\in[0,1]$. Let $\phi^\star$ link with probability one if $w>T_{\mathrm L}$ and with probability $a$ if $w=T_{\mathrm L}$, not link with probability one if $w<T_{\mathrm N}$ and with probability $b$ if $w=T_{\mathrm N}$, and send every other comparison vector to review. Let $P_{\mathrm{FL}}^\star=P_{\mathrm{FL}}(\phi^\star)$ and $P_{\mathrm{ML}}^\star=P_{\mathrm{ML}}(\phi^\star)$. Then every rule $\phi$ with $P_{\mathrm{FL}}(\phi)\le P_{\mathrm{FL}}^\star$ and $P_{\mathrm{ML}}(\phi)\le P_{\mathrm{ML}}^\star$ satisfies
+\[
+  \textstyle\sum_\gamma m(\gamma)\phi_{\mathrm C}(\gamma)\ \ge\ \sum_\gamma m(\gamma)\phi^\star_{\mathrm C}(\gamma)
+  \qquad\text{and}\qquad
+  \sum_\gamma u(\gamma)\phi_{\mathrm C}(\gamma)\ \ge\ \sum_\gamma u(\gamma)\phi^\star_{\mathrm C}(\gamma).
+\]
+Hence $\phi^\star$ minimises the probability of clerical review for every proportion of matches among the candidate pairs.
+\end{proposition}
+
+The proof applies the Neyman--Pearson lemma twice (\cref{app:link-fs}). Under conditional independence of the fields within each mixture component, $m(\gamma)=\prod_fm_f(\gamma^f)$ and $u(\gamma)=\prod_fu_f(\gamma^f)$, and the EM algorithm takes the closed form of \cref{alg:fsem} \citep{winkler1988,jaro1989}. Missing field values are omitted from both products, which is valid when values are missing at random given match status \citep{enamorado2019}. \Citet{enamorado2019} implement this model at scale. The match probabilities $\pi_\ell$ that \cref{alg:fsem} returns are pairwise: unlike the posterior match probabilities of \cref{sec:link-fs}, they ignore the one-to-one constraint.
+
+\begin{algorithm}[t]
+\caption{Fellegi--Sunter EM under conditional independence}\label{alg:fsem}
+\begin{algorithmic}[1]
+\Require Comparison vectors $\gamma_\ell$ for candidate pairs $\ell\in\mathcal P$; field levels $\{0,\dots,L_f\}$, $f=1,\dots,F$; tolerance $\mathrm{tol}$
+\Ensure Estimates of $p=\Pr(\mathrm M)$, $m_f$, $u_f$; pairwise match probabilities $\pi_\ell$; weights $w_\ell$
+\State Initialise $p\in(0,\tfrac12)$, and $m_f,u_f$ with $m_f$ placing more mass than $u_f$ on the agreement levels
+\Repeat
+  \For{$\ell\in\mathcal P$} \Comment{E-step; $O_\ell$ = fields observed for pair $\ell$}
+    \State $\pi_\ell\gets p\prod_{f\in O_\ell}m_f(\gamma^f_\ell)\big/\bigl[p\prod_{f\in O_\ell}m_f(\gamma^f_\ell)+(1-p)\prod_{f\in O_\ell}u_f(\gamma^f_\ell)\bigr]$
+  \EndFor
+  \State $p\gets|\mathcal P|^{-1}\sum_\ell\pi_\ell$ \Comment{M-step}
+  \For{$f=1,\dots,F$ and each level $j$}
+    \State $m_f(j)\gets\sum_{\ell:f\in O_\ell}\pi_\ell\ind{\gamma^f_\ell=j}\big/\sum_{\ell:f\in O_\ell}\pi_\ell$
+    \State $u_f(j)\gets\sum_{\ell:f\in O_\ell}(1-\pi_\ell)\ind{\gamma^f_\ell=j}\big/\sum_{\ell:f\in O_\ell}(1-\pi_\ell)$
+  \EndFor
+\Until{the observed-data log-likelihood increases by less than $\mathrm{tol}$}
+\State If necessary swap the labels so that $m$ is the component with more agreement
+\State \Return $p$, $m_f$, $u_f$, $\pi_\ell$, and $w_\ell=\sum_{f\in O_\ell}\log\{m_f(\gamma_\ell^f)/u_f(\gamma_\ell^f)\}$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Merging and the split--merge calculus}\label{app:link-opdetails}
+
+\begin{lemma}[Merging to first order]\label{lem:link-merge}
+Let $\tilde\Link$ be any linkage structure with table $\tilde{\bm n}$. Let $A=\sum_k\tilde n_{\{k\}}$ be its number of singletons and suppose $C_{\min}=\min_kC_k(\tilde{\bm n})>0$. Under (LE-M),
+\[
+  \bm n=\tilde{\bm n}+\varepsilon\,\bm q(\tilde{\bm n})+\bm\xi+\bm\rho_{\mathrm{int}},
+\]
+where $\E[\bm\xi\mid\tilde\Link]=\bm 0$, $\E[\|\bm\xi\|_2^2\mid\tilde\Link]\le3\varepsilon A$ and $\E[\|\bm\rho_{\mathrm{int}}\|_1\mid\tilde\Link]\le24\,\varepsilon^2A^2/C_{\min}$. In particular, $\|\E[\bm n\mid\tilde\Link]-\tilde{\bm n}-\varepsilon\bm q(\tilde{\bm n})\|_1\le24\,\varepsilon^2A^2/C_{\min}$.
+\end{lemma}
+
+The proof (\cref{app:link-merge}) couples (LE-M) with an idealised process in which every selected singleton merges independently into a uniformly chosen cluster of the \emph{initial} configuration. The two processes differ only when two merges interact, and the expected number of such interactions is $O(\varepsilon^2A^2/C_{\min})$.
+
+For a differentiable function $F$ of a table, let $\partial_{h,k}F(\bm x)=\nabla F(\bm x)^{\top}\bm d_{h,k}$ be its derivative along the split $(h,k)$.
+
+\begin{lemma}[Split--merge calculus]\label{lem:link-response}
+Let $F$ be positively homogeneous of degree one and twice continuously differentiable near $\bm\tau$. Under LE and \cref{ass:link-pop},
+\begin{equation}\label{eq:link-response}
+  \frac{F(\bm n)-F(\bm t)}{N}
+  =\frac{\delta}{N}\sum_{|h|\ge2}t_h\sum_{k\in h}\partial_{h,k}F(\bm t)
+  -\frac{\varepsilon}{N}\sum_{k\in\Kset}\sum_{g\not\ni k}\frac{t_{\{k\}}\,t_g}{C_k(\bm t)}\,\partial_{g\cup k,k}F(\bm t)
+  +O_p^{\mathrm u}\bigl((\delta+\varepsilon)^2+N^{-1/2}\bigr).
+\end{equation}
+\end{lemma}
+
+Detachment pushes the table along the split directions, with intensity $\delta$ per record. Merging pushes it along the reversed directions, with intensity $\varepsilon$ per singleton, aimed at each target cell in proportion to its count. To first order, the effect of linkage error on any smooth estimator is the sum, over these elementary moves, of the estimator's sensitivity to each move. For the estimators of \cref{sec:identification} the sensitivities are explicit. The closed form \eqref{eq:id-closed} has $\nabla\log\mathcal A(\bm x)=(s_h/x_h)_h$, with $s_h=(-1)^{|h|+1}$ the alternating sign of \eqref{eq:fw-altprod}. Hence
+\begin{equation}\label{eq:link-splitsens}
+  \partial_{h,k}\log\mathcal A(\bm x)=\frac{1}{x_{\{k\}}}+(-1)^{|h|}\Bigl(\frac1{x_h}+\frac1{x_{h\setminus k}}\Bigr),
+\end{equation}
+where for $|h|=2$ the cell $h\setminus k$ is a singleton. In \cref{thm:review} and \cref{alg:review}, a link that merges a list-$k$ singleton into a cluster of type $g$ has sensitivity $g_\ell=-\widehat n_{\zero}\,\partial_{g\cup k,k}\log\mathcal A$, plus $-1$ from the change in $n$ when $F=\Nhat$.
+
+\subsection{Remarks on the linkage-bias theorem}\label{app:link-biasremarks}
+
+\begin{remark}[Coefficients for two and three lists]\label{rem:link-H}
+For $K=2$, \eqref{eq:link-betas} reduces to $\beta_\delta=2(1+t_{11}/t_{10}+t_{11}/t_{01})$ and $\beta_\varepsilon=-\{2+t_{10}/t_{01}+t_{01}/t_{10}+(t_{10}+t_{01})/t_{11}\}$. For $K=3$, every positive table has the factorised form required in \cref{thm:linkbias}(iv): it is the no-three-way-interaction parametrisation of the observed cells. The pairwise factor $\phi_{jk}$ is then the observable conditional odds ratio $t_{\{j,k,l\}}t_{\{l\}}/(t_{\{j,l\}}t_{\{k,l\}})$ between lists $j$ and $k$ among incidents recorded by the third list $l$ (\cref{app:link-bias}). So for $K=3$, the table $\bm t$ itself satisfies \eqref{eq:link-H} whenever these three odds ratios lie in $[\frac12,2]$. For $K\ge4$ the factorisation is a genuine restriction: it rules out interactions of order three or more among the observed cells, so a realised table essentially never factorises exactly, even under independent capture. This is why \cref{thm:linkbias}(iv) places the condition on $\bm\tau$. In practice, \eqref{eq:link-H} involves only observed cells and can be checked directly on the corrected table $\hat{\bm t}$ of \cref{cor:linkcorrect}.
+\end{remark}
+
+\begin{remark}[Reading the theorem]\label{rem:link-reading}
+Under independent capture (\cref{cor:link-indep}), the two error types are not symmetric, and which one matters more depends on how sparse the lists are. Detachment moves incidents from overlaps into singletons at a rate proportional to the overlaps. Merging moves singletons into overlaps at a rate proportional to the \emph{singletons}. When lists capture small fractions of incidents, singletons outnumber overlaps by a factor of order $1/p$. Then $|\beta_\varepsilon|$ is of order $1/p$, while $\beta_\delta$ is close to $K$. Take a hypothetical two-list example with $p_1=p_2=0.1$. \Cref{cor:link-indep} gives $\beta_\delta\approx2.4$ and $\beta_\varepsilon=-22$. A false-match rate of $1\%$ would then deflate the estimated dark figure by about a fifth, while a false-non-match rate of $1\%$ would inflate it by about $2.4\%$. Dense lists reverse the ranking. Under independent capture with equal $p$, $\beta_\delta$ grows like $(1-p)^{-(K-1)}$, and missed links dominate once $p$ exceeds $p^\ast=1-2^{-1/(K-1)}$, which is about $0.21$ for $K=4$. With $K=4$ and $p=0.5$, for instance, $\beta_\delta=36$ and $\beta_\varepsilon\approx-5.1$. The plug-in $F(\Lop_{\delta,\varepsilon}(\bm t))$ then gives $+41\%$ for $\delta=1\%$ against $-5\%$ for $\varepsilon=1\%$. These rankings are proved only under independent capture; with dependent lists even the signs can change (\cref{rem:link-reversal}). We therefore recommend computing $\beta_\delta$ and $\beta_\varepsilon$ from the corrected table $\hat{\bm t}$ of \cref{cor:linkcorrect}, which estimates them consistently up to $O(\varepsilon^2)$ when the errors follow LE, and using them to choose linkage thresholds and audit priorities. Since the expansion \eqref{eq:link-Kbias} is linear, it is informative only when $\delta|\beta_\delta|$ and $\varepsilon|\beta_\varepsilon|$ are small. Beyond that range we recommend the plug-in $F(\Lop_{\delta,\varepsilon}(\hat{\bm t}))$, which is exact in $\delta$.
+\end{remark}
+
+\begin{remark}[Relation to the literature]\label{rem:link-lit}
+For $K=2$, LE shares the affine structure of the dual-system model with matching error of \citet{ding1994}. In both, $\E[n_{11}]=\alpha t_{11}+\beta_1(t_{1+}-t_{11})+\beta_2(t_{2+}-t_{11})$ for constants $\alpha$, $\beta_1$ and $\beta_2$. For any mechanism of this form whose matched count concentrates, the argument of \cref{thm:linkbias}(ii) gives $\Nhat_{\mathrm{LP}}(\bm n)/\Nhat_{\mathrm{LP}}(\bm t)\to\{\alpha-\beta_1-\beta_2+\beta_1/\hat p_2+\beta_2/\hat p_1\}^{-1}$. To first order in $\varepsilon$, LE has $\alpha=(1-\delta)^2(1-2\varepsilon)+2\varepsilon$ and $\beta_1=\beta_2=\varepsilon$, which gives \eqref{eq:link-LP}. In the Ding--Fienberg model, a true match is recovered with probability $\alpha$ and a record of one list without a true match is falsely matched with probability $\beta$, so $\beta_1=0$ and $\beta_2=\beta$. The two models are not nested, and $\E[n_{11}]$ alone does not identify $(\alpha,\beta_1,\beta_2)$. Under LE, for example, an unmatched list-$k$ singleton is falsely linked with probability about $\varepsilon(1+A_j/A_k)$, where $A_k$ is the number of list-$k$ singletons after detachment and $j\ne k$, because it can merge into another cluster or have another singleton merge into it. Inverting the affine map gives
+\[
+  \Nhat=\frac{t_{1+}t_{2+}(\alpha-\beta_1-\beta_2)}{n_{11}-\beta_1t_{1+}-\beta_2t_{2+}},
+\]
+which for $\beta_1=0$ is their corrected estimator; \citet{diconsiglio2015} use it with probabilistically linked data. Extensions to several lists that, like ours, treat linkage error as a transformation of capture-history counts are given by \citet{ding1996} and \citet{diconsiglio2018}. Bias corrections of the same spirit for regression on linked files are due to \citet{lahiri2005}.
+\end{remark}
+
+\begin{remark}[List-specific rates]\label{rem:link-listspecific}
+If records of list $k$ detach with probability $\delta_k$ and list-$k$ singletons merge with probability $\varepsilon_k$, replace $\delta^{|h|-|g|}(1-\delta)^{|g|}$ in \eqref{eq:link-D} by $\prod_{j\in h\setminus g}\delta_j\prod_{j\in g}(1-\delta_j)$, the singleton term $\delta\,\ind{g=\{k\},k\in h}$ by $\delta_k\ind{g=\{k\},k\in h}$, and the coefficient $(-\delta)^{|g|-|h|}(1-\delta)^{-|g|}$ in \eqref{eq:link-mobius} by $\prod_{j\in g\setminus h}(-\delta_j)\prod_{j\in g}(1-\delta_j)^{-1}$. In \eqref{eq:link-response}, weight the split $(h,k)$ by $\delta_k$ and the merges of list-$k$ singletons by $\varepsilon_k$. The proofs are unchanged. List-specific rates are natural here, because police records are typically more complete than self-reports.
+\end{remark}
+
+\begin{remark}[Deduplication errors]\label{rem:link-dedup}
+LE assumes perfect within-list deduplication. A missed duplicate in list $k$ adds a spurious record that, if unlinked, is a singleton $\{k\}$. Missed duplicates at rate $\eta_k$ thus add about $\eta_kt_{k+}$ to the cell $\{k\}$. Singletons enter $\mathcal A$ with exponent $+1$, so this inflates the closed-form dark figure by a relative amount of about $\sum_k\eta_kt_{k+}/t_{\{k\}}$. Over-deduplication, which merges two distinct incidents within a list, acts in the opposite direction. Unlike LE errors, both change the list margins.
+\end{remark}
+
+\subsection{The corrected estimator: audits of the same linkage, and the solver}\label{app:link-correctdetails}
+
+\begin{remark}[Auditing the same linkage]\label{rem:link-sameaudit}
+The audit of \cref{sec:link-review} samples pairs from the linkage that produced $\bm n$. Then $\hat\theta$ and $\bm n$ are dependent and \cref{cor:linkcorrect}(iii) does not apply. Such an audit estimates the \emph{realised} error rates of that linkage, which removes part of $v_{\mathrm{link}}$. Take $K=2$, $\varepsilon=0$ and an audit of a simple random fraction $f$ of the $t_{11}$ true pairs, and let $\varrho=(1-\delta)^2$. Then $\Var(\log\hat t_{11}-\log t_{11})=\{1+o(1)\}(1-\varrho)(f^{-1}-1)/(\varrho\,t_{11})$, whereas adding the variances of (i) and (iii) gives $(1-\varrho)(f^{-1}+1)/(\varrho\,t_{11})$. A census audit ($f=1$) recovers $t_{11}$ exactly (\cref{app:link-correct}). In this case the sum overstates the variance by twice the linkage variance of (i), so it is conservative. We do not derive the joint variance in general. A parametric bootstrap that regenerates both the LE errors at $\hat\theta$ and the audit sample estimates it.
+\end{remark}
+
+\Cref{cor:linkcorrect}(ii) defines the estimator that the simulation code computes. That code solves $\Lop_{\delta,\varepsilon}(\bm x)=\bm n$ by the projected fixed-point iteration $\bm x\gets\max\{\bm 0,\bm x+(\bm n-\Lop_{\delta,\varepsilon}(\bm x))\}$, started at $\bm x=\bm n$, with step length one; the step is halved and the iteration restarted only if it diverges. For $\varepsilon=0$ and without the projection, the iteration matrix $I-\mathcal D_\delta$ is triangular with spectral radius $1-(1-\delta)^K<1$, so the iteration converges geometrically to \eqref{eq:link-mobius}--\eqref{eq:link-singleinv}. With the projection, it can converge to that solution only if $\mathcal D_\delta^{-1}\bm n\ge\bm0$. If some cell of $\mathcal D_\delta^{-1}\bm n$ is negative, which can happen when a cell is small and $\delta$ is large, the equation has no non-negative solution. The iteration then stops at a stationary point with some cells clamped at zero, and the code reports non-convergence.
+
+\subsection{Review under general costs, and the design of the audit}\label{app:link-reviewdetails}
+
+\Cref{thm:review}(ii) assumes unit costs. With general costs the greedy rule is near-optimal.
+
+\begin{proposition}[Review under general costs]\label{prop:review-costs}
+Assume (R1)--(R2) of \cref{sec:link-review}. Maximising $\sum_{u\in S}\sigma_u^2$ subject to $\sum_{u\in S}c_u\le B$ is a $0$--$1$ knapsack problem with optimum $W^\star$. Order the units by $\sigma_u^2/c_u$, let $S_{\mathrm g}$ be the longest prefix that fits the budget, and let $j$ be the first unit that does not fit. Then $\sum_{u\in S_{\mathrm g}}\sigma_u^2\ge W^\star-\sigma_j^2$. If $c_j\le B$, the better of $S_{\mathrm g}$ and $\{j\}$ achieves at least $W^\star/2$.
+\end{proposition}
+
+\paragraph{Design of the random audit}
+The audit population is the set $\mathcal P$ of candidate pairs, partitioned into strata $\mathcal P_1,\dots,\mathcal P_H$ of sizes $N_h$ that cross decision status (linked edge; same cluster but not an edge; different clusters) with bins of the posterior match probability $\pi_\ell$. From stratum $h$ a simple random sample of $n_h\ge2$ pairs is drawn without replacement, at cost $c_h$ per pair, and a reviewer determines the true status $I_\ell$ of each sampled pair. Let $\bm y_\ell\in\mathbb R^J$ be pair-level variables, functions of $I_\ell$ and of the decisions, whose population totals $\bm Y=\sum_{\ell\in\mathcal P}\bm y_\ell$ determine the error rates through a smooth map $\theta=(\delta,\varepsilon)=\psi(\bm Y)$. Under LE the natural choice is $\bm Y=(\mathrm{TP},\mathrm{FN},\mathrm{FE})$, with $\psi$ given by \eqref{eq:link-psi}.
+
+The first equation of \eqref{eq:link-psi} inverts the pairwise retention probability $(1-\delta)^2$ of \cref{prop:link-detach}(iv). For the second, let $M$ be the number of false merges and $A$ the number of singletons before merging. Under LE, $\E M=\varepsilon A\{1+O(\varepsilon)\}$. A merge consumes one singleton, or two when its target is itself a singleton, which for $K=2$ is always the case. So $A=f_1+M+M_s$, where $f_1$ is the observed number of singleton clusters and $M_s\le M$ counts merges into singletons. Since $M_s=O(\varepsilon A)$, dropping it changes $\varepsilon$ by $O(\varepsilon^2)$, and \eqref{eq:link-psi} is correct to first order in $\varepsilon$.
+
+Let $\hat{\bm Y}=\sum_hN_h\bar{\bm y}_h$ be the stratified expansion estimator, $\hat\theta=\psi(\hat{\bm Y})$, and let $\bm a=\partial F(\hat{\bm t}(\theta))/\partial\theta$ be the sensitivity of the corrected estimator of \cref{cor:linkcorrect} to the rates. Conditionally on the linkage, the audit sample is the only source of randomness in $\hat\theta$. The audit should minimise the resulting design variance of $F(\hat{\bm t}(\hat\theta))$. Its linearisation is the design variance of the total of the composite variable $z_\ell=\bm a^{\top}\nabla\psi(\bm Y)\bm y_\ell$. Because $\hat\theta$ then estimates the realised error rates, this variance should not simply be added to $v_{\mathrm{link}}$ (\cref{rem:link-sameaudit}).
+
+\begin{proposition}[Neyman-allocated audit]\label{prop:link-audit}
+In the design above, let $S_{z,h}^2=(N_h-1)^{-1}\sum_{\ell\in\mathcal P_h}(z_\ell-\bar z_h)^2$.
+\begin{enumerate}[(i)]
+  \item $\hat{\bm Y}$ is design-unbiased for $\bm Y$, and $\hat\theta$ is design-consistent as $\min_hn_h\to\infty$.
+  \item The linearised audit variance $V_{\mathrm{aud}}=\sum_hN_h^2(1-n_h/N_h)S_{z,h}^2/n_h$ is minimised, subject to $\sum_hc_hn_h=C$ and ignoring integrality, by the Neyman allocation $n_h\propto N_hS_{z,h}/\sqrt{c_h}$. The minimum is $(\sum_hN_hS_{z,h}\sqrt{c_h})^2/C-\sum_hN_hS_{z,h}^2$. With the bounds $2\le n_h\le N_h$ the problem stays convex, and its solution is $n_h=\min\{N_h,\max(2,N_hS_{z,h}/\sqrt{\lambda c_h})\}$, with $\lambda>0$ chosen to exhaust the budget.
+  \item If all pairs in stratum $h$ share one decision status, then $z_\ell=\alpha_h+\lambda_hI_\ell$ and $S_{z,h}=|\lambda_h|S_{I,h}$. Here $S_{I,h}^2=P_h(1-P_h)N_h/(N_h-1)$, where $P_h$ is the proportion of true matches in the stratum. If the posterior is calibrated within strata, then $\E[P_h\mid D]=\bar\pi_h$, the mean of $\pi_\ell$ over the stratum. This suggests the working allocation $n_h\propto N_h|\lambda_h|\{\bar\pi_h(1-\bar\pi_h)N_h/((N_h-1)c_h)\}^{1/2}$.
+\end{enumerate}
+\end{proposition}
+
+The optimal allocation (ii) is classical \citep{neyman1934,cochran1977}. The point of (iii) is the choice of target. Strata are weighted by their posterior uncertainty, as in targeted review, and also by the leverage $|\lambda_h|$ of their error type on the dark figure. Under independent capture (\cref{cor:link-indep,rem:link-reading}), this leverage is much larger for false links than for missed links when the lists are sparse, and smaller when they are dense; in general, the estimated coefficients $\beta(\hat{\bm t})$ show which case applies. The estimates in (i) are design-based, so they remain valid when the linkage model is miscalibrated \citep{belin1995}. Calibration affects only efficiency, through the proxy for $S_{z,h}$ in (iii). The simulation code uses (iii) with $|\lambda_h|\equiv1$ and $c_h\equiv1$, drops the factor $N_h/(N_h-1)$, and floors the proxy at $S_{I,h}\ge0.01$. It allocates at least two pairs per stratum, caps $n_h$ at $N_h$, and re-allocates the remainder, as in (ii).

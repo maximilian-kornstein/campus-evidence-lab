@@ -28,11 +28,11 @@ N_k(t)-\Lam_k(t),\qquad \Lam_k(t)=\int_0^t\lambda_k(s)\,\dd s,
 \]
 is a local martingale. Heuristically,
 $\lambda_k(t)\,\dd t=\Pr\{\dN_k(t)=1\mid\Hist_{t-}\}$. The process $\Lam_k$ is the
-\emph{compensator}. For a parametric family of intensities $\lambda_k(\cdot;\theta)$,
+\emph{compensator}. For a parametric family of intensities $\lambda_k(\cdot;\vartheta)$,
 the log-likelihood of the observed streams on $[0,T]$ is
 \begin{equation}\label{eq:th-loglik}
-  \ell_T(\theta)=\sum_{k=1}^{M}\Big[\sum_{i:\,t^k_i\le T}\log\lambda_k(t^k_i;\theta)
-  -\int_0^T\lambda_k(t;\theta)\,\dd t\Big]
+  \ell_T(\vartheta)=\sum_{k=1}^{M}\Big[\sum_{i:\,t^k_i\le T}\log\lambda_k(t^k_i;\vartheta)
+  -\int_0^T\lambda_k(t;\vartheta)\,\dd t\Big]
 \end{equation}
 \citep[Ch.~7]{daley2003}; see \citet{ogata1978} for its asymptotic theory and
 \citet{ogata1988} for its use in self-exciting models. If marks are
@@ -129,8 +129,8 @@ Suppose there are no shocks, $\mu_k(t)\equiv\mu_k>0$ for every $k$, and
     Borel distribution
     $\Pr(\mathcal S=k)=e^{-nk}(nk)^{k-1}/k!$, $k\ge1$, with $\E \mathcal S=(1-n)^{-1}$,
     $\E \mathcal S^2=(1-n)^{-3}$, $\E \mathcal S^3=(1+2n)(1-n)^{-5}$ and
-    $\E \mathcal S^4=(1+8n+6n^2)(1-n)^{-7}$. Moreover $\E e^{\theta \mathcal S}<\infty$ for
-    $\theta\le n-1-\log n$, and $n-1-\log n>0$ for $n\in(0,1)$.
+    $\E \mathcal S^4=(1+8n+6n^2)(1-n)^{-7}$. Moreover $\E e^{u \mathcal S}<\infty$ for
+    $u\le n-1-\log n$, and $n-1-\log n>0$ for $n\in(0,1)$.
 \end{enumerate}
 \end{proposition}
 

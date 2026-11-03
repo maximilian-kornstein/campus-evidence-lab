@@ -1,0 +1,319 @@
+\section{Simulation details}\label{app:simdetails}
+
+This appendix documents the simulation study of \cref{sec:simulation}: the software and
+the runs (\cref{app:sim-run}), the configurations (\cref{app:sim-config}), the estimator
+settings (\cref{app:sim-est}), the Monte Carlo standard errors (\cref{app:sim-mcse}) and
+how to reproduce the results (\cref{app:sim-repro}). All data are synthetic. Every
+configuration value below is stored with the results in \texttt{results/sim\_results.json},
+and the per-replicate values are in \texttt{results/raw/E1.json}, \dots,
+\texttt{results/raw/E6.json}.
+
+\subsection{Software, seeds and runs}\label{app:sim-run}
+
+\paragraph{Software} The experiments are run by \texttt{code/run\_experiments.py}. It
+calls the lab's Hawkes library in \texttt{code/hawkes/} (version 1.0.0) for simulation,
+EM fitting, standard errors, the likelihood-ratio test, the surge decomposition and
+predictive simulation. The figures of \cref{sec:simulation} and \cref{tab:sim-main} are
+written by \texttt{code/make\_figures.py} from the results file. The recorded environment is
+Python 3.13.18, NumPy 2.5.3, SciPy 1.18.1 and Matplotlib 3.11.2 on Linux x86\_64 (glibc
+2.39). No other packages are used.
+
+\paragraph{Seeds} The base seed is $2026110302$. Every replicate has its own NumPy
+generator, created by \texttt{np.random.default\_rng} from the seed sequence
+\[
+\mathtt{SeedSequence}([\,2026110302,\ i,\ c,\ r\,]),
+\]
+where $i$ is the experiment index (E1 to E6 are $1$ to $6$), $c$ indexes the configuration
+and $r$ the replicate. The configuration index is the index of $T$ in E1; the position in
+\cref{tab:sim-e2} in E2; the index of $n$ for the homogeneous part of E3 and $100$ plus the
+index of the recording case for its heterogeneous part; and the scenario index in E4 (size,
+three power values, common shock). E5 draws its label paths in 20 chunks of 1000, with
+$(i,c,r)=(5,0,\text{chunk})$. E6 uses $c=0$ for its replicates and $(i,c,r)=(6,999,0)$ for
+the threshold pilot. Because each replicate has its own stream, the results do not depend
+on the number of worker processes or on the order in which tasks are scheduled.
+
+\paragraph{Runs} The main run was on 3~November 2026, from 21:08:49 to 21:48:24 UTC, with
+two worker processes, \texttt{OPENBLAS\_NUM\_THREADS=1} and \texttt{nice}, on a shared
+four-core machine with a load of about twelve. The experiments ran in the order E1, E5, E3,
+E4, E2, E6. Three later steps changed the results file.
+\begin{enumerate}[(1)]
+  \item \emph{E6 post-processing} (21:49:52 UTC). The option \texttt{-{}-postprocess-e6}
+  added the split of the PIT by whether a new external event arrives inside the forecast
+  window. The event calendar of each replicate is the first draw from its generator, so it
+  was regenerated from the seed; the script checked that the number of events matched the
+  stored run. No incidents were re-simulated and no model was refitted. The provenance is
+  recorded under \texttt{postprocess} in the E6 entry.
+  \item \emph{E5 rerun} (21:49:53 to 21:50:28 UTC) with 20{,}000 branching-label paths.
+  The first E5 run, with 4000 paths, was overwritten and is superseded. The plug-in
+  estimates of E5 reuse the stored E1 fits, so they are unchanged.
+  \item \emph{Final merge} (21:55:25 UTC, \texttt{-{}-merge-only}), which rewrote
+  \texttt{sim\_results.json} from the raw files without running any experiment.
+\end{enumerate}
+\Cref{tab:sim-runtime} gives the run times. The total wall time, $2406.0$ seconds, exceeded
+the planned budget of 35 minutes by about five minutes. Task CPU time is summed over
+tasks; it can exceed wall time because two workers ran in parallel, and it falls short of
+wall time when the machine was busy with other jobs.
+
+\begin{table}[t]
+\centering
+\caption{Run times of the simulation study, in seconds. E5 is the rerun with 20{,}000
+paths. Task CPU time is summed over tasks.}
+\label{tab:sim-runtime}
+\small
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+ & E1 & E5 & E3 & E4 & E2 & E6 & Total\\
+\midrule
+Wall time & 503.0 & 34.6 & 103.0 & 760.4 & 795.1 & 209.9 & 2406.0\\
+Task CPU time & 577.5 & 25.5 & 184.2 & 752.9 & 568.9 & 128.2 & 2237.2\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Code hashes} Each experiment records the first 16 hexadecimal digits of the
+SHA-256 hash of every source file (\cref{tab:sim-hashes}). The library files were identical
+in all runs. The driver \texttt{run\_experiments.py} had three versions. Version
+\texttt{4214ba239bd036f8} ran E1, E2, E3, E4 and E6 in the main run. Version
+\texttt{97cd66769a8bd7a9} ran the E5 rerun and the E6 post-processing; according to the
+run notes, it changes only the default number of E5 paths and adds the post-processing
+option. Version \texttt{caf14514836f2036} performed the final merge; it is recorded in the
+\texttt{meta} entry of the results file and is the version in the repository. The figure
+script \texttt{make\_figures.py} has hash \texttt{2ccd886e35665f2d}.
+
+\begin{table}[t]
+\centering
+\caption{Source files of the simulation study and the first 16 hexadecimal digits of their
+SHA-256 hashes. Library files are in \texttt{code/hawkes/}.}
+\label{tab:sim-hashes}
+\small
+\begin{tabular}{@{}ll@{\hspace{2.5em}}ll@{}}
+\toprule
+File & Hash & File & Hash\\
+\midrule
+\texttt{\_\_init\_\_.py} & \texttt{f8498f730e100620} & \texttt{model.py} & \texttt{b66101b97399627c}\\
+\texttt{alert.py} & \texttt{22a64c948e3a9b61} & \texttt{rescaling.py} & \texttt{9ab2c9b32e3003fc}\\
+\texttt{attribution.py} & \texttt{e7f5e764f1adf374} & \texttt{simulate.py} & \texttt{aaedac31380652f5}\\
+\texttt{em.py} & \texttt{2f6aebebccfc91e7} & \texttt{tests\_alpha.py} & \texttt{9a70835c25addd10}\\
+\texttt{inar.py} & \texttt{fd6f659749824310} & \texttt{thinning.py} & \texttt{0374a889ddb6ddb6}\\
+\texttt{likelihood.py} & \texttt{ae276c6c27e89823} & & \\
+\midrule
+\multicolumn{4}{@{}l}{\texttt{run\_experiments.py}: \texttt{4214ba239bd036f8} (main run),
+\texttt{97cd66769a8bd7a9} (E5 rerun, E6 post-processing),}\\
+\multicolumn{4}{@{}l}{\phantom{\texttt{run\_experiments.py}: }\texttt{caf14514836f2036} (final merge)}\\
+\texttt{make\_figures.py} & \texttt{2ccd886e35665f2d} & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Configurations}\label{app:sim-config}
+
+Time is in arbitrary units, called days in the text. Unless stated otherwise, EM stops when
+the gain in log-likelihood is at most $10^{-8}(1+|\ell_T|)$, or after 2000 iterations.
+
+\paragraph{E1 (recovery)} $M=3$ streams: offline region A, offline region B and online.
+$\bm\mu=(0.25,0.20,0.50)$; $\Amat$ as in \cref{sec:sim-recovery}, with
+$\spr(\Amat)=0.4848$; one decay $\beta=1.5$ for all kernels. Events at days
+$60,180,\dots,1980$ (every 120 days), with sizes $1,2,3,1,2,1,3,2$ repeated: 8 events before
+$T=1000$ and 17 before $T=2000$. Loadings $(3,2,6)$; response kernel $\eta e^{-\eta t}$ with
+$\eta=0.4$ for all streams. $T\in\{1000,2000\}$; $R=100$ per $T$. The mean numbers of
+incidents per stream are $621.0$, $511.2$ and $1076.8$ at $T=1000$, and $1252.8$,
+$1026.1$ and $2173.0$ at $T=2000$. Fits estimate 17 parameters with the calendar known. The
+mean fitting time was $2.6$ seconds at $T=1000$ and $6.9$ seconds at $T=2000$.
+
+\paragraph{E5 (attribution)} The E1 truth on $[0,315]$, which contains the first three
+events. The attributed event is the third, at $\tau_e=300$ with $S_e=3$; horizons
+$H\in\{7,14\}$, and $H=\infty$ for the plug-in totals. 20{,}000 paths are simulated with
+their branching labels. An incident in $(\tau_e,\tau_e+H]$ is counted in $D_k$ if it is an
+immigrant of event $e$, in $C_k$ if it is a later-generation descendant of such an
+immigrant, in $C^{\mathrm{on}}_k$ if, in addition, its ancestral line contains a step from
+the online stream to an offline stream, and in $B_k$ otherwise. The exact values are those
+of \cref{thm:attribution} for the process started empty at time $0$, with $B_k$ including
+the clusters rooted in the first two events. They are computed with matrix exponentials of
+the linear system of \cref{prop:irf}, as in \eqref{eq:at-augmented}; the plug-in estimates
+apply the same computation to the E1 fits.
+
+\paragraph{E2 (spurious contagion)} Mean rate $\Lambda=2$; $T=1000$; lead-in of 40 days;
+$R=20$ per configuration. Shot-noise families: shock decay $\gamma=0.5$, $m$ incidents per
+shock on average, shock share $s=\kappa/m$, shock rate $r=s\Lambda/m$, amplitude
+$a=m\gamma$ and constant part $\nu=\Lambda(1-s)$. The process is simulated as a Hawkes
+process with $\Amat=\zero$ whose calendar is the shocks in $[-40,T]$, each with size $1$,
+loading $m$ and response rate $\gamma$; this is the law of $C(\nu,r,a,\gamma)$, and it lets
+the shocks before time $0$ act on the window. Slow family: a two-state rate
+$\Lambda\pm\delta$ with switching rate $0.01$ in each direction ($q=0.02$ in total),
+$\delta=(\kappa\Lambda q/2)^{1/2}$, and a random initial state. \Cref{tab:sim-e2} lists the
+configurations and the theoretical values. The spline background is a clamped cubic
+B-spline basis with 20 functions and equally spaced interior knots on $[0,T]$, without
+penalty. The dispersion estimator uses 40 bins of 25 days.
+
+\begin{table}[t]
+\centering
+\caption{E2 configurations, in the order of their seed index. $s$: share of shock-driven
+incidents; $r$: shock rate; $\nu$: constant part of the rate; shocks: mean number per path,
+including the 40-day lead-in; $n^*$, $n^*_w$ and $\beta^*$: second-order pseudo-true
+branching ratio, its 25-day-bin version and the pseudo-true decay
+(\cref{thm:spurious}). Fits: c = constant background, s = spline background,
+k = shock times known.}
+\label{tab:sim-e2}
+\small
+\begin{tabular}{@{}lrrrrrrrrl@{}}
+\toprule
+Family & $\kappa$ & $s$ & $r$ & $\nu$ & Shocks & $n^*$ & $n^*_w$ & $\beta^*$ & Fits\\
+\midrule
+Rare ($m=16$) & 0.5 & 0.0312 & 0.00391 & 1.9375 & 4.2 & 0.184 & 0.172 & 0.612 & c, s, k\\
+ & 1 & 0.0625 & 0.00781 & 1.8750 & 9.2 & 0.293 & 0.278 & 0.707 & c, s, k\\
+ & 2 & 0.1250 & 0.01562 & 1.7500 & 16.1 & 0.423 & 0.407 & 0.866 & c, s, k\\
+ & 4 & 0.2500 & 0.03125 & 1.5000 & 34.1 & 0.553 & 0.538 & 1.118 & c, s, k\\
+ & 8 & 0.5000 & 0.06250 & 1.0000 & 65.7 & 0.667 & 0.654 & 1.500 & c, s, k\\
+\addlinespace
+Frequent ($m=4$) & 0.5 & 0.1250 & 0.06250 & 1.7500 & 66.8 & 0.184 & 0.172 & 0.612 & c, s, k\\
+ & 1 & 0.2500 & 0.12500 & 1.5000 & 131.7 & 0.293 & 0.278 & 0.707 & c, s, k\\
+ & 2 & 0.5000 & 0.25000 & 1.0000 & 262.1 & 0.423 & 0.407 & 0.866 & c, s\\
+ & 3 & 0.7500 & 0.37500 & 0.5000 & 388.9 & 0.500 & 0.484 & 1.000 & c, s\\
+\addlinespace
+Slow ($q=0.02$) & 0.5 & \multicolumn{4}{l}{$\delta=0.1$; rates $1.9$ and $2.1$} & 0.184 & --- & 0.0245 & c, s\\
+ & 2 & \multicolumn{4}{l}{$\delta=0.2$; rates $1.8$ and $2.2$} & 0.423 & --- & 0.0346 & c, s\\
+ & 8 & \multicolumn{4}{l}{$\delta=0.4$; rates $1.6$ and $2.4$} & 0.667 & --- & 0.0600 & c, s\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The shocks-known fit was restricted to configurations with at most about 130 shocks per path
+on average. The library's E-step stores an array of size (incidents $\times$ shocks), so its
+cost grows with the number of shocks: for the frequent family at $\kappa=1$, with 131.7
+shocks per path, a shocks-known fit took $10.6$ seconds on average, against $1.3$ seconds
+for the constant-background fit. This is a limitation of the implementation, not of
+\cref{alg:em}: the M-step needs only sums over shocks, which admit the same recursion as
+\eqref{eq:est-recursion}.
+
+\paragraph{E3 (thinning)} Univariate Hawkes process with $\beta=1$, $\mu=2(1-n)$ (so
+$\Lambda=2$), $T=1500$, $n\in\{0.3,0.5,0.7\}$ and $R=40$. Recording probabilities
+$p\in\{1,0.8,0.6,0.4,0.2\}$, applied with one uniform variable per incident. The
+theoretical apparent branching ratios $n'=h_p(n)$ are $0.3000$, $0.2613$, $0.2154$,
+$0.1597$ and $0.0902$ for $n=0.3$; $0.5000$, $0.4577$, $0.4024$, $0.3258$ and $0.2094$
+for $n=0.5$; and $0.7000$, $0.6683$, $0.6238$, $0.5548$ and $0.4248$ for $n=0.7$.
+Estimated $p$: $\hat p=\min\{1,\max(0.02,\,p+0.1pZ)\}$ with $Z\sim N(0,1)$ drawn
+independently for each $p$, and $\mathrm{SE}(\hat p)=0.1\hat p$. Heterogeneous part: marks
+$x\in\{1,2\}$ with probabilities $(0.5,0.5)$ and offspring means $n_x=(0.1,0.9)$,
+simulated as a two-type Hawkes process with $\alpha_{yx}=\pi_yn_x$ (the type of a child is
+drawn independently of its parent), $\beta=1$, $\Lambda=2$, $T=1500$ and $R=30$. The
+recording cases and the values of \cref{prop:th-hetthin} are: $(0.2,0.8)$ with
+$\Cov(p_X,n_X)=0.12$, $n''=0.4495$ and $n_{\mathrm{naive}}=0.5774$; $(0.5,0.5)$ with
+$0.4045$ and $0.5358$; $(0.8,0.2)$ with $\Cov(p_X,n_X)=-0.12$, $0.3463$ and $0.4787$; and
+$(1,1)$ with $0.5358$ and $0.5358$. In all cases $\bar n=0.5$ and $\Var(n_X)=0.16$.
+
+\paragraph{E4 (testing)} $M=2$ (offline, online); $\bm\mu=(0.4,0.8)$;
+$\Amat=\bigl(\begin{smallmatrix}0.3&\alpha_{\mathrm{off},\mathrm{on}}\\0.2&0.4\end{smallmatrix}\bigr)$;
+$\beta=1$; $T=600$. Size: $\alpha_{\mathrm{off},\mathrm{on}}=0$, $R=160$. Power:
+$\alpha_{\mathrm{off},\mathrm{on}}\in\{0.05,0.1,0.2\}$, $R=60$ each. Common shocks:
+$\alpha_{\mathrm{off},\mathrm{on}}=0$; events uniform on $[0,T]$ at rate $0.05$; sizes
+$e^{0.5Z}$; loadings $(4,12)$; response rates $(0.25,2.0)$; $R=60$. EM tolerance
+$10^{-9}$.
+
+\paragraph{E6 (alerting)} $M=2$ (offline target, online); $\bm\mu=(0.3,0.8)$;
+$\Amat=\bigl(\begin{smallmatrix}0.35&0.10\\0.25&0.45\end{smallmatrix}\bigr)$; $\beta=1$.
+Events uniform at rate $1/30$; sizes $e^{0.75Z}$; loadings $(6,15)$; common response rate
+$0.3$. Training period $[0,1000]$, followed by 150 windows of $\Delta_{\mathrm a}=7$ days;
+$R=12$. The surge threshold $c=21$ was set from a pilot path of $30{,}000$ days, using the
+4271 complete weekly windows after a burn-in of 100 days. Predictive distributions use
+2000 simulated continuations per forecast. The moving-average forecast uses the last four
+weekly counts. Cost ratios $c_{\mathrm{miss}}/c_{\mathrm{FA}}\in\{2,5,10\}$ with
+$c_{\mathrm{FA}}=1$. Delays on the offline stream only: zero with probability $0.3$,
+otherwise exponential with mean 3 days, so $F(d)=0.3+0.7(1-e^{-d/3})$ for $d\ge0$. PIT
+histograms have 10 bins.
+
+\subsection{Estimator settings}\label{app:sim-est}
+
+\paragraph{EM} All fits use \cref{alg:em} as implemented in \texttt{hawkes.em.fit\_em}, with
+the exact window terms, one decay rate shared by all excitation kernels, and one response
+rate shared by all streams (stream-specific response rates in the E4 fit with the calendar
+included). Starting values come from the profile log-likelihood in the decay rate, evaluated
+by 40 EM iterations at each point of an 8-point logarithmic grid on
+$[\min(0.05\,n_{\mathrm{ev}}/T,\,20/T),\ 200\,n_{\mathrm{ev}}/T]$; full EM is then run from
+up to three local maxima of the grid profile, best first, and the best optimum is kept. The
+decay and response rates are bounded to $[0.01/T,\ 10^4n_{\mathrm{ev}}/T]$. SQUAREM steps
+are accepted only when they raise the log-likelihood. The spline background is fitted with
+three Newton steps per M-step and no penalty.
+
+\paragraph{Standard errors and intervals} The observed information is the numerical Hessian
+of the exact log-likelihood, by central differences with relative step $10^{-4}$, over the
+free parameters that exceed $10^{-6}$; parameters at or below this value are treated as
+on the boundary and flagged. Parameter intervals are
+$\hat x\pm1.96\,\mathrm{SE}$. Derived quantities (multiplier, spectral radius, surge
+components) use the delta method with a central-difference Jacobian, and shares use the
+logit scale. A replicate without a standard error counts as a miss; no such replicate
+occurred in E1. In E3, the corrected intervals use \eqref{eq:th-delta}.
+
+\paragraph{E2 summaries} The in-window branching ratio is
+$\hat n_{\mathrm{eff}}=\hat\alpha\,N(T)^{-1}\sum_l\{1-e^{-\hat\beta(T-t_l)}\}$. A decay is
+flagged as on its lower bound if $\hat\beta\le1.01\times10^{-5}$.
+
+\paragraph{E4 test} The alternative is fitted first. The null fit, with
+$\alpha_{\mathrm{off},\mathrm{on}}=0$ exactly, is started both from the alternative optimum
+and from the default multistart, and the better optimum is kept; if the null
+log-likelihood exceeds the alternative's, the alternative is refitted from the null optimum
+(\cref{app:comp-tests}). The statistic is $\max\{0,2(\hat\ell_1-\hat\ell_0)\}$, and the
+$p$-value is $\tfrac12\Pr(\chi^2_1\ge x)$ for $x>0$ and $1$ for $x=0$. The decay is shared
+and re-estimated under each hypothesis.
+
+\paragraph{E6 forecasts} The predictive distribution at origin $t$ is simulated from the
+state at $t$ (\cref{lem:fc-future}), including the remaining response to events up to $t$
+and no later events. The surge probability is the fraction of simulated counts at or above
+$c$. The randomised PIT uses one uniform variable per window and method. The log score uses
+a floor of $0.5/2000$ for simulated distributions and $0.5$ divided by the number of
+training windows for climatology. The moving-average mean is floored at $0.1$. Climatology
+is the empirical distribution of the weekly counts in the training period from day 100. The
+naive state uses the incidents available at $t$ without weights. The Horvitz--Thompson
+state weights each available offline incident at $s$ by $1/F(t-s)$, which is finite because
+$F(0)=0.3$. Both states are plugged into the same continuation as the complete-data
+forecast, so state uncertainty is not integrated over. The fitted forecasts use the EM
+estimates from the training period as fixed values. The state ratios of
+\cref{sec:sim-alert} are computed with the true parameters, from the excitation carried by
+the offline stream.
+
+\subsection{Monte Carlo standard errors}\label{app:sim-mcse}
+
+Let $x_1,\dots,x_R$ be the estimates of a quantity with true value $x_0$ over $R$
+replicates, with mean $\bar x$, standard deviation $s_x$ and errors $\varepsilon_r=x_r-x_0$.
+\begin{itemize}
+  \item \emph{Mean and bias.} The bias is $\bar x-x_0$. The MC SE of the mean and of the
+  bias is $s_x/\sqrt R$.
+  \item \emph{RMSE.} $\mathrm{RMSE}=(R^{-1}\sum_r\varepsilon_r^2)^{1/2}$, with MC SE
+  $s_{\varepsilon^2}/(2\,\mathrm{RMSE}\sqrt R)$ by the delta method, where
+  $s_{\varepsilon^2}$ is the standard deviation of the squared errors.
+  \item \emph{Coverage and rejection rates.} For an estimated proportion $\hat\pi$, the
+  MC SE is $\{\hat\pi(1-\hat\pi)/R\}^{1/2}$. The band of \cref{fig:sim-recovery}(b) is
+  $0.95\pm1.96\,(0.95\times0.05/R)^{1/2}$.
+  \item \emph{E5.} For each quantity, the mean over the $N=20{,}000$ paths has MC SE
+  $(\hat\sigma^2/N)^{1/2}$, with $\hat\sigma^2$ the sample variance over paths, and
+  $z=(\text{mean}-\text{exact})/\text{MC SE}$.
+  \item \emph{E6.} Costs per window, Brier, CRPS and log scores and the mean forecast bias
+  are averaged within each replicate; the MC SE is the standard deviation of the 12
+  replicate averages divided by $\sqrt{12}$. Alert rates, precision and recall are pooled
+  over all 1800 windows and have no reported MC SE. The PIT statistic is
+  $\chi^2=\sum_{b=1}^{10}(h_b-e)^2/e$, with $h_b$ the bin counts and $e$ the number of
+  windows divided by 10, referred to $\chi^2_9$. The windows do not overlap and the outcomes
+  are settled, so by \cref{lem:fc-pit}(b) the PIT values are independent under a correct
+  forecast; the reference ignores the Monte Carlo error of the predictive distributions.
+  The state ratios are ratios of means over all windows.
+\end{itemize}
+In the figures, error bars are $\pm1.96$ MC SE, except in \cref{fig:sim-recovery}(a)
+($\pm$ relative RMSE) and \cref{fig:sim-attribution} ($\pm1$ SD over replicates).
+
+\subsection{Reproduction}\label{app:sim-repro}
+
+From \texttt{papers/contagion/code/}, the commands
+\begin{quote}\small
+\texttt{OPENBLAS\_NUM\_THREADS=1 nice python run\_experiments.py -{}-workers 2}\\
+\texttt{python make\_figures.py}
+\end{quote}
+run all six experiments, write \texttt{results/raw/E*.json} and
+\texttt{results/sim\_results.json}, and then the figures and \cref{tab:sim-main}. With the
+current driver, E5 uses 20{,}000 paths by default and E6 computes the calendar split
+itself, so a single run replaces the three steps of \cref{app:sim-run}. One experiment can
+be rerun with \texttt{-{}-only E5} (E5 reads the stored E1 results when E1 is not run in the
+same invocation), and \texttt{-{}-merge-only} rebuilds the results file from the raw files.
+The option \texttt{-{}-quick} runs tiny configurations in seconds; the smoke tests in
+\texttt{code/tests/test\_experiments.py} use it to check the output schema, the absence of
+failed replicates and that two runs give identical results. With the recorded software
+versions, the seeds determine every replicate. We have not checked whether other versions
+of NumPy or SciPy reproduce the results to the last digit.

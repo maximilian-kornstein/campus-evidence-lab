@@ -13,7 +13,7 @@ capture history; $\zero$ is the all-zero history.}
 \toprule
 \nhead{Population and lists}
 d & domain (state $s$ $\times$ year $t$) \\
-U_d,\ N & in-scope antisemitic incidents; unknown size \\
+U_d,\ N & in-scope antisemitic incidents that reach a recording channel ($U_d^V$ of \cref{sec:funnel}); unknown size \\
 k\in\Kset & list; $K=4$: police (FBI), NGO audit, community security org., campus/self-report portal \\
 Y_{ik} & $1$ if incident $i$ is on list $k$ \\
 \midrule
@@ -24,14 +24,16 @@ n=\sum_{\h\neq\zero}n_{\h} & distinct incidents observed \\
 \nzero=N-n & \textbf{the dark figure} \\
 n_{k+},\ f_j & size of list $k$; incidents on exactly $j$ lists \\
 D_k=N/n_{k+} & dark-figure ratio relative to list $k$ \\
+s_{\h}=(-1)^{|\h|+1} & alternating sign of a history \\
+\mathcal A(\bm x)=\prod_{\h\neq\zero}x_{\h}^{s_{\h}} & alternating product \\
 \midrule
 \nhead{Reporting funnel}
-\rvic & victim or witness discloses to anyone \\
-\rpol & reported to police $\mid$ disclosed \\
-\rcls & classified as antisemitic $\mid$ reported \\
+\rvic & reaches a recording channel, by a report or by the channel's own detection \\
+\rpol & reaches the police $\mid$ reaches a channel \\
+\rcls & classified as antisemitic $\mid$ reaches the police \\
 \rsub & submitted to the FBI $\mid$ classified \\
-N_V & disclosed incidents; what list-based MSE estimates \\
-\nFBI & police list size; $\E\,\nFBI=N\rvic\rpol\rcls\rsub$ \\
+N_V & incidents that reach a channel; what list-based MSE estimates \\
+\nFBI & FBI count; $\E\,\nFBI=N_V\rpol\rcls\rsub$ \\
 \bottomrule
 \end{tabularx}
 \end{minipage}\hfill
@@ -42,6 +44,7 @@ N_V & disclosed incidents; what list-based MSE estimates \\
 \mu_{\h}=\E[n_{\h}] & expected cell count \\
 u_S,\ S\subseteq\Kset & log-linear terms: $\log\mu_{\h}=\sum_{S\subseteq\supp(\h)}u_S$ \\
 \omega=u_{\Kset} & highest-order interaction; sensitivity parameter \\
+\bar\omega=(-1)^K\omega & oriented interaction: $\mu_{\zero}=e^{\bar\omega}\mathcal A(\bm\mu_+)$ \\
 p_{ik} & $\Pr(Y_{ik}=1\mid x_i)$, capture probability \\
 z_i,\ \pi_j,\ \lambda_{jk} & latent class; class weight; class-$j$ capture probability on list $k$ \\
 \midrule
@@ -51,8 +54,13 @@ r\in R_k,\ a_r & record of list $k$; its attributes \\
 \gamma_{rr'} & comparison vector of a record pair \\
 m(\gamma),\ u(\gamma) & $\Pr(\gamma\mid\text{match})$, $\Pr(\gamma\mid\text{non-match})$ \\
 w=\log(m/u) & Fellegi--Sunter weight \\
-\delta,\ \varepsilon & false non-match rate; false match rate \\
+\delta,\ \varepsilon & per-record probabilities of detachment and of a false merge under LE (pairwise false non-match rate $1-(1-\delta)^2$) \\
 \Lop(\delta,\varepsilon) & linkage operator on capture-history tables \\
+\midrule
+\nhead{Small-area model}
+\theta_{st} & incidence per unit exposure, state $s$, year $t$ \\
+b_s,\ \tau_t,\ \chi_{st} & state effect; national trend; state-specific trend \\
+c_{st,k} & coverage of list $k$ (police: agency participation) \\
 \bottomrule
 \end{tabularx}
 \end{minipage}

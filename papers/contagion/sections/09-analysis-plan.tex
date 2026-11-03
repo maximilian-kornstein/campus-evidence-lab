@@ -7,9 +7,12 @@ sensitivity analyses, the validation checks and the decision rules. The
 numerical settings below (horizons, thresholds, grids) are proposals. They
 will be frozen at registration; any change made before registration will be
 documented, and any change made after it will be reported as a deviation. The
-simulation study (\cref{sec:simulation}) evaluates the operating
-characteristics of these rules on synthetic data with known ground truth. No
-part of the plan has yet been carried out on real data.
+simulation study (\cref{sec:simulation}) evaluates, on synthetic data with
+known ground truth, the main tools these rules rely on: estimation, the
+boundary test, the thinning correction, surge attribution and the alert rule.
+It does not evaluate the selection and decision rules themselves; they are
+checked in the synthetic dry run (V4). No part of the plan has yet been
+carried out on real data.
 
 \subsection{Candidate pilot}\label{sec:plan-pilot}
 
@@ -74,7 +77,7 @@ streams (F4); and obtain ethics approval (F5; \cref{sec:ethics}).
   summarised by event class. Event-level results appear in an appendix under
   neutral identifiers (\cref{sec:plan-events}).
   \item \emph{Alert performance.} We evaluate the rule of \cref{thm:alert}
-  and \cref{alg:alert}, with window $\Delta=7$ days. For each stream the
+  and \cref{alg:alert}, with window $\Delta_{\mathrm a}=7$ days. For each stream the
   surge threshold $c$ is the 95th percentile of the training-period
   distribution of 7-day counts. The cost ratio $c_{\mathrm{miss}}/c_{\mathrm{FA}}$
   is agreed with community-security partners before registration, with
@@ -171,13 +174,16 @@ from every model in the hierarchy are reported as well.
   question (\cref{thm:equiv}). Self-excitation that vanishes under a more
   flexible background while goodness of fit remains acceptable is reported
   as not robustly distinguishable from background variation. An overly
-  flexible background can absorb genuine contagion. The simulation study
-  calibrates this trade-off.
+  flexible background can absorb genuine contagion. In the simulation study a
+  spline background removed the spurious contagion of slow regime switches but
+  not that of fast unrecorded shocks (\cref{sec:sim-spurious}); how much
+  genuine contagion it absorbs was not studied and is checked in the
+  synthetic dry run (V4).
   \item \emph{Thinning.} We use (a) posterior draws of $p_k$ from the
   companion paper, mapped to streams as in \cref{sec:data-thinning}; (b) a
   grid $p_k\in\{0.1,0.25,0.5,0.75,1\}$; and (c) salience-dependent recording,
-  $p_k(t)=p_k\{1+\gamma\sum_e\psi(t-\tau_e)\}$ with
-  $\gamma\in\{0,0.25,0.5,1\}$ (capped at one), which violates the
+  $p_k(t)=p_k\{1+\varepsilon\sum_e\psi(t-\tau_e)\}$ with
+  $\varepsilon\in\{0,0.25,0.5,1\}$ (capped at one), which violates the
   independence condition of \cref{thm:thinning}. In addition, (d) known
   recording breaks, such as reporting-system transitions, scope changes and
   interrupted referral feeds (\cref{sec:data-incidents}), enter $\mu_k(t)$
@@ -214,7 +220,7 @@ from every model in the hierarchy are reported as well.
   \item \emph{Out-of-sample performance.} We compute log scores for daily
   counts \citep{gneiting2007} and randomised PIT histograms for calibration
   \citep{dawid1984,gneiting2007b}, using rolling-origin one-step and
-  $\Delta$-step forecasts over the test period.
+  $\Delta_{\mathrm a}$-step forecasts over the test period.
   \item \emph{Placebo shocks.} Placebo calibration is done for one event
   class at a time (\cref{sec:est-placebo}). For each class we draw 1{,}000
   placebo calendars with the same number of events and the same sizes as the

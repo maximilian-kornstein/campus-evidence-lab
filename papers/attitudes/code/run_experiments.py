@@ -86,13 +86,16 @@ def _py(x):
 
 
 def mc(v):
-    """Mean, median, SD and Monte Carlo SE of the mean of a 1-D sample (nan-aware)."""
+    """Mean, median, SD, Monte Carlo SE of the mean, and a robust MCSE of the median
+    (1.2533 x IQR/1.349 / sqrt(R), the normal-theory formula with a robust scale), nan-aware."""
     v = np.asarray(v, float)
     v = v[np.isfinite(v)]
     if len(v) == 0:
-        return dict(mean=None, median=None, sd=None, mcse=None, n=0)
+        return dict(mean=None, median=None, sd=None, mcse=None, mcse_median=None, n=0)
     sd = float(np.std(v, ddof=1)) if len(v) > 1 else float("nan")
-    return dict(mean=float(np.mean(v)), median=float(np.median(v)), sd=sd, mcse=sd / np.sqrt(len(v)), n=len(v))
+    iqr = float(np.subtract(*np.percentile(v, [75, 25])))
+    return dict(mean=float(np.mean(v)), median=float(np.median(v)), sd=sd, mcse=sd / np.sqrt(len(v)),
+                mcse_median=1.2533 * iqr / 1.349 / np.sqrt(len(v)), n=len(v))
 
 
 def prop(v):
@@ -440,6 +443,8 @@ def e2_summary(raw, popl):
             d["ecv0_I_meanabsbias"] = float(np.mean(np.abs(e_all.mean(axis=0))))
             d["converged"] = prop([r[s]["converged"] for r in rr])
             d["var1_G"] = mc([r[s]["var1"][0] for r in rr])
+            V1 = np.array([r[s]["var1"] for r in rr], float)
+            d["p_var_at_bound"] = prop(np.any((V1 >= 0.999 * np.exp(3.0)) | (V1 <= 1.001 * np.exp(-3.0)), axis=1))
             pl = popl.get(str(kappa), {}).get(s)          # no plim for the data-dependent procedures
             if pl is not None:
                 for fac, nm in enumerate(("G", "S", "I")):
@@ -929,7 +934,10 @@ def main():
         for e in args.resummarize:
             with open(os.path.join(args.out, "raw", f"{e}.json")) as f:
                 raw = json.load(f)
-            res["experiments"][e]["summary"] = e1_summary(raw, res["experiments"][e]["truth"])
+            if e == "E2":
+                res["experiments"][e]["summary"] = e2_summary(raw, res["experiments"][e]["population"])
+            else:
+                res["experiments"][e]["summary"] = e1_summary(raw, res["experiments"][e]["truth"])
             res["experiments"][e]["summary_recomputed"] = dict(
                 when=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), code_sha256_16=CODE_HASHES,
                 note="summary recomputed from raw/%s.json with the code hashed here; the replications themselves "

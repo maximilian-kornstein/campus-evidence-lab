@@ -240,11 +240,11 @@ and the finite-horizon totals reduce to matrix exponentials.
   excitation of stream $k$ by stream-$j$ incidents.
   \item \emph{Finite-horizon totals for exponential shock responses.} Let
   $\psi_k(t)=\eta_ke^{-\eta_kt}$. For rates $\eta,\gamma>0$, let
-  $\chi_{\eta,\gamma}(H)=\Pr(X_\eta+X_\gamma\le H)$ be the hypoexponential distribution
+  $\Pi_{\eta,\gamma}(H)=\Pr(X_\eta+X_\gamma\le H)$ be the hypoexponential distribution
   function. Here $X_\eta$ and $X_\gamma$ are independent exponential variables with
-  rates $\eta$ and $\gamma$, and $\dot\chi_{\eta,\gamma}$ denotes the density. Explicitly,
+  rates $\eta$ and $\gamma$, and $\dot\Pi_{\eta,\gamma}$ denotes the density. Explicitly,
   \begin{equation}\label{eq:at-kappa}
-    \chi_{\eta,\gamma}(H)=
+    \Pi_{\eta,\gamma}(H)=
     \begin{cases}
       1-\dfrac{\gamma e^{-\eta H}-\eta e^{-\gamma H}}{\gamma-\eta}, & \eta\neq\gamma,\\[1.6ex]
       1-(1+\gamma H)\,e^{-\gamma H}, & \eta=\gamma\quad\text{(resonance)}.
@@ -253,22 +253,22 @@ and the finite-horizon totals reduce to matrix exponentials.
   In the univariate case, let $d=\beta_1S_e$ and $\gamma=\beta(1-n)$. Then
   \begin{equation}\label{eq:at-DC-uni}
     D(H)=d\,\bigl(1-e^{-\eta H}\bigr),\qquad
-    C(H)=\frac{n}{1-n}\,d\,\chi_{\eta,\gamma}(H).
+    C(H)=\frac{n}{1-n}\,d\,\Pi_{\eta,\gamma}(H).
   \end{equation}
   The intensity attributable to the event at lag $t$ is
-  $d\,\{\eta e^{-\eta t}+\tfrac{n}{1-n}\dot\chi_{\eta,\gamma}(t)\}$. Its contagion
+  $d\,\{\eta e^{-\eta t}+\tfrac{n}{1-n}\dot\Pi_{\eta,\gamma}(t)\}$. Its contagion
   part peaks at $t^*=\log(\eta/\gamma)/(\eta-\gamma)$, which equals $1/\gamma$ at
   resonance.
 
   If all kernels share one decay rate $\beta$ and all responses share one rate $\eta$, then
   \begin{equation}\label{eq:at-DC-common}
     \bm D(H)=\bigl(1-e^{-\eta H}\bigr)\bm d_e,\qquad
-    \bm C(H)=(\Mmat-\Imat)\,\chi_{\eta,\bm G}(H)\,\bm d_e,\qquad
+    \bm C(H)=(\Mmat-\Imat)\,\Pi_{\eta,\bm G}(H)\,\bm d_e,\qquad
     \bm G=\beta(\Imat-\Amat).
   \end{equation}
   Here
-  $\chi_{\eta,\bm G}(H)=\int_0^H\eta e^{-\eta v}\bigl(\Imat-e^{-\bm G(H-v)}\bigr)\,\dd v$
-  is the matrix function induced by the entire map $x\mapsto\chi_{\eta,x}(H)$.
+  $\Pi_{\eta,\bm G}(H)=\int_0^H\eta e^{-\eta v}\bigl(\Imat-e^{-\bm G(H-v)}\bigr)\,\dd v$
+  is the matrix function induced by the entire map $x\mapsto\Pi_{\eta,x}(H)$.
 
   In general, with pair-specific $\beta_{kj}$ and stream-specific $\eta_k$, consider
   the state $\bm w=(\bm\nu_e,\bm z,\bm D,\bm C)$: the event's immigrant intensity, the
@@ -418,15 +418,15 @@ are reported as model-based quantities and are not described as causal effects.
 
 \subsection{Uncertainty}\label{sec:at-uncertainty}
 
-Every component above is a smooth function $g(\theta)$ of the parameter vector
-$\theta$: the entries of $\Amat$, the kernel rates, the loadings, the response rates and
+Every component above is a smooth function $g(\vartheta)$ of the parameter vector
+$\vartheta$: the entries of $\Amat$, the kernel rates, the loadings, the response rates and
 the background coefficients, on the region $\spr(\Amat)<1$. Uncertainty in
-$\hat\theta$ can be propagated in two ways.
+$\hat\vartheta$ can be propagated in two ways.
 
-\paragraph{Delta method} If $\hat\theta$ is asymptotically normal with estimated
+\paragraph{Delta method} If $\hat\vartheta$ is asymptotically normal with estimated
 covariance $\hat{\bm V}$ (\cref{sec:estimation}), then
-$\Var g(\hat\theta)\approx\nabla g^{\top}\hat{\bm V}\nabla g$, evaluated at
-$\hat\theta$. Since $\bm B$, $\bm D$ and $\bm C$ share parameters, their joint
+$\Var g(\hat\vartheta)\approx\nabla g^{\top}\hat{\bm V}\nabla g$, evaluated at
+$\hat\vartheta$. Since $\bm B$, $\bm D$ and $\bm C$ share parameters, their joint
 covariance should be computed from the joint gradient. The infinite-horizon totals have
 closed-form gradients:
 \begin{equation}\label{eq:at-grad}
@@ -444,7 +444,7 @@ regions: near the boundary $\alpha_{kj}=0$, where the estimator is not asymptoti
 normal (\cref{prop:lrt}); and near criticality, where $\Mmat$ has a pole at
 $\spr(\Amat)=1$.
 
-\paragraph{Posterior or bootstrap draws} Given draws $\theta^{(1)},\dots,\theta^{(R)}$,
+\paragraph{Posterior or bootstrap draws} Given draws $\vartheta^{(1)},\dots,\vartheta^{(R)}$,
 from the posterior or from a parametric bootstrap, compute
 $(\bm B,\bm D,\bm C,\bm C^{\mathrm{on}})^{(r)}$ exactly for each draw, and report
 quantiles. This propagates the dependence between components and respects the

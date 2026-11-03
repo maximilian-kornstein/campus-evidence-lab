@@ -1065,11 +1065,17 @@ def analyse_e5(counts, cfg):
         # AA: normal-mixture CS (plug-in variance) on corrected pair differences with known J
         Dd = (Qa - Qr) / J_a
         lo, hi = sq.asymptotic_cs(Dd, cfg["alpha"], cfg["t_star"])
-        lo_r, hi_r = np.fmax.accumulate(lo, 1), np.fmin.accumulate(hi, 1)
-        okl = (lo_r[:, looks - 1] <= AA0) & (AA0 <= hi_r[:, looks - 1])
-        res["aa_cs"] = dict(coverage_from_wave1=float(np.all(okl, 1).mean()),
-                            coverage_from_wave2=float(np.all(okl[:, 1:], 1).mean()),
-                            excludes_0_by_wave8=float(np.mean((lo_r[:, 39] > 0) | (hi_r[:, 39] < 0))) if Nmax >= 40 else None)
+        lo_l, hi_l = lo[:, looks - 1], hi[:, looks - 1]           # updated after each wave (burn-in: one wave)
+        aa_res = {}
+        for nm_, st in (("from_wave1", 0), ("from_wave2", 1)):
+            lo_r, hi_r = np.fmax.accumulate(lo_l[:, st:], 1), np.fmin.accumulate(hi_l[:, st:], 1)
+            okl = (lo_r <= AA0) & (AA0 <= hi_r)
+            cv = float(np.all(okl, 1).mean())
+            aa_res["coverage_" + nm_] = cv
+            aa_res["coverage_" + nm_ + "_mcse"] = float(np.sqrt(cv * (1 - cv) / R))
+            if st == 0 and Wn >= 8:
+                aa_res["excludes_0_by_wave8"] = float(np.mean((lo_r[:, 7] > 0) | (hi_r[:, 7] < 0)))
+        res["aa_cs"] = aa_res
         # exact variant (thm:sequential(b)) on corrected exposures (here: true exposures, i.e. perfect coding)
         Rb = cfg["R_bet"]
         gb = np.exp(np.linspace(np.log(cfg["grid"][0]), np.log(cfg["grid"][1]), cfg["grid_bet"]))

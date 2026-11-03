@@ -17,7 +17,9 @@ autocorrelation of counts cannot tell contagion from clustered shocks
 manufactures contagion (\cref{thm:spurious}). Identification has to come from
 outside the counts: from a calendar of events fixed blind to the outcome, from
 higher-order information that only the full likelihood exploits, or from
-provenance links between incidents (\cref{cor:equiv-id}). The analysis plan
+provenance links between incidents (\cref{cor:equiv-id}). In the simulation
+study a more flexible background did not remove the artefact of fast
+unrecorded shocks; their times did (\cref{sec:sim-spurious}). The analysis plan
 is built around that requirement (\cref{sec:plan-events}). The companion
 paper enters at a precise point. Recorded incidents are a thinned version of
 all incidents, and thinning attenuates apparent contagion in a known way
@@ -59,7 +61,11 @@ vary them but not remove them (\cref{sec:plan-sens}). More fundamentally, the
 shock term treats event times as exogenous. Some candidate events, such as
 public statements, may themselves respond to a wave of incidents. Such
 reverse dependence violates the model, and blind coding of the calendar does
-not prevent it.
+not prevent it. Forecasts depend on the calendar in a further way. They
+condition on the events known at the forecast origin, so a surge set off by an
+event inside the forecast window cannot be anticipated. In the simulation
+study the forecasts were calibrated only on windows without a new event
+(\cref{sec:sim-alert}).
 
 \emph{Classifier error in online streams.} An online stream is the output of
 a classifier applied to a defined corpus. It measures that corpus, not

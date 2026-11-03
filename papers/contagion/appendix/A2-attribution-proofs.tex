@@ -250,7 +250,7 @@ C(H)&=d\int_0^H\eta e^{-\eta v}\,\frac{n}{1-n}\bigl(1-e^{-\gamma(H-v)}\bigr)\,\d
 =\frac{n}{1-n}\,d\,\Pr(X_\eta+X_\gamma\le H).
 \end{align*}
 For $\eta\neq\gamma$, the density of $X_\eta+X_\gamma$ is
-$\dot\chi_{\eta,\gamma}(t)=\eta\gamma(e^{-\eta t}-e^{-\gamma t})/(\gamma-\eta)$.
+$\dot\Pi_{\eta,\gamma}(t)=\eta\gamma(e^{-\eta t}-e^{-\gamma t})/(\gamma-\eta)$.
 Integration gives the distribution function
 \[
 \frac{\gamma(1-e^{-\eta H})-\eta(1-e^{-\gamma H})}{\gamma-\eta},
@@ -260,9 +260,9 @@ which is \eqref{eq:at-kappa}. For $\eta=\gamma$, the sum has the $\mathrm{Gamma}
 The intensity attributable to the event at lag $t$ is
 \[
 d\eta e^{-\eta t}+d\int_0^tn\beta e^{-\gamma(t-v)}\eta e^{-\eta v}\,\dd v
-=d\,\{\eta e^{-\eta t}+\tfrac{n}{1-n}\dot\chi_{\eta,\gamma}(t)\},
+=d\,\{\eta e^{-\eta t}+\tfrac{n}{1-n}\dot\Pi_{\eta,\gamma}(t)\},
 \]
-since $n\beta/\gamma=n/(1-n)$. The density $\dot\chi_{\eta,\gamma}$ vanishes at $0$
+since $n\beta/\gamma=n/(1-n)$. The density $\dot\Pi_{\eta,\gamma}$ vanishes at $0$
 and at infinity. For $\eta\neq\gamma$ its only critical point solves
 $\eta e^{-\eta t}=\gamma e^{-\gamma t}$, namely $t^*=\log(\eta/\gamma)/(\eta-\gamma)>0$.
 At resonance, $\gamma^2te^{-\gamma t}$ is maximised at $1/\gamma$.
@@ -275,7 +275,7 @@ The scalar map
 $x\mapsto\int_0^H\eta e^{-\eta v}(1-e^{-x(H-v)})\,\dd v$ is entire, with a power series
 that converges absolutely and uniformly on bounded sets. Substituting $\bm G$ into the
 series therefore yields the matrix integral. For real $x>0$ the map equals
-$\chi_{\eta,x}(H)$.
+$\Pi_{\eta,x}(H)$.
 
 \emph{General case.} The immigrant intensity
 $\bm\nu_e(\tau_e+u)=\operatorname{diag}(\bm\eta)e^{-\operatorname{diag}(\bm\eta)u}\bm d_e$
@@ -378,7 +378,7 @@ $h_{t,k}(s)=\sum_j\sum_{t^j_i\le t}\alpha_{kj}\beta_{kj}e^{-\beta_{kj}(s-t^j_i)}
 and $u_{t,k}(s)=e^{-\eta_k(s-t)}u_k(t)$ in the same way. Hence $\bm\nu_t$, and with it
 the conditional law of the future, depends on $\Hist_t$ only through $\bm\xi(t)$. The
 dynamics of $\bm\xi$ follow from \eqref{eq:fc-state}. The predictive mean
-$\int_t^{t+\Delta}\mathcal K_t\bm\nu_t$ is linear in $\bm\nu_t$, which is affine in
+$\int_t^{t+\Delta_{\mathrm a}}\mathcal K_t\bm\nu_t$ is linear in $\bm\nu_t$, which is affine in
 $\bm\xi(t)$. \qed
 
 \subsection{Proof of \texorpdfstring{\cref{thm:alert}}{the alerting theorem}}\label{app:fc-alert}
@@ -402,7 +402,7 @@ $(r,j)$ in $\omega'\setminus\omega$, so $\bm\nu'-\bm\nu\ge\zero$. Let $\bm N$ be
 process with immigrant intensity $\bm\nu$, and let $\bm N^+$ be an independent cluster
 process with immigrant intensity $\bm\nu'-\bm\nu$. By \cref{lem:at-split}(a),
 $\bm N'=\bm N+\bm N^+$ has the predictive law under $\omega'$, and
-$\bm N'(t,t+\Delta]\ge\bm N(t,t+\Delta]$ pathwise. For an upper set $\mathcal U$,
+$\bm N'(t,t+\Delta_{\mathrm a}]\ge\bm N(t,t+\Delta_{\mathrm a}]$ pathwise. For an upper set $\mathcal U$,
 $\{\bm N\in\mathcal U\}\subseteq\{\bm N'\in\mathcal U\}$.
 
 (c) By \cref{lem:fc-future}, $\pi_t=G_t(\bm\xi(t))$, where $G_t(\bm\xi)$ is the
@@ -410,19 +410,19 @@ probability that a cluster process with immigrant intensity
 \[
 \nu^{\bm\xi}_k(s)=\mu_k(s)+u_ke^{-\eta_k(s-t)}+\sum_jx_{kj}e^{-\beta_{kj}(s-t)}
 \]
-has $\bm N(t,t+\Delta]\in\mathcal U$. If $\bm\xi\le\bm\xi'$, then
+has $\bm N(t,t+\Delta_{\mathrm a}]\in\mathcal U$. If $\bm\xi\le\bm\xi'$, then
 $\bm\nu^{\bm\xi'}-\bm\nu^{\bm\xi}\ge\zero$, and the coupling of (b) gives
 $G_t(\bm\xi)\le G_t(\bm\xi')$.
 
-For the Lipschitz bound with $\bm\xi\le\bm\xi'$, write $W=(t,t+\Delta]$. Then
+For the Lipschitz bound with $\bm\xi\le\bm\xi'$, write $W=(t,t+\Delta_{\mathrm a}]$. Then
 \[
 |G_t(\bm\xi')-G_t(\bm\xi)|\le\Pr\{\bm N^+(W)\neq\zero\}\le\E\,\mathbf 1^{\top}\bm N^+(W)
 \le\mathbf 1^{\top}\Mmat\int_W(\bm\nu^{\bm\xi'}-\bm\nu^{\bm\xi})
-\le\Delta\max_j(\mathbf 1^{\top}\Mmat)_j\,\|\bm\xi'-\bm\xi\|_1 ,
+\le\Delta_{\mathrm a}\max_j(\mathbf 1^{\top}\Mmat)_j\,\|\bm\xi'-\bm\xi\|_1 ,
 \]
 using \cref{lem:at-mean}(b), \cref{lem:at-young} and the fact that each exponential
 factor is at most $1$. If $\spr(\Amat)\ge1$, replace $\Mmat$ by the finite matrix
-$\Imat+\int_0^\Delta\Rker$, where $\Rker$ is the locally integrable resolvent
+$\Imat+\int_0^{\Delta_{\mathrm a}}\Rker$, where $\Rker$ is the locally integrable resolvent
 \citep[Ch.~2]{gripenberg1990}. For general $\bm\xi,\bm\xi'$, pass through
 $\bm\xi\wedge\bm\xi'$ and note that
 $\|\bm\xi-\bm\xi\wedge\bm\xi'\|_1+\|\bm\xi'-\bm\xi\wedge\bm\xi'\|_1=\|\bm\xi-\bm\xi'\|_1$.
@@ -440,13 +440,13 @@ independent cluster process with immigrant intensity $(x'-x)e^{-\beta(s-t)}$. Th
 \[
 g_t(x',u)-g_t(x,u)=\Pr(N<c\le N+N^+)\ge\Pr(N=c-1)\Pr(N^+\ge1).
 \]
-Here $\Pr(N^+\ge1)\ge1-\exp\{-(x'-x)(1-e^{-\beta\Delta})/\beta\}>0$. The number of
+Here $\Pr(N^+\ge1)\ge1-\exp\{-(x'-x)(1-e^{-\beta\Delta_{\mathrm a}})/\beta\}>0$. The number of
 immigrants in $W$ is Poisson with mean $m=\int_W\nu^{x,u}>0$, since $\mu>0$, and each
 immigrant has no offspring at all with probability $e^{-n}$. Hence
 $\Pr(N=c-1)\ge e^{-m}m^{c-1}e^{-n(c-1)}/(c-1)!>0$.
 
 The immigrants contributed by $x$ are Poisson with mean
-$x(1-e^{-\beta\Delta})/\beta\to\infty$, so $g_t(x,u)\to1$ as $x\to\infty$. Since
+$x(1-e^{-\beta\Delta_{\mathrm a}})/\beta\to\infty$, so $g_t(x,u)\to1$ as $x\to\infty$. Since
 $\pi^*<1$, the set $\{x:g_t(x,u)\ge\pi^*\}$ is a nonempty closed ray
 $[x^*_t(u),\infty)$, and the rule alerts if and only if $x(t)\ge x^*_t(u(t))$.
 Because $g_t$ is nondecreasing in $u$, $x^*_t(u)$ is nonincreasing in $u$.
@@ -458,8 +458,8 @@ $|g_t(x,u)-g_t(x,0)|\le L_tu$ is the Lipschitz property of (c).
 
 The comparative statics follow from three facts. First, $\Pr(N\ge c)$ is nonincreasing
 in $c$. Second, the set $\{g_t\ge\pi^*\}$ shrinks as $\pi^*$ grows. Third,
-$N(t,t+\Delta]$ is nondecreasing in $\Delta$ on every realisation of the future, whose
-law does not depend on $\Delta$. \qed
+$N(t,t+\Delta_{\mathrm a}]$ is nondecreasing in $\Delta_{\mathrm a}$ on every realisation of the future, whose
+law does not depend on $\Delta_{\mathrm a}$. \qed
 
 \subsection{Proof of \texorpdfstring{\cref{lem:fc-is}}{the importance-weight lemma}}\label{app:fc-is}
 
@@ -570,16 +570,16 @@ $\E\prod_if(s_i)=\exp\{-\int(1-f)\,\nu_t\}$ with $f(s)=G_{j}(z;s)$ for roots in 
 $j$, which is \eqref{eq:fc-pgf}. A root in stream $j$ at $s$ has offspring in each
 stream $i$ forming independent Poisson processes with intensities
 $\varphi_{ij}(\cdot-s)$, and each child roots an independent subcluster. The same
-identity then gives \eqref{eq:fc-pgf-cluster}, with $G_i(z;r)=1$ for $r>t+\Delta$.
+identity then gives \eqref{eq:fc-pgf-cluster}, with $G_i(z;r)=1$ for $r>t+\Delta_{\mathrm a}$.
 
 In the univariate case,
-$I(s)=\int_s^{t+\Delta}n\beta e^{-\beta(r-s)}\{G(z;r)-1\}\,\dd r$, and differentiation
+$I(s)=\int_s^{t+\Delta_{\mathrm a}}n\beta e^{-\beta(r-s)}\{G(z;r)-1\}\,\dd r$, and differentiation
 gives $I'(s)=\beta I(s)-n\beta\{G(z;s)-1\}$.
 
 The coordinate $\xi_i$ of the state adds the immigrant intensity
 $\xi_ie^{-b_i(s-t)}$ to one stream $k(i)$, with $b_i$ the corresponding decay rate. Its
 factor in \eqref{eq:fc-pgf} is $\exp\{\xi_ic_i(\hat G_i(z)-1)\}$, where
-$c_i=(1-e^{-b_i\Delta})/b_i$ and
+$c_i=(1-e^{-b_i\Delta_{\mathrm a}})/b_i$ and
 $\hat G_i(z)=c_i^{-1}\int_We^{-b_i(s-t)}G_{k(i)}(z;s)\,\dd s$ is a probability
 generating function. This factor is a compound Poisson law with rate $\xi_ic_i$.
 

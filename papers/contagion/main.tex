@@ -69,8 +69,17 @@ Bayes-optimal alert rule whose state is corrected for reporting delays.
 Estimation uses EM over the latent branching structure, Bayesian shrinkage,
 boundary-corrected likelihood-ratio tests and time-rescaling diagnostics. A
 simulation study on synthetic data with known ground truth evaluates these
-tools, and a pre-registered plan with an ethics protocol specifies the
-real-data analysis. We report no empirical estimates from real data.
+tools. EM recovers the branching matrix and the surge decomposition with
+close to nominal interval coverage. In data without any contagion, a
+constant background yields apparent branching ratios of up to 0.63, and
+maximum likelihood does not reproduce the second-order prediction exactly; a
+flexible background removes the artefact of slow rate changes but not that
+of fast unrecorded shocks, which only known event times remove. The
+dark-figure correction restores the coverage that naive estimates lose,
+except when excitation is weak and recording poor. Forecasts are calibrated only in windows without new external events, which
+no model of the past can anticipate. A pre-registered plan with an ethics
+protocol specifies the real-data analysis. We report no empirical estimates
+from real data.
 \end{abstract}
 \keywords{Hawkes processes; self-exciting point processes; contagion;
 identification; under-reporting; surge attribution; early warning; hate

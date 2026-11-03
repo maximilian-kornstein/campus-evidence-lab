@@ -353,7 +353,11 @@ Four practical points about \cref{alg:em} follow.
   \item \emph{Multimodality.} The likelihood can be multimodal in the decay rates. When
     excitation is weak, for example, a spurious mode with tiny $\alpha$ and very large
     $\beta$ can appear. Our implementation therefore evaluates the profile likelihood on a
-    grid of decays and starts EM from each local maximum of the grid profile.
+    grid of decays and starts EM from each local maximum of the grid profile. When
+    excitation is absent, the likelihood can also have a ridge on which $\beta\to0$ while
+    $\alpha$ grows and the expected number of in-window offspring per incident stays small.
+    On that ridge $\hat\alpha$ alone is not a usable estimate of the branching ratio
+    (\cref{sec:sim-spurious}).
   \item \emph{Speed.} EM converges linearly, at a rate set by the fraction of missing
     information. It is slow when some $\alpha_{kj}$ is near $0$, because the multiplicative
     update in \cref{prop:est-mstep}(b) can only approach the boundary. SQUAREM
@@ -383,9 +387,9 @@ strongly and leave large ones nearly untouched.
     is the law of the squared half-Cauchy local scale of the horseshoe \citep{carvalho2010}. Its density has a pole at $0$ and
     a tail of order $x^{-3/2}$, so it is a horseshoe-type prior placed directly on the
     nonnegative $\alpha_{kj}$ \citep[cf.][]{armagan2011}.
-  \item \emph{Spike and slab.} Set $\alpha_{kj}=\gamma_{kj}\tilde\alpha_{kj}$ with
-    $\gamma_{kj}\sim\Bern(\pi_{kj})$ and $\tilde\alpha_{kj}\sim\operatorname{Gamma}(a_{\mathrm s},b_{\mathrm s})$.
-    The $\gamma_{kj}$ may follow a random-graph model, as in the network Hawkes process of
+  \item \emph{Spike and slab.} Set $\alpha_{kj}=\iota_{kj}\tilde\alpha_{kj}$ with
+    $\iota_{kj}\sim\Bern(\pi_{kj})$ and $\tilde\alpha_{kj}\sim\operatorname{Gamma}(a_{\mathrm s},b_{\mathrm s})$.
+    The $\iota_{kj}$ may follow a random-graph model, as in the network Hawkes process of
     \citet{linderman2014}. That model uses the same parent augmentation, with logistic-normal
     impulse responses.
 \end{itemize}
@@ -456,14 +460,14 @@ following steps.
     $\varsigma\mid\cdot\sim\operatorname{Gamma}(a_\varsigma+a_2|\mathcal P|,\,b_\varsigma+\sum\omega_{kj})$,
     where $\mathcal P$ is the set of shrunk entries. (In the spike-and-slab version, the
     slab replaces $(a_1,\omega_{kj})$ by $(a_{\mathrm s},b_{\mathrm s})$.)
-  \item \emph{Spike and slab.} Update $(\gamma_{kj},Z^k)$ as a block. First draw
-    $\gamma_{kj}$ with $Z^k$ integrated out. The odds are
+  \item \emph{Spike and slab.} Update $(\iota_{kj},Z^k)$ as a block. First draw
+    $\iota_{kj}$ with $Z^k$ integrated out. The odds are
     $\pi_{kj}\exp\{\ell_{T,k}(\tilde\alpha_{kj})\}/[(1-\pi_{kj})\exp\{\ell_{T,k}(0)\}]$, where
     $\ell_{T,k}(x)$ is the stream-$k$ log-likelihood with $\alpha_{kj}=x$, computable in
     $O(n_{\mathrm{ev}})$ by \eqref{eq:est-recursion}.
-    Set $\gamma_{kj}=1$ only if the truncation allows it. Then draw $Z^k$ given
-    $\gamma_{kj}$. When $\gamma_{kj}=0$, draw $\tilde\alpha_{kj}$ from its prior. Updating $\gamma_{kj}$ given $Z^k$ instead would mix badly: any label
-    pointing to stream $j$ forces $\gamma_{kj}=1$.
+    Set $\iota_{kj}=1$ only if the truncation allows it. Then draw $Z^k$ given
+    $\iota_{kj}$. When $\iota_{kj}=0$, draw $\tilde\alpha_{kj}$ from its prior. Updating $\iota_{kj}$ given $Z^k$ instead would mix badly: any label
+    pointing to stream $j$ forces $\iota_{kj}=1$.
   \item \emph{Loadings and background.} With gamma priors,
     $\beta_k\mid\cdot\sim\operatorname{Gamma}(a_\beta+\sum_eN_{ke},\,b_\beta+\sum_eS_e\Psi^T_k(e))$.
     A constant background has $\mu_k\mid\cdot\sim\operatorname{Gamma}(a_\mu+N^0_k,\,b_\mu+T)$.

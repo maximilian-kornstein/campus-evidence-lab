@@ -52,7 +52,7 @@ $p_kp_j\bar\Lambda_k\bar\Lambda_j|I||J|$ gives the claim.
 Let $N$ be a stationary Poisson cluster process on $\mathbb R$. Cluster centres form a
 Poisson process of rate $r$. Each centre $x$ carries an independent copy of a finite
 random configuration $\{y_1,\dots,y_{\mathcal S}\}$, possibly empty, placed at $x+y_i$. Assume
-$\E e^{\theta_0\mathcal S}<\infty$ for some $\theta_0>0$. Then:
+$\E e^{u_0\mathcal S}<\infty$ for some $u_0>0$. Then:
 \begin{enumerate}[(a)]
   \item for every $j\ge1$,
   $\chi_j=\lim_{T\to\infty}T^{-1}\operatorname{cum}_jN(0,T]=r\,\E \mathcal S^j$;
@@ -84,8 +84,8 @@ Dominated convergence gives $T^{-1}\operatorname{cum}_jN(0,T]\to r\E \mathcal S^
 (b) Suppose two such processes have the same law. By (a), $r\E \mathcal S^j=r'\E \mathcal S'^j$ for every
 $j\ge1$. The finite measures $\nu(k)=k\,w(k)$ and $\nu'(k)=k\,w'(k)$ on
 $\{1,2,\dots\}$ then have the same moments of every order $j\ge0$. Both have finite
-exponential moments for $\theta<\theta_0$. Their generating functions
-$\sum_k\nu(k)z^k$ are therefore analytic for $|z|<e^{\theta_0}$ and agree, so
+exponential moments for $u<u_0$. Their generating functions
+$\sum_k\nu(k)z^k$ are therefore analytic for $|z|<e^{u_0}$ and agree, so
 $\nu=\nu'$ and hence $w=w'$.
 \end{proof}
 
@@ -305,13 +305,13 @@ $\sigma^2=r a^2/(2\gamma)$. For the two-state chain,
 $\Pr(X_u=1\mid X_0=1)=\pi_1+\pi_0e^{-(q_{01}+q_{10})u}$, which gives
 $c_\xi(u)=(\lambda_1-\lambda_0)^2\pi_0\pi_1e^{-(q_{01}+q_{10})|u|}$.
 
-(b) Let $\bm m(\theta)$ denote the population counterpart of $\hat{\bm m}_T$. Since $N$
-is stationary and ergodic with finite second moments, $\hat{\bm m}_T\to\bm m(\theta^*)$
-almost surely under $N$, by Birkhoff's theorem and (a). Under $H(\theta^*)$, which is
-ergodic (proof of \cref{thm:equiv}(c)), also $\hat{\bm m}_T\to\bm m(\theta^*)$, and by
-assumption $G(\hat{\bm m}_T)\to\theta^*$. Continuity of $G$ then forces
-$G(\bm m(\theta^*))=\theta^*$. Hence, under $N$,
-$\hat\theta_T=G(\hat{\bm m}_T)\to G(\bm m(\theta^*))=\theta^*$.
+(b) Let $\bm m(\vartheta)$ denote the population counterpart of $\hat{\bm m}_T$. Since $N$
+is stationary and ergodic with finite second moments, $\hat{\bm m}_T\to\bm m(\vartheta^*)$
+almost surely under $N$, by Birkhoff's theorem and (a). Under $H(\vartheta^*)$, which is
+ergodic (proof of \cref{thm:equiv}(c)), also $\hat{\bm m}_T\to\bm m(\vartheta^*)$, and by
+assumption $G(\hat{\bm m}_T)\to\vartheta^*$. Continuity of $G$ then forces
+$G(\bm m(\vartheta^*))=\vartheta^*$. Hence, under $N$,
+$\hat\vartheta_T=G(\hat{\bm m}_T)\to G(\bm m(\vartheta^*))=\vartheta^*$.
 
 (c) $\hat c_\xi$ is continuous because $c_\xi\in L^1$, so
 $F_\infty(N)=1+\hat c_\xi(0)/\bar\Lambda=1+\kappa$. For a Hawkes process,
@@ -325,7 +325,7 @@ has density $\bar\Lambda^2+c(t-s)$ off the diagonal, so
 =\bar\Lambda^2+I_\beta,
 \qquad I_\beta=\int_0^\infty g_\beta c .
 \end{equation}
-Since $\log\mu\le\log\lambda_\theta\le\log\mu+nX/\mu$, the function $L$ is finite.
+Since $\log\mu\le\log\lambda_\vartheta\le\log\mu+nX/\mu$, the function $L$ is finite.
 
 For $n=0$, $L(\mu,0,\beta)=\bar\Lambda\log\mu-\mu$, which is uniquely maximised at
 $\mu=\bar\Lambda$ with value $\bar\Lambda\log\bar\Lambda-\bar\Lambda$. Now fix
@@ -439,8 +439,8 @@ $F(n)=1+2n+O(n^2)$. Finally,
 and solving $F(n)=1+\{F(n')-1\}/p$ gives \eqref{eq:th-hinv}.
 
 (d) $N^p$ is a Poisson cluster process with $r=\mu$ and cluster size
-$\mathcal S_p\mid \mathcal S\sim\Bin(\mathcal S,p)$, where $\mathcal S\sim$ Borel$(n)$, so $\E e^{\theta \mathcal S_p}<\infty$ for
-small $\theta>0$. Suppose $N^p$ were a stationary Hawkes process with constant
+$\mathcal S_p\mid \mathcal S\sim\Bin(\mathcal S,p)$, where $\mathcal S\sim$ Borel$(n)$, so $\E e^{u \mathcal S_p}<\infty$ for
+small $u>0$. Suppose $N^p$ were a stationary Hawkes process with constant
 background $\mu''\ge0$ and some kernel $\varphi''\ge0$ of mass $n''$.
 
 First suppose $\mu''=0$. Taking expectations of the intensity gives

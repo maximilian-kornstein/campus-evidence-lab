@@ -1,51 +1,46 @@
 \section{Introduction}\label{sec:intro}
 
 Public debate, security funding and policy on antisemitism are argued in
-counts. In the FBI's hate-crime statistics for 2023, law enforcement agencies
-reported 1{,}832 incidents motivated by anti-Jewish bias, about two-thirds of
-the 2{,}699 incidents with a religious bias motivation
-\citep{dojcrs2024}. For 2024, the Anti-Defamation League's annual Audit
-tabulated 9{,}354 antisemitic incidents of harassment, vandalism and assault,
-criminal and non-criminal alike. That is the highest total since ADL began
-tracking in 1979 \citep{adl2025audit}. Figures like these are routinely set
-side by side, but they are not rival estimates of one quantity. Each is a
+counts. In the FBI's hate-crime statistics for 2025, law enforcement
+agencies reported 1{,}528 single-bias incidents motivated by anti-Jewish bias
+\citep{fbi2026hate,adl2026fbi}. For the same year, the Anti-Defamation
+League's annual Audit tabulated 6{,}274 antisemitic incidents of harassment,
+vandalism and assault, criminal and non-criminal alike, after a record 9{,}354
+in 2024 \citep{adl2026audit,adl2025audit}. Figures like these are routinely
+set side by side, but they are not rival estimates of one quantity. Each is a
 \emph{list}: an enumeration of the incidents that happened to pass through a
-particular set of filters. Every count of antisemitic incidents is partial.
-The number that matters, the total number of in-scope incidents, including
-those that appear on no list, is never observed. Criminologists call it the
-\emph{dark figure} \citep{pezzella2019}. This paper is about estimating it.
+particular set of filters. The number that matters, the total number of
+in-scope incidents including those that appear on no list, is never observed.
+Criminologists call it the \emph{dark figure} \citep{pezzella2019}. This paper
+is about estimating it.
 
 \IfFileExists{figures/fig-funnel.tex}{\input{figures/fig-funnel}}{}%
 \paragraph{How incidents go missing}
 The police count is the end of a chain of conditional events, sketched in
-\cref{fig:funnel}. A victim or witness must disclose the incident, and it
-must reach the police. National Crime Victimization Survey data indicate that
-U.S. residents experienced an average of roughly 250{,}000 hate-crime victimizations a year
-over 2004--2015, the majority of which were not reported to the police
-\citep{masucci2017}. If the incident reaches the police, an officer must
-recognise and record an antisemitic bias motivation, a judgement whose
-consistency across agencies has long been questioned
-\citep{mcdevitt2003}. Finally, the agency must submit the record to the FBI.
-Coverage at this last stage is not a constant. When the FBI retired its legacy
-Summary Reporting System on 1~January 2021 and accepted only National
-Incident-Based Reporting System (NIBRS) submissions, several of the largest
-U.S. agencies and some states were missing from the initial 2021 hate-crime
-release, which covered agencies serving about 65\% of the population. A
-supplemental release in March 2023 retroactively accepted summary-format data
-and raised coverage to 91.1\% \citep{fbi2023supp,doj2023hate2021}. Even in an ordinary
-year, the composition of the reporting panel can move the headline. The FBI's
-2023 release drew on 16{,}009 participating agencies. On a trend dataset
-restricted to agencies with comparable reporting in both years, incidents fell
-by 0.6\% from 2022 to 2023 \citep{fbi2024crimenation}, while the published
-national total rose from 11{,}634 to 11{,}862 \citep{dojcrs2024}.
+\cref{fig:funnel}. The incident must first reach a recording channel, by a
+report or by the channel's own detection, and then the police. National Crime
+Victimization Survey data indicate that U.S. residents experienced an average
+of roughly 250{,}000 hate-crime victimizations a year over 2004--2015, the
+majority of which were not reported to the police \citep{masucci2017}. If the
+incident reaches the police, an officer must recognise and record an
+antisemitic bias motivation, a judgement whose consistency across agencies has
+long been questioned \citep{mcdevitt2003}. Finally, the agency must submit the
+record to the FBI. Coverage at this last stage is not constant: in the 2021
+transition to incident-based reporting, several of the largest agencies were
+missing from the initial federal release (\cref{sec:src-police}). Even in an
+ordinary year the composition of the reporting panel can move the headline.
+From 2022 to 2023 the published national hate-crime total rose from 11{,}634
+to 11{,}862 incidents \citep{dojcrs2024}, while on a trend dataset restricted
+to agencies with comparable reporting in both years incidents fell by 0.6\%
+\citep{fbi2024crimenation}.
 
 Non-governmental audits see a different slice. ADL's Audit includes
 non-criminal incidents and draws on reports from victims, law enforcement,
 the media and partner organisations \citep{adl2025audit}. Community security
-organisations and campus or self-report portals each have their own intake
+organisations and campus or self-report portals have their own intake
 channels, definitions and audiences (\cref{sec:sources}). No single list is
-complete. Each is selected through a different reporting process, and the
-lists are not independent of one another.
+complete, each is selected through a different process, and the lists are not
+independent of one another.
 
 \paragraph{Why multiple-systems estimation}
 When a closed population is partially enumerated by several overlapping
@@ -55,53 +50,51 @@ estimator of \citet{petersen1896} and \citet{lincoln1930} through the
 multiple-recapture census of \citet{darroch1958} and the log-linear models of
 \citet{fienberg1972}. Under the name \emph{multiple-systems estimation} (MSE)
 it has become a standard tool wherever a hidden population leaves traces in
-several administrative or documentary sources \citep{bird2018}. Examples
-include killings and disappearances in armed conflict
-\citep{lum2013,ball2018,sadinle2018}, victims of modern slavery
-\citep{silverman2020} and disease surveillance in epidemiology
-\citep{international1995,chao2001}. Antisemitic incidents fit this template
-well: several organisations separately record overlapping subsets of the
-same events, and the dark figure is the unobserved cell of their
-cross-classification.
+several administrative or documentary sources \citep{bird2018}: killings and
+disappearances in armed conflict \citep{lum2013,ball2018,sadinle2018}, victims
+of modern slavery \citep{silverman2020} and disease surveillance
+\citep{international1995,chao2001}. Antisemitic incidents fit this template:
+several organisations separately record overlapping subsets of the same
+events, and the dark figure is the unobserved cell of their
+cross-classification. One limit is structural. A list can record only
+incidents that reach it, so list-based MSE estimates $N_V$, the number of
+incidents that reach some recording channel (\cref{sec:funnel}). The
+remainder needs a victim survey.
 
 \paragraph{Why antisemitic incidents are hard}
-Five features of this domain stress the classical assumptions, and each one
-shapes the methods we develop.
+Five features of this domain stress the classical assumptions.
 \begin{enumerate}[(i),leftmargin=2.2em]
   \item \emph{Referral dependence.} Lists feed one another. An audit that
   ingests law-enforcement reports is more likely to contain an incident
-  because the police recorded it. With two lists this positive dependence
-  biases the Lincoln--Petersen estimator downward (\cref{prop:referral}).
-  With more lists its effect depends on how the referral channel sits among
-  the other lists.
+  because the police recorded it. With two lists this biases the
+  Lincoln--Petersen estimator downward (\cref{prop:referral}); with more
+  lists its effect depends on how the referral channel sits among them.
   \item \emph{Definitional scope mismatch.} The FBI counts criminal offences
   with a recorded bias motivation. NGO audits also count non-criminal
-  harassment, and their criteria change over time. MSE requires a common
-  target population, so scope must be harmonised before lists are combined.
+  harassment, under criteria that change over time. Scope must be harmonised
+  before lists are combined.
   \item \emph{Record-linkage error.} The lists share no identifier. Records
   must be matched on sparse, noisy and sensitive attributes (date, place,
-  incident type), and both false matches and missed matches distort the
-  capture-history table from which $N$ is estimated \citep{ding1994}.
+  incident type), and false and missed matches distort the capture-history
+  table from which the dark figure is estimated \citep{ding1994}.
   \item \emph{Heterogeneous reportability.} An assault at a synagogue and a
   slur on a commuter train do not have the same chance of being recorded
-  anywhere. Heterogeneous visibility induces dependence among all lists at
-  once. With two lists it leads to underestimation \citep{chao1987}; with
-  three or more, even the sign of the bias depends on the shape of the
-  visibility distribution (\cref{prop:id-hetero}).
-  \item \emph{Coverage shifts.} When the population of reporting agencies
-  changes, as during the 2021 NIBRS transition, a change in list coverage
-  can masquerade as a change in incidence.
+  anywhere. With two lists such heterogeneity leads to underestimation
+  \citep{chao1987}; with three or more, even the sign of the bias depends on
+  the shape of the visibility distribution (\cref{prop:id-hetero}).
+  \item \emph{Coverage shifts.} When the set of reporting agencies changes, as
+  in 2021, a change in list coverage can masquerade as a change in incidence.
 \end{enumerate}
 
 \paragraph{What this paper does, and does not, do}
 This is a methods paper. We develop the statistical framework, prove its
-properties, evaluate it in a simulation study on synthetic data with known
-ground truth, and pre-register an analysis plan for real sources. We report
-\emph{no} empirical estimates of the number of antisemitic incidents in any
-jurisdiction or year: we have not linked any real incident data, and nothing
-here should be read as a finding about the level or trend of antisemitism.
-\Cref{fig:pipeline} summarises the pipeline from raw records to the dark
-figure; notation is collected in \cref{tab:notation}.
+properties, evaluate the estimators in a simulation study on synthetic data
+with known ground truth, and pre-register an analysis plan for real sources.
+We report \emph{no} empirical estimates of the number of antisemitic incidents
+in any jurisdiction or year: we have not linked any real incident data, and
+nothing here should be read as a finding about the level or trend of
+antisemitism. \Cref{fig:pipeline} summarises the pipeline from raw records to
+the dark figure; notation is collected in \cref{tab:notation}.
 
 \IfFileExists{figures/fig-pipeline.tex}{\input{figures/fig-pipeline}}{}%
 \IfFileExists{tables/tab-notation.tex}{\input{tables/tab-notation}}{}%
@@ -115,107 +108,103 @@ attributed where they are used.
   model, the dark figure is not identified (\cref{thm:nonid}; compare
   \citealp{aleshinguendel2024}). Without a $K$-way interaction, the
   maximum-likelihood estimate of the dark figure is an alternating product of
-  cell counts over the Boolean lattice $\{0,1\}^K$, for every $K$
-  \citep{fienberg1972,bishop1975}; it reduces to the Lincoln--Petersen
-  estimator when $K=2$. We retain $\omega$ in this closed form as an explicit
-  sensitivity parameter, which enters as the factor $e^{\pm\omega}$
-  (\cref{thm:closed}, \cref{fig:lattice}) and makes offset-based sensitivity
-  analysis \citep{gerritse2015} analytic. The
-  bounds are sharp (\cref{cor:bounds}), and the direction of bias is the sign
-  of an oriented interaction (\cref{prop:direction}). We show that, with three
-  or more lists, neither positive dependence nor heterogeneous visibility fixes
-  that sign (\cref{prop:id-hetero}). In a stylised three-list example, the
-  model without a $K$-way interaction overstates the dark figure more than
-  twelvefold (\cref{ex:id-hetero}). Sensitivity analysis must therefore be
-  two-sided unless a known mechanism fixes the sign. We restate the lower bound of
-  \citet{chao1987} (\cref{thm:chao}) and show that heterogeneity across lists
-  reverses it (\cref{prop:id-mt}). We model referral dependence explicitly
-  and show how provenance metadata restores identification
-  (\cref{prop:referral}). A sensitivity frontier states how much unmeasured
-  dependence a claim such as ``the dark figure exceeds the police count'' can
-  survive (\cref{thm:id-frontier}).
+  cell counts over the Boolean lattice $\{0,1\}^K$
+  \citep{fienberg1972,bishop1975}. We retain $\omega$ in this classical closed
+  form as an explicit sensitivity parameter, which enters as the factor
+  $e^{\pm\omega}$ (\cref{thm:closed}, \cref{fig:lattice}) and makes
+  offset-based sensitivity analysis \citep{gerritse2015} analytic. The bounds
+  are sharp (\cref{cor:bounds}), and the direction of bias is the sign of an
+  oriented interaction (\cref{prop:direction}). With three or more lists,
+  neither positive dependence nor heterogeneous visibility fixes that sign
+  (\cref{prop:id-hetero}); in a stylised three-list example the model without
+  a $K$-way interaction overstates the dark figure more than twelvefold
+  (\cref{ex:id-hetero}). Sensitivity analysis must therefore be two-sided
+  unless a known mechanism fixes the sign. Chao's lower bound
+  \citep{chao1987} holds under heterogeneity across incidents, but
+  heterogeneity across lists reverses it (\cref{thm:chao,prop:id-mt}), so we
+  use it as a diagnostic. We model referral dependence and show how provenance
+  metadata restore identification (\cref{prop:referral}). A sensitivity
+  frontier states how much unmeasured dependence a claim such as ``the dark
+  figure exceeds the police count'' can survive (\cref{thm:id-frontier}).
   \item\label{contrib:link} \textbf{Linkage error as a linear operator.}
   Following the dual-system analysis of matching error by \citet{ding1994}
   and its multi-list extensions \citep{ding1996,diconsiglio2018}, we
-  represent imperfect record linkage under a canonical error model as a
-  stochastic operator $\Lop(\delta,\varepsilon)$ acting on the true
-  capture-history table, where $\delta$ and $\varepsilon$ are the false
-  non-match and false match rates. We derive explicit first-order bias
-  coefficients for the $K$-list estimator (\cref{thm:linkbias}). Which error
-  does more damage depends on how much the lists overlap. With sparse lists
-  false matches dominate, and with dense lists missed matches do; under
-  independent capture the crossover has a closed form
-  (\cref{cor:link-indep,rem:link-reading}). Missed matches inflate the two-list dark
-  figure, but with three or more strongly dependent lists that direction can
-  reverse (\cref{rem:link-reversal}). We also propose a linkage-corrected
-  estimator (\cref{cor:linkcorrect}) and give a total-variance decomposition
-  into within- and between-linkage components that quantifies how far
-  plug-in intervals undercover (\cref{prop:totalvar}). We design clerical
-  review to target the links whose resolution most reduces posterior
-  variance, with an explicit bound on the gap to the optimal review set
-  (\cref{thm:review}, \cref{alg:review}).
+  represent imperfect record linkage under a stylised error model (LE) as an
+  operator $\Lop(\delta,\varepsilon)$ on the true capture-history table, where
+  $\delta$ and $\varepsilon$ are per-record probabilities of a missed and a
+  false match. We derive first-order bias coefficients for the $K$-list
+  estimator (\cref{thm:linkbias}). Under independent capture, false matches do
+  more damage when lists are sparse and missed matches when they are dense,
+  with a closed-form crossover (\cref{cor:link-indep,rem:link-reading}).
+  Missed matches inflate the two-list dark figure, but with three or more
+  strongly dependent lists that direction can reverse
+  (\cref{rem:link-reversal}). We derive the correction implied under LE
+  (\cref{cor:linkcorrect}) and a total-variance decomposition that quantifies
+  how far plug-in intervals undercover (\cref{prop:totalvar}). LE has no move
+  for a swap, a record linked to the wrong partner, and our simulation shows
+  that the correction over-corrects when swaps dominate. Mixing over linkage
+  draws is therefore our primary approach, and the correction is a
+  diagnostic. We also design clerical review and a random audit of linkage
+  quality (\cref{thm:review,alg:review,prop:link-audit}).
   \item\label{contrib:bayes} \textbf{A Bayesian model.} We assemble the
   latent-class MSE of \citet{manriquevallier2016}, with a Dirichlet-process
   prior (\cref{eq:lcmcr}), covariate-dependent capture, and a spatiotemporal
-  small-area model for state--year counts (\cref{eq:smallarea}). In that
-  model, police-list coverage enters as a known offset computed from agency
-  participation data, so that breaks such as the 2021 transition are absorbed
-  by data rather than mistaken for changes in incidence. Linkage uncertainty
+  small-area model for state--year counts (\cref{eq:smallarea}) in which
+  police-list coverage enters as a known offset computed from agency
+  participation, so that breaks such as the 2021 transition are absorbed by
+  data. The small-area model is specified, not evaluated. Linkage uncertainty
   is propagated through a modular (``cut'') posterior that mixes over draws of
-  the linkage structure instead of conditioning on a single estimated linkage
-  (\cref{eq:models-cut}, \cref{alg:pipeline}), in the spirit of
-  \citet{tancredi2011} and \citet{sadinle2018}.
-  \item\label{contrib:funnel} \textbf{Where antisemitism goes missing.} We
-  write the police count as a multiplicative reporting funnel
+  the linkage structure (\cref{eq:models-cut}, \cref{alg:pipeline}), in the
+  spirit of \citet{tancredi2011} and \citet{sadinle2018}.
+  \item\label{contrib:funnel} \textbf{Where antisemitic incidents go missing.}
+  We write the police count as a multiplicative reporting funnel
   (\cref{prop:funnel}, \cref{fig:funnel}) and state which data identify each
-  stage and which do not. In particular, no list-based method can see
-  incidents that were never disclosed to anyone, so the disclosure stage
-  requires a victim survey. A Shapley-value decomposition attributes the
-  dispersion of recorded rates across jurisdictions, or the gap between two
-  of them, to incidence and to each reporting stage (\cref{thm:shapley}).
+  stage. No list-based method can see incidents that never reach a recording
+  channel, so that stage requires a victim survey. A Shapley-value
+  decomposition attributes the dispersion of recorded rates across
+  jurisdictions, or the gap between two of them, to incidence and to each
+  reporting stage (\cref{thm:shapley}).
   \item\label{contrib:sim} \textbf{A simulation study.} In synthetic worlds
   with heterogeneous reportability, referral dependence and noisy records, we
-  compare Lincoln--Petersen, log-linear model averaging, latent-class
-  DP-MSE and the Chao bound. We also compare naive, linkage-corrected and
-  uncertainty-propagating pipelines on bias, root-mean-squared error and
-  interval coverage (\cref{sec:simulation}). The simulated records are
-  corrupted by exactly the linkage-error model analysed in the theory
-  (\cref{def:link-le}).
+  compare Lincoln--Petersen, log-linear model averaging, latent-class DP-MSE
+  and Chao's estimator, and naive, linkage-corrected and
+  uncertainty-propagating pipelines, on bias, root-mean-squared error and
+  interval coverage (\cref{sec:simulation}). Simulated records carry
+  realistic attribute noise and are linked by FS-EM (\cref{alg:fsem}); LE
+  enters only through the correction, which is thereby tested under
+  misspecification.
   \item\label{contrib:plan} \textbf{A pre-registered analysis plan.} We fix
-  in advance how FBI hate-crime data (UCR/NIBRS), the ADL Audit, community
-  security organisations, campus (Clery Act) data and the NCVS would be
-  harmonised, linked under privacy constraints and analysed, with New York
-  City as the candidate pilot (\cref{sec:plan}). An ethics protocol for data on victims of hate crime
-  accompanies the plan (\cref{sec:ethics}).
+  in advance how FBI hate-crime data, the ADL Audit, community security
+  organisations, campus data and the NCVS would be harmonised, linked under
+  privacy constraints and analysed, with New York City as the candidate pilot
+  (\cref{sec:plan}), together with an ethics protocol (\cref{sec:ethics}).
 \end{enumerate}
 
 \paragraph{Related work}
 The effect of matching error on dual-system estimates was analysed by
 \citet{ding1994}, with multi-list extensions by \citet{ding1996} and
 \citet{diconsiglio2018}. Joint Bayesian models of record linkage and
-population size were developed by \citet{tancredi2011}. \citet{sadinle2018} showed how to propagate linkage
-uncertainty into MSE for human-rights data, building on Bayesian bipartite
-matching \citep{sadinle2017} and the record-linkage theory of
-\citet{fellegi1969}. Heterogeneity in capture probabilities has been
-addressed through latent-class and Dirichlet-process models
-\citep{manriquevallier2016} and through lower bounds \citep{chao1987}. On
-hate crime, the under-reporting literature documents the gap between
-victimisation and police statistics \citep{pezzella2019} and the fragility of
-bias classification \citep{mcdevitt2003}. As far as we know, these strands
-have not been brought together for antisemitic incidents, where referral
-between lists, definitional mismatch and shifting police coverage occur
-together.
+population size were developed by \citet{tancredi2011}. \citet{sadinle2018}
+showed how to propagate linkage uncertainty into MSE for human-rights data,
+building on Bayesian bipartite matching \citep{sadinle2017} and the
+record-linkage theory of \citet{fellegi1969}. Heterogeneity in capture
+probabilities has been addressed through latent-class and Dirichlet-process
+models \citep{manriquevallier2016} and through lower bounds
+\citep{chao1987}. On hate crime, the under-reporting literature documents the
+gap between victimisation and police statistics \citep{pezzella2019} and the
+fragility of bias classification \citep{mcdevitt2003}. As far as we know,
+these strands have not been brought together for antisemitic incidents, where
+referral between lists, definitional mismatch and shifting police coverage
+occur together.
 
 \paragraph{Roadmap}
-\Cref{sec:sources} describes the candidate lists and how each one is
-generated. \Cref{sec:framework} sets out the population, the lists and the
-capture model. \Cref{sec:identification} develops identification,
-sensitivity bounds and referral dependence. \Cref{sec:linkage} treats
+\Cref{sec:sources} describes the candidate lists and \cref{sec:framework} the
+population, lists and capture model. \Cref{sec:identification} develops
+identification, sensitivity bounds and referral dependence, \cref{sec:linkage}
 record-linkage error and clerical review, and \cref{sec:models} the Bayesian
-joint model. \Cref{sec:funnel} develops the reporting funnel and its Shapley
-decomposition. \Cref{sec:simulation} reports the simulation study,
-\cref{sec:plan} the pre-registered analysis plan, and \cref{sec:ethics} the
-ethics protocol. \Cref{sec:discussion} discusses limitations and extensions.
-Proofs are in \cref{app:idproofs,app:linkproofs}, with the remaining
-funnel proof in \cref{app:bayes-proofs}. Computational details are in
-\cref{app:computation} and simulation details in \cref{app:simdetails}.
+model. \Cref{sec:funnel} develops the reporting funnel, \cref{sec:simulation}
+reports the simulation study, \cref{sec:plan} gives the pre-registered
+analysis plan and \cref{sec:ethics} the ethics protocol. \Cref{sec:discussion}
+discusses limitations. Proofs are in \cref{app:idproofs,app:linkproofs}, with
+the remaining funnel proof in \cref{app:bayes-proofs}; computational and
+simulation details are in \cref{app:computation,app:simdetails}.

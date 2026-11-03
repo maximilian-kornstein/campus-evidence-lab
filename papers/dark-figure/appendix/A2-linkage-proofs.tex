@@ -10,21 +10,21 @@ which follows by expanding the product. Norms on $\mathbb R^{\Hobs}$ are $\ell_1
 
 \subsection{Proof of \texorpdfstring{\cref{prop:link-fs}}{the Fellegi--Sunter optimality}}\label{app:link-fs}
 
-We give the standard Neyman--Pearson argument \citep[Ch.~3]{lehmann2005}; the result is Theorem~1 of \citet{fellegi1969}. Use the conventions $w=+\infty$ if $u(\gamma)=0<m(\gamma)$ and $w=-\infty$ if $m(\gamma)=0<u(\gamma)$, and discard $\gamma$ with $m(\gamma)=u(\gamma)=0$. Because $T_\lambda<T_\mu$, the link and non-link regions of $\phi^\star$ are disjoint, so $\phi^\star$ is a decision rule. Let $\phi$ satisfy $\mu(\phi)\le\mu^\star$ and $\lambda(\phi)\le\lambda^\star$.
+We give the standard Neyman--Pearson argument \citep[Ch.~3]{lehmann2005}; the result is Theorem~1 of \citet{fellegi1969}. Use the conventions $w=+\infty$ if $u(\gamma)=0<m(\gamma)$ and $w=-\infty$ if $m(\gamma)=0<u(\gamma)$, and discard $\gamma$ with $m(\gamma)=u(\gamma)=0$. Because $T_{\mathrm N}<T_{\mathrm L}$, the link and non-link regions of $\phi^\star$ are disjoint, so $\phi^\star$ is a decision rule. Let $\phi$ satisfy $P_{\mathrm{FL}}(\phi)\le P_{\mathrm{FL}}^\star$ and $P_{\mathrm{ML}}(\phi)\le P_{\mathrm{ML}}^\star$.
 
-Put $c=e^{T_\mu}$. By construction, $\phi^\star_{\mathrm L}(\gamma)=1$ if $m(\gamma)>c\,u(\gamma)$ and $\phi^\star_{\mathrm L}(\gamma)=0$ if $m(\gamma)<c\,u(\gamma)$. Hence $\{\phi^\star_{\mathrm L}(\gamma)-\phi_{\mathrm L}(\gamma)\}\{m(\gamma)-c\,u(\gamma)\}\ge0$ for every $\gamma$. Summing over $\gamma$,
+Put $c=e^{T_{\mathrm L}}$. By construction, $\phi^\star_{\mathrm L}(\gamma)=1$ if $m(\gamma)>c\,u(\gamma)$ and $\phi^\star_{\mathrm L}(\gamma)=0$ if $m(\gamma)<c\,u(\gamma)$. Hence $\{\phi^\star_{\mathrm L}(\gamma)-\phi_{\mathrm L}(\gamma)\}\{m(\gamma)-c\,u(\gamma)\}\ge0$ for every $\gamma$. Summing over $\gamma$,
 \begin{equation}\label{eq:link-np1}
-  \sum_\gamma m(\gamma)\{\phi^\star_{\mathrm L}(\gamma)-\phi_{\mathrm L}(\gamma)\}\ \ge\ c\,\{\mu^\star-\mu(\phi)\}\ \ge\ 0 .
+  \sum_\gamma m(\gamma)\{\phi^\star_{\mathrm L}(\gamma)-\phi_{\mathrm L}(\gamma)\}\ \ge\ c\,\{P_{\mathrm{FL}}^\star-P_{\mathrm{FL}}(\phi)\}\ \ge\ 0 .
 \end{equation}
-Similarly, with $c'=e^{T_\lambda}$, $\phi^\star_{\mathrm N}(\gamma)=1$ if $m(\gamma)<c'u(\gamma)$ and $\phi^\star_{\mathrm N}(\gamma)=0$ if $m(\gamma)>c'u(\gamma)$. Hence $\{\phi^\star_{\mathrm N}-\phi_{\mathrm N}\}\{c'u-m\}\ge0$ pointwise, and
+Similarly, with $c'=e^{T_{\mathrm N}}$, $\phi^\star_{\mathrm N}(\gamma)=1$ if $m(\gamma)<c'u(\gamma)$ and $\phi^\star_{\mathrm N}(\gamma)=0$ if $m(\gamma)>c'u(\gamma)$. Hence $\{\phi^\star_{\mathrm N}-\phi_{\mathrm N}\}\{c'u-m\}\ge0$ pointwise, and
 \begin{equation}\label{eq:link-np2}
-  c'\sum_\gamma u(\gamma)\{\phi^\star_{\mathrm N}(\gamma)-\phi_{\mathrm N}(\gamma)\}\ \ge\ \lambda^\star-\lambda(\phi)\ \ge\ 0 .
+  c'\sum_\gamma u(\gamma)\{\phi^\star_{\mathrm N}(\gamma)-\phi_{\mathrm N}(\gamma)\}\ \ge\ P_{\mathrm{ML}}^\star-P_{\mathrm{ML}}(\phi)\ \ge\ 0 .
 \end{equation}
-Since $\phi_{\mathrm C}=1-\phi_{\mathrm L}-\phi_{\mathrm N}$, \eqref{eq:link-np1} and $\lambda(\phi)\le\lambda^\star$ give
+Since $\phi_{\mathrm C}=1-\phi_{\mathrm L}-\phi_{\mathrm N}$, \eqref{eq:link-np1} and $P_{\mathrm{ML}}(\phi)\le P_{\mathrm{ML}}^\star$ give
 \[
-  \textstyle\sum_\gamma m\phi_{\mathrm C}=1-\sum_\gamma m\phi_{\mathrm L}-\lambda(\phi)\ \ge\ 1-\sum_\gamma m\phi^\star_{\mathrm L}-\lambda^\star=\sum_\gamma m\phi^\star_{\mathrm C}.
+  \textstyle\sum_\gamma m\phi_{\mathrm C}=1-\sum_\gamma m\phi_{\mathrm L}-P_{\mathrm{ML}}(\phi)\ \ge\ 1-\sum_\gamma m\phi^\star_{\mathrm L}-P_{\mathrm{ML}}^\star=\sum_\gamma m\phi^\star_{\mathrm C}.
 \]
-Likewise \eqref{eq:link-np2} and $\mu(\phi)\le\mu^\star$ give $\sum_\gamma u\phi_{\mathrm C}=1-\mu(\phi)-\sum_\gamma u\phi_{\mathrm N}\ge1-\mu^\star-\sum_\gamma u\phi^\star_{\mathrm N}=\sum_\gamma u\phi^\star_{\mathrm C}$. For any proportion $p$ of matches, the review probability is $p\sum m\phi_{\mathrm C}+(1-p)\sum u\phi_{\mathrm C}$, which $\phi^\star$ therefore minimises. \qed
+Likewise \eqref{eq:link-np2} and $P_{\mathrm{FL}}(\phi)\le P_{\mathrm{FL}}^\star$ give $\sum_\gamma u\phi_{\mathrm C}=1-P_{\mathrm{FL}}(\phi)-\sum_\gamma u\phi_{\mathrm N}\ge1-P_{\mathrm{FL}}^\star-\sum_\gamma u\phi^\star_{\mathrm N}=\sum_\gamma u\phi^\star_{\mathrm C}$. For any proportion $p$ of matches, the review probability is $p\sum m\phi_{\mathrm C}+(1-p)\sum u\phi_{\mathrm C}$, which $\phi^\star$ therefore minimises. \qed
 
 \subsection{Proof of \texorpdfstring{\cref{prop:link-detach}}{the detachment proposition}}\label{app:link-detach}
 
@@ -69,7 +69,7 @@ The three cells $g\cup k$, $g$ and $\{k\}$ of $\bm d_{g\cup k,k}$ are distinct, 
   \Pr\bigl(B_r=V_r\in P_k^\circ\mid\text{past}\bigr)=\frac{|P_k^\circ|}{\max(C_k,|\mathcal P_j|)}\ge\frac{C_k-2m_j}{C_k+m_j}\ge1-\frac{3m_j}{C_k}.
 \]
 
-Call $r\in\mathcal F$ \emph{good} if it is still a singleton at its turn and $B_r=V_r\in P_k^\circ$. Then the actual change in the table is $\bm m_r$, because $V_r$ is untouched and has type $\mathrm{type}(B_r)$. Otherwise $r$ is \emph{bad}. Either (a) it was the target of an earlier merge, so that it is no longer a singleton at its turn, or (b) it is still a singleton but the coupling fails. Let $\bm a_r$ be the actual change caused by $r\in\mathcal F$: zero if $r$ is skipped, and otherwise $-\bm d_{\mathrm{type}(V_r)\cup k,k}$ with the current type of $V_r$. Both $\|\bm a_r\|_1$ and $\|\bm m_r\|_1$ are at most $3$. Put $\bm\zeta=(\bm n-\tilde{\bm n})-\bm X=\sum_{r\text{ bad}}(\bm a_r-\bm m_r)$. Then $\|\bm\zeta\|_1\le6\,\#\{\text{bad}\}$, and $\bm n=\tilde{\bm n}+\varepsilon\bm q(\tilde{\bm n})+\bm\xi+\bm\zeta$.
+Call $r\in\mathcal F$ \emph{good} if it is still a singleton at its turn and $B_r=V_r\in P_k^\circ$. Then the actual change in the table is $\bm m_r$, because $V_r$ is untouched and has type $\mathrm{type}(B_r)$. Otherwise $r$ is \emph{bad}. Either (a) it was the target of an earlier merge, so that it is no longer a singleton at its turn, or (b) it is still a singleton but the coupling fails. Let $\bm a_r$ be the actual change caused by $r\in\mathcal F$: zero if $r$ is skipped, and otherwise $-\bm d_{\mathrm{type}(V_r)\cup k,k}$ with the current type of $V_r$. Both $\|\bm a_r\|_1$ and $\|\bm m_r\|_1$ are at most $3$. Put $\bm\rho_{\mathrm{int}}=(\bm n-\tilde{\bm n})-\bm X=\sum_{r\text{ bad}}(\bm a_r-\bm m_r)$. Then $\|\bm\rho_{\mathrm{int}}\|_1\le6\,\#\{\text{bad}\}$, and $\bm n=\tilde{\bm n}+\varepsilon\bm q(\tilde{\bm n})+\bm\xi+\bm\rho_{\mathrm{int}}$.
 
 \emph{Counting bad steps.} For (b), $|\mathcal F|\sim\Bin(A,\varepsilon)$ gives
 \[
@@ -79,7 +79,7 @@ For (a), map each such $r\in\mathcal F$ to the first earlier step $r'$ whose tar
 \[
   \E\#\{r'\in\mathcal F:B_{r'}\in\mathcal F\}=\sum_k\varepsilon A_k\sum_{c\in P_k\cap\mathcal S}\frac{\varepsilon}{C_k}\le\frac{\varepsilon^2A^2}{C_{\min}} .
 \]
-Therefore $\E\#\{\text{bad}\}\le2\E\#(\mathrm b)+\varepsilon^2A^2/C_{\min}\le4\varepsilon^2A^2/C_{\min}$, and $\E\|\bm\zeta\|_1\le24\varepsilon^2A^2/C_{\min}$. Finally $\E[\bm n\mid\tilde\Link]-\tilde{\bm n}-\varepsilon\bm q(\tilde{\bm n})=\E\bm\zeta$. \qed
+Therefore $\E\#\{\text{bad}\}\le2\E\#(\mathrm b)+\varepsilon^2A^2/C_{\min}\le4\varepsilon^2A^2/C_{\min}$, and $\E\|\bm\rho_{\mathrm{int}}\|_1\le24\varepsilon^2A^2/C_{\min}$. Finally $\E[\bm n\mid\tilde\Link]-\tilde{\bm n}-\varepsilon\bm q(\tilde{\bm n})=\E\bm\rho_{\mathrm{int}}$. \qed
 
 \subsection{Proof of \texorpdfstring{\cref{lem:link-response}}{the split-merge calculus}}\label{app:link-response}
 
@@ -94,9 +94,9 @@ Its $\ell_1$ norm is at most $3+6\sum_kx_{\{k\}}/C_k\le3+6/c$. Hence $\bm q$ is 
 
 \emph{Step 3 (the observed table).} By \cref{prop:link-detach}(v), $\tilde{\bm n}=\mathcal D_\delta\bm t+\bm\rho_1$ with $\E\|\bm\rho_1\|_2^2\le K\|\bm t\|_1$. By \cref{lem:link-merge} and Step~1,
 \[
-  \bm n=\Lop_{\delta,\varepsilon}(\bm t)+\bm\rho_1+\varepsilon\{\bm q(\tilde{\bm n})-\bm q(\mathcal D_\delta\bm t)\}+\bm\xi+\bm\zeta,
+  \bm n=\Lop_{\delta,\varepsilon}(\bm t)+\bm\rho_1+\varepsilon\{\bm q(\tilde{\bm n})-\bm q(\mathcal D_\delta\bm t)\}+\bm\xi+\bm\rho_{\mathrm{int}},
 \]
-where $\|\bm q(\tilde{\bm n})-\bm q(\mathcal D_\delta\bm t)\|_1\le L_c\|\bm\rho_1\|_1$, $\E\|\bm\xi\|_2^2\le3K\|\bm t\|_1$, and $\E\|\bm\zeta\|_1\le24\varepsilon^2K^2\|\bm t\|_1^2/\min_kC_k(\bm t)$. All constants are free of $\delta$ and $\varepsilon$. Chebyshev's inequality, applied in the $(2^K-1)$-dimensional space, and Markov's inequality give
+where $\|\bm q(\tilde{\bm n})-\bm q(\mathcal D_\delta\bm t)\|_1\le L_c\|\bm\rho_1\|_1$, $\E\|\bm\xi\|_2^2\le3K\|\bm t\|_1$, and $\E\|\bm\rho_{\mathrm{int}}\|_1\le24\varepsilon^2K^2\|\bm t\|_1^2/\min_kC_k(\bm t)$. All constants are free of $\delta$ and $\varepsilon$. Chebyshev's inequality, applied in the $(2^K-1)$-dimensional space, and Markov's inequality give
 \begin{equation}\label{eq:link-nexp}
   \bigl\|\bm n/N-\Lop_{\delta,\varepsilon}(\bm\tau_N)\bigr\|_1=O_p^{\mathrm u}\bigl(\varepsilon^2+N^{-1/2}\bigr),
 \end{equation}
@@ -159,7 +159,7 @@ Under independent capture, $\tau_{g\cup k}/\tau_g=p_k/(1-p_k)$ for all $g$, so $
   \phi_{13}=\frac{t_{\{1,2,3\}}\,t_{\{2\}}}{t_{\{1,2\}}\,t_{\{2,3\}}},\qquad
   \phi_{23}=\frac{t_{\{1,2,3\}}\,t_{\{1\}}}{t_{\{1,2\}}\,t_{\{1,3\}}},
 \]
-and similarly for $k=1,2$. Each $\phi_{jk}$ is the odds ratio between lists $j$ and $k$ among the incidents recorded by the third list. This proves the claim made after \cref{thm:linkbias}.
+and similarly for $k=1,2$. Each $\phi_{jk}$ is the odds ratio between lists $j$ and $k$ among the incidents recorded by the third list. This proves the claim of \cref{rem:link-H}.
 
 \subsection{Proof of \texorpdfstring{\cref{cor:link-indep}}{the independent-capture corollary}}\label{app:link-indep}
 
@@ -193,7 +193,7 @@ By Banach's theorem it has a unique fixed point $\hat{\bm x}$, which solves $\Ps
 
 (i) is the law of total variance under $p(N,\Link\mid D)$. For (ii), $\Linkhat$ is fixed given $D$, so $G(\Linkhat)$ is a constant, and $\E[(N-G(\Linkhat))^2\mid D]=\Var(N\mid D)+\{\E[N\mid D]-G(\Linkhat)\}^2$. If $V(\Link)\equiv V_w$ on the support, the reported $V(\Linkhat)=V_w$ falls short of this by $V_b+\{\E[N\mid D]-G(\Linkhat)\}^2\ge V_b$. For (iii), let $N\mid D\sim\mathrm N(\bar N,s^2)$ with $s^2=V_w+V_b$, let $b=G(\Linkhat)-\bar N$, and let $w=z_{\alpha/2}V_w^{1/2}$. The coverage is $\Phi\{(w-b)/s\}+\Phi\{(w+b)/s\}-1=:\kappa(b)$. Its derivative is $\kappa'(b)=s^{-1}[\varphi\{(w+b)/s\}-\varphi\{(w-b)/s\}]$, which is $\le0$ for $b\ge0$ and $\ge0$ for $b\le0$, because $|w+b|\ge|w-b|$ exactly when $b\ge0$. So $\kappa$ is maximised at $b=0$, where it equals $2\Phi(w/s)-1=2\Phi\{z_{\alpha/2}(1+V_b/V_w)^{-1/2}\}-1$. For (iv), $N-\bar Q=(N-\E[N\mid D])-(\bar Q-\E[N\mid D])$, and the two terms are independent given $D$, so $\E[(N-\bar Q)^2\mid D]=\Var(N\mid D)+\Var(\bar Q\mid D)=V_w+V_b+V_b/M$. Finally $\E[\bar U\mid D]=V_w$, and $\E[B_M\mid D]=V_b$ because $B_M$ is the unbiased sample variance of $M$ independent draws. \qed
 
-\subsection{Proof of \texorpdfstring{\cref{thm:review}}{the review theorem}}\label{app:link-review}
+\subsection{Proofs of \texorpdfstring{\cref{thm:review,prop:review-costs}}{the review results}}\label{app:link-review}
 
 (i) For independent $O_1,\dots,O_L$ with finite ranges, the Hoeffding decomposition \citep{hoeffding1948,efron1981} is
 \[
@@ -213,7 +213,7 @@ For $T=\{u\}$, $G_{\{u\}}=\E[G\mid O_u]-\E G$. For a binary $I_\ell$, $\E[G\mid 
 \]
 and $|\nabla F(\bm y)^{\top}\bm v_\ell-g_\ell|\le H\|\bm y-\bar{\bm n}\|_2\,\bar v$. Since $\E\|\bm X_{-\ell}\|_2\le(\E\|\bm X\|_2^2)^{1/2}\le\bar vS_1^{1/2}$, we get $|\Delta_\ell-g_\ell|\le H\bar v(\bar vS_1^{1/2}+\bar v)$. For the interactions, write $G=F(\bar{\bm n})+\sum_\ell g_\ell\xi_\ell+R$, with $|R|\le\frac H2\|\bm X\|_2^2$ by Taylor's theorem. The linear part has Hoeffding components of order one only. So the components of order at least two of $G$ are those of $R$, and $I_{\mathrm{int}}\le\Var R\le\E R^2\le\frac{H^2}4\E\|\bm X\|_2^4$. Expanding $\|\bm X\|_2^4=\sum_{a,b,c,d}\xi_a\xi_b\xi_c\xi_d\langle\bm v_a,\bm v_b\rangle\langle\bm v_c,\bm v_d\rangle$, only paired or fully coincident indices have non-zero mean. Using $\E\xi_a^4\le\E\xi_a^2=\pi_a(1-\pi_a)$ and $\langle\bm v_a,\bm v_b\rangle^2\le\bar v^4$ gives $\E\|\bm X\|_2^4\le\bar v^4(S_1+3S_1^2)$. If $F$ is homogeneous of degree one, then $\nabla^2F(\bm x)=N^{-1}\nabla^2F(\bm x/N)$. If the convex hull of the attainable tables lies in $\{\bm x:x_h\ge cN\ \forall h,\ \|\bm x\|_1\le C'N\}$, then $\bm x/N$ ranges over a compact subset of $(0,\infty)^{\Hobs}$ on which $\nabla^2F$ is bounded, so $H=O(N^{-1})$. For the closed form, $\nabla^2F$ is unbounded as a cell tends to zero, which is why the proviso is needed.
 
-(iv) Index the units so that $\sigma_1^2/c_1\ge\sigma_2^2/c_2\ge\cdots$, and assume $\sum_uc_u>B$, since otherwise all units are reviewed. Let $j$ be the first index with $\sum_{u\le j}c_u>B$, and let $x^{\mathrm g}_u=1$ for $u<j$, $x^{\mathrm g}_j=(B-\sum_{u<j}c_u)/c_j\in[0,1)$, and $x^{\mathrm g}_u=0$ for $u>j$. For any $x\in[0,1]^L$ with $\sum_uc_ux_u\le B$,
+\emph{Proof of \cref{prop:review-costs}.} Index the units so that $\sigma_1^2/c_1\ge\sigma_2^2/c_2\ge\cdots$, and assume $\sum_uc_u>B$, since otherwise all units are reviewed. Let $j$ be the first index with $\sum_{u\le j}c_u>B$, and let $x^{\mathrm g}_u=1$ for $u<j$, $x^{\mathrm g}_j=(B-\sum_{u<j}c_u)/c_j\in[0,1)$, and $x^{\mathrm g}_u=0$ for $u>j$. For any $x\in[0,1]^L$ with $\sum_uc_ux_u\le B$,
 \[
   \sum_u\sigma_u^2(x^{\mathrm g}_u-x_u)=\sum_u\frac{\sigma_u^2}{c_u}\,c_u(x^{\mathrm g}_u-x_u)\ \ge\ \frac{\sigma_j^2}{c_j}\sum_uc_u(x^{\mathrm g}_u-x_u)\ \ge\ 0 .
 \]
@@ -227,6 +227,6 @@ The first inequality holds because $c_u(x^{\mathrm g}_u-x_u)\ge0$ for $u<j$ and 
 \[
   \Bigl(\sum_h\frac{N_h^2S_{z,h}^2}{n_h}\Bigr)\Bigl(\sum_hc_hn_h\Bigr)\ge\Bigl(\sum_hN_hS_{z,h}\sqrt{c_h}\Bigr)^2,
 \]
-with equality if and only if $N_hS_{z,h}/\sqrt{n_h}\propto\sqrt{c_hn_h}$, that is, $n_h\propto N_hS_{z,h}/\sqrt{c_h}$ \citep{neyman1934}. With $\sum_hc_hn_h=C$, the minimum is as stated. With the bounds $2\le n_h\le N_h$, we minimise the convex function $\sum_ha_h/n_h$, with $a_h=N_h^2S_{z,h}^2$, over a convex set, so the Karush--Kuhn--Tucker conditions are sufficient. They read $a_h/n_h^2=\lambda c_h-\mu_h+\nu_h$, where $\mu_h,\nu_h\ge0$ vanish unless $n_h=2$ or $n_h=N_h$ respectively. Hence $n_h=(a_h/\lambda c_h)^{1/2}$ when this lies within the bounds, and $n_h$ equals the bound it would cross otherwise. This is the stated clipped allocation. The total cost is decreasing in $\lambda$, so $\lambda$ is fixed by the budget.
+with equality if and only if $N_hS_{z,h}/\sqrt{n_h}\propto\sqrt{c_hn_h}$, that is, $n_h\propto N_hS_{z,h}/\sqrt{c_h}$ \citep{neyman1934}. With $\sum_hc_hn_h=C$, the minimum is as stated. With the bounds $2\le n_h\le N_h$, we minimise the convex function $\sum_ha_h/n_h$, with $a_h=N_h^2S_{z,h}^2$, over a convex set, so the Karush--Kuhn--Tucker conditions are sufficient. They read $a_h/n_h^2=\lambda c_h-\underline\nu_h+\bar\nu_h$, where $\underline\nu_h,\bar\nu_h\ge0$ vanish unless $n_h=2$ or $n_h=N_h$ respectively. Hence $n_h=(a_h/\lambda c_h)^{1/2}$ when this lies within the bounds, and $n_h$ equals the bound it would cross otherwise. This is the stated clipped allocation. The total cost is decreasing in $\lambda$, so $\lambda$ is fixed by the budget.
 
 (iii) If all pairs in stratum $h$ share one decision status, then each coordinate of $\bm y_\ell$ is an affine function of $I_\ell$ with stratum-specific coefficients. For example, in a stratum of linked edges $\bm y_\ell=(I_\ell,0,1-I_\ell)$. Hence $z_\ell=\alpha_h+\lambda_hI_\ell$ and $S_{z,h}=|\lambda_h|S_{I,h}$. For a binary variable with stratum proportion $P_h$, $S_{I,h}^2=N_hP_h(1-P_h)/(N_h-1)$. Calibration within strata gives $\E[P_h\mid D]=\bar\pi_h$, and replacing $P_h$ by $\bar\pi_h$ gives the working allocation. Since $x(1-x)$ is concave, $\E[P_h(1-P_h)\mid D]\le\bar\pi_h(1-\bar\pi_h)$, so the proxy does not understate $S_{I,h}^2$ on average. \qed

@@ -99,8 +99,8 @@ $(1-n)^{-2}-1$ incidents. The full laws of $H$ and $C$ do differ
 \paragraph{General kernels.} The exponential kernel is not special. Completely monotone
 kernels have the form $g(t)=\int_{(0,\infty)}e^{-bt}\sigma(\dd b)$ for a positive
 measure $\sigma$. They include finite mixtures of exponentials and the Lomax (Omori-type) kernels
-$g(t)=(\vartheta/\varsigma)(1+t/\varsigma)^{-\vartheta-1}$ with
-$\vartheta,\varsigma>0$.
+$g(t)=(\zeta/\varsigma)(1+t/\varsigma)^{-\zeta-1}$ with
+$\zeta,\varsigma>0$.
 
 \begin{proposition}[Completely monotone kernels]\label{prop:th-cm}
 Let $H$ be the stationary Hawkes process with background $\mu$ and kernel
@@ -200,10 +200,10 @@ Define the \emph{burstiness index}
   $\pi_1=q_{01}/(q_{01}+q_{10})$, then
   $\kappa=2(\lambda_1-\lambda_0)^2\pi_0\pi_1/\{\bar\Lambda(q_{01}+q_{10})\}$.
   \item \emph{Moment-based estimators.} In the setting of (a), let $N$ be ergodic. Let
-  $\hat\theta_T=G(\hat{\bm m}_T)$, where $\hat{\bm m}_T$ collects the empirical mean and
+  $\hat\vartheta_T=G(\hat{\bm m}_T)$, where $\hat{\bm m}_T$ collects the empirical mean and
   finitely many empirical autocovariances of the binned counts on $[0,T]$, and $G$ is
-  continuous. If $\hat\theta_T$ is consistent for $(\mu,n,\beta)$ under every
-  stationary exponential Hawkes process, then $\hat\theta_T\to(\mu^*,n^*,\beta^*)$ in
+  continuous. If $\hat\vartheta_T$ is consistent for $(\mu,n,\beta)$ under every
+  stationary exponential Hawkes process, then $\hat\vartheta_T\to(\mu^*,n^*,\beta^*)$ in
   probability under $N$.
   \item \emph{Any covariance shape.} The dispersion functional
   $n_F=1-F_\infty^{-1/2}$ equals $n$ for every stationary Hawkes process, whatever its
@@ -212,16 +212,16 @@ Define the \emph{burstiness index}
   \item \emph{Likelihood.} Now let $N$ be any stationary point process with mean
   $\bar\Lambda$, $\E N(0,1]^2<\infty$ and covariance density $c$; for a Cox process,
   $c=c_\xi$. Fit the family
-  $\lambda_\theta(t)=\mu+n\int_{(-\infty,t)}g_\beta(t-s)\,\dN(s)$ with
-  $\theta=(\mu,n,\beta)\in(0,\infty)\times[0,1)\times\mathcal B$, where each $g_\beta$
+  $\lambda_\vartheta(t)=\mu+n\int_{(-\infty,t)}g_\beta(t-s)\,\dN(s)$ with
+  $\vartheta=(\mu,n,\beta)\in(0,\infty)\times[0,1)\times\mathcal B$, where each $g_\beta$
   is a probability density on $(0,\infty)$ with $\int_0^\infty g_\beta|c|<\infty$. Let
   \[
-  L(\theta)=\E\int_0^1\log\lambda_\theta(t)\,\dN(t)-\E\lambda_\theta(0)
+  L(\vartheta)=\E\int_0^1\log\lambda_\vartheta(t)\,\dN(t)-\E\lambda_\vartheta(0)
   \]
   be the expected log-likelihood per unit time. If $\int_0^\infty g_{\beta_0}(u)c(u)\,\dd u>0$
   for some $\beta_0\in\mathcal B$, then
   \[
-  \sup_{\theta:\,n>0}L(\theta)>\sup_{\theta:\,n=0}L(\theta)=\bar\Lambda\log\bar\Lambda-\bar\Lambda .
+  \sup_{\vartheta:\,n>0}L(\vartheta)>\sup_{\vartheta:\,n=0}L(\vartheta)=\bar\Lambda\log\bar\Lambda-\bar\Lambda .
   \]
   Hence every maximiser of $L$, that is, every pseudo-true value of the misspecified
   maximum likelihood estimator, has $n>0$. For $C(\nu,r,a,\gamma)$ with exponential
@@ -242,13 +242,15 @@ Define the \emph{burstiness index}
   estimators, such as variance-time and autocovariance fits. Spectral (Whittle-type)
   estimators from binned counts \citep{cheysson2022} use the whole periodogram, so they
   are not covered by (b) as stated. Their population contrast
-  $\int\{\log f_\theta+f/f_\theta\}$ is minimised exactly where $f_\theta=f$, which in
-  case (a) happens only at $\theta^*$. Under the usual M-estimation conditions, which we
-  do not verify, they therefore also converge to $\theta^*$. Part (d) proves
+  $\int\{\log f_\vartheta+f/f_\vartheta\}$ is minimised exactly where $f_\vartheta=f$, which in
+  case (a) happens only at $\vartheta^*$. Under the usual M-estimation conditions, which we
+  do not verify, they therefore also converge to $\vartheta^*$. Part (d) proves
   only that the likelihood pseudo-true value has $n>0$. That value depends on the law
   of $N$ beyond second order, so it need not equal $n^*$. Nothing forces the members of
   the matched family of \cref{thm:equiv}, which all share $n^*$, to share it. The
-  simulation study (\cref{sec:simulation}) compares maximum likelihood fits with $n^*$.
+  simulation study compares maximum likelihood fits with $n^*$: they are close to $n^*$
+  for frequent small shocks and below it for rare large shocks and slow regime switches
+  (\cref{sec:sim-spurious}).
   Under the usual conditions for misspecified likelihoods \citep{white1982,ogata1978},
   the estimator converges to the maximisers of $L$; we do not verify those conditions
   here.
@@ -363,8 +365,7 @@ is recorded independently, with probability $p\in(0,1]$, independently of $H$.
     n'=h_p(n)=1-\frac{1-n}{\sqrt{(1-n)^2+p\,n(2-n)}} .
   \end{equation}
   Equivalently, $F'_\infty-1=p\,(F_\infty-1)$: thinning scales the excess dispersion by
-  $p$. We write $n'$ for the observed (apparent) branching ratio, called $n_{\mathrm{obs}}$
-  in the overview of contributions.
+  $p$. We write $n'$ for the observed (apparent) branching ratio.
   \item For $p\in(0,1)$, $h_p$ is a strictly increasing bijection of $[0,1)$, and
   $pn<h_p(n)<n$ for $n\in(0,1)$. Moreover $h_p(n)=pn+O(n^2)$ as $n\downarrow0$,
   $h_p(n)\to1$ as $n\uparrow1$, $h_p(n)\to0$ as $p\downarrow0$, $h_1(n)=n$, and
@@ -405,8 +406,9 @@ coverage puts a floor under the precision of any dark-figure-corrected contagion
 estimate. A Bayesian alternative passes posterior draws of $p$ from the companion paper's model through
 $h_p^{-1}$. If $\hat n'$ is the Hawkes maximum likelihood estimator, its limit is the
 pseudo-true value under $N^p$, so the correction is exact only to the extent that this
-value coincides with $n'$ (\cref{thm:thinning}(d)). The simulation study quantifies the
-gap.
+value coincides with $n'$ (\cref{thm:thinning}(d)). In the simulation study the mean
+maximum likelihood estimate is within $0.0104$ of $n'$ for every combination of $n$ and $p$
+that was studied (\cref{sec:sim-thinning}).
 
 \paragraph{Heterogeneous recording.} Severe incidents may be both more likely to be
 recorded and more likely to trigger further incidents. Suppose each incident carries an

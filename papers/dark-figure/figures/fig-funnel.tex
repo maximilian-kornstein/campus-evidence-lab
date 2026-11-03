@@ -59,14 +59,14 @@
 
   % ---------------- stage labels ----------------
   \node[stage] at (\xA,0.12) {Incidents\\[-1pt]\normalfont$N$};
-  \node[stage] at (\xB,0.12) {Disclosed\\[-1pt]\normalfont$N_V$};
+  \node[stage] at (\xB,0.12) {Reaches a\\[-1pt]channel\enspace\normalfont$N_V$};
   \node[stage] at (\xC,0.12) {Reported\\[-1pt]to police};
   \node[stage] at (\xD,0.12) {Classified as\\[-1pt]antisemitic};
   \node[stage] at (\xE,0.12) {Submitted\\[-1pt]to the FBI};
 
   % ---------------- multiplicative factors & identifying sources ----------
   \foreach \xa/\xb/\r/\s in {
-      \xA/\xB/\rvic/{victim survey:\\[-2pt]told anyone},
+      \xA/\xB/\rvic/{victim survey: told\\[-2pt]police or a recording org.},
       \xB/\xC/\rpol/{NCVS-type survey:\\[-2pt]told the police},
       \xC/\xD/\rcls/{police--NGO\\[-2pt]linked overlap},
       \xD/\xE/\rsub/{agency\\[-2pt]participation data}}{
@@ -76,14 +76,17 @@
   \node[src,anchor=north,text width=1.2cm] at (\xB,-\hB-0.08) {MSE};
 
   % ---------------- the recorded count ----------------
-  \node[anchor=west,inner sep=1pt] (nfbi) at (\xE+\bw+0.12,-0.5)
+  \def\xc{12.05}  % x of the collector that gathers all K lists for MSE
+  \draw[listline] (\xE+\bw,-0.5) -- (\xc,-0.5);
+  \fill[LabNavyMid] (\xc,-0.5) circle (1.6pt);
+  \node[anchor=west,inner sep=1pt] (nfbi) at (\xc+0.12,-0.5)
       {\color{LabNavy}$\nFBI$};
   \node[anchor=north west,font=\scriptsize,text=LabGrey,inner sep=1pt]
       at (nfbi.south west) {list $k{=}1$};
 
   % ---------------- leak labels ----------------
   \foreach \x/\dh/\r/\t in {
-      \xA/1.0/\rvic/{never disclosed},
+      \xA/1.0/\rvic/{reached no\\[-2pt]channel},
       \xB/1.0/\rpol/{not reported\\[-2pt]to police},
       \xC/0.55/\rcls/{not recorded\\[-2pt]as bias crime},
       \xD/0.33/\rsub/{recorded but\\[-2pt]not submitted}}{
@@ -94,17 +97,17 @@
   }
 
   % ---------------- parallel lists (capture from the whole population) ----
-  \foreach \y/\k/\name in {1.55/2/{NGO audit},2.05/3/{community security org.},
+  \foreach \y/\k/\name in {1.55/2/{NGO audit},2.05/3/{community security},
                            2.55/4/{campus / portal}}{
-    \draw[listline] (\xB,\y) -- (\xE+\bw,\y);
-    \fill[LabNavyMid] (\xE+\bw,\y) circle (1.6pt);
-    \node[listlab] at (\xE+\bw+0.12,\y) {$n_{\k+}$\enspace\textcolor{LabGrey}{\name}};
+    \draw[listline] (\xB,\y) -- (\xc,\y);
+    \fill[LabNavyMid] (\xc,\y) circle (1.6pt);
+    \node[listlab] at (\xc+0.12,\y) {$n_{\k+}$\enspace\textcolor{LabGrey}{\name}};
   }
-  % sampling ticks: every list learns of incidents once they are disclosed
+  % sampling ticks: every list records only incidents that reach a channel
   \draw[LabNavyMid,line width=0.5pt] (\xB,0.95) -- (\xB,2.55);
   \foreach \y in {1.55,2.05,2.55}{\fill[LabNavyMid] (\xB,\y) circle (1.4pt);}
   \node[font=\scriptsize\itshape,text=LabGrey,anchor=east,align=right,inner sep=1pt]
-      at (\xB-0.15,2.05) {parallel lists\\[-2pt]sample the\\[-2pt]disclosed};
+      at (\xB-0.15,2.05) {parallel lists\\[-2pt]record incidents\\[-2pt]that reach them};
 
   % referral dependence: police-recorded incidents flow into the NGO audit
   \draw[-{Stealth[length=4pt]},LabAccent,line width=0.8pt,dash pattern=on 2.5pt off 1.5pt]
@@ -112,30 +115,30 @@
   \node[font=\scriptsize\itshape,text=LabAccent,anchor=west,inner sep=1pt]
       at ({(\xC+\xD)/2+0.05},1.0) {referral};
 
-  % MSE closes the loop: K lists -> linkage -> estimate of N
+  % MSE closes the loop: all K lists, including list 1 -> linkage -> N_V
+  \draw[LabNavy,line width=0.7pt] (\xc,-0.5) -- (\xc,2.8);
   \draw[-{Stealth[length=5pt]},LabNavy,line width=0.7pt,rounded corners=5pt]
-      (\xE+\bw,2.8) -- (\xE+\bw,3.25) -- (\xB,3.25) -- (\xB,2.72);
+      (\xc,2.8) -- (\xc,3.25) -- (\xB,3.25) -- (\xB,2.72);
   \node[fill=white,font=\scriptsize,text=LabNavy,inner sep=3pt]
-      at ({(\xB+\xE+\bw)/2},3.25)
+      at ({(\xB+\xc)/2},3.25)
       {link the $K$ lists, then multiple-systems estimation:\enspace $\widehat N_V$};
   % a victim survey closes the first stage
   \node[font=\scriptsize,text=LabNavy,anchor=south,align=center,inner sep=1pt]
       at (\xA,1.1) {$N=N_V/\rvic$\\[-1pt]\textcolor{LabGrey}{\itshape(survey)}};
 \end{tikzpicture}
-\caption{\textbf{The reporting funnel.} Each in-scope antisemitic incident must
-pass four filters before it appears in the FBI's hate-crime count:
-the victim or a witness discloses it ($\rvic$), it reaches the police
-($\rpol$), the police record an antisemitic bias motivation ($\rcls$), and
-the agency submits the record to the FBI ($\rsub$), so that
-$\E[\nFBI\mid U_d]=N\rvic\rpol\rcls\rsub$ (\cref{prop:funnel}). Orange
-streams are incidents lost from the police record at each stage; grey italics
-name the auxiliary data that inform each factor (\cref{tab:funnel-sources}).
-Parallel lists (NGO audit, community security organisation, campus or
-self-report portal) learn of disclosed incidents through channels other than
-the police pipeline, except through \emph{referral} (dashed), the dependence
-formalised in \cref{prop:referral}. Linking the $K$ lists and applying
-multiple-systems estimation recovers the number of disclosed incidents
-$N_V$. A victim survey supplies $\rvic$, and hence $N$ and the dark figure
-$\nzero=N-n$ of incidents on no list. Widths are schematic, not estimates.}
+\caption{\textbf{The reporting funnel.} Each in-scope antisemitic incident
+passes four filters before it appears in the FBI's hate-crime count: it reaches
+a recording channel, by a report or by the channel's own detection
+($\rvic$); it reaches the police ($\rpol$); the police record an antisemitic
+bias motivation ($\rcls$); and the agency submits the record to the FBI
+($\rsub$), so that $\E[\nFBI\mid U_d]=N_V\rpol\rcls\rsub$ (\cref{prop:funnel}).
+Orange streams are incidents lost from the police record at each stage; grey
+italics name the auxiliary data that inform each factor
+(\cref{tab:funnel-sources}). The other lists record incidents that reach them
+through channels other than the police, except through \emph{referral}
+(dashed; \cref{prop:referral}). Linking all $K$ lists, the police list
+included, and applying multiple-systems estimation estimates $N_V$. Incidents
+that reach no channel are on no list; a victim survey that supplies $\rvic$ is
+needed to recover them. Widths are schematic, not estimates.}
 \label{fig:funnel}
 \end{figure}

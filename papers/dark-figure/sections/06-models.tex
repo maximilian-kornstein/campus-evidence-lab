@@ -25,7 +25,7 @@ We use $a_\lambda=b_\lambda=1$ and $a_\alpha=b_\alpha=0.25$ (shape and rate), a 
   \pi_{\h}(\psi)=\sum_{j=1}^{J^\star}\pi_j\prod_{k=1}^{K}\lambda_{jk}^{h_k}(1-\lambda_{jk})^{1-h_k},
   \qquad \h\in\Hset,\qquad \psi=(\pi_1,\dots,\pi_{J^\star},\bm\lambda).
 \end{equation}
-Bold subscripts index histories and plain subscripts index classes. This is the mixture representation of \cref{sec:fw-sampling} with a discrete mixing distribution. In particular, $\pi_{\zero}(\psi)=\sum_j\pi_j\prod_k(1-\lambda_{jk})$ is the probability that an incident is missed by every list. The visible type of the example above corresponds to a class $j$ whose $\lambda_{j\cdot}$ are all large. The low-visibility type corresponds to a class with small $\lambda_{j\cdot}$, and such a class contributes most of $\pi_{\zero}$.
+Bold subscripts index histories and plain subscripts index classes. The probability that an incident is missed by every list, $\pi_{\zero}(\psi)=\sum_j\pi_j\prod_k(1-\lambda_{jk})$, comes mostly from low-visibility classes.
 
 The prior $p(N)\propto1/N$ has a convenient property, which the next lemma records together with a one-parameter family of alternatives that we use for sensitivity analysis. The calculation is elementary; we state it because it underlies both the sampler and the Bayesian reading of the Horvitz--Thompson estimator in \cref{sec:models-cov}.
 
