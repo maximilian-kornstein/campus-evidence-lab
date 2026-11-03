@@ -1,4 +1,4 @@
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -9,11 +9,15 @@ const source = path.join(root, "papers");
 const output = path.join(root, "pdfs");
 const work = mkdtempSync(path.join(os.tmpdir(), "kornstein-papers-"));
 const slugs = ["measurement", "detection", "narratives"];
+const compiler = spawnSync("pdflatex", ["--version"], { stdio: "ignore" }).error?.code === "ENOENT" ? "tectonic" : "pdflatex";
 mkdirSync(output, { recursive: true });
 
 try {
   for (const slug of slugs) {
-    const log = execFileSync("pdflatex", ["-interaction=nonstopmode", "-halt-on-error", "-no-shell-escape", `-output-directory=${work}`, `${slug}.tex`], { cwd: source, encoding: "utf8" });
+    const outputLog = execFileSync(compiler, compiler === "tectonic"
+      ? ["--untrusted", "--keep-logs", "--outdir", work, `${slug}.tex`]
+      : ["-interaction=nonstopmode", "-halt-on-error", "-no-shell-escape", `-output-directory=${work}`, `${slug}.tex`], { cwd: source, encoding: "utf8" });
+    const log = compiler === "tectonic" ? readFileSync(path.join(work, `${slug}.log`), "utf8") : outputLog;
     if (!/Output written on .*\(1 page,/.test(log)) throw new Error(`${slug}: expected a single-page PDF`);
     if (/Overfull \\[hv]box/.test(log)) throw new Error(`${slug}: overfull typesetting box`);
     const pdf = path.join(work, `${slug}.pdf`);

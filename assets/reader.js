@@ -57,7 +57,7 @@ function renderTranscript(container, current) {
     fragment.append(element);
     return element;
   };
-  append("p", "Kornstein Lab for Antisemitism Research. Research proposal.");
+  append("p", "Kornstein Lab for Antisemitism Research.");
   append("h2", "Abstract");
   append("p", current.abstract);
   append("h2", "1 Introduction");

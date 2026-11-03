@@ -180,7 +180,8 @@ test("reader initializes matching document links and transcript, resizes, and ap
     assert.equal(nodes["reader-download"].href, `/pdfs/${slug}.pdf`);
     assert.equal(nodes["reader-download"].download, `${slug}.pdf`);
     assert.equal(nodes["reader-preview"].src, `/pdfs/${slug}-page.svg`);
-    assert.match(text(nodes["reader-transcript"]), /Research proposal.*Abstract.*Limitations/);
+    assert.match(text(nodes["reader-transcript"]), /Kornstein Lab for Antisemitism Research.*Abstract.*Limitations/);
+    assert.doesNotMatch(text(nodes["reader-transcript"]), /Research proposal/);
     assert.equal(nodes["reader-sheet"].style.width, "710px");
     assert.equal(nodes["reader-zoom"].disabled, false);
     nodes["reader-zoom"].value = "150";

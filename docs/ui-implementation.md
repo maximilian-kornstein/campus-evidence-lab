@@ -1,6 +1,10 @@
 # Kornstein Lab implementation and visual acceptance
 
-Status: implementation shared on `rebrand/kornstein-ui-reset` for local continuation; functional checks passing; **visual acceptance blocked, not complete**. No merge into `main` or deployment has been performed.
+Status: the user-reviewed Kornstein Lab UI is finalized on `rebrand/kornstein-ui-reset` and recorded in local Git. No push, merge into `main`, or deployment is authorized by this finalization. Visual comparison was performed; remaining font/rendering differences are documented rather than described as pixel-identical.
+
+## Latest review refinement — 2026-11-03
+
+Following user review, removed the repeated Research proposal label from paper pages, PDF subtitles and reader transcripts while retaining prospective study prose. Data & Methods now has three concise descriptions without subtopic lists, and consistently centered row content instead of per-row position offsets. All eight updated desktop captures and scoped checks are in `artifacts/visual/refinement-2026-11-03/`. Earlier evidence remains a historical record of the approved first pass.
 
 ## Approved reference mapping
 
@@ -23,23 +27,23 @@ The user authorized replacing the public-records paper with quantitative/algorit
 
 - Semantic, selectable HTML text rather than screenshot overlays.
 - Shared 1430px desktop shell, 76px header, local Inter variable font under the OFL, warm-white background, orange links, hairline rules.
-- The untouched homepage reference is used as an artwork atlas: CSS crops orange, lavender, and sand artwork regions. Original source rectangles: orange `(746,276,737,299)`; lavender `(433,612,319,248)`; sand `(1164,612,319,248)`.
+- The homepage uses the untouched homepage reference as an artwork atlas. Other pages use ten artwork-only crops from their respective approved mockups, preventing aspect-ratio changes from distorting their compositions. Crop rectangles are recorded in `artifacts/visual/artwork-provenance.json`; no reference text or interactive UI is used as a page image.
 - Responsive layouts at 1250, 900, 650, and 480px, with mobile navigation wrapping and paper cards stacking.
-- Real Computer Modern LaTeX PDFs, 511.2 by 558pt, one page each. SVG previews are rendered from those PDFs. The reader's desktop document footprint is 710 by 775px.
+- Real Times-compatible Nimbus Roman LaTeX PDFs, 511.2 by 558pt, one page each. SVG previews are rendered from those PDFs. The reader's desktop document footprint is 710 by 775px.
 - Reader paper selection is allowlisted. Zoom is limited to 75/100/125/150 percent. Downloads and return links follow the selected paper. A full accessible text transcript accompanies each preview.
 
 ## Checks completed
 
-The build checks every local asset, route, fragment, page heading/landmark, PDF signature, SVG rendering, and sitemap entry. Integration tests cover stale output/legacy exclusion, retired-route 404s, supported MIME types, reader routing, downloads, transcript updates, zoom, resizing, and preview-load errors. PDFs compile without overfull boxes, contain embedded fonts and selectable text, and have one page each. The compiled measurement PDF was visually inspected as a raster rendering.
+Final validation on 2026-11-03 used Node 22.23.1. `npm run check` passes all nine tests and validates 33 public files. The original browser pass covered all eight desktop routes and 40 responsive states; the final refinement passed 108 browser check groups across 35 affected page/viewport states at 1536, 320, 390, 768 and 1024px. Navigation, paper methods anchors, keyboard focus, all three readers, four zoom levels, resizing and real PDF downloads were checked. No browser exceptions, failed requests, page overflow, clipped text or overlapping reader controls were observed.
 
-## Browser acceptance still required
+All three PDFs were regenerated with matching SVG previews and visually inspected. Each is one page with embedded fonts and selectable body text. Study-specific TeX sources and reader research content are unchanged. The measurement PDF's CMEX10 large-symbol font lacks a Unicode map under Tectonic, so equation extraction is imperfect; the accessible reader transcript supplies its full equation.
 
-No browser-control, CUA, or screenshot tool was exposed in this session. No browser screenshots of the implemented UI have been captured. PDF raster inspection and source-level geometry checks do not establish a perfect browser match.
+Full screenshot comparisons and machine-readable checks remain in the ignored local `artifacts/visual/` directory; they are deliberately excluded from the published site and this source commit. The approved original mockups in `docs/design-references/` remain unchanged. The user approved the visual result and requested repository finalization after reviewing the label and Methods refinements.
 
-When browser access becomes available:
+## Local browser comparison
 
-1. Run the local build and server. Capture each route at 1536×1024 with fonts loaded and the reader at 100%.
-2. Compare against its reference, checking shell/header/footer coordinates, type weight and line breaks, borders, artwork crops, card sizes, and document alignment. Inspect differences visually; account for the intended research-text replacements.
-3. Iterate CSS and capture again until the desktop design is accepted. Do not claim perfect matching from the current static checks.
-4. Verify 320, 390, 768, and 1024px widths for overflow, keyboard navigation, readable content, and functioning reader controls. Mobile layout is an adaptation because no mobile mockup was supplied.
-5. Keep the work local until the user reviews it. Visual acceptance remains pending until the screenshot evidence exists.
+The local session used installed Chrome through bundled Playwright, without adding a site runtime dependency. Baselines were captured with Chrome 156.0.8078.74 and finals with 156.0.8078.80, at 1536×1024 CSS pixels, device scale factor 1, browser zoom 100%, and reader zoom 100%, after fonts and images loaded.
+
+The team corrected font optical sizing/weight/tracking, header/footer metrics, card and row geometry, artwork crops, page-specific paper spacing/buttons, and the reader's LaTeX typography. All active pages and the 404 page now give the skip link a focusable main landmark. The reader toolbar is centered independently of its side links. The paper build uses installed Tectonic when pdfLaTeX is absent and retains one-page/no-overfull-box checks.
+
+See `artifacts/visual/REPORT.md` for the reference/capture/comparison gallery, authorized topic differences, measurements, responsive/functional evidence, and rendering limitations. The preview remains at `http://localhost:5173`. The reviewed implementation is saved locally in Git; visual artifacts remain local and excluded from the public build.

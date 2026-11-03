@@ -1,27 +1,32 @@
 \documentclass[11pt]{article}
-\usepackage[paperwidth=7.10in,paperheight=7.75in,left=.43in,right=.43in,top=.28in,bottom=.42in,footskip=.19in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[paperwidth=7.10in,paperheight=7.75in,left=.45in,right=.45in,top=.34in,bottom=.50in,footskip=.19in]{geometry}
 \usepackage{amsmath}
 \usepackage[hidelinks]{hyperref}
-\pdfinfoomitdate=1
-\pdftrailerid{}
-\hypersetup{pdfauthor={Kornstein Lab for Antisemitism Research},pdfsubject={Research proposal; illustrative methods, no empirical findings}}
+\ifdefined\pdfinfoomitdate\pdfinfoomitdate=1\fi
+\ifdefined\pdftrailerid\pdftrailerid{}\fi
+\hypersetup{pdfauthor={Kornstein Lab for Antisemitism Research},pdfsubject={Proposed research; illustrative methods, no empirical findings}}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{3pt}
+\setlength{\parskip}{2pt}
+\setlength{\emergencystretch}{1em}
+\renewcommand{\normalsize}{\fontsize{12}{13}\selectfont}
+\normalsize
+\DeclareMathSizes{12}{13}{9}{7}
 \setlength{\abovedisplayskip}{7pt}
 \setlength{\belowdisplayskip}{7pt}
 \pagestyle{plain}
 \makeatletter
-\renewcommand\section{\@startsection{section}{1}{0pt}{9pt plus 1pt minus 1pt}{3pt}{\normalfont\large\bfseries}}
+\renewcommand\section{\@startsection{section}{1}{0pt}{9pt plus 1pt minus 1pt}{3pt}{\normalfont\fontsize{17.5}{19}\selectfont\bfseries}}
 \makeatother
 \newcommand{\papertitle}[1]{%
   \hypersetup{pdftitle={#1}}%
   \begin{center}
-    {\fontsize{18.5}{22}\selectfont #1\par}
+    {\fontsize{20.5}{24}\selectfont #1\par}
     \vspace{6pt}
-    {\fontsize{13}{16}\selectfont Kornstein Lab for Antisemitism Research\par}
-    {\fontsize{12}{15}\selectfont Research proposal\par}
+    {\fontsize{14}{17}\selectfont Kornstein Lab for Antisemitism Research\par}
   \end{center}
   \vspace{2pt}
 }
-\newenvironment{paperabstract}{\begin{list}{}{\leftmargin=21pt\rightmargin=21pt}\item[]\begin{center}\textbf{Abstract}\end{center}\vspace{-3pt}\small}{\end{list}\vspace{2pt}}
-\newenvironment{methodlist}{\begin{enumerate}\setlength{\itemsep}{1pt}\setlength{\parsep}{0pt}\setlength{\topsep}{2pt}}{\end{enumerate}}
+\newenvironment{paperabstract}{\begin{list}{}{\leftmargin=21pt\rightmargin=21pt\topsep=0pt\partopsep=0pt}\item[]{\centering\textbf{Abstract}\par}\vspace{3pt}\fontsize{11.5}{13}\selectfont}{\end{list}\vspace{2pt}}
+\newenvironment{methodlist}{\vspace{6pt}\begin{enumerate}\setlength{\itemsep}{2pt}\setlength{\parsep}{0pt}\setlength{\parskip}{0pt}\setlength{\topsep}{2pt}}{\end{enumerate}}

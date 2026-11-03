@@ -1,5 +1,11 @@
 # Kornstein Lab: local goal handoff
 
+## Latest user review — 2026-11-03
+
+The user approved the overall UI, then requested removal of the visible **Research proposal** label from the paper pages and PDFs/readers. This supersedes the older instruction below to retain that label. Keep the study prose prospective; no empirical findings were added.
+
+On Data & Methods, remove the small slash-separated topic lists and replace the repeated three-part descriptions with **Research corpora**, **Algorithm evaluation**, and **Reproducible analysis**. Center each description consistently in its row and remove the per-row offset adjustments. The original PNGs remain unchanged historical design references. Latest evidence is in `artifacts/visual/refinement-2026-11-03/`.
+
 ## Start here
 
 Clone the dedicated handoff branch, then open **the resulting `kornstein-lab/` folder containing `package.json`** as the local session's workspace. Paths in these instructions are relative to that folder.

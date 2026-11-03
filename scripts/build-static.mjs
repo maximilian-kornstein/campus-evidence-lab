@@ -13,6 +13,9 @@ export const REQUIRED_FILES = [
   ...PAGE_FILES,
   "assets/styles.css", "assets/favicon.svg", "assets/artwork-reference.png", "assets/reader.js",
   "assets/fonts/InterVariable.woff2", "assets/fonts/OFL.txt", "_headers",
+  ...["orange", "lavender", "sand"].flatMap((color) => [`assets/artwork-research-${color}.png`, `assets/artwork-methods-${color}.png`]),
+  "assets/artwork-about.png",
+  ...PAPER_SLUGS.map((slug) => `assets/artwork-paper-${slug}.png`),
   ...PAPER_SLUGS.flatMap((slug) => [`pdfs/${slug}.pdf`, `pdfs/${slug}-page.svg`]),
 ];
 export const OPTIONAL_FILES = [];
