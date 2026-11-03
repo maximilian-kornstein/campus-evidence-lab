@@ -139,3 +139,16 @@ survey and substantive sources in `bib/sources.bib`.
 - Kempf (ASCI survey), Frindte et al. 2005, Allington & Hirsh 2019 (AzAs scale) and the GeAs validity paper (JCA 5(2)):
   relevant, but not verified within the search budget, so not added.
 - An alternative "gelman2007" (Gelman & Hill 2007 book) was not added; gelman2007 is the verified Stat Sci article.
+
+## Fact-check pass (FACT-CHECKER, 2026-11-03)
+- halpin2024: Psychometrika 89(3):796-821, DOI 10.1007/s11336-024-09957-6 (Springer, PubMed, Cambridge Core). VERIFY note removed.
+- imbens2015: DOI 10.1017/CBO9781139025751 (Cambridge Core); ch. 6 = Neyman's repeated sampling approach, pp. 83-112.
+- cohen2009: DOI 10.1037/a0015338 (PubMed record); abstract confirms Studies 1-3 as summarised in sections/02-background.tex.
+- kuklinski1997: DOI changed to the publisher DOI 10.1017/S0022381600053470 (JOP page at journals.uchicago.edu); the JSTOR DOI previously given was not confirmed.
+- fra2024antisemitism: URL replaced by the FRA report PDF (confirmed); published 11 July 2024; 13 Member States; fieldwork Jan-Jun 2023.
+- ajc2024*: fieldwork dates confirmed against AJC pages and the SSRS methodology report (Feb 2025); reports released February 2025.
+- adl2023attitudes: "discrete, [but] they overlap in substantial ways" and ~40% correlation confirmed on adl.org; 11 tropes since 1964, 6+ threshold.
+- hersh2023: double-standards result corrected in 02-background (anti-Jewish double standard on the left, not on the right; the right attributes more responsibility to Jews for Israel). The claimed author caveat about Israel items could not be confirmed and was removed.
+- nexus2021: "As a general rule ... should not, as such, be deemed antisemitic"; "It is antisemitic to promote myths, stereotypes or attitudes about Zionism and/or Israel that derive from and/or reinforce antisemitic accusations and tropes"; "not prima facie proof"; treating Israel differently because it is a Jewish state listed as antisemitic (Wikipedia summary + Nexus white paper). "Updated June 2024" not independently confirmed.
+- jda2021: signatory description, 210 initial signatories, context clause (intention, pattern of speech, identity of speaker), "alternative" / "tool for interpreting" / "corrective" all confirmed on jerusalemdeclaration.org.
+- ec2024antisemitism: COM(2024) 476, 14 Oct 2024, 25 Member States confirmed (commission.europa.eu); Luxembourg and Slovenia adopted without the examples.

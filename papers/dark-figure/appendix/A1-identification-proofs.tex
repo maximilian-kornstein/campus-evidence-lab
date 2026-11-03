@@ -218,6 +218,18 @@ by the second identity in \eqref{eq:fw-signsum}. Under (M), the multinomial cova
 
 \subsection{Further remarks on Section~\ref{sec:identification}}\label{app:id-remarks}
 
+\begin{remark}[The restriction on $\omega$ cannot be tested]\label{rem:id-untestable}
+Every goodness-of-fit statistic, information criterion and posterior predictive check is a function of the observed table. Its law is constant along the curve in \cref{thm:nonid}(a). Model search over log-linear models (\cref{sec:models}) therefore chooses among restrictions on lower-order terms \emph{given} a restriction on $\omega$, never the restriction on $\omega$ itself. A non-hierarchical model that sets some lower-order terms to zero and leaves $\omega$ free can identify $\omega$, because the observed table then over-determines the remaining parameters. Each such restriction, however, is itself a statement about the unobservable cell, since every $u_S$ involves $\log\mu_{\zero}$ through the $T=\emptyset$ term of \eqref{eq:fw-mobius}. That is identification by functional form, not by data (compare \citealp{fienberg1972,international1995}).
+\end{remark}
+
+\begin{remark}[Intervals]\label{rem:id-intervals}
+\Cref{thm:closed}(d) gives two Wald intervals on the log scale. For the expected dark figure under (P), $\widehat n_{\zero}\exp(\pm z_{1-\alpha/2}\widehat v_+^{1/2})$ has asymptotic coverage $1-\alpha$. For the realised total under (P) or (M), the interval
+\[
+  \bigl[\,n+\widehat n_{\zero}\,e^{-z_{1-\alpha/2}\widehat v^{1/2}},\;n+\widehat n_{\zero}\,e^{z_{1-\alpha/2}\widehat v^{1/2}}\,\bigr]
+\]
+has asymptotic coverage $1-\alpha$, and its lower end never falls below $n$. This is in the spirit of the log-transformed interval of \citet{chao1987}. For $K=2$ and $\omega=0$, a direct computation gives $\mu_{\zero}^2v_++\mu_{\zero}=\mu_{1+}\mu_{2+}\mu_{10}\mu_{01}/\mu_{11}^3$, the familiar large-sample variance of the Lincoln--Petersen estimator \citep{bishop1975}. For the illustrative \cref{tab:fw-example}, $\widehat v_+=0.104$, the $95\%$ interval for $\mu_{\zero}$ is $[382,1355]$, and the interval for $N$ is $[1141,2121]$.
+\end{remark}
+
 \begin{remark}[Zero cells]\label{rem:id-zeros}
 If $n_{\h}=0$ for some $\h\in\Hobs$, the likelihood has no maximiser in the interior. If all empty cells have odd (respectively even) $|\h|$, the formal limit of \eqref{eq:id-closed} is $0$ (respectively $+\infty$). With empty cells of both parities it is undefined. We use three remedies, in order of preference. (1) Add $\tfrac12$ to every observed cell. Under (P), $\E\log(n_{\h}+\tfrac12)=\log\mu_{\h}+O(\mu_{\h}^{-2})$, whereas the bias of $\log n_{\h}$, conditional on $n_{\h}>0$, is of order $\mu_{\h}^{-1}$. The corrected estimator $e^{(-1)^K\omega}\mathcal A(\bm n_++\tfrac12)$ therefore removes the leading bias of $\log\widehat n_{\zero}$ (compare \citealp{gart1967}). For $K=2$, \citet{chapman1951} gives the analogous correction for Lincoln--Petersen. (2) Fit a hierarchical submodel without the interactions that the empty cells cannot support. Existence of its maximum likelihood estimator is a polyhedral condition on the support of the table \citep{fienberg2012}. (3) Place proper priors on the $u$-terms \citep{madigan1997}; see \cref{sec:models}. Sparse tables are the rule in small domains, which is one motivation for the hierarchical models of \cref{sec:models}.
 \end{remark}
@@ -226,6 +238,24 @@ If $n_{\h}=0$ for some $\h\in\Hobs$, the likelihood has no maximiser in the inte
 For any hierarchical generating class $\mathcal S$ with $\Kset\notin\mathcal S$, every parameter value satisfies $\omega=0$, so $\mu_{\zero}=\mathcal A(\bm\mu_+)$ by \eqref{eq:fw-key}. By equivariance, the maximum likelihood estimator under $\mathcal S$ is therefore $\widehat\mu_{\zero}^{\mathcal S}=\mathcal A(\widehat{\bm\mu}_+^{\mathcal S})$, the alternating product of the \emph{fitted} observed cells. In the same way, each posterior draw of $\bm\mu_+$ maps to a draw $\mathcal A(\bm\mu_+)$ of $\mu_{\zero}$. Log-linear multiple-systems estimators thus differ only in how they smooth the observed table before applying $\mathcal A$; the model of \cref{thm:closed} smooths nothing. With a non-zero offset $\omega_0$ in a proper submodel, the fitted cells $\widehat{\bm\mu}^{\mathcal S}_+$ depend on $\omega_0$. The exact multiplicative dependence on $\omega$ in \eqref{eq:id-closed} is therefore specific to the model without a $K$-way term.
 \end{remark}
 
+\begin{example}[Visibility heterogeneity can reverse the bias]\label{ex:id-hetero}
+Suppose $95\%$ of incidents have $p=0.1$ and $5\%$ are highly visible with $p=0.9$. Computing $\omega$ exactly from $\pi_{\h}=\int p^{|\h|}(1-p)^{K-|\h|}dF$ gives $\omega=1.56$, $2.53$ and $-0.49$ for $K=2,3,4$, so by \eqref{eq:id-direction} the limit of $\widehat n_{\zero}(0)/\nzero$ is $0.21$, $12.5$ and $1.63$. Lincoln--Petersen recovers a fifth of the dark figure. For $K=3$ the $\omega=0$ model, with all two-way interactions, overstates the dark figure $12.5$-fold and $N$ about $9$-fold, because the few highly visible incidents pile up in $n_{111}$, which enters $\mathcal A$ in the numerator. Simpler three-list models understate it instead, and over a grid of two-class mixtures the all-two-way limit ranges from $0.37$ to $25$ (\cref{rem:id-hetero-more}). These are exact population limits for stylised models. The lesson is not that three lists are worse than two, but that ``heterogeneity'' fixes neither the sign nor the size of the bias, which is why \cref{sec:models} models heterogeneity directly through latent classes.
+\end{example}
+
+\begin{remark}[More on \cref{ex:id-hetero}]\label{rem:id-hetero-more}
+In the population of \cref{ex:id-hetero} with $K=3$, simpler log-linear models understate the dark figure: the limit of $\widehat n_{\zero}/\nzero$ is $0.24$ under independence, $0.30$ with one two-way interaction and $0.69$ with two. The magnitude of the bias of the all-two-way model is also fragile. Over two-class mixtures with low visibility $p\in\{0.05,0.1,0.2\}$, high visibility $p\in\{0.7,0.8,0.9\}$ and a highly visible share in $\{0.02,0.05,0.1,0.2\}$, its limit ranges from $0.37$ to $25$.
+\end{remark}
+
+\begin{remark}[Calibrating $\Omega$ from referral]\label{rem:id-calibrate}
+For $K=2$, referral produces only $\omega\ge0$. Suppose the analyst is willing to bound the ingestion rate, $q\le\bar q$, and the direct coverage, $p_2\ge\underline p_2$. Then \eqref{eq:id-referral-or} gives the one-sided restriction $0\le\omega\le\log\{1+\bar q/(\underline p_2(1-\bar q))\}$. For example, $\bar q=\underline p_2=0.2$ gives $e^{\Omega}=2.25$. The bounds of \cref{cor:bounds} then become $[\widehat n_{\zero}(0),\,e^{\Omega}\widehat n_{\zero}(0)]$. This translates the abstract $\omega$ into two quantities that list holders can speak to.
+
+For $K\ge3$ the one-sided conclusion fails, because \eqref{eq:id-referral-or} is a two-list result and referral involving several lists can give $\bar\omega$ of either sign (\cref{ex:id-referral3}). With three or more lists the analyst should therefore calibrate $\bar\omega$, which governs the direction of bias (\cref{prop:direction}), from an explicit model of the referral channels, not assume a sign for $\omega$.
+\end{remark}
+
 \begin{example}[Referral among three lists can bias either way]\label{ex:id-referral3}
 Keep the police-to-NGO referral of \cref{prop:referral} with $p_1=0.3$, $p_2=0.2$, $q=0.3$. Add a third list with direct coverage $p_3=0.2$ that also ingests, with probability $0.3$, incidents recorded by both police \emph{and} the NGO. Then $\omega=+1.15$ and $\bar\omega=-1.15$, so the $\omega=0$ estimator overstates the dark figure by a factor of about $3.1$. If the third list instead ingests incidents recorded by police \emph{or} the NGO, then $\omega=-1.15$, and the dark figure is understated by the same factor. This is why \cref{rem:id-calibrate} confines the one-sided calibration of $\Omega$ to $K=2$.
+\end{example}
+
+\begin{example}[Illustrative numbers, continued]\label{ex:id-frontier}
+For \cref{tab:fw-example}, the claim ``the dark figure exceeds the police count'' ($\kappa=1$) has plug-in frontier $\log(720/400)=0.59$, which estimates $\Omega^*_1$. Ignoring sampling error, $\omega$ would have to move the dark figure by a factor of $1.8$ to overturn it. Once sampling error is included ($\widehat s_1=0.33$, $\alpha=0.05$), $\widehat\Omega_{1,0.05}=0.05$, so the claim is barely robust at all. The weaker claim with $\kappa=\tfrac12$ has $\widehat\Omega_{1/2,0.05}=0.74$ and survives any departure up to a factor of $e^{0.74}\approx2.1$. With counts of this size, only the weaker claim could responsibly be reported.
 \end{example}

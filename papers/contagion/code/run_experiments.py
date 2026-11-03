@@ -14,10 +14,14 @@ Experiments (see SPEC.md and sections 04, 05 and 07 of the paper)
       processes with no contagion, fitted by a constant-background Hawkes model
       (MLE vs the second-order prediction n* = 1 - (1 + kappa)^{-1/2}), by a
       spline-background Hawkes model, and by a Hawkes model with the shocks known
-      (cor:equiv-id); plus a moment (dispersion) estimator.
+      (cor:equiv-id); plus a moment (dispersion) estimator. Fits on the
+      weak-identification ridge (beta_hat * T < 1) are flagged and counted.
+      A long-window run (rare family, kappa in {2, 4}, T = 10000, constant
+      background) separates finite-T bias from the likelihood-vs-second-order gap.
   E3  Thinning (thm:thinning, cor:th-darkfig, prop:th-hetthin): fitted n of
       p-thinned exp-Hawkes data vs n'(p); dark-figure correction with p known and
-      with p estimated; heterogeneous recording.
+      with p estimated (relative error 10%, 30%, 50%: the variance floor of
+      eq:th-delta); heterogeneous recording.
   E4  Online -> offline boundary LRT (prop:lrt): size, power, and false positives
       under a common shock with and without the shock calendar in the model.
   E5  Surge attribution (thm:attribution, prop:at-channel): exact B/D/C and
@@ -26,11 +30,18 @@ Experiments (see SPEC.md and sections 04, 05 and 07 of the paper)
   E6  Alerting (thm:alert, prop:nowcast): predictive alerts at pi* = c_FA /
       (c_FA + c_miss); cost, precision/recall, Brier/CRPS/log score and PIT of
       the Hawkes predictive vs moving-average Poisson and climatology baselines;
-      reporting delays (naive state vs Horvitz-Thompson nowcast).
+      reporting delays (naive state vs Horvitz-Thompson nowcast, both PLUG-IN
+      states; alg:alert / SIS is not run). Two forecasters for every Hawkes
+      variant: "no future events" (the calendar after t is empty) and
+      "integrating" (*_int: future events drawn from the event process, i.e.
+      the conditional law given the past only; sec:fc-predictive, lem:fc-pit).
 
 Usage (from code/):
   OPENBLAS_NUM_THREADS=1 nice python run_experiments.py [--only E1,E5] [--quick]
-        [--workers 2] [--results ../results] [--merge-only]
+        [--workers 2] [--results ../results] [--merge-only] [--augment-e2]
+  --augment-e2 runs only the E2 long-window configurations, keeps the stored
+  replicates of the 12 main configurations (re-running a few of them to check
+  that they reproduce exactly), and recomputes the E2 summary.
 
 Outputs
   <results>/raw/<E>.json     config, seeds, R, runtime, per-replicate values, summary
@@ -87,6 +98,7 @@ from hawkes import (  # noqa: E402
 )
 from hawkes.alert import excitation_state  # noqa: E402
 from hawkes.alert import _future_counts  # noqa: E402  (private; see NOTES-SIMEXP.md, issue 1)
+from hawkes.simulate import cascade  # noqa: E402
 from hawkes.thinning import apparent_beta, apparent_mu  # noqa: E402
 
 BASE_SEED = 2026110302
@@ -142,6 +154,12 @@ DEFAULT = {
             dict(name="slow", kind="regime", q=0.02, kappas=[0.5, 2.0, 8.0],
                  fits=["const", "spline"], shocks_max_kappa=None),
         ],
+        # weak-identification ridge: flag fits with beta_hat * T < ridge_betaT (revision; the
+        # first run flagged only beta_hat at its lower bound 0.01 / T)
+        ridge_betaT=1.0,
+        # long-window configurations (revision, referee item 4); config indices follow the
+        # 12 main ones, so the main seeds are unchanged
+        long_T=dict(T=10000.0, R=20, family="rare", kappas=[2.0, 4.0], fits=["const"]),
     ),
     "E3": dict(
         n_list=[0.3, 0.5, 0.7],
@@ -151,6 +169,9 @@ DEFAULT = {
         p_list=[1.0, 0.8, 0.6, 0.4, 0.2],
         R=40,
         p_rel_se=0.10,
+        # revision: relative errors of p_hat for the variance floor of eq:th-delta. All levels
+        # reuse the same standard normal Z per (replicate, p), so the 0.10 cell equals p_rel_se.
+        p_rel_se_list=[0.10, 0.30, 0.50],
         tol=1e-8,
         max_iter=2000,
         het=dict(pi=[0.5, 0.5], n_x=[0.1, 0.9], beta=1.0, Lam=2.0, T=1500.0, R=30,
@@ -198,6 +219,9 @@ DEFAULT = {
         tol=1e-8,
         max_iter=2000,
         pit_bins=10,
+        # revision: forecasters that integrate over future events (*_int), drawn from a separate
+        # generator SeedSequence([BASE_SEED, 6, 1, rep]) so the other methods reproduce exactly
+        integrate=True,
     ),
 }
 
@@ -212,6 +236,7 @@ def quick_config():
         dict(name="rare", kind="shot", m=8.0, kappas=[1.0], fits=["const", "spline", "shocks"], shocks_max_kappa=None),
         dict(name="slow", kind="regime", q=0.05, kappas=[1.0], fits=["const"], shocks_max_kappa=None),
     ]
+    q["E2"]["long_T"] = dict(T=600.0, R=2, family="rare", kappas=[1.0], fits=["const"])
     q["E3"].update(n_list=[0.5], T=300.0, p_list=[1.0, 0.5], R=2, tol=1e-6)
     q["E3"]["het"].update(T=300.0, R=2, p_cases={"positive": [0.2, 0.8]})
     q["E4"].update(T=200.0, alt_values=[0.2], R_size=2, R_power=2, tol=1e-6)
@@ -735,13 +760,24 @@ def run_E5(cfg, runner, ctx):
 # E2  Spurious contagion
 # ---------------------------------------------------------------------------
 def e2_configs(cfg):
+    """The main configurations (families x kappas, T = cfg["T"]), then the long-window
+    ones (cfg["long_T"]). The position in this list is the seed's config index, so the
+    long-window configurations do not change the seeds of the main ones."""
     out = []
     for fi, fam in enumerate(cfg["families"]):
         for ki, kappa in enumerate(fam["kappas"]):
             fits = list(fam["fits"])
             if "shocks" in fits and fam.get("shocks_max_kappa") is not None and kappa > fam["shocks_max_kappa"] + 1e-12:
                 fits.remove("shocks")
-            out.append(dict(family=fam["name"], kind=fam["kind"], kappa=float(kappa), fam=fam, fi=fi, ki=ki, fits=fits))
+            out.append(dict(family=fam["name"], kind=fam["kind"], kappa=float(kappa), fam=fam, fi=fi, ki=ki, fits=fits,
+                            T=float(cfg["T"]), R=int(cfg["R"]), long_T=False))
+    lt = cfg.get("long_T")
+    if lt:
+        fi = [f["name"] for f in cfg["families"]].index(lt["family"])
+        fam = cfg["families"][fi]
+        for ki, kappa in enumerate(lt["kappas"]):
+            out.append(dict(family=fam["name"], kind=fam["kind"], kappa=float(kappa), fam=fam, fi=fi, ki=ki,
+                            fits=list(lt["fits"]), T=float(lt["T"]), R=int(lt["R"]), long_T=True))
     return out
 
 
@@ -768,7 +804,7 @@ def _e2_task(args):
     cfg, ci, rep = args
     c = e2_configs(cfg)[ci]
     th = e2_theory(cfg, c)
-    T = cfg["T"]
+    T = c["T"]  # = cfg["T"] for the main configurations
     rng = rng_for("E2", ci, rep)
     shots = None
     if c["kind"] == "shot":
@@ -803,7 +839,8 @@ def _e2_task(args):
         b = float(np.asarray(f.spec.beta).ravel()[0])
         rec = dict(alpha=a, beta=b, mu_bar=float(f.spec.mu_bar(T)[0]), n_eff=n_eff(a, b, t_ev, T),
                    loglik=float(f.loglik), converged=bool(f.converged), n_iter=int(f.n_iter),
-                   beta_at_lower_bound=bool(b <= 1.01 * lo_bound), sec=time.time() - t0)
+                   beta_at_lower_bound=bool(b <= 1.01 * lo_bound), ridge=bool(b * T < cfg.get("ridge_betaT", 1.0)),
+                   sec=time.time() - t0)
         if fk == "shocks":
             rec.update(shock_beta=float(f.spec.shock_beta[0]), eta=float(f.spec.shock_rate_vec[0]))
         out[fk] = rec
@@ -815,47 +852,93 @@ def _e2_task(args):
     return out
 
 
+def _e2_order_key(cfg, confs, task):
+    c = confs[task[1]]
+    # most expensive first for load balance: shocks-known fits with many shots, then long windows
+    return -(("shocks" in c["fits"]) * c["kappa"] / c["fam"].get("m", 1e9) ** 2 + (c["T"] / cfg["T"] - 1.0) * 1e-3)
+
+
 def run_E2(cfg, runner, ctx):
     confs = e2_configs(cfg)
-    tasks = [(cfg, ci, rep) for ci in range(len(confs)) for rep in range(cfg["R"])]
-    # most expensive (shocks-known, many shots) first for load balance
-    order = sorted(range(len(tasks)), key=lambda i: -(("shocks" in confs[tasks[i][1]]["fits"]) * confs[tasks[i][1]]["kappa"]
-                                                     / confs[tasks[i][1]]["fam"].get("m", 1e9) ** 2))
+    tasks = [(cfg, ci, rep) for ci in range(len(confs)) for rep in range(confs[ci]["R"])]
+    order = sorted(range(len(tasks)), key=lambda i: _e2_order_key(cfg, confs, tasks[i]))
     out_ordered = runner.map(_timed(_e2_task), [tasks[i] for i in order], "E2")
     res_t = [None] * len(tasks)
     for pos, i in enumerate(order):
         res_t[i] = out_ordered[pos]
     res, cpu = _split_timing(res_t)
-    summary = []
+    summary = e2_summarise(cfg, res)
+    raw = [_e2_strip(r) for r in res]
+    return dict(summary=summary, reps=raw, cpu=cpu, R=cfg["R"], seeds=dict(scheme=E2_SEED_SCHEME))
+
+
+E2_SEED_SCHEME = ("SeedSequence([BASE_SEED, 2, config_index, rep]); config_index 0-11 = main configurations "
+                  "(T = 1000), 12-13 = long-window configurations (rare family, kappa = 2, 4; T = 10000)")
+
+
+def _e2_strip(r):
+    return {k: (({kk: vv for kk, vv in v.items() if kk != "sec"}) if isinstance(v, dict) else v) for k, v in r.items()}
+
+
+def e2_summarise(cfg, res):
+    """E2 summary from per-replicate records (fresh, or loaded from raw/E2.json).
+
+    For every configuration and fit: mean/median/quartiles of alpha_hat and n_eff;
+    the weak-identification ridge (beta_hat * T < cfg["ridge_betaT"]), with the
+    replicate ids and values of the flagged fits; n_eff without the ridge fits; and
+    max |n_eff - alpha_hat| over the non-ridge fits. Shots per path: mean, median,
+    min and max."""
+    confs = e2_configs(cfg)
+    thr = cfg.get("ridge_betaT", 1.0)
+    rows = []
+    ridge_table = []
     for ci, c in enumerate(confs):
         th = e2_theory(cfg, c)
-        reps = [r for r in res if r.get("ok") and r["ci"] == ci]
-        row = dict(family=c["family"], kind=c["kind"], kappa=c["kappa"], theory=th, R=len(reps),
-                   n_failed=cfg["R"] - len(reps), n_events=mstat([r["n_events"] for r in reps]),
-                   n_shots=mstat([r["n_shots"] for r in reps]) if c["kind"] == "shot" else None, fits={})
+        T = c["T"]
+        reps = sorted([r for r in res if r.get("ok") and r["ci"] == ci], key=lambda r: r["rep"])
+        row = dict(family=c["family"], kind=c["kind"], kappa=c["kappa"], T=T, long_T=c["long_T"], theory=th, R=len(reps),
+                   n_failed=c["R"] - len(reps), n_events=mstat([r["n_events"] for r in reps]), n_shots=None, fits={})
+        if c["kind"] == "shot":
+            ns = np.array([r["n_shots"] for r in reps], float)
+            row["n_shots"] = dict(**mstat(ns), min=float(ns.min()) if ns.size else NAN, max=float(ns.max()) if ns.size else NAN)
         for fk in c["fits"]:
-            al = np.array([r[fk]["alpha"] for r in reps])
-            ne = np.array([r[fk]["n_eff"] for r in reps])
-            be = np.array([r[fk]["beta"] for r in reps])
-            row["fits"][fk] = dict(
+            al = np.array([r[fk]["alpha"] for r in reps], float)
+            ne = np.array([r[fk]["n_eff"] for r in reps], float)
+            be = np.array([r[fk]["beta"] for r in reps], float)
+            ridge = be * T < thr
+            ids = [int(r["rep"]) for r, f in zip(reps, ridge) if f]
+            d = dict(
                 alpha=mstat(al), n_eff=mstat(ne), beta=mstat(be), mu_bar=mstat([r[fk]["mu_bar"] for r in reps]),
                 gap_alpha_minus_nstar=mstat(al - th["n_star"]), gap_neff_minus_nstar=mstat(ne - th["n_star"]),
                 beta_at_lower_bound=rate([r[fk]["beta_at_lower_bound"] for r in reps]),
-                converged=rate([r[fk]["converged"] for r in reps]), seconds=mstat([r[fk]["sec"] for r in reps]))
+                ridge=dict(rule=f"beta_hat * T < {thr:g}", n=int(ridge.sum()), reps=ids,
+                           alpha=[float(x) for x in al[ridge]], beta_T=[float(x) for x in (be * T)[ridge]],
+                           n_eff=[float(x) for x in ne[ridge]]),
+                n_eff_excl_ridge=mstat(ne[~ridge]), gap_neff_excl_ridge_minus_nstar=mstat(ne[~ridge] - th["n_star"]),
+                max_abs_neff_minus_alpha_excl_ridge=float(np.max(np.abs(ne - al)[~ridge])) if (~ridge).any() else NAN,
+                converged=rate([r[fk]["converged"] for r in reps]),
+                seconds=mstat([r[fk].get("sec", NAN) for r in reps]))
             if fk == "shocks":
-                row["fits"][fk]["shock_beta"] = mstat([r[fk]["shock_beta"] for r in reps])
-                row["fits"][fk]["eta"] = mstat([r[fk]["eta"] for r in reps])
+                d["shock_beta"] = mstat([r[fk]["shock_beta"] for r in reps])
+                d["eta"] = mstat([r[fk]["eta"] for r in reps])
+            row["fits"][fk] = d
+            ridge_table.append(dict(family=c["family"], kappa=c["kappa"], T=T, fit=fk, R=len(reps), n_ridge=int(ridge.sum()),
+                                    reps=ids))
         if "const" in c["fits"] and "spline" in c["fits"]:
             row["dloglik_spline_minus_const"] = mstat([r["spline"]["loglik"] - r["const"]["loglik"] for r in reps])
         if c["kind"] == "shot":
             row["moment"] = dict(n_F=mstat([r["moment"]["n_F"] for r in reps]), F=mstat([r["moment"]["F"] for r in reps]))
-        summary.append(row)
-    raw = [{k: (({kk: vv for kk, vv in v.items() if kk != "sec"}) if isinstance(v, dict) else v) for k, v in r.items()}
-           for r in res]
-    return dict(summary=dict(configs=summary, lower_beta_bound=0.01 / cfg["T"],
-                             note="alpha = fitted branching ratio n_hat; n_eff = alpha * mean(1 - exp(-beta (T - t_l))) "
-                                  "= share of events EM attributes to self-excitation (differs from alpha when beta_hat T is small)."),
-                reps=raw, cpu=cpu, R=cfg["R"], seeds=dict(scheme="SeedSequence([BASE_SEED, 2, config_index, rep])"))
+        rows.append(row)
+    main = [r for r in rows if not r["long_T"]]
+    shot_const = [r["fits"]["const"]["max_abs_neff_minus_alpha_excl_ridge"] for r in main if r["kind"] == "shot"]
+    return dict(configs=rows, ridge_rule=f"beta_hat * T < {thr:g}", ridge_counts=ridge_table,
+                ridge_total=int(sum(x["n_ridge"] for x in ridge_table)),
+                max_abs_neff_minus_alpha_const_shot=float(np.max(shot_const)) if shot_const else NAN,
+                lower_beta_bound={f"{T:g}": 0.01 / T for T in sorted({c["T"] for c in confs})},
+                note="alpha = fitted branching ratio n_hat; n_eff = alpha * mean(1 - exp(-beta (T - t_l))) "
+                     "= share of events EM attributes to self-excitation (differs from alpha when beta_hat T is small). "
+                     "ridge: fits with beta_hat * T < 1 (weak identification of alpha; n_eff remains interpretable). "
+                     "long_T rows: rare family, constant background only, T = 10000.")
 
 
 # ---------------------------------------------------------------------------
@@ -893,9 +976,16 @@ def _e3_task(args):
             se_p = cfg["p_rel_se"] * p
             p_hat = float(np.clip(p + se_p * Z[pi], 0.02, 1.0))
             ne, se_e = _corr_se(na, sa, p, p_hat=p_hat, se_p=cfg["p_rel_se"] * p_hat)
+            # revision: the same Z at several relative errors r (no extra random draws, so the
+            # cells above are unchanged); p_hat_r = clip(p + r p Z, 0.02, 1), SE(p_hat_r) = r p_hat_r
+            by_r = []
+            for r_ in cfg.get("p_rel_se_list", []):
+                ph = float(np.clip(p + r_ * p * Z[pi], 0.02, 1.0))
+                nr, sr = _corr_se(na, sa, p, p_hat=ph, se_p=r_ * ph)
+                by_r.append(dict(r=float(r_), p_hat=ph, n_corr=nr, se_corr=sr))
             out["by_p"].append(dict(p=p, N=int(evp.size), n_app=na, se_app=sa, beta_app=float(np.asarray(f.spec.beta).ravel()[0]),
                                     mu_app=float(f.spec.mu[0]), se_flag=f.se_flag, n_corr_known=nk, se_corr_known=sk,
-                                    p_hat=p_hat, n_corr_est=ne, se_corr_est=se_e))
+                                    p_hat=p_hat, n_corr_est=ne, se_corr_est=se_e, est_by_r=by_r))
         return out
     het = cfg["het"]
     case = list(het["p_cases"])[ci]
@@ -934,6 +1024,25 @@ def e3_het_theory(het, case):
                 n_naive_check=float(inverse_apparent_branching(npp, pbar)))
 
 
+def _e3_by_r(cfg, n, d, nk):
+    """Corrected estimates with p estimated at each relative error r (eq:th-delta).
+    floor_sd = r n (1 - n)(2 - n) / 2 is the p-term of eq:th-delta with SD(p_hat) = r p: it
+    does not depend on p or T, so it is a floor under the SD of any corrected estimate.
+    predicted_sd = (SD of the p-known correction^2 + floor_sd^2)^(1/2)."""
+    out = []
+    sd_known = float(np.nanstd(nk, ddof=1)) if np.sum(np.isfinite(nk)) > 1 else NAN
+    for i, r_ in enumerate(cfg.get("p_rel_se_list", [])):
+        ne = np.array([x["est_by_r"][i]["n_corr"] for x in d], float)
+        se_ = np.array([x["est_by_r"][i]["se_corr"] for x in d], float)
+        floor = r_ * n * (1 - n) * (2 - n) / 2
+        st = err_stats(ne, n, ne - Z95 * se_, ne + Z95 * se_)
+        st.update(r=float(r_), floor_sd=floor, sd_known_p=sd_known, predicted_sd=math.sqrt(sd_known**2 + floor**2),
+                  median=float(np.nanmedian(ne)) if np.isfinite(ne).any() else NAN,
+                  p_hat_clipped=int(np.sum([x["est_by_r"][i]["p_hat"] in (0.02, 1.0) for x in d])))
+        out.append(st)
+    return out
+
+
 def run_E3(cfg, runner, ctx):
     het = cfg["het"]
     tasks = [(cfg, "hom", ci, rep) for ci in range(len(cfg["n_list"])) for rep in range(cfg["R"])]
@@ -961,6 +1070,7 @@ def run_E3(cfg, runner, ctx):
                 beta_app=err_stats([x["beta_app"] for x in d], float(apparent_beta(n, cfg["beta"], p))),
                 mu_app=err_stats([x["mu_app"] for x in d], float(apparent_mu(cfg["Lam"] * (1 - n), n, p))),
                 se_flag_ok=rate([x["se_flag"] == "ok" for x in d]),
+                corrected_est_p_by_r=_e3_by_r(cfg, n, d, nk),
             ))
         hom.append(dict(n=n, R=len(reps), by_p=rows))
     hets = []
@@ -973,7 +1083,9 @@ def run_E3(cfg, runner, ctx):
                          n_corrected_vs_nbar=err_stats([r["n_corr_naive"] for r in reps], th["n_bar"])))
     return dict(summary=dict(homogeneous=hom, heterogeneous=hets,
                              note="corrected_est_p: p_hat = clip(p (1 + p_rel_se Z), 0.02, 1), SE(p_hat) = p_rel_se * p_hat, "
-                                  "independent of the data; CIs from eq:th-delta. Missing SE (alpha on the boundary) counts as non-coverage."),
+                                  "independent of the data; CIs from eq:th-delta. Missing SE (alpha on the boundary) counts as non-coverage. "
+                                  "corrected_est_p_by_r: the same with relative error r in p_rel_se_list and the same Z "
+                                  "(r = p_rel_se reproduces corrected_est_p); floor_sd = r n (1 - n)(2 - n) / 2."),
                 reps=res, cpu=cpu, R=cfg["R"],
                 seeds=dict(scheme="hom: SeedSequence([BASE_SEED, 3, n_index, rep]); het: SeedSequence([BASE_SEED, 3, 100 + case_index, rep])"))
 
@@ -1166,7 +1278,8 @@ def e6_calibration_split(cfg, reps, flags):
     out["n_windows_no_new_shock"] = int((~F).sum())
     out["mean_count_new_shock"] = float(Y[F].mean()) if F.any() else NAN
     out["mean_count_no_new_shock"] = float(Y[~F].mean()) if (~F).any() else NAN
-    for m in E6_METHODS:
+    first = reps[0]["pit"] if "pit" in reps[0] else reps[0]["methods"]
+    for m in [m for m in E6_ALL if m in first]:
         pit = np.concatenate([np.asarray(r["pit"][m] if "pit" in r else r["methods"][m]["pit"], float) for r in reps])
         row = {}
         for lab, sel in (("no_new_shock", ~F), ("new_shock", F)):
@@ -1181,6 +1294,66 @@ def e6_calibration_split(cfg, reps, flags):
 
 
 E6_METHODS = ["oracle", "fitted", "fitted_naive_delay", "fitted_ht_delay", "ma_poisson", "ma_poisson_delay", "climatology"]
+# revision: the same Hawkes forecasters, integrating over external events after the forecast origin
+E6_INT_METHODS = ["oracle_int", "fitted_int", "fitted_naive_delay_int", "fitted_ht_delay_int"]
+E6_ALL = E6_METHODS + E6_INT_METHODS
+
+
+def e6_methods(cfg):
+    return E6_ALL if cfg.get("integrate", False) else E6_METHODS
+
+
+def e6_future_event_counts(alpha, beta_m, shock_beta, eta, rate, draw_sizes, t, Delta, n_sim, rng):
+    """(n_sim, M) counts on (t, t + Delta] of the clusters of external events that ARRIVE in
+    (t, t + Delta]: event times are a Poisson process with rate ``rate``, sizes
+    S = draw_sizes(rng, n), and event e sends Poisson(shock_beta_k S_e) immigrants to stream k
+    at tau_e + Exp(eta_k) (only those in the window are kept), which then cascade with (alpha,
+    beta_m). Given the past, these clusters are independent of everything that the
+    no-future-event continuation simulates (lem:fc-future), so adding the two samples
+    replicate by replicate draws from the forecast that integrates over the event process."""
+    M = len(shock_beta)
+    eta = np.broadcast_to(np.asarray(eta, float), (M,))
+    out = np.zeros((n_sim, M), np.int64)
+    n_ev = rng.poisson(rate * Delta, size=n_sim)
+    tot = int(n_ev.sum())
+    if tot == 0:
+        return out
+    tau = t + Delta * rng.random(tot)
+    S = np.asarray(draw_sizes(rng, tot), float)
+    rep_e = np.repeat(np.arange(n_sim), n_ev)
+    ts, ds, rs = [], [], []
+    for k in range(M):
+        if shock_beta[k] <= 0:
+            continue
+        F1 = -np.expm1(-eta[k] * (t + Delta - tau))
+        n = rng.poisson(shock_beta[k] * S * F1)
+        m = int(n.sum())
+        if m == 0:
+            continue
+        idx = np.repeat(np.arange(tot), n)
+        U = F1[idx] * rng.random(m)
+        tt = tau[idx] - np.log1p(-U) / eta[k]
+        ts.append(np.clip(tt, tau[idx], t + Delta))
+        ds.append(np.full(m, k, np.int64))
+        rs.append(rep_e[idx])
+    if not ts:
+        return out
+    _, dims, _, _, carry = cascade(alpha, beta_m, np.concatenate(ts), np.concatenate(ds), t + Delta, rng,
+                                   carry={"rep": np.concatenate(rs)})
+    return np.bincount(carry["rep"] * M + dims, minlength=n_sim * M).reshape(n_sim, M)
+
+
+def e6_future_event_mean(alpha, beta_m, shock_beta, eta, rate, mean_size, Delta, n_grid=2001):
+    """Exact mean of :func:`e6_future_event_counts` (per stream), by quadrature over the
+    arrival time of the closed-form expected response (hawkes.attribution); for tests."""
+    from hawkes.attribution import shock_response_counts
+    M = len(shock_beta)
+    spec = HawkesSpec(M, np.zeros(M), np.asarray(alpha, float), beta=np.asarray(beta_m, float), shocks=[(0.0, 1.0)],
+                      shock_beta=np.asarray(shock_beta, float), shock_rate=np.broadcast_to(np.asarray(eta, float), (M,)).copy())
+    u = np.linspace(0.0, Delta, n_grid)
+    s0 = spec.shock_beta * spec.shock_rate_vec
+    D, C = shock_response_counts(spec, s0, u)
+    return rate * mean_size * np.trapezoid(D + C, u, axis=0)
 
 
 def _e6_task(args):
@@ -1206,11 +1379,27 @@ def _e6_task(args):
     cal_tr = [s for s in cal if s[0] < Ttr]
     fit = fit_em(ev_tr, Ttr, cfg["M"], shocks=cal_tr, tol=cfg["tol"], max_iter=cfg["max_iter"])
     fspec = fit.spec.copy(shocks=cal)  # predictive uses only shocks with tau <= t
+    # revision: event process for the integrating forecasters (*_int). True: rate 1/30 and
+    # log-normal sizes, as in the data-generating process. Fitted: rate = training events /
+    # T_train, sizes resampled from the training calendar, fitted loadings and response rate.
+    # A separate generator keeps the draws of the original methods unchanged.
+    integrate = bool(cfg.get("integrate", False))
+    rng_int = rng_for("E6", 1, rep)
+    sizes_tr = np.array([sz for _, sz in cal_tr], float)
+    rate_hat = len(cal_tr) / Ttr
+    logsd = cfg["shock_logsd"]
+    ev_true = (spec.alpha, spec.beta_matrix, spec.shock_beta, spec.shock_rate_vec, cfg["shock_cal_rate"],
+               lambda g, n: np.exp(logsd * g.standard_normal(n)))
+    if sizes_tr.size:
+        draw_fit = lambda g, n: sizes_tr[g.integers(0, sizes_tr.size, n)]  # noqa: E731
+    else:  # pragma: no cover - no training events
+        draw_fit = lambda g, n: np.exp(logsd * g.standard_normal(n))  # noqa: E731
+    ev_fit = (fspec.alpha, fspec.beta_matrix, fspec.shock_beta, fspec.shock_rate_vec, rate_hat, draw_fit)
     # climatology from the training period (complete data)
     edges = np.arange(cfg["pilot_burn"], Ttr - D + 1e-9, D)
     clim = np.histogram(ev_tr[tgt], bins=np.append(edges, edges[-1] + D))[0]
     n_sim = cfg["n_sim"]
-    rows = {m: dict(prob=[], pit=[], crps=[], logs=[], mean=[]) for m in E6_METHODS}
+    rows = {m: dict(prob=[], pit=[], crps=[], logs=[], mean=[]) for m in e6_methods(cfg)}
     Y, state = [], dict(full=[], naive=[], ht=[])
     for w in range(cfg["n_windows"]):
         t = Ttr + D * w
@@ -1250,12 +1439,26 @@ def _e6_task(args):
             pr, pit, crps, logs, mean = _scores(cdf, pmf, y, c, V[mi], floor)
             for key, val in zip(("prob", "pit", "crps", "logs", "mean"), (pr, pit, crps, logs, mean)):
                 rows[m][key].append(val)
+        if integrate:  # uses rng_int only
+            fe_true = e6_future_event_counts(*ev_true, t, D, n_sim, rng_int)[:, tgt]
+            fe_fit = e6_future_event_counts(*ev_fit, t, D, n_sim, rng_int)[:, tgt]
+            s_int = {"oracle_int": samples["oracle"] + fe_true, "fitted_int": samples["fitted"] + fe_fit,
+                     "fitted_naive_delay_int": samples["fitted_naive_delay"] + fe_fit,
+                     "fitted_ht_delay_int": samples["fitted_ht_delay"] + fe_fit}
+            K2 = int(max(400, y + 1, *(int(x.max()) + 1 for x in s_int.values())))
+            V2 = rng_int.random(len(E6_INT_METHODS))
+            for mi, m in enumerate(E6_INT_METHODS):
+                cdf, pmf = _cdf_from_samples(s_int[m], K2)
+                pr, pit, crps, logs, mean = _scores(cdf, pmf, y, c, V2[mi], 0.5 / n_sim)
+                for key, val in zip(("prob", "pit", "crps", "logs", "mean"), (pr, pit, crps, logs, mean)):
+                    rows[m][key].append(val)
     fit_par = dict(mu=list(np.asarray(fit.spec.mu, float)), alpha=fit.spec.alpha.tolist(),
                    beta=float(np.asarray(fit.spec.beta).ravel()[0]), shock_beta=list(fit.spec.shock_beta),
                    eta=float(fit.spec.shock_rate_vec[0]))
     new_shock = e6_new_shock_flags(cfg, cal)
     return dict(rep=rep, Y=Y, methods=rows, state=state, fit=fit_par, n_events=[int(e.size) for e in ev], n_shocks=len(cal),
-                new_shock=new_shock)
+                new_shock=new_shock, n_shocks_train=len(cal_tr), rate_hat=rate_hat,
+                mean_size_train=float(sizes_tr.mean()) if sizes_tr.size else NAN)
 
 
 def run_E6(cfg, runner, ctx):
@@ -1267,7 +1470,7 @@ def run_E6(cfg, runner, ctx):
     Yall = np.concatenate([np.asarray(r["Y"]) for r in reps])
     S = (Yall >= c)
     methods = {}
-    for m in E6_METHODS:
+    for m in e6_methods(cfg):
         prob = [np.asarray(r["methods"][m]["prob"]) for r in reps]
         ys = [np.asarray(r["Y"]) >= c for r in reps]
         P = np.concatenate(prob)
@@ -1318,19 +1521,31 @@ def run_E6(cfg, runner, ctx):
                  rmse_naive=float(np.sqrt(np.mean((st["naive"] - st["full"]) ** 2))),
                  rmse_ht=float(np.sqrt(np.mean((st["ht"] - st["full"]) ** 2))))
     fits = dict(alpha=mstat([np.asarray(r["fit"]["alpha"])[0, 0] for r in reps]))
+    mean_size_true = math.exp(cfg["shock_logsd"] ** 2 / 2)
+    event_process = dict(rate_true=cfg["shock_cal_rate"], mean_size_true=mean_size_true,
+                         rate_hat=mstat([r["rate_hat"] for r in reps]), mean_size_train=mstat([r["mean_size_train"] for r in reps]),
+                         n_shocks_train=mstat([r["n_shocks_train"] for r in reps]))
     summary = dict(threshold=thr, n_windows_total=int(Yall.size), surge_rate_test=float(S.mean()),
                    surge_rate_test_mcse=float(math.sqrt(S.mean() * (1 - S.mean()) / S.size)),
                    methods=methods, state=state, fitted_alpha00=fits["alpha"],
                    note="c_FA = 1, c_miss = ratio, pi* = 1/(1+ratio). fitted = plug-in EM fit on [0, T_train]. "
                         "Delays only on the target (offline) stream; outcomes are settled counts. "
                         "fitted_ht_delay plugs the HT state into the cluster continuation (no state-uncertainty integration). "
-                        "state ratios use the true parameters; theory_ratio_naive = E exp(-beta D) holds under stationarity without shocks.")
+                        "state ratios use the true parameters; theory_ratio_naive = E exp(-beta D) holds under stationarity without shocks. "
+                        "*_int: the same forecaster plus independently simulated clusters of external events arriving after the "
+                        "forecast origin (oracle_int: true event process; fitted variants: rate and sizes estimated from the "
+                        "training calendar, fitted loadings and response rate), i.e. the conditional law given the past only "
+                        "(sec:fc-predictive); the other methods condition on no future events.")
+    summary["event_process"] = event_process
     summary["calibration_by_new_shock"] = e6_calibration_split(cfg, reps, [r["new_shock"] for r in reps])
-    raw = [dict(rep=r["rep"], Y=r["Y"], prob={m: r["methods"][m]["prob"] for m in E6_METHODS},
-                pit={m: r["methods"][m]["pit"] for m in E6_METHODS}, fit=r["fit"], n_events=r["n_events"],
-                n_shocks=r["n_shocks"], new_shock=r["new_shock"]) if r.get("ok") else r for r in res]
+    ms = e6_methods(cfg)
+    raw = [dict(rep=r["rep"], Y=r["Y"], prob={m: r["methods"][m]["prob"] for m in ms},
+                pit={m: r["methods"][m]["pit"] for m in ms}, fit=r["fit"], n_events=r["n_events"],
+                n_shocks=r["n_shocks"], new_shock=r["new_shock"], n_shocks_train=r["n_shocks_train"],
+                rate_hat=r["rate_hat"], mean_size_train=r["mean_size_train"]) if r.get("ok") else r for r in res]
     return dict(summary=summary, reps=raw, cpu=cpu, R=cfg["R"],
-                seeds=dict(scheme="rep: SeedSequence([BASE_SEED, 6, 0, rep]); threshold pilot: SeedSequence([BASE_SEED, 6, 999, 0])"))
+                seeds=dict(scheme="rep: SeedSequence([BASE_SEED, 6, 0, rep]); integrating forecasters (*_int): "
+                                  "SeedSequence([BASE_SEED, 6, 1, rep]); threshold pilot: SeedSequence([BASE_SEED, 6, 999, 0])"))
 
 
 RUNNERS = {"E1": run_E1, "E2": run_E2, "E3": run_E3, "E4": run_E4, "E5": run_E5, "E6": run_E6}
@@ -1414,6 +1629,72 @@ def postprocess_e6(results_dir):
         json.dump(jsonify(doc), f)
 
 
+E2_REPRO_CHECK = [(1, 17), (11, 7), (10, 12), (0, 0)]  # (config, rep): two ridge fits, a slow-family ridge fit, a plain one
+
+
+def augment_e2(results_dir, runner, log=print):
+    """Revision step for E2 (no rerun of the 240 main tasks).
+
+    Keeps the stored replicates of the 12 main configurations in raw/E2.json, runs the
+    long-window configurations (config indices 12, 13), re-runs the main tasks in
+    E2_REPRO_CHECK and checks that every stored fit value is reproduced exactly, and
+    recomputes the whole summary with :func:`e2_summarise` (ridge counts, medians, shots
+    per path). The stored configuration must equal the current one apart from the new keys.
+    Provenance is recorded under ``augment``."""
+    p = os.path.join(results_dir, "raw", "E2.json")
+    with open(p) as f:
+        doc = json.load(f)
+    cfg = copy.deepcopy(DEFAULT["E2"])
+    new_keys = ("long_T", "ridge_betaT")
+    if jsonify({k: v for k, v in cfg.items() if k not in new_keys}) != {k: v for k, v in doc["config"].items() if k not in new_keys}:
+        raise RuntimeError("stored E2 configuration differs from the current main configuration")
+    confs = e2_configs(cfg)
+    n_main = sum(not c["long_T"] for c in confs)
+    old_reps = [r for r in doc["reps"] if r.get("ci", -1) < n_main]
+    if len(old_reps) != n_main * cfg["R"] or not all(r.get("ok") for r in old_reps):
+        raise RuntimeError("stored E2 replicates are incomplete")
+    new_tasks = [(cfg, ci, rep) for ci in range(n_main, len(confs)) for rep in range(confs[ci]["R"])]
+    chk_tasks = [(cfg, ci, rep) for ci, rep in E2_REPRO_CHECK]
+    t0 = time.time()
+    out = runner.map(_timed(_e2_task), chk_tasks + new_tasks, "E2 augment")
+    wall = time.time() - t0
+    res, cpu = _split_timing(out)
+    chk, new = res[:len(chk_tasks)], res[len(chk_tasks):]
+    stored = {(r["ci"], r["rep"]): r for r in old_reps}
+    repro = []
+    for r in chk:
+        s0 = stored[(r["ci"], r["rep"])]
+        fields = {fk: {k: (r[fk][k], s0[fk][k]) for k in ("alpha", "beta", "n_eff", "loglik", "mu_bar")}
+                  for fk in confs[r["ci"]]["fits"]}
+        same = all(a == b for d in fields.values() for a, b in d.values()) and r["n_events"] == s0["n_events"]
+        repro.append(dict(ci=r["ci"], rep=r["rep"], identical=bool(same),
+                          max_abs_diff=float(max(abs(a - b) for d in fields.values() for a, b in d.values()))))
+    if not all(x["identical"] for x in repro):
+        log(f"WARNING: E2 reproduction check failed: {repro}")
+    failed = [r for r in new if not r.get("ok")]
+    if failed:
+        raise RuntimeError(f"E2 augment: {len(failed)} failed tasks, e.g. {failed[0]}")
+    all_reps = old_reps + new
+    summary = e2_summarise(cfg, all_reps)
+    old_sum = {(c["family"], c["kappa"]): c for c in doc["summary"]["configs"]}
+    for c in summary["configs"]:  # wall-clock fit times of the main run are not in the raw records
+        o = old_sum.get((c["family"], c["kappa"])) if not c["long_T"] else None
+        for fk, d in c["fits"].items():
+            if o is not None and fk in o["fits"] and d["seconds"]["n"] == 0:
+                d["seconds"] = o["fits"][fk]["seconds"]
+    doc.update(config=cfg, summary=summary, reps=[_e2_strip(r) for r in all_reps], R=cfg["R"],
+               seeds=dict(base_seed=BASE_SEED, scheme=E2_SEED_SCHEME))
+    doc["augment"] = dict(
+        what="revision: long-window configurations (indices 12-13) run; main replicates (indices 0-11) kept from the "
+             "main run; summary recomputed by e2_summarise (ridge rule beta_hat * T < 1, medians, shots per path)",
+        when=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), code_sha256_16=code_hashes(), versions=versions(),
+        wall_seconds=wall, task_cpu_seconds=cpu, n_new_tasks=len(new_tasks), reproduction_check=repro,
+        main_run=dict(finished=doc.get("finished"), code_sha256_16=doc.get("code_sha256_16"), runtime=doc.get("runtime")))
+    with open(p, "w") as f:
+        json.dump(jsonify(doc), f)
+    return doc
+
+
 def merge(results_dir, started=None):
     raw_dir = os.path.join(results_dir, "raw")
     exps = {}
@@ -1423,14 +1704,16 @@ def merge(results_dir, started=None):
             with open(p) as f:
                 d = json.load(f)
             exps[name] = {k: d[k] for k in ("quick", "workers", "R", "seeds", "runtime", "finished", "versions",
-                                             "code_sha256_16", "config", "summary", "postprocess") if k in d}
+                                             "code_sha256_16", "config", "summary", "postprocess", "augment") if k in d}
     meta = dict(
         description="Simulation study for 'Shock and Contagion' (Paper 2). Synthetic data only; no real incidents.",
         base_seed=BASE_SEED,
         seed_scheme="each replicate: np.random.default_rng(SeedSequence([BASE_SEED, experiment_index, config_index, rep]))",
         experiment_index=EXP_INDEX,
-        total_wall_seconds=float(sum(e["runtime"]["wall_seconds"] for e in exps.values())),
-        total_task_cpu_seconds=float(sum(e["runtime"]["task_cpu_seconds"] for e in exps.values())),
+        total_wall_seconds=float(sum(e["runtime"]["wall_seconds"] + e.get("augment", {}).get("wall_seconds", 0.0)
+                                     for e in exps.values())),
+        total_task_cpu_seconds=float(sum(e["runtime"]["task_cpu_seconds"] + e.get("augment", {}).get("task_cpu_seconds", 0.0)
+                                         for e in exps.values())),
         merged=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         versions=versions(),
         code_sha256_16=code_hashes(),
@@ -1453,6 +1736,8 @@ def main(argv=None):
     ap.add_argument("--results", default=os.path.join(HERE, "..", "results"))
     ap.add_argument("--merge-only", action="store_true")
     ap.add_argument("--postprocess-e6", action="store_true", help="add the new-event calibration split to raw/E6.json")
+    ap.add_argument("--augment-e2", action="store_true",
+                    help="run only the E2 long-window configurations and recompute the E2 summary (revision)")
     a = ap.parse_args(argv)
     results_dir = os.path.abspath(a.results)
     os.makedirs(results_dir, exist_ok=True)
@@ -1472,6 +1757,20 @@ def main(argv=None):
         print(line, flush=True)
         with open(log_path, "a") as fh:
             fh.write(line + "\n")
+
+    if a.augment_e2:
+        log(f"start {started} augment-e2 workers={a.workers}")
+        runner = Runner(a.workers, log=log)
+        try:
+            doc = augment_e2(results_dir, runner, log)
+        finally:
+            runner.close()
+        au = doc["augment"]
+        log(f"E2 augment: done, wall {au['wall_seconds']:.0f}s, task cpu {au['task_cpu_seconds']:.0f}s, "
+            f"reproduction check identical: {[x['identical'] for x in au['reproduction_check']]}")
+        merge(results_dir, started)
+        log("merged sim_results.json")
+        return
 
     names = [n for n in ORDER if n in a.only.split(",")]
     log(f"start {started} quick={a.quick} workers={a.workers} experiments={names}")

@@ -67,10 +67,11 @@ main.tex should list: `\bibliography{refs,bib/sources,bib/theory,bib/design,bib/
 - ec2025access -- Commission news: data access for researchers (29 Oct 2025; DSA data access portal)
 - ec2026roundtable -- Commission news: roundtable of 19 May 2026; 49 applications received by DSCs
 - ec2025fine -- Commission press release IP/25/2934 (Dec 2025): first DSA non-compliance decision; includes researcher access to public data
+- ec2026actionplan -- Commission news (July 2026): action plan accepted; terms to state eligible researchers are not contractually prohibited from scraping public data
 ### EU data protection
 - eu2016gdpr -- Regulation (EU) 2016/679 (GDPR), OJ L 119, 4.5.2016 (standard citation; special categories Art. 9, research safeguards Art. 89)
 ### US case law
-- sandvigbarr2020 -- Sandvig v. Barr (D.D.C. 27 Mar 2020), 2020 WL 1494065: ToS violations for research not criminal under CFAA access provision
+- sandvigbarr2020 -- Sandvig v. Barr, 451 F. Supp. 3d 73 (D.D.C. 27 Mar 2020): violating public websites' ToS for research does not violate CFAA access provisions
 - vanburen2021 -- Van Buren v. United States, 593 U.S. 374 (2021): "exceeds authorized access", gates-up-or-down
 ### Lab documents
 - kornsteinlab2026detection -- lab proposal: evaluating algorithms for antisemitism detection (same key as Paper 2)
@@ -82,4 +83,4 @@ main.tex should list: `\bibliography{refs,bib/sources,bib/theory,bib/design,bib/
 - Haroon 2023: headline percentages (share of problematic recommendations; share of puppets exposed) appear only in secondary coverage in our checks; do not quote numbers.
 - Ledwich, Zaitsev & Laukemper 2022 (personalised follow-up, First Monday) and Bagchi et al. 2024 critique of guess2023: findings not checked; not included.
 - Kemeny & Snell "new appendix" subtitle: library records disagree on which printing added it; not used.
-- Sandvig v. Barr F. Supp. reporter citation: not confirmed; WL citation used.
+- Sandvig v. Barr WL citation: not confirmed; replaced by 451 F. Supp. 3d 73, which Van Buren cites (fact-check 2026-11-03).

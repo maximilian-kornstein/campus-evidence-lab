@@ -1,0 +1,349 @@
+\section{Simulation details}\label{app:simdetails}
+
+This appendix documents the simulation study of \cref{sec:simulation}. All data are synthetic. Place names, venue names and incidents are generated from generic word lists and random numbers, and no real incident, victim, institution or location is represented. The source of truth is \texttt{results/sim\_results.json} (run~2, started 2026-11-03T21:21:47Z). Its \texttt{meta} block records every setting quoted below. The per-replicate results are in \texttt{results/raw/<scenario>.json}, and the code is the \texttt{darkfig} package in \texttt{code/}.
+
+\subsection{Worlds and capture}\label{app:sim-worlds}
+
+\paragraph{Geography and incidents} The 30 counties lie on a $6\times5$ grid, and two counties are adjacent if they share an edge. County weights are proportional to $\mathrm{rank}^{-0.8}$, randomly permuted. Each county has a pool of synthetic venues:
+\begin{itemize}
+  \item one to four synagogues drawn from a list of generic congregation names;
+  \item a Jewish community centre;
+  \item with probability $0.5$, a Hebrew academy;
+  \item with probability $0.4$, a university;
+  \item eight streets, two to five shops and one or two cemeteries.
+\end{itemize}
+
+Each incident is generated as follows.
+\begin{itemize}
+  \item \emph{Date.} Uniform over 365 days, except that $25\%$ of incidents fall in one of three 14-day spikes.
+  \item \emph{Hour.} Drawn with weights $1+0.8\sin\{2\pi(h-10)/24\}$, which peak in the late afternoon.
+  \item \emph{Offence type.} Assault, vandalism, threat or harassment, with probabilities $(0.08,0.30,0.22,0.40)$.
+  \item \emph{Target.} Assaults target a person. Vandalism targets an institution or property, and threats an institution or a person, with equal probability. Harassment targets a person with probability $0.8$ and an institution otherwise.
+  \item \emph{Campus.} An incident in a county with a university is on campus with probability $0.15$.
+  \item \emph{Venue.} Drawn from the county pool according to the target.
+\end{itemize}
+
+\paragraph{Capture} \Cref{tab:sim-capture} gives the parameters. Under independent capture (S1, S3, S5, S7 and S8) every incident has the marginal capture probabilities of the latent-class model. In S4 class membership depends on the offence type (panel B), and additive shifts act on the logit capture probabilities:
+\begin{itemize}
+  \item police: $+0.8$ for assault, $+0.2$ for threat, $-0.6$ for harassment, $+0.3$ for an institutional target and $-0.5$ on campus;
+  \item NGO: $+0.4$ for an institutional target and $+0.2$ for harassment;
+  \item community security organisation: $+0.8$ for an institutional target and $-0.3$ for a person;
+  \item portal: $+1.5$ on campus, $+0.5$ for harassment and $-0.3$ for an institutional target.
+\end{itemize}
+
+\begin{table}[tp]
+\centering
+\caption{Capture parameters of the synthetic worlds. A: class weights and class-specific capture probabilities $\lambda_{jk}$ (S2, and the S4 baseline before covariate shifts), with the marginal probabilities used for independent capture. B: class probabilities given the offence type in S4.}\label{tab:sim-capture}
+\small
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+ & & Weight & Police & NGO & CSO & Portal \\
+\midrule
+A & Visible & 0.15 & 0.80 & 0.70 & 0.55 & 0.30 \\
+ & Moderate & 0.35 & 0.35 & 0.40 & 0.30 & 0.25 \\
+ & Low visibility & 0.50 & 0.06 & 0.12 & 0.08 & 0.15 \\
+ & Marginal (independent capture) & & 0.2725 & 0.305 & 0.2275 & 0.2075 \\
+\midrule
+ & & & Visible & Moderate & Low vis. & \\
+\cmidrule(lr){4-6}
+B & Assault & & 0.45 & 0.35 & 0.20 & \\
+ & Vandalism & & 0.20 & 0.40 & 0.40 & \\
+ & Threat & & 0.15 & 0.35 & 0.50 & \\
+ & Harassment & & 0.08 & 0.32 & 0.60 & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Referral} In S3 and S7 the NGO list also records each police-recorded incident with probability $q$. If the NGO did not capture the incident directly, it receives a referral-only record that copies the police record:
+\begin{itemize}
+  \item the police date, plus a $\mathrm{Poisson}(1)$ number of days when $\nu>0$;
+  \item the police hour and county;
+  \item the NGO label corresponding to the police type label (``Intimidation'' maps to harassment);
+  \item the police venue string in title case.
+\end{itemize}
+The record carries provenance flag $1$. The provenance recoding of \cref{prop:referral}(c) drops exactly these records.
+
+\subsection{Record noise}\label{app:sim-noise}
+
+\Cref{tab:sim-noise} lists the list-specific noise rates. Every rate except hour missingness is multiplied by $\nu$. Each list has its own type vocabulary, for instance ``Simple Assault'', ``Aggravated Assault'' and ``Intimidation'' for the police. The analyst harmonises the vocabularies with a crosswalk to sets of canonical types. Relabelled types are drawn from a fixed confusion matrix; for example, threats are relabelled mostly as harassment.
+
+Venue strings are also formatted by list. The police list uses upper case and abbreviations (``St'', ``Cong'', \dots), and the community security organisation uses the abbreviations. The portal uses lower case and, with probability $0.3\min(\nu,1)$, adds a prefix such as ``near'' or ``outside''. Typos are substitutions, deletions, insertions or transpositions at random positions.
+
+A world has on average $2022$ records in S1, $2376$ in S4 (including $91.6$ duplicates) and $2188$ in S5 at $\nu=2$ (including $164.4$ duplicates).
+
+\begin{table}[tp]
+\centering
+\caption{Record-noise rates by list (probabilities per record unless stated). All rates except hour missingness are multiplied by the noise level $\nu$; a dash means that the rate is not list-specific.}\label{tab:sim-noise}
+\small
+\begin{tabular}{@{}lrrrrl@{}}
+\toprule
+ & Police & NGO & CSO & Portal & Notes \\
+\midrule
+Report date later than incident & 0.35 & 0.60 & 0.45 & 0.65 & capped at $0.95$ \\
+\quad extra lag, $1+\mathrm{Poisson}(\lambda\nu)$ days: $\lambda$ & 1.5 & 4 & 2 & 5 & \\
+Gross date error ($\pm1$--$30$ days) & \multicolumn{4}{c}{0.02} & -- \\
+County recorded as unknown & 0.01 & 0.03 & 0.02 & 0.08 & \\
+Adjacent county recorded & 0.03 & 0.05 & 0.04 & 0.08 & \\
+Type relabelled & 0.06 & 0.08 & 0.06 & 0.12 & confusion matrix \\
+Venue missing & 0.01 & 0.02 & 0.01 & 0.08 & \\
+Venue word dropped & 0.05 & 0.08 & 0.05 & 0.15 & strings of $>2$ words \\
+Venue typos (Poisson mean) & 0.4 & 0.5 & 0.4 & 0.9 & \\
+Hour missing (structural) & 0.15 & 0.60 & 0.30 & 0.40 & not scaled by $\nu$ \\
+Hour off by 1--3 hours & 0.15 & 0.30 & 0.20 & 0.40 & capped at $0.9$ \\
+Within-list duplicate & \multicolumn{4}{c}{0.04} & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Linkage and audit}\label{app:sim-linkage}
+
+\paragraph{Fellegi--Sunter EM} \Cref{tab:sim-fsem} gives the comparison fields (\texttt{meta.fs\_em}). ``Missing'' is an explicit comparison level with its own $m$ and $u$ probabilities; there is no missing-at-random marginalisation.
+
+The model has three classes: match, related non-match and unrelated non-match. A related non-match shares venue, location or type, as repeat targets do. The fields are independent within each class. The two non-match classes share one date distribution and one hour distribution, so the related class can explain only agreement on venue, location and type. EM uses a pseudo-count of $10^{-3}$, at most 5000 iterations and a relative log-likelihood tolerance of $10^{-9}$. It is initialised as follows:
+\begin{itemize}
+  \item match class: a geometric agreement profile $0.25^{\text{level}}$;
+  \item related class: agreement on location, type and venue;
+  \item unrelated class: the overall frequencies;
+  \item class weights: $(0.04,0.04,0.92)$.
+\end{itemize}
+The match class is the one with the largest probability of exact date agreement.
+
+The fit proceeds in three steps.
+\begin{enumerate}[(1)]
+  \item EM on all cross-list candidate pairs.
+  \item Within-list deduplication. The class-conditional distributions are held fixed, and the class proportions are re-estimated on the within-list pairs; records are merged by union--find at posterior $\ge0.5$.
+  \item An EM refit, warm-started at (1), on the cross-list pairs among the deduplicated records.
+\end{enumerate}
+The point linkage then merges pairs greedily in decreasing order of the posterior $\pi\ge0.5$, keeping at most one record per list in each cluster.
+
+A world has about $36{,}000$ candidate pairs in S1 and $64{,}000$ in S4. EM reached its tolerance in every world of S1--S3, in $99\%$ of S4 worlds and in $92.5$--$100\%$ of the worlds at each S5 noise level. Blocking recall is the share of true cross-list record pairs that are candidate pairs. It is $1.000$ in S1--S3, $0.978$ in S4, and it falls from $0.995$ to $0.936$ as $\nu$ rises from $0.25$ to $2$ in S5.
+
+\begin{table}[tp]
+\centering
+\caption{Comparison fields and levels of the FS-EM model (\texttt{meta.fs\_em}). Blocking: same or adjacent county (or either unknown) and a date difference of at most 14 days.}\label{tab:sim-fsem}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Field & Comparison & Levels \\
+\midrule
+Date & $|$date difference$|$ (days) & $0$ \,|\, $1$--$2$ \,|\, $3$--$7$ \,|\, $\ge8$ \\
+Hour & circular $|$hour difference$|$ & $\le1$ \,|\, $2$--$3$ \,|\, $\ge4$ \,|\, missing \\
+Location & county & same \,|\, adjacent \,|\, unknown on either side \\
+Type & harmonised type sets & both single and equal \,|\, overlapping \,|\, disjoint \\
+Venue & Jaro--Winkler of normalised strings & $\ge0.96$ \,|\, $\ge0.90$ \,|\, $\ge0.80$ \,|\, $<0.80$ \,|\, missing \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Error rates} Linkage errors are expressed in the parametrisation of LE.
+\begin{itemize}
+  \item $\delta=1-\sqrt{\text{pairwise recall}}$, because a true pair survives detachment with probability $(1-\delta)^2$.
+  \item $\varepsilon=M/(S+M)$, where $M=\sum_c(\#\text{incidents in }c-1)$ counts false merge events and $S$ is the number of singleton clusters.
+\end{itemize}
+The \emph{realised} rates are computed on the deduplicated records over all true cross-list pairs (the capture level). The \emph{frame} rates are computed over candidate pairs only, which is what the audit estimates. The best-fit rates minimise the Pearson distance
+\[
+  (\delta^\ast,\varepsilon^\ast)=\argmin_{(\delta,\varepsilon)\in[0,0.95)^2}\sum_{\h\in\Hobs}\frac{\{\Lop_{\delta,\varepsilon}(\bm t)_{\h}-n_{\h}\}^2}{\max(n_{\h},1)},
+\]
+with $\bm t$ the oracle table and $\bm n$ the naive table. The minimisation uses Nelder--Mead from three starting points. Its minimised value is the ``Pearson distance'' quoted in \cref{sec:simulation}.
+
+\paragraph{Random audit (S1--S5)} The audit is a stratified simple random sample of $B=300$ candidate pairs.
+\begin{itemize}
+  \item \emph{Strata.} The three link statuses (accepted edge; same cluster but not an edge; different clusters) are crossed with posterior bins whose cut points are $10^{-4}$, $10^{-3}$, $0.01$, $0.05$, $0.2$, $0.5$, $0.8$, $0.95$ and $0.99$.
+  \item \emph{Allocation.} $n_h\propto N_hS_h$ with $S_h=\max\{0.01,\bar\pi_h^{1/2}(1-\bar\pi_h)^{1/2}\}$, at least two pairs per stratum, $n_h$ capped at $N_h$, and the remainder re-allocated (\cref{prop:link-audit}).
+  \item \emph{Estimation.} Horvitz--Thompson estimates of $\mathrm{TP}$, $\mathrm{FN}$ and $\mathrm{FE}$ give $(\hat\delta,\hat\varepsilon)$ by \eqref{eq:link-psi}, with $f_1$ the observed number of singleton clusters.
+  \item \emph{Standard errors.} The stratified variance with finite-population correction, with the within-stratum variance floored at $\bar\pi_h(1-\bar\pi_h)$, followed by the delta method.
+\end{itemize}
+Reviewed links are not fixed afterwards. \Cref{tab:sim-linkage} compares the audit with its estimand on the frame and with the realised rates in S5.
+
+\paragraph{Audit of an LE linkage (S8)} For $\delta$, a simple random sample of 200 records is drawn. For each sampled record, the reviewer finds its true counterparts in the other lists and counts how many share its cluster. The ratio estimator $\hat R=\sum y/\sum x$ of pairwise recall over all true pairs gives $\hat\delta=1-\hat R^{1/2}$. For $\varepsilon$, a simple random sample of 100 of the $E=\sum_c(|c|-1)$ linked spanning-forest edges is drawn. The false fraction gives $\widehat{\mathrm{FE}}$, and $\hat\varepsilon=\widehat{\mathrm{FE}}/(f_1+\widehat{\mathrm{FE}})$. Both standard errors include the finite-population correction.
+
+\subsection{Correction and its variance}\label{app:sim-correction}
+
+The corrected table solves $\Lop_{\delta,\varepsilon}(\bm x)=\bm n$ by the projected fixed-point iteration described after \cref{cor:linkcorrect}, with rates capped at $0.95$. The linkage variance is
+\[
+  v_{\mathrm{link}}=\bm a^{\top}\Sigma\,\bm a,\qquad \bm a=J^{-\top}\nabla F(\hat{\bm t}),
+\]
+where:
+\begin{itemize}
+  \item $J$ is the Jacobian of $\bm t\mapsto\E[\Lop_{\delta,\varepsilon}\bm t]$ at $\hat{\bm t}$, that is, the exact detachment matrix times the first-order merge Jacobian;
+  \item $\Sigma=\Cov(\bm n\mid\hat{\bm t})$ under LE, made up of the exact detachment covariance $\sum_{\h}\hat t_{\h}\Cov(\bm Z_{\h})$ of \cref{cor:linkcorrect}(i), propagated through the merge Jacobian, plus the first-order merge covariance;
+  \item $\nabla F$ is computed by forward differences with step $\max(0.05,10^{-3}\hat t_{\h})$.
+\end{itemize}
+The inner interval is log-normal on $\log(N-a)$, with $a=n$, or $a=n_{11}$ for LP. It is widened on each side by $s^2\to s^2+\log\{1+v_{\mathrm{link}}/(\Nhat-a)^2\}$. A parametric bootstrap through the LE simulator was the alternative. The delta method costs about 16 estimator calls per table instead of 100--200, and its $\Sigma$ matches Monte Carlo in the package tests.
+
+The audit variance is $v_{\mathrm{aud}}=\sum_j(\partial\Nhat/\partial\theta_j)^2\,\mathrm{se}_j^2$ for $\theta=(\delta,\varepsilon)$. Its derivatives are taken by central differences, and it is added in the same way.
+
+For LCMCR, four tables $\bm t^\ast\sim\mathrm N(\hat{\bm t},J^{-1}\Sigma J^{-\top})$ are imputed. One chain is run on each, and the draws are pooled.
+
+\subsection{Multiple imputation}\label{app:sim-mi}
+
+The sampler targets $p(\Link\mid\gamma)\propto\prod_{r<r'\text{ in one cluster}}\varpi_{rr'}$. Here $\varpi_{rr'}=\pi_{rr'}/(1-\pi_{rr'})$ for candidate pairs with $\pi_{rr'}\ge\tau=10^{-3}$, and $\varpi_0=\tau/(1-\tau)$ for every other within-cluster pair. The support is the set of partitions with at most one record per list per cluster and with clusters connected through retained edges.
+
+One sweep visits every record that has a retained edge, in random order. It resamples the record's cluster from the full conditional, choosing between a singleton and the admissible neighbouring clusters. The chain starts at the point linkage. After 5 burn-in sweeps, 20 draws are kept, one per sweep. The first 5 draws of each replicate are scored against the truth (\cref{tab:sim-mi}).
+
+Rubin's rules are applied to $\theta_m=\log(\Nhat_m-c)$, where $c=\min_m a_m$ and $a_m$ is the offset of draw $m$'s interval ($n^{(m)}$, or $n^{(m)}_{11}$ for LP).
+\begin{itemize}
+  \item \emph{Within-imputation variance.} The variance of draw $m$ on $\log(N-a_m)$ is read off its log-normal interval and transported to the common scale by $U_m=U_m^{(0)}\{(\Nhat_m-a_m)/(\Nhat_m-c)\}^2$.
+  \item \emph{Total variance.} $T=\bar U+(1+M^{-1})B$, with $t$ reference degrees of freedom $(M-1)\{1+\bar U/((1+M^{-1})B)\}^2$.
+  \item \emph{Interval.} $c+\exp(\bar\theta\pm t\,T^{1/2})$, so the lower limit is never below $c$.
+\end{itemize}
+In 2 of the 1920 MI fits of CF, BMA and Chao, both in S5 at $\nu=2$, the lower limit lies between $c$ and the mean $n$ over the draws. The LP lower limit is above $n_{11}$, but it can lie below the four-list $n$, because LP uses two lists. For LCMCR, one chain with the settings below is run on each of the first four draws, and the chains are pooled.
+
+\subsection{LCMCR}\label{app:sim-lcmcr}
+
+The model is \eqref{eq:lcmcr} with $J^\star=10$, $a_\lambda=b_\lambda=1$, $a_\alpha=b_\alpha=0.25$ and $p(N)\propto1/N$, fitted by the sampler of \cref{app:comp-lcmcr}. Each fit runs four chains of 7500 iterations, with burn-in 2500 and thinning 5, giving 4000 pooled draws.
+\begin{itemize}
+  \item \emph{Starting values.} All units start in one class. The starting $n_{\zero}$ is $0.5$, $1$, $2$ and $4$ times $f_1^2/(2f_2)$ (clipped to $[1,10n]$) in the four chains.
+  \item \emph{Summaries.} $\Nhat$ is the posterior median, and the interval is equal-tailed.
+  \item \emph{Diagnostics.} For every oracle and naive fit we compute the rank-normalised split-$\widehat R$ of $N$ (the larger of the bulk and folded versions) and the bulk and tail ESS \citep{vehtari2021}.
+  \item \emph{Replicates.} LCMCR is run on the first 10 replicates of S1 and S3 and the first 25 of S2 and S4, and not in S5, S7 or S8.
+\end{itemize}
+This is a reduced protocol: 30{,}000 iterations in total per fit, against the requirement of \cref{app:comp-diag} that every fit reach $\widehat R<1.01$ and an ESS of at least 400 (\cref{tab:sim-lcmcr}).
+
+\subsection{Replications, seeds and Monte Carlo error}\label{app:sim-seeds}
+
+The study has 3440 tasks: 640 record-level worlds (S1--S4 with 100 each, and S5 with 40 at each of six levels), 1000 oracle-only worlds (S7) and 1800 LE tables (S8).
+
+\paragraph{Seeds} The base seed is $20261103$. The scenario ids are S1\,$=0$, S2\,$=1$, S3\,$=2$, S4\,$=3$, S5\,$=4$, S7\,$=5$ and S8\,$=7$. The world of replicate $r$ (from 0) at level $\ell$ (from 0; $\ell=-1$ for single-level scenarios) uses \texttt{SeedSequence([20261103, id, $\ell$+1, $r$])}, which spawns four independent streams for geography, incidents, capture and records. The pipeline seed appends $7$ to the same list, and S8 uses the world seed only. The ids equal the scenario positions of run~1, so the worlds of S1--S5 and S7 are identical in both runs.
+
+\paragraph{Monte Carlo error}
+\begin{itemize}
+  \item \emph{Coverage.} The MCSE of a coverage $\hat c$ is $\{\hat c(1-\hat c)/R\}^{1/2}$.
+  \item \emph{Median.} The MCSE of a median is $(x_{(b)}-x_{(a)})/(2\times1.96)$. Here $a=\lfloor R/2-0.98\sqrt R\rfloor$ and $b=\lceil R/2+0.98\sqrt R\rceil$ index order statistics, clamped to $[1,R]$. This is the half-width of the distribution-free $95\%$ interval for the median, divided by $1.96$.
+  \item \emph{Mean.} The MCSE of a mean is $s/\sqrt R$.
+  \item \emph{Spread and blow-ups.} The robust spread is $1.4826\times$ the median absolute deviation, and a blow-up is a replicate with $\Nhat>5N$.
+\end{itemize}
+
+\subsection{Software and runtime}\label{app:sim-software}
+
+The study ran with Python 3.13.18, numpy 2.5.3, scipy 1.18.1 and matplotlib 3.11.2 (only for figures) on Linux x86\_64 (glibc 2.39), with no other dependencies. \Cref{tab:sim-hashes} gives the code version.
+
+The run took $2948$\,s of wall time ($49.1$ minutes) with two worker processes under \texttt{nice -n 10} and \texttt{OPENBLAS\_NUM\_THREADS=1} on a shared machine. The summed task time was $5879$\,s: $651$\,s for S1, $1063$\,s for S2, $669$\,s for S3, $1258$\,s for S4, $1353$\,s for S5, $191$\,s for S7 and $695$\,s for S8. LCMCR and the MI sampler dominate the record-level scenarios.
+
+\begin{table}[tp]
+\centering
+\caption{Code version of run 2: first 16 hexadecimal digits of the SHA-256 of each source file (\texttt{meta.code\_sha256\_16}).}\label{tab:sim-hashes}
+\small
+\begin{tabular}{@{}ll@{\qquad}ll@{}}
+\toprule
+File & Hash & File & Hash \\
+\midrule
+\texttt{run\_experiments.py} & \texttt{89b7e70cb3deb64f} & \texttt{darkfig/linkerror.py} & \texttt{c92c73dc2e39fd15} \\
+\texttt{darkfig/estimators.py} & \texttt{24d55e635a614b2b} & \texttt{darkfig/loglinear.py} & \texttt{a91ac8d56280b079} \\
+\texttt{darkfig/lcmcr.py} & \texttt{6886cad4c2263568} & \texttt{darkfig/pipeline.py} & \texttt{3f658bccb06a4bdc} \\
+\texttt{darkfig/linkage.py} & \texttt{9689e4bdd58e1f18} & \texttt{darkfig/world.py} & \texttt{9d177529c28a8433} \\
+\texttt{darkfig/\_\_init\_\_.py} & \texttt{4b2d863d9feafe7c} & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Run 1 and run 2}\label{app:sim-runs}
+
+A first run (run~1; 1640 worlds, $1271$\,s of wall time, kept as \texttt{results/sim\_results\_run1.json}) was superseded after a code audit. Run~2 made the following changes.
+\begin{enumerate}[(i)]
+  \item \emph{S8 added.} It generates tables by LE, with known and audit-estimated rates.
+  \item \emph{Linkage variance.} Corrected intervals include $v_{\mathrm{link}}$. Run~1 used the inner interval only, which is reported as Known$^-$ in \cref{tab:sim-le}.
+  \item \emph{Audit variance.} It is added by the delta method. Run~1 used 20 draws of the rates and Rubin's rules on $\log N$.
+  \item \emph{MI.} The Gibbs sampler of \cref{app:sim-mi} replaces independent Bernoulli$(\pi)$ link proposals resolved greedily, which are not posterior draws.
+  \item \emph{Rubin's rules.} They are applied on $\log(\Nhat-c)$. Run~1 used $\log\Nhat$ with a within-imputation variance on another scale, which could give lower limits below $n$.
+  \item \emph{Summaries.} The median relative bias is primary. The mean, the MAD spread and blow-up counts are secondary. Run~1 reported means.
+  \item \emph{LCMCR.} Run~2 uses four chains with $\widehat R$ and ESS, on 10 or 25 replicates. Run~1 used one chain of 6000 iterations (burn-in 2000, thinning 4) on 20 or 40 replicates.
+  \item \emph{Audit.} It is compared with its estimand on the candidate-pair frame, and blocking recall is reported.
+  \item \emph{Seeds and records.} Seeds are keyed to fixed scenario ids, and the FS-EM specification is recorded in \texttt{meta.fs\_em}.
+  \item \emph{Jaro similarity.} It was reimplemented with identical values.
+\end{enumerate}
+The worlds are the same in both runs, so the oracle and naive tables and their non-LCMCR estimates are identical. The audit samples, MI draws and MCMC chains differ, because the pipeline's random stream is consumed differently. \Cref{tab:sim-run12} compares the numbers that changed most.
+
+\begin{table}[tp]
+\centering
+\caption{Run 1 against run 2 (synthetic data): median and mean relative bias of $\Nhat$ (\%) and coverage of nominal $95\%$ intervals (\%). Generated from \texttt{results/sim\_results\_run1.json} and \texttt{results/sim\_results.json}. In run 1 the corrected intervals lacked $v_{\mathrm{link}}$, the ``+ audit variance'' row used 20 rate draws with Rubin's rules (which also changes its point estimate), and MI used Bernoulli/greedy draws.}\label{tab:sim-run12}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+ & \multicolumn{4}{c}{Run 1} & \multicolumn{4}{c}{Run 2} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+ & Median & Mean & Cov. & $R$ & Median & Mean & Cov. & $R$ \\
+\midrule
+\multicolumn{9}{@{}l}{\emph{S4, BMA}} \\
+Naive & $+$40.0 & $+$39.2 & 7 & 100 & $+$40.0 & $+$39.2 & 7 & 100 \\
+LE-corrected (audit rates) & $+$45.8 & $+$72.2 & 12 & 100 & $+$47.1 & $+$75.3 & 24 & 100 \\
+\quad + audit variance & $+$60.0 & $+$90.6 & 96 & 100 & $+$47.1 & $+$75.3 & 76 & 100 \\
+$\varepsilon=0$ variant (post hoc) & $-$3.2 & $-$3.1 & 57 & 100 & $-$4.5 & $-$5.0 & 69 & 100 \\
+Best-fit LE (infeasible) & $+$4.3 & $+$4.8 & 81 & 100 & $+$4.3 & $+$4.8 & 93 & 100 \\
+MI & $+$64.5 & $+$63.0 & 14 & 100 & $+$44.2 & $+$40.7 & 6 & 100 \\
+\addlinespace
+\multicolumn{9}{@{}l}{\emph{LCMCR}} \\
+S2, oracle & $-$11.2 & $-$10.1 & 78 & 40 & $-$10.2 & $-$9.6 & 88 & 25 \\
+S4, oracle & $-$8.3 & $-$7.9 & 80 & 40 & $-$8.7 & $-$8.3 & 88 & 25 \\
+S4, naive & $+$61.5 & $+$58.1 & 8 & 40 & $+$59.3 & $+$57.2 & 4 & 25 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Reproduction}\label{app:sim-repro}
+
+From \texttt{papers/dark-figure/code/}, the full study (two worker processes), a smoke run, a single scenario, the figures and tables, and the tests are run by
+\begin{verbatim}
+OPENBLAS_NUM_THREADS=1 nice -n 10 python run_experiments.py  # ~50 min
+python run_experiments.py --quick          # smoke run
+python run_experiments.py --only S8        # one scenario
+python make_figures.py                     # figures and tables
+python -m pytest tests/ -q                 # 58 tests
+\end{verbatim}
+\texttt{run\_experiments.py} writes \texttt{results/sim\_results.json} and \texttt{results/raw/}. \texttt{make\_figures.py} reads them and writes \texttt{figures/fig-sim-*.pdf} and \texttt{tables/tab-sim-*.tex}. \Cref{tab:sim-realistic,tab:sim-run12} were generated from the same JSON files by short scripts that read the keys named in their source comments and captions.
+
+\subsection{Supplementary tables}\label{app:sim-tables}
+
+\Cref{tab:sim-le} gives the S8 results cell by cell (Q3), \cref{tab:sim-mi,tab:sim-lcmcr} support Q5 and Q6, and \cref{tab:sim-referral,tab:sim-sensitivity,tab:sim-linkage,tab:sim-linkage-bias} give the S5--S7 results that \cref{sec:simulation} summarises. In \cref{tab:sim-linkage-bias} the bias is that of the dark figure, $(\Nhat-N)/n_{\zero}$, with the common oracle count $n$. It is therefore about $N/n_{\zero}\approx3.2$ times the relative bias of $\Nhat$ in \cref{tab:sim-realistic}.
+
+\begin{table}[tp]
+\centering
+\caption{Synthetic data, S8: the LE model generates the observed table (independent capture, $N=2000$, $R=200$ per cell; coverage MCSE about $1.5$ points). Naive: estimator applied to the LE table. Known: correction with the true $(\delta,\varepsilon)$. Audit: correction with audit-estimated rates (200 records, 100 linked edges). Known$^-$: interval without $v_{\mathrm{link}}$, as in the first run. Known and Audit: interval with $v_{\mathrm{link}}$. Audit$^+$: with the audit variance added.}\label{tab:sim-le}
+\small
+\setlength{\tabcolsep}{4pt}
+\simfit{\input{tables/tab-sim-le}}
+\end{table}
+
+\begin{table}[tp]
+\centering
+\caption{Synthetic data. MI with Gibbs linkage draws (approximate posterior under the plug-in FS pairwise model) against the point linkage. False merges, pairwise recall over all records, and $n-n^\star$ (clusters minus true recorded incidents) are means over replicates; draw columns average the first 5 draws of each replicate. BMA bias and coverage as in \cref{tab:sim-main}. S4: $R=100$; S5: $R=40$ per level.}\label{tab:sim-mi}
+\small
+\input{tables/tab-sim-mi}
+\end{table}
+
+\begin{table}[tp]
+\centering
+\caption{Synthetic data. LCMCR convergence diagnostics for the oracle and naive tables (4 chains $\times$ 7500 iterations, burn-in 2500, thinning 5; overdispersed starting values). Diagnostics are for $N$: rank-normalised split-$\widehat R$ and bulk/tail ESS \citep{vehtari2021}. \% protocol: share of fits meeting \cref{app:comp-diag} ($\widehat R<1.01$, bulk and tail ESS $\ge400$). Bias and coverage in $\%$, MCSE in parentheses.}\label{tab:sim-lcmcr}
+\setlength{\tabcolsep}{3pt}
+\simfit{\input{tables/tab-sim-lcmcr}}
+\end{table}
+
+\begin{table}[tp]
+\centering
+\caption{Synthetic data, S7: median relative bias of $\Nhat$ in $\%$ (coverage of the $95\%$ interval in $\%$). Oracle linkage, independent capture, $R=200$ per $q$. All: all NGO records. Dropped: referral-only NGO records removed using the provenance flag.}\label{tab:sim-referral}
+\small
+\input{tables/tab-sim-referral}
+\end{table}
+
+\begin{table}[tp]
+\centering
+\caption{Synthetic data, S6: closed-form estimator on the oracle tables ($R=100$). $\omega_{\mathrm{pop}}$: mean population top interaction. Bias $\omega{=}0$: median relative bias of $\widehat n_{\zero}$ (\%). Bounds: \% of replicates with the true $n_{\zero}$ in $[\widehat n_{\zero}(-\Omega),\widehat n_{\zero}(\Omega)]$. CI union: \% with the true $n_{\zero}$ in the union of $95\%$ intervals over $|\omega|\le\Omega$. Cov.\ $\omega{=}0$: coverage of the $95\%$ interval for $n_{\zero}$.}\label{tab:sim-sensitivity}
+\small
+\input{tables/tab-sim-sensitivity}
+\end{table}
+
+\begin{table}[tp]
+\centering
+\caption{Synthetic data, S5: linkage quality and the random audit ($R=40$ per level; means over replicates). Prec./Rec.: pairwise precision and recall over all records. Block.: blocking recall. $\delta,\varepsilon$: realised capture-level rates of the point linkage. $\delta_{\mathrm{frame}},\varepsilon_{\mathrm{frame}}$: the same rates on the audit frame, which is the audit's estimand. Hats: audit estimates ($B=300$). Cov.: \% of replicates whose $95\%$ audit interval covers the frame rate.}\label{tab:sim-linkage}
+\small
+\input{tables/tab-sim-linkage}
+\end{table}
+
+\begin{table}[tp]
+\centering
+\caption{Synthetic data, S5, BMA ($R=40$ per level). Bias: median over replicates of the dark-figure error $(\Nhat-N)/n_{\zero}$ (\%), with the common oracle count $n$; superscript: replicates with $\Nhat>5N$. Coverage of $95\%$ intervals for $N$ (\%). Corrected intervals include $v_{\mathrm{link}}$. Corr.\,$\varepsilon{=}0$ is the post hoc variant. Corr.\,true uses the realised rates. MI: Gibbs linkage draws with Rubin's rules.}\label{tab:sim-linkage-bias}
+\small
+\setlength{\tabcolsep}{4pt}
+\simfit{\input{tables/tab-sim-linkage-bias}}
+\end{table}

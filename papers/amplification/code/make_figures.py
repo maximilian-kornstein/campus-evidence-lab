@@ -19,6 +19,7 @@ import argparse
 import json
 import math
 import os
+import re
 
 import numpy as np
 import matplotlib
@@ -361,54 +362,55 @@ def fig_markov(res, path):
 def fig_sequential(res, path):
     e5 = res["E5"]
     P = e5["personas"]
-    fig, axes = plt.subplots(1, 3, figsize=(W2, 2.5), layout="constrained", gridspec_kw=dict(width_ratios=[1.15, 1, 1]))
+    W = e5["config"]["wave"]
+    fig, axes = plt.subplots(1, 3, figsize=(W2, 2.55), layout="constrained", gridspec_kw=dict(width_ratios=[1.15, 1, 1]))
     ax = axes[0]
     _style(ax)
     ax.axhline(95, color=INK2, lw=0.7)
-    meths = [("fieller", "primary", "alg:seq.", "#0072B2", "o"), ("fieller", "protocol", "alg:seq., $\\alpha$=.0125", "#56B4E9", "v"),
-             ("betting_exact", None, "exact betting", "#009E73", "D"), ("aa_cs", None, "AA plug-in CS", "#E69F00", "^"),
-             ("repeated_wald", None, "repeated Wald", "#D55E00", "s")]
-    for k, (a, b, lab, c, m) in enumerate(meths):
-        ys = []
-        for p in PERS:
-            v = P[p][a][b] if b else P[p][a]
-            key = {"fieller": "coverage_from_wave1", "betting_exact": "coverage_all_t", "aa_cs": "coverage_from_wave1",
-                   "repeated_wald": "coverage_all_looks"}[a]
-            ys.append(100 * _f(v[key]))
-        ax.plot(np.arange(4) + (k - 2) * 0.13, ys, marker=m, color=c, ls="none", ms=4, mec="white", mew=0.4, label=lab)
+    series = [(("ND", "alt", "a05_b1", "coverage_all_waves"), "Alg. 1, burn-in 1 wave", "#0072B2", "o"),
+              (("ND", "alt", "a05_b0", "coverage_all_waves"), "Alg. 1, no burn-in", "#56B4E9", "v"),
+              (("ND", "alt", "peeking", "coverage_waves_1_to_Wmax"), "peeking, 8 looks", "#D55E00", "s"),
+              (("ND", "alt", "betting_exact", "coverage_all_t"), "exact betting", "#009E73", "D"),
+              (("DD", "alt", "a05_b1", "coverage_all_waves"), r"diff. Se, $\lambda_S{=}1$ assumed", "#CC79A7", "X"),
+              (("DD", "alt", "a05_b1_lam20", "coverage_all_waves"), r"diff. Se, $\lambda_S\in[.8,1.2]$", "#E69F00", "^")]
+    for k, (key, lab, c, m) in enumerate(series):
+        ys = [100 * _f(P[p][key[0]][key[1]][key[2]][key[3]]) for p in PERS]
+        ax.plot(np.arange(4) + (k - 2.5) * 0.11, ys, marker=m, color=c, ls="none", ms=4, mec="white", mew=0.4, label=lab)
     ax.set_xticks(range(4))
     ax.set_xticklabels([PERS_TICK[p] for p in PERS], rotation=30, ha="right", rotation_mode="anchor")
-    ax.set_ylim(0, 103)
+    ax.set_ylim(-3, 103)
     ax.set_ylabel("Time-uniform coverage (%)")
-    ax.legend(frameon=False, fontsize=6.0, loc="lower left", handletextpad=0.2, borderaxespad=0.1)
+    ax.legend(frameon=False, fontsize=5.8, loc="center left", bbox_to_anchor=(0.0, 0.43), handletextpad=0.2,
+              borderaxespad=0.1)
     _tag(ax, "(a)")
     ax = axes[1]
     _style(ax, "both")
     for p in PERS:
-        v = P[p]["fieller"]["primary"]["median_log_width_by_wave"]
+        v = P[p]["ND"]["alt"]["a05_b1"]["median_width_by_wave"]
         ws = sorted(int(w) for w in v)
-        ax.plot([5 * w for w in ws], [_f(v[str(w)]) for w in ws], color=PCOL[p], marker=PMARK[p], ms=3.2, mec="white",
+        ax.plot([W * w for w in ws], [_f(v[str(w)]) for w in ws], color=PCOL[p], marker=PMARK[p], ms=3.2, mec="white",
                 mew=0.4, lw=1.2)
-        b = P[p]["betting_exact"]["median_log_width"]
+        b = P[p]["ND"]["alt"]["betting_exact"]["median_log_width"]
         ts = sorted(int(t) for t in b)
         ax.plot(ts, [_f(b[str(t)]) for t in ts], color=PCOL[p], ls=":", lw=0.9, marker=PMARK[p], mfc="white", ms=3)
     ax.set_xscale("log")
     ax.set_xlabel("Pairs of puppets")
     ax.set_ylabel(r"Median width of CS for $\log\mathrm{AR}$")
-    ax.legend(handles=[Line2D([], [], color=INK2, marker="o", ms=3, label="alg:sequential"),
+    ax.legend(handles=[Line2D([], [], color=INK2, marker="o", ms=3, label="Algorithm 1"),
                        Line2D([], [], color=INK2, ls=":", marker="o", mfc="white", ms=3, label="exact betting")],
               frameon=False, fontsize=6.2, loc="upper right")
     _tag(ax, "(b)")
     ax = axes[2]
     _style(ax, "both")
     for p in PERS:
-        v = P[p]["fieller"]["primary"]["excludes_1_by_wave"]
+        v = P[p]["ND"]["alt"]["a05_b1"]["excludes_0_by_wave"]
         ws = sorted(int(w) for w in v)
-        ax.plot([5 * w for w in ws], [100 * _f(v[str(w)]) for w in ws], color=PCOL[p], marker=PMARK[p], ms=3.2,
+        ax.plot([W * w for w in ws], [100 * _f(v[str(w)]) for w in ws], color=PCOL[p], marker=PMARK[p], ms=3.2,
                 mec="white", mew=0.4, lw=1.2, label=PERS_LABEL[p])
-        pw = P[p]["power"]
-        if pw.get("n_seq") is not None and _f(pw["n_seq"]) <= 400:
-            ax.axvline(_f(pw["n_seq"]), color=PCOL[p], lw=0.6, ls=(0, (2, 2)))
+        pw = P[p]["ND"]["alt"]["power"]
+        ns = _f(pw.get("n_seq_Y"))
+        if np.isfinite(ns) and ns <= W * max(ws):
+            ax.axvline(max(ns, 2 * W), color=PCOL[p], lw=0.6, ls=(0, (2, 2)))
     ax.axhline(80, color=INK2, lw=0.6, ls=":")
     ax.set_xscale("log")
     ax.set_xlabel("Pairs of puppets")
@@ -472,7 +474,7 @@ def tab_designs(res, path):
     lines.append("Quantity & " + " & ".join(PERS_LABEL[p] for p in PERS) + r" \\")
     lines.append(r"\midrule")
     def row(lab, vals):
-        vals = [v.replace("-", "$-$") if v != "--" else v for v in vals]
+        vals = [re.sub(r"(?<!-)-(?!-)", "$-$", v) for v in vals]
         lines.append(lab + " & " + " & ".join(vals) + r" \\")
     if "E2" in res:
         e2 = res["E2"]
@@ -505,13 +507,23 @@ def tab_designs(res, path):
         lines.append(r"\addlinespace")
     if "E5" in res:
         e5 = res["E5"]["personas"]
-        lines.append(rf"\multicolumn{{{1 + len(PERS)}}}{{@{{}}l}}{{\emph{{E5: sequential audit (reference chron)}}}} \\")
-        row("True AR", [f"{e5[p]['AR']:.2f}" for p in PERS])
-        row(r"Time-uniform coverage, \cref{alg:sequential} (\%)", [f"{100 * e5[p]['fieller']['primary']['coverage_from_wave1']:.1f}" for p in PERS])
-        row(r"\quad repeated Wald (\%)", [f"{100 * e5[p]['repeated_wald']['coverage_all_looks']:.1f}" for p in PERS])
-        row(r"$n_{\mathrm{fix}}$; $n_{\mathrm{seq}}$ (pairs)", [f"{e5[p]['power']['n_fix']:.0f}; {e5[p]['power']['n_seq']:.0f}" for p in PERS])
-        row(r"Power at $n_{\mathrm{fix}}$, fixed sample", [f"{e5[p]['power'].get('fixed_power_at_n_fix', float('nan')):.2f}" if e5[p]['power'].get('fixed_power_at_n_fix') is not None else "--" for p in PERS])
-        row(r"Power by $n_{\mathrm{seq}}$, sequential", [f"{e5[p]['power']['seq_power_by_horizon']:.2f}" if e5[p]['power'].get('seq_power_by_horizon') is not None else "--" for p in PERS])
+        lines.append(rf"\multicolumn{{{1 + len(PERS)}}}{{@{{}}l}}{{\emph{{E5: \cref{{alg:sequential}}, reference chron, waves of 5 pairs, $\alpha=0.05$ unless stated}}}} \\")
+        nd = {p: e5[p]["ND"] for p in PERS}
+        row("True AR", [f"{nd[p]['AR']:.2f}" for p in PERS])
+        row(r"Time-uniform coverage, burn-in 1 wave; none (\%)",
+            [f"{100 * nd[p]['alt']['a05_b1']['coverage_all_waves']:.1f}; {100 * nd[p]['alt']['a05_b0']['coverage_all_waves']:.1f}" for p in PERS])
+        row(r"\quad peeking, waves 1--8 (\%)", [f"{100 * nd[p]['alt']['peeking']['coverage_waves_1_to_Wmax']:.1f}" for p in PERS])
+        row(r"Null AR$=1$: false detection by wave 8, Alg.~1; peeking (\%)",
+            [f"{100 * nd[p]['null']['a05_b1']['excludes_0_by_wave']['8']:.1f}; {100 * nd[p]['null']['peeking']['rejects_AR1_by_Wmax']:.1f}" for p in PERS])
+        row(r"P(excludes AR$=1$) by wave 8 (\%)", [f"{100 * nd[p]['alt']['a05_b1']['excludes_0_by_wave']['8']:.1f}" for p in PERS])
+        row(r"$n_{\mathrm{fix}}$; $n_{\mathrm{seq}}$ from $A_Y$ (pairs)", [f"{nd[p]['alt']['power']['n_fix_Y']:.0f}; {nd[p]['alt']['power']['n_seq_Y']:.0f}" for p in PERS])
+        row(r"Power at $n_{\mathrm{fix}}$ (fixed); by horizon (sequential)",
+            [(f"{nd[p]['alt']['power']['fixed_power_at_n_fix_Y']:.2f}" if nd[p]['alt']['power'].get('fixed_power_at_n_fix_Y') is not None else "--")
+             + "; " + (f"{nd[p]['alt']['power']['seq_power_by_horizon']:.2f}" if nd[p]['alt']['power'].get('seq_power_by_horizon') is not None else "--")
+             for p in PERS])
+        dd = {p: e5[p]["DD"] for p in PERS}
+        row(r"Differential Se: $\lambda_S$; coverage with $\lambda_S{=}1$; with $[0.8,1.2]$ (\%)",
+            [f"{dd[p]['lambda_S']:.2f}; {100 * dd[p]['alt']['a05_b1']['coverage_all_waves']:.1f}; {100 * dd[p]['alt']['a05_b1_lam20']['coverage_all_waves']:.1f}" for p in PERS])
     lines += [r"\bottomrule", r"\end{tabular}"]
     with open(path, "w") as f:
         f.write("% Generated by code/make_figures.py from results/sim_results.json -- do not edit by hand.\n")
@@ -526,7 +538,7 @@ def tab_checks(res, path, U="20"):
     L.append(r"\midrule")
 
     def row(lab, vals):
-        vals = [v.replace("-", "$-$") if v not in ("--",) else v for v in vals]
+        vals = [re.sub(r"(?<!-)-(?!-)", "$-$", v) for v in vals]
         L.append(lab + " & " + " & ".join(vals) + r" \\")
 
     def head(t):
@@ -547,8 +559,9 @@ def tab_checks(res, path, U="20"):
             row(r"Naive AR; $\omega+(1-\omega)\mathrm{AR}$; true AR",
                 [f"{P_[p]['naive_AR_pop']:.3f}; {P_[p]['naive_AR_attenuation_formula']:.3f}; {P_[p]['AR']:.3f}" for p in PERS])
             x = "external_pooled"
-            row(r"External validation: s.d.\ of $\log\widehat{\mathrm{AR}}$, MC; delta",
-                [f"{P_[p]['by_U'][U][x]['logAR_sd_mc']:.3f}; {P_[p]['by_U'][U][x]['logAR_sd_delta']:.3f}" for p in PERS])
+            row(r"External validation: s.d.\ of $\log\widehat{\mathrm{AR}}$, MC; delta (median)",
+                [f"{P_[p]['by_U'][U][x]['logAR_sd_mc']:.3f}; {P_[p]['by_U'][U][x]['logAR_sd_delta_median']:.3f}" for p in PERS])
+            row(r"\quad $\kappa_{\Sp}=v_{\Sp}^{1/2}/(J\mu_r)$", [f"{P_[p]['by_U'][U][x]['kappa_Sp']:.3f}" for p in PERS])
             row(r"\quad coverage $\log\mathrm{AR}$; AA (\%)",
                 [f"{100 * P_[p]['by_U'][U][x]['logAR']['coverage']:.1f}; {100 * P_[p]['by_U'][U][x]['AA']['coverage']:.1f}" for p in PERS])
         L.append(r"\addlinespace")

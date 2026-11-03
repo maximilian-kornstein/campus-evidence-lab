@@ -100,7 +100,7 @@ Import the package with `code/` on `sys.path`, e.g. run from `code/`, or `sys.pa
 * `bin_counts(events, T, delta)` → (n_bins, M).
 * `fit_inar(counts, p, method="cls"|"nnls"|"poisson")` → `INARFit(nu, Theta (p, M, M), ...)`. CLS is Kirchner's estimator. The Gram matrix is built exactly from lagged cross-products, so 60k bins × 60 lags takes ~0.5 s.
 * `inar_to_hawkes(fit, delta)` → dict(`mu` = ν/Δ, `A` = Σ_l Θ_l, `beta` (geometric-decay moment estimator, rough), `kernel` = Θ_l/Δ, `lags`).
-* Approximation (Kirchner 2016, 2017): Θ_l ≈ Δ Φ(lΔ), with O(Δ) error. For an exponential kernel, A is biased by about −βΔ/2 (right Riemann sum) and by −A e^{−βpΔ} (truncation). Use βΔ ≲ 0.1 and pΔ ≳ 5/β.
+* Approximation (Kirchner 2016, 2017): Θ_l ≈ Δ Φ(lΔ), with O(Δ) error. For a univariate exponential kernel the CLS lag sum converges to n_Δ = n − ½n(1−n)βΔ + O(Δ²) (Prop prop:est-binning), not to the right-endpoint Riemann sum n(1 − βΔ/2); e.g. n = 0.5, βΔ = 0.5 gives 0.4413 exactly. Truncation adds a bias of about −A e^{−βpΔ}. Use βΔ ≲ 0.1 and pΔ ≳ 5/β. INAR is not used in E1–E6.
 
 ### `hawkes.attribution`
 
@@ -110,7 +110,7 @@ Import the package with `code/` on `sys.path`, e.g. run from `code/`, or `sys.pa
   * `infinite`: H = ∞; direct = β∘S, total = (I − A)^{-1} direct.
   * `window` and, optionally, `spillover`.
 * Exact for exponential kernels: the expected-intensity response is a finite linear ODE system, solved with `scipy.linalg.expm`. "process" gives the exact expectation for the process started empty at 0, which is what `simulate` produces.
-* `spillover(spec, e, H, through)` is the counterfactual "total − total with A[:, j] (or A[k, j], or a mask) zeroed". It returns `horizon`, `infinite` and shares of the shock-e contagion. Equivalently, it counts the shock-rooted events whose ancestry passes through j (or uses the j → k channel); this is checked by Monte Carlo.
+* `spillover(spec, e, H, through)` is the counterfactual "shock-e contagion − shock-e contagion with the selected entries of A zeroed". `through=j` (int) zeroes the whole column A[:, j] (all excitation by stream j, including j → j and online → online); this is **not** Def def:at-channel. `through=(k, j)` zeroes one entry; a bool mask zeroes exactly its True entries. The online channel of Def def:at-channel is the mask of online → offline entries (`run_experiments.channel_mask`, used in E1/E5). It returns `horizon`, `infinite` and shares of the shock-e contagion. Equivalently, it counts the shock-rooted events whose ancestry uses a zeroed entry; this is checked by Monte Carlo.
 * `impulse_response(spec, u, shock_index=e | source=j)` gives the IRF (Prop prop:irf). `source=j` gives the resolvent column R(u)[:, j].
 * `expected_counts(spec, t0, t1)` returns the exact expected counts split by root.
 

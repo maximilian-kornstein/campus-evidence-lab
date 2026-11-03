@@ -14,7 +14,7 @@ We build on established results and attribute them where they are used. The item
 
 \subsection{The item count technique}\label{sec:sens-ict}
 
-Fix one sensitive statement; it is an item of the battery of \cref{sec:model}, coded as agreement. Let $Z_i\in\{0,1\}$ be respondent $i$'s truthful agreement, the answer $i$ would give if the answer could not be attributed to $i$, and let $\pi=\Pr(Z_i=1)$. A \emph{control list} consists of $J$ non-sensitive statements with indicators $W_{i1},\dots,W_{iJ}\in\{0,1\}$ and count $W_i=\sum_{j=1}^JW_{ij}$. (In \cref{sec:sens-ict,sec:sens-var,sec:sens-joint,sec:sens-design}, $J$ is the number of control statements and $j$ indexes them; from \cref{sec:sens-irt} on, $j$ again indexes items of the battery.) Respondents are randomised to three arms. In the \emph{list-control} arm $\armC$, respondents see the $J$ control statements. In the \emph{list-treatment} arm $\armT$, they see the same statements plus the sensitive one. In both, they report only how many statements they agree with, $Y_i$. In the \emph{direct} arm $\armD$, the sensitive statement is asked directly. We write $D_i\in\{0,1\}$ for the direct answer, $\pi^D=\Pr(D_i=1)$ for the direct prevalence, and
+Fix one sensitive statement; it is an item of the battery of \cref{sec:model}, coded as agreement. Let $Z_i\in\{0,1\}$ be respondent $i$'s truthful agreement, the answer $i$ would give if the answer could not be attributed to $i$, and let $\pi=\Pr(Z_i=1)$. A \emph{control list} consists of $J$ non-sensitive statements with indicators $W_{i1},\dots,W_{iJ}\in\{0,1\}$ and count $W_i=\sum_{j=1}^JW_{ij}$. (In \cref{sec:sens-ict,sec:sens-var,sec:sens-joint,sec:sens-design}, $J$ is the number of control statements and $j$ indexes them, not the battery items of \cref{sec:model}; from \cref{sec:sens-irt} on, $j$ again indexes items of the battery. Likewise, in this section and in \cref{app:proofs-design}, $W_i$ is a control count, $B$ a budget, $L$ a loss factor and $\pi$ a prevalence; they are unrelated to the matrices $\bm W$, $\bm B$ and $\bm L$ of \cref{sec:identification}.) Respondents are randomised to three arms. In the \emph{list-control} arm $\armC$, respondents see the $J$ control statements. In the \emph{list-treatment} arm $\armT$, they see the same statements plus the sensitive one. In both, they report only how many statements they agree with, $Y_i$. In the \emph{direct} arm $\armD$, the sensitive statement is asked directly. We write $D_i\in\{0,1\}$ for the direct answer, $\pi^D=\Pr(D_i=1)$ for the direct prevalence, and
 \[
   \SDB=\pi-\pi^D
 \]
@@ -154,10 +154,10 @@ All statements in \cref{thm:joint-sdb} hold conditionally on discrete pre-treatm
 \begin{gathered}
   \Pr(Z_i=1\mid x)=\logit^{-1}(x^\top\beta),\qquad
   \Pr(D_i=1\mid Z_i=1,x)=\logit^{-1}(x^\top\zeta),\\
-  W_i\mid(Z_i=z,X_i=x)\sim h_z(\cdot\,;x,\psi),
+  W_i\mid(Z_i=z,X_i=x)\sim q_z(\cdot\,;x,\psi),
 \end{gathered}
 \end{equation}
-where $h_z$ is a binomial or beta-binomial count model \citep{imai2011} and $\alpha(x)=\logit^{-1}(x^\top\zeta)$ is the \emph{candour rate}, the probability that a private endorser endorses directly. Then $\SDB(x)=\pi(x)\{1-\alpha(x)\}$. In the split design the direct arm identifies $\pi(x)\alpha(x)$ and the list arms identify $\pi(x)$, so $\beta$ and $\zeta$ are identified when $X_i$ contains an intercept and its support spans $\mathbb R^{\dim X_i}$. In the paired design the likelihood of $(D_i,Y_i)$ is a finite mixture over $Z_i$ with known structure. If social pressure on an item runs towards agreement for some respondents, \cref{asm:le-mono} is replaced by its mirror image, $\Pr(Z_i=1,D_i=0)=0$; the theorem then holds with the roles of $D_i=0$ and $D_i=1$ exchanged, and $\SDB=-\pi^F\le0$.
+where $q_z$ is a binomial or beta-binomial count model \citep{imai2011} and $\alpha(x)=\logit^{-1}(x^\top\zeta)$ is the \emph{candour rate}, the probability that a private endorser endorses directly. Then $\SDB(x)=\pi(x)\{1-\alpha(x)\}$. In the split design the direct arm identifies $\pi(x)\alpha(x)$ and the list arms identify $\pi(x)$, so $\beta$ and $\zeta$ are identified when $X_i$ contains an intercept and its support spans $\mathbb R^{\dim X_i}$. In the paired design the likelihood of $(D_i,Y_i)$ is a finite mixture over $Z_i$ with known structure. If social pressure on an item runs towards agreement for some respondents, \cref{asm:le-mono} is replaced by its mirror image, $\Pr(Z_i=1,D_i=0)=0$; the theorem then holds with the roles of $D_i=0$ and $D_i=1$ exchanged, and $\SDB=-\pi^F\le0$.
 \end{remark}
 
 \subsection{Optimal design}\label{sec:sens-design}
@@ -175,12 +175,12 @@ A direct interview costs $c_{\armD}$ and an interview in a list arm costs $c_{\a
     n_a=\frac{B}{K_{\mathrm S}}\sqrt{\frac{v_a}{c_a}}\quad(a\in\{\armD,\armC,\armT\},\ c_{\armC}=c_{\armT}=c_{\armL}),\qquad K_{\mathrm S}=\sum_a\sqrt{v_ac_a},\qquad V^*=K_{\mathrm S}^2 .
   \end{equation}
   With equal costs the arm shares are proportional to $(\sqrt{v_{\armD}},\sigma_{\armC},\sigma_{\armT})$.
-  \item \emph{Paired design.} Let $\delta=c_{\armL}-c_{\armD}$, the marginal cost of moving a respondent from the direct arm into a list arm. If $\nu_0\delta>c_{\armD}\bar b^2$, the optimum uses all three arms:
+  \item \emph{Paired design.} Let $c_+=c_{\armL}-c_{\armD}$, the marginal cost of moving a respondent from the direct arm into a list arm. If $\nu_0c_+>c_{\armD}\bar b^2$, the optimum uses all three arms:
   \begin{equation}\label{eq:le-paired-int}
     n=\frac{B}{K_{\mathrm P}}\sqrt{\frac{\nu_0}{c_{\armD}}},\quad
-    n_{\armT}=\frac{B}{K_{\mathrm P}}\sqrt{\frac{b_{\armT}}{\delta}},\quad
-    n_{\armC}=\frac{B}{K_{\mathrm P}}\sqrt{\frac{b_{\armC}}{\delta}},\quad
-    K_{\mathrm P}=\sqrt{\nu_0c_{\armD}}+\bar b\sqrt\delta,\quad V^*=K_{\mathrm P}^2,
+    n_{\armT}=\frac{B}{K_{\mathrm P}}\sqrt{\frac{b_{\armT}}{c_+}},\quad
+    n_{\armC}=\frac{B}{K_{\mathrm P}}\sqrt{\frac{b_{\armC}}{c_+}},\quad
+    K_{\mathrm P}=\sqrt{\nu_0c_{\armD}}+\bar b\sqrt{c_+},\quad V^*=K_{\mathrm P}^2,
   \end{equation}
   with $n_{\armD}=n-n_{\armT}-n_{\armC}>0$. Otherwise the direct arm is empty, $n_{\armT}+n_{\armC}=B/c_{\armL}$, $n_{\armT}/n_{\armC}=\sqrt{b_{\armT}/b_{\armC}}$, and $V^*=c_{\armL}(\nu_0+\bar b^2)$.
   \item \emph{Choice of list.} Let $\mathcal L$ be a finite menu of control lists, and let $\ell(B)$ minimise $\mathrm{MSE}_\ell(B)=V^*_\ell/B+\operatorname{bias}_\ell^2$ over $\mathcal L$. Under the floor-and-ceiling model,
@@ -259,6 +259,6 @@ Part (c) is the substantive point. A uniform shift common to all groups moves le
 For estimation, the list responses enter the likelihood of the measurement model. For respondent $i$ in a list arm,
 \begin{multline}\label{eq:le-irt-lik}
   L_i=\int\Bigl\{\prod_{k\ne j}f(y_{ik}\mid\bm\theta)\Bigr\}\\
-  \times\sum_{z\in\{0,1\}}h_z\bigl(y_i-z\ind{A_i=\armT};x_i,\psi\bigr)\,F\{\eta_j(\bm\theta)-b_{jc^*}\}^z\bigl[1-F\{\eta_j(\bm\theta)-b_{jc^*}\}\bigr]^{1-z}\,\Pi(\mathrm d\bm\theta\mid x_i),
+  \times\sum_{z\in\{0,1\}}q_z\bigl(y_i-z\ind{A_i=\armT};x_i,\psi\bigr)\,F\{\eta_j(\bm\theta)-b_{jc^*}\}^z\bigl[1-F\{\eta_j(\bm\theta)-b_{jc^*}\}\bigr]^{1-z}\,\Pi(\mathrm d\bm\theta\mid x_i),
 \end{multline}
-where $f(y_{ik}\mid\bm\theta)$ are the graded-response probabilities of the other items, $A_i$ is the arm, $h_z$ is the control-count model of \eqref{eq:le-joint}, $\eta_j(\bm\theta)=a_{jG}\theta_G+a_{js}\theta_s$, and $\Pi(\cdot\mid x)$ is the latent distribution given covariates. Direct-arm respondents contribute the usual likelihood with thresholds $b_{jc}+\delta_j$. Equation \eqref{eq:le-irt-lik} assumes that the control count is independent of $\bm\theta_i$ given $(Z_{ij},X_i)$; part (b) does not need this, because it uses only the first moment of the list response. With several sensitive items, the shifts $\delta_j$ can be given a common hierarchical prior, which borrows strength across items when each list experiment alone is imprecise.
+where $f(y_{ik}\mid\bm\theta)$ are the graded-response probabilities of the other items, $A_i$ is the arm, $q_z$ is the control-count model of \eqref{eq:le-joint}, $\eta_j(\bm\theta)=a_{jG}\theta_G+a_{js}\theta_s$, and $\Pi(\cdot\mid x)$ is the latent distribution given covariates. Direct-arm respondents contribute the usual likelihood with thresholds $b_{jc}+\delta_j$. Equation \eqref{eq:le-irt-lik} assumes that the control count is independent of $\bm\theta_i$ given $(Z_{ij},X_i)$; part (b) does not need this, because it uses only the first moment of the list response. With several sensitive items, the shifts $\delta_j$ can be given a common hierarchical prior, which borrows strength across items when each list experiment alone is imprecise.

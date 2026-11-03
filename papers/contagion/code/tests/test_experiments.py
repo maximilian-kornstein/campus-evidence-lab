@@ -84,8 +84,13 @@ def test_schema_and_no_failures(quick_results):
     s4 = quick_results["E4"]["summary"]["scenarios"]
     assert [r["name"] for r in s4][0] == "size" and s4[-1]["name"] == "common_shock"
     assert "with_shocks" in s4[-1] and "reject_0.05" in s4[0]["without_shocks"]
+    assert any(c["long_T"] for c in s2) and all("ridge" in f for c in s2 for f in c["fits"].values())
+    assert "ridge_counts" in quick_results["E2"]["summary"]
+    for row in s3["homogeneous"][0]["by_p"]:
+        rs = [x["r"] for x in row["corrected_est_p_by_r"]]
+        assert rs == rx.quick_config()["E3"]["p_rel_se_list"]
     s6 = quick_results["E6"]["summary"]
-    assert set(s6["methods"]) == set(rx.E6_METHODS)
+    assert set(s6["methods"]) == set(rx.E6_ALL)
     for m in s6["methods"].values():
         assert set(m["alerts"]) == {f"{r:g}" for r in rx.quick_config()["E6"]["cost_ratios"]}
         assert sum(m["pit_hist"]) == rx.quick_config()["E6"]["R"] * rx.quick_config()["E6"]["n_windows"]
@@ -143,9 +148,10 @@ def test_files_strict_json_and_figures(quick_results, tmp_path):
     for fn in ("fig-sim-recovery.pdf", "fig-sim-spurious.pdf", "fig-sim-thinning.pdf", "fig-sim-lrt.pdf",
                "fig-sim-attribution.pdf", "fig-sim-alert.pdf"):
         assert (fig_dir / fn).stat().st_size > 1000, fn
-    tex = (tab_dir / "tab-sim-main.tex").read_text()
-    assert tex.count(r"\begin{tabular}") == 1 and r"\toprule" in tex and r"\bottomrule" in tex
-    assert "nan" not in tex.lower().replace("\\addlinespace", "")
+    for fn in mf.TABLES:
+        tex = (tab_dir / fn).read_text()
+        assert tex.count(r"\begin{tabular}") == 1 and r"\toprule" in tex and r"\bottomrule" in tex, fn
+        assert "nan" not in tex.lower().replace("\\addlinespace", ""), fn
 
 
 # ---------------------------------------------------------------------------
@@ -201,3 +207,62 @@ def test_logit_ci_and_scores():
     assert crps == 0 and abs(pit - 0.25) < 1e-12 and prob == 0 and logs == 0 and mean == 4
     _, _, crps2, _, _ = rx._scores(cdf, pmf, 6, 5, 0.5, 1e-9)
     assert crps2 == 2  # |6 - 4| for a point mass
+
+
+# ---------------------------------------------------------------------------
+# revision: integrating forecasters (E6), E3 relative errors, E2 ridge rule
+# ---------------------------------------------------------------------------
+def test_future_event_counts_match_exact_mean():
+    A = np.array([[0.35, 0.10], [0.25, 0.45]])
+    Bm = np.ones((2, 2))
+    sb, eta, rate, logsd, D = np.array([6.0, 15.0]), np.array([0.3, 0.3]), 1 / 30, 0.75, 7.0
+    rng = np.random.default_rng(7)
+    x = rx.e6_future_event_counts(A, Bm, sb, eta, rate, lambda g, n: np.exp(logsd * g.standard_normal(n)), 100.0, D,
+                                  200000, rng)
+    exact = rx.e6_future_event_mean(A, Bm, sb, eta, rate, math.exp(logsd ** 2 / 2), D, n_grid=401)
+    se = x.std(0, ddof=1) / math.sqrt(x.shape[0])
+    assert np.all(np.abs(x.mean(0) - exact) < 4 * se), (x.mean(0), exact, se)
+    # no events at rate 0
+    assert rx.e6_future_event_counts(A, Bm, sb, eta, 0.0, lambda g, n: np.ones(n), 0.0, D, 50, rng).sum() == 0
+
+
+def test_integrating_forecasters_do_not_change_the_other_methods():
+    cfg = rx.quick_config()["E6"]
+    c = rx.e6_threshold(cfg)["c"]
+    on = rx._e6_task((dict(cfg, integrate=True), 0, c))
+    off = rx._e6_task((dict(cfg, integrate=False), 0, c))
+    assert set(off["methods"]) == set(rx.E6_METHODS) and set(on["methods"]) == set(rx.E6_ALL)
+    for m in rx.E6_METHODS:
+        assert on["methods"][m] == off["methods"][m], m
+    # the integrating forecast is stochastically larger: its mean is never below the other one
+    for a, b in (("oracle_int", "oracle"), ("fitted_int", "fitted")):
+        assert np.all(np.array(on["methods"][a]["mean"]) >= np.array(on["methods"][b]["mean"]) - 1e-12)
+
+
+def test_e3_relative_error_cells_reuse_z(quick_results):
+    for h in quick_results["E3"]["summary"]["homogeneous"]:
+        for row in h["by_p"]:
+            r10 = [x for x in row["corrected_est_p_by_r"] if abs(x["r"] - 0.1) < 1e-12][0]
+            assert r10["mean"] == row["corrected_est_p"]["mean"]
+            assert r10["coverage"] == row["corrected_est_p"]["coverage"]
+            n = h["n"]
+            for x in row["corrected_est_p_by_r"]:
+                assert abs(x["floor_sd"] - x["r"] * n * (1 - n) * (2 - n) / 2) < 1e-15
+
+
+def test_e2_ridge_rule_counts_small_beta_T():
+    cfg = rx.quick_config()["E2"]
+    confs = rx.e2_configs(cfg)
+    T = confs[0]["T"]
+    base = dict(alpha=0.2, mu_bar=1.0, n_eff=0.2, loglik=0.0, converged=True, n_iter=1, beta_at_lower_bound=False)
+    reps = []
+    for rep, b in enumerate([0.5, 0.9 / T, 0.05 / T]):
+        r = dict(ci=0, rep=rep, ok=True, n_events=100, n_shots=10, moment=dict(F=1.5, n_F=0.18))
+        for fk in confs[0]["fits"]:
+            r[fk] = dict(base, beta=b, shock_beta=1.0, eta=1.0)
+        reps.append(r)
+    out = rx.e2_summarise(cfg, reps)
+    row = out["configs"][0]
+    for fk in confs[0]["fits"]:
+        assert row["fits"][fk]["ridge"]["n"] == 2 and row["fits"][fk]["ridge"]["reps"] == [1, 2]
+    assert row["n_shots"]["min"] == 10 and row["n_shots"]["max"] == 10

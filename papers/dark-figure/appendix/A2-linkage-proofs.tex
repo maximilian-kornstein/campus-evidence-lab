@@ -193,7 +193,7 @@ By Banach's theorem it has a unique fixed point $\hat{\bm x}$, which solves $\Ps
 
 (i) is the law of total variance under $p(N,\Link\mid D)$. For (ii), $\Linkhat$ is fixed given $D$, so $G(\Linkhat)$ is a constant, and $\E[(N-G(\Linkhat))^2\mid D]=\Var(N\mid D)+\{\E[N\mid D]-G(\Linkhat)\}^2$. If $V(\Link)\equiv V_w$ on the support, the reported $V(\Linkhat)=V_w$ falls short of this by $V_b+\{\E[N\mid D]-G(\Linkhat)\}^2\ge V_b$. For (iii), let $N\mid D\sim\mathrm N(\bar N,s^2)$ with $s^2=V_w+V_b$, let $b=G(\Linkhat)-\bar N$, and let $w=z_{\alpha/2}V_w^{1/2}$. The coverage is $\Phi\{(w-b)/s\}+\Phi\{(w+b)/s\}-1=:\kappa(b)$. Its derivative is $\kappa'(b)=s^{-1}[\varphi\{(w+b)/s\}-\varphi\{(w-b)/s\}]$, which is $\le0$ for $b\ge0$ and $\ge0$ for $b\le0$, because $|w+b|\ge|w-b|$ exactly when $b\ge0$. So $\kappa$ is maximised at $b=0$, where it equals $2\Phi(w/s)-1=2\Phi\{z_{\alpha/2}(1+V_b/V_w)^{-1/2}\}-1$. For (iv), $N-\bar Q=(N-\E[N\mid D])-(\bar Q-\E[N\mid D])$, and the two terms are independent given $D$, so $\E[(N-\bar Q)^2\mid D]=\Var(N\mid D)+\Var(\bar Q\mid D)=V_w+V_b+V_b/M$. Finally $\E[\bar U\mid D]=V_w$, and $\E[B_M\mid D]=V_b$ because $B_M$ is the unbiased sample variance of $M$ independent draws. \qed
 
-\subsection{Proofs of \texorpdfstring{\cref{thm:review,prop:review-costs}}{the review results}}\label{app:link-review}
+\subsection{Proofs of \texorpdfstring{\cref{thm:review,prop:review-linear,prop:review-costs}}{the review results}}\label{app:link-review}
 
 (i) For independent $O_1,\dots,O_L$ with finite ranges, the Hoeffding decomposition \citep{hoeffding1948,efron1981} is
 \[
@@ -207,7 +207,7 @@ For $T=\{u\}$, $G_{\{u\}}=\E[G\mid O_u]-\E G$. For a binary $I_\ell$, $\E[G\mid 
 
 (ii) $\sum_{u\notin S}\sigma_u^2=\sum_u\sigma_u^2-\sum_{u\in S}\sigma_u^2$. The $B$ largest terms maximise $\sum_{u\in S}\sigma_u^2$ over $|S|\le B$; exchanging any chosen term for a larger unchosen one can only increase the sum. Let $S^\star$ minimise $V$ over $|S|\le B$, and write $V(S)=V_1(S)+V_{\mathrm{int}}(S)$, where $V_1$ is the main-effect part and $0\le V_{\mathrm{int}}(S)\le I_{\mathrm{int}}$. Then $V(S_{\mathrm g})\le V_1(S^\star)+I_{\mathrm{int}}\le V(S^\star)+I_{\mathrm{int}}$.
 
-(iii) Let $\xi_\ell=I_\ell-\pi_\ell$, $\bm X=\sum_\ell\xi_\ell\bm v_\ell$ and $\bm X_{-\ell}=\bm X-\xi_\ell\bm v_\ell$. Then $\bm n(I)=\bar{\bm n}+\bm X$, and $\bar{\bm n}=\E\bm n(I)$ lies in the convex hull of the attainable tables. By the mean-value theorem,
+\emph{Proof of \cref{prop:review-linear}.} Let $\xi_\ell=I_\ell-\pi_\ell$, $\bm X=\sum_\ell\xi_\ell\bm v_\ell$ and $\bm X_{-\ell}=\bm X-\xi_\ell\bm v_\ell$. Then $\bm n(I)=\bar{\bm n}+\bm X$, and $\bar{\bm n}=\E\bm n(I)$ lies in the convex hull of the attainable tables. By the mean-value theorem,
 \[
   \Delta_\ell=\E\int_0^1\nabla F\bigl(\bar{\bm n}+\bm X_{-\ell}+(s-\pi_\ell)\bm v_\ell\bigr)^{\top}\bm v_\ell\,ds ,
 \]

@@ -16,12 +16,14 @@ $e_{20}$ predicted / simulated & 0.28 / 0.28 & 0.26 / 0.26 & 3.16 / 3.16 & 3.62 
 $e_{200}$ predicted / simulated & 0.30 / 0.38 & 0.28 / 0.22 & 3.36 / 3.54 & 3.84 / 3.89 \\
 $\kappa_{\mathcal A}$; Kemeny $K$ & 0.50; 2.07 & 0.51; 1.98 & 0.51; 2.04 & 0.52; 2.17 \\
 \addlinespace
-\multicolumn{5}{@{}l}{\emph{E5: sequential audit (reference chron)}} \\
+\multicolumn{5}{@{}l}{\emph{E5: \cref{alg:sequential}, reference chron, waves of 5 pairs, $\alpha=0.05$ unless stated}} \\
 True AR & 1.79 & 1.33 & 1.67 & 1.04 \\
-Time-uniform coverage, \cref{alg:sequential} (\%) & 100.0 & 100.0 & 100.0 & 100.0 \\
-\quad repeated Wald (\%) & 47.0 & 26.4 & 19.3 & 18.2 \\
-$n_{\mathrm{fix}}$; $n_{\mathrm{seq}}$ (pairs) & 6; 12 & 6; 12 & 1; 2 & 144; 276 \\
-Power at $n_{\mathrm{fix}}$, fixed sample & 0.86 & 0.84 & 0.90 & 0.79 \\
-Power by $n_{\mathrm{seq}}$, sequential & 0.87 & 0.90 & 0.81 & 0.93 \\
+Time-uniform coverage, burn-in 1 wave; none (\%) & 95.0; 92.6 & 96.2; 93.5 & 95.7; 93.3 & 95.2; 93.2 \\
+\quad peeking, waves 1--8 (\%) & 71.2 & 69.8 & 69.5 & 69.8 \\
+Null AR$=1$: false detection by wave 8, Alg.~1; peeking (\%) & 2.9; 30.3 & 2.1; 29.2 & 2.5; 29.8 & 3.4; 33.0 \\
+P(excludes AR$=1$) by wave 8 (\%) & 100.0 & 99.8 & 100.0 & 9.0 \\
+$n_{\mathrm{fix}}$; $n_{\mathrm{seq}}$ from $A_Y$ (pairs) & 6; 12 & 10; 20 & 2; 4 & 267; 512 \\
+Power at $n_{\mathrm{fix}}$ (fixed); by horizon (sequential) & 0.87; 0.92 & 0.85; 0.85 & 0.93; 1.00 & 0.82; -- \\
+Differential Se: $\lambda_S$; coverage with $\lambda_S{=}1$; with $[0.8,1.2]$ (\%) & 0.86; 2.8; 99.6 & 0.93; 19.8; 100.0 & 0.83; 0.0; 99.4 & 0.82; 0.0; 99.6 \\
 \bottomrule
 \end{tabular}

@@ -105,10 +105,10 @@ def experiment_config(quick: bool):
         E4=dict(n_acc=60 if q else 250, burn=3, S=10, T=20, T_long=200, tail_from=100,
                 tilt=[0.0, 0.1, 0.25, 0.5, 1.0] if not q else [0.0, 0.5],
                 replace=[0.0, 0.01, 0.02, 0.05] if not q else [0.0, 0.02], n_boot=200 if not q else 20),
-        E5=dict(ref="chron", N_max=400 if not q else 100, wave=5, m1=50, alpha=0.05, alpha_protocol=0.0125,
-                alpha_v_share=0.2, rho_range=[0.95, 1.05], t_star=40, delta=1.25, W_max_list=[8, 40],
-                grid=[0.1, 10.0, 600], grid_bet=300, R=1000 if not q else 100, R_bet=200 if not q else 20,
-                R_power=500 if not q else 50, power_target=0.8),
+        E5=dict(ref="chron", regimes=["ND", "DD"], N_max=400 if not q else 100, wave=5, m=10, alpha=0.05,
+                alpha_protocol=0.0125, lam_range=[0.95, 1.05], lam_range_wide=[0.8, 1.2], t_star=40, delta=1.25,
+                W_max=8, W_max_list=[8, 40], grid=[0.1, 10.0, 300], R=2000 if not q else 100,
+                R_bet=200 if not q else 20, power_target=0.8),
     )
 
 
@@ -422,6 +422,8 @@ def analyse_e1b(pools, cfg):
                                     AA_sd_mc=float(aa.std(ddof=1)), AA_sd_delta=float(np.sqrt(np.mean(v_aa))),
                                     AR_median=float(np.median(np.exp(lv))), logAR_sd_mc=float(lv.std(ddof=1)),
                                     logAR_sd_delta=float(np.sqrt(np.nanmean(v_l[ok]))),
+                                    logAR_sd_delta_median=float(np.sqrt(np.nanmedian(v_l[ok]))),
+                                    kappa_Sp=float(np.sqrt(sp_arm[1] * (1 - sp_arm[1]) / n0) / (J_arm[1] * mu[1])),
                                     AA=_cov(aa, np.sqrt(v_aa), AA0),
                                     logAR=_cov(np.where(ok, lar, 1e9), np.sqrt(np.where(ok, v_l, 1.0)), np.log(AR0)))
                 rowU["naive_AR_median"] = float(np.median(qa / qr))
@@ -938,191 +940,196 @@ def _pool_arm(C, d, q):
 
 
 def _decision(L, U, delta):
+    """Conclusion of tab:prot-decisions from the final interval [L, U] for log AR."""
+    ld = np.log(delta)
     if not (L <= U):
         return "empty"
-    if L > delta:
+    if L > ld:
         return "material_amplification"
-    if U < 1 / delta:
+    if U < -ld:
         return "material_deamplification"
-    if L > 1 / delta and U < delta:
+    if L > -ld and U < ld:
         return "no_material_difference"
-    if L > 1 or U < 1:
+    if L > 0 or U < 0:
         return "difference_materiality_undetermined"
     return "inconclusive"
 
 
-def analyse_e5(counts, cfg):
-    """alg:sequential on synthetic audits resampled from the ND puppet pool (no interference):
-    pairs (alg puppet, ref puppet) arrive in waves of `wave`; each wave codes m1 flagged exposures per arm."""
+def _wrong(dec, L, U, logAR, delta):
+    """Is the stated conclusion contradicted by the true AR?"""
+    ld = np.log(delta)
+    if dec == "material_amplification":
+        return logAR <= ld
+    if dec == "material_deamplification":
+        return logAR >= -ld
+    if dec == "no_material_difference":
+        return not (-ld < logAR < ld)
+    if dec == "difference_materiality_undetermined":
+        return (L > 0 and logAR <= 0) or (U < 0 and logAR >= 0)
+    return False
+
+
+def _y_stat(X, idx, m, rng):
+    """Confirmed-flagged statistic Y_u = Qbar_u Phat_u: m of the puppet's flagged positions are coded
+    (without replacement; all of them if fewer than m)."""
+    fp, fn = X["fpos"][idx], X["fneg"][idx]
+    fl = fp + fn
+    mu_ = np.minimum(m, fl)
+    a = np.zeros(idx.shape, np.int64)
+    k = mu_ > 0
+    a[k] = rng.hypergeometric(fp[k], fn[k], mu_[k])
+    return np.where(k, (fl / N_IMPR) * a / np.maximum(mu_, 1), 0.0)
+
+
+def _stop_and_decide(L, U, delta, Wmax, burn, logAR):
+    R = L.shape[0]
+    ld = np.log(delta)
+    stop = np.full(R, Wmax)
+    dec, wrong = [], 0
+    for i in range(R):
+        ws = Wmax
+        for w in range(burn, Wmax):
+            l_, u_ = L[i, w], U[i, w]
+            if l_ > ld or u_ < -ld or (-ld < l_ <= u_ < ld):
+                ws = w + 1
+                break
+        stop[i] = ws
+        dd = _decision(L[i, ws - 1], U[i, ws - 1], delta)
+        dec.append(dd)
+        wrong += _wrong(dd, L[i, ws - 1], U[i, ws - 1], logAR, delta)
+    cats, cnt = np.unique(dec, return_counts=True)
+    return dict(mean_stop_wave=float(stop.mean()), median_stop_wave=float(np.median(stop)),
+                stopped_early=float(np.mean(stop < Wmax)), decisions={str(k): float(c / R) for k, c in zip(cats, cnt)},
+                wrong_conclusion=float(wrong / R), wrong_conclusion_mcse=float(np.sqrt(wrong / R * (1 - wrong / R) / R)),
+                mean_pairs_used=float(stop.mean() * 5))
+
+
+def analyse_e5(pools, cfg):
+    """alg:sequential (Algorithm 1 as revised by DESIGN) on synthetic audits resampled from E1 puppet pools
+    (no interference): pairs (alg puppet, ref puppet) arrive in waves of `wave`; each puppet codes m flagged
+    positions; Y_u = Qbar_u Phat_u."""
     t0 = time.perf_counter()
     q = POL[cfg["ref"]]
-    wave, Nmax, m1 = cfg["wave"], cfg["N_max"], cfg["m1"]
+    wave, Nmax, m = cfg["wave"], cfg["N_max"], cfg["m"]
     looks = np.arange(wave, Nmax + 1, wave)
     Wn = looks.size
-    grid = np.exp(np.linspace(np.log(cfg["grid"][0]), np.log(cfg["grid"][1]), cfg["grid"][2]))
-    pgrid = np.concatenate([np.linspace(1e-4, 0.999, 4000)])
-    z = Z95
     zb = float(norm.ppf(cfg["power_target"]))
     out = dict(config=cfg, c_alpha={str(a): sq.c_alpha(a) for a in (0.05, 0.0125)}, personas={})
     for d, pn in enumerate(PERSONAS):
-        A_, R_ = _pool_arm(counts, d, 0), _pool_arm(counts, d, q)
-        mu_a, mu_r = A_["E"].mean(), R_["E"].mean()
-        AR0, AA0 = mu_a / mu_r, mu_a - mu_r
-        se_a, se_r = A_["fpos"].sum() / A_["pos"].sum(), R_["fpos"].sum() / R_["pos"].sum()
-        f_a, f_r = A_["fneg"].sum() / A_["neg"].sum(), R_["fneg"].sum() / R_["neg"].sum()
-        J_a, J_r = se_a - f_a, se_r - f_r
-        rho_star = J_a / J_r
-        res = dict(AR=float(AR0), AA=float(AA0), mu_alg=float(mu_a), mu_ref=float(mu_r), Se_alg=float(se_a),
-                   Se_ref=float(se_r), Sp_alg=float(1 - f_a), Sp_ref=float(1 - f_r), rho_J=float(rho_star))
-        rng = rng_for("E5", 1, d)
-        R = cfg["R"]
-        P = A_["Q"].size
-        ia = rng.integers(0, P, (R, Nmax))
-        ir = rng.integers(0, P, (R, Nmax))
-        Qa, Qr, Ea, Er = A_["Q"][ia], R_["Q"][ir], A_["E"][ia], R_["E"][ir]
-        # per-wave validation: m1 coded flagged exposures per arm, drawn from the wave's flagged exposures
-        nuis = {}
-        for arm, idx, X in (("a", ia, A_), ("r", ir, R_)):
-            fp = X["fpos"][idx].reshape(R, Wn, wave).sum(-1)
-            fl = fp + X["fneg"][idx].reshape(R, Wn, wave).sum(-1)
-            ppv_w = np.where(fl > 0, fp / np.maximum(fl, 1), 0.0)
-            s_w = rng.binomial(m1, ppv_w)
-            nuis[arm] = (np.cumsum(s_w, 1), m1 * np.arange(1, Wn + 1)[None, :].repeat(R, 0))
-        mq = {"a": np.cumsum(Qa, 1)[:, looks - 1] / looks, "r": np.cumsum(Qr, 1)[:, looks - 1] / looks}
-
-        def fmap(qq, ppv):
-            return qq * (1 - ppv) / (1 - qq * ppv)
-
-        def boxes(alpha_v):
-            fb, fh = {}, {}
-            for arm in ("a", "r"):
-                sc, nc = nuis[arm]
-                lo, hi = sq.bernoulli_mixture_cs(nc, sc, alpha_v / 2, pgrid)
-                lo = np.fmax.accumulate(np.nan_to_num(lo, nan=1.0), axis=1)     # running intersection
-                hi = np.fmin.accumulate(np.nan_to_num(hi, nan=0.0), axis=1)
-                fb["f%s_lo" % arm] = fmap(mq[arm], hi)
-                fb["f%s_hi" % arm] = fmap(mq[arm], lo)
-                fh[arm] = fmap(mq[arm], sc / nc)
-            return fb, (fh["a"], fh["r"])
-
-        def cover_stats(L, U, truth, from_look=0):
-            okc = (L[:, from_look:] <= truth) & (truth <= U[:, from_look:])
-            c = np.all(okc, axis=1).mean()
-            return float(c), float(np.sqrt(c * (1 - c) / L.shape[0]))
-
-        variants = {}
-        for name, alpha, rho_box in (("primary", cfg["alpha"], tuple(cfg["rho_range"])),
-                                     ("rho_known", cfg["alpha"], (rho_star, rho_star)),
-                                     ("protocol", cfg["alpha_protocol"], tuple(cfg["rho_range"]))):
-            a1 = alpha * (1 - cfg["alpha_v_share"])
-            av = alpha * cfg["alpha_v_share"]
-            fb, fh = boxes(av)
-            L, U = sq.fieller_cs(Qa, Qr, looks, fb, rho_box, fh, 1.0, a1, cfg["t_star"], grid)
-            c1, c1se = cover_stats(L, U, AR0, 0)
-            c2, c2se = cover_stats(L, U, AR0, 1)
-            v = dict(alpha=alpha, alpha1=a1, alpha_v=av, rho_box=list(rho_box),
-                     coverage_from_wave1=c1, coverage_from_wave1_mcse=c1se,
-                     coverage_from_wave2=c2, coverage_from_wave2_mcse=c2se,
-                     excludes_1_by_wave={str(w): float(np.mean((L[:, w - 1] > 1) | (U[:, w - 1] < 1)))
-                                         for w in (1, 2, 4, 8, 16, 40, Wn) if w <= Wn},
-                     median_log_width_by_wave={str(w): float(np.median(np.log(U[:, w - 1]) - np.log(L[:, w - 1])))
-                                               for w in (1, 2, 4, 8, 16, 40, Wn) if w <= Wn},
-                     empty_rate=float(np.mean(L[:, -1] > U[:, -1])))
-            if name == "protocol":
-                for Wmax in [min(x, Wn) for x in cfg["W_max_list"]]:
-                    stop = np.full(R, Wmax)
-                    dec = []
-                    for i in range(R):
-                        w_stop = Wmax
-                        for w in range(Wmax):
-                            l_, u_ = L[i, w], U[i, w]
-                            if l_ > cfg["delta"] or u_ < 1 / cfg["delta"] or (1 / cfg["delta"] < l_ <= u_ < cfg["delta"]):
-                                w_stop = w + 1
-                                break
-                        stop[i] = w_stop
-                        dec.append(_decision(L[i, w_stop - 1], U[i, w_stop - 1], cfg["delta"]))
-                    cats, cnt = np.unique(dec, return_counts=True)
-                    v[f"W_max_{Wmax}"] = dict(mean_stop_wave=float(stop.mean()), median_stop_wave=float(np.median(stop)),
-                                              stopped_early=float(np.mean(stop < Wmax)),
-                                              decisions={str(k): float(c / R) for k, c in zip(cats, cnt)},
-                                              mean_pairs_used=float(stop.mean() * wave))
-            variants[name] = v
-        res["fieller"] = variants
-        # comparator: fixed-sample Wald interval for log AR recomputed after every wave (point nuisance, rho = 1)
-        fb, fh = boxes(cfg["alpha"] * cfg["alpha_v_share"])
-        ma, mr = mq["a"], mq["r"]
-        va = (np.cumsum(Qa ** 2, 1)[:, looks - 1] - looks * ma ** 2) / np.maximum(looks - 1, 1)
-        vr = (np.cumsum(Qr ** 2, 1)[:, looks - 1] - looks * mr ** 2) / np.maximum(looks - 1, 1)
-        num, den = ma - fh[0], mr - fh[1]
-        with np.errstate(invalid="ignore", divide="ignore"):
-            lar = np.log(num / den)
-            se_l = np.sqrt(va / (looks * num ** 2) + vr / (looks * den ** 2))
-            okw = (np.abs(lar - np.log(AR0)) <= z * se_l) & (num > 0) & (den > 0)
-        res["repeated_wald"] = dict(coverage_all_looks=float(np.all(okw, 1).mean()),
-                                    coverage_all_looks_from_wave2=float(np.all(okw[:, 1:], 1).mean()),
-                                    coverage_single_look_wave8=float(okw[:, 7].mean()),
-                                    coverage_single_look_last=float(okw[:, -1].mean()))
-        # AA: normal-mixture CS (plug-in variance) on corrected pair differences with known J
-        Dd = (Qa - Qr) / J_a
-        lo, hi = sq.asymptotic_cs(Dd, cfg["alpha"], cfg["t_star"])
-        lo_l, hi_l = lo[:, looks - 1], hi[:, looks - 1]           # updated after each wave (burn-in: one wave)
-        aa_res = {}
-        for nm_, st in (("from_wave1", 0), ("from_wave2", 1)):
-            lo_r, hi_r = np.fmax.accumulate(lo_l[:, st:], 1), np.fmin.accumulate(hi_l[:, st:], 1)
-            okl = (lo_r <= AA0) & (AA0 <= hi_r)
-            cv = float(np.all(okl, 1).mean())
-            aa_res["coverage_" + nm_] = cv
-            aa_res["coverage_" + nm_ + "_mcse"] = float(np.sqrt(cv * (1 - cv) / R))
-            if st == 0 and Wn >= 8:
-                aa_res["excludes_0_by_wave8"] = float(np.mean((lo_r[:, 7] > 0) | (hi_r[:, 7] < 0)))
-        res["aa_cs"] = aa_res
-        # exact variant (thm:sequential(b)) on corrected exposures (here: true exposures, i.e. perfect coding)
-        Rb = cfg["R_bet"]
-        gb = np.exp(np.linspace(np.log(cfg["grid"][0]), np.log(cfg["grid"][1]), cfg["grid_bet"]))
-        blo, bhi = sq.betting_ratio_cs(Ea[:Rb], Er[:Rb], cfg["alpha"], gb)
-        blo = np.fmax.accumulate(np.nan_to_num(blo, nan=np.inf), 1)
-        bhi = np.fmin.accumulate(np.nan_to_num(bhi, nan=-np.inf), 1)
-        okb = (blo <= AR0) & (AR0 <= bhi)
-        res["betting_exact"] = dict(R=Rb, coverage_all_t=float(np.all(okb, 1).mean()),
-                                    median_log_width={str(t): float(np.median(np.log(bhi[:, t - 1]) - np.log(blo[:, t - 1])))
-                                                      for t in (40, 200, Nmax) if t <= Nmax},
-                                    excludes_1_by={str(t): float(np.mean((blo[:, t - 1] > 1) | (bhi[:, t - 1] < 1)))
-                                                   for t in (40, 200, Nmax) if t <= Nmax})
-        # prop:power: detection of AR0 against r0 = 1 at alpha = 0.05, known error rates (B = 0)
-        Lg = abs(np.log(AR0))
-        Jbar = 0.5 * (J_a + J_r)
-        A_direct = A_["Q"].var(ddof=1) / (J_a * mu_a) ** 2 + R_["Q"].var(ddof=1) / (J_r * mu_r) ** 2
-        kTS = N_IMPR
-        om = lambda mu, se_, f_: (mu * se_ * (1 - se_) + (1 - mu) * f_ * (1 - f_)) / kTS
-        A_form = (A_["E"].var(ddof=1) + om(mu_a, se_a, f_a) / J_a ** 2) / mu_a ** 2 \
-            + (R_["E"].var(ddof=1) + om(mu_r, se_r, f_r) / J_r ** 2) / mu_r ** 2
-        n_fix = (z + zb) ** 2 * A_direct / Lg ** 2
-        n_seq = (sq.c_alpha(cfg["alpha"]) + zb) ** 2 * A_direct / Lg ** 2
-        pw = dict(A_direct=float(A_direct), A_formula=float(A_form), L=float(Lg), n_fix=float(n_fix),
-                  n_seq=float(n_seq), A0=float(A_["E"].var(ddof=1) / mu_a ** 2 + R_["E"].var(ddof=1) / mu_r ** 2))
-        nf = int(math.ceil(n_fix))
-        if nf <= Nmax:
-            ma_, mr_ = Qa[:, :nf].mean(1), Qr[:, :nf].mean(1)
-            va_, vr_ = Qa[:, :nf].var(1, ddof=1), Qr[:, :nf].var(1, ddof=1)
-            num_, den_ = ma_ - f_a, mr_ - f_r
-            with np.errstate(invalid="ignore", divide="ignore"):
-                lar_ = np.log(num_ / den_) - np.log(rho_star)
-                sel = np.sqrt(va_ / (nf * num_ ** 2) + vr_ / (nf * den_ ** 2))
-            pw["fixed_power_at_n_fix"] = float(np.mean((np.abs(lar_) > z * sel) & (num_ > 0) & (den_ > 0)))
-        ns = int(math.ceil(n_seq))
-        if ns <= Nmax:
-            Rp = min(R, cfg["R_power"])
-            lk = np.arange(min(wave, ns), ns + 1)          # registered burn-in of one wave
-            fk = {"fa_lo": np.full((Rp, lk.size), f_a), "fa_hi": np.full((Rp, lk.size), f_a),
-                  "fr_lo": np.full((Rp, lk.size), f_r), "fr_hi": np.full((Rp, lk.size), f_r)}
-            Lk, Uk = sq.fieller_cs(Qa[:Rp], Qr[:Rp], lk, fk, (rho_star, rho_star), (fk["fa_lo"], fk["fr_lo"]),
-                                   rho_star, cfg["alpha"], ns, grid)
-            ex = (Lk > 1) | (Uk < 1)
-            first = np.where(ex.any(1), lk[np.argmax(ex, 1)], ns)
-            pw.update(seq_power_by_horizon=float(ex[:, -1].mean()), seq_mean_stop=float(first.mean()),
-                      seq_mean_stop_over_n_fix=float(first.mean() / n_fix),
-                      seq_known_coverage=float(np.all((Lk <= AR0) & (AR0 <= Uk), 1).mean()))
-        res["power"] = pw
+        res = {}
+        for regime in cfg["regimes"]:
+            C = pools[regime]["counts"]
+            A_, R_ = _pool_arm(C, d, 0), _pool_arm(C, d, q)
+            mu_a, mu_r = A_["E"].mean(), R_["E"].mean()
+            AR0 = mu_a / mu_r
+            se_a, se_r = A_["fpos"].sum() / A_["pos"].sum(), R_["fpos"].sum() / R_["pos"].sum()
+            lam = se_a / se_r
+            rr = dict(AR=float(AR0), logAR=float(np.log(AR0)), lambda_S=float(lam), mu_alg=float(mu_a),
+                      mu_ref=float(mu_r), Se_alg=float(se_a), Se_ref=float(se_r))
+            rng = rng_for("E5", 2, REG_IDX[regime], d)
+            R = cfg["R"]
+            P = A_["Q"].size
+            cases = {"alt": (A_, R_, float(np.log(AR0)))}
+            if regime == "ND":
+                cases["null"] = (R_, R_, 0.0)                       # both arms from the reference pool: AR = 1
+            for case, (XA, XR, target) in cases.items():
+                ia, ir = rng.integers(0, P, (R, Nmax)), rng.integers(0, P, (R, Nmax))
+                Ya, Yr = _y_stat(XA, ia, m, rng), _y_stat(XR, ir, m, rng)
+                cr = {}
+                variants = [("a05_b1", 0.05, (1.0, 1.0), 1), ("a05_b0", 0.05, (1.0, 1.0), 0),
+                            ("a0125_b1", 0.0125, (1.0, 1.0), 1), ("a0125_b0", 0.0125, (1.0, 1.0), 0),
+                            ("a0125_b1_lam5", 0.0125, tuple(cfg["lam_range"]), 1)]
+                if regime != "ND":
+                    variants = [("a05_b1", 0.05, (1.0, 1.0), 1), ("a05_b1_lam20", 0.05, tuple(cfg["lam_range_wide"]), 1),
+                                ("a0125_b1_lam20", 0.0125, tuple(cfg["lam_range_wide"]), 1)]
+                for nm, alpha, lr, b in variants:
+                    o = sq.alg1_cs(Ya, Yr, looks, alpha, cfg["t_star"], lr, burn=b)
+                    Lr, Ur = o["L"], o["U"]
+                    okc = (Lr <= target) & (target <= Ur)
+                    cov = float(np.all(okc, 1).mean())
+                    cov8 = float(np.all(okc[:, :cfg["W_max"]], 1).mean())
+                    v = dict(alpha=alpha, lam_range=list(lr), burn=b,
+                             coverage_all_waves=cov, coverage_all_waves_mcse=float(np.sqrt(cov * (1 - cov) / R)),
+                             coverage_to_Wmax=cov8, coverage_to_Wmax_mcse=float(np.sqrt(cov8 * (1 - cov8) / R)),
+                             excludes_0_by_wave={str(w): float(np.mean((Lr[:, w - 1] > 0) | (Ur[:, w - 1] < 0)))
+                                                 for w in (2, 4, 8, 16, 40, Wn) if w <= Wn},
+                             median_width_by_wave={str(w): float(np.median(Ur[:, w - 1] - Lr[:, w - 1]))
+                                                   for w in (2, 4, 8, 16, 40, Wn) if w <= Wn})
+                    if alpha == cfg["alpha_protocol"] or case == "null" or regime != "ND":
+                        for Wmax in cfg["W_max_list"]:
+                            v[f"W_max_{Wmax}"] = _stop_and_decide(Lr, Ur, cfg["delta"], min(Wmax, Wn), b, target)
+                    cr[nm] = v
+                # naive peeking: fixed-sample 95% interval on the same statistic, recomputed after every wave
+                o = sq.alg1_cs(Ya, Yr, looks, 0.05, cfg["t_star"], (1.0, 1.0), burn=0)
+                se_l = np.sqrt(np.maximum(o["h"] / sq.normal_mixture_radius(looks, 1.0, 0.05,
+                                                                              sq.mixture_a(0.05) / cfg["t_star"]), 0) ** 2 / looks)
+                okw = np.abs(o["lth"] - target) <= Z95 * se_l
+                rej = np.abs(o["lth"]) > Z95 * se_l
+                cr["peeking"] = dict(coverage_waves_1_to_Wmax=float(np.all(okw[:, :cfg["W_max"]], 1).mean()),
+                                     coverage_waves_2_to_Wmax=float(np.all(okw[:, 1:cfg["W_max"]], 1).mean()),
+                                     coverage_all_waves=float(np.all(okw, 1).mean()),
+                                     coverage_single_look_wave8=float(okw[:, cfg["W_max"] - 1].mean()),
+                                     rejects_AR1_by_Wmax=float(np.any(rej[:, :cfg["W_max"]], 1).mean()),
+                                     rejects_AR1_by_last_wave=float(np.any(rej, 1).mean()))
+                if case == "alt" and regime == "ND":
+                    # exact variant (thm:sequential(b)) on Y, lambda_S = 1
+                    Rb = cfg["R_bet"]
+                    gb = np.exp(np.linspace(np.log(cfg["grid"][0]), np.log(cfg["grid"][1]), cfg["grid"][2]))
+                    blo, bhi = sq.betting_ratio_cs(Ya[:Rb], Yr[:Rb], cfg["alpha"], gb)
+                    blo = np.fmax.accumulate(np.nan_to_num(blo, nan=np.inf), 1)
+                    bhi = np.fmin.accumulate(np.nan_to_num(bhi, nan=-np.inf), 1)
+                    okb = (blo <= AR0 * lam) & (AR0 * lam <= bhi)
+                    cr["betting_exact"] = dict(R=Rb, coverage_all_t=float(np.all(okb, 1).mean()),
+                                               median_log_width={str(t): float(np.median(np.log(bhi[:, t - 1]) - np.log(blo[:, t - 1])))
+                                                                 for t in (40, 200, Nmax) if t <= Nmax},
+                                               excludes_1_by={str(t): float(np.mean((blo[:, t - 1] > 1) | (bhi[:, t - 1] < 1)))
+                                                              for t in (40, 200, Nmax) if t <= Nmax})
+                    # AA: normal-mixture CS (plug-in variance) on corrected pair differences, known J, b = 1
+                    J_a = se_a - A_["fneg"].sum() / A_["neg"].sum()
+                    Dd = (XA["Q"][ia] - XR["Q"][ir]) / J_a
+                    AA0 = mu_a - mu_r
+                    lo, hi = sq.asymptotic_cs(Dd, cfg["alpha"], cfg["t_star"])
+                    lo_l, hi_l = lo[:, looks - 1], hi[:, looks - 1]
+                    lo_r, hi_r = np.fmax.accumulate(lo_l[:, 1:], 1), np.fmin.accumulate(hi_l[:, 1:], 1)
+                    cva = float(np.all((lo_r <= AA0) & (AA0 <= hi_r), 1).mean())
+                    cr["aa_cs"] = dict(AA=float(AA0), coverage_after_burn_in=cva,
+                                       coverage_mcse=float(np.sqrt(cva * (1 - cva) / R)),
+                                       excludes_0_by_wave8=float(np.mean((lo_r[:, 6] > 0) | (hi_r[:, 6] < 0))))
+                    # prop:power (c) and (d)
+                    L_ = abs(np.log(AR0))
+                    kTS = N_IMPR
+                    PPV = lambda X: X["fpos"].sum() / (X["fpos"].sum() + X["fneg"].sum())
+                    qa, qr = A_["Q"].mean(), R_["Q"].mean()
+                    AY_formula = sum((X["E"].var(ddof=1) + mu * (1 - se_) / (se_ * kTS)
+                                      + qq ** 2 * PPV(X) * (1 - PPV(X)) / (m * se_ ** 2)) / mu ** 2
+                                     for X, mu, se_, qq in ((A_, mu_a, se_a, qa), (R_, mu_r, se_r, qr)))
+                    AY_direct = Ya.var() / Ya.mean() ** 2 + Yr.var() / Yr.mean() ** 2
+                    ca_ = {a_: sq.c_alpha(a_) for a_ in (0.05, 0.0125)}
+                    pw = dict(L=float(L_), A_Y_formula=float(AY_formula), A_Y_direct=float(AY_direct),
+                              n_fix_Y=float((Z95 + zb) ** 2 * AY_direct / L_ ** 2),
+                              n_seq_Y=float((ca_[0.05] + zb) ** 2 * AY_direct / L_ ** 2),
+                              n_seq_Y_lam5=float((ca_[0.05] + zb) ** 2 * AY_direct
+                                                 / (L_ - np.log(cfg["lam_range"][1] / cfg["lam_range"][0])) ** 2)
+                              if L_ > np.log(cfg["lam_range"][1] / cfg["lam_range"][0]) else None)
+                    nf = int(math.ceil(pw["n_fix_Y"]))
+                    if 2 <= nf <= Nmax:
+                        ya_, yr_ = Ya[:, :nf].mean(1), Yr[:, :nf].mean(1)
+                        s_ = np.sqrt(((Ya[:, :nf] / ya_[:, None] - Yr[:, :nf] / yr_[:, None]) ** 2).mean(1) / nf)
+                        pw["fixed_power_at_n_fix_Y"] = float(np.mean(np.abs(np.log(ya_ / yr_)) > Z95 * s_))
+                        pw["n_fix_Y_used"] = nf
+                    ns = pw["n_seq_Y"]
+                    w_h = max(int(math.ceil(ns / wave)), 2)          # at least one wave after the burn-in
+                    if w_h <= Wn:
+                        o = sq.alg1_cs(Ya, Yr, looks, 0.05, max(ns, wave), (1.0, 1.0), burn=1)
+                        ex = (o["L"] > 0) | (o["U"] < 0)
+                        exh = ex[:, :w_h]
+                        first = np.where(exh.any(1), exh.argmax(1) + 1, w_h)
+                        pw.update(horizon_waves=w_h, seq_power_by_horizon=float(exh[:, -1].mean()),
+                                  seq_mean_stop_pairs=float(first.mean() * wave),
+                                  seq_mean_stop_over_n_fix=float(first.mean() * wave / pw["n_fix_Y"]))
+                    cr["power"] = pw
+                rr[case] = cr
+            res[regime] = rr
         out["personas"][pn] = res
     out["runtime"] = time.perf_counter() - t0
     return out
@@ -1221,7 +1228,7 @@ def main():
         results["E4"] = analyse_e4(raw4, cfg["E4"])
         runtimes["E4"] = sum(r["runtime"] for r in raw4)
     if "E5" in only:
-        results["E5"] = analyse_e5(pools["ND"]["counts"], cfg["E5"])
+        results["E5"] = analyse_e5(pools, cfg["E5"])
         runtimes["E5"] = results["E5"]["runtime"]
     path = os.path.join(a.out, "sim_results.json" if not a.quick else "sim_results_quick.json")
     if a.merge and os.path.exists(path):

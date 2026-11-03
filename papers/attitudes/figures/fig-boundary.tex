@@ -5,7 +5,7 @@
 %  simulation output). The classification is computed in TikZ from the
 %  made-up intervals with the rule of the pre-registered plan
 %  (sec:design-estimands): in B_tau if lo >= tau; out if hi < tau;
-%  indeterminate otherwise. Primary tau = 0.5; sensitivity tau = 0.3, 0.7.
+%  undetermined otherwise. Intervals are read as simultaneous (Bonferroni) 95% intervals. Primary tau = 0.5; sensitivity tau = 0.3, 0.7.
 %  Requires the house colours defined in preamble.tex.
 % =====================================================================
 \begin{figure}[t]
@@ -44,7 +44,7 @@
     at (0.1,\ytop-0.12)
     {\textcolor{LabNavy}{in $\mathcal{B}_\tau$}: lower 95\% limit $\ge\tau$\\
      \textcolor{LabNavy}{out}: upper 95\% limit $<\tau$\\
-     indeterminate: interval contains $\tau$\\
+     undetermined: interval contains $\tau$\\
      \textcolor{LabAccent!75}{dashed}: sensitivity values of $\tau$};
   % ---------------- schematic stamp (empty bottom-right corner) ----------------
   \node[font=\small\itshape,text=LabGrey,anchor=south east,inner sep=2pt]
@@ -61,7 +61,7 @@
     \pgfmathsetmacro{\yy}{\ytop-\r+0.5}
     \pgfmathtruncatemacro{\cls}{\lo>=\tauz ? 1 : (\hi<\tauz ? -1 : 0)}
     \ifnum\cls=0
-      \def\ccol{LabGrey}\def\cfill{white}\def\ctext{indeterminate}
+      \def\ccol{LabGrey}\def\cfill{white}\def\ctext{undetermined}
     \else
       \def\ccol{LabNavy}\def\cfill{LabNavy}%
       \ifnum\cls=1 \def\ctext{in $\mathcal{B}_\tau$}\else\def\ctext{out}\fi
@@ -79,7 +79,7 @@
       \pgfmathtruncatemacro{\cs}{\lo>=\t ? 1 : (\hi<\t ? -1 : 0)}
       \ifnum\cs=1 \node[lab,text=LabNavy] at (\sx+\cx,\yy) {in};\fi
       \ifnum\cs=-1 \node[lab,text=LabNavy] at (\sx+\cx,\yy) {out};\fi
-      \ifnum\cs=0 \node[lab,text=LabGrey] at (\sx+\cx,\yy) {ind.};\fi
+      \ifnum\cs=0 \node[lab,text=LabGrey] at (\sx+\cx,\yy) {und.};\fi
     }
   }
   \draw[LabRule,line width=0.4pt] (\sx+2.45,\ybot) -- (\sx+2.45,\ytop);
@@ -90,7 +90,7 @@
     \draw[LabNavy,line width=0.5pt] (\v*\sx,\ybot) -- (\v*\sx,\ybot-0.25);
     \node[tick,text=\c,anchor=north] at (\v*\sx,\ybot-0.3) {$\v$};}
   \node[lab,text=LabNavy,anchor=north] at (0.5*\sx,\ybot-1.15)
-    {$\mathrm{ECV}_j$: share of item $j$'s common variance due to $G$, with 95\% interval};
+    {$\mathrm{ECV}_j$: share of item $j$'s common variance due to $G$, with simultaneous 95\% interval};
   \node[lab,text=LabGrey,anchor=north west,font=\scriptsize\itshape] at (0,\ybot-2.0)
     {$\leftarrow$ mainly item-specific};
   \node[lab,text=LabGrey,anchor=north east,font=\scriptsize\itshape] at (\sx,\ybot-2.0)
@@ -103,10 +103,10 @@ its item-level explained common variance $\mathrm{ECV}_j$
 (\cref{def:boundary}): the share of the item's common variance that it shares,
 through the general factor $G$, with the classic-stereotype items, rather than
 with the other Israel-related items alone, through the specific factor $I$
-(\cref{fig:bifactor}). Bars are 95\% intervals. An item is \emph{in} the
+(\cref{fig:bifactor}). Bars are simultaneous 95\% intervals (\cref{prop:id-boundary-test}(b)). An item is \emph{in} the
 boundary set $\mathcal{B}_\tau$ when its whole interval lies at or above the
 pre-registered threshold $\tau=0.5$, \emph{out} when it lies wholly below,
-and \emph{indeterminate} when it contains $\tau$; the same rule is applied to
+and \emph{undetermined} when it contains $\tau$; the same rule is applied to
 every item, whatever its content. The right-hand columns repeat the
 classification at the sensitivity values $\tau=0.3$ and $0.7$. Positions and
 intervals are made up for illustration; the items are generic and carry no

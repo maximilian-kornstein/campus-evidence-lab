@@ -1,7 +1,7 @@
 % =====================================================================
 %  Table: notation (LEAD).  Symbols follow SPEC.md exactly.
 % =====================================================================
-\begin{table}[t]
+\begin{table}[tbp]
 \caption{\textbf{Notation.} Symbols used throughout. Bold $\h$ denotes a
 capture history; $\zero$ is the all-zero history.}
 \label{tab:notation}
@@ -13,7 +13,7 @@ capture history; $\zero$ is the all-zero history.}
 \toprule
 \nhead{Population and lists}
 d & domain (state $s$ $\times$ year $t$) \\
-U_d,\ N & in-scope antisemitic incidents that reach a recording channel ($U_d^V$ of \cref{sec:funnel}); unknown size \\
+U_d,\ N & in-scope antisemitic incidents that reach a recording channel; unknown size (\cref{sec:funnel} writes $U_d^V$, $N_V$, and uses $U_d$, $N$ for all incidents) \\
 k\in\Kset & list; $K=4$: police (FBI), NGO audit, community security org., campus/self-report portal \\
 Y_{ik} & $1$ if incident $i$ is on list $k$ \\
 \midrule
@@ -50,7 +50,7 @@ z_i,\ \pi_j,\ \lambda_{jk} & latent class; class weight; class-$j$ capture proba
 \midrule
 \nhead{Record linkage}
 r\in R_k,\ a_r & record of list $k$; its attributes \\
-\Link,\ \Link^{*},\ \Linkhat & linkage structure (partition of records into incidents); truth; estimate \\
+\Link,\ \Link^{\star},\ \Linkhat & linkage structure (partition of records into incidents); truth; estimate \\
 \gamma_{rr'} & comparison vector of a record pair \\
 m(\gamma),\ u(\gamma) & $\Pr(\gamma\mid\text{match})$, $\Pr(\gamma\mid\text{non-match})$ \\
 w=\log(m/u) & Fellegi--Sunter weight \\

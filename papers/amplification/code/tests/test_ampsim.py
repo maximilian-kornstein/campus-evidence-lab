@@ -355,3 +355,22 @@ def test_fieller_cs_coverage_known_nuisance():
     cover = np.all((L <= AR * 1.003) & (AR / 1.003 <= U), 1).mean()
     assert cover >= 0.93
     assert np.mean(L[:, -1] > 1) > 0.9            # and it detects AR = 1.5
+
+
+def test_alg1_coverage_and_burn_in():
+    """Algorithm 1 (alg:sequential, revised) on iid positive pairs: near-nominal time-uniform coverage of the
+    log ratio after a one-wave burn-in, and detection of AR = 1.5."""
+    rng = np.random.default_rng(14)
+    R, N = 2000, 300
+    Ya = rng.gamma(9.0, 0.045 / 9.0, (R, N))
+    Yr = rng.gamma(9.0, 0.030 / 9.0, (R, N))
+    looks = np.arange(5, N + 1, 5)
+    o = sq.alg1_cs(Ya, Yr, looks, 0.05, 40, burn=1)
+    th = np.log(1.5)
+    cover = np.all((o["L"][:, 1:] <= th) & (th <= o["U"][:, 1:]), 1).mean()
+    assert cover >= 0.93
+    assert np.mean(o["L"][:, -1] > 0) > 0.99
+    assert np.all(np.isneginf(o["L"][:, 0]))      # the burn-in wave cannot narrow [L, U]
+    # the sensitivity range widens the set by log(lambda+/lambda-)
+    o2 = sq.alg1_cs(Ya, Yr, looks, 0.05, 40, lam_range=(0.95, 1.05), burn=1)
+    assert np.allclose((o2["hi"] - o2["lo"]) - (o["hi"] - o["lo"]), np.log(1.05 / 0.95))

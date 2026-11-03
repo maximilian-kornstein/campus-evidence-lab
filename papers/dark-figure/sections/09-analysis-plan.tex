@@ -1,24 +1,25 @@
 \section{A pre-registered analysis plan}\label{sec:plan}
 
-This section is the analysis plan we will register, time-stamped and with the commit hash of the analysis code, before any real record is accessed \citep{nosek2018}. It commits in advance to the estimand, the lists, the linkage protocol, the model-selection rule, the sensitivity grid, the validation checks and the decision rules. Any departure will be reported as a deviation, with its reason. The estimators are the ones implemented and tested on synthetic data in \cref{sec:simulation}. The plan contains no real-data results.
+This is the analysis plan we will register, with the commit hash of the analysis code, before any real record is accessed \citep{nosek2018}; any departure will be reported as a deviation, with its reason. The estimators are those tested on synthetic data in \cref{sec:simulation}; the sensitivity devices of \cref{sec:models-lcmcr} and the linkage diagnostics below will be tested on synthetic worlds with known $\bar\omega$, $q$ and linkage errors before registration. The plan contains no real-data results.
 
 \subsection{Estimands}\label{sec:plan-estimands}
 
 \paragraph{Primary estimand}
-$N_d$ is the number of \emph{criminal antisemitic incidents}, under the harmonised scope of \cref{sec:src-harmonise}, occurring in a pilot domain $d$ (a jurisdiction and a period). The candidate pilot jurisdiction is New York City. Its police list is public at complaint level with an anti-Jewish bias field (\cref{sec:src-local}), and two of the other candidate lists operate there. The candidate period is the two calendar years 2024--2025. These begin after the October 2023 change in the ADL Audit's scope rule (\cref{sec:src-audit}), so the domain does not straddle it. Before registration, we will check that window for known interruptions in any list's reporting system and fix the final jurisdiction and period. Both choices remain candidates until then.
+$N_{V,d}$ is the number of \emph{criminal antisemitic incidents}, under the harmonised scope of \cref{sec:src-harmonise}, that occur in a pilot domain $d$ (a jurisdiction and a period) and reach at least one recording channel: the population $U_d^V$ of \cref{sec:funnel}, which is what the lists identify. The candidate pilot is New York City, whose police list is public at complaint level with an anti-Jewish bias field (\cref{sec:src-local}), for 2024--2025, after the Audit's October 2023 scope change (\cref{sec:src-audit}); both are fixed at registration after a check for interruptions in any list's reporting.
 
 \paragraph{Secondary estimands}
 \begin{enumerate}[(i)]
-  \item The dark figure $\nzero=N_d-n$ and the dark-figure ratio $D_1=N_d/n_{1+}$ relative to the police list.
-  \item The list coverages $p_k=n_{k+}/N_d$ for $k\in\Kset$, and in particular $p_1$. Because the pilot police list is local (NYPD) rather than federal, $p_1$ corresponds to $\rvic\rpol\rcls$ in the funnel of \cref{prop:funnel}. Comparing NYPD with NIBRS records for the same domain estimates $\rsub$ separately.
-  \item $N_d$ by conduct class (assault; threat or intimidation; property damage), if each class has enough linked records to pass the checks in \cref{sec:plan-validation}.
-  \item Scope variants: $N_d$ computed with and without incidents carrying the Israel/Zionism content flag (\cref{sec:src-harmonise}), reported side by side with no preferred variant.
-  \item Exploratory: borough-by-year counts $N_{s,t}$ from the small-area model (\cref{eq:smallarea}), released only under the disclosure rules of \cref{sec:ethics}.
+  \item The dark figure $\nzero=N_{V,d}-n$ and the ratio $D_1=N_{V,d}/n_{1+}$.
+  \item The list coverages $p_k=n_{k+}/N_{V,d}$. Because list~1 is the NYPD's, observed before submission, and $N_{V,d}$ conditions on reaching a channel, $p_1$ corresponds to $\rpol\rcls$ (\cref{prop:funnel}); comparing NYPD with NIBRS records estimates $\rsub$.
+  \item $N_{V,d}$ by conduct class (assault; threat or intimidation; property damage), if each class has enough linked records to pass the checks of \cref{sec:plan-validation}.
+  \item Scope variants: $N_{V,d}$ with and without incidents carrying the Israel/Zionism content flag (\cref{sec:src-harmonise}), reported side by side with no preferred variant.
+  \item Exploratory: borough-by-year counts from the small-area model (\cref{eq:smallarea}), which has not been evaluated by simulation, released only under the disclosure rules of \cref{sec:ethics}.
+  \item Scenarios for all in-scope incidents, $N_d=N_{V,d}/\rvic$, over the grid of $\rvic$ in \cref{tab:plan-sens}. No estimate of $\rvic$ for antisemitic incidents exists (\cref{sec:src-surveys}), so these are sensitivity analyses, not estimates.
 \end{enumerate}
 
 \subsection{Lists and data-sharing agreements}\label{sec:plan-lists}
 
-\Cref{tab:plan-lists} lists the records we will request. The public files (NYPD open data, the H.E.A.T. Map) are not sufficient for linkage. They lack the exact dates or exact locations that linkage needs, and they carry no provenance. They will be used only to check that the agreement extracts are complete. Every agreement will specify five things: purpose limitation; the minimum necessary fields; linkage inside a secure enclave using encoded identifiers (\cref{sec:ethics}); review of outputs for disclosure risk only, so that providers have no veto over substantive findings; and retention and destruction schedules. Data holders such as ADL and SCN are also stakeholders in the results. Pre-registration and the disclosure-only review clause protect the independence of the analysis.
+\Cref{tab:plan-lists} lists the records we will request, numbered as in \cref{sec:sources} with the NYPD as list~1. The public files lack exact dates, locations and provenance, so they serve only to check the extracts. Every agreement will specify purpose limitation, minimum necessary fields, linkage inside a secure enclave (\cref{sec:ethics}), output review for disclosure risk only, so that providers have no veto over findings, and retention and destruction schedules.
 
 \begin{table}[tbp]
 \centering
@@ -42,102 +43,101 @@ aux & BJS (NCVS); Dept.\ of Education (Clery) & Published hate-crime reporting e
 \bottomrule
 \end{tabularx}
 \end{table}
-
 \subsection{Linkage protocol}\label{sec:plan-linkage}
 
 \begin{enumerate}[1.]
-  \item \emph{Ontology coding.} Two coders independently code every record on the five axes of \cref{sec:src-harmonise}, blind to the other lists, and a third resolves disagreements. Scope is decided per record before linkage.
-  \item \emph{Within-list deduplication.} After this step each list holds at most one record per incident, as the framework requires (\cref{sec:framework}).
-  \item \emph{Standardisation and encoding.} Dates are standardised to the day. Locations are geocoded and then encoded together with institution names, using the privacy-preserving encodings of \cref{sec:ethics}. Narratives never leave the enclave.
+  \item \emph{Ontology coding.} Two coders independently code every record on the axes of \cref{sec:src-harmonise}, blind to the other lists; a third resolves disagreements.
+  \item \emph{Within-list deduplication}, so that each list holds at most one record per incident (\cref{sec:framework}).
+  \item \emph{Standardisation and encoding.} Dates are standardised to the day; locations are geocoded and encoded together with institution names (\cref{sec:ethics}). Narratives never leave the enclave.
   \item \emph{Blocking and comparison.} Candidate pairs are restricted to the same or adjacent precinct and a date difference of at most 14 days. The comparison vector $\gamma_{rr'}$ has levels for date difference (0, 1, 2--3, 4--14 days), distance band, conduct agreement, target-type agreement and encoded-location similarity.
-  \item \emph{Model-based linkage.} The parameters $m(\gamma)$ and $u(\gamma)$ are estimated by \cref{alg:fsem} \citep{fellegi1969}. The posterior over the linkage structure $\Link$ is sampled using the Bayesian multi-list matching of \cref{sec:linkage} \citep{sadinle2017,steorts2016}.
-  \item \emph{Clerical review.} Uncertain links are reviewed following \cref{alg:review}, with the review budget allocated as in \cref{thm:review}. Each reviewed pair is judged by two reviewers who do not know which estimate it would move. We report Cohen's $\kappa$ and adjudicate disagreements.
-  \item \emph{Linkage error and propagation.} The rates $\delta$ and $\varepsilon$ are estimated from the reviewed sample. They enter the correction of \cref{cor:linkcorrect}, and linkage uncertainty is propagated into $N_d$ by \cref{alg:pipeline}. \Cref{prop:totalvar} gives the variance decomposition we report.
-  \item \emph{Freeze.} The linkage is frozen, and its diagnostics are archived, before any estimate of $N_d$ is computed (\cref{sec:plan-decisions}).
+  \item \emph{Model-based linkage.} $m(\gamma)$ and $u(\gamma)$ are estimated by \cref{alg:fsem} \citep{fellegi1969}, and the posterior over the linkage structure $\Link$ is sampled by multifile Bayesian matching (\cref{sec:models-link}; \citealp{aleshinguendel2023}).
+  \item \emph{Targeted clerical review} of uncertain links by \cref{alg:review} (\cref{thm:review}), by two reviewers blind to which estimate a pair would move, with Cohen's $\kappa$ reported; reviewed pairs are fixed. Targeted review is not a probability sample and is \emph{not} used to estimate error rates.
+  \item \emph{Random audit.} After targeted review, a stratified random audit of at least 300 candidate pairs, allocated as in \cref{prop:link-audit} and with a record-level stratum of at least 100 records for errors outside the blocks, estimates the count-based LE parameters $(\hat\delta,\hat\varepsilon)$ and the pairwise precision and recall. A simple random sample of at least 50 connected components of the candidate-pair graph, resolved in full by a reviewer, gives the true and estimated tables $\bm t^{\mathrm a}$, $\bm n^{\mathrm a}$ of \cref{def:link-effective}.
+  \item \emph{Propagation (primary).} Linkage uncertainty is propagated into $N_{V,d}$ by mixing over $M=100$ linkage draws (\cref{alg:pipeline}), with the Monte Carlo error checked as in \cref{app:computation}. \Cref{prop:totalvar} gives the variance decomposition we report.
+  \item \emph{LE diagnostic.} A swap leaves the table unchanged, but the audit counts it as missed pairs plus false edges, so a correction at $(\hat\delta,\hat\varepsilon)$ removes errors that are not there (\cref{rem:link-swaps}). We report the table-effective rates $(\delta_{\mathrm{eff}},\varepsilon_{\mathrm{eff}})$ of \cref{def:link-effective}, the corrected estimates (\cref{cor:linkcorrect}) at both pairs of rates, and the three checks after \cref{def:link-effective} of whether the errors are LE-like: the share of swap-like missed pairs, the bootstrap calibration of $X^2_{\mathrm{eff}}$, and the agreement of count-based and table-effective rates. Corrected estimates are diagnostics, never the estimate.
+  \item \emph{Freeze.} The linkage is frozen, and its diagnostics archived, before any estimate of $N_{V,d}$ is computed.
 \end{enumerate}
 
 \subsection{Models and the model-selection rule}\label{sec:plan-models}
 
 The following are fixed in advance.
 \begin{description}[style=unboxed,leftmargin=0pt]
-  \item[M1, primary.] Latent-class multiple-systems estimation with a Dirichlet-process prior (\cref{eq:lcmcr}; \citealp{manriquevallier2016}). It includes the covariates conduct class, target type and setting, uses the prior specification of \cref{sec:models} with truncation $J^\star=10$, and propagates linkage uncertainty as in \cref{alg:pipeline}.
-  \item[M2, secondary.] Bayesian model averaging over hierarchical log-linear models with all main effects and up to two-way interactions, weighted by BIC, with $\omega=0$ (\cref{thm:closed}; \citealp{fienberg1972,madigan1997}).
-  \item[M3, bound.] The estimator of \cref{thm:chao} \citep{chao1987}, reported in every case. It is a lower bound under heterogeneity across incidents (model $M_h$) but can exceed $N$ when capture probabilities differ across lists (\cref{prop:id-mt}), so it is reported as a diagnostic reference, not as a floor.
+  \item[M1, primary.] Latent-class multiple-systems estimation with a Dirichlet-process prior (\cref{eq:lcmcr}; \citealp{manriquevallier2016}), with the covariates conduct class, target type and setting, the prior of \cref{sec:models} with $p(N)\propto1/N$ and truncation $J^\star=10$, and linkage uncertainty propagated by \cref{alg:pipeline}. The sensitivity parameters $\Delta$ and $q$ enter as in \cref{sec:models-lcmcr}; the primary fit has $\Delta=0$ and $q=0$, or $q=\hat q$ under rule D4.
+  \item[M2, secondary.] Bayesian model averaging over hierarchical log-linear models with all main effects and up to two-way interactions, weighted by BIC, with $\bar\omega=\Delta$ in the closed form of \cref{thm:closed} \citep{fienberg1972,madigan1997}.
+  \item[M3, diagnostic.] Chao's estimator (\cref{thm:chao}; \citealp{chao1987}), reported in every case. It is a lower bound under heterogeneity across incidents (model $M_h$) but can exceed $N_{V,d}$ when capture probabilities differ across lists (\cref{prop:id-mt}), so it is a diagnostic reference, not a floor. The only assumption-free floor is $n$.
 \end{description}
-\emph{Campus stratum.} List~4 operates only on campus. In M1 and M2, non-campus incidents therefore carry a declared structural zero for list~4: the campus stratum is estimated from all four lists and the non-campus stratum from lists 1--3 (\cref{ex:src-scope}; \cref{asm:fw-scope}). $N_d$ is the sum of the two.
+\emph{Campus stratum.} List~4 operates only on campus, so in M1 and M2 non-campus incidents carry a declared structural zero for list~4: the campus stratum is estimated from all four lists and the rest from lists 1--3 (\cref{ex:src-scope}; \cref{asm:fw-scope}), and $N_{V,d}$ is their sum.
 
-\emph{Selection rule.} M1 is the primary model if it passes the posterior predictive check of \cref{sec:plan-validation}. If M1 fails and M2 passes, M2 becomes primary. If both fail, we report no point estimate of $N_d$, only M3 and the bounds of \cref{cor:bounds}. If the posterior median of the primary model falls below M3, we flag the result for review. Under $M_h$ this indicates negative dependence or misfit; under list heterogeneity it may instead reflect the upward bias of M3 (\cref{prop:id-mt}). The flag does not change the primary model. Strata are fixed as above. No list, stratum or covariate is added or removed after estimates are seen.
+\emph{Selection rule.} M1 is primary if it passes the posterior predictive check of \cref{sec:plan-validation}. If M1 fails and M2 passes, M2 becomes primary. If both fail, we report no point estimate of $N_{V,d}$: only $n$, M3 and the bounds of \cref{cor:bounds}. If the posterior median of the primary model falls below M3, we flag the result: under $M_h$ this indicates negative dependence or misfit, under list heterogeneity the upward bias of M3 (\cref{prop:id-mt}). The flag does not change the primary model. No list, stratum or covariate is added or removed after estimates are seen.
 
 \subsection{Sensitivity analyses}\label{sec:plan-sensitivity}
 
-The primary model is refitted over the full grid in \cref{tab:plan-sens}, $5\times5\times4\times4=400$ cells. The ``plausible region'' is declared in advance. It is used only in the decision rules of \cref{sec:plan-decisions} and does not restrict what is reported. If the provenance fields yield an estimate $\hat q$, we add $\hat q$ and its 90\% interval endpoints to the $q$ grid. We also vary the scope-coding rule (record-level majority versus any-record), the Dirichlet-process concentration prior, and the truncation level ($J^\star\in\{10,20\}$). We report the posterior median and 90\% interval of $N_d$ for every cell. We also report \emph{tipping points}: the smallest $|\omega|$, and separately the smallest $q$, at which a conclusion under the decision rules would change.
+\Cref{tab:plan-sens} gives the pre-specified grid and states how each parameter enters the primary model.
+\begin{itemize}
+  \item \emph{Dependence offset $\Delta$}, on the oriented scale of \cref{prop:direction} (positive $\Delta$ raises the dark figure). In M1 every posterior draw's odds of being unrecorded are multiplied by $e^{\Delta}$ \eqref{eq:models-offset}, which shifts its implied $\bar\omega$ by $\Delta$ and needs no refit. In M2, $\bar\omega=\Delta$ in \cref{thm:closed}.
+  \item \emph{Referral $q$.} Where provenance identifies how list~2 learned of every record, the table is recoded as in \cref{prop:referral}(c) and $q$ is estimated, not varied. Otherwise M1 is refitted with the referral-augmented sampler of \cref{sec:models-lcmcr} at each grid value, using provenance wherever it is observed; if provenance yields $\hat q$, we add $\hat q$ and its 90\% interval endpoints to the grid. M2 is reported on the recoded table only.
+  \item \emph{Linkage.} Mixing over linkage draws under the primary, a strict (same precinct, 7 days) and a loose (two precincts, 28 days) blocking rule. The LE-corrected estimates of \cref{sec:plan-linkage} are reported beside the grid as diagnostics; there is no $(\delta,\varepsilon)$ grid.
+  \item \emph{Reaching a channel, $\rvic$} (secondary estimand (vi) only). Incidents that reach no channel change only the unobservable cell, so each $\rvic$ scenario is the $\Delta$ grid shifted by $\Delta_{\mathrm{vic}}$ of \eqref{eq:funnel-vic}, computed from the same draws.
+\end{itemize}
+M1 is refitted only along $q$ and the linkage variants (15 fits); the 75 cells for $N_{V,d}$ follow by post-processing. We also vary, one at a time, the scope-coding rule, the Dirichlet-process concentration prior and $J^\star\in\{10,20\}$. For every cell we report the posterior median and 90\% interval of $N_{V,d}$, and we report the \emph{tipping points}: the smallest $|\Delta|$, and separately the smallest $q$, at which a conclusion under D5 would change. The plausible region enters only the decision rules.
 
 \begin{table}[tbp]
 \centering
-\caption{Pre-specified sensitivity grid. $\omega$: highest-order log-linear interaction (\cref{thm:closed,cor:bounds}); $q$: referral fraction from the police list to the audit (\cref{prop:referral}); $\delta,\varepsilon$: false non-match and false match rates of the linkage operator $\Lop(\delta,\varepsilon)$ (\cref{thm:linkbias}).}\label{tab:plan-sens}
+\caption{Pre-specified sensitivity grid. $\Delta$: departure of the oriented top interaction from the fitted model (\cref{eq:models-offset}; \cref{thm:closed,cor:bounds}); $q$: referral fraction from the police list to the audit (\cref{prop:referral}); $\rvic$: share of incidents that reach a recording channel (\cref{prop:funnel}), used only for the scenarios $N_d=N_{V,d}/\rvic$.}\label{tab:plan-sens}
 \small
-\begin{tabular}{@{}lll@{}}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{3.2cm}@{}}
 \toprule
-Parameter & Grid values & Plausible region \\
+Parameter & Enters M1 by & Grid values & Plausible region \\
 \midrule
-$\omega$ & $-1,\ -0.5,\ 0,\ 0.5,\ 1$ & $|\omega|\le 0.5$ \\
-$q$ & $0,\ 0.05,\ 0.10,\ 0.20,\ 0.30$ (plus $\hat q$ if estimable) & $q\le 0.20$ \\
-$\delta$ & $0,\ 0.05,\ 0.10,\ 0.20$ & $\delta\le 0.10$ \\
-$\varepsilon$ & $0,\ 0.01,\ 0.02,\ 0.05$ & $\varepsilon\le 0.02$ \\
+$\Delta$ & scaling each draw's odds $\pi_{\zero}/(1-\pi_{\zero})$ by $e^{\Delta}$; no refit & $-1$, $-0.5$, $0$, $0.5$, $1$ & $|\Delta|\le 0.5$ \\
+$q$ & provenance recoding, else referral-augmented refit & $0$, $0.05$, $0.10$, $0.20$, $0.30$ (plus $\hat q$) & $q\le 0.20$ \\
+Linkage & mixing over draws under each blocking rule & strict, primary, loose & primary (all three under D1(b)) \\
+$\rvic$ & shift of $\Delta$ by $\Delta_{\mathrm{vic}}$ \eqref{eq:funnel-vic}; scenarios only & $1$, $0.75$, $0.5$, $0.25$ & none declared \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \subsection{Validation}\label{sec:plan-validation}
 
 \paragraph{Calibration before unblinding}
-Before fitting real data, we rerun the simulation pipeline of \cref{sec:simulation} on synthetic worlds calibrated to the observed list sizes and to the estimated $(\delta,\varepsilon)$. The primary model must attain at least 85\% empirical coverage for its nominal 90\% intervals. If it does not, its intervals will be reported as uncalibrated.
+Before fitting real data, we rerun the simulation pipeline of \cref{sec:simulation} on synthetic worlds calibrated to the observed list sizes and to the audit, with records that carry attribute noise and are linked by FS-EM (errors are \emph{not} generated from LE) at noise levels that reproduce the audited precision and recall. The primary pipeline must attain at least 85\% coverage for nominal 90\% intervals, or its intervals are reported as uncalibrated; its median relative bias there is reported beside the estimate.
 
 \paragraph{Held-out-list prediction}
-For each $k\in\Kset$, we fit the selected model to the other $K-1$ lists to obtain a posterior for $N_d$. Let $n_{-k}$ be the number of incidents those lists capture. Suppose list $k$ captures incidents with a common probability, independently of capture by the other lists. Then, given $n_{k+}$, the set of incidents list $k$ captures is a uniformly random subset of $U_d$. The number $m_k$ of list-$k$ records linked to at least one other list is therefore hypergeometric:
+For each $k\in\Kset$ we fit the selected model to the other $K-1$ lists, obtaining a posterior for $N_{V,d}$. Let $n_{-k}$ be the number of incidents those lists capture. If list $k$ captures incidents with a common probability, independently of the other lists, then given $n_{k+}$ its captures are a uniformly random subset of $U^V_d$, and the number $m_k$ of list-$k$ records linked to at least one other list satisfies
 \begin{equation}\label{eq:plan-holdout}
-  m_k \mid N_d,\,n_{-k},\,n_{k+} \;\sim\; \operatorname{Hypergeometric}\bigl(N_d,\; n_{-k},\; n_{k+}\bigr)\;\approx\;\Bin\!\left(n_{k+},\; n_{-k}/N_d\right).
+  m_k \mid N_{V,d},\,n_{-k},\,n_{k+} \;\sim\; \operatorname{Hypergeometric}\bigl(N_{V,d},\; n_{-k},\; n_{k+}\bigr)\;\approx\;\Bin\!\left(n_{k+},\; n_{-k}/N_{V,d}\right).
 \end{equation}
-We report the posterior predictive $p$-value of the observed $m_k$. The check tests the $(K-1)$-list model and the independence and homogeneity of list $k$ jointly. A small $p$-value (excess overlap) points to positive dependence such as referral. A large one (deficit) points to specialisation. Results are reported for each $k$ separately.
+We report the posterior predictive $p$-value of the observed $m_k$ for each $k$; it tests the $(K-1)$-list model and the independence and homogeneity of list $k$ jointly, a small value (excess overlap) pointing to referral and a large one to specialisation.
 
 \paragraph{Triangulation against NCVS reporting rates}
-For hate crime in general, BJS publishes NCVS estimates of the share of victimisations reported to police \citep{bjs2021hate}. Write $r$ for the most recent such estimate at registration and $r^{+}$ for the upper end of its 95\% interval. Recording requires reporting, so we expect $p_1\le r$ approximately. The approximation is needed because the NCVS excludes institutional victims and is not specific to anti-Jewish bias (\cref{sec:src-surveys}). We report $\Pr(p_1>r^{+}\mid\text{data})$, and a value above $0.5$ is flagged. A flag would suggest scope mismatch, false matches that inflate overlaps, or unmodelled negative dependence. The ratio $p_1/r$ also gives a rough cross-check on $\rcls$ in \cref{prop:funnel}. This check triangulates; it does not identify $N_d$.
+Let $r$ be the most recent BJS estimate of the share of hate-crime victimisations reported to police \citep{bjs2021hate}, and $r^{+}$ the upper end of its 95\% interval. Since reaching the police implies reaching a channel, $r\approx\rvic\rpol$, and $p_1\approx\rpol\rcls\le r/\rvic$. With $\rvic$ unidentified, the check constrains $\rvic$ rather than $p_1$: we report the implied upper bound $\rvic\le r^{+}/p_1$ and flag the result if its posterior probability of falling below the smallest grid value $0.25$ exceeds $0.5$. A flag would suggest scope mismatch, false matches that inflate overlaps, or unmodelled negative dependence. The NCVS excludes institutional victims and is not specific to anti-Jewish bias (\cref{sec:src-surveys}), so this check triangulates; it does not identify anything.
 
 \paragraph{Posterior predictive check}
-Following \citet{gelman2013}, we draw replicated capture tables from the posterior and compare them with the observed table through the Freeman--Tukey discrepancy over observed histories,
+Following \citet{gelman2013}, we compare replicated capture tables with the observed table through the Freeman--Tukey discrepancy over observed histories,
 \begin{equation}\label{eq:plan-ft}
   T(\bm n,\bm\mu)=\sum_{\h\in\Hobs}\bigl(\sqrt{n_{\h}}-\sqrt{\mu_{\h}}\bigr)^2,
 \end{equation}
-as well as through the frequency counts $f_j$ and the list sizes $n_{k+}$. A model passes if the posterior predictive $p$-value of $T$ lies in $[0.05,0.95]$.
+and through the frequency counts $f_j$ and the list sizes $n_{k+}$. A model passes if the posterior predictive $p$-value of $T$ lies in $[0.05,0.95]$.
 
 \subsection{Decision rules}\label{sec:plan-decisions}
 
-These rules state which results would change our conclusions. They are fixed now.
+These rules state which results would change our conclusions.
 \begin{enumerate}[D1.]
-  \item \emph{Linkage gate.} If the review-based posterior mean of $\varepsilon$ exceeds $0.05$ or that of $\delta$ exceeds $0.20$, we do not estimate $N_d$. We revise blocking and comparisons and repeat the review, reporting this as a deviation.
+  \item \emph{Linkage gate.} (a) If the random audit (\cref{prop:link-audit}) estimates $\delta$ above $0.20$ or $\varepsilon$ above $0.05$, we do not estimate $N_{V,d}$; we revise blocking and comparisons, re-link and re-audit, and report a deviation. (b) If any LE check fails, or the corrected estimate at the table-effective rates lies outside the 90\% interval of the mixed estimate, linkage is reported as a dominant source of uncertainty, and a statement under D5 must then hold under all three linkage variants. The corrected estimate never replaces the mixed one.
   \item \emph{Ontology gate.} If Cohen's $\kappa$ for the in-scope decision is below $0.6$ for any list, on a random sample of at least 200 records (or all of them if fewer), scope-specific estimates are labelled exploratory.
-  \item \emph{Model adequacy.} Applied as in \cref{sec:plan-models}. If no model passes, we report only bounds.
-  \item \emph{Referral switch.} If list~2's held-out-list check shows excess overlap ($p<0.05$), or if the provenance data give $\hat q>0.10$ with a 90\% interval excluding $0.05$, the referral-adjusted model of \cref{prop:referral} replaces M1 as primary.
-  \item \emph{Substantive statements.} We will say that the police list misses \emph{most} in-scope incidents only if $\Pr(p_1<0.5\mid\text{data})\ge 0.95$ under the primary model \emph{and} the posterior median of $p_1$ is below $0.5$ throughout the plausible region of \cref{tab:plan-sens}. We will say it captures most of them under the symmetric condition. If a statement holds under the primary model but fails somewhere in the plausible region, we report it as dependent on unverifiable assumptions and name the tipping point.
-  \item \emph{Negative result.} If the held-out-list check fails for two or more lists, or the NCVS triangulation is flagged, we will conclude that these lists do not support MSE in the pilot domain. That conclusion will be reported with the same prominence as an estimate.
+  \item \emph{Model adequacy.} As in \cref{sec:plan-models}; if no model passes, we report only $n$, M3 and bounds.
+  \item \emph{Referral switch.} If list~2's held-out check shows excess overlap ($p<0.05$), or provenance gives $\hat q>0.10$ with a 90\% interval excluding $0.05$, the primary fit uses the provenance-recoded table, or the referral-augmented M1 at $q=\hat q$ where provenance is incomplete.
+  \item \emph{Substantive statements.} We will say that the police list misses \emph{most} in-scope incidents that reach a recording channel only if $\Pr(p_1<0.5\mid\text{data})\ge 0.95$ under the primary model \emph{and} the posterior median of $p_1$ is below $0.5$ throughout the plausible region of \cref{tab:plan-sens}; the symmetric condition governs the statement that it captures most of them. A statement that holds under the primary model but fails somewhere in the plausible region is reported as dependent on unverifiable assumptions, with its tipping point. No statement about all incidents, $N_d$, is made; only the $\rvic$ scenarios are reported.
+  \item \emph{Negative result.} If the held-out-list check fails for two or more lists, or the NCVS triangulation is flagged, we conclude that these lists do not support MSE in the pilot domain, and report that conclusion with the same prominence as an estimate.
 \end{enumerate}
 
 \subsection{Reporting and replication}\label{sec:plan-reporting}
 
-The report will contain the following.
-\begin{itemize}
-  \item A flow diagram of records, from received, to in scope, to deduplicated, to linked.
-  \item The capture-history table, subject to the disclosure rules of \cref{sec:ethics}.
-  \item Linkage diagnostics: estimated $(\delta,\varepsilon)$, review agreement, and the variance decomposition of \cref{prop:totalvar}.
-  \item Estimates from M1--M3, the full sensitivity grid and the tipping points.
-  \item All validation results.
-  \item A log of deviations from this plan.
-\end{itemize}
-Our reporting follows the good-practice discussions in \citet{bird2018} and \citet{lum2013}. The replication package will contain the version-tagged \texttt{darkfig} code with deterministic seeds; the ontology codebook and coding manual; the clerical-review protocol; synthetic data with the same schema as the agreement extracts; and every released aggregate table. Record-level data cannot be redistributed. The package will document how qualified researchers can apply to the data holders for access under equivalent agreements.
+The report will contain a flow diagram of records; the capture-history table, subject to \cref{sec:ethics}; linkage diagnostics (audit and table-effective rates, corrected versus mixed estimates, review agreement, the decomposition of \cref{prop:totalvar}); M1--M3 with the full grid and tipping points; all validation results; and a log of deviations, following \citet{bird2018} and \citet{lum2013}. The replication package will contain the version-tagged \texttt{darkfig} code, the ontology codebook, the review and audit protocols, synthetic data with the extracts' schema and every released aggregate table; record-level data cannot be redistributed.
 
 \subsection{Timeline}\label{sec:plan-timeline}
 
-\Cref{tab:plan-timeline} gives the phases. Month 0 is the date the plan is registered. Estimation begins only after the linkage freeze and the calibration study.
+\Cref{tab:plan-timeline} gives the phases. Month 0 is the date of registration; estimation begins only after the linkage freeze and the calibration study.
 
 \begin{table}[tbp]
 \centering
@@ -150,7 +150,7 @@ Phase & Months & Activities & Exit criterion \\
 \midrule
 0. Registration & 0--3 & Register plan and code hash; IRB review; negotiate data-use agreements; convene community advisory group (\cref{sec:ethics}) & Plan registered; IRB approval; signed agreements \\
 1. Acquisition & 3--8 & Receive extracts in enclave; ontology coding; within-list deduplication & Ontology gate D2 assessed \\
-2. Linkage & 8--12 & Encoding; blocking; FS--EM and Bayesian matching; clerical review (\cref{alg:review}) & Linkage gate D1 passed; linkage frozen \\
+2. Linkage & 8--12 & Encoding; blocking; FS--EM and Bayesian matching; clerical review (\cref{alg:review}); random audit & Linkage gate D1 passed; linkage frozen \\
 3. Calibration & 12--14 & Calibrated simulation; blinded model fitting and diagnostics & Coverage check; model selection completed \\
 4. Unblinding & 14--17 & Estimates, sensitivity grid, validation; disclosure review & Decision rules D3--D6 applied \\
 5. Release & 17--20 & Briefings with community advisory group and data holders; manuscript; replication package & Public release \\

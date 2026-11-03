@@ -6,7 +6,7 @@ This appendix collects results, remarks and implementation details that \cref{se
 
 The attributes of \cref{sec:link-records} are noisy and heterogeneous across lists in four main ways.
 
-\emph{Dates.} A police record usually carries both the date of the incident and the date it was reported. An NGO or community-security record may carry only the date on which the organisation learned of the incident or published it, and a campus portal records the time of submission. Agreement on dates is therefore agreement up to a reporting lag whose distribution depends on the pair of lists. The comparison levels are defined on absolute date differences, and their match probabilities must be estimated separately for each pair of lists.
+\emph{Dates.} A police record usually carries both the date of the incident and the date it was reported. An NGO or community-security record may carry only the date on which the organisation learned of the incident or published it, and a campus portal records the time of submission. Agreement on dates is therefore agreement up to a reporting lag whose distribution depends on the pair of lists. The comparison levels are bands of the absolute date difference, such as $\{0\}$, $\{1,2\}$, $\{3,\dots,7\}$ and $\{\ge8\}$ days, and their match probabilities must be estimated separately for each pair of lists.
 
 \emph{Location.} Granularity differs: a street address or block for police, a city or neighbourhood for an NGO audit, a building for a campus portal, a county or state when details are withheld to protect victims. We compare at the finest resolution that both records share, with levels such as same block or city, same county, and unknown. Agreement at a coarse resolution carries less evidence than agreement at a fine one, and the comparison model must learn this from the data rather than assume it.
 
@@ -14,7 +14,7 @@ The attributes of \cref{sec:link-records} are noisy and heterogeneous across lis
 
 \emph{Target and venue.} Target type (person, institution, property) and venue (synagogue, school, cemetery, residence, campus building) are recorded partly as free text. They are compared with string comparators \citep{winkler1990}, and the similarity is binned.
 
-\subsection{Fellegi--Sunter optimality and the EM algorithm}\label{app:link-fsdetails}
+\subsection{Fellegi--Sunter optimality, the EM algorithm and Bayesian linkage}\label{app:link-fsdetails}
 
 A \emph{decision rule} is a triple of functions $\phi=(\phi_{\mathrm L},\phi_{\mathrm C},\phi_{\mathrm N})$ from $\Gamma$ to $[0,1]$ with $\phi_{\mathrm L}+\phi_{\mathrm C}+\phi_{\mathrm N}=1$. These are the probabilities of linking, of review and of not linking. Its error probabilities are the false-link probability $P_{\mathrm{FL}}(\phi)=\sum_\gamma u(\gamma)\phi_{\mathrm L}(\gamma)$ and the missed-link probability $P_{\mathrm{ML}}(\phi)=\sum_\gamma m(\gamma)\phi_{\mathrm N}(\gamma)$.
 
@@ -51,7 +51,16 @@ The proof applies the Neyman--Pearson lemma twice (\cref{app:link-fs}). Under co
 \end{algorithmic}
 \end{algorithm}
 
+\paragraph{Bayesian record linkage}
+The Bayesian approach treats $\Link$ as an unknown parameter, with likelihood
+\begin{equation}\label{eq:link-fslik}
+  p(\gamma\mid\Link,m,u)=\prod_{\ell\in\mathrm M(\Link)}m(\gamma_\ell)\prod_{\ell\in\mathcal P\setminus\mathrm M(\Link)}u(\gamma_\ell),
+\end{equation}
+where $\mathcal P$ is the set of candidate pairs and $\mathrm M(\Link)$ the set of those that $\Link$ places in the same block. \Citet{sadinle2017} samples bipartite matchings of two lists that respect the one-to-one constraint, and leaves the least certain records for clerical review through loss functions with an abstention option. \Citet{tancredi2011} model linkage and population size jointly for two lists. \Citet{steorts2016} represent $\Link$ through latent entities, which handles deduplication and any number of lists \citep[see also][]{marchant2021,tancredi2020}. \Citet{sadinle2013} generalise the Fellegi--Sunter model to several files, and \citet{binette2022} review the field.
+
 \subsection{Merging and the split--merge calculus}\label{app:link-opdetails}
+
+On the up-set $\{h:|h|\ge2\}$ the detachment operator of \cref{prop:link-detach} factorises as $\mathcal D_\delta=Z_\rho\operatorname{diag}\{(1-\delta)^{|h|}\}$, where $\rho=\delta/(1-\delta)$ and $(Z_\rho)_{gh}=\rho^{|h|-|g|}\ind{g\subseteq h}$ is a weighted zeta function of the Boolean lattice. The inverse of $Z_\rho$ is the weighted Möbius function $(-\rho)^{|h|-|g|}\ind{g\subseteq h}$, which gives \eqref{eq:link-mobius}. Part (iv) of the proposition is exact because two records of one incident stay together if and only if neither detaches.
 
 \begin{lemma}[Merging to first order]\label{lem:link-merge}
 Let $\tilde\Link$ be any linkage structure with table $\tilde{\bm n}$. Let $A=\sum_k\tilde n_{\{k\}}$ be its number of singletons and suppose $C_{\min}=\min_kC_k(\tilde{\bm n})>0$. Under (LE-M),
@@ -115,13 +124,73 @@ The audit of \cref{sec:link-review} samples pairs from the linkage that produced
 
 \Cref{cor:linkcorrect}(ii) defines the estimator that the simulation code computes. That code solves $\Lop_{\delta,\varepsilon}(\bm x)=\bm n$ by the projected fixed-point iteration $\bm x\gets\max\{\bm 0,\bm x+(\bm n-\Lop_{\delta,\varepsilon}(\bm x))\}$, started at $\bm x=\bm n$, with step length one; the step is halved and the iteration restarted only if it diverges. For $\varepsilon=0$ and without the projection, the iteration matrix $I-\mathcal D_\delta$ is triangular with spectral radius $1-(1-\delta)^K<1$, so the iteration converges geometrically to \eqref{eq:link-mobius}--\eqref{eq:link-singleinv}. With the projection, it can converge to that solution only if $\mathcal D_\delta^{-1}\bm n\ge\bm0$. If some cell of $\mathcal D_\delta^{-1}\bm n$ is negative, which can happen when a cell is small and $\delta$ is large, the equation has no non-negative solution. The iteration then stops at a stationary point with some cells clamped at zero, and the code reports non-convergence.
 
-\subsection{Review under general costs, and the design of the audit}\label{app:link-reviewdetails}
+\subsection{Targeted review and the design of the audit}\label{app:link-reviewdetails}
+
+\paragraph{Targeted review}
+A \emph{review unit} $u\in\mathcal U=\{1,\dots,L\}$ is either a candidate pair, whose outcome is binary, or the set of competing candidate links of one record, whose outcome is categorical (which candidate, if any, is the match). Reviewing $u$ reveals its outcome $O_u$ at cost $c_u>0$, and the total budget is $B$. The target is the between-linkage variance $V_b=\Var(G(\Link)\mid D)$ of \cref{prop:totalvar}, with $G(\Link)=\E[N\mid\Link,D]$. In a frequentist pipeline one takes $G=F(\bm n(\Link))$ instead. After units $S\subseteq\mathcal U$ have been reviewed, the expected remaining linkage variance is
+\[
+  V(S)=\E\bigl[\Var(G\mid O_S,D)\mid D\bigr].
+\]
+We work under the following assumptions.
+\begin{enumerate}[({R}1)]
+  \item Under $p(\Link\mid D)$ the outcomes $(O_u)_{u\in\mathcal U}$ are mutually independent, and $G$ depends on $\Link$ only through $O=(O_u)_u$; the rest of the linkage is held fixed.
+  \item Review is error-free.
+\end{enumerate}
+Under (R1), $G$ has the Hoeffding (functional ANOVA) decomposition $G-\E G=\sum_{\emptyset\ne T\subseteq\mathcal U}G_T(O_T)$ into uncorrelated terms with variances $\sigma_T^2$. We write $\sigma_u^2=\sigma_{\{u\}}^2$ for the main effects and $I_{\mathrm{int}}=\sum_{|T|\ge2}\sigma_T^2$ for the total interaction variance.
+
+
+\begin{theorem}[Optimal clerical review]\label{thm:review}
+Assume (R1)--(R2).
+\begin{enumerate}[(i)]
+  \item \emph{Exact decomposition.} $V(S)=\sum_{u\notin S}\sigma_u^2+\sum_{|T|\ge2,\,T\not\subseteq S}\sigma_T^2$, where $\sigma_u^2=\Var(\E[G\mid O_u])$. For a pair unit with $I_\ell=\ind{\ell\in\mathrm M(\Link)}\sim\Bern(\pi_\ell)$,
+  \begin{equation}\label{eq:link-sigma}
+    \sigma_\ell^2=\pi_\ell(1-\pi_\ell)\Delta_\ell^2=\frac{\Cov(G,I_\ell\mid D)^2}{\pi_\ell(1-\pi_\ell)},\qquad \Delta_\ell=\E[G\mid I_\ell=1]-\E[G\mid I_\ell=0].
+  \end{equation}
+  \item \emph{Unit costs.} Let $S_{\mathrm g}$ consist of the $B$ units with the largest $\sigma_u^2$. Then $S_{\mathrm g}$ minimises the main-effect objective $\sum_{u\notin S}\sigma_u^2$ over $|S|\le B$, and
+  \[
+    V(S_{\mathrm g})\le\min_{|S|\le B}V(S)+I_{\mathrm{int}} .
+  \]
+\end{enumerate}
+\end{theorem}
+
+Parts (i)--(ii) need no linearisation, and the single-unit value $\sigma_u^2$ is exact even without (R1); for pairs it is a squared covariance that posterior draws estimate, as in \eqref{eq:link-sigma}. What (R1) buys is additivity across units, and this is where the approximation lies. The following results give the first-order form of the rule and its extension to general costs.
+
+\begin{proposition}[Linear response]\label{prop:review-linear}
+Assume (R1)--(R2). Suppose every unit is a pair and $G(I)=F(\bm n_0+\sum_\ell I_\ell\bm v_\ell)$, so that each link changes the table by a fixed vector $\bm v_\ell$, for example $-\bm d_{g\cup k,k}$; this holds when candidate pairs touch disjoint clusters. Suppose $F$ is twice continuously differentiable with $\|\nabla^2F\|_{\mathrm{op}}\le H$ on the convex hull of the attainable tables, and $\|\bm v_\ell\|_2\le\bar v$. Let $\bar{\bm n}=\bm n_0+\sum_\ell\pi_\ell\bm v_\ell$, $g_\ell=\nabla F(\bar{\bm n})^{\top}\bm v_\ell$ and $S_1=\sum_\ell\pi_\ell(1-\pi_\ell)$. Then
+  \[
+    |\Delta_\ell-g_\ell|\le H\bar v^2\bigl(1+S_1^{1/2}\bigr),\qquad
+    I_{\mathrm{int}}\le\tfrac14H^2\bar v^4\bigl(S_1+3S_1^2\bigr).
+  \]
+  Ranking by $g_\ell^2\pi_\ell(1-\pi_\ell)$ is therefore exactly optimal for the linearised objective $\sum_{\ell\notin S}g_\ell^2\pi_\ell(1-\pi_\ell)$. For $F=\Nhat$, which is homogeneous of degree one, $H=O(N^{-1})$ provided the convex hull of the attainable tables lies in $\{\bm x:x_h\ge cN\ \forall h\}$ for some $c>0$. If uncertain links can empty a cell, $H$ is unbounded and the bound is void. Under the proviso and with $S_1=O(N)$, the suboptimality $I_{\mathrm{int}}$ is $O(1)$, while the linkage variance is of order $N$.
+\end{proposition}
 
 \Cref{thm:review}(ii) assumes unit costs. With general costs the greedy rule is near-optimal.
 
 \begin{proposition}[Review under general costs]\label{prop:review-costs}
-Assume (R1)--(R2) of \cref{sec:link-review}. Maximising $\sum_{u\in S}\sigma_u^2$ subject to $\sum_{u\in S}c_u\le B$ is a $0$--$1$ knapsack problem with optimum $W^\star$. Order the units by $\sigma_u^2/c_u$, let $S_{\mathrm g}$ be the longest prefix that fits the budget, and let $j$ be the first unit that does not fit. Then $\sum_{u\in S_{\mathrm g}}\sigma_u^2\ge W^\star-\sigma_j^2$. If $c_j\le B$, the better of $S_{\mathrm g}$ and $\{j\}$ achieves at least $W^\star/2$.
+Assume (R1)--(R2). Maximising $\sum_{u\in S}\sigma_u^2$ subject to $\sum_{u\in S}c_u\le B$ is a $0$--$1$ knapsack problem with optimum $W^\star$. Order the units by $\sigma_u^2/c_u$, let $S_{\mathrm g}$ be the longest prefix that fits the budget, and let $j$ be the first unit that does not fit. Then $\sum_{u\in S_{\mathrm g}}\sigma_u^2\ge W^\star-\sigma_j^2$. If $c_j\le B$, the better of $S_{\mathrm g}$ and $\{j\}$ achieves at least $W^\star/2$.
 \end{proposition}
+
+\Cref{alg:review} implements targeted review adaptively. Each batch is chosen with up-to-date values of $\sigma_u^2$, which limits the damage from the dependence that (R1) ignores, and its knapsack safeguard is the rule of \cref{prop:review-costs}.
+
+\begin{algorithm}[t]
+\caption{Targeted clerical review}\label{alg:review}
+\begin{algorithmic}[1]
+\Require Linkage posterior sampler; review units $\mathcal U$ with costs $c_u$; budget $B$; batch budget $b$; functional $G$ (e.g.\ $\E[N\mid\Link,D]$ or $F(\bm n(\Link))$)
+\Ensure Reviewed outcomes and an updated linkage posterior
+\While{$B>0$}
+  \State Draw $\Link^{(1)},\dots,\Link^{(M)}$ from the current posterior and compute $G^{(m)}=G(\Link^{(m)})$
+  \For{$u\in\mathcal U$ not yet reviewed}
+    \State $\hat\sigma_u^2\gets\widehat\Var\bigl(\widehat\E[G\mid O_u]\bigr)$ from the draws \Comment{pairs: $\widehat\Cov(G,I_\ell)^2/\{\hat\pi_\ell(1-\hat\pi_\ell)\}$}
+    \State If $\hat\pi_\ell$ is too extreme to estimate the covariance, use $\hat\sigma_\ell^2=g_\ell^2\hat\pi_\ell(1-\hat\pi_\ell)$ with $g_\ell$ from \eqref{eq:link-splitsens}
+  \EndFor
+  \State Sort units by $\hat\sigma_u^2/c_u$ and take the longest prefix $S$ with $\sum_{u\in S}c_u\le\min(b,B)$
+  \State If the best single unit $j$ that fits has $\hat\sigma_j^2>\sum_{u\in S}\hat\sigma_u^2$, set $S\gets\{j\}$ \Comment{knapsack safeguard}
+  \State Review the units in $S$, record their outcomes, and set $B\gets B-\sum_{u\in S}c_u$
+  \State Condition the linkage model on the reviewed outcomes (fix the reviewed links or non-links)
+\EndWhile
+\State \Return reviewed outcomes and the conditioned posterior
+\end{algorithmic}
+\end{algorithm}
 
 \paragraph{Design of the random audit}
 The audit population is the set $\mathcal P$ of candidate pairs, partitioned into strata $\mathcal P_1,\dots,\mathcal P_H$ of sizes $N_h$ that cross decision status (linked edge; same cluster but not an edge; different clusters) with bins of the posterior match probability $\pi_\ell$. From stratum $h$ a simple random sample of $n_h\ge2$ pairs is drawn without replacement, at cost $c_h$ per pair, and a reviewer determines the true status $I_\ell$ of each sampled pair. Let $\bm y_\ell\in\mathbb R^J$ be pair-level variables, functions of $I_\ell$ and of the decisions, whose population totals $\bm Y=\sum_{\ell\in\mathcal P}\bm y_\ell$ determine the error rates through a smooth map $\theta=(\delta,\varepsilon)=\psi(\bm Y)$. Under LE the natural choice is $\bm Y=(\mathrm{TP},\mathrm{FN},\mathrm{FE})$, with $\psi$ given by \eqref{eq:link-psi}.

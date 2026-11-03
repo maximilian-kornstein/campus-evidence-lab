@@ -2,20 +2,22 @@
 
 \paragraph{What the framework makes possible}
 The usual argument about antisemitic incidents asks whose count is right.
-The framework replaces that question with a different one: what is the
-population that every list samples, and how does each list sample it? Once
-the target is defined (\cref{sec:framework}), the police count, an NGO audit
+The framework asks instead what population every list samples, and how
+each list samples it. Once
+the target is defined (\cref{sec:framework}) as the in-scope incidents that
+reach a recording channel, the police count, an NGO audit
 and a community-security log become \emph{data about} the same unknown
 total, not competitors for it. Their overlaps are informative, their
 dependence is modelled rather than assumed away (\cref{prop:referral}), and
 the part of the answer that the data cannot deliver is isolated in a single
 interpretable parameter $\omega$ (\cref{thm:closed,cor:bounds}). The
 sensitivity frontier tells a reader how much unmeasured dependence a stated
-conclusion can withstand (\cref{thm:id-frontier}). Linkage
-error, which in practice is often handled silently, becomes an explicit
-operator whose effect on the estimate can be quantified and corrected
-(\cref{thm:linkbias,cor:linkcorrect}). Its residual uncertainty is carried
-into the final interval (\cref{alg:pipeline}).
+conclusion can withstand (\cref{thm:id-frontier}). Linkage error, which in
+practice is often handled silently, becomes an explicit operator whose
+first-order effect can be computed (\cref{thm:linkbias}). The correction is
+valid only under LE-type errors (\cref{cor:linkcorrect}); otherwise we mix
+over linkage draws (\cref{alg:pipeline}) and use the correction as a
+diagnostic.
 
 The funnel decomposition (\cref{prop:funnel,thm:shapley}) turns an estimate
 of the dark figure into something a policymaker can act on. A gap between
@@ -26,20 +28,18 @@ these calls for a different response: community outreach, officer training
 or reporting infrastructure. Raw counts cannot tell these explanations apart.
 The decomposition can, to the extent that the stage-specific rates are
 identified by the auxiliary data of \cref{tab:funnel-sources}. Incidents that
-were never disclosed to anyone remain beyond the reach of every list, so
+never reach a recording channel remain beyond the reach of every list, so
 that stage rests on victim surveys.
 
 \paragraph{Limitations}
-We stress five.
+We stress six.
 
 \emph{Untestable assumptions.} No method escapes the basic
 non-identifiability of the unobserved cell (\cref{thm:nonid}). Our approach
 makes the identifying assumption explicit and adjustable, but it does not
-remove it. A sensitivity interval for $\omega$ is only as credible as the
-range chosen for it, and that range must be argued from knowledge of how the
-lists are generated, not from the data. It must in general be two-sided:
-the model without a $K$-way interaction can overstate the dark figure as well
-as understate it (\cref{prop:direction}, \cref{ex:id-hetero}). A one-sided
+remove it. A sensitivity interval is only as credible as the range chosen
+for $\omega$, which must be argued from how the lists are generated and must
+in general be two-sided (\cref{prop:direction}, \cref{ex:id-hetero}). A one-sided
 range is justified only by a mechanism of known sign, such as referral
 between two lists (\cref{rem:id-calibrate}); with three or more lists,
 referral itself can push the bias either way. Latent-class models replace the
@@ -47,28 +47,22 @@ assumption of no highest-order interaction with conditional independence
 within classes. That is weaker in some directions and not in others. The
 Chao bound is a lower bound only when heterogeneity runs across incidents.
 Heterogeneity across lists can turn it into an upper bound
-(\cref{prop:id-mt}), so it is a diagnostic, not a floor.
+(\cref{prop:id-mt}), so it is a diagnostic, not a floor; the only
+assumption-free floor is the observed count $n$.
 
-\emph{Scope harmonisation.} MSE requires every list to be sampling the same
-population. The FBI records criminal offences with a recorded bias
-motivation, whereas NGO audits also record non-criminal incidents under
-their own and evolving criteria \citep{adl2025audit}. Harmonisation rules
-(\cref{sec:src-harmonise,sec:plan}) can align the lists only as far as
-their records contain the information needed to apply a common
-definition. Residual mismatch
-behaves like coverage error and cannot be fully separated from it.
+\emph{Scope harmonisation.} Harmonisation rules
+(\cref{sec:src-harmonise,sec:plan}) can align police and NGO lists only as
+far as their records contain the information needed to apply a common
+definition; residual mismatch behaves like coverage error and cannot be
+fully separated from it.
 
-\emph{Data access.} The methods assume record-level access to several
-lists. Police records, NGO case files and community reports contain
-sensitive information about victims who did not consent to being linked.
-Obtaining such data will require data-sharing agreements,
-privacy-preserving linkage \citep[e.g.,][]{schnell2009} and disclosure
-control for small cells \citep{hundepool2012}, possibly with formal
-privacy guarantees \citep{dwork2014}. Each of these degrades linkage
-quality or precision to some degree. Encodings for privacy-preserving
-linkage can themselves be attacked (\cref{sec:ethics-pprl}), and the ethics
-protocol of \cref{sec:ethics} may rightly rule out some linkages
-altogether.
+\emph{Data access.} The methods need record-level access to sensitive
+records of victims who did not consent to linkage. Agreements,
+privacy-preserving linkage \citep{schnell2009}, disclosure control
+\citep{hundepool2012} and formal privacy \citep{dwork2014} each degrade
+linkage quality or precision, encodings can be attacked
+(\cref{sec:ethics-pprl}), and the ethics protocol may rightly rule out some
+linkages altogether.
 
 \emph{The closed-population idealisation.} Incidents occur in continuous
 time, lists have different reporting windows and lags, and records are
@@ -79,16 +73,29 @@ concentrated at period boundaries and in lists with long reporting delays.
 \emph{Approximate linkage-error models.} The operator
 $\Lop(\delta,\varepsilon)$ assumes that detachments and false merges occur
 independently across records, at rates that are at most list-specific
-(\cref{rem:link-listspecific}). Real linkage errors
-cluster: they are more frequent for incidents in dense places, for generic
-incident descriptions and for records with missing fields, and they may be
-correlated with capture history itself. The correction of
-\cref{cor:linkcorrect} should therefore be read as a first-order adjustment.
-Propagating linkage uncertainty by mixing over linkage draws
-(\cref{alg:pipeline}) is preferable whenever record-level comparison data are
-available. The modular posterior used there (\cref{eq:models-cut})
-deliberately ignores the information that the capture model carries about
-which records match, trading some efficiency for robustness.
+(\cref{rem:link-listspecific}). It has no move for a \emph{swap}, in which a
+record is linked to the wrong partner. A swap leaves the table unchanged,
+but an audit counts it as missed pairs plus false edges, so a correction at
+audit-based rates removes errors that are not there (\cref{rem:link-swaps}).
+In our
+simulation, where records carry realistic attribute noise and are linked by
+FS-EM, swaps dominate and the correction does over-correct
+(\cref{sec:simulation}). Real errors also cluster in dense places, in generic
+incident descriptions and in records with missing fields, and may be
+correlated with capture history itself. The correction is therefore a
+diagnostic. Mixing over linkage draws (\cref{alg:pipeline}) is our primary
+approach, but it propagates only the uncertainty that the linkage posterior
+expresses and cannot remove a bias shared by every draw; the random audit
+and the calibration study of \cref{sec:plan-validation} are the guard. The
+modular posterior (\cref{eq:models-cut}) also ignores the information that
+the capture model carries about which records match, trading some
+efficiency for robustness.
+
+\emph{Unevaluated components.} The small-area model of
+\cref{sec:models-sae} is specified but has not been evaluated by simulation,
+and the sensitivity devices and linkage diagnostics of the analysis plan are
+to be tested on synthetic data before registration. Until then their
+operating characteristics are unknown.
 
 \paragraph{Extensions}
 Three extensions seem most valuable. First, \emph{open populations and
@@ -99,15 +106,14 @@ nowcasting of reporting delays. Second, \emph{online incidents}: here the
 unit of analysis is itself unsettled, and platform moderation and automated
 detection act as lists with their own selection and classification error, a
 direct analogue of the funnel's classification stage. Third,
-\emph{international comparison}. In the United Kingdom the Community Security Trust maintains a
-long-running list of antisemitic incidents and documents the share it receives
-from the police \citep{cst2026incidents}. The European Union Agency for
-Fundamental Rights has surveyed Jewish people in several member states about
-their experiences of antisemitism and about non-reporting
-\citep{fra2018antisemitism,fra2024antisemitism}; see
-\cref{sec:src-community,sec:src-surveys}. Combining such sources country by
-country, with the funnel decomposition as a common accounting framework, would allow cross-national
-comparisons of reporting, not only of recorded counts.
+\emph{international comparison}. Community lists such as the UK's
+Community Security Trust, which documents its police referrals
+\citep{cst2026incidents}, and surveys of Jewish people's experiences of
+non-reporting \citep{fra2018antisemitism,fra2024antisemitism} exist outside
+the United States (\cref{sec:src-community,sec:src-surveys}). Combined
+country by country, with the funnel as a common accounting framework, they
+would allow cross-national comparisons of reporting, not only of recorded
+counts.
 
 \paragraph{Why measure what is missing}
 A count that omits its dark figure can mislead in both directions. Rising

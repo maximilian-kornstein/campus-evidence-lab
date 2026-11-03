@@ -23,13 +23,24 @@ For exponential kernels we also report a decay estimate
 ``r_kj = sum_l Theta_l[k,j] / sum_l l Theta_l[k,j]``. This is exact for
 geometric lag weights and p = infinity.
 
-Accuracy and caveats. The approximation error is O(Delta). The lag sum is a
-right-endpoint Riemann sum of int Phi, so for an exponential kernel
-``sum_l Theta_l ~= A (beta Delta) / (e^{beta Delta} - 1) ~= A (1 - beta Delta / 2)``.
-Excitation inside a bin is not captured, and the truncation at lag p biases A
-down by about ``A e^{-beta p Delta}``. Use beta*Delta <~ 0.1 and
-p*Delta >~ 5/beta. Under coarse binning (e.g. daily counts with
-within-day contagion) A is underestimated.
+Accuracy and caveats. The approximation error is O(Delta). The first-order
+mapping Theta_l ~= Delta Phi(l Delta) has, for an exponential kernel, the lag
+sum ``A (beta Delta) / (e^{beta Delta} - 1) ~= A (1 - beta Delta / 2)`` (a
+right-endpoint Riemann sum of int Phi), but that is NOT the limit of the fitted
+lag sum. For a stationary univariate exponential Hawkes process with branching
+ratio n, the CLS lag sum converges (number of bins, then p, to infinity) to
+the n_Delta of Prop prop:est-binning, with
+
+    n_Delta = n - (1/2) n (1 - n) beta Delta + O(Delta^2),
+
+i.e. the first-order attenuation is the Riemann-sum value times (1 - n).
+Example: n = 0.5 and beta Delta = 0.5 give n_Delta = 0.4413 exactly (CLS on
+simulated data agrees), 0.4375 from the expansion and 0.385 from the Riemann
+sum. Truncation at lag p biases A down further, by about
+``A e^{-beta p Delta}``. Use beta*Delta <~ 0.1 and p*Delta >~ 5/beta. Under
+coarse binning (e.g. daily counts with within-day contagion) A is
+underestimated. For M > 1 no closed form is given here; the univariate
+expansion is a guide only. INAR is not used in the simulation study (E1-E6).
 
 Estimators: ``method="cls"`` is conditional least squares (OLS on the lagged
 design, as in Kirchner), ``"nnls"`` is CLS with nonnegativity, and

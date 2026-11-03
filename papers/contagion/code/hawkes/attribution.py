@@ -199,15 +199,31 @@ def expected_counts(spec: HawkesSpec, t0: float, t1: float, A=None) -> dict:
 
 
 def spillover(spec: HawkesSpec, shock_index: int, H: float, through) -> dict:
-    """Counterfactual spillover of shock e through ``through``.
+    """Counterfactual spillover of shock e through ``through``: the shock-e
+    contagion computed with A minus the shock-e contagion computed with the
+    entries selected by ``through`` set to zero (all other parameters fixed).
 
-    through : int j (zero column A[:, j], i.e. all excitation by stream j), a
-        tuple (k, j) (zero the single channel j -> k), or an (M, M) bool mask
-        of entries to zero.
+    through : which entries of A are zeroed.
+        * int j: the WHOLE column A[:, j], i.e. every excitation BY stream j,
+          including j -> j self-excitation and j -> j' for other streams j'
+          of the same type. This is NOT the online channel of Def
+          def:at-channel when j is an online stream: that definition zeroes
+          only the online -> offline entries and keeps online -> online
+          excitation (Sec sec:at-channel), so ``through=j`` removes more and
+          answers a different question ("all paths through stream j").
+        * tuple (k, j): the single entry A[k, j] (channel j -> k).
+        * (M, M) bool mask: exactly the True entries. For Def def:at-channel,
+          pass mask[np.ix_(offline, online)] = True (the E matrix of
+          Sec sec:at-channel); this is what run_experiments.channel_mask
+          builds for E1/E5, so the reported sigma_k follow the definition.
+
+    By Prop prop:at-channel(a), with a mask the result equals the expected
+    number of shock-e descendants whose ancestral line uses at least one
+    masked entry (checked by Monte Carlo in E5).
 
     Returns dict(horizon (M,), infinite (M,), share_horizon (M,),
-    share_infinite (M,)). The shares are relative to the shock-e contagion
-    in each stream (NaN where that is 0).
+    share_infinite (M,), mask (M, M)). The shares are relative to the shock-e
+    contagion in each stream (NaN where that is 0).
     """
     M = spec.M
     mask = np.zeros((M, M), bool)
@@ -250,7 +266,8 @@ def decompose_surge(
     background : "process" (exact, for the process started empty at time 0, as
         simulated) or "stationary" (H (I - A)^{-1} mu_bar; constant mu only).
     spillover_through : optional column j, entry (k, j) or mask, passed to
-        :func:`spillover`.
+        :func:`spillover` (an int zeroes the whole column, which is not the
+        online channel of Def def:at-channel; use the online -> offline mask).
 
     Returns a dict with scalar totals ``background``, ``other_shocks``,
     ``direct``, ``contagion``, ``total`` (summed over streams); ``by_stream``

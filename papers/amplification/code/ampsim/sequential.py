@@ -217,3 +217,44 @@ def c_alpha(alpha):
     """prop:power(c): radius constant of the tuned normal-mixture boundary."""
     a = -2 * np.log(alpha) + np.log(1 - 2 * np.log(alpha))
     return float(np.sqrt(2 * (1 + 1 / a) * np.log(np.sqrt(1 + a) / alpha)))
+
+
+# ---------------------------------------------------------------------------------------------
+# alg:sequential as revised by DESIGN: delta-method normal-mixture CS for log AR on the
+# confirmed-flagged statistic Y_u = Qbar_u * Phat_u, widened by the sensitivity-ratio range
+# ---------------------------------------------------------------------------------------------
+def mixture_a(alpha):
+    return -2 * np.log(alpha) + np.log(1 - 2 * np.log(alpha))
+
+
+def alg1_cs(Ya, Yr, looks, alpha, t_star, lam_range=(1.0, 1.0), burn=1):
+    """Algorithm 1 (alg:sequential) for R replications at once.
+
+    Ya, Yr  (R, N) paired confirmed-flagged statistics in pair order; looks (W,) numbers of pairs after each wave.
+    Returns dict with (R, W) arrays: L, U (running intersection over waves > burn; -inf/+inf before),
+    lo, hi (the per-look sets C_t), lth (log theta_hat), h (radius)."""
+    R, N = Ya.shape
+    r2 = mixture_a(alpha) / float(t_star)
+    ca, cr = np.cumsum(Ya, 1), np.cumsum(Yr, 1)
+    caa, crr, car = np.cumsum(Ya * Ya, 1), np.cumsum(Yr * Yr, 1), np.cumsum(Ya * Yr, 1)
+    W = len(looks)
+    out = {k: np.zeros((R, W)) for k in ("L", "U", "lo", "hi", "lth", "h")}
+    L = np.full(R, -np.inf)
+    U = np.full(R, np.inf)
+    llo, lhi = np.log(lam_range[0]), np.log(lam_range[1])
+    for w, t in enumerate(looks):
+        ya, yr = ca[:, t - 1] / t, cr[:, t - 1] / t
+        ok = (ya > 0) & (yr > 0)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            lth = np.log(ya / yr)
+            s2 = (caa[:, t - 1] / ya ** 2 + crr[:, t - 1] / yr ** 2 - 2 * car[:, t - 1] / (ya * yr)) / t
+        h = np.sqrt(np.maximum(s2, 0.0)) * normal_mixture_radius(t, 1.0, alpha, r2)
+        lo = np.where(ok, lth - lhi - h, -np.inf)
+        hi = np.where(ok, lth - llo + h, np.inf)
+        if w >= burn:
+            L = np.maximum(L, lo)
+            U = np.minimum(U, hi)
+        out["L"][:, w], out["U"][:, w] = L, U
+        out["lo"][:, w], out["hi"][:, w] = lo, hi
+        out["lth"][:, w], out["h"][:, w] = np.where(ok, lth, np.nan), h
+    return out

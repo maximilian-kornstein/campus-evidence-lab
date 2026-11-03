@@ -123,7 +123,8 @@ def main():
                     for k in ("external_pooled", "external_strat"):
                         x = u[k]
                         w(f"| {p} | {U} | {k} | {pc(x['AA']['coverage'])} (cluster) | {pc(x['logAR']['coverage'])} (cluster) | "
-                          f"{f(x['AR_median'])} | {f(x['logAR_sd_mc'])} / {f(x['logAR_sd_delta'])} |")
+                          f"{f(x['AR_median'])} | {f(x['logAR_sd_mc'])} / {f(x['logAR_sd_delta'])} (median {f(x.get('logAR_sd_delta_median'))}; "
+                          f"kappa_Sp {f(x.get('kappa_Sp'))}) |")
             w("")
 
     if "E2" in r:
@@ -245,39 +246,69 @@ def main():
     if "E5" in r:
         e5 = r["E5"]
         c = e5["config"]
-        w("## E5: sequential audit (alg:sequential), reference chron, regime ND\n")
-        w(f"Pairs resampled from the ND pool; waves of {c['wave']} pairs; {c['m1']} coded flagged exposures per arm per wave; "
-          f"R = {c['R']} (betting R = {c['R_bet']}, power check R = {c['R_power']}); N_max = {c['N_max']} pairs; "
-          f"rho_J range {c['rho_range']}; mixture tuned to t* = {c['t_star']}; c_alpha = {e5['c_alpha']}.\n")
-        w("| persona | AR | rho_J | coverage from wave 1 / 2 (%) primary | rho known | protocol (alpha .0125) | P(excl. 1) at wave 8 / 40 / 80 | "
-          "median log-width wave 8 / 80 | repeated Wald cov. % | AA plug-in CS cov. % | betting cov. %; log-width t=40/200 |")
-        w("|---|---|---|---|---|---|---|---|---|---|---|")
+        w("## E5: sequential audit (alg:sequential, Algorithm 1), reference chron\n")
+        w(f"Pairs resampled from the E1 pools (regimes {c['regimes']}); waves of {c['wave']} pairs; m = {c['m']} coded flagged "
+          f"positions per puppet; Y_u = Qbar_u * Phat_u; R = {c['R']} audits (betting R = {c['R_bet']}); N_max = {c['N_max']} pairs; "
+          f"mixture tuned to t* = {c['t_star']}; c_alpha = {e5['c_alpha']}; protocol alpha = {c['alpha_protocol']}, delta = {c['delta']}, "
+          f"W_max = {c['W_max']}. 'null' = both arms drawn from the reference pool (AR = 1).\n")
+        w("| persona | regime | case | AR | lambda_S | variant | coverage all waves % (MCSE) | coverage to W_max % | "
+          "P(excl. 1) wave 2/4/8/16/40 % | median width wave 8 / 80 |")
+        w("|---|---|---|---|---|---|---|---|---|---|")
         for p in PERS:
-            v = e5["personas"][p]
-            fp = v["fieller"]["primary"]
-            ex = fp["excludes_1_by_wave"]
-            lw = fp["median_log_width_by_wave"]
-            b = v["betting_exact"]
-            w(f"| {p} | {f(v['AR'])} | {f(v['rho_J'])} | {pc(fp['coverage_from_wave1'])} / {pc(fp['coverage_from_wave2'])} | "
-              f"{pc(v['fieller']['rho_known']['coverage_from_wave1'])} | {pc(v['fieller']['protocol']['coverage_from_wave1'])} | "
-              f"{pc(ex.get('8'))} / {pc(ex.get('40'))} / {pc(ex.get('80'))} | {f(lw.get('8'), 2)} / {f(lw.get('80'), 2)} | "
-              f"{pc(v['repeated_wald']['coverage_all_looks'])} | {pc(v['aa_cs']['coverage_from_wave1'])} | "
-              f"{pc(b['coverage_all_t'])}; {f(b['median_log_width'].get('40'), 2)}/{f(b['median_log_width'].get('200'), 2)} |")
+            for g, rr in e5["personas"][p].items():
+                for case in ("alt", "null"):
+                    if case not in rr:
+                        continue
+                    for k, v in rr[case].items():
+                        if not k.startswith("a0"):
+                            continue
+                        ex = v["excludes_0_by_wave"]
+                        mw = v["median_width_by_wave"]
+                        w(f"| {p} | {g} | {case} | {f(rr['AR'])} | {f(rr['lambda_S'])} | {k} | {pc(v['coverage_all_waves'])} "
+                          f"({pc(v['coverage_all_waves_mcse'])}) | {pc(v['coverage_to_Wmax'])} | "
+                          + "/".join(pc(ex.get(x)) for x in ("2", "4", "8", "16", "40")) + f" | {f(mw.get('8'), 2)} / {f(mw.get('80'), 2)} |")
         w("")
-        w("Protocol decisions (alpha = 0.0125 per persona, delta = 1.25):\n")
+        w("Stopping and conclusions (rules S1-S2, tab:prot-decisions); wrong = conclusion contradicted by the true AR:\n")
         for p in PERS:
-            pr = e5["personas"][p]["fieller"]["protocol"]
-            for k in [k for k in pr if k.startswith("W_max_")]:
-                d = pr[k]
-                w(f"- {p}, {k}: mean stop wave {f(d['mean_stop_wave'], 2)}, stopped early {pc(d['stopped_early'])}%, decisions "
-                  + ", ".join(f"{kk} {pc(vv)}%" for kk, vv in d["decisions"].items()))
-        w("\nPower (prop:power, detection of the persona's AR against 1, alpha = 0.05, known error rates):\n")
+            for g, rr in e5["personas"][p].items():
+                for case in ("alt", "null"):
+                    if case not in rr:
+                        continue
+                    for k, v in rr[case].items():
+                        for kk in [x for x in v if isinstance(v, dict) and x.startswith("W_max_")]:
+                            d = v[kk]
+                            w(f"- {p} {g} {case} {k} {kk}: mean stop wave {f(d['mean_stop_wave'], 2)}, stopped early "
+                              f"{pc(d['stopped_early'])}%, wrong {pc(d['wrong_conclusion'], 2)}% (MCSE {pc(d['wrong_conclusion_mcse'], 2)}); "
+                              + ", ".join(f"{a_} {pc(b_)}%" for a_, b_ in d["decisions"].items()))
+        w("\nPeeking (fixed-sample 95% interval on the same statistic after every wave) and comparators:\n")
         for p in PERS:
-            pw = e5["personas"][p]["power"]
-            w(f"- {p}: A direct {f(pw['A_direct'], 4)}, A formula {f(pw['A_formula'], 4)}, A0 {f(pw['A0'], 4)}, L {f(pw['L'], 4)}; "
-              f"n_fix {f(pw['n_fix'], 1)}, n_seq {f(pw['n_seq'], 1)}; fixed-sample power at n_fix {f(pw.get('fixed_power_at_n_fix'))}; "
-              f"sequential power by n_seq {f(pw.get('seq_power_by_horizon'))}, mean stop {f(pw.get('seq_mean_stop'), 1)} pairs "
-              f"({f(pw.get('seq_mean_stop_over_n_fix'), 2)} x n_fix), known-nuisance coverage {f(pw.get('seq_known_coverage'))}")
+            for g, rr in e5["personas"][p].items():
+                for case in ("alt", "null"):
+                    if case not in rr:
+                        continue
+                    pk = rr[case]["peeking"]
+                    s_ = (f"- {p} {g} {case}: peeking coverage waves 1-8 {pc(pk['coverage_waves_1_to_Wmax'])}%, waves 2-8 "
+                          f"{pc(pk['coverage_waves_2_to_Wmax'])}%, all waves {pc(pk['coverage_all_waves'])}%, single look wave 8 "
+                          f"{pc(pk['coverage_single_look_wave8'])}%; rejects AR = 1 by wave 8 {pc(pk['rejects_AR1_by_Wmax'])}%, by last wave "
+                          f"{pc(pk['rejects_AR1_by_last_wave'])}%")
+                    if "betting_exact" in rr[case]:
+                        b = rr[case]["betting_exact"]
+                        s_ += (f"; exact betting coverage {pc(b['coverage_all_t'])}%, median log-width t=40/200/400 "
+                               + "/".join(f(b["median_log_width"].get(t), 2) for t in ("40", "200", "400"))
+                               + ", P(excl. 1) " + "/".join(pc(b["excludes_1_by"].get(t)) for t in ("40", "200", "400")) + "%")
+                    if "aa_cs" in rr[case]:
+                        a_ = rr[case]["aa_cs"]
+                        s_ += (f"; AA plug-in CS (b = 1) coverage {pc(a_['coverage_after_burn_in'])}% (MCSE {pc(a_['coverage_mcse'])}), "
+                               f"excludes 0 by wave 8 {pc(a_['excludes_0_by_wave8'])}%")
+                    w(s_)
+        w("\nPower (prop:power(c),(d); detection of the persona's AR against 1, alpha = 0.05, lambda_S = 1):\n")
+        for p in PERS:
+            pw = e5["personas"][p]["ND"]["alt"]["power"]
+            w(f"- {p}: L {f(pw['L'], 4)}; A_Y formula {f(pw['A_Y_formula'], 4)}, direct {f(pw['A_Y_direct'], 4)}; n_fix {f(pw['n_fix_Y'], 1)}, "
+              f"n_seq {f(pw['n_seq_Y'], 1)}, n_seq with lambda range {f(pw.get('n_seq_Y_lam5'), 1)}; fixed-sample power at n_fix "
+              f"{f(pw.get('fixed_power_at_n_fix_Y'))}; sequential power by horizon ({pw.get('horizon_waves')} waves) "
+              f"{f(pw.get('seq_power_by_horizon'))}, mean stop {f(pw.get('seq_mean_stop_pairs'), 1)} pairs "
+              f"({f(pw.get('seq_mean_stop_over_n_fix'), 2)} x n_fix)")
         w("")
     notes = os.path.join(a.results, "SUMMARY_notes.md")
     if os.path.exists(notes):

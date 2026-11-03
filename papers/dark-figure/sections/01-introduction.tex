@@ -34,13 +34,10 @@ to 11{,}862 incidents \citep{dojcrs2024}, while on a trend dataset restricted
 to agencies with comparable reporting in both years incidents fell by 0.6\%
 \citep{fbi2024crimenation}.
 
-Non-governmental audits see a different slice. ADL's Audit includes
-non-criminal incidents and draws on reports from victims, law enforcement,
-the media and partner organisations \citep{adl2025audit}. Community security
-organisations and campus or self-report portals have their own intake
-channels, definitions and audiences (\cref{sec:sources}). No single list is
-complete, each is selected through a different process, and the lists are not
-independent of one another.
+Non-governmental audits, community security organisations and campus or
+self-report portals see different slices, through their own intake channels
+and definitions (\cref{sec:sources}). No list is complete, each is selected
+by a different process, and the lists are not independent.
 
 \paragraph{Why multiple-systems estimation}
 When a closed population is partially enumerated by several overlapping
@@ -106,105 +103,84 @@ attributed where they are used.
   \item\label{contrib:id} \textbf{Identification and sensitivity.} Without a
   restriction on the highest-order interaction $\omega$ of the log-linear
   model, the dark figure is not identified (\cref{thm:nonid}; compare
-  \citealp{aleshinguendel2024}). Without a $K$-way interaction, the
-  maximum-likelihood estimate of the dark figure is an alternating product of
-  cell counts over the Boolean lattice $\{0,1\}^K$
-  \citep{fienberg1972,bishop1975}. We retain $\omega$ in this classical closed
-  form as an explicit sensitivity parameter, which enters as the factor
-  $e^{\pm\omega}$ (\cref{thm:closed}, \cref{fig:lattice}) and makes
-  offset-based sensitivity analysis \citep{gerritse2015} analytic. The bounds
-  are sharp (\cref{cor:bounds}), and the direction of bias is the sign of an
-  oriented interaction (\cref{prop:direction}). With three or more lists,
-  neither positive dependence nor heterogeneous visibility fixes that sign
-  (\cref{prop:id-hetero}); in a stylised three-list example the model without
-  a $K$-way interaction overstates the dark figure more than twelvefold
-  (\cref{ex:id-hetero}). Sensitivity analysis must therefore be two-sided
-  unless a known mechanism fixes the sign. Chao's lower bound
-  \citep{chao1987} holds under heterogeneity across incidents, but
-  heterogeneity across lists reverses it (\cref{thm:chao,prop:id-mt}), so we
-  use it as a diagnostic. We model referral dependence and show how provenance
-  metadata restore identification (\cref{prop:referral}). A sensitivity
-  frontier states how much unmeasured dependence a claim such as ``the dark
-  figure exceeds the police count'' can survive (\cref{thm:id-frontier}).
+  \citealp{aleshinguendel2024}). We retain $\omega$ in the classical
+  closed-form estimator, an alternating product of cell counts over the
+  Boolean lattice \citep{fienberg1972,bishop1975}, as an explicit sensitivity
+  parameter entering as the factor $e^{\pm\omega}$ (\cref{thm:closed},
+  \cref{fig:lattice}); this makes offset-based sensitivity analysis
+  \citep{gerritse2015} analytic, with sharp bounds (\cref{cor:bounds}). The
+  direction of bias is the sign of an oriented interaction
+  (\cref{prop:direction}), which, with three or more lists, neither positive
+  dependence nor heterogeneous visibility fixes (\cref{prop:id-hetero}); in a
+  stylised three-list example the model without a $K$-way interaction
+  overstates the dark figure more than twelvefold (\cref{ex:id-hetero}).
+  Sensitivity analysis must therefore be two-sided. Chao's lower bound
+  \citep{chao1987} is reversed by heterogeneity across lists
+  (\cref{thm:chao,prop:id-mt}), so we use it as a diagnostic. We model
+  referral dependence and show how provenance restores identification
+  (\cref{prop:referral}), and give a sensitivity frontier for policy claims
+  (\cref{thm:id-frontier}).
   \item\label{contrib:link} \textbf{Linkage error as a linear operator.}
-  Following the dual-system analysis of matching error by \citet{ding1994}
-  and its multi-list extensions \citep{ding1996,diconsiglio2018}, we
-  represent imperfect record linkage under a stylised error model (LE) as an
-  operator $\Lop(\delta,\varepsilon)$ on the true capture-history table, where
-  $\delta$ and $\varepsilon$ are per-record probabilities of a missed and a
-  false match. We derive first-order bias coefficients for the $K$-list
-  estimator (\cref{thm:linkbias}). Under independent capture, false matches do
-  more damage when lists are sparse and missed matches when they are dense,
-  with a closed-form crossover (\cref{cor:link-indep,rem:link-reading}).
-  Missed matches inflate the two-list dark figure, but with three or more
-  strongly dependent lists that direction can reverse
-  (\cref{rem:link-reversal}). We derive the correction implied under LE
-  (\cref{cor:linkcorrect}) and a total-variance decomposition that quantifies
-  how far plug-in intervals undercover (\cref{prop:totalvar}). LE has no move
-  for a swap, a record linked to the wrong partner, and our simulation shows
-  that the correction over-corrects when swaps dominate. Mixing over linkage
-  draws is therefore our primary approach, and the correction is a
-  diagnostic. We also design clerical review and a random audit of linkage
-  quality (\cref{thm:review,alg:review,prop:link-audit}).
+  Following \citet{ding1994} and its multi-list extensions
+  \citep{ding1996,diconsiglio2018}, we represent linkage error under a
+  stylised model (LE) as an operator $\Lop(\delta,\varepsilon)$ on the
+  capture-history table, with per-record probabilities $\delta$ of a missed
+  and $\varepsilon$ of a false match, and derive first-order bias
+  coefficients for the $K$-list estimator (\cref{thm:linkbias}). Under
+  independent capture, false matches do more damage when lists are sparse and
+  missed matches when they are dense, with a closed-form crossover
+  (\cref{cor:link-indep,rem:link-reading}); with three or more strongly
+  dependent lists the usual direction can reverse (\cref{rem:link-reversal}).
+  We derive the correction implied under LE (\cref{cor:linkcorrect}), a
+  total-variance decomposition (\cref{prop:totalvar}), and designs for
+  clerical review and a random audit (\cref{thm:review,prop:link-audit}). LE
+  has no move for a swap, a record linked to the wrong partner
+  (\cref{rem:link-swaps}), and our simulation shows that the correction
+  over-corrects when swaps dominate;
+  mixing over linkage draws is therefore primary, and the correction a
+  diagnostic.
   \item\label{contrib:bayes} \textbf{A Bayesian model.} We assemble the
-  latent-class MSE of \citet{manriquevallier2016}, with a Dirichlet-process
-  prior (\cref{eq:lcmcr}), covariate-dependent capture, and a spatiotemporal
-  small-area model for state--year counts (\cref{eq:smallarea}) in which
-  police-list coverage enters as a known offset computed from agency
-  participation, so that breaks such as the 2021 transition are absorbed by
-  data. The small-area model is specified, not evaluated. Linkage uncertainty
-  is propagated through a modular (``cut'') posterior that mixes over draws of
-  the linkage structure (\cref{eq:models-cut}, \cref{alg:pipeline}), in the
-  spirit of \citet{tancredi2011} and \citet{sadinle2018}.
+  latent-class MSE of \citet{manriquevallier2016} (\cref{eq:lcmcr}), into
+  which the sensitivity parameters enter explicitly (\cref{eq:models-offset}),
+  covariate-dependent capture, and a spatiotemporal small-area model
+  (\cref{eq:smallarea}) with police coverage as a known offset; the
+  small-area model is specified, not evaluated. Linkage uncertainty is
+  propagated by a modular (``cut'') posterior that mixes over linkage draws
+  (\cref{alg:pipeline}), as in \citet{sadinle2018}.
   \item\label{contrib:funnel} \textbf{Where antisemitic incidents go missing.}
-  We write the police count as a multiplicative reporting funnel
-  (\cref{prop:funnel}, \cref{fig:funnel}) and state which data identify each
-  stage. No list-based method can see incidents that never reach a recording
-  channel, so that stage requires a victim survey. A Shapley-value
-  decomposition attributes the dispersion of recorded rates across
-  jurisdictions, or the gap between two of them, to incidence and to each
-  reporting stage (\cref{thm:shapley}).
+  We write the police count as a multiplicative funnel (\cref{prop:funnel},
+  \cref{fig:funnel}) and state which data identify each stage; incidents that
+  never reach a recording channel require a victim survey. A Shapley
+  decomposition attributes differences in recorded rates across
+  jurisdictions to incidence and to each stage (\cref{thm:shapley}).
   \item\label{contrib:sim} \textbf{A simulation study.} In synthetic worlds
-  with heterogeneous reportability, referral dependence and noisy records, we
-  compare Lincoln--Petersen, log-linear model averaging, latent-class DP-MSE
-  and Chao's estimator, and naive, linkage-corrected and
-  uncertainty-propagating pipelines, on bias, root-mean-squared error and
-  interval coverage (\cref{sec:simulation}). Simulated records carry
+  with heterogeneous reportability, referral and noisy records, we compare
+  estimators and naive, linkage-corrected and uncertainty-propagating
+  pipelines on bias, error and coverage (\cref{sec:simulation}). Simulated records carry
   realistic attribute noise and are linked by FS-EM (\cref{alg:fsem}); LE
   enters only through the correction, which is thereby tested under
   misspecification.
-  \item\label{contrib:plan} \textbf{A pre-registered analysis plan.} We fix
-  in advance how FBI hate-crime data, the ADL Audit, community security
-  organisations, campus data and the NCVS would be harmonised, linked under
-  privacy constraints and analysed, with New York City as the candidate pilot
-  (\cref{sec:plan}), together with an ethics protocol (\cref{sec:ethics}).
+  \item\label{contrib:plan} \textbf{A pre-registered analysis plan} for a
+  New York City pilot (\cref{sec:plan}), with an ethics protocol
+  (\cref{sec:ethics}).
 \end{enumerate}
 
 \paragraph{Related work}
-The effect of matching error on dual-system estimates was analysed by
-\citet{ding1994}, with multi-list extensions by \citet{ding1996} and
-\citet{diconsiglio2018}. Joint Bayesian models of record linkage and
-population size were developed by \citet{tancredi2011}. \citet{sadinle2018}
-showed how to propagate linkage uncertainty into MSE for human-rights data,
-building on Bayesian bipartite matching \citep{sadinle2017} and the
-record-linkage theory of \citet{fellegi1969}. Heterogeneity in capture
-probabilities has been addressed through latent-class and Dirichlet-process
-models \citep{manriquevallier2016} and through lower bounds
-\citep{chao1987}. On hate crime, the under-reporting literature documents the
-gap between victimisation and police statistics \citep{pezzella2019} and the
-fragility of bias classification \citep{mcdevitt2003}. As far as we know,
-these strands have not been brought together for antisemitic incidents, where
-referral between lists, definitional mismatch and shifting police coverage
-occur together.
+Joint Bayesian models of record linkage and population size were developed
+by \citet{tancredi2011}, and \citet{sadinle2018} propagated linkage
+uncertainty into MSE for human-rights data, building on \citet{sadinle2017}
+and \citet{fellegi1969}. Heterogeneity in capture has been addressed through
+latent classes \citep{manriquevallier2016} and lower bounds
+\citep{chao1987}. The hate-crime literature documents under-reporting
+\citep{pezzella2019} and the fragility of bias classification
+\citep{mcdevitt2003}. As far as we know, these strands have not been brought
+together for antisemitic incidents, where referral, definitional mismatch
+and shifting police coverage occur together.
 
 \paragraph{Roadmap}
-\Cref{sec:sources} describes the candidate lists and \cref{sec:framework} the
-population, lists and capture model. \Cref{sec:identification} develops
-identification, sensitivity bounds and referral dependence, \cref{sec:linkage}
-record-linkage error and clerical review, and \cref{sec:models} the Bayesian
-model. \Cref{sec:funnel} develops the reporting funnel, \cref{sec:simulation}
-reports the simulation study, \cref{sec:plan} gives the pre-registered
-analysis plan and \cref{sec:ethics} the ethics protocol. \Cref{sec:discussion}
-discusses limitations. Proofs are in \cref{app:idproofs,app:linkproofs}, with
-the remaining funnel proof in \cref{app:bayes-proofs}; computational and
-simulation details are in \cref{app:computation,app:simdetails}.
+\Cref{sec:sources,sec:framework} describe the lists and the capture model,
+\cref{sec:identification,sec:linkage,sec:models,sec:funnel} develop the
+methods, \cref{sec:simulation} reports the simulation study,
+\cref{sec:plan,sec:ethics} give the analysis plan and ethics protocol, and
+\cref{sec:discussion} discusses limitations. Proofs and details are in the
+appendices.
