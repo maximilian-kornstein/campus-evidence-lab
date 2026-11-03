@@ -9,8 +9,8 @@ implemented in the accompanying code (\texttt{code/hawkes}).
 
 \subsection{Recursions for exponential kernels}\label{app:comp-rec}
 
-Let $s_1<\dots<s_n$ be the merged event times, $d_m$ the stream of $s_m$, and
-$\Delta_m=s_m-s_{m-1}$. For each pair $(k,j)$ define the decay sums
+Fix a pair $(k,j)$. Let $s_1<s_2<\cdots$ be the merged event times of streams $j$ and
+$k$ only, $d_m$ the stream of $s_m$, and $\Delta_m=s_m-s_{m-1}$. Define the decay sums
 \[
   R_{kj}(t)=\sum_{l:\,t^j_l<t}e^{-\beta_{kj}(t-t^j_l)},\qquad
   R^{(1)}_{kj}(t)=\sum_{l:\,t^j_l<t}(t-t^j_l)\,e^{-\beta_{kj}(t-t^j_l)} .
@@ -63,6 +63,10 @@ window.
 recursion with $\Delta_m=0$ would count one as the parent of the other. Ties are therefore
 broken first, by randomisation within the recorded resolution (\cref{sec:plan-sens}).
 
+\paragraph{Cost.} The recursion for pair $(k,j)$ costs $O(n_j+n_k)$, so all pairs together
+cost $O(Mn_{\mathrm{ev}})$. Running it over all $n_{\mathrm{ev}}$ merged events for every pair, as one
+state vector updated at every incident, would cost $O(M^2n_{\mathrm{ev}})$.
+
 \paragraph{Parallelism.} If no parameter is shared across rows of the model, the
 likelihood separates by target stream (\cref{sec:est-mle}). Each row can then be fitted
 on its own processor.
@@ -70,10 +74,15 @@ on its own processor.
 \subsection{Background integrals}\label{app:comp-bg}
 
 The log-linear background needs $\int_0^Te^{B(t)^{\top}\theta}\,\dd t$, together with its
-gradient $\int Be^{B^{\top}\theta}$ and Hessian $\int BB^{\top}e^{B^{\top}\theta}$. On
-each knot interval the exponent is a polynomial, so the integrand is smooth. We use a
-composite 8-point Gauss--Legendre rule, with each knot interval split into 16 cells, and
-reuse the same nodes for all three integrals. Seasonal (Fourier) bases use uniform cells.
+gradient $\int Be^{B^{\top}\theta}$ and Hessian $\int BB^{\top}e^{B^{\top}\theta}$. We
+use a composite 8-point Gauss--Legendre rule and reuse the same nodes for all three
+integrals. The cells must be chosen so that the integrand is smooth on each of them. For
+cubic B-splines alone, the exponent is a polynomial on each knot interval, and our
+implementation splits each knot interval into 16 cells. Day-of-week and holiday indicators
+make the integrand jump at day boundaries. With such indicators, the cells must also be
+split at every day boundary, giving at least one cell per day; our implementation
+currently supports smooth bases only. Seasonal (Fourier) bases use uniform cells. The
+basis evaluated at the incidents costs $O(n_{\mathrm{ev}}K_b)$ per gradient evaluation.
 The M-step for $\theta_k$ (\cref{prop:est-mstep}(a)) takes Newton steps with gradient
 $\sum_ip^{k,0}_iB(t^k_i)-\int B\mu_k-\lambda^{\mathrm{pen}}_kP\theta_k$ and negative
 Hessian $\int BB^{\top}\mu_k+\lambda^{\mathrm{pen}}_kP$. Step halving ensures that the
@@ -85,11 +94,11 @@ M-step objective increases, so the iteration remains a generalised EM and
 Synthetic data for the simulation study, and parametric bootstrap replicates, are drawn by
 one of two exact algorithms.
 
-\paragraph{Ogata's thinning.} Between incidents and away from calendar times, every term
-of $\lambda_k$ is nonincreasing. The excitation and shock terms decay exponentially, and
-the background is bounded by $\bar\mu_k\ge\sup_{[0,T]}\mu_k$. So the total intensity
-evaluated just after the current time bounds the future intensity until the next
-incident or calendar time. \Cref{alg:ogata} exploits this. Candidates come from a Poisson
+\paragraph{Ogata's thinning.} Between incidents and away from calendar times, the
+excitation and shock terms of $\lambda_k$ are nonincreasing, because they decay
+exponentially. A time-varying background need not be monotone, but it is bounded by
+$\bar\mu_k\ge\sup_{[0,T]}\mu_k$. So the sum of $\bar\mu_k$ and the current excitation and
+shock terms bounds the future intensity until the next incident or calendar time. \Cref{alg:ogata} exploits this. Candidates come from a Poisson
 process at the current bound and are accepted with probability $\lambda/\bar\lambda$.
 By the thinning theorem \citep{lewis1979,ogata1981}, the accepted points have intensity
 $\lambda$. After a rejection the bound is recomputed at the new time, which is valid
@@ -142,7 +151,7 @@ true branching labels.
 When $\spr(\Amat)<1$, the generations form a subcritical multitype Galton--Watson process.
 The algorithm then terminates almost surely, after an expected $\Mmat\bm m$ points, where
 $\bm m$ is the vector of expected immigrant counts. Each generation is a vectorised
-operation, so the cost is $O(Mn)$. For a stationary start, either simulate on $[-T_0,T]$
+operation, so the cost is $O(Mn_{\mathrm{ev}})$. For a stationary start, either simulate on $[-T_0,T]$
 and discard $[-T_0,0)$, or use perfect simulation \citep{moller2005}. The burn-in error
 decays with the cascade memory $1/\{\beta(1-n)\}$ (\cref{prop:th-spectrum}). Comparing the
 two algorithms on the same parameters is a useful unit test, since they share no code
@@ -153,18 +162,21 @@ beyond the model specification.
 Standard errors come from the observed information
 $\hat{\bm I}_{\mathrm{obs}}=-\nabla^2\ell_T(\hat\vartheta)$. Our implementation computes it
 by central differences of the exact log-likelihood, with relative step $10^{-4}$.
-Differencing the analytic gradient of \cref{app:comp-rec} is more accurate: it needs only
-$p$ gradient evaluations for $p$ free parameters, with $O(h^2)$ error in each entry. Two
-further details matter.
+Central differences of the analytic gradient of \cref{app:comp-rec} are more accurate.
+They need $2p$ gradient evaluations for $p$ free parameters and have $O(h^2)$ error in each
+entry; one-sided differences need only $p$ evaluations but have $O(h)$ error. Two further
+details matter.
 \begin{itemize}
   \item \emph{Boundary parameters.} Free parameters estimated on or near the boundary
     ($\hat\alpha_{kj}\approx0$, $\hat\beta_k\approx0$) are excluded from the inversion and
     flagged. Their sampling distribution is not normal (\cref{prop:lrt}(b)). Intervals for
     them come from the profile likelihood, the parametric bootstrap, or the posterior.
   \item \emph{Alternatives.} The information can also be assembled from complete-data
-    quantities via Louis's identity \citep{louis1982}. The predictable-variation form
-    $\sum_k\sum_i\lambda_k^{-2}\nabla\lambda_k\nabla\lambda_k^{\top}(t^k_i)$ is also
-    available, and it is positive semidefinite by construction.
+    quantities via Louis's identity \citep{louis1982}. Two further consistent forms are
+    positive semidefinite by construction: the optional (quadratic) variation of the
+    score, $\sum_k\sum_i\lambda_k^{-2}\nabla\lambda_k\nabla\lambda_k^{\top}(t^k_i)$, a sum
+    over incidents; and its predictable variation,
+    $\sum_k\int_0^T\lambda_k^{-1}\nabla\lambda_k\nabla\lambda_k^{\top}\,\dd t$.
 \end{itemize}
 Derived quantities use the delta method. For the multiplier,
 $\partial\Mmat/\partial\alpha_{kj}=\Mmat\bm e_k\bm e_j^{\top}\Mmat$ (\cref{eq:at-grad}).
@@ -176,11 +188,14 @@ bootstrap or posterior draws instead.
 
 \subsection{Tests and calibration}\label{app:comp-tests}
 
-\paragraph{Likelihood-ratio tests.} The null fit fixes $\alpha_{kj}=0$ exactly. The
-alternative is started from the null optimum with a small positive $\alpha_{kj}$, and also
-from the default multistart. Because the alternative nests the null, a null log-likelihood
-above the alternative's signals a local optimum. The alternative is then refitted from the
-null optimum. The statistic is $\max\{0,2(\hat\ell_1-\hat\ell_0)\}$.
+\paragraph{Likelihood-ratio tests.} The alternative is fitted first, with the default
+multistart. The null fit fixes $\alpha_{kj}=0$ exactly. It is started both from the
+alternative optimum, with $\alpha_{kj}$ set to $0$, and from the default multistart, and
+the better null optimum is kept. Because the alternative nests the null, a null
+log-likelihood above the alternative's signals a local optimum, and the alternative is then
+refitted from the null optimum. The statistic is $\max\{0,2(\hat\ell_1-\hat\ell_0)\}$. For
+the sup-statistic, each alternative fit fixes $\beta_{kj}$ at a grid value and starts from
+the null fit with a small positive $\alpha_{kj}$.
 
 \paragraph{Score process for the Davies problem.} At the null fit $\tilde\vartheta$, the
 score in the nuisance parameters vanishes when they are interior. The standardised
@@ -189,7 +204,7 @@ efficient score at decay $\beta$ is therefore
   \hat Z(\beta)=\frac{U_\alpha(\beta)}{\{I_{\alpha\alpha}(\beta)-I_{\alpha\xi}(\beta)I_{\xi\xi}^{-1}I_{\xi\alpha}(\beta)\}^{1/2}},\qquad
   U_\alpha(\beta)=\sum_i\frac{\beta R_{kj}(t^k_i;\beta)}{\tilde\lambda_k(t^k_i)}-G_{kj}(\beta).
 \]
-The information blocks are those of the predictable-variation form in
+The information blocks are those of the optional-variation form in
 \cref{app:comp-se}, with $\partial\lambda_k/\partial\alpha_{kj}=\beta R_{kj}(\cdot;\beta)$.
 Each grid point costs one recursion \eqref{eq:app-rec}. The whole path, and with it the
 sup-score statistic and the bound $p_{\mathrm D}$ of \cref{sec:est-lrt}, needs a single
@@ -203,12 +218,13 @@ positive value, reduces the number of EM iterations substantially.
 
 \subsection{Complexity and memory}\label{app:comp-cost}
 
-\Cref{tab:app-cost} summarises the costs. Here $n$ is the number of incidents, $M$ the
+\Cref{tab:app-cost} summarises the costs. Here $n_{\mathrm{ev}}$ is the number of incidents, $M$ the
 number of streams, $E$ the number of calendar events, $K_b$ the background basis size,
 $Q$ the number of quadrature nodes, $p$ the number of free parameters, $G$ the size of a
 decay grid, and $B$ the number of bootstrap or placebo replicates. No step stores an
-$n\times n$ array. Direct summation over pairs of incidents, by contrast, needs $O(n^2)$
-time, and $O(n^2)$ memory if the parent probabilities are stored.
+$n_{\mathrm{ev}}\times n_{\mathrm{ev}}$ array. Direct summation over pairs of incidents, by contrast,
+needs $O(n_{\mathrm{ev}}^2)$ time, and $O(n_{\mathrm{ev}}^2)$ memory if the parent probabilities are
+stored.
 
 \begin{table}[t]
 \centering
@@ -218,23 +234,24 @@ time, and $O(n^2)$ memory if the parent probabilities are stored.
 \toprule
 Step & Time & Memory\\
 \midrule
-Log-likelihood or gradient & $O(Mn+nE+QK_bM)$ & $O(n+M^2+QK_b)$\\
-EM iteration (E-step, M-step root solves) & $O(Mn+nE+r\,Mn)$, $r$ bisection steps & $O(n+M^2)$\\
+Log-likelihood or gradient & $O(Mn_{\mathrm{ev}}+{n_{\mathrm{ev}}}E+n_{\mathrm{ev}}K_b+QK_bM)$ & $O(n_{\mathrm{ev}}+M^2+QK_b)$\\
+EM iteration (E-step, M-step root solves) & $O(Mn_{\mathrm{ev}}+{n_{\mathrm{ev}}}E+n_{\mathrm{ev}}K_b+r\,Mn_{\mathrm{ev}})$ & $O(n_{\mathrm{ev}}+M^2)$\\
 Background Newton step (stream $k$) & $O\{(n_k+Q)K_b^2\}$ & $O\{(n_k+Q)K_b\}$\\
-Gibbs sweep (labels, conjugate updates) & $O(Mn+n\log n)$ & $O(n+M^2)$\\
-Histogram or spline kernels (any shape) & $O(nw)$ per EM iteration & $O(n)$\\
-Ogata thinning (\cref{alg:ogata}) & $O(M^2n_{\mathrm{cand}})$ & $O(n+M^2)$\\
-Cluster simulation & $O(Mn)$ expected & $O(n)$\\
+Gibbs sweep (labels, conjugate updates) & $O(Mn_{\mathrm{ev}}+n_{\mathrm{ev}}\log n_{\mathrm{ev}})$ & $O(n_{\mathrm{ev}}+M^2)$\\
+Histogram or spline kernels (any shape) & $O(n_{\mathrm{ev}}w)$ per EM iteration & $O(n_{\mathrm{ev}})$\\
+Ogata thinning (\cref{alg:ogata}) & $O\{(M^2+E)\,n_{\mathrm{cand}}\}$ & $O(n_{\mathrm{ev}}+M^2)$\\
+Cluster simulation & $O(Mn_{\mathrm{ev}})$ expected & $O(n_{\mathrm{ev}})$\\
 Observed information by differences & $O(p^2)$ likelihood evaluations & $O(p^2)$\\
 Sup-LR test, bootstrap & $O(BG)$ fits & as a fit\\
-Sup-score test, bootstrap & $O\{B(\text{null fit}+GMn)\}$ & as a fit\\
+Sup-score test, bootstrap & $O\{B(\text{null fit}+GMn_{\mathrm{ev}})\}$ & as a fit\\
 INAR($p_{\ell}$) by CLS, $N_{\mathrm{bin}}$ bins & $O(p_\ell N_{\mathrm{bin}}M^2+p_\ell^3M^3)$ & $O(p_\ell^2M^2)$\\
 \bottomrule
 \end{tabularx}
 \par\smallskip
 \begin{minipage}{\textwidth}\footnotesize
-$w$: mean number of incidents within the kernel support. $n_{\mathrm{cand}}$: number of
-thinning candidates, $n\int\bar\lambda/\int\lambda$ in expectation. $p_\ell$: number of
+$w$: mean number of incidents within the kernel support. $r$: root-search steps per
+M-step. $n_{\mathrm{cand}}$: number of
+thinning candidates, $n_{\mathrm{ev}}\int\bar\lambda/\int\lambda$ in expectation. $p_\ell$: number of
 INAR lags.
 \end{minipage}
 \end{table}

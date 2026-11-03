@@ -168,21 +168,21 @@ From $\Mmat(\Imat-\Amat)=\Imat$ we get $\Mmat-\Imat=\Mmat\Amat=\Amat\Mmat$, beca
 is a power series in $\Amat$. In the univariate case, $\Mmat=(1-n)^{-1}$ and
 $C(\infty)/\{D(\infty)+C(\infty)\}=(\Mmat-1)d_e/(\Mmat d_e)=1-(1-n)=n$.
 
-(c) Let $\bm g_r(u)=(\Phik^{*r}*\bm\nu_e)(\tau_e+u)$ be the mean intensity of
-generation $r$ of $N^e$ at lag $u$, and let $\bm G_r(H)=\int_0^H\bm g_r$. Then
-$\bm G_0=\bm D(H)$ and $\bm g_{r+1}(u)=\int_0^u\Phik(u-v)\bm g_r(v)\,\dd v$, so
+(c) Since $\Rker\ge0$, $\bar\Rker$ is nondecreasing and bounded by
+$\int_0^\infty\Rker=\Mmat-\Imat$. In \eqref{eq:at-C}, $\bar\Rker(H-v)\le\bar\Rker(H)$
+for $0\le v\le H$, so
 \[
-\bm G_{r+1}(H)=\int_0^H\Bigl(\int_0^{H-v}\Phik\Bigr)\bm g_r(v)\,\dd v\le\Amat\,\bm G_r(H).
+\bm C(H)\le\bar\Rker(H)\,S_e\int_0^H\bigl(\beta_k\psi_k(v)\bigr)_k\,\dd v
+=\bar\Rker(H)\,\bm D(H)\le(\Mmat-\Imat)\,\bm D(H).
 \]
-Since $\Amat\ge0$ preserves entrywise inequalities, induction gives
-$\bm G_r(H)\le\Amat^r\bm D(H)$. Therefore
-$\bm C(H)=\sum_{r\ge1}\bm G_r(H)\le\sum_{r\ge1}\Amat^r\bm D(H)=(\Mmat-\Imat)\bm D(H)$.
+In the univariate case $C\le\bar\Rker(H)D$. Since $x\mapsto x/(D+x)$ is increasing,
+$C/(D+C)\le\bar\Rker(H)/\{1+\bar\Rker(H)\}\le(\Mmat-1)/\Mmat=n$. The limit follows
+from (b).
 
-In the univariate case $C\le\frac{n}{1-n}D$. Since $x\mapsto x/(D+x)$ is increasing,
-\[
-\frac{C}{D+C}\le\frac{\tfrac{n}{1-n}D}{D+\tfrac{n}{1-n}D}=n .
-\]
-The limit follows from (b).
+With a common response kernel, $\bm D(H)=\Psi(H)\bm d_e$, so
+$\bm C(H)\le\Psi(H)(\Mmat-\Imat)\bm d_e=\Psi(H)\bm C(\infty)$. Since
+$D_k(H)=\Psi(H)d_{e,k}$, the same monotonicity gives
+$C_k(H)/\{D_k(H)+C_k(H)\}\le C_k(\infty)/\{d_{e,k}+C_k(\infty)\}$.
 
 (d) Apply \cref{lem:fc-future} at time $\tau_e$, proved in \cref{app:fc-future}.
 Conditionally on $\Hist_{\tau_e}$, the incidents after $\tau_e$ form a cluster process
@@ -432,29 +432,66 @@ law of the cluster process on $W$ depends on $t$ only through $\bm\nu^{\bm\xi}$ 
 The exponential terms depend on $s-t$ alone, so the dependence on $t$ is through
 $\bm\mu$ on $W$ and the future calendar.
 
-(d) Let $M=1$. If $u(t)=0$, then $\nu^{\xi}(s)=\mu(s)+xe^{-\beta(s-t)}$. If $\eta=\beta$,
-then $\nu^{\xi}(s)=\mu(s)+(x+u)e^{-\beta(s-t)}$. In both cases $\pi_t=g(x+u)$ for a
-function $g$ that is nondecreasing and continuous by (c).
+(d) Let $M=1$, and write $\nu^{x,u}(s)=\mu(s)+xe^{-\beta(s-t)}+ue^{-\eta(s-t)}$ and
+$\pi_t=g_t(x,u)$. By (c), $g_t$ is continuous and nondecreasing in both arguments.
 
-For strict monotonicity, let $0\le a<a'$ and couple as in (b), with $N^+$ an
-independent cluster process with immigrant intensity $(a'-a)e^{-\beta(s-t)}$. Then
+For strict monotonicity in $x$, let $0\le x<x'$ and couple as in (b), with $N^+$ an
+independent cluster process with immigrant intensity $(x'-x)e^{-\beta(s-t)}$. Then
 \[
-g(a')-g(a)=\Pr(N<c\le N+N^+)\ge\Pr(N=c-1)\Pr(N^+\ge1).
+g_t(x',u)-g_t(x,u)=\Pr(N<c\le N+N^+)\ge\Pr(N=c-1)\Pr(N^+\ge1).
 \]
-Here $\Pr(N^+\ge1)\ge1-\exp\{-(a'-a)(1-e^{-\beta\Delta})/\beta\}>0$. The number of
-immigrants in $W$ is Poisson with mean $m=\int_W\nu^{a}>0$, since $\mu>0$, and each
+Here $\Pr(N^+\ge1)\ge1-\exp\{-(x'-x)(1-e^{-\beta\Delta})/\beta\}>0$. The number of
+immigrants in $W$ is Poisson with mean $m=\int_W\nu^{x,u}>0$, since $\mu>0$, and each
 immigrant has no offspring at all with probability $e^{-n}$. Hence
 $\Pr(N=c-1)\ge e^{-m}m^{c-1}e^{-n(c-1)}/(c-1)!>0$.
 
-The immigrants contributed by the excitation are Poisson with mean
-$a(1-e^{-\beta\Delta})/\beta\to\infty$, so $g(a)\to1$ as $a\to\infty$. Since $\pi^*<1$,
-the set $\{a:g(a)\ge\pi^*\}$ is therefore a nonempty closed ray $[x^*_t,\infty)$, and
-the rule alerts if and only if $\lambda(t+)-\mu(t)\ge x^*_t$.
+The immigrants contributed by $x$ are Poisson with mean
+$x(1-e^{-\beta\Delta})/\beta\to\infty$, so $g_t(x,u)\to1$ as $x\to\infty$. Since
+$\pi^*<1$, the set $\{x:g_t(x,u)\ge\pi^*\}$ is a nonempty closed ray
+$[x^*_t(u),\infty)$, and the rule alerts if and only if $x(t)\ge x^*_t(u(t))$.
+Because $g_t$ is nondecreasing in $u$, $x^*_t(u)$ is nonincreasing in $u$.
+
+If $\eta=\beta$, then $\nu^{x,u}$ depends on $(x,u)$ only through $x+u$, and so does
+$g_t$. The same holds trivially when $u\equiv0$. In either case the rule alerts if and
+only if $x+u\ge x^*_t(0)$, that is, $\lambda(t+)\ge\mu(t)+x^*_t(0)$. The bound
+$|g_t(x,u)-g_t(x,0)|\le L_tu$ is the Lipschitz property of (c).
 
 The comparative statics follow from three facts. First, $\Pr(N\ge c)$ is nonincreasing
-in $c$. Second, the set $\{g\ge\pi^*\}$ shrinks as $\pi^*$ grows. Third,
+in $c$. Second, the set $\{g_t\ge\pi^*\}$ shrinks as $\pi^*$ grows. Third,
 $N(t,t+\Delta]$ is nondecreasing in $\Delta$ on every realisation of the future, whose
 law does not depend on $\Delta$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{lem:fc-is}}{the importance-weight lemma}}\label{app:fc-is}
+
+Condition throughout on the history up to $t-L$. Mark each incident in $(t-L,t]$ as
+available by $t$ or not. By \cref{prop:nowcast}(a), the marked process has
+$\mathcal G^\circ$-intensities $p_kF_k(t-s)\lambda_k(s)$ for available and
+$\{1-p_kF_k(t-s)\}\lambda_k(s)$ for unavailable incidents. Its density with respect to
+a unit-rate Poisson reference on $(t-L,t]$, one for each mark and stream, is therefore
+\[
+\prod_{i\in O}p_{k_i}F_{k_i}(t-s_i)\lambda_{k_i}(s_i)
+\prod_{j\in U}\{1-p_{k_j}F_{k_j}(t-s_j)\}\lambda_{k_j}(s_j)\,
+\exp\Bigl\{-\sum_k\int_{t-L}^t\lambda_k(s)\,\dd s\Bigr\}
+\]
+up to a constant, where $\lambda$ is computed from the history up to $t-L$ and from
+$O\cup U$ \citep[Ch.~7]{daley2003}. As a function of $U$ for fixed $O$, this is
+proportional to the conditional density of $U$ given $O$.
+
+The proposal inserts the fixed points of $O$ and generates $U$ with the predictable
+intensity $\{1-p_kF_k(t-s)\}\lambda_k(s)$. Its density is
+$\prod_{j\in U}\{1-p_{k_j}F_{k_j}(t-s_j)\}\lambda_{k_j}(s_j)\exp\{-\sum_k\int\{1-p_kF_k(t-s)\}\lambda_k(s)\,\dd s\}$.
+The ratio of the two densities is
+\[
+\prod_{i\in O}p_{k_i}F_{k_i}(t-s_i)\lambda_{k_i}(s_i)
+\exp\Bigl\{-\sum_k\int_{t-L}^tp_kF_k(t-s)\lambda_k(s)\,\dd s\Bigr\}.
+\]
+The factors $p_{k_i}F_{k_i}(t-s_i)$ do not depend on $U$, which gives
+\eqref{eq:fc-isweight}.
+
+Given the completed history, \cref{lem:fc-future} shows that the probability of a surge
+is $G_t(\bm\xi(t))$, which is bounded. The consistency of self-normalised importance
+sampling with an absolutely continuous proposal and bounded integrand then gives the
+limit, by the strong law of large numbers applied to numerator and denominator. \qed
 
 \subsection{Proof of \texorpdfstring{\cref{prop:nowcast}}{the nowcasting proposition}}\label{app:fc-nowcast}
 

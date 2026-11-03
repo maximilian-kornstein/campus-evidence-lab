@@ -18,7 +18,8 @@ from darkfig.world import (WorldConfig, generate_world, histories_to_table, true
                            expected_cell_counts, population_omega, world_truth)
 from darkfig.linkage import (jaro_winkler, normalize_venue, fs_em, run_linkage, linkage_error,
                              clerical_review, sample_linkage, table_from_labels, LinkageConfig,
-                             cluster_constrained, N_LEVELS)
+                             cluster_constrained, N_LEVELS, jaro, _jaro_reference, gibbs_linkage,
+                             audit_frame_truth, sample_linkage_bernoulli)
 from darkfig import pipeline as P
 
 
@@ -130,11 +131,22 @@ def test_fs_em_recovers_simulated_mixture():
     assert ((post > 0.5) == z).mean() > 0.97
 
 
+def test_jaro_fast_equals_reference():
+    rng = np.random.default_rng(3)
+    alphabet = list("abcd efgh")
+    for _ in range(20000):
+        a = "".join(rng.choice(alphabet, rng.integers(0, 20)))
+        b = "".join(rng.choice(alphabet, rng.integers(0, 20)))
+        assert jaro(a, b) == _jaro_reference(a, b)
+
+
 def test_constrained_clustering_and_mi_draws_respect_one_record_per_list():
     w = generate_world(WorldConfig(N=600, capture_model="latent_cov", noise=1.5), 4)
     L = run_linkage(w.records, w.adjacency)
     rng = np.random.default_rng(1)
-    for lab in [L.labels] + [sample_linkage(len(L.list_id), L.list_id, L.pairs, L.post, rng) for _ in range(3)]:
+    gibbs = gibbs_linkage(len(L.list_id), L.list_id, L.pairs, L.post, rng, n_draws=3, burn=2, thin=1,
+                          init_labels=L.labels)
+    for lab in [L.labels] + [sample_linkage(len(L.list_id), L.list_id, L.pairs, L.post, rng) for _ in range(3)] + gibbs:
         for c in np.unique(lab):
             lists = L.list_id[lab == c]
             assert len(lists) == len(set(lists.tolist()))
@@ -185,13 +197,77 @@ def test_review_estimates_near_empirical_rates():
     assert rv["FN_hat"] == pytest.approx((~same & truth).sum())
 
 
+def test_gibbs_linkage_targets_the_documented_distribution():
+    """Exact check on a toy problem: 3 records from 3 lists, all pairs candidates.
+
+    Target: p(partition) propto prod_{within-cluster pairs} pi/(1-pi), clusters connected
+    via retained edges (all pairs retained here). Enumerate the 5 partitions of 3 records.
+    """
+    pairs = np.array([[0, 1], [0, 2], [1, 2]])
+    post = np.array([0.8, 0.3, 0.6])
+    odds = post / (1 - post)
+    parts = {"123": odds.prod(), "12|3": odds[0], "13|2": odds[1], "23|1": odds[2], "1|2|3": 1.0}
+    Z = sum(parts.values())
+    exact = {k: v / Z for k, v in parts.items()}
+    draws = gibbs_linkage(3, np.array([0, 1, 2]), pairs, post, np.random.default_rng(0), n_draws=40000, burn=10,
+                          thin=1)
+    def key(lab):
+        a, b, c = lab
+        if a == b == c:
+            return "123"
+        if a == b:
+            return "12|3"
+        if a == c:
+            return "13|2"
+        if b == c:
+            return "23|1"
+        return "1|2|3"
+    freq = {k: 0 for k in exact}
+    for d in draws:
+        freq[key(d)] += 1
+    for k in exact:
+        assert freq[k] / len(draws) == pytest.approx(exact[k], abs=0.015), (k, freq[k] / len(draws), exact[k])
+    # the one-record-per-list constraint: two records of list 0 never share a cluster
+    draws = gibbs_linkage(3, np.array([0, 0, 1]), pairs, np.array([0.9, 0.9, 0.9]), np.random.default_rng(1),
+                          n_draws=200, burn=5, thin=1)
+    assert all(d[0] != d[1] for d in draws)
+
+
+def test_gibbs_draws_have_fewer_false_merges_than_bernoulli_imputation():
+    w = generate_world(WorldConfig(N=1500, capture_model="latent_cov", noise=1.0), 6)
+    L = run_linkage(w.records, w.adjacency)
+    rng = np.random.default_rng(2)
+    tid, lid = w.records.true_id, w.records.list_id
+    fm = lambda lab: linkage_error(L.labels_all(lab), tid, lid)["n_false_merges"]
+    g = [fm(d) for d in gibbs_linkage(len(L.list_id), L.list_id, L.pairs, L.post, rng, n_draws=3, burn=3, thin=1,
+                                      init_labels=L.labels)]
+    b = [fm(sample_linkage_bernoulli(len(L.list_id), L.list_id, L.pairs, L.post, rng)) for _ in range(3)]
+    assert np.mean(g) < np.mean(b)
+
+
+def test_audit_frame_truth_and_blocking_recall():
+    w = generate_world(WorldConfig(N=1500, capture_model="latent_cov", noise=1.0), 7)
+    L = run_linkage(w.records, w.adjacency)
+    fr = audit_frame_truth(L.pairs, L.labels, L.accepted, L.true_id)
+    rv = clerical_review(L.pairs, L.post, L.labels, L.accepted, L.true_id, len(L.pairs), np.random.default_rng(0))
+    # a census audit recovers the frame estimand exactly
+    assert rv["TP_hat"] == pytest.approx(fr["TP"]) and rv["FN_hat"] == pytest.approx(fr["FN"])
+    assert rv["FE_hat"] == pytest.approx(fr["FE"])
+    assert rv["delta_hat"] == pytest.approx(fr["delta_frame"]) and rv["eps_hat"] == pytest.approx(fr["eps_frame"])
+    assert 0.5 < L.info["blocking_recall"] <= 1.0 and 0.5 < L.info["blocking_recall_reps"] <= 1.0
+    assert L.info["n_true_cross_candidates"] <= L.info["n_true_cross_pairs"]
+
+
 # ---------------------------------------------------------------------------
 # pipeline (with the local stub)
 # ---------------------------------------------------------------------------
 def test_rubin_and_pooling():
-    rs = [dict(N_hat=100.0, lo=90.0, hi=110.0, n_obs=60.0, ok=True) for _ in range(5)]
+    # identical draws whose interval is log-normal on N - n_obs are returned unchanged
+    z = 1.959963984540054
+    lo, hi = 60 + 40 * np.exp(-z * 0.1), 60 + 40 * np.exp(z * 0.1)
+    rs = [dict(N_hat=100.0, lo=lo, hi=hi, n_obs=60.0, ok=True) for _ in range(5)]
     r = P.rubin_log(rs)
-    assert r["N_hat"] == pytest.approx(100.0) and r["lo"] == pytest.approx(90.0, rel=0.01)
+    assert r["N_hat"] == pytest.approx(100.0) and r["lo"] == pytest.approx(lo) and r["hi"] == pytest.approx(hi)
     rs2 = rs + [dict(N_hat=float("nan"), lo=0, hi=0, n_obs=0, ok=False)]
     assert P.rubin_log(rs2)["m_valid"] == 5
     pooled = P.pool_samples([dict(ok=True, n_obs=1, _samples=list(range(100))),
@@ -199,17 +275,59 @@ def test_rubin_and_pooling():
     assert pooled["N_hat"] == pytest.approx(99.5)
 
 
+def test_rubin_scale_lower_limit_never_below_observed():
+    """Rubin's rules on log(N_hat - c): with skewed dark-figure uncertainty the run-1 rule (log N_hat with
+    U from log(hi/lo)) put the lower limit below n_obs; the run-2 rule cannot."""
+    rng = np.random.default_rng(4)
+    z = 1.959963984540054
+    rs = []
+    for _ in range(20):
+        nobs = 1000.0 + rng.normal(0, 5)
+        n0 = 150.0 * np.exp(rng.normal(0, 0.3))
+        s = 0.9
+        rs.append(dict(N_hat=nobs + n0, lo=nobs + n0 * np.exp(-z * s), hi=nobs + n0 * np.exp(z * s), n_obs=nobs, ok=True))
+    r = P.rubin_log(rs)
+    assert r["lo"] >= min(x["n_obs"] for x in rs) - 1e-9
+    assert r["offset"] == pytest.approx(min(x["n_obs"] for x in rs))
+    # the run-1 rule on log N_hat for comparison: its lower limit falls below n_obs here
+    th = np.log([x["N_hat"] for x in rs])
+    U = ((np.log([x["hi"] for x in rs]) - np.log([x["lo"] for x in rs])) / (2 * z)) ** 2
+    T = U.mean() + (1 + 1 / 20) * th.var(ddof=1)
+    assert np.exp(th.mean() - z * np.sqrt(T)) < min(x["n_obs"] for x in rs)
+    # the within-imputation variance is on the log dark-figure scale: widths agree with the inner one
+    assert np.log((r["hi"] - r["offset"]) / (r["N_hat"] - r["offset"])) == pytest.approx(z * 0.9, rel=0.25)
+
+
+def test_seeds_keyed_to_scenario_ids_not_list_positions():
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+    import run_experiments as RX
+    full = RX.scenario_grid(quick=True)
+    only = [s for s in full if s["id"] == "S7"]
+    t_full = [t for t in RX.task_list(full) if t[0] == "S7"]
+    t_only = RX.task_list(only)
+    assert t_full == t_only
+    assert [RX.seeds_for(*t) for t in t_full] == [RX.seeds_for(*t) for t in t_only]
+    assert RX.seeds_for("S7", 0, 1)[0] == [RX.BASE_SEED, RX.SEED_ID["S7"], 1, 1]
+    # same task, run inside the filtered and the full grid -> identical results
+    a = RX.run_task(t_only[0] + (only,))
+    b = RX.run_task(t_full[0] + (full,))
+    for k in ("pipelines", "tables", "truth"):
+        assert a[k] == b[k]
+
+
 def test_pipeline_smoke_with_lp_stub(monkeypatch):
     monkeypatch.setattr(P, "_est_funcs", lambda: {"lp": (lp_stub, dict(lists=(0, 1)))})
-    # linkage_corrected is SIM-EST's: replace it by a pass-through for this smoke test
+    # replace linkage_corrected by a pass-through for this smoke test
     import types
-    stub_E = types.SimpleNamespace(linkage_corrected=lambda t, d, e, estimator, **kw: estimator(t, **kw))
+    stub_E = types.SimpleNamespace(
+        linkage_corrected=lambda t, d, e, estimator, link_var=None, rate_se=None, n_imp=None, seed=None, **kw:
+        estimator(t, **kw))
     monkeypatch.setitem(sys.modules, "darkfig.estimators", stub_E)
     import darkfig
     monkeypatch.setattr(darkfig, "estimators", stub_E, raising=False)
     w = generate_world(WorldConfig(N=800, capture_model="independent", noise=0.5), 9)
-    cfg = P.PipelineConfig(estimators=("lp",), mi_draws=4, tv_draws=3, review_B=100,
-                           pipelines=("oracle", "naive", "corrected", "corrected_tv", "corrected_d", "mi"))
+    cfg = P.PipelineConfig(estimators=("lp",), mi_draws=4, review_B=100,
+                           pipelines=("oracle", "naive", "corrected", "corrected_d", "mi"))
     out1 = P.analyse_world(w, cfg, [1, 2])
     out2 = P.analyse_world(w, cfg, [1, 2])
     for p in cfg.pipelines:

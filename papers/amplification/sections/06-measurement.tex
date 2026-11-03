@@ -1,0 +1,217 @@
+% =====================================================================
+%  Section 6 -- Measurement: misclassification and sequential inference (owner: DESIGN).
+%  Proofs in appendix/B-proofs-design.tex. Tables here are ILLUSTRATIVE: invented inputs,
+%  exact computations from closed forms; not results. Simulation evidence belongs to Section 7.
+% =====================================================================
+\providecommand{\Se}{\mathrm{Se}}
+\providecommand{\Sp}{\mathrm{Sp}}
+\providecommand{\PPV}{\mathrm{PPV}}
+\providecommand{\FOR}{\mathrm{FOR}}
+
+\section{Measurement: misclassification and sequential inference}\label{sec:measurement}
+
+An audit sees exposure through a classifier. This section corrects for the classifier's errors (\cref{sec:meas-misclass}), turns the corrected estimators into an audit that can stop as soon as the evidence is decisive (\cref{sec:meas-sequential}), and sizes the audit (\cref{sec:meas-power}). Three results carry the section. \Cref{thm:misclass} gives the bias of naive estimators, the variance of corrected ones, and an exact expression showing that error rates that differ by arm can push the naive ratio in either direction. \Cref{alg:sequential} and \cref{thm:sequential} give a confidence sequence for the amplification ratio that remains valid when the audit stops early, with the uncertainty of the validation carried through and differential sensitivity treated as a declared sensitivity parameter. \Cref{prop:power} gives the number of puppets and sessions in closed form. Throughout, the persona $d$ is fixed and suppressed, the arms are $\pi\in\{a,r\}$ with $a=\mathrm{alg}$ and $r=\mathrm{ref}$, and the notation is that of \cref{sec:id-design}. In particular $q_\pi=(1-\Sp_\pi)+J_\pi\mu_\pi$ by \eqref{eq:id-q}.
+
+\subsection{Misclassification}\label{sec:meas-misclass}
+
+The correction of a prevalence for a test with known sensitivity and specificity is due to \citet{rogangladen1978}. Double sampling, in which a subsample of the classified units is checked against the truth, is due to \citet{tenenbein1970}. Our contribution is to work out what these imply for a \emph{ratio} of two prevalences, measured on two arms that show different content, and to give the validation design that makes the correction consistent.
+
+\paragraph{Validation designs}
+Two designs are considered. In an \emph{external} design, the error rates are estimated from coded items that are independent of the audit's measurement data: $\widehat\Se$ is the share flagged among $n_1$ coded items with $L_c=1$, and $\widehat\Sp$ the share unflagged among $n_0$ coded items with $L_c=0$. In an \emph{internal} design, which is the one in \cref{sec:prot-validation}, coded items are drawn from each arm's own recorded exposures, stratified by classifier output. Either way, the target is the exposure-weighted error rate \eqref{eq:id-sesp} of each arm, so a coded item must represent exposures, not distinct items. An item that appeared in many recorded positions must be weighted by its number of appearances divided by its inclusion probability.
+
+\begin{theorem}[Misclassification: attenuation, correction and differential error]\label{thm:misclass}
+Let $\mu_r>0$ and $J_\pi>0$ for both arms.
+\begin{enumerate}[(a)]
+  \item \emph{Naive estimands under non-differential error.} Under \cref{asm:id-nondiff}, the naive additive contrast is $q_a-q_r=J\,\mathrm{AA}$, and the naive ratio is
+  \begin{equation}\label{eq:mc-attenuation}
+    \mathrm{AR}^{\mathrm{nv}}=\frac{q_a}{q_r}=\omega+(1-\omega)\,\mathrm{AR},\qquad \omega=\frac{1-\Sp}{q_r}\in[0,1).
+  \end{equation}
+  The naive ratio is a convex combination of $1$ and $\mathrm{AR}$, so it lies between them and is attenuated towards one. The weight $\omega$ depends on the classifier only through $\Sp$ and $q_r$, and $\omega=0$ if and only if $\Sp=1$.
+  \item \emph{Corrected estimators and their variance.} Under \cref{asm:id-nondiff}, let $(\widehat\Se,\widehat\Sp)$ come from an external design, and let $\widehat\mu_\pi=(\widehat q_\pi+\widehat\Sp-1)/\widehat J$. Let the numbers of puppets $n_a$, $n_r$ and of coded items $n_1$, $n_0$ grow in fixed proportions. Then $\widehat{\mathrm{AA}}=\widehat\mu_a-\widehat\mu_r$ and $\log\widehat{\mathrm{AR}}$ are consistent and asymptotically normal, with asymptotic variances
+  \begin{align}
+    \Var(\widehat{\mathrm{AA}})&\simeq\frac1{J^2}\Bigl\{V_a+V_r+\mathrm{AA}^2\,(v_{\Se}+v_{\Sp})\Bigr\},\label{eq:mc-varAA}\\
+    \Var(\log\widehat{\mathrm{AR}})&\simeq\frac1{J^2}\Bigl\{\frac{V_a}{\mu_a^2}+\frac{V_r}{\mu_r^2}+\Bigl(\frac1{\mu_a}-\frac1{\mu_r}\Bigr)^2v_{\Sp}\Bigr\},\label{eq:mc-varAR}
+  \end{align}
+  where $V_\pi=\sigma^2_\pi/n_\pi$ is the cluster-robust variance of $\widehat q_\pi$ (\cref{thm:identify}), $v_{\Se}=\Se(1-\Se)/n_1$ and $v_{\Sp}=\Sp(1-\Sp)/n_0$. Replacing every unknown by its estimate gives consistent variance estimators. The sensitivity enters \eqref{eq:mc-varAA} only through $J$, and it does not enter \eqref{eq:mc-varAR} except through the common factor $J^{-2}$.
+  \item \emph{Differential error.} Without \cref{asm:id-nondiff}, let $\kappa_\pi=q_\pi/\mu_\pi=\Se_\pi+(1-\Sp_\pi)(1-\mu_\pi)/\mu_\pi$. Then, exactly,
+  \begin{equation}\label{eq:mc-diff}
+    \mathrm{AR}^{\mathrm{nv}}=\mathrm{AR}\cdot\frac{\kappa_a}{\kappa_r},\qquad
+    \mathrm{AR}^{\mathrm{pool}}=\frac{J_a\mu_a+\overline{\Sp}-\Sp_a}{J_r\mu_r+\overline{\Sp}-\Sp_r},
+  \end{equation}
+  where $\mathrm{AR}^{\mathrm{pool}}$ is the limit of the corrected ratio computed with error rates $(\overline{\Se},\overline{\Sp})$ pooled over the two arms. Either can lie on the other side of one from $\mathrm{AR}$. Precisely, if the error rates are only known to lie in $\Se_\pi\in[s_-,s_+]$ and $\Sp_\pi\in[p_-,p_+]$, with $s_-+p_->1$, the set of values of $\mathrm{AR}^{\mathrm{nv}}$ compatible with $(\mu_a,\mu_r)$ is the interval
+  \[
+    \mathrm{AR}\cdot\Bigl[\frac{\kappa_-(\mu_a)}{\kappa_+(\mu_r)},\;\frac{\kappa_+(\mu_a)}{\kappa_-(\mu_r)}\Bigr],\qquad
+    \kappa_\mp(\mu)=s_\mp+(1-p_\pm)\frac{1-\mu}{\mu},
+  \]
+  and it contains values on both sides of one whenever $\kappa_-(\mu_a)/\kappa_+(\mu_r)<1/\mathrm{AR}<\kappa_+(\mu_a)/\kappa_-(\mu_r)$. If content falls into types $k$ with labels $L_k$ and type-level flag rates $\phi_k$ common to both arms, and arm $\pi$ shows type $k$ with exposure share $w_{\pi k}$, then $\Se_\pi=\mu_\pi^{-1}\sum_{k:L_k=1}w_{\pi k}\phi_k$ and $1-\Sp_\pi=(1-\mu_\pi)^{-1}\sum_{k:L_k=0}w_{\pi k}\phi_k$. \Cref{asm:id-nondiff} then fails unless, within each label, the two arms' mixtures of types have the same $\phi$-weighted average, which fails generically when the arms mix types with different $\phi_k$ in different proportions.
+  \item \emph{Stratified validation.} Let the error rates be estimated separately in each arm, by an external design per arm or by an internal design, with estimators consistent for $(\Se_\pi,\Sp_\pi)$. Then $\widehat\mu^{\mathrm{st}}_\pi=(\widehat q_\pi+\widehat\Sp_\pi-1)/\widehat J_\pi$ is consistent for $\mu_\pi$, whether or not \cref{asm:id-nondiff} holds, and so are the resulting $\widehat{\mathrm{AA}}^{\mathrm{st}}$ and $\widehat{\mathrm{AR}}^{\mathrm{st}}$. With external designs, $\Var(\widehat\mu^{\mathrm{st}}_\pi)\simeq J_\pi^{-2}\{V_\pi+\mu_\pi^2v_{\Se,\pi}+(1-\mu_\pi)^2v_{\Sp,\pi}\}$, and the two arms are independent. In the internal design that codes $m_{\pi1}$ flagged and $m_{\pi0}$ unflagged exposures of arm $\pi$, and weights them by the arm's recorded flagged and unflagged counts, the corrected estimator equals the double-sampling estimator exactly,
+  \begin{equation}\label{eq:mc-ds}
+    \frac{\widehat q_\pi+\widehat\Sp_\pi-1}{\widehat\Se_\pi+\widehat\Sp_\pi-1}=\widehat q_\pi\,\widehat\PPV_\pi+(1-\widehat q_\pi)\,\widehat\FOR_\pi,
+  \end{equation}
+  where $\widehat\PPV_\pi$ and $\widehat\FOR_\pi$ are the shares with $L_c=1$ among the coded flagged and coded unflagged exposures. If the coding is done within each puppet, the puppet-level version of the right side is conditionally unbiased for the puppet's true exposure $\bar E_u$.
+  \item \emph{Confirmed-positive form.} Let $\PPV_\pi$ be the exposure-weighted share of true positives among flagged exposures of arm $\pi$. Then $q_\pi\PPV_\pi=\Se_\pi\mu_\pi$ exactly, and hence
+  \begin{equation}\label{eq:mc-confirmed}
+    \mathrm{AR}=\frac{1}{\lambda_S}\cdot\frac{q_a\PPV_a}{q_r\PPV_r},\qquad \lambda_S=\frac{\Se_a}{\Se_r}.
+  \end{equation}
+  If the sensitivities are equal, $\mathrm{AR}$ is identified by the flagged shares and coded flagged exposures alone, whatever the specificities of the two arms.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+(a) Substitute \eqref{eq:id-q} into $q_a/q_r$ and collect terms. (b) The estimator is a smooth function of $(\widehat q_a,\widehat q_r,\widehat\Se,\widehat\Sp)$, which are independent and asymptotically normal. The gradient of $\mu_\pi=(q_\pi+\Sp-1)/J$ is $J^{-1}(1,-\mu_\pi,1-\mu_\pi)$, and the delta method gives \eqref{eq:mc-varAA}--\eqref{eq:mc-varAR}. In the ratio, $J$ cancels, so the sensitivity drops out. (c) Divide $q_\pi$ by $\mu_\pi$. The interval follows because $\kappa_\pi$ is increasing in $\Se_\pi$ and decreasing in $\Sp_\pi$, and the four rates vary independently over a rectangle. (d) Consistency is the continuous mapping theorem applied arm by arm. The identity \eqref{eq:mc-ds} is algebra: with these weights, the weighted counts of true and false positives and negatives add up to the recorded counts. (e) Both sides of $q_\pi\PPV_\pi=\Se_\pi\mu_\pi$ equal the expected share of recorded positions that are flagged and truly antisemitic. The full proof is in \cref{app:pf-misclass}.
+\end{proof}
+
+\paragraph{Rare content makes specificity decisive}
+Part (a) quantifies a familiar warning. When antisemitic content is rare, $q_r$ is small, and even a highly specific classifier makes $\omega$ large. With $\mu_r=0.02$, $\Se=0.85$ and $\Sp=0.98$, the weight is $\omega=0.55$. A true ratio of $1.5$ then appears as $1.23$, and a true ratio of $2$ as $1.45$. The naive difference is attenuated only by the factor $J=0.83$. Part (b) carries the same message into the variance. The specificity term in \eqref{eq:mc-varAR} is multiplied by $(1/\mu_a-1/\mu_r)^2$, which is large for rare content. With $\mu_r=0.02$, $\mathrm{AR}=1.5$, $\Se=0.85$, $\Sp=0.98$ and $n_0=1{,}500$ coded negatives, the standard deviation of $\widehat\Sp$ is $0.0036$, and the specificity term alone contributes $0.073$ to the standard deviation of $\log\widehat{\mathrm{AR}}$. That is the precision of an audit with no sampling error at all in the flagged shares. The delta method is also less accurate here than usual. Its linearisation in $\Sp$ is good only if $v_{\Sp}^{1/2}\ll J\mu_r$, and in this example the two are $0.0036$ and $0.017$. We recommend checking this condition, and reporting a bootstrap over puppets and coded items when it is not met.
+
+\paragraph{Differential error is the rule, not the exception}
+Part (c) formalises the problem raised in \cref{sec:bg-classifier}. Content types differ in how well the classifier handles them. Coded antisemitism is missed more often than explicit antisemitism, and news reports or counter-speech that quote antisemitic language are flagged more often than neutral content. If the algorithm shifts the mix of types, the arm-level error rates differ, even though no type-level error rate does. \Cref{tab:mc-signflip} gives two invented examples. In the first, the algorithm shows more coded antisemitic content, which the classifier misses. The true ratio is $1.8$, but the naive ratio is $0.97$ and the corrected ratio with pooled error rates is $0.94$: real amplification looks like none, or even like de-amplification. In the second, the algorithm shows less antisemitic content and much more counter-speech. The true ratio is $0.57$, but the naive ratio is $1.24$ and the pooled correction makes things worse, at $1.69$. Correcting with the wrong error rates is not a safe default. By part (d), validation stratified by arm recovers the true ratio in both cases.
+
+\begin{table}[tbp]
+\centering
+\caption{Differential misclassification can reverse the direction of the naive and the pooled-corrected amplification ratio (\cref{thm:misclass}(c)). \textbf{Illustrative: invented exposure mixes and error rates; not data.} Types and flag rates $\phi_k$: explicit antisemitic ($0.95$), coded antisemitic ($0.40$), quotation or counter-speech ($0.30$), borderline ($0.05$), neutral ($0.005$). Exposure shares (ref; alg) are given for the first four types; the rest is neutral. $\mathrm{AR}^{\mathrm{nv}}$: naive ratio; $\mathrm{AR}^{\mathrm{pool}}$: limit of the correction with error rates pooled over the arms; $\lambda_S\mathrm{AR}$: limit of the confirmed-positive ratio \eqref{eq:mc-confirmed} computed with $\lambda_S=1$. The arm-stratified correction of \cref{thm:misclass}(d) converges to AR. All entries are exact computations.}\label{tab:mc-signflip}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xcccccccc@{}}
+\toprule
+Scenario (shares ref; alg) & $\mu_r$ & $\mu_a$ & $\Se_r$; $\Se_a$ & $\Sp_r$; $\Sp_a$ & AR & $\mathrm{AR}^{\mathrm{nv}}$ & $\mathrm{AR}^{\mathrm{pool}}$ & $\lambda_S\mathrm{AR}$ \\
+\midrule
+A: more coded content (explicit $.008$; $.004$, coded $.002$; $.014$, quoting $.010$; $.002$, borderline $.03$; $.05$) & .010 & .018 & .84; .52 & .991; .992 & 1.80 & 0.97 & 0.94 & 1.12 \\
+B: more counter-speech (explicit $.010$; $.006$, coded $.004$; $.002$, quoting $.004$; $.030$, borderline $.03$; $.06$) & .014 & .008 & .79; .81 & .992; .983 & 0.57 & 1.24 & 1.69 & 0.59 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Validation by arm, and where to spend it}
+Part (d) is the reason the protocol stratifies its validation sample by arm (\cref{sec:prot-validation}). The internal design has two further advantages. By \eqref{eq:mc-ds}, it does not need error rates that transfer from elsewhere: it estimates directly the share of true positives among what each arm flagged and among what it did not. And done within puppets, it yields corrected puppet-level exposures whose cluster-robust variance already contains the validation uncertainty. Its cost lies in the unflagged stratum. False negatives are rare among the many unflagged exposures, so $\widehat\FOR_\pi$, and with it $\widehat\Se_\pi$, needs many coded items. Classifier scores help here. Stratifying the unflagged stratum into score bands, as the protocol does, concentrates the coding where false negatives are, and the allocation of \citet{neyman1934} sets the numbers per band. The flagged stratum is cheap by comparison, because $\PPV_\pi$ is a proportion of moderate size that a few hundred coded items estimate well. Part (e) exploits this asymmetry. The ratio needs the flagged stratum of each arm and one number about the unflagged strata, the sensitivity ratio $\lambda_S$. Differential specificity, as in scenario B of \cref{tab:mc-signflip}, is then corrected automatically, and differential sensitivity, as in scenario A, enters as a single factor that can be estimated with a dedicated search for false negatives or bounded in a sensitivity analysis. In scenario B, $\lambda_S=1.02$, so \eqref{eq:mc-confirmed} with $\lambda_S=1$ gives $0.59$ against the true $0.57$. In scenario A, $\lambda_S=0.62$, and setting it to one would give $1.12$: the direction is right but the size is not, which is what a sensitivity analysis over $\lambda_S$ must show.
+
+\subsection{Sequential, anytime-valid audits}\label{sec:meas-sequential}
+
+An audit that stops as soon as its evidence is decisive uses fewer accounts and sessions. That matters for its footprint (\cref{sec:eth-footprint}) and for the moving target of \cref{sec:id-drift}. Stopping on the data invalidates a fixed-sample interval, however, because a monitored fixed-sample analysis performs repeated significance tests and inflates its error rate. Sequential tests go back to \citet{wald1945}. A \emph{confidence sequence} \citep{darling1967} is a sequence of sets $C_t$ with $\Pr(\theta\in C_t\text{ for all }t\ge1)\ge1-\alpha$. It remains valid at any stopping time, however the time is chosen. Modern constructions use nonnegative supermartingales and Ville's inequality \citep{ville1939}, through normal mixtures \citep{robbins1970}, nonparametric boundaries \citep{howard2021} or betting \citep{waudbysmith2024betting}. \citet{waudbysmith2024asymp} give the asymptotic analogue of the central-limit interval, and \citet{ramdas2023} review the field.
+
+\paragraph{The statistic}
+\Cref{thm:misclass}(e) suggests a statistic that needs no false negatives. For each puppet, code $m$ of its flagged recorded positions, drawn uniformly without replacement (all of them if it has fewer than $m$), and let $\widehat P_u$ be the share confirmed as antisemitic. The puppet's \emph{confirmed-flagged exposure} is $Y_u=\bar Q_u\widehat P_u$. Given the puppet's record, $\E(Y_u\mid\text{record})$ is the share of its recorded positions that are flagged and truly antisemitic, so $\E Y_u=\Se_\pi\mu_\pi$ for a puppet of arm $\pi$ (\cref{lem:seq-unbiased}). Hence $\vartheta=\E Y_a/\E Y_r=\lambda_S\,\mathrm{AR}$. Pairs $i$ consist of one puppet per arm from the same wave and persona, with values $(Y_{a,i},Y_{r,i})$. The sensitivity ratio $\lambda_S$ is declared to lie in a registered range $[\lambda_-,\lambda_+]$, which is $\{1\}$ under non-differential sensitivity, or is replaced by a confidence sequence from a search for false negatives.
+
+\begin{algorithm}[tbp]
+\caption{Anytime-valid audit of $\mathrm{AR}(d)$ for one persona}\label{alg:sequential}
+\begin{algorithmic}[1]
+\Require level $\alpha$; margin $\delta>1$; wave budget $W_{\max}$; burn-in $w_0\ge1$; mixture parameter $\varrho>0$; codes per puppet $m$; range $[\lambda_-,\lambda_+]\ni\lambda_S$
+\State $L\gets-\infty$; $U\gets+\infty$
+\For{$w=1,2,\dots,W_{\max}$}
+  \State run wave $w$; for each puppet $u$ of persona $d$, compute $\bar Q_u$, code $m$ of its flagged positions, and set $Y_u\gets\bar Q_u\widehat P_u$
+  \State pair each $\mathrm{alg}$ puppet with a distinct $\mathrm{ref}$ puppet of the wave, at random; append $(Y_{a,i},Y_{r,i})$; $t\gets$ number of pairs
+  \State $\bar Y_a\gets t^{-1}\sum_{i\le t}Y_{a,i}$;\quad $\bar Y_r\gets t^{-1}\sum_{i\le t}Y_{r,i}$;\quad $\widehat\vartheta_t\gets\bar Y_a/\bar Y_r$
+  \State $\widehat s_t^{\,2}\gets t^{-1}\sum_{i\le t}\bigl(Y_{a,i}/\bar Y_a-Y_{r,i}/\bar Y_r\bigr)^2$ \Comment{delta-method variance of $\log\widehat\vartheta_t$, times $t$}
+  \State $h_t\gets\widehat s_t\,\bigl\{2(t\varrho^2+1)\,t^{-2}\varrho^{-2}\log\bigl((t\varrho^2+1)^{1/2}/\alpha\bigr)\bigr\}^{1/2}$ \Comment{normal-mixture radius}
+  \State $C_t\gets\bigl[\log\widehat\vartheta_t-\log\lambda_+-h_t,\ \log\widehat\vartheta_t-\log\lambda_-+h_t\bigr]$
+  \If{$w\ge w_0$} $L\gets\max(L,\min C_t)$;\quad $U\gets\min(U,\max C_t)$ \EndIf
+  \If{$L>\log\delta$ \textbf{or} $U<-\log\delta$ \textbf{or} $-\log\delta<L\le U<\log\delta$} \textbf{stop} \Comment{rules S1--S2 of \cref{sec:prot-stopping}}
+  \EndIf
+\EndFor
+\State \Return $[L,U]$ for $\log\mathrm{AR}(d)$ and the conclusion of \cref{tab:prot-decisions}
+\end{algorithmic}
+\end{algorithm}
+
+\Cref{alg:sequential} is the delta-method confidence sequence of \citet{waudbysmith2024asymp} for the log of a ratio of two means, widened by the sensitivity range. The running intersection $[L,U]$ is valid because every $C_t$ with $t$ beyond the burn-in is. The mixture parameter is fixed before the audit. The choice $\varrho^2=\{-2\log\alpha+\log(1-2\log\alpha)\}/t^\ast$ nearly minimises the radius at a planned number of pairs $t^\ast$, as we checked numerically. The protocol runs one copy per persona, at level $\alpha/|\mathcal D_A|$.
+
+\begin{theorem}[Validity of \cref{alg:sequential}]\label{thm:sequential}
+Let \cref{asm:id-nointerf}, \cref{asm:id-stable}(a) and \cref{asm:id-script} hold, so that the pairs $(Y_{a,i},Y_{r,i})$ are independent and identically distributed. Let $\mu_a,\mu_r>0$, $\Se_a,\Se_r>0$, $\lambda_S\in[\lambda_-,\lambda_+]$, and let $\psi_i=Y_{a,i}/\E Y_a-Y_{r,i}/\E Y_r$ have variance $s^2\in(0,\infty)$.
+\begin{enumerate}[(a)]
+  \item \emph{Asymptotic time-uniform coverage.} $\lim_{m_0\to\infty}\Pr(\exists\,t\ge m_0:\log\mathrm{AR}\notin C_t)\le\alpha$. Consequently, for random times $\tau\ge m_0$, stopping or not, $\limsup_{m_0\to\infty}\Pr(\log\mathrm{AR}\notin C_\tau)\le\alpha$, and the probability that rule S1 or S2 states a conclusion that the true $\mathrm{AR}$ contradicts is asymptotically at most $\alpha$.
+  \item \emph{Exact variant.} Let $K_t(\vartheta)$ be the hedged capital process of \citet{waudbysmith2024betting}, with predictable bets, for the null hypothesis that $Y_{a,i}-\vartheta Y_{r,i}\in[-\vartheta,1]$ has mean zero. Then $C^{\mathrm{bet}}_t=\{\log\vartheta-\log\lambda:\max_{s\le t}K_s(\vartheta)<1/\alpha,\ \lambda\in[\lambda_-,\lambda_+]\}$ satisfies $\Pr(\exists\,t\ge1:\log\mathrm{AR}\notin C^{\mathrm{bet}}_t)\le\alpha$ for every sample size, without asymptotics.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+(a) Since $\lambda_S\in[\lambda_-,\lambda_+]$, $\log\mathrm{AR}\notin C_t$ implies $|\log\widehat\vartheta_t-\log\vartheta|>h_t$. By the delta method and the law of the iterated logarithm, $t(\log\widehat\vartheta_t-\log\vartheta)=\sum_{i\le t}\psi_i+O(\log\log t)$ almost surely. Strassen's strong invariance principle \citep{strassen1964} couples $\sum_{i\le t}\psi_i$ with $sW(t)$ for a Brownian motion $W$, with an error of order $o\{(t\log\log t)^{1/2}\}$, which is negligible against the boundary $th_t\asymp(t\log t)^{1/2}$. For Brownian motion, the normal mixture of the exponential martingales $\exp(\theta W_t-\theta^2t/2)$ \citep{robbins1970} is a nonnegative martingale, and Ville's inequality bounds the crossing probability by $\alpha$. (b) Under the null, the hedged capital process is a nonnegative martingale with initial value one, and Ville's inequality applies directly. Details are in \cref{app:pf-sequential}.
+\end{proof}
+
+\paragraph{What is exact and what is approximate}
+We state the approximations plainly.
+\begin{enumerate}[(1)]
+  \item Part (a) is asymptotic in the number of pairs. The normal approximation is poorest in the first wave, when only a few pairs and a few coded positions per puppet are available, and the distribution of $Y_u$ is skewed. A burn-in of one wave is therefore registered: the first wave updates the estimates but cannot stop the audit. \Cref{sec:simulation} reports the time-uniform coverage with and without the burn-in.
+  \item The coding of $m$ flagged positions per puppet is exactly unbiased for the puppet's confirmed-flagged share, so validation enters the variance of $Y_u$ and needs no separate treatment. The price is that only the flagged stratum is validated. False negatives enter through $\lambda_S$, which is either assumed equal to one, bounded by a declared range, or estimated from coded unflagged positions. In the last case a confidence sequence for $\lambda_S$ at level $\alpha_v$ replaces the declared range, and a union bound gives level $\alpha+\alpha_v$.
+  \item Under drift, the pairs are independent but not identically distributed. A time-uniform central limit theorem of Lindeberg type then covers the running average of the pair means \citep{waudbysmith2024asymp}, so the sequence targets the ratio of window-averaged means of $Y$, which is $\lambda_S\overline{\mathrm{AR}}$ if sensitivities do not drift. We claim nothing beyond that.
+  \item The exact variant (b) needs no asymptotics, but it pays for the range of its observations. $Y_u$ can lie anywhere in $[0,1]$, whereas its typical value is near $0.02$. Bets must be small enough to survive an extreme observation, so the capital grows slowly. We therefore register the asymptotic sequence as primary and the exact one as a robustness check.
+\end{enumerate}
+
+\paragraph{Peeking}
+For comparison, consider the analyst who recomputes a fixed-sample $95\%$ interval after every wave and stops when it excludes the null. Under the null, the standardised estimate after $t$ pairs behaves like $W_t/\sqrt t$ for a Brownian motion $W$, and by the law of the iterated logarithm it leaves $[-1.96,1.96]$ at some $t$ with probability one if monitoring continues indefinitely. With eight looks, the probability that some look rejects is well above $5\%$ (about $17.6\%$ for eight equally spaced looks at a Gaussian random walk, a direct computation). \Cref{alg:sequential} pays for the right to look by a wider radius, quantified in \cref{prop:power}(c). \Cref{sec:simulation} compares the two on the synthetic recommender.
+
+\subsection{Power and sample size}\label{sec:meas-power}
+
+The design question is how many puppets, and how many sessions per puppet, are needed to conclude that $\mathrm{AR}=r_1$ lies outside the null region bounded by $r_0$. For detection, $r_0=1$. For the materiality rule S1, $r_0=\delta$ and the registered alternative is $r_1=\delta^2$ (\cref{sec:prot-stopping}). Let $n$ be the number of puppets per arm, and let $\tau^2_\pi$ and $\gamma_\pi$ be the variance and the intra-puppet correlation of the \emph{true} session exposures. Write
+\begin{equation}\label{eq:pw-var}
+  \sigma^2_{E,\pi}=\frac{\tau^2_\pi\{1+(S-1)\gamma_\pi\}}{S},\qquad
+  \omega^2_\pi=\frac{\varsigma^2_\pi}{kTS},\qquad
+  \varsigma^2_\pi=\mu_\pi\Se(1-\Se)+(1-\mu_\pi)\Sp(1-\Sp).
+\end{equation}
+The first is the variance of a puppet's true exposure, with the design effect of \citet{kish1965}. The second is the variance that the classifier adds to $\bar Q_u$ when its errors are independent across positions given the labels, and $\varsigma^2_\pi$ is the corresponding variance per position. Let
+\[
+  A=\sum_\pi\frac{\sigma^2_{E,\pi}+\omega^2_\pi/J^2}{\mu_\pi^2},\qquad
+  A_0=\sum_\pi\frac{\sigma^2_{E,\pi}}{\mu_\pi^2},\qquad
+  B=\frac{(1/\mu_a-1/\mu_r)^2\,\Sp(1-\Sp)}{J^2n_0},
+\]
+let $L=|\log r_1-\log r_0|$, and let $z=z_{1-\alpha/2}+z_{1-\beta}$.
+
+\begin{proposition}[Power and sample size]\label{prop:power}
+Let $\log\mathrm{AR}=\log r_1$, with $n$ puppets per arm and $S$ sessions per puppet.
+\begin{enumerate}[(a)]
+  \item \emph{Fixed sample.} Under the conditions of \cref{thm:misclass}(b), the normal approximation to the probability that the interval for $\log\mathrm{AR}$ excludes $\log r_0$ is at least $1-\beta$ if and only if
+  \begin{equation}\label{eq:pw-n}
+    n\ \ge\ n_{\mathrm{fix}}=\frac{z^2A}{L^2-z^2B},\qquad\text{which requires}\qquad
+    n_0\ >\ n_0^{\min}=\frac{z^2(1/\mu_a-1/\mu_r)^2\Sp(1-\Sp)}{J^2L^2}.
+  \end{equation}
+  Below $n_0^{\min}$ coded negatives, no number of puppets achieves the target power. The ratio $A/A_0$ is the variance inflation due to classifier noise, and $B$ is the inflation due to validation.
+  \item \emph{Sessions per puppet.} Write $A=a_0+a_1/S$, with $a_0=\sum_\pi\tau^2_\pi\gamma_\pi/\mu_\pi^2$ and $a_1=\sum_\pi\{\tau^2_\pi(1-\gamma_\pi)+\varsigma^2_\pi/(kTJ^2)\}/\mu_\pi^2$. If a puppet costs $c_p$ and each of its sessions $c_s$, the cost $n(c_p+Sc_s)$ of meeting \eqref{eq:pw-n} with $B=0$ is minimised at $S^\ast=\{(c_p/c_s)\,a_1/a_0\}^{1/2}$.
+  \item \emph{Sequential.} For a normal-mixture confidence sequence with $\varrho$ tuned to $t^\ast$ pairs, the radius at $t^\ast$ is $c_\alpha(A/t^\ast)^{1/2}$, where
+  \[
+    c_\alpha=\bigl\{2(1+a^{-1})\log\bigl((1+a)^{1/2}/\alpha\bigr)\bigr\}^{1/2},\qquad a=-2\log\alpha+\log(1-2\log\alpha),
+  \]
+  does not depend on $t^\ast$. A horizon of $n_{\mathrm{seq}}=(c_\alpha+z_{1-\beta})^2A/L^2$ pairs gives power at least $1-\beta$ by the horizon, to the same approximation, and the expected number of pairs used is smaller because the audit can stop early.
+  \item \emph{\Cref{alg:sequential}.} For the confirmed-flagged statistic with $m$ codes per puppet, $A$ is replaced by
+  \[
+    A_Y=\sum_\pi\frac{1}{\mu_\pi^2}\Bigl\{\sigma^2_{E,\pi}+\frac{\mu_\pi(1-\Se_\pi)}{\Se_\pi kTS}+\frac{q_\pi^2\PPV_\pi(1-\PPV_\pi)}{m\,\Se_\pi^2}\Bigr\},
+  \]
+  up to the finite-population correction of the coding and the variation of $\PPV$ across puppets. With the declared range $[\lambda_-,\lambda_+]$, the horizon becomes $n_{\mathrm{seq}}=(c_\alpha+z_{1-\beta})^2A_Y/\{L-\log(\lambda_+/\lambda_-)\}^2$, which requires $L>\log(\lambda_+/\lambda_-)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+(a) By \cref{thm:misclass}(b), $\log\widehat{\mathrm{AR}}$ is approximately normal with mean $\log r_1$ and variance $A/n+B$. The variance of $\bar Q_u$ follows from the law of total variance, conditioning on the labels. The power of the comparison with $\log r_0$ is $\Phi\{L(A/n+B)^{-1/2}-z_{1-\alpha/2}\}$, and setting it to $1-\beta$ gives \eqref{eq:pw-n}. (b) Minimise $(a_0+a_1/S)(c_p+Sc_s)$ over $S>0$. (c) Substitute $\varrho^2=a/t^\ast$ into the radius. (d) Condition on the record and then on the labels. In the worst case allowed by the range, the estimated log ratio is shifted by $\log(\lambda_+/\lambda_-)$ towards the null. Details are in \cref{app:pf-power}.
+\end{proof}
+
+For $\alpha=0.05$, $c_\alpha=3.04$, against $z_{0.975}=1.96$. For the per-persona level $\alpha=0.0125$ of the protocol, $c_\alpha=3.50$, against $z_{0.99375}=2.50$. Being allowed to look after every wave therefore costs a horizon $\{(c_\alpha+z_{1-\beta})/(z_{1-\alpha/2}+z_{1-\beta})\}^2$ times the fixed sample size, which is $1.9$ at $\alpha=0.05$ and $1.7$ at $\alpha=0.0125$ for power $0.8$. Early stopping recovers part of this, and \cref{sec:simulation} reports the distribution of stopping times.
+
+\Cref{tab:pw-illus} applies \cref{prop:power} to invented but plausible inputs. Three conclusions hold across its rows.
+\begin{enumerate}[(1)]
+  \item The materiality test of the protocol needs about five times as many puppets as detection, because $L$ falls from $\log1.5$ to $\log1.25$ and the per-persona level is stricter. With the base inputs it needs about $190$ puppets per arm at a fixed sample size, and a horizon of $320$--$360$ pairs with sequential monitoring. That is several times the candidate values of \cref{tab:prot-design} (at most $40$ per cell). The registered numbers must come from the pilot, and if the pilot resembles these inputs, the budget or the margin must change.
+  \item Validation can bind before puppets do. For the ratio corrected with external error rates, about $2{,}100$ coded negatives \emph{per persona} are needed under the protocol's margin before any number of puppets suffices. A pooled validation sample of $2{,}000$ items over all personas and arms would not be enough. Raising $\Sp$ from $0.98$ to $0.995$ reduces this fourfold. \Cref{alg:sequential} avoids the floor, because its coding scales with the number of puppets, but a sensitivity range of $\pm5\%$ around $\lambda_S=1$ more than triples its horizon. Evidence on differential sensitivity is therefore worth as much as many puppets.
+  \item The optimal number of sessions per puppet is small, $S^\ast\approx3$--$7$ when a puppet's training costs about three sessions, because sessions of one puppet are correlated. More puppets with fewer sessions also reduce the total number of sessions, which is the audit's footprint.
+\end{enumerate}
+
+\begin{table}[tbp]
+\centering
+\caption{Sample sizes from \cref{prop:power}. \textbf{Illustrative: invented inputs; not a result and not a registered design.} Base inputs: $\mu_{\mathrm{ref}}=0.02$; session-level coefficient of variation of true exposure $1$; $\gamma=0.3$; $S=10$ sessions of $kT=100$ recorded positions; $\Se=0.85$, $\Sp=0.98$; power $0.8$; materiality rows use $r_0=\delta=1.25$, $r_1=\delta^2$ and $\alpha=0.05/4$. Columns: design effect $1+(S-1)\gamma$; classifier-noise inflation $A/A_0$; puppets per arm $n_{\mathrm{fix}}$ with known error rates; minimum coded negatives $n_0^{\min}$; sequential horizons (pairs) for the corrected ratio with known error rates (part c) and for \cref{alg:sequential} with $m=10$ codes per puppet and $\lambda_S=1$ or $\lambda_S\in[0.95,1.05]$ (part d); optimal sessions per puppet $S^\ast$ for $c_p/c_s=3$. Closed forms evaluated in the DESIGN hand-off note.}\label{tab:pw-illus}
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xcccccccc@{}}
+\toprule
+ & & & & & \multicolumn{3}{c}{$n_{\mathrm{seq}}$} & \\
+\cmidrule(lr){6-8}
+Scenario & Deff & $A/A_0$ & $n_{\mathrm{fix}}$ & $n_0^{\min}$ & (c) & (d), $\lambda_S=1$ & (d), $\pm5\%$ & $S^\ast$ \\
+\midrule
+Detection ($r_0=1$, $r_1=1.5$, $\alpha=0.05$) & 3.7 & 1.16 & 41 & 378 & 79 & 87 & 153 & 3.6 \\
+Materiality, base inputs & 3.7 & 1.15 & 192 & 2{,}065 & 324 & 358 & 1{,}176 & 3.6 \\
+\quad lower correlation, $\gamma=0.1$ & 1.9 & 1.30 & 111 & 2{,}065 & 187 & 221 & 727 & 6.6 \\
+\quad higher exposure, $\mu_{\mathrm{ref}}=0.05$ & 3.7 & 1.03 & 171 & 331 & 289 & 311 & 1{,}020 & 2.8 \\
+\quad higher specificity, $\Sp=0.995$ & 3.7 & 1.05 & 175 & 506 & 296 & 304 & 1{,}000 & 3.0 \\
+\quad lower sensitivity, $\Se=0.70$ & 3.7 & 1.25 & 207 & 3{,}076 & 350 & 381 & 1{,}252 & 4.0 \\
+\quad fewer sessions, $S=3$ & 1.6 & 1.35 & 324 & 2{,}065 & 548 & 495 & 1{,}625 & 3.6 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{remark}[A model-based session variance]\label{rem:pw-markov}
+If sessions follow the chain of \cref{asm:markov} with $k=1$ and start near stationarity, \cref{prop:markov}(a) gives $\sigma^2_{\mathcal A}/T$ for the within-session part of $\tau^2_\pi$, with $\sigma^2_{\mathcal A}$ computed from the fundamental matrix. By the law of total variance, this is approximately a lower bound for $\tau^2_\pi$, since it ignores differences between puppets and between sessions. It is a check on pilot estimates, not a substitute for them.
+\end{remark}

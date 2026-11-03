@@ -1,6 +1,6 @@
 # Key index (BIB curator: SOURCES) -- Paper 4, Supply or Demand?
 
-Status: VERIFIED 2026-11-03. refs.bib: 25 entries; bib/sources.bib: 24 entries.
+Status: VERIFIED 2026-11-03. refs.bib: 25 entries; bib/sources.bib: 25 entries. `\nocite{*}` + plainnat + bibtex: 0 errors, 0 warnings.
 Each entry carries a non-printing field `verification` saying how it was checked: `web: <where>` means
 authors/title/venue/year/volume/pages/DOI were confirmed by web search against publisher or index records
 (pnas.org, projecteuclid.org, dl.acm.org, academic.oup.com, nature.com, science.org, eur-lex/ec.europa.eu,
@@ -22,7 +22,7 @@ main.tex should list: `\bibliography{refs,bib/sources,bib/theory,bib/design,bib/
 - huszar2022 -- Huszar, Ktena, O'Brien, Belli, Schlaikjer, Hardt 2022 PNAS 119(1) e2025334119: randomized chronological-feed holdout on Twitter
 - ledwich2020 -- Ledwich & Zaitsev 2020 First Monday 25(3): YouTube "rabbit hole" (logged-out recommendations)
 - chaney2018 -- Chaney, Stewart, Engelhardt 2018 RecSys '18 pp. 224-232: algorithmic confounding / feedback loops (simulation)
-- jiang2019 -- Jiang, Chiappa, Lattimore, Gyorgy, Kohli 2019 AIES '19 pp. 383-390: degenerate feedback loops
+- jiang2019 -- Jiang, Chiappa, Lattimore, Gyorgy, Kohli 2019 AIES '19 pp. 383-390: degenerate feedback loops (theory). Some lists mis-cite it as AAAI-19 33:4275-4282; the AIES citation is the one used. Abstract wording not re-checked: do not attribute specific sub-findings
 ### Markov chains
 - kemeny1960 -- Kemeny & Snell 1960 Van Nostrand: Finite Markov Chains (fundamental matrix, absorption). PREFER this key.
 - kemeny1976 -- Kemeny & Snell 1976 Springer UTM printing of the same book. Do not cite both.
@@ -67,6 +67,8 @@ main.tex should list: `\bibliography{refs,bib/sources,bib/theory,bib/design,bib/
 - ec2025access -- Commission news: data access for researchers (29 Oct 2025; DSA data access portal)
 - ec2026roundtable -- Commission news: roundtable of 19 May 2026; 49 applications received by DSCs
 - ec2025fine -- Commission press release IP/25/2934 (Dec 2025): first DSA non-compliance decision; includes researcher access to public data
+### EU data protection
+- eu2016gdpr -- Regulation (EU) 2016/679 (GDPR), OJ L 119, 4.5.2016 (standard citation; special categories Art. 9, research safeguards Art. 89)
 ### US case law
 - sandvigbarr2020 -- Sandvig v. Barr (D.D.C. 27 Mar 2020), 2020 WL 1494065: ToS violations for research not criminal under CFAA access provision
 - vanburen2021 -- Van Buren v. United States, 593 U.S. 374 (2021): "exceeds authorized access", gates-up-or-down

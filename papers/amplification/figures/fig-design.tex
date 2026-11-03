@@ -1,0 +1,244 @@
+% =====================================================================
+%  Figure: the audit design, from personas to a stopping time (LEAD).
+%  Glyphs are SCHEMATIC: every number drawn (cell counts, slates, score
+%  densities, bar heights, intervals, the confidence sequence) is invented
+%  for legibility and is neither a simulation output nor data.
+%  Requires the house colours defined in preamble.tex.
+% =====================================================================
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,
+    tile/.style={rounded corners=3pt,draw=LabRule,line width=0.6pt,fill=white,
+                 minimum width=3.5cm,minimum height=3.0cm,inner sep=0pt},
+    ttl/.style={font=\footnotesize\bfseries,text=LabNavy,align=center,
+                anchor=north,inner sep=0pt,text width=3.35cm},
+    ref/.style={font=\scriptsize,text=LabGrey,align=center,anchor=south,
+                inner sep=0pt,text width=3.35cm},
+    flowarrow/.style={-{Stealth[length=4.5pt]},LabNavy,line width=0.8pt},
+    lab/.style={font=\tiny,text=LabGrey,inner sep=0.5pt},
+    algc/.style={fill=LabNavy},
+    refc/.style={fill=LabNavyLight},
+  ]
+  % ------------------------------------------------------------------
+  % tile helper:  \tile{name}{x}{y}{title}{reference}
+  \newcommand{\tile}[5]{%
+    \node[tile] (#1) at (#2,#3) {};
+    \node[ttl] at ([yshift=-5pt]#1.north) {#4};
+    \node[ref] at ([yshift=4pt]#1.south) {#5};}
+  \def\yA{0}\def\yB{-4.0}
+  \def\gx{-0.27}  % vertical offset of glyph centres within a tile
+
+  % ---------------- row I: from design to labelled exposures -----------
+  \tile{t1}{1.75}{\yA}{Personas $\times$\\policies}%
+    {\S\ref{sec:prot-personas}, Def.~\ref{def:amplification}}
+  \tile{t2}{5.8}{\yA}{Randomised puppets,\\blocked by wave}%
+    {Thm.~\ref{thm:identify}, Prop.~\ref{prop:interference}}
+  \tile{t3}{9.85}{\yA}{Training, then\\measurement sessions}%
+    {\S\ref{sec:prot-personas}, Prop.~\ref{prop:markov}}
+  \tile{t4}{13.9}{\yA}{Frozen classifier\\labels every item}%
+    {\S\ref{sec:prot-validation}}
+
+  % ---------------- row II: from labels to a decision ------------------
+  \tile{t5}{1.75}{\yB}{Validation sample,\\coded blind}%
+    {\S\ref{sec:prot-validation}}
+  \tile{t6}{5.8}{\yB}{Corrected exposure\\in each arm}%
+    {Thm.~\ref{thm:misclass}}
+  \tile{t7}{9.85}{\yB}{Amplification\\for each persona}%
+    {Def.~\ref{def:amplification}, Thm.~\ref{thm:decomp}}
+  \tile{t8}{13.9}{\yB}{Confidence sequence\\and stopping time}%
+    {Alg.~\ref{alg:sequential}, Thm.~\ref{thm:sequential}, Prop.~\ref{prop:power}}
+
+  % ---------------- arrows ----------------
+  \foreach \a/\b in {t1/t2,t2/t3,t3/t4,t5/t6,t6/t7,t7/t8}{
+    \draw[flowarrow] (\a.east) -- (\b.west);}
+  \draw[flowarrow,rounded corners=6pt] (t4.south) -- ++(0,-0.5) -| (t5.north);
+  \node[fill=white,font=\scriptsize,text=LabNavy,inner sep=3pt] at (7.825,-2.0)
+    {after every wave: new items are labelled, a validation subsample is coded, and
+     every estimate is updated};
+  % the sequential loop: back to the next wave unless a boundary is crossed
+  \draw[flowarrow,LabAccent,rounded corners=6pt,dash pattern=on 3pt off 1.6pt]
+    (t8.east) -- ++(0.32,0) |- ([yshift=0.42cm]t2.north) -- (t2.north);
+  \node[fill=white,font=\scriptsize,text=LabAccent,inner sep=2pt,anchor=west]
+    at (6.3,1.92) {next wave, unless the sequence has crossed a decision boundary
+    (\S\ref{sec:prot-stopping})};
+
+  % ================== glyphs ==================
+  % 1. personas x policies: |D| x 2 cells, puppets in each
+  \begin{scope}[shift={(t1.center)},yshift=\gx cm]
+    \def\cw{0.5}\def\ch{0.25}
+    \foreach \c/\st/\nm in {0/algc/alg,1/refc/ref}{
+      \node[lab,anchor=south] at ({-0.42+\c*\cw+\cw/2},0.52) {\nm};
+      \foreach \r in {0,1,2,3}{
+        \fill[LabTint] ({-0.42+\c*\cw},{0.5-\r*\ch}) rectangle ++(\cw,-\ch);
+        \foreach \k in {0,1,2}{
+          \fill[\st] ({-0.42+\c*\cw+0.11+\k*0.14},{0.5-\r*\ch-\ch/2}) circle (1.45pt);}
+      }}
+    \draw[LabRule,line width=0.3pt,step=\cw] (-0.42,-0.5) grid (0.58,0.5);
+    \draw[LabRule,line width=0.3pt] (-0.42,0.25) -- (0.58,0.25) (-0.42,0) -- (0.58,0)
+      (-0.42,-0.25) -- (0.58,-0.25);
+    \draw[LabNavy,line width=0.5pt] (-0.42,-0.5) rectangle (0.58,0.5);
+    \foreach \r in {0,1,2,3}{
+      \node[lab,anchor=east] at (-0.44,{0.5-\r*\ch-\ch/2}) {$d_{\r}$};}
+    \node[lab,anchor=west,align=left] at (0.66,0.0) {persona\\[-1pt]$d\in\mathcal D$\\[1pt]policy\\[-1pt]$\pi$};
+  \end{scope}
+
+  % 2. randomised puppets in waves (equal numbers per arm; one sentinel each)
+  \begin{scope}[shift={(t2.center)},yshift=\gx cm+0.08cm]
+    \foreach \w/\xo/\pat in {1/-1.38/{1,0,0,1,0,1,1,0},2/-0.74/{0,1,1,0,1,0,0,1},
+                             3/-0.10/{1,1,0,0,0,1,0,1}}{
+      \draw[LabRule,fill=LabTint,rounded corners=2pt,line width=0.4pt]
+        (\xo,-0.5) rectangle ++(0.56,1.0);
+      \foreach \a [count=\j from 0] in \pat {
+        \pgfmathtruncatemacro{\cx}{mod(\j,2)}\pgfmathtruncatemacro{\cy}{div(\j,2)}
+        \ifnum\a=1 \def\fc{LabNavy}\else\def\fc{LabNavyLight}\fi
+        \fill[\fc] ({\xo+0.16+0.24*\cx},{0.36-0.2*\cy}) circle (1.6pt);}
+      \draw[LabNavy,line width=0.5pt,fill=white] ({\xo+0.28},-0.4) circle (1.6pt);
+      \node[lab,anchor=north] at ({\xo+0.28},-0.52) {$w{=}\w$};}
+    \node[font=\scriptsize,text=LabGrey] at (0.66,0.02) {$\cdots$};
+    \node[lab,anchor=west,align=left] at (0.86,0.36) {\textcolor{LabNavy}{$\bullet$}\,alg};
+    \node[lab,anchor=west,align=left] at (0.86,0.16) {\textcolor{LabNavyLight}{$\bullet$}\,ref};
+    \node[lab,anchor=west,align=left] at (0.86,-0.4) {$\circ$\,sentinel};
+  \end{scope}
+
+  % 3. training, then measurement: slates of k positions over T steps
+  \begin{scope}[shift={(t3.center)},yshift=\gx cm+0.12cm]
+    % training: seed items
+    \foreach \i in {0,...,3}{
+      \fill[LabNavyLight!45] (-1.42,{0.28-0.2*\i}) rectangle ++(0.26,-0.14);}
+    \node[lab,anchor=south] at (-1.29,0.36) {train};
+    \draw[-{Stealth[length=2.5pt]},LabGrey,line width=0.5pt] (-1.06,0) -- (-0.8,0);
+    % measurement: columns are steps t, rows slate positions; one item opened per step
+    \def\cw{0.27}
+    \foreach \col [count=\t from 0] in {{0,1,0},{0,0,2},{1,0,0},{2,0,1},{1,1,0},{0,2,0},{1,0,0}}{
+      \foreach \s [count=\r from 0] in \col {
+        \ifcase\s \def\fc{LabNavyLight!45}\or\def\fc{LabNavyMid}\or\def\fc{LabAccent}\fi
+        \fill[\fc] ({-0.7+\t*\cw},{0.3-\r*0.24}) rectangle ++(0.21,-0.18);}}
+    % opened item per step (never a flagged one)
+    \foreach \t/\r in {0/0,1/0,2/1,3/1,4/0,5/0,6/1}{
+      \draw[LabNavy,line width=0.7pt] ({-0.7+\t*\cw-0.03},{0.3-\r*0.24+0.03})
+        rectangle ++(0.27,-0.24);}
+    \node[lab,anchor=south] at (0.17,0.36) {measure: slate $\times$ step $t$};
+    \node[lab,anchor=north,align=center] at (0.17,-0.42)
+      {\textcolor{LabNavy}{$\square$}\,opened\enspace
+       \textcolor{LabAccent}{$\blacksquare$}\,flagged:\\[-1pt]recorded, never opened};
+  \end{scope}
+
+  % 4. frozen classifier: score densities of L = 0 and L = 1, one threshold
+  \begin{scope}[shift={(t4.center)},yshift=\gx cm]
+    \fill[LabNavyLight!40,domain=0.05:0.9,samples=30,smooth]
+      plot (\x,{-0.42+0.85*exp(-((\x+0.45)^2)/0.13)}) -- (0.9,-0.42) -- (0.05,-0.42) -- cycle;
+    \fill[LabAccent!25,domain=-1.15:0.05,samples=30,smooth]
+      plot (\x,{-0.42+0.6*exp(-((\x-0.62)^2)/0.16)}) -- (0.05,-0.42) -- (-1.15,-0.42) -- cycle;
+    \draw[LabNavyLight,line width=0.8pt,domain=-1.25:0.9,samples=50,smooth]
+      plot (\x,{-0.42+0.85*exp(-((\x+0.45)^2)/0.13)});
+    \draw[LabAccent,line width=0.8pt,domain=-0.6:1.3,samples=50,smooth]
+      plot (\x,{-0.42+0.6*exp(-((\x-0.62)^2)/0.16)});
+    \draw[LabNavy,line width=0.4pt] (-1.3,-0.42) -- (1.35,-0.42);
+    \draw[LabNavy,line width=0.6pt,dash pattern=on 2pt off 1pt] (0.05,-0.48) -- (0.05,0.5);
+    \node[lab,text=LabNavyLight,anchor=south] at (-0.45,0.44) {$L_c{=}0$};
+    \node[lab,text=LabAccent,anchor=south] at (0.72,0.2) {$L_c{=}1$};
+    \node[lab,anchor=north] at (0,-0.44) {score; $\widehat L_c=1$ right of the threshold};
+  \end{scope}
+
+  % 5. validation sample: score bands, high bands oversampled; blind double coding
+  \begin{scope}[shift={(t5.center)},yshift=\gx cm]
+    \foreach \b/\n in {0/2,1/2,2/3,3/5,4/6}{
+      \pgfmathsetmacro{\sh}{8+9*\b}
+      \fill[LabNavy!\sh] (-1.05,{-0.5+0.2*\b}) rectangle ++(1.5,0.18);
+      \foreach \k in {1,...,\n}{
+        \pgfmathsetmacro{\xx}{-1.05+1.5*\k/(\n+1)}
+        \pgfmathtruncatemacro{\isa}{(\b>2 && mod(\k,3)!=0) || (\b==2 && \k==2) ? 1 : 0}
+        \ifnum\isa=1 \def\fc{LabAccent}\else\def\fc{LabNavy}\fi
+        \fill[\fc] (\xx,{-0.41+0.2*\b}) circle (1.3pt);}}
+    \node[lab,anchor=east] at (-1.07,0.4) {high};
+    \node[lab,anchor=east] at (-1.07,-0.4) {low};
+    % two coders and an adjudicator
+    \foreach \yy in {0.3,-0.05}{
+      \fill[LabNavyMid] (0.85,\yy+0.07) circle (1.6pt);
+      \fill[LabNavyMid] (0.85,\yy-0.07) ellipse (2.6pt and 1.8pt);}
+    \fill[LabNavy] (1.15,0.2) circle (1.6pt);
+    \fill[LabNavy] (1.15,0.06) ellipse (2.6pt and 1.8pt);
+    \node[lab,anchor=north,align=center] at (1.0,-0.2) {2 coders\\[-1pt]+ adjudicator};
+  \end{scope}
+
+  % 6. corrected exposure in each arm: naive (outlined) versus corrected (solid)
+  \begin{scope}[shift={(t6.center)},yshift=\gx cm]
+    \draw[LabNavy,line width=0.4pt] (-1.2,-0.45) -- (1.25,-0.45);
+    \foreach \x/\nv/\cv/\c/\nm in {-0.7/0.78/0.62/LabNavy/alg,0.45/0.40/0.20/LabNavyLight/ref}{
+      \draw[\c,line width=0.6pt,fill=white] (\x,-0.45) rectangle ++(0.3,\nv);
+      \fill[\c] (\x+0.36,-0.45) rectangle ++(0.3,\cv);
+      \node[lab,anchor=north] at (\x+0.33,-0.47) {\nm};}
+    \draw[LabNavyMid,line width=0.5pt,fill=white] (0.12,0.4) rectangle ++(0.13,0.1);
+    \node[lab,anchor=west] at (0.27,0.45) {naive};
+    \fill[LabNavyMid] (0.12,0.22) rectangle ++(0.13,0.1);
+    \node[lab,anchor=west] at (0.27,0.27) {corrected};
+  \end{scope}
+
+  % 7. amplification for each persona: log AR with interval, margin [1/delta, delta]
+  \begin{scope}[shift={(t7.center)},yshift=\gx cm]
+    \def\lu{1.15}  % cm per unit of log AR
+    \fill[LabAccent!12] ({-0.223*\lu+0.1},-0.5) rectangle ({0.223*\lu+0.1},0.5);
+    \draw[LabAccent,line width=0.4pt,dash pattern=on 1.5pt off 1pt]
+      ({-0.223*\lu+0.1},-0.5) -- ({-0.223*\lu+0.1},0.5)
+      ({0.223*\lu+0.1},-0.5) -- ({0.223*\lu+0.1},0.5);
+    \draw[LabNavy,line width=0.5pt] (0.1,-0.5) -- (0.1,0.5);
+    \foreach \r/\est/\lo/\hi in {0/0.05/-0.15/0.18,1/0.40/0.25/0.58,2/0.20/-0.05/0.47,3/0.85/0.48/1.15}{
+      \pgfmathsetmacro{\yy}{0.38-0.25*\r}
+      \draw[LabNavyLight,line width=1.6pt] ({\lo*\lu+0.1-0.06},\yy) -- ({\hi*\lu+0.1+0.06},\yy);
+      \draw[LabNavy,line width=1.0pt] ({\lo*\lu+0.1},\yy) -- ({\hi*\lu+0.1},\yy);
+      \fill[LabNavy] ({\est*\lu+0.1},\yy) circle (1.7pt);
+      \node[lab,anchor=east] at (-1.25,\yy) {$d_{\r}$};}
+    \node[lab,anchor=north] at (0.1,-0.52) {$\log\mathrm{AR}(d)$;\ \textcolor{LabAccent}{margin $\pm\log\delta$}};
+  \end{scope}
+
+  % 8. confidence sequence for log AR(d) over waves; stops at tau
+  \begin{scope}[shift={(t8.center)},yshift=\gx cm]
+    \def\wx{0.29}   % cm per wave
+    \def\vy{0.72}   % cm per unit of log AR
+    \def\yo{-0.4}   % y of log AR = 0
+    \draw[LabNavy,line width=0.4pt,-{Stealth[length=2.5pt]}] (-1.15,\yo) -- (1.35,\yo);
+    \draw[LabNavy,line width=0.4pt] (-1.15,-0.52) -- (-1.15,0.55);
+    % margin log(delta) = 0.223
+    \draw[LabAccent,line width=0.5pt,dash pattern=on 2pt off 1pt]
+      (-1.15,{\yo+0.223*\vy}) -- (1.3,{\yo+0.223*\vy});
+    % the band (waves 1..4), then the stop
+    \fill[LabNavy!18]
+      plot coordinates {(-1.15+1*\wx,{\yo+1.40*\vy}) (-1.15+2*\wx,{\yo+0.95*\vy})
+                        (-1.15+3*\wx,{\yo+0.86*\vy}) (-1.15+4*\wx,{\yo+0.88*\vy})}
+      -- plot coordinates {(-1.15+4*\wx,{\yo+0.27*\vy}) (-1.15+3*\wx,{\yo+0.17*\vy})
+                        (-1.15+2*\wx,{\yo+0.03*\vy}) (-1.15+1*\wx,{\yo-0.20*\vy})} -- cycle;
+    \draw[LabNavy,line width=0.6pt] plot coordinates {(-1.15+1*\wx,{\yo+0.60*\vy})
+      (-1.15+2*\wx,{\yo+0.49*\vy}) (-1.15+3*\wx,{\yo+0.52*\vy}) (-1.15+4*\wx,{\yo+0.58*\vy})};
+    % waves not run
+    \foreach \w in {5,...,8}{
+      \draw[LabRule,line width=0.4pt] (-1.15+\w*\wx,\yo) -- ++(0,-0.05);}
+    \foreach \w in {1,...,4}{
+      \draw[LabNavy,line width=0.4pt] (-1.15+\w*\wx,\yo) -- ++(0,-0.05);}
+    \draw[LabAccent,line width=0.7pt] (-1.15+4*\wx,\yo-0.07) -- (-1.15+4*\wx,{\yo+0.27*\vy});
+    \fill[LabAccent] (-1.15+4*\wx,{\yo+0.27*\vy}) circle (1.3pt);
+    \node[lab,text=LabAccent,anchor=north] at (-1.15+4*\wx,\yo-0.06) {$\tau$};
+    \node[lab,text=LabAccent,anchor=west] at (0.1,{\yo+0.223*\vy+0.1}) {$\log\delta$};
+    \node[lab,anchor=north] at (0.62,\yo-0.06) {waves};
+    \node[lab,anchor=east] at (-1.17,{\yo}) {$0$};
+  \end{scope}
+\end{tikzpicture}
+\caption{\textbf{The audit design, from personas to a stopping time.} Top row:
+each persona $d$ (a fixed demand profile) is crossed with the algorithmic and
+a reference policy; puppets are assigned to the $|\mathcal D|\times2$ cells
+completely at random within waves, which are blocks, and untrained sentinels
+monitor interference and drift. Every puppet is trained in the same way; the
+policy contrast starts with the measurement sessions, in which each slate is
+recorded, every item is scored by a classifier frozen at registration, and the
+puppet opens one item per step but never a flagged one. Bottom row: a
+stratified, oversampled validation sample is coded blind to arm, persona and
+score, and gives the sensitivity and specificity of the classifier in each
+arm; exposure is corrected arm by arm, because error rates can differ when the
+content mix differs; the amplification ratio is estimated for each persona and
+compared with a registered margin $[1/\delta,\delta]$; and a confidence
+sequence for $\mathrm{AR}(d)$, built from each puppet's confirmed flagged
+exposure and (asymptotically) valid whenever the audit stops, decides after
+each wave whether to stop. Here, on the log scale, it stops at wave $\tau=4$,
+when it lies entirely above $\log\delta$ (rule S1). Labels under each tile point to the corresponding results.
+\textbf{Schematic:} all glyph values are invented for legibility.}
+\label{fig:design}
+\end{figure}

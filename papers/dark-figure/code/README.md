@@ -1,25 +1,68 @@
 # `darkfig`: code for the simulation study of *The Dark Figure*
 
-This README covers the **estimator** half of the package (owner: SIM-EST):
-
 | module | contents |
 |---|---|
-| `darkfig/estimators.py` | public estimator API (`Estimate`, LP, closed form, log-linear model / BMA, Chao, LCMCR, linkage-corrected) |
+| `darkfig/estimators.py` | public estimator API (`Estimate`, LP, closed form, log-linear model / BMA, Chao, LCMCR incl. multi-chain and pooled, linkage-corrected with linkage variance) |
 | `darkfig/loglinear.py` | capture-table utilities, design matrices, batched Poisson IRLS, hierarchical-model enumeration |
-| `darkfig/lcmcr.py` | Gibbs sampler for the DP latent-class model (Manrique-Vallier 2016) |
-| `darkfig/linkerror.py` | the canonical linkage-error operator T(δ, ε) of SPEC (expected and Monte Carlo) |
-| `tests/test_estimators.py` | tests for all of the above |
+| `darkfig/lcmcr.py` | Gibbs sampler for the DP latent-class model (Manrique-Vallier 2016); split-R-hat / bulk-tail ESS |
+| `darkfig/linkerror.py` | the canonical linkage-error operator T(δ, ε) of SPEC (expected, Monte Carlo, record level), Cov(ñ given t), Jacobian, LE audit simulator |
+| `darkfig/world.py` | synthetic worlds (incidents, capture, noisy records) |
+| `darkfig/linkage.py` | blocking, comparison vectors, 3-class FS-EM (`FS_EM_SPEC`), de-duplication, greedy point linkage, Gibbs linkage sampler for MI, random audit (`clerical_review`) and its estimand on the frame (`audit_frame_truth`) |
+| `darkfig/pipeline.py` | one-world analysis (`analyse_world`) and the table-level LE scenario S8 (`analyse_le_table`) |
+| `run_experiments.py`, `make_figures.py` | the simulation study and its figures / tables |
+| `tests/test_estimators.py`, `tests/test_world_linkage.py` | tests |
 
-`world.py`, `linkage.py` and `pipeline.py` (synthetic worlds, record linkage, pipelines) are maintained by SIM-WORLD.
+Requirements: Python 3.13 with numpy, scipy, matplotlib and pytest. Nothing else.
 
-Requirements: Python 3.13 with numpy, scipy and pytest. Nothing else.
+## Run 2 (after the 2026-11-03 code audit): what changed
+
+* **Linkage variance in corrected intervals.** `linkage_corrected(..., link_var="delta")` (default) adds
+  `v_link` of Cor `cor:linkcorrect`(i) by the delta method, `v_link = a' Σ a` with `a = J^{-T} ∇F(t̂)`.
+  Here `J` is the Jacobian of `t ↦ E[T(δ,ε)t]`, which is `D_δ` times the first-order merge Jacobian, and
+  `Σ = Cov(ñ | t̂)` under LE (`linkerror.observed_covariance`). The detachment part of `Σ` is exact; merging is
+  first order. The inner interval is widened on its log(N − a) scale (`widen_interval`). `rate_se=(se_δ, se_ε)`
+  also returns the interval with the audit variance of part (iii) (`extra["lo_tv"]`, `extra["hi_tv"]`), which
+  is conservative for an audit of the same linkage. For LCMCR (`link_var="impute"`), one chain is run per
+  imputed table `t* ~ N(t̂, J^{-1} Σ J^{-T})` and the draws are pooled. A parametric bootstrap was the
+  alternative. We chose the delta method because it costs about 16 estimator calls per table, and its `Σ`
+  matches Monte Carlo (`test_observed_covariance_matches_monte_carlo`). On LE-generated tables it restores
+  nominal coverage (`test_v_link_restores_coverage_in_small_le_case`, scenario S8).
+* **MI draws.** `linkage.gibbs_linkage` is a single-record Gibbs sampler over partitions, with at most one
+  record per list per cluster and clusters connected through retained edges. It targets
+  `Π_{within-cluster pairs} π/(1−π)` (candidate pairs with π ≥ τ = 1e-3; other within-cluster pairs get the
+  floor τ/(1−τ)). These are approximate posterior draws under the plug-in (empirical-Bayes) FS pairwise model,
+  not a full Bayesian record-linkage posterior. `test_gibbs_linkage_targets_the_documented_distribution`
+  checks the target exactly on a toy problem. The run-1 sampler (`sample_linkage_bernoulli`: Bernoulli(π) +
+  greedy) is not a posterior sampler and is kept only for reference.
+* **Rubin's rules** (`pipeline.rubin_log`) combine on `log(N̂ − c)`, with `c = min_m n_obs^(m)`. The
+  within-imputation variance comes from each draw's log-normal interval on `N − a`. Lower limits are therefore
+  never below `c`.
+* **LCMCR.** `lcmcr(..., n_chains=4)` runs chains whose `n0` starts are 0.5/1/2/4 × the Chao-type default. It
+  pools the draws and reports the rank-normalised split-R̂ and bulk/tail ESS (`lcmcr.convergence_diagnostics`,
+  Vehtari et al. 2021). The study uses 4 × 7500 iterations (burn-in 2500, thin 5). That is the 30 000
+  iterations recommended below, split over 4 chains. This is a reduced protocol relative to App.
+  `app:comp-diag`, and the diagnostics are reported. `lcmcr_pooled(tables)` runs one chain per table (MI,
+  corrected) and pools the draws.
+* **Audit.** `clerical_review` is the random stratified audit of Prop. `prop:link-audit`. It is not the
+  targeted review of Alg. `alg:review`, and reviewed links are not fixed. Its estimand on the same frame
+  (candidate pairs among de-duplicated records) is `audit_frame_truth`. Blocking recall is in `LinkageResult.info`.
+* **S8.** `linkerror.simulate_records` is `simulate_observed` with record-level output, using the same random
+  stream and returning the same table. `linkerror.simulate_audit` is a random audit of an LE linkage: a
+  200-record sample for δ (ratio estimator of the pairwise recall) and a 100-edge sample for ε.
+* **Seeds** are keyed to fixed scenario ids (`run_experiments.SEED_ID`). **Summaries:** the median relative bias
+  is primary, with the mean, the MAD-based spread and the count of replicates with N̂ > 5N alongside.
+  `relbias_n0` uses the common oracle n_obs.
+* `FS_EM_SPEC` (in `linkage.py`) records the FS-EM details: the missing levels, the 3 classes and the tied
+  date/hour distributions. It is copied into `results/sim_results.json` as `meta.fs_em`.
+* `linkage.jaro` uses `str.find`. It gives identical values to the textbook loop
+  (`test_jaro_fast_equals_reference`) and is about 2× faster.
 
 ## Running the tests
 
 ```bash
 cd papers/dark-figure/code
-nice python -m pytest tests/test_estimators.py -q               # all 32 tests, about 30 s
-nice python -m pytest tests/test_estimators.py -q -m "not slow" # 27 quick tests, about 5 s
+nice python -m pytest tests/ -q                                  # all 58 tests, about 40-90 s under load
+nice python -m pytest tests/test_estimators.py -q -m "not slow" # quick estimator subset
 ```
 
 The tests carrying the `slow` marker are the LCMCR coverage run, the LCMCR Geweke test, the Monte Carlo check of the LE model, and the Monte Carlo check of linkage correction. The marker is not registered in a pytest config, so pytest may print an "unknown mark" warning. It is harmless.
@@ -63,7 +106,7 @@ Timings are for K = 4 and N ≈ 2000 on the shared 4-core machine, under load.
 | `loglinear_bma(table, max_order=2, criterion="bic")` | Averages over all hierarchical models with main effects and interactions up to `max_order`, clamped to K−1 (64 models for K = 4, order 2; 113 for order 3), with BIC weights (`log n` penalty) or AIC weights. Fitted by batched IRLS. Models whose MLE does not exist are dropped. | MATA-Wald (Turek & Fletcher 2012): quantiles of the weighted mixture of per-model log-normal deltas. | 6 ms |
 | `chao_lower_bound(table, bias_corrected=False)` | Thm `thm:chao`: `n + ((K-1)/K) f1²/(2 f2)`. If f2 = 0, falls back to the bias-corrected `c f1(f1-1)/(2(f2+1))`. | Chao (1987) log-normal interval with the multinomial delta variance `f2[(c/2)r² + c²r³ + (c²/4)r⁴]`, where r = f1/f2 and c = (K-1)/K. | 0.2 ms |
 | `lcmcr(table, J=10, n_iter=10000, burn=2000, thin=4, seed=None, alpha_prior=(0.25,0.25))` | Eq `eq:lcmcr`: truncated stick-breaking DP latent-class model, Beta(1,1) priors on λ, Gamma(a, b) prior on α, p(N) ∝ 1/N. Gibbs sampler at cell level (negative-binomial `n_0`, multinomial class allocations). `N_hat` is the posterior median. Float counts are rounded. | Equal-tailed credible interval. | 0.7–0.9 s |
-| `linkage_corrected(table, delta, eps, estimator=loglinear_closed_form, **kw)` | Cor `cor:linkcorrect`: solves `E[T(δ,ε) t] = ñ` with `t ← max(0, t + (ñ − E[T(t)]))` starting from `t = ñ`, then applies `estimator(t̂, **kw)`. `extra["t_hat"]` holds the corrected table. `n_obs = Σ t̂`. | As the inner estimator. | 1.5 ms plus the inner estimator |
+| `linkage_corrected(table, delta, eps, estimator=loglinear_closed_form, link_var="delta", rate_se=None, **kw)` | Cor `cor:linkcorrect`: solves `E[T(δ,ε) t] = ñ` with `t ← max(0, t + (ñ − E[T(t)]))` starting from `t = ñ`, then applies `estimator(t̂, **kw)`. `extra["t_hat"]` holds the corrected table. `n_obs = Σ t̂`. | Inner interval plus `v_link` (delta method; see Run 2). The inner-only interval is in `extra["lo_cap"]`, `extra["hi_cap"]`. | 1.5 ms plus about 16 inner-estimator calls |
 
 All functions take `level=0.95`.
 

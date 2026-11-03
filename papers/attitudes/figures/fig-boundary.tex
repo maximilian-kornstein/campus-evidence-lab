@@ -1,0 +1,117 @@
+% =====================================================================
+%  Figure: a schematic boundary map (LEAD).
+%  SCHEMATIC, NOT DATA. Ten generic Israel-related items with MADE-UP point
+%  estimates and 95% intervals for ECV_j (no item content, no estimates, no
+%  simulation output). The classification is computed in TikZ from the
+%  made-up intervals with the rule of the pre-registered plan
+%  (sec:design-estimands): in B_tau if lo >= tau; out if hi < tau;
+%  indeterminate otherwise. Primary tau = 0.5; sensitivity tau = 0.3, 0.7.
+%  Requires the house colours defined in preamble.tex.
+% =====================================================================
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=0.86cm,y=0.5cm,
+    lab/.style={font=\scriptsize,inner sep=1pt},
+    tick/.style={font=\scriptsize,text=LabGrey,inner sep=1pt},
+    hdr/.style={font=\scriptsize\bfseries,text=LabNavy,inner sep=1pt},
+  ]
+  \def\sx{10}   % x units per unit of ECV
+  \def\tauz{0.5}
+  % row / point estimate / lower / upper  (made up; ordered by estimate)
+  \def\rows{1/0.86/0.78/0.92, 2/0.78/0.66/0.88, 3/0.71/0.55/0.84,
+            4/0.63/0.44/0.79, 5/0.55/0.41/0.69, 6/0.47/0.30/0.64,
+            7/0.38/0.26/0.52, 8/0.31/0.19/0.44, 9/0.22/0.12/0.35,
+            10/0.12/0.05/0.22}
+  \def\ytop{10.0}\def\ybot{0.0}
+
+  % ---------------- regions ----------------
+  \fill[LabTint] (\tauz*\sx,\ybot) rectangle (\sx,\ytop);
+  \draw[LabRule,line width=0.4pt] (0,\ybot) rectangle (\sx,\ytop);
+  \node[lab,text=LabNavyMid,anchor=south,align=center] at (0.25*\sx,\ytop+1.15)
+    {mainly the Israel-specific factor $I$\\[-1pt]$\mathrm{ECV}_j<\tau$};
+  \node[lab,text=LabNavy,anchor=south,align=center] at (0.75*\sx,\ytop+1.15)
+    {mainly the general factor $G$\\[-1pt]$\mathrm{ECV}_j\ge\tau$};
+
+  % ---------------- thresholds ----------------
+  \foreach \t in {0.3,0.7}{
+    \draw[LabAccent!55,line width=0.5pt,dash pattern=on 2pt off 1.5pt] (\t*\sx,\ybot) -- (\t*\sx,\ytop);}
+  \draw[LabAccent,line width=0.9pt] (\tauz*\sx,\ybot) -- (\tauz*\sx,\ytop+0.35);
+  \node[lab,text=LabAccent,anchor=south,font=\scriptsize\bfseries] at (\tauz*\sx,\ytop+0.3)
+    {pre-registered threshold $\bm{\tau=0.5}$};
+
+  % ---------------- decision rule (empty top-left corner) ----------------
+  \node[lab,text=LabGrey,anchor=north west,align=left,fill=white,inner sep=2.5pt]
+    at (0.1,\ytop-0.12)
+    {\textcolor{LabNavy}{in $\mathcal{B}_\tau$}: lower 95\% limit $\ge\tau$\\
+     \textcolor{LabNavy}{out}: upper 95\% limit $<\tau$\\
+     indeterminate: interval contains $\tau$\\
+     \textcolor{LabAccent!75}{dashed}: sensitivity values of $\tau$};
+  % ---------------- schematic stamp (empty bottom-right corner) ----------------
+  \node[font=\small\itshape,text=LabGrey,anchor=south east,inner sep=2pt]
+    at (\sx-0.1,\ybot+0.25) {schematic, not data};
+
+  % ---------------- column headers ----------------
+  \node[hdr,anchor=south east,align=right] at (-0.25,\ytop+0.3) {Israel-related\\[-1pt]items};
+  \node[hdr,anchor=south west,align=left] at (\sx+0.3,\ytop+0.3) {classification\\[-1pt]at $\tau=0.5$};
+  \node[hdr,anchor=south,align=center,text=LabGrey] at (\sx+3.55,\ytop+0.3)
+    {sensitivity\\[-1pt]$\tau=0.3$\enspace$0.7$};
+
+  % ---------------- items ----------------
+  \foreach \r/\e/\lo/\hi in \rows {
+    \pgfmathsetmacro{\yy}{\ytop-\r+0.5}
+    \pgfmathtruncatemacro{\cls}{\lo>=\tauz ? 1 : (\hi<\tauz ? -1 : 0)}
+    \ifnum\cls=0
+      \def\ccol{LabGrey}\def\cfill{white}\def\ctext{indeterminate}
+    \else
+      \def\ccol{LabNavy}\def\cfill{LabNavy}%
+      \ifnum\cls=1 \def\ctext{in $\mathcal{B}_\tau$}\else\def\ctext{out}\fi
+    \fi
+    % interval, end caps, point
+    \draw[\ccol,line width=1.1pt] (\lo*\sx,\yy) -- (\hi*\sx,\yy);
+    \draw[\ccol,line width=0.6pt] (\lo*\sx,\yy-0.17) -- (\lo*\sx,\yy+0.17)
+                                  (\hi*\sx,\yy-0.17) -- (\hi*\sx,\yy+0.17);
+    \fill[\cfill,draw=\ccol,line width=0.8pt] (\e*\sx,\yy) circle (2.3pt);
+    % row label and primary classification
+    \node[tick,anchor=east] at (-0.25,\yy) {item \r};
+    \node[lab,text=\ccol,anchor=west] at (\sx+0.3,\yy) {\ctext};
+    % sensitivity classifications
+    \foreach \t/\cx in {0.3/2.95,0.7/4.15}{
+      \pgfmathtruncatemacro{\cs}{\lo>=\t ? 1 : (\hi<\t ? -1 : 0)}
+      \ifnum\cs=1 \node[lab,text=LabNavy] at (\sx+\cx,\yy) {in};\fi
+      \ifnum\cs=-1 \node[lab,text=LabNavy] at (\sx+\cx,\yy) {out};\fi
+      \ifnum\cs=0 \node[lab,text=LabGrey] at (\sx+\cx,\yy) {ind.};\fi
+    }
+  }
+  \draw[LabRule,line width=0.4pt] (\sx+2.45,\ybot) -- (\sx+2.45,\ytop);
+
+  % ---------------- axis ----------------
+  \draw[LabNavy,line width=0.5pt] (0,\ybot) -- (\sx,\ybot);
+  \foreach \v/\c in {0/LabGrey,0.3/LabAccent!80,0.5/LabAccent,0.7/LabAccent!80,1/LabGrey}{
+    \draw[LabNavy,line width=0.5pt] (\v*\sx,\ybot) -- (\v*\sx,\ybot-0.25);
+    \node[tick,text=\c,anchor=north] at (\v*\sx,\ybot-0.3) {$\v$};}
+  \node[lab,text=LabNavy,anchor=north] at (0.5*\sx,\ybot-1.15)
+    {$\mathrm{ECV}_j$: share of item $j$'s common variance due to $G$, with 95\% interval};
+  \node[lab,text=LabGrey,anchor=north west,font=\scriptsize\itshape] at (0,\ybot-2.0)
+    {$\leftarrow$ mainly item-specific};
+  \node[lab,text=LabGrey,anchor=north east,font=\scriptsize\itshape] at (\sx,\ybot-2.0)
+    {mainly shared with the stereotype items $\rightarrow$};
+\end{tikzpicture}
+\caption{\textbf{A boundary map (schematic, not data).} What the primary
+estimands E1 and E2 of the pre-registered plan (\cref{sec:design-estimands})
+would look like when reported. Each row is one Israel-related item, placed by
+its item-level explained common variance $\mathrm{ECV}_j$
+(\cref{def:boundary}): the share of the item's common variance that it shares,
+through the general factor $G$, with the classic-stereotype items, rather than
+with the other Israel-related items alone, through the specific factor $I$
+(\cref{fig:bifactor}). Bars are 95\% intervals. An item is \emph{in} the
+boundary set $\mathcal{B}_\tau$ when its whole interval lies at or above the
+pre-registered threshold $\tau=0.5$, \emph{out} when it lies wholly below,
+and \emph{indeterminate} when it contains $\tau$; the same rule is applied to
+every item, whatever its content. The right-hand columns repeat the
+classification at the sensitivity values $\tau=0.3$ and $0.7$. Positions and
+intervals are made up for illustration; the items are generic and carry no
+content, and nothing here is an estimate or a simulation result. The map
+describes response patterns in a surveyed population. It does not classify
+any utterance, speaker or context (\cref{sec:ethics-individual}).}
+\label{fig:boundary}
+\end{figure}

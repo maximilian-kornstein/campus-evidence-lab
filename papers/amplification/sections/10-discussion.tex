@@ -1,0 +1,172 @@
+% =====================================================================
+%  Section 10 -- Discussion (owner: LEAD).
+% =====================================================================
+\section{Discussion}\label{sec:discussion}
+
+\paragraph{What a well-designed audit could establish}
+Debate about recommender systems and hateful content tends to ask whether
+``the algorithm'' amplifies it. The framework replaces that question with
+several that have precise answers under stated assumptions. For a stated
+service, recommendation surface, jurisdiction and audit window, and for each
+registered persona, an audit run under the protocol of \cref{sec:protocol}
+would report the amplification ratio and the additive amplification relative
+to a named reference policy (\cref{def:amplification}), corrected for
+classifier error in each arm (\cref{thm:misclass}), with a confidence sequence
+that remains valid however early the audit stopped (\cref{alg:sequential}),
+and a conclusion fixed in advance: material amplification, material
+de-amplification, no material difference at the registered margin, or an
+inconclusive result (\cref{tab:prot-decisions}). It would also report the
+persona-contrast decomposition, which separates what the algorithm adds for a
+baseline persona from what differs between personas and from their
+interaction (\cref{sec:est-audit}), and the Markov summaries of each arm
+(\cref{prop:markov,thm:perturb}). The Markov summaries are model-based. Their
+value is that they reach beyond the audited session length, to other horizons
+and to the long run, where short sessions can understate the effect of a
+change many times over (\cref{sec:markov-perturb}), and that they say how
+sensitive exposure is to small changes in recommendation probabilities.
+
+Such an audit could not establish everything that is asked of it, and the
+framework says exactly what it leaves out. A fixed-demand audit says nothing
+about how the algorithm shapes what people want, and without outside
+information on how demand forms, the total effect of the algorithm on real
+users is not identified (\cref{prop:audit-scope}). A finding that
+$\mathrm{AR}(d)>1$ for one persona is a statement about supply at that
+persona's demand. It is not a measurement of how much antisemitic content
+real users see, nor evidence about other surfaces, other services or other
+periods, nor about the intentions of the people who built the system or the
+legality of its conduct (\cref{sec:eth-neutrality}). A finding that
+$\mathrm{AR}(d)\le1$ is limited in the same ways. Within those limits, an
+estimate of this kind is what a systemic-risk assessment under Article~34 of
+the DSA could be checked against: a provider's statement that its recommender
+does not raise exposure to antisemitic content is a claim about supply at
+given demand, and it is the claim an independent audit can test
+(\cref{sec:bg-governance}).
+
+\paragraph{Limitations}
+We stress five.
+
+\emph{The moving target.} Recommenders are retrained and re-tuned
+continuously, and the eligible pool changes by the hour. An audit estimates
+amplification by the policies that ran during its window, and the estimate
+expires with the system it describes. Blocking by wave keeps drift that is
+common to both arms out of the contrast and makes the estimand an average
+over the window, and sentinels and a test of heterogeneity across waves make
+drift visible (\cref{sec:id-drift}), but nothing in the design makes a result
+from one window a result about the next. Published audits show how much this
+matters: the counterfactual-bot study of \citet{hosseinmardi2024} limits its
+own conclusion to the period after changes that the audited service made in
+2019 (\cref{sec:bg-audits}). A service may also learn to recognise audit
+accounts and treat them differently. The audit then measures what the service
+supplies to accounts it treats as puppets. That is a failure of transport
+from puppets to people (\cref{asm:id-transport}), and the audit cannot test
+for it.
+
+\emph{From puppets to people.} A persona is a script: a pool of seed items, a
+choice rule and an interaction budget. Real users have long histories, social
+graphs, several devices and preferences that change in response to what they
+are shown. The step from an audit estimate to real users rests on the
+exchangeability of a user and a puppet with the same demand profile, which is
+the second part of \cref{asm:demand}, stated for audits as
+\cref{asm:id-transport}, and cannot be tested from audit data. The
+protocol's choice rule adds a further gap by design: puppets never open an
+item that the classifier flags (\cref{sec:prot-personas}), so
+$\mathrm{AR}(d)$ describes the supply to a demand profile that does not
+engage with antisemitic content. That is the right estimand for asking what
+the algorithm offers to users who do not seek such content. It is not an
+estimate of what it offers to users who do. Population-level statements need
+weights over demand profiles, and an audit supplies none
+(\cref{lem:est-agg}).
+
+\emph{Dependence on the classifier and the codebook.} Every estimand is
+defined by the true label $L_c$, and the true label is itself a coding
+decision. Its meaning depends on the codebook and on the definition of
+antisemitism behind it, which is why the protocol reports scope variants side
+by side (\cref{sec:prot-validation}). The correction of \cref{thm:misclass}
+removes classifier bias only if the error rates estimated from the validation
+sample hold for the items they are applied to, within the strata in which they
+are estimated. Coded language that emerges during an audit
+\citep{zannettou2020}, quotation and counter-speech that a classifier
+confuses with endorsement \citep{rottger2021}, and content in images and video
+can each break that condition. The correction also becomes unstable as the
+sum of sensitivity and specificity approaches one. Classifier error is a
+modelled quantity in this paper, not an eliminated one.
+
+\emph{Law, terms of service and access.} A sock-puppet audit typically
+involves automated access and accounts that do not represent real people, and
+the terms of many services prohibit both (\cref{sec:eth-legal}). The legal
+decisions that have narrowed the criminal exposure of such research in one
+jurisdiction leave contractual and other civil claims open, and the
+application of the DSA's research-access provisions to sock-puppet audits
+has not, to our knowledge, been settled. The vetted-researcher route under Article~40(4) is operational in
+law, but its practical reach for a given project, service and period was
+still being established at the time of writing (\cref{sec:bg-governance}).
+These constraints shape which services can be audited at all. The services
+that are audited are therefore not a random sample of services, and a body of
+audit results inherits that selection.
+
+\emph{Heterogeneity across platforms and surfaces.} A home feed, a list of
+items recommended next to the current one, a short-video stream and a search
+results page are different systems with different eligible pools, formats and
+reference policies. The non-profiling option that Article~38 of the DSA
+requires (\cref{sec:bg-governance}) is a natural reference where it exists,
+but it is not the same policy on every service, so amplification ratios from
+two services may be relative to different references. By
+\cref{lem:est-agg}(c), changing the reference multiplies the ratio by
+$\mu_{\rho'}(d)/\mu_\rho(d)$, a factor that does not involve the algorithm at
+all, so a difference between two services' ratios may reflect their
+references rather than their algorithms. Comparisons across services are
+meaningful only on a common
+reference, or along a stated ladder of references, and they also require the
+same classifier, codebook and personas. Interference is a further source of
+heterogeneity. Its strength depends on how a service's learning system pools
+engagement across accounts, and on the puppets' share of that engagement in
+the region of content they visit, which can be substantial in a niche even on
+a very large service. \Cref{prop:interference} bounds the resulting bias by
+$\xi$ times that share, but $\xi$ is not identified by the audit. Sentinels
+and a randomised-saturation design provide evidence about it, not a bound,
+which is why the protocol reports the breakdown value of each conclusion
+rather than a single corrected estimate.
+
+\paragraph{Extensions}
+Three extensions seem most valuable. First, \emph{generative answer engines}.
+Conversational assistants and generated summaries in search do not select
+items from a pool; they produce text. The framework carries over once its
+parts are renamed. The policy is the system that generates the answer, a
+persona is a script of prompts and follow-ups, exposure is the share of
+answers, or of answer segments, that a classifier and a validation sample
+label antisemitic, and natural references include the same system without
+generation (its retrieved sources alone) or another model. Two features are
+new. Generation is stochastic even at fixed inputs, which the potential
+outcomes of \cref{sec:est-setup} accommodate, and there is no fixed eligible
+pool, so the distinction between content supply and algorithmic supply of
+\cref{sec:est-reference} has to be redrawn. Second, \emph{search}. In search,
+demand is explicit in the query. A persona becomes a distribution over
+queries, and a natural reference is the same query issued without a profile.
+The comparison of exposure with engagement on a search service by
+\citet{robertson2023} is a precedent for separating what is shown from what
+is chosen. Query suggestions and autocompletion are surfaces in their own
+right, and they act on demand directly. Third, \emph{cross-platform audits}.
+Users move between services, and links from one service can bring an audience
+to content on another \citep{chen2023}. Amplification on one service may
+therefore shape demand on another, which is the demand-shaping effect of
+\cref{thm:decomp} at the level of an ecosystem rather than a single service. A
+joint audit with harmonised personas, one frozen classifier and a shared
+validation sample would make estimates comparable across services, and
+adaptive personas, whose scripted demand responds to what they are shown,
+would let it study the demand-shaping effect for synthetic users
+(\cref{sec:est-audit}).
+
+\paragraph{Why define amplification}
+A count of antisemitic items seen online says how much there is. It does not
+say where it came from. Content that users seek out calls for one kind of
+response, content that a recommender supplies beyond what users seek calls
+for another, and content that a recommender has taught users to seek calls
+for a third. These are different claims about responsibility, and they carry
+different duties under the law and different obligations for the people who
+design these systems. An audit can test the second claim, for a stated system
+and a stated alternative, and it can say plainly that it cannot test the
+third. Stating the comparison before measuring it, correcting for the errors
+of the instrument, stopping as soon as the evidence allows and fixing the
+rules before the data are seen are how an audit can take seriously both the
+people who are targeted by antisemitic content and the evidence about where
+it comes from.

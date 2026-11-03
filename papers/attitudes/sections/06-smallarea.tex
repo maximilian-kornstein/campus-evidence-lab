@@ -1,0 +1,95 @@
+\section{Small-area estimation and the fragility of stereotype indices}\label{sec:smallarea}
+
+\providecommand{\ECV}{\mathrm{ECV}}
+\providecommand{\SDB}{\mathrm{SDB}}
+
+National estimates of the latent factors say little about variation between states, regions or campuses, and area samples are usually too small for direct estimation. This section adapts multilevel regression and poststratification (MRP) to the latent traits of \cref{sec:model} (\cref{sec:sa-mrp}), shows why the obvious two-step shortcut, poststratifying individual trait scores, is biased (\cref{prop:eap}), and then turns to a simpler and widely used summary, the share of respondents who agree with at least a given number of stereotype statements. \Cref{prop:index} states when group differences in such a share have the same sign as differences in the latent trait, and gives constructions in which they do not. Proofs are in \cref{app:proofs-design}.
+
+MRP was introduced by \citet{gelman1997} and developed for state-level opinion by \citet{park2004}. Comparisons with disaggregation \citep{lax2009}, models with deep interactions \citep{ghitza2013}, applications to non-probability samples \citep{wang2015} and the relation between weighting and regression \citep{gelman2007} shape the choices below. Estimating latent-trait distributions in subpopulations from item responses, rather than from individual scores, is the logic of the plausible-values methodology of \citet{mislevy1991}.
+
+\subsection{MRP on the latent trait}\label{sec:sa-mrp}
+
+Let the population be partitioned into cells $k\in\mathcal K$, cross-classifications of demographic variables and an area $r(k)$, with known population counts $N_k$. For an area $r$, let $\mathcal K_r=\{k:r(k)=r\}$, $N_r=\sum_{k\in\mathcal K_r}N_k$ and $\omega_k=N_k/N_r$. The measurement model is the graded response model of \cref{sec:model}, with item parameters common to all cells (or partially invariant, with DIF modelled as in \cref{sec:identification}). The structural model is a multilevel latent regression that replaces the group distributions \eqref{eq:model-latent} by cell distributions: for respondent $i$ in cell $k[i]$,
+\begin{equation}\label{eq:sa-latreg}
+  \bm\theta_i\mid k[i]=k\ \sim\ \mathrm N_3(\bm\mu_k,\bm\Sigma_k),\qquad
+  \mu_{kf}=x_k^\top\beta_f+\sum_{u=1}^{U_f}\alpha^{(u)}_{f,u[k]}+z_{r(k)}^\top\gamma_f,\qquad
+  \alpha^{(u)}_{f,\cdot}\sim\mathrm N(0,\tau_{fu}^2),
+\end{equation}
+for each factor $f\in\{G,S,I\}$. Here $x_k$ are cell-level fixed effects, the $\alpha^{(u)}$ are batches of exchangeable random effects (area, demographic groups, and their interactions, following \citealp{ghitza2013}), $z_r$ are area-level predictors \citep{park2004}, and $\bm\Sigma_k$ is the within-cell covariance, diagonal in the bifactor model and subject to the normalisations of \cref{sec:model}. The item responses and \eqref{eq:sa-latreg} are fitted jointly, so the measurement uncertainty of each $\bm\theta_i$ is propagated into the cell parameters.
+
+The poststratified area mean of the latent traits is
+\begin{equation}\label{eq:mrp}
+  \bar{\bm\theta}_r=\frac{\sum_{k\in\mathcal K_r}N_k\,\E[\bm\theta_i\mid k]}{\sum_{k\in\mathcal K_r}N_k}=\sum_{k\in\mathcal K_r}\omega_k\bm\mu_k .
+\end{equation}
+The same weights carry every estimand that is linear in the cell distributions. For a function $\varphi$, $\E_r\varphi(\bm\theta)=\sum_k\omega_k\E[\varphi(\bm\theta_i)\mid k]$; for example, the share of area $r$ above a pre-registered cut-off $t$ on $G$ is $\sum_k\omega_k\Phi\{(\mu_{kG}-t)/\Sigma_{k,GG}^{1/2}\}$. The area covariance of the latent traits is
+\begin{equation}\label{eq:mrp-cov}
+  \bm\Sigma_r=\sum_{k\in\mathcal K_r}\omega_k\bigl\{\bm\Sigma_k+(\bm\mu_k-\bar{\bm\theta}_r)(\bm\mu_k-\bar{\bm\theta}_r)^\top\bigr\}.
+\end{equation}
+Inference proceeds draw by draw. Each posterior draw $(\bm\mu_k^{(s)},\bm\Sigma_k^{(s)})_{k}$ gives a draw $\bar{\bm\theta}_r^{(s)}$ of \eqref{eq:mrp}, and equal-tailed quantiles of the draws give credible intervals. Nonlinear area estimands are computed per draw from \eqref{eq:mrp} and \eqref{eq:mrp-cov}, never by plugging posterior means into a nonlinear function. Uncertainty in the $N_k$, for example when they come from survey-based population tables, is propagated by drawing the $N_k$ jointly with the model parameters.
+
+\begin{remark}[Estimands and the finite population]\label{rem:sa-finite}
+For a finite population, the realised area mean of $\bm\theta$ equals $\sum_k\omega_k\bar{\bm\theta}_k^{\mathrm{pop}}$ exactly, where $\bar{\bm\theta}_k^{\mathrm{pop}}$ is the realised mean in cell $k$; \eqref{eq:mrp} replaces $\bar{\bm\theta}_k^{\mathrm{pop}}$ by its superpopulation expectation $\bm\mu_k$. The difference has standard deviation of order $N_r^{-1/2}$ and is negligible for census-scale cells. The same identity, with realised cell covariances, gives \eqref{eq:mrp-cov}.
+\end{remark}
+
+\paragraph{Area-level boundary estimands}
+Under measurement invariance the loadings, and hence $\ECV_j$, are common to all areas. What varies between areas is the distribution of the latent traits. Two area-level summaries are informative. The first is the latent correlation $\rho_{SI}^{(r)}$ of the correlated-factors model \eqref{eq:model-cf}, obtained from the area covariance of $(\zeta_S,\zeta_I)$ computed as in \eqref{eq:mrp-cov}. The second is the area analogue of the population-specific index $\ECV^{(g)}_j$ of \cref{def:boundary},
+\begin{equation}\label{eq:sa-ecv}
+  \ECV_j^{(r)}=\frac{a_{jG}^2\,\Sigma_{r,GG}}{a_{jG}^2\,\Sigma_{r,GG}+a_{js}^2\,\Sigma_{r,s(j)s(j)}},
+\end{equation}
+which equals $\ECV_j$ when both factor variances in the area are one. By \eqref{eq:mrp-cov}, $\bm\Sigma_r$ has a between-cell component even when the factors are uncorrelated within cells, so the off-diagonal entries of $\bm\Sigma_r$ need not vanish, and \eqref{eq:sa-ecv} leaves them out by convention. Area-level factor covariances therefore mix individual-level structure with the composition of the area. They should not be read as statements about how attitudes are organised within individuals (\cref{sec:model-meaning}). If loadings may differ between areas, area-specific loadings require a multiple-group model with partial invariance (\cref{prop:anchor}). This is feasible only for large areas, which is why the plan of \cref{sec:design} estimates boundary estimands by region only.
+
+\paragraph{Social-desirability correction in small areas}
+List experiments are too imprecise to estimate $\SDB_j$ area by area (\cref{prop:list-var}). Under \cref{prop:list-irt}, the national or regional shift $\delta_j$ enters the item's thresholds, and the poststratified prevalence of private agreement is $\sum_k\omega_k\E\{F(\eta_{ij}-b_{jc^*})\mid k\}$, with $\eta_{ij}=\bm a_j^\top\bm\theta_i$. The assumption that $\delta_j$ does not vary between areas within a region is untestable at the area level and is reported as such.
+
+\subsection{Scoring first and poststratifying later attenuates differences}\label{sec:sa-eap}
+
+A common shortcut is to compute a score $\tilde\theta_i$ for each respondent, typically the posterior mean (EAP) under a single population prior, and to run MRP on the scores. The next result shows that this attenuates area differences.
+
+\begin{proposition}[Two-step attenuation]\label{prop:eap}
+Suppose $\theta_i\mid k\sim\mathrm N(\mu_k,\sigma^2)$, that the items yield a statistic $\hat\theta_i$ with $\hat\theta_i\mid\theta_i\sim\mathrm N(\theta_i,s^2)$, and that scores are computed as posterior means under the common prior $\mathrm N(m_0,\sigma_0^2)$. Then
+\begin{equation}\label{eq:sa-eap}
+  \E[\tilde\theta_i\mid k]=m_0+\varrho\,(\mu_k-m_0),\qquad \varrho=\frac{\sigma_0^2}{\sigma_0^2+s^2}<1,
+\end{equation}
+so the two-step estimator of $\bar\theta_r$ converges to $m_0+\varrho(\bar\theta_r-m_0)$, where $\bar\theta_r$ is the scalar version of \eqref{eq:mrp}, and every difference between areas is shrunk by the factor $\varrho$, at every cell size $n_k$. In the joint model \eqref{eq:sa-latreg} the posterior mean of $\mu_k$ is consistent as $n_k\to\infty$.
+\end{proposition}
+
+The Gaussian setting makes the factor explicit; in the graded response model the information, and hence the attenuation, varies with $\theta$, so the bias is not even a constant multiple. The joint model also shrinks small cells and areas towards the regression prediction through partial pooling, but that shrinkage reflects the data available for each cell and vanishes as $n_k$ grows. The two-step attenuation does not vanish: it persists however large the cells are. Including the cell or area in the scoring prior removes the bias for the corresponding contrasts. Fitting the latent regression jointly does this for all of them, and is the approach of \citet{mislevy1991}.
+
+\subsection{When do count indices compare groups correctly?}\label{sec:sa-index}
+
+Let $U_{ij}\in\{0,1\}$ indicate agreement with stereotype statement $j=1,\dots,M$, $S_i=\sum_jU_{ij}$, and consider the index $\ind{S_i\ge h}$, ``agrees with at least $h$ of $M$ statements''. For a group $g$, let $P_g(h)=\Pr(S_i\ge h\mid g)$. We use a unidimensional trait $\theta_i$ with law $G_g$ and mean $\mu_g$ in group $g$; the multidimensional case is discussed after the proposition. The items follow
+\begin{equation}\label{eq:sa-irf}
+  \Pr(U_{ij}=1\mid\theta_i,g)=F\bigl(a_j^{(g)}\theta_i-b_j^{(g)}\bigr),
+\end{equation}
+with local independence given $(\theta_i,g)$ and $F$ a continuous, strictly increasing distribution function. \emph{Full invariance} means $a_j^{(1)}=a_j^{(2)}$ and $b_j^{(1)}=b_j^{(2)}$ for all $j$. A \emph{location family} means $G_g(t)=G_0(t-\mu_g)$ for a common $G_0$. We write $G_1\ge_{\mathrm{st}}G_2$ for first-order stochastic dominance, which holds, for instance, when the two laws have a monotone likelihood ratio.
+
+\begin{proposition}[Count indices under invariance and non-invariance]\label{prop:index}
+\begin{enumerate}[(a)]
+  \item \emph{Sufficient condition for sign agreement.} Under full invariance with all $a_j>0$, if $G_1\ge_{\mathrm{st}}G_2$ then $P_1(h)\ge P_2(h)$ for every $h\in\{1,\dots,M\}$, with strict inequality for every such $h$ if $G_1\ne G_2$. In a location family, $\mathrm{sign}\{P_1(h)-P_2(h)\}=\mathrm{sign}(\mu_1-\mu_2)$ for every $h$.
+  \item \emph{Mean ordering alone is not enough.} Under full invariance, let $G_g=\mathrm N(\mu_g,\sigma_g^2)$ with $\mu_1>\mu_2$ and $\sigma_1<\sigma_2$. For every $h\in\{1,\dots,M\}$ there are invariant item parameters with $P_1(h)<P_2(h)$, and others with $P_1(h)>P_2(h)$. Specifically, let all statements have a common slope $a$ and common location $t\ne t_\times=(\mu_1\sigma_2-\mu_2\sigma_1)/(\sigma_2-\sigma_1)$, so that $b_j=at$. Then, for all sufficiently large $a$, $P_1(h)<P_2(h)$ if $t>t_\times$ and $P_1(h)>P_2(h)$ if $t<t_\times$. For moderate slopes the sign can also vary with $h$.
+  \item \emph{Uniform DIF.} In a location family with $\mu_1>\mu_2$, invariant slopes $a_j>0$, and $b_j^{(1)}=b_j^{(2)}+\delta_j$: if $\delta_j=a_j(\mu_1-\mu_2)$ for all $j$, the responses $(U_{i1},\dots,U_{iM})$ have the same law in both groups; if $\delta_j\ge a_j(\mu_1-\mu_2)$ for all $j$, with strict inequality for some $j$, then $P_1(h)<P_2(h)$ for every $h$.
+  \item \emph{Non-uniform DIF.} Let $M\ge2$, let $F$ and $G_0$ be symmetric about zero with $G_0$ continuous, and let $b_j^{(g)}=0$ for all $j$ and $g$. For every $\mu_1>0=\mu_2$ there are slopes $a^{(1)}>0$ (small) and $a^{(2)}>0$ (large), common to all items within a group, such that $P_1(1)>P_2(1)$ but $P_1(M)<P_2(M)$. The sign of the index difference then depends on $h$, although the thresholds are invariant.
+  \item \emph{Nonlinearity.} Under full invariance with all $a_j>0$, in a location family, $\mu\mapsto P(h;\mu)$ is strictly increasing from $0$ to $1$. Hence for any $\Delta_A>\Delta_B>0$ there are baselines $\mu_A,\mu_B$ with $P(h;\mu_A+\Delta_A)-P(h;\mu_A)<P(h;\mu_B+\Delta_B)-P(h;\mu_B)$: a larger latent change can produce a smaller change in the index.
+\end{enumerate}
+\end{proposition}
+
+Each part isolates one way in which a count index can mislead. Part (a) is the positive result. Invariance and stochastic dominance together guarantee that the whole distribution of the count is ordered, $S_i\mid1\ge_{\mathrm{st}}S_i\mid2$, so every threshold $h$ ranks the groups the same way. Part (b) shows that invariance alone is not enough: the index compares tails, not means, and a group with a higher mean but less dispersion can have fewer members above a high threshold. Part (c) shows that a uniform shift of all thresholds by $a_j(\mu_1-\mu_2)$ is observationally equivalent to equal latent means; this is the index counterpart of \cref{thm:dif-bias}(d), and it is the indeterminacy that anchor items resolve (\cref{prop:anchor}). Slightly larger shifts reverse the sign of every index comparison. Part (d) shows that differences in discrimination alone, with identical thresholds, can make the low-threshold and high-threshold versions of the index disagree about which group has more agreement. Part (e) concerns changes. If two groups start from different baselines, the index can rank their latent changes in the wrong order even under full invariance.
+
+\begin{example}[Numerical instances]\label{ex:sa-index}
+Take $M=10$, logistic $F$ and normal $G_g$. (i) For part (b), let all $a_j=1.5$, let the $b_j$ be equally spaced on $[0.5,3.5]$, and let $G_1=\mathrm N(0.2,0.6^2)$ and $G_2=\mathrm N(0,1.4^2)$. Then $P_1(h)>P_2(h)$ for $h\le2$ and $P_1(h)<P_2(h)$ for $h\ge3$; at $h=5$, $P_1=0.10$ and $P_2=0.21$. (ii) For part (d), let $b_j=0$, $a^{(1)}=0.25$, $a^{(2)}=3$, $\mu_1=0.3$, $\mu_2=0$ and unit variances. Then $P_1(1)=0.999$ and $P_2(1)=0.806$, but $P_1(10)=0.002$ and $P_2(10)=0.194$; the sign changes between $h=5$ and $h=6$. (iii) For part (e), in the limit of perfectly discriminating statements with common location $t$ and $G_0=\mathrm N(0,1)$, $P(h;\mu)=\Phi(\mu-t)$. A group starting at $\mu=t-3$ whose latent mean rises by $0.5$ moves the index by $0.005$; a group starting at $\mu=t$ whose mean rises by $0.25$ moves it by $0.099$.
+\end{example}
+
+These are properties of any index of this form. We make no claim about the results of any particular index or survey, and the constructions are not calibrated to any. Whether an index's group comparisons are affected is an empirical question about its items in the groups compared, and it is answered by testing invariance (\cref{sec:identification,sec:design}).
+
+\paragraph{Several factors}
+In the bifactor model a stereotype statement loads on $G$ and on $S$. If all loadings are non-negative and the latent vectors are ordered by the usual multivariate stochastic order, part (a) extends with the same proof, since $\Pr(S_i\ge h\mid\bm\theta)$ is then non-decreasing in each coordinate of $\bm\theta$. Without such an ordering, an index of stereotype statements responds to $G$ and $S$ together. Two groups can then differ in the index because they differ in the specific stereotype factor, with no difference in $G$. This matters for the boundary question: an index built from classic stereotypes is not, by itself, a measure of the general factor.
+
+\subsection{Practical guidance}\label{sec:sa-guidance}
+
+\begin{enumerate}[(1)]
+  \item \emph{Model the latent trait jointly.} Fit the measurement model and the multilevel latent regression \eqref{eq:sa-latreg} together and poststratify draw by draw (\cref{eq:mrp}). Do not poststratify individual scores (\cref{prop:eap}).
+  \item \emph{Test invariance across the cells and areas being compared.} Poststratification averages cell means; if items function differently across cells, the cell means are on different scales. Use the DIF screens and anchors of \cref{sec:identification}, or model DIF explicitly.
+  \item \emph{Poststratify the estimand of interest.} Means, tail shares and covariances each have their own poststratification (\cref{eq:mrp,eq:mrp-cov}). Report cut-off-based shares only for pre-registered cut-offs. Describe them as shares of a population above a point on a latent scale, not as counts of a type of person.
+  \item \emph{Check the model where data allow.} Compare MRP with design-based estimates in areas large enough to support both, and report the posterior shrinkage of each area towards the model prediction.
+  \item \emph{Treat count indices as descriptive.} Report the whole distribution of $S_i$ by group, not one threshold. Crossing survival curves, $\Pr(S_i\ge h\mid1)-\Pr(S_i\ge h\mid2)$ changing sign in $h$, refute the conjunction of invariance and stochastic dominance (\cref{prop:index}(a)). Report index comparisons between groups only alongside invariance diagnostics, and do not read differences in index changes between groups with different baselines as differences in latent change (\cref{prop:index}(e)).
+\end{enumerate}

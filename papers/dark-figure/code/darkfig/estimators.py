@@ -39,7 +39,7 @@ from dataclasses import asdict, dataclass, field
 from typing import Callable
 
 import numpy as np
-from scipy import optimize, stats
+from scipy import optimize, special, stats
 
 from . import lcmcr as _lc
 from . import linkerror as _le
@@ -364,7 +364,7 @@ def _mixture_normal_quantile(p: float, means: np.ndarray, sds: np.ndarray, w: np
     sds = np.maximum(sds, 1e-12)
 
     def cdf(x):
-        return float(np.dot(w, stats.norm.cdf((x - means) / sds))) - p
+        return float(np.dot(w, special.ndtr((x - means) / sds))) - p   # ndtr == norm.cdf, without overhead
 
     lo = float(np.min(means - 10 * sds))
     hi = float(np.max(means + 10 * sds))
@@ -686,46 +686,30 @@ def lcmcr_pooled(tables, seed=None, level: float = 0.95, **kw) -> Estimate:
 # --------------------------------------------------------------------------
 # Linkage-corrected estimation (Cor cor:linkcorrect)
 # --------------------------------------------------------------------------
-def linkage_corrected(
-    table,
-    delta: float,
-    eps: float,
-    estimator: Callable[..., Estimate] = loglinear_closed_form,
-    tol: float = 1e-11,
-    max_iter: int = 20_000,
-    damping: float = 1.0,
-    **kw,
-) -> Estimate:
-    """Linkage-error-corrected estimator (Cor ``cor:linkcorrect``).
+_SOLVE_CACHE: dict = {}
 
-    Given an observed (post-linkage) table ``n~`` and known error rates
-    ``(delta, eps)`` of the canonical LE model, solve ``E[T(delta, eps) t] = n~``
-    for ``t >= 0`` by the damped fixed-point iteration of SPEC,
 
-        t <- max(0, t + damping * (n~ - E[T(t)])),   t^(0) = n~,
+def _memo(key, fn):
+    """Small memo for deterministic per-table computations reused across inner estimators."""
+    if key in _SOLVE_CACHE:
+        return _SOLVE_CACHE[key]
+    if len(_SOLVE_CACHE) > 256:
+        _SOLVE_CACHE.clear()
+    val = fn()
+    _SOLVE_CACHE[key] = val
+    return val
 
-    (:func:`darkfig.linkerror.expected_observed` is ``E[T]``), then return
-    ``estimator(t_hat, **kw)``.  ``damping`` in (0, 1] is the step size (default
-    1, the SPEC iteration; it is halved and the iteration restarted only if the
-    residual blows up).  For ``eps = 0`` the map is the linear, upper-triangular
-    detachment operator and the iteration converges geometrically with rate
-    ``max_h 1 - (1-delta)^{|h|}`` (0.34 for delta = 0.1, K = 4; 0.94 for
-    delta = 0.5); small eps perturbs this only slightly.  Iteration stops when
-    ``max|residual| <= tol * max(1, max n~)``, when ``t`` stops moving
-    (non-negativity projection active), or after ``max_iter`` steps.
 
-    The returned Estimate is the inner estimator's, with ``method`` wrapped and
-    ``n_obs = sum(t_hat)`` (estimated number of distinct *true* incidents
-    observed), so ``N_hat - n_obs`` is still the dark-figure estimate.  ``extra``
-    contains the inner ``extra`` plus ``t_hat`` (the corrected table, a dict over
-    all nonzero histories), ``n_clusters_observed`` (= sum n~), ``iterations``,
-    ``residual`` (max-norm), ``converged`` (False if the non-negativity
-    projection is active, i.e. no exact non-negative solution exists),
-    ``n_zero_cells``, ``delta``, ``eps``.
-    """
-    if not (0.0 <= delta < 1.0) or not (0.0 <= eps < 1.0):
-        raise ValueError("need 0 <= delta < 1 and 0 <= eps < 1")
-    obs, K = table_to_array(table)
+def _solve_corrected(obs: np.ndarray, K: int, delta: float, eps: float, tol: float = 1e-11,
+                     max_iter: int = 20_000, damping: float = 1.0):
+    """Projected fixed-point solve of ``E[T(delta, eps) t] = obs`` (SPEC LE step 3); memoised."""
+    key = ("solve", obs.tobytes(), K, float(delta), float(eps), tol, max_iter, damping)
+    t, it, conv, rn, st = _memo(key, lambda: _solve_corrected_raw(obs, K, delta, eps, tol, max_iter, damping))
+    return t.copy(), it, conv, rn, st
+
+
+def _solve_corrected_raw(obs: np.ndarray, K: int, delta: float, eps: float, tol: float = 1e-11,
+                         max_iter: int = 20_000, damping: float = 1.0):
     scale = max(1.0, float(obs.max()))
     step = float(damping)
     if not (0.0 < step <= 1.0):
@@ -759,9 +743,169 @@ def linkage_corrected(
             converged = True
         elif moved <= 1e-3 * tol * scale:
             break  # stationary point of the projected iteration (some t_h clamped at 0)
+    return t, it, bool(converged), rnorm, step
+
+
+def _interval_offset(est: Estimate) -> float:
+    """Offset ``a`` of the inner interval, which is log-normal on ``N - a`` (LP: n12; others: n_obs)."""
+    ex = est.extra or {}
+    if "n12" in ex and str(est.method).startswith("lincoln_petersen"):
+        return float(ex["n12"])
+    return float(est.n_obs)
+
+
+def widen_interval(N_hat: float, lo: float, hi: float, a: float, v_add: float, level: float = 0.95):
+    """Add variance ``v_add`` (on the N scale) to a log-normal interval on ``N - a``.
+
+    Each side's log half-width ``z s_side`` is replaced by
+    ``z sqrt(s_side^2 + log(1 + v_add / f0^2))``, ``f0 = N_hat - a`` (the log-normal
+    moment match used by the LP / Chao intervals); asymmetric inner intervals
+    (BMA's MATA mixture, posterior quantiles) keep their asymmetry.
+    """
+    z = _z(level)
+    if not (np.isfinite(v_add) and v_add > 0):
+        return float(lo), float(hi)
+    f0 = N_hat - a
+    if not np.isfinite(f0) or f0 <= 0:
+        sd = math.sqrt(v_add)
+        return float(max(a, lo - z * sd)), float(hi + z * sd)
+    add = math.log1p(v_add / f0 ** 2)
+    if lo > a and np.isfinite(lo):
+        s_lo = math.log(f0 / (lo - a)) / z
+        lo_n = a + f0 * math.exp(-z * math.sqrt(max(s_lo, 0.0) ** 2 + add))
+    else:
+        lo_n = lo
+    if np.isfinite(hi) and hi > a:
+        s_hi = math.log((hi - a) / f0) / z
+        hi_n = a + f0 * math.exp(z * math.sqrt(max(s_hi, 0.0) ** 2 + add))
+    else:
+        hi_n = hi
+    return float(lo_n), float(hi_n)
+
+
+def _num_grad(F, t: np.ndarray, rel: float = 1e-3, abs_step: float = 0.05):
+    """Forward-difference gradient of ``F`` (array of length 2^K in, float out) on cells 1..2^K-1."""
+    base = F(t)
+    g = np.zeros(len(t) - 1)
+    for i in range(1, len(t)):
+        h = max(abs_step, rel * abs(t[i]))
+        tp = t.copy()
+        tp[i] += h
+        g[i - 1] = (F(tp) - base) / h
+    return g, base
+
+
+def linkage_corrected(
+    table,
+    delta: float,
+    eps: float,
+    estimator: Callable[..., Estimate] = loglinear_closed_form,
+    tol: float = 1e-11,
+    max_iter: int = 20_000,
+    damping: float = 1.0,
+    link_var: str = "delta",
+    rate_se: tuple | None = None,
+    n_imp: int = 4,
+    seed=None,
+    **kw,
+) -> Estimate:
+    """Linkage-error-corrected estimator (Cor ``cor:linkcorrect``) with linkage variance.
+
+    Point estimate: solve ``E[T(delta, eps) t] = n~`` for ``t >= 0`` by the damped
+    fixed-point iteration of SPEC (``t <- max(0, t + damping (n~ - E[T(t)]))``,
+    ``t^(0) = n~``) and return ``estimator(t_hat, **kw)``; ``n_obs = sum(t_hat)``.
+
+    Interval (run 2). The inner interval treats ``t_hat`` as a raw table and so
+    reflects only the capture variance ``v_cap``. Cor cor:linkcorrect(i) adds the
+    linkage variance ``v_link``:
+
+    * ``link_var="delta"`` (default; frequentist inner estimators): delta method
+      ``v_link = a' Sigma a`` with ``a = J^{-T} grad F(t_hat)``, ``J`` the Jacobian of
+      ``t -> E[T(delta, eps) t]`` at ``t_hat`` (``D_delta`` times the merge
+      Jacobian) and ``Sigma = Cov(n~ | t_hat)`` under LE
+      (:func:`darkfig.linkerror.observed_covariance`: exact for the detachment
+      step, first order in eps for merging). ``grad F`` by forward differences.
+      ``v_link`` is added to the inner interval on its log(N - a) scale
+      (:func:`widen_interval`).
+    * ``link_var="impute"`` (for Bayesian inner estimators such as LCMCR, whose
+      posterior median cannot be differentiated numerically): ``n_imp`` tables
+      ``t* ~ N(t_hat, J^{-1} Sigma J^{-T})`` (rounded, clipped at 0) are drawn, one
+      chain is run on each and the draws are pooled (:func:`lcmcr_pooled`).
+    * ``link_var="none"``: the run-1 behaviour (inner interval only).
+
+    ``rate_se=(se_delta, se_eps)``: additionally the audit variance of Cor
+    cor:linkcorrect(iii), ``v_aud = c' diag(se^2) c`` with ``c = dN_hat/d(delta, eps)``
+    by central differences (covariance of the two rate estimates ignored). Adding
+    it to ``v_link`` is conservative when the audit sampled the same linkage
+    (Rem. rem:link-sameaudit). Returned as ``extra["lo_tv"], extra["hi_tv"]``.
+
+    ``extra`` holds the inner ``extra`` plus ``t_hat``, ``lo_cap``/``hi_cap`` (inner
+    interval, v_cap only), ``v_link``, ``v_aud``, ``se_log_n0_link`` (the added
+    log-scale sd), ``iterations``, ``residual``, ``converged`` (False if the
+    non-negativity projection is active), ``n_zero_cells``, ``delta``, ``eps``.
+    """
+    if not (0.0 <= delta < 1.0) or not (0.0 <= eps < 1.0):
+        raise ValueError("need 0 <= delta < 1 and 0 <= eps < 1")
+    obs, K = table_to_array(table)
+    t, it, converged, rnorm, step = _solve_corrected(obs, K, delta, eps, tol, max_iter, damping)
     t_table = array_to_table(t, K)
-    inner = estimator(t_table, **kw)
+    level = kw.get("level", 0.95)
+    Sigma_t = None
+    v_link = float("nan")
+    if link_var in ("delta", "impute"):
+        def _lin():
+            J = _le.jacobian_expected_observed(t, delta, eps)
+            Sig = _le.observed_covariance(t, delta, eps)
+            Jinv = np.linalg.inv(J)
+            return Sig, Jinv, Jinv @ Sig @ Jinv.T
+        Sig, Jinv, Sigma_t = _memo(("lin", t.tobytes(), K, float(delta), float(eps)), _lin)
+    if link_var == "impute":
+        rng = np.random.default_rng(seed)
+        A = np.linalg.cholesky(Sigma_t + 1e-9 * np.eye(len(t) - 1))
+        tabs = []
+        for _ in range(int(n_imp)):
+            ts = np.zeros_like(t)
+            ts[1:] = np.maximum(0.0, np.rint(t[1:] + A @ rng.standard_normal(len(t) - 1)))
+            tabs.append(array_to_table(ts, K))
+        kw2 = {k: v for k, v in kw.items() if k not in ("seed", "return_samples", "n_chains")}
+        inner = lcmcr_pooled(tabs, seed=int(rng.integers(2**31 - 1)), **kw2)
+        lo, hi = inner.lo, inner.hi
+        lo_cap, hi_cap = float("nan"), float("nan")
+    else:
+        inner = estimator(t_table, **kw)
+        lo_cap, hi_cap = float(inner.lo), float(inner.hi)
+        lo, hi = lo_cap, hi_cap
+        if link_var == "delta":
+            def F(tt):
+                return float(estimator(array_to_table(tt, K), **kw).N_hat)
+            g, _ = _num_grad(F, t)
+            a = Jinv.T @ g
+            v_link = float(max(a @ Sig @ a, 0.0))
+            lo, hi = widen_interval(inner.N_hat, lo_cap, hi_cap, _interval_offset(inner), v_link, level)
     extra = dict(inner.extra)
+    v_aud = float("nan")
+    lo_tv, hi_tv = float("nan"), float("nan")
+    if rate_se is not None and link_var != "impute":
+        sd_d, sd_e = (float(x) if x is not None and np.isfinite(x) else 0.0 for x in rate_se)
+        c = []
+        for j, (th, sd) in enumerate(((delta, sd_d), (eps, sd_e))):
+            if sd <= 0:
+                c.append(0.0)
+                continue
+            h = max(1e-3, 0.05 * sd)
+            up, dn = min(th + h, 0.95), max(th - h, 0.0)
+            vals = []
+            for th2 in (up, dn):
+                d2, e2 = (th2, eps) if j == 0 else (delta, th2)
+                t2, *_ = _solve_corrected(obs, K, d2, e2, tol, max_iter, damping)
+                vals.append(float(estimator(array_to_table(t2, K), **kw).N_hat))
+            c.append((vals[0] - vals[1]) / (up - dn))
+        v_aud = float(c[0] ** 2 * sd_d ** 2 + c[1] ** 2 * sd_e ** 2)
+        v_tot = (v_link if np.isfinite(v_link) else 0.0) + v_aud
+        lo_tv, hi_tv = widen_interval(inner.N_hat, lo_cap, hi_cap, _interval_offset(inner), v_tot, level)
+        extra["dN_drates"] = [float(x) for x in c]
+    f0 = inner.N_hat - _interval_offset(inner)
+    extra.pop("samples", None)
     extra.update(
         {
             "inner_method": inner.method,
@@ -774,14 +918,25 @@ def linkage_corrected(
             "delta": float(delta),
             "eps": float(eps),
             "damping_final": step,
+            "link_var": link_var,
+            "v_link": v_link,
+            "v_aud": v_aud,
+            "se_log_n0_link": float(math.sqrt(math.log1p(v_link / f0 ** 2))) if (np.isfinite(v_link) and f0 > 0) else float("nan"),
+            "lo_cap": lo_cap,
+            "hi_cap": hi_cap,
+            "lo_tv": lo_tv,
+            "hi_tv": hi_tv,
+            "interval_offset": _interval_offset(inner),
         }
     )
+    if link_var == "impute":
+        extra["n_imp"] = int(n_imp)
+        extra["sd_t_total"] = float(np.sqrt(np.sum(np.diag(Sigma_t))))
     return Estimate(
         N_hat=inner.N_hat,
-        lo=inner.lo,
-        hi=inner.hi,
-        n_obs=_nobs(float(t.sum())),
+        lo=float(lo),
+        hi=float(hi),
+        n_obs=_nobs(float(t.sum())) if link_var != "impute" else float(inner.n_obs),
         method=f"linkage_corrected({inner.method})",
         extra=extra,
     )
-

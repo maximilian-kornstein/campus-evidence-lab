@@ -1,17 +1,24 @@
 #!/usr/bin/env python
-"""Figures and LaTeX tables for the simulation section (sec:simulation).
+"""Figures and LaTeX tables for the simulation section (sec:simulation). Run 2.
 
 Reads ../results/sim_results.json (and ../results/raw/S5.json for the per-replication
 scatter of fig-sim-linkage-error) and writes
-  ../figures/fig-sim-bias-coverage.pdf   bias and coverage by estimator x pipeline x scenario (S1-S4)
-  ../figures/fig-sim-linkage-error.pdf   dark-figure bias vs realised linkage error (S5)
+  ../figures/fig-sim-bias-coverage.pdf   median (filled) and mean (open) relative bias, coverage (S1-S4)
+  ../figures/fig-sim-linkage-error.pdf   dark-figure error vs realised linkage error (S5)
   ../figures/fig-sim-sensitivity.pdf     closed-form n0(omega) curves with |omega| <= Omega bands (S6)
-  ../figures/fig-sim-referral.pdf        Lincoln-Petersen bias with / without provenance correction (S7)
-  ../tables/tab-sim-main.tex             main results (S1-S4)
-  ../tables/tab-sim-linkage.tex          linkage error and correction by noise level (S5)
+  ../figures/fig-sim-referral.pdf        Lincoln-Petersen / BMA median bias with / without provenance correction (S7)
+  ../figures/fig-sim-le-validation.pdf   S8: LE-generated tables; bias and coverage with / without v_link
+  ../tables/tab-sim-main.tex             main results (S1-S4): median (MAD), mean [blow-ups], coverage
+  ../tables/tab-sim-linkage.tex          S5 linkage quality and audit (frame vs capture-level rates)
+  ../tables/tab-sim-linkage-bias.tex     S5 dark-figure bias and coverage by pipeline (BMA)
   ../tables/tab-sim-referral.tex         referral sweep (S7)
   ../tables/tab-sim-sensitivity.tex      omega-sensitivity bands (S6)
-No titles inside plots; captions belong in LaTeX.
+  ../tables/tab-sim-le.tex               S8 validation of Cor cor:linkcorrect under the LE model
+  ../tables/tab-sim-lcmcr.tex            LCMCR convergence diagnostics (4 chains per fit)
+  ../tables/tab-sim-mi.tex               MI (Gibbs linkage draws) vs the point linkage
+Bias is the MEDIAN relative bias over replicates (primary); means are secondary and are
+dominated by blow-ups (N_hat > 5N), which are counted. No titles inside plots; captions
+belong in LaTeX.
 Usage (from code/): python make_figures.py [--results ../results] [--figures ../figures] [--tables ../tables]
 """
 from __future__ import annotations
@@ -65,9 +72,9 @@ MARK = dict(oracle="o", naive="s", corrected="D", mi="^", corrected_d="v", corre
 LS = dict(oracle="-", naive="--", corrected="-", mi=":", corrected_d="-.", corrected_true=(0, (1, 1)),
           corrected_tv="-", corrected_lefit=(0, (3, 1, 1, 1)))
 PIPE_LABEL = dict(oracle="Oracle linkage", naive="Naive (best linkage)", corrected="Linkage-corrected",
-                  mi="Multiple imputation", corrected_d=r"Corrected, $\varepsilon=0$ (post hoc)",
+                  mi="Multiple imputation (Gibbs)", corrected_d=r"Corrected, $\varepsilon=0$ (post hoc)",
                   corrected_true=r"Corrected, realised $(\delta,\varepsilon)$",
-                  corrected_tv="Corrected + review var.", corrected_lefit="Corrected, best-fit LE")
+                  corrected_tv="Corrected + audit var.", corrected_lefit="Corrected, best-fit LE")
 EST_LABEL = dict(lp="LP", cf="CF", bma="BMA", chao="Chao", lcmcr="LCMCR")
 EST_LONG = dict(lp="Lincoln--Petersen", cf="Closed form ($\\omega=0$)", bma="Log-linear BMA",
                 chao="Chao lower bound", lcmcr="LCMCR")
@@ -106,6 +113,13 @@ def _style(ax, grid_axis="y"):
 # ---------------------------------------------------------------------------
 # Figure 1: bias and coverage (S1-S4)
 # ---------------------------------------------------------------------------
+def _clip_mark(ax, x, v, lim, col, filled=True):
+    """Plot an out-of-range value as a triangle at the panel edge."""
+    y = lim[1] - 2.5 if v > 0 else lim[0] + 2.5
+    ax.plot(x, y, marker="^" if v > 0 else "v", ms=4.4, color=col, mfc=col if filled else "white", mew=1.0,
+            zorder=4, ls="none")
+
+
 def fig_bias_coverage(res, path):
     scen = ["S1", "S2", "S3", "S4"]
     pipes = ["oracle", "naive", "corrected", "mi"]
@@ -128,14 +142,18 @@ def fig_bias_coverage(res, path):
                 if s is None or s.get("n_ok", 0) == 0:
                     continue
                 xb = x + off[p_i]
-                b, mcse = 100 * _f(s["relbias"]), 100 * _f(s["relbias_mcse"])
-                if b > ylim_b[1] or b < ylim_b[0]:     # clipped: open triangle at the panel edge
-                    yb = ylim_b[1] - 2.5 if b > 0 else ylim_b[0] + 2.5
-                    axb.plot(xb, yb, marker="^" if b > 0 else "v", ms=4.4, color=COL[p], mfc="white", mew=1.0,
-                             zorder=4, ls="none")
+                b, mcse = 100 * _f(s["relbias_median"]), 100 * _f(s["relbias_median_mcse"])
+                bm = 100 * _f(s["relbias_mean"])
+                if b > ylim_b[1] or b < ylim_b[0]:
+                    _clip_mark(axb, xb, b, ylim_b, COL[p], filled=True)
                 else:
                     axb.errorbar(xb, b, yerr=2 * mcse if np.isfinite(mcse) else None, fmt=MARK[p], ms=3.6,
                                  color=COL[p], mec="white", mew=0.4, elinewidth=0.8, capsize=0, zorder=3)
+                if np.isfinite(bm):      # secondary: mean (open, small)
+                    if bm > ylim_b[1] or bm < ylim_b[0]:
+                        _clip_mark(axb, xb, bm, ylim_b, COL[p], filled=False)
+                    else:
+                        axb.plot(xb, bm, marker="o", ms=2.6, mfc="white", mec=COL[p], mew=0.7, ls="none", zorder=2)
                 c = 100 * _f(s["coverage"])
                 cse = 100 * _f(s["coverage_mcse"])
                 axc.errorbar(xb, c, yerr=2 * cse, fmt=MARK[p], ms=3.6, color=COL[p], mec="white", mew=0.4,
@@ -148,12 +166,14 @@ def fig_bias_coverage(res, path):
         axb.set_xticklabels([])
         axc.set_xticklabels([EST_LABEL[e] for e in ests], rotation=45, ha="right", rotation_mode="anchor")
         axb.set_title(SC_SHORT[sid], fontsize=7.8, pad=3)
-    axes[0, 0].set_ylabel(r"Relative bias of $\widehat{N}$ (%)")
-    axes[1, 0].set_ylabel("Coverage of 95% interval (%)")
+    axes[0, 0].set_ylabel(r"Rel. bias of $\widehat{N}$ (%)")
+    axes[1, 0].set_ylabel("Coverage of 95% CI (%)")
     handles = [Line2D([], [], marker=MARK[p], color=COL[p], ls="none", ms=4.5, mec="white", mew=0.4,
                       label=PIPE_LABEL[p]) for p in pipes]
-    fig.legend(handles=handles, loc="outside lower center", ncol=4, frameon=False,
-               handletextpad=0.3, columnspacing=1.2)
+    handles += [Line2D([], [], marker="o", ls="none", ms=3.0, mfc="white", mec=INK2, mew=0.7,
+                       label="open: mean (filled: median)")]
+    fig.legend(handles=handles, loc="outside lower center", ncol=3, frameon=False,
+               handletextpad=0.3, columnspacing=1.0, fontsize=6.8)
     fig.savefig(path)
     plt.close(fig)
 
@@ -162,35 +182,37 @@ def fig_bias_coverage(res, path):
 # Figure 2: linkage error sweep (S5)
 # ---------------------------------------------------------------------------
 def fig_linkage_error(res, raw_s5, path, est="bma"):
-    """(a) realised and review-estimated LE rates vs noise; (b), (c) n0_hat / n0 vs realised delta, eps.
+    """(a) realised (capture-level and audit-frame) and audit-estimated LE rates vs noise;
+    (b), (c) dark-figure ratio vs realised delta, eps.
 
-    The dark-figure error is shown as the ratio n0_hat / n0 = 1 + relative bias on a log
-    axis (the LE-corrected estimators can overshoot by an order of magnitude). Small
-    points: replications; lines: level means of the ratio (= 1 + mean relative bias).
+    The dark-figure error is shown as (N_hat - n_obs_true) / n0 = 1 + (N_hat - N)/n0 (common oracle
+    observed count) on a log axis. Small points: replications; lines: level MEDIANS.
     """
     sc = res["scenarios"]["S5"]
     levels = sc["results"]
     nu = np.array([lv["level_values"]["noise"] for lv in levels])
     L = [lv["linkage"] for lv in levels]
-    g = lambda key: np.array([l[key]["mean"] for l in L])
+    g = lambda key, stat="mean": np.array([l[key][stat] for l in L])
     fig, axes = plt.subplots(1, 3, figsize=(W2, 2.55), layout="constrained",
                              gridspec_kw=dict(width_ratios=[1, 1.1, 1.1]))
     ax = axes[0]
     _style(ax, "both")
-    ax.plot(nu, g("delta_true"), color="#0072B2", ls="-", marker="o", ms=3.5, label=r"$\delta$ realised")
+    ax.plot(nu, g("delta_true"), color="#0072B2", ls="-", marker="o", ms=3.5, label=r"$\delta$ capture-level")
+    ax.plot(nu, g("delta_frame"), color="#0072B2", ls=":", lw=1.0, label=r"$\delta$ audit frame")
     ax.plot(nu, g("delta_hat"), color="#0072B2", ls="none", marker="o", ms=5.5, mfc="white", mew=0.9,
-            label=r"$\hat\delta$ review")
-    ax.plot(nu, g("eps_true"), color="#D55E00", ls="--", marker="s", ms=3.5, label=r"$\varepsilon$ realised")
+            label=r"$\hat\delta$ audit")
+    ax.plot(nu, g("eps_true"), color="#D55E00", ls="--", marker="s", ms=3.5, label=r"$\varepsilon$ capture-level")
+    ax.plot(nu, g("eps_frame"), color="#D55E00", ls=":", lw=1.0, label=r"$\varepsilon$ audit frame")
     ax.plot(nu, g("eps_hat"), color="#D55E00", ls="none", marker="s", ms=5.5, mfc="white", mew=0.9,
-            label=r"$\hat\varepsilon$ review")
+            label=r"$\hat\varepsilon$ audit")
     ax.set_xlabel(r"Record-noise level $\nu$")
-    ax.set_ylabel("Linkage error rate")
-    ax.legend(frameon=False, loc="upper left", handlelength=1.6, borderaxespad=0.2, fontsize=6.6)
+    ax.set_ylabel("Linkage error rate (mean)")
+    ax.legend(frameon=False, loc="upper left", handlelength=1.6, borderaxespad=0.2, fontsize=5.8)
     ax.set_title("(a)", loc="left", fontsize=8.5, pad=2)
-    pipes = ["naive", "corrected", "corrected_d", "corrected_true"]
+    pipes = ["naive", "corrected", "corrected_d", "corrected_true", "mi"]
     ymin, ymax = 0.5, 2.0
-    for k, (xkey, xlabel, tag) in enumerate([("delta", r"Realised $\delta$", "(b)"),
-                                             ("eps", r"Realised $\varepsilon$", "(c)")]):
+    for k, (xkey, xlabel, tag) in enumerate([("delta", r"Realised $\delta$ (capture-level)", "(b)"),
+                                             ("eps", r"Realised $\varepsilon$ (capture-level)", "(c)")]):
         ax = axes[k + 1]
         _style(ax, "both")
         ax.axhline(1.0, color=INK2, lw=0.7, zorder=1)
@@ -202,11 +224,11 @@ def fig_linkage_error(res, raw_s5, path, est="bma"):
                     continue
                 n0 = r["truth"]["n0"]
                 xs.append(r["linkage"]["error"][xkey])
-                ys.append(max(((_f(pr["N_hat"]) - _f(pr["n_obs"]))) / n0, 1e-2))
+                ys.append(max((_f(pr["N_hat"]) - r["truth"]["n_obs"]) / n0, 1e-2))
             if p != "oracle":
                 ax.scatter(xs, ys, s=2.0, color=COL[p], alpha=0.2, lw=0, zorder=2, rasterized=True)
-            mx = g(xkey + "_true")
-            my = np.array([1 + _f(_est(res, "S5", p, est, li)["relbias_n0"]) for li in range(len(levels))])
+            mx = g(xkey + "_true", "median")
+            my = np.array([1 + _f(_est(res, "S5", p, est, li)["relbias_n0_median"]) for li in range(len(levels))])
             ymin, ymax = min(ymin, np.nanmin(my)), max(ymax, np.nanmax(my))
             ax.plot(mx, my, color=COL[p], ls=LS[p], marker=MARK[p], ms=3.8 if p != "oracle" else 2.6,
                     lw=1.4 if p != "oracle" else 0.9, mec="white", mew=0.4, zorder=4, label=PIPE_LABEL[p])
@@ -214,11 +236,11 @@ def fig_linkage_error(res, raw_s5, path, est="bma"):
         ax.set_xlabel(xlabel)
         ax.set_title(tag, loc="left", fontsize=8.5, pad=2)
     for ax in axes[1:]:
-        ax.set_ylim(ymin / 1.25, ymax * 1.25)
-        ax.yaxis.set_major_locator(matplotlib.ticker.FixedLocator([0.5, 0.75, 1, 1.5, 2, 3, 5, 10, 20, 50]))
+        ax.set_ylim(max(ymin / 1.25, 0.08), min(ymax * 1.25, 60))
+        ax.yaxis.set_major_locator(matplotlib.ticker.FixedLocator([0.1, 0.2, 0.5, 0.75, 1, 1.5, 2, 3, 5, 10, 20, 50]))
         ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}"))
         ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
-    axes[1].set_ylabel(r"$\widehat{n}_{\mathbf{0}}\,/\,n_{\mathbf{0}}$ (" + EST_LABEL[est] + ", log scale)")
+    axes[1].set_ylabel(r"$(\widehat{N}-n)/n_{\mathbf{0}}$ (" + EST_LABEL[est] + ", log scale)")
     h, lab = axes[1].get_legend_handles_labels()
     fig.legend(h, lab, loc="outside lower center", ncol=3, frameon=False,
                handletextpad=0.3, columnspacing=1.2, fontsize=6.8)
@@ -278,14 +300,89 @@ def fig_referral(res, path):
               ("oracle", "bma", "#D55E00", "s", ":", "BMA, all NGO records"),
               ("oracle_dropref", "bma", "#0072B2", "o", ":", "BMA, referral-only dropped")]
     for pipe, est, col, mk, ls, lab in series:
-        y = np.array([100 * _f(_est(res, "S7", pipe, est, li)["relbias"]) for li in range(len(q))])
-        e = np.array([200 * _f(_est(res, "S7", pipe, est, li)["relbias_mcse"]) for li in range(len(q))])
+        y = np.array([100 * _f(_est(res, "S7", pipe, est, li)["relbias_median"]) for li in range(len(q))])
+        e = np.array([200 * _f(_est(res, "S7", pipe, est, li)["relbias_median_mcse"]) for li in range(len(q))])
         ax.errorbar(q, y, yerr=e, color=col, ls=ls, marker=mk, ms=3.6 if ls == "-" else 3.0,
                     mfc=col if ls == "-" else "white", mec=col, mew=0.8, lw=1.2, elinewidth=0.7, capsize=0, label=lab)
     ax.set_xlabel(r"Referral probability $q$")
-    ax.set_ylabel(r"Relative bias of $\widehat{N}$ (%)")
+    ax.set_ylabel(r"Median relative bias of $\widehat{N}$ (%)")
     ax.set_xticks(q)
     ax.legend(frameon=False, loc="lower left", fontsize=6.4, handlelength=2.0, borderaxespad=0.2)
+    fig.savefig(path)
+    plt.close(fig)
+
+
+# ---------------------------------------------------------------------------
+# Figure 5: S8 -- the LE model generates the observed table
+# ---------------------------------------------------------------------------
+LE_COL = dict(oracle="#000000", naive="#D55E00", corrected_known="#0072B2", corrected_review="#009E73",
+              corrected_review_tv="#56B4E9", known_cap="#CC79A7")
+LE_LAB = dict(oracle="Oracle", naive="Naive (LE table)", corrected_known=r"Corrected, known $(\delta,\varepsilon)$",
+              corrected_review="Corrected, audit rates", corrected_review_tv="Corrected, audit rates + audit var.",
+              known_cap=r"Corrected, known, without $v_{\mathrm{link}}$")
+LE_MARK = dict(oracle="o", naive="s", corrected_known="D", corrected_review="^", corrected_review_tv="v", known_cap="X")
+
+
+def fig_le_validation(res, path):
+    sc = res["scenarios"]["S8"]
+    lv = sc["results"]
+    ests = ["lp", "cf", "bma", "chao"]
+    x = np.arange(len(lv))
+    fig, axes = plt.subplots(2, 4, figsize=(W2, 3.9), sharey="row", layout="constrained")
+    bias_p = ["oracle", "naive", "corrected_known", "corrected_review"]
+    cov_p = ["oracle", "known_cap", "corrected_known", "corrected_review", "corrected_review_tv"]
+    off_b = np.linspace(-0.27, 0.27, len(bias_p))
+    off_c = np.linspace(-0.3, 0.3, len(cov_p))
+    ylim_b = (-30, 60)
+    for j, e in enumerate(ests):
+        axb, axc = axes[0, j], axes[1, j]
+        for ax in (axb, axc):
+            _style(ax)
+            for i in (3, 4, 5):
+                ax.axvspan(i - 0.5, i + 0.5, color="#f3f3f3", zorder=0, lw=0)
+        axb.axhline(0, color=INK2, lw=0.7, zorder=1)
+        axc.axhline(95, color=INK2, lw=0.7, zorder=1)
+        for k, p in enumerate(bias_p):
+            for i, l in enumerate(lv):
+                s = l["estimates"].get(p, {}).get(e)
+                if not s or not s.get("n_ok"):
+                    continue
+                b, m = 100 * _f(s["relbias_median"]), 100 * _f(s["relbias_median_mcse"])
+                if b > ylim_b[1] or b < ylim_b[0]:
+                    _clip_mark(axb, i + off_b[k], b, ylim_b, LE_COL[p])
+                else:
+                    axb.errorbar(i + off_b[k], b, yerr=2 * m if np.isfinite(m) else None, fmt=LE_MARK[p], ms=3.2,
+                                 color=LE_COL[p], mec="white", mew=0.4, elinewidth=0.7, capsize=0, zorder=3)
+        for k, p in enumerate(cov_p):
+            for i, l in enumerate(lv):
+                pp = "corrected_known" if p == "known_cap" else p
+                s = l["estimates"].get(pp, {}).get(e)
+                if not s or not s.get("n_ok"):
+                    continue
+                c = 100 * _f(s["coverage_cap"] if p == "known_cap" else s["coverage"])
+                cs = 100 * _f(s["coverage_cap_mcse"] if p == "known_cap" else s["coverage_mcse"])
+                axc.errorbar(i + off_c[k], c, yerr=2 * cs, fmt=LE_MARK[p], ms=3.2, color=LE_COL[p], mec="white",
+                             mew=0.4, elinewidth=0.7, capsize=0, zorder=3)
+        axb.set_ylim(*ylim_b)
+        axc.set_ylim(40, 101)
+        for ax in (axb, axc):
+            ax.set_xlim(-0.5, len(lv) - 0.5)
+            ax.set_xticks(x)
+        axb.set_xticklabels([])
+        axc.set_xticklabels([f"{v['level_values']['eps']:g}".replace("0.", ".") for v in lv], fontsize=5.6)
+        for gi, d in enumerate(sorted({v["level_values"]["delta"] for v in lv})):
+            axc.text(3 * gi + 1, -0.17, rf"$\delta={d:g}$", transform=axc.get_xaxis_transform(), ha="center",
+                     va="top", fontsize=6.0)
+        axb.set_title(EST_LONG[e], fontsize=7.8, pad=3)
+    axes[0, 0].set_ylabel(r"Median bias of $\widehat{N}$ (%)")
+    axes[1, 0].set_ylabel("Coverage of 95% CI (%)")
+    axes[1, 0].text(-0.06, -0.035, r"$\varepsilon$:", transform=axes[1, 0].transAxes, fontsize=5.6, ha="right",
+                    va="top")
+    keys = ["oracle", "naive", "corrected_known", "known_cap", "corrected_review", "corrected_review_tv"]
+    handles = [Line2D([], [], marker=LE_MARK[p], color=LE_COL[p], ls="none", ms=4.2, mec="white", mew=0.4,
+                      label=LE_LAB[p]) for p in keys]
+    fig.legend(handles=handles, loc="outside lower center", ncol=3, frameon=False, handletextpad=0.3,
+               columnspacing=1.0, fontsize=6.6)
     fig.savefig(path)
     plt.close(fig)
 
@@ -306,63 +403,106 @@ def _pct(x, nd=1, sign=True):
     return s.replace("+", "$+$").replace("-", "$-$")
 
 
+def _cov(s, key="coverage"):
+    v = _f(s.get(key)) if s else float("nan")
+    return f"{100 * v:.0f}" if np.isfinite(v) else "--"
+
+
+def _hdr(f, extra=""):
+    f.write("% Generated by code/make_figures.py from results/sim_results.json (run 2) -- do not edit by hand.\n")
+    if extra:
+        f.write(extra)
+
+
 def tab_main(res, path):
     scen = ["S1", "S2", "S3", "S4"]
     pipes = [("oracle", "Oracle"), ("naive", "Naive"), ("corrected", "Corrected"), ("mi", "MI")]
     ests = ["lp", "cf", "bma", "chao", "lcmcr"]
-    lines = [r"\begin{tabular}{@{}ll" + "rr" * len(ests) + "@{}}", r"\toprule"]
-    lines.append(" & & " + " & ".join(rf"\multicolumn{{2}}{{c}}{{{EST_LABEL[e]}}}" for e in ests) + r" \\")
-    lines.append(" ".join(rf"\cmidrule(lr){{{3 + 2 * i}-{4 + 2 * i}}}" for i in range(len(ests))))
-    lines.append("Scenario & Pipeline & " + " & ".join(["Bias", "Cov."] * len(ests)) + r" \\")
+    lines = [r"\begin{tabular}{@{}ll" + "rrr" * len(ests) + "@{}}", r"\toprule"]
+    lines.append(" & & " + " & ".join(rf"\multicolumn{{3}}{{c}}{{{EST_LABEL[e]}}}" for e in ests) + r" \\")
+    lines.append(" ".join(rf"\cmidrule(lr){{{3 + 3 * i}-{5 + 3 * i}}}" for i in range(len(ests))))
+    lines.append("Scen. & Pipeline & " + " & ".join(["Median (MAD)", "Mean", "Cov."] * len(ests)) + r" \\")
     lines.append(r"\midrule")
-    names = dict(S1="S1", S2="S2", S3="S3", S4="S4")
     for k, sid in enumerate(scen):
         for i, (p, plab) in enumerate(pipes):
-            row = [names[sid] if i == 0 else "", plab]
+            row = [sid if i == 0 else "", plab]
             for e in ests:
                 s = _est(res, sid, p, e)
                 if s is None or s.get("n_ok", 0) == 0:
-                    row += ["--", "--"]
+                    row += ["--", "--", "--"]
                 else:
-                    row += [_pct(s["relbias"]), f"{100 * _f(s['coverage']):.0f}"]
+                    mad = 100 * _f(s["relbias_mad_sd"])
+                    row.append(f"{_pct(s['relbias_median'])} ({mad:.0f})" if np.isfinite(mad) else _pct(s["relbias_median"]))
+                    nb = int(s.get("n_blowup", 0))
+                    row.append(_pct(s["relbias_mean"]) + (rf"\textsuperscript{{[{nb}]}}" if nb else ""))
+                    row.append(_cov(s))
             lines.append(" & ".join(row) + r" \\")
         if k < len(scen) - 1:
             lines.append(r"\addlinespace")
     lines += [r"\bottomrule", r"\end{tabular}"]
+    Rs = {sid: res["scenarios"][sid]["R"] for sid in scen}
+    Rl = {sid: res["scenarios"][sid]["R_lcmcr"] for sid in scen}
     with open(path, "w") as f:
-        f.write("% Generated by code/make_figures.py from results/sim_results.json -- do not edit by hand.\n")
-        f.write("% Bias: mean relative bias of N_hat (%); Cov.: coverage of nominal 95% intervals (%).\n")
-        f.write("% Means of exploding estimators are outlier-dominated; medians are in results/sim_results.json.\n")
-        Rs = {sid: res["scenarios"][sid]["R"] for sid in scen}
-        Rl = {sid: res["scenarios"][sid]["R_lcmcr"] for sid in scen}
-        f.write(f"% Replications R = {Rs}; LCMCR replications = {Rl}.\n")
+        _hdr(f, "% Median (MAD): median relative bias of N_hat in % (1.4826 x MAD of the relative bias, in % points);\n"
+                "% Mean: mean relative bias (%), superscript [k] = number of replicates with N_hat > 5N;\n"
+                "% Cov.: coverage of nominal 95% intervals (%). Corrected intervals include v_link.\n"
+                f"% Replications R = {Rs}; LCMCR replications = {Rl} (4 chains per fit).\n")
         f.write("\n".join(lines) + "\n")
 
 
-def tab_linkage(res, path, est="bma"):
+def tab_linkage(res, path):
     sc = res["scenarios"]["S5"]
-    lines = [r"\begin{tabular}{@{}r" + "r" * 6 + "r" * 5 + "@{}}", r"\toprule"]
-    lines.append(r" & \multicolumn{6}{c}{Linkage} & \multicolumn{5}{c}{Relative bias of $\widehat{n}_{\mathbf{0}}$, "
-                 + EST_LABEL[est] + r" (\%)} \\")
-    lines.append(r"\cmidrule(lr){2-7}\cmidrule(lr){8-12}")
-    lines.append(r"$\nu$ & Prec. & Rec. & $\delta$ & $\hat\delta$ & $\varepsilon$ & $\hat\varepsilon$ & "
-                 r"Oracle & Naive & Corr. & Corr.\,$\varepsilon{=}0$ & Corr.\,true \\")
+    lines = [r"\begin{tabular}{@{}r" + "r" * 3 + "r" * 4 + "r" * 4 + "@{}}", r"\toprule"]
+    lines.append(r" & \multicolumn{3}{c}{Linkage} & \multicolumn{4}{c}{False non-match rate} & "
+                 r"\multicolumn{4}{c}{False-match rate} \\")
+    lines.append(r"\cmidrule(lr){2-4}\cmidrule(lr){5-8}\cmidrule(lr){9-12}")
+    lines.append(r"$\nu$ & Prec. & Rec. & Block. & $\delta$ & $\delta_{\mathrm{frame}}$ & $\hat\delta$ & Cov. & "
+                 r"$\varepsilon$ & $\varepsilon_{\mathrm{frame}}$ & $\hat\varepsilon$ & Cov. \\")
     lines.append(r"\midrule")
-    for li, lv in enumerate(sc["results"]):
+    for lv in sc["results"]:
         L = lv["linkage"]
         row = [f"{lv['level_values']['noise']:.2f}",
-               f"{L['precision']['mean']:.3f}", f"{L['recall']['mean']:.3f}",
-               f"{L['delta_true']['mean']:.3f}", f"{L['delta_hat']['mean']:.3f}",
-               f"{L['eps_true']['mean']:.3f}", f"{L['eps_hat']['mean']:.3f}"]
-        for p in ("oracle", "naive", "corrected", "corrected_d", "corrected_true"):
-            s = _est(res, "S5", p, est, li)
-            row.append(_pct(s["relbias_n0"]) if s and s.get("n_ok") else "--")
+               f"{L['precision']['mean']:.3f}", f"{L['recall']['mean']:.3f}", f"{L['blocking_recall']['mean']:.3f}",
+               f"{L['delta_true']['mean']:.3f}", f"{L['delta_frame']['mean']:.3f}", f"{L['delta_hat']['mean']:.3f}",
+               f"{100 * L['delta_ci_coverage_frame']:.0f}",
+               f"{L['eps_true']['mean']:.3f}", f"{L['eps_frame']['mean']:.3f}", f"{L['eps_hat']['mean']:.3f}",
+               f"{100 * L['eps_ci_coverage_frame']:.0f}"]
         lines.append(" & ".join(row) + r" \\")
     lines += [r"\bottomrule", r"\end{tabular}"]
     with open(path, "w") as f:
-        f.write("% Generated by code/make_figures.py from results/sim_results.json -- do not edit by hand.\n")
-        f.write(f"% S5: independent capture, record-noise sweep, R = {sc['R']} per level. Precision/recall over all records;\n")
-        f.write("% delta, eps: realised LE-model rates of the naive linkage; hats: clerical-review estimates (B = 300 pairs).\n")
+        _hdr(f, f"% S5: independent capture, record-noise sweep, R = {sc['R']} per level (means over replicates).\n"
+                "% Prec./Rec.: pairwise precision / recall over all records; Block.: blocking recall (true cross-list\n"
+                "% record pairs that are candidate pairs). delta, eps: realised capture-level LE rates of the naive\n"
+                "% linkage over ALL true pairs; delta_frame, eps_frame: the same rates on the audit frame (candidate\n"
+                "% pairs among de-duplicated records), i.e. the estimand of the random audit; hats: audit estimates\n"
+                "% (B = 300 pairs); Cov.: % of replicates whose 95% audit CI covers the frame rate.\n")
+        f.write("\n".join(lines) + "\n")
+
+
+def tab_linkage_bias(res, path, est="bma"):
+    sc = res["scenarios"]["S5"]
+    pipes = [("oracle", "Oracle"), ("naive", "Naive"), ("corrected", "Corr."), ("corrected_d", r"Corr.\,$\varepsilon{=}0$"),
+             ("corrected_true", "Corr.\\,true"), ("mi", "MI")]
+    lines = [r"\begin{tabular}{@{}r" + "r" * len(pipes) + "r" * len(pipes) + "@{}}", r"\toprule"]
+    lines.append(rf" & \multicolumn{{{len(pipes)}}}{{c}}{{Median relative bias of $\widehat{{n}}_{{\mathbf{{0}}}}$ (\%)}} & "
+                 rf"\multicolumn{{{len(pipes)}}}{{c}}{{Coverage (\%)}} \\")
+    lines.append(rf"\cmidrule(lr){{2-{1 + len(pipes)}}}\cmidrule(lr){{{2 + len(pipes)}-{1 + 2 * len(pipes)}}}")
+    lines.append(r"$\nu$ & " + " & ".join(l for _, l in pipes) + " & " + " & ".join(l for _, l in pipes) + r" \\")
+    lines.append(r"\midrule")
+    for li, lv in enumerate(sc["results"]):
+        row = [f"{lv['level_values']['noise']:.2f}"]
+        ss = [_est(res, "S5", p, est, li) for p, _ in pipes]
+        for s in ss:
+            nb = int(s.get("n_blowup", 0)) if s else 0
+            row.append((_pct(s["relbias_n0_median"]) + (rf"\textsuperscript{{[{nb}]}}" if nb else "")) if s and s.get("n_ok") else "--")
+        for s in ss:
+            row.append(_cov(s) if s and s.get("n_ok") else "--")
+        lines.append(" & ".join(row) + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    with open(path, "w") as f:
+        _hdr(f, f"% S5: {EST_LABEL[est]}; R = {sc['R']} per level. Bias: median over replicates of (N_hat - N)/n0_true, i.e. the\n"
+                "% dark-figure error with the common (oracle) observed count; superscript [k]: replicates with N_hat > 5N.\n"
+                "% Coverage of 95% intervals for N; corrected intervals include v_link; MI = Gibbs linkage draws + Rubin.\n")
         f.write("\n".join(lines) + "\n")
 
 
@@ -379,13 +519,12 @@ def tab_referral(res, path):
         for e in ests:
             for p in ("oracle", "oracle_dropref"):
                 s = _est(res, "S7", p, e, li)
-                row.append(f"{_pct(s['relbias'])} ({100 * _f(s['coverage']):.0f})" if s and s.get("n_ok") else "--")
+                row.append(f"{_pct(s['relbias_median'])} ({_cov(s)})" if s and s.get("n_ok") else "--")
         lines.append(" & ".join(row) + r" \\")
     lines += [r"\bottomrule", r"\end{tabular}"]
     with open(path, "w") as f:
-        f.write("% Generated by code/make_figures.py from results/sim_results.json -- do not edit by hand.\n")
-        f.write(f"% S7: relative bias of N_hat in % (coverage of 95% interval in %), oracle linkage, R = {sc['R']} per q.\n")
-        f.write("% All = all NGO records; Dropped = referral-only NGO records removed using the provenance flag.\n")
+        _hdr(f, f"% S7: median relative bias of N_hat in % (coverage of 95% interval in %), oracle linkage, R = {sc['R']} per q.\n"
+                "% All = all NGO records; Dropped = referral-only NGO records removed using the provenance flag.\n")
         f.write("\n".join(lines) + "\n")
 
 
@@ -409,10 +548,95 @@ def tab_sensitivity(res, path, scen=("S1", "S2", "S3", "S4")):
         lines.append(" & ".join(row) + r" \\")
     lines += [r"\bottomrule", r"\end{tabular}"]
     with open(path, "w") as f:
-        f.write("% Generated by code/make_figures.py from results/sim_results.json -- do not edit by hand.\n")
-        f.write("% S6: closed-form estimator on oracle tables. Bias omega=0: median relative bias of n0_hat (%).\n")
-        f.write("% Bounds: % of replications with true n0 in [n0_hat(-Omega), n0_hat(Omega)];\n")
-        f.write("% CI union: % with true n0 in the union of 95% intervals over |omega| <= Omega; Cov. omega=0: 95% CI coverage of n0.\n")
+        _hdr(f, "% S6: closed-form estimator on oracle tables. Bias omega=0: median relative bias of n0_hat (%).\n"
+                "% Bounds: % of replications with true n0 in [n0_hat(-Omega), n0_hat(Omega)];\n"
+                "% CI union: % with true n0 in the union of 95% intervals over |omega| <= Omega; Cov. omega=0: 95% CI coverage of n0.\n")
+        f.write("\n".join(lines) + "\n")
+
+
+def tab_le(res, path):
+    sc = res["scenarios"]["S8"]
+    lines = [r"\begin{tabular}{@{}rr" + "rrr" + "rrrrr" + "rrr" + "@{}}", r"\toprule"]
+    lines.append(r" & & \multicolumn{3}{c}{BMA: median bias (\%)} & \multicolumn{5}{c}{BMA: coverage (\%)} & "
+                 r"\multicolumn{3}{c}{Known rates: cov. with / without $v_{\mathrm{link}}$} \\")
+    lines.append(r"\cmidrule(lr){3-5}\cmidrule(lr){6-10}\cmidrule(lr){11-13}")
+    lines.append(r"$\delta$ & $\varepsilon$ & Naive & Known & Audit & Oracle & Known$^-$ & Known & Audit & "
+                 r"Audit$^+$ & LP & CF & Chao \\")
+    lines.append(r"\midrule")
+    for li, lv in enumerate(sc["results"]):
+        E = lv["estimates"]
+        g = lambda p, e="bma": E.get(p, {}).get(e)
+        row = [f"{lv['level_values']['delta']:g}", f"{lv['level_values']['eps']:g}",
+               _pct(g("naive")["relbias_median"]), _pct(g("corrected_known")["relbias_median"]),
+               _pct(g("corrected_review")["relbias_median"]),
+               _cov(g("oracle")), _cov(g("corrected_known"), "coverage_cap"), _cov(g("corrected_known")),
+               _cov(g("corrected_review")), _cov(g("corrected_review_tv"))]
+        for e in ("lp", "cf", "chao"):
+            s = g("corrected_known", e)
+            row.append(f"{_cov(s)}/{_cov(s, 'coverage_cap')}")
+        lines.append(" & ".join(row) + r" \\")
+        if li in (2, 5):
+            lines.append(r"\addlinespace")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    with open(path, "w") as f:
+        _hdr(f, f"% S8: observed table = simulate_observed(t_true, delta, eps) (the LE model itself); independent capture,\n"
+                f"% N = 2000, R = {sc['R']} per cell. Known: linkage_corrected with the true (delta, eps); Audit: rates from a\n"
+                "% random audit simulated from the LE ground truth (200 records + 100 linked edges). Known^-: interval without\n"
+                "% v_link (inner estimator only, as in run 1); Known/Audit: with v_link; Audit^+: + audit variance.\n")
+        f.write("\n".join(lines) + "\n")
+
+
+def tab_lcmcr(res, path):
+    rows = []
+    for sid in ("S1", "S2", "S3", "S4"):
+        for p, plab in (("oracle", "Oracle"), ("naive", "Naive")):
+            s = _est(res, sid, p, "lcmcr")
+            if not s or "diag" not in s:
+                continue
+            d = s["diag"]
+            rows.append([sid, plab, f"{d['n_fits']}", f"{d['rhat_median']:.3f}", f"{d['rhat_max']:.3f}",
+                         f"{100 * d['frac_rhat_lt_1_01']:.0f}", f"{d['ess_bulk_median']:.0f}", f"{d['ess_bulk_min']:.0f}",
+                         f"{d['ess_tail_median']:.0f}", f"{100 * d['frac_meets_protocol']:.0f}",
+                         _pct(s["relbias_median"]) + rf" ({100 * _f(s['relbias_median_mcse']):.1f})",
+                         f"{_cov(s)} ({100 * _f(s['coverage_mcse']):.0f})"])
+    lines = [r"\begin{tabular}{@{}llrrrrrrrrrr@{}}", r"\toprule",
+             r"Scen. & Table & Fits & $\widehat R$ med. & $\widehat R$ max & \% $\widehat R{<}1.01$ & ESS$_b$ med. & "
+             r"ESS$_b$ min & ESS$_t$ med. & \% protocol & Median bias (MCSE) & Cov. (MCSE) \\", r"\midrule"]
+    lines += [" & ".join(r) + r" \\" for r in rows]
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    with open(path, "w") as f:
+        _hdr(f, "% LCMCR fits with 4 chains x 7500 iterations (2500 burn-in, thin 5; 4000 pooled draws), overdispersed n0 starts.\n"
+                "% Rank-normalised split-Rhat and bulk / tail ESS of N (Vehtari et al. 2021). % protocol: fits meeting App. app:comp-diag\n"
+                "% (Rhat < 1.01 and bulk and tail ESS >= 400). Bias and coverage in %, Monte Carlo SE in parentheses.\n")
+        f.write("\n".join(lines) + "\n")
+
+
+def tab_mi(res, path, est="bma"):
+    rows = []
+    items = [("S4", 0, "S4")] + [("S5", li, f"S5, $\\nu={lv['level_values']['noise']:g}$")
+                                 for li, lv in enumerate(res["scenarios"]["S5"]["results"])]
+    for sid, li, lab in items:
+        L = res["scenarios"][sid]["results"][li]["linkage"]
+        if not L or "mi" not in L:
+            continue
+        M = L["mi"]
+        sn, sm = _est(res, sid, "naive", est, li), _est(res, sid, "mi", est, li)
+        rows.append([lab, f"{M['n_false_merges_point']['mean']:.0f}", f"{M['n_false_merges_draw']['mean']:.0f}",
+                     f"{M['recall_point']['mean']:.3f}", f"{M['recall_draw']['mean']:.3f}",
+                     f"{M['n_obs_point_minus_true']['mean']:+.0f}".replace("-", "$-$").replace("+", "$+$"),
+                     f"{M['n_obs_draw_minus_true']['mean']:+.0f}".replace("-", "$-$").replace("+", "$+$"),
+                     _pct(sn["relbias_median"]), _pct(sm["relbias_median"]), _cov(sn), _cov(sm)])
+    lines = [r"\begin{tabular}{@{}lrrrrrrrrrr@{}}", r"\toprule",
+             r" & \multicolumn{2}{c}{False merges} & \multicolumn{2}{c}{Recall} & \multicolumn{2}{c}{$n-n^\star$} & "
+             rf"\multicolumn{{2}}{{c}}{{{EST_LABEL[est]} median bias (\%)}} & \multicolumn{{2}}{{c}}{{Cov. (\%)}} \\",
+             r"\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}\cmidrule(lr){10-11}",
+             r"Scenario & Point & Draw & Point & Draw & Point & Draw & Naive & MI & Naive & MI \\", r"\midrule"]
+    lines += [" & ".join(r) + r" \\" for r in rows]
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    with open(path, "w") as f:
+        _hdr(f, "% MI with Gibbs linkage draws (approximate posterior under the plug-in FS pairwise model) vs the point\n"
+                "% linkage. False merges, recall (pairwise, all records) and n - n* (observed clusters minus true observed\n"
+                "% incidents): means over replicates (draw columns: mean over the first 5 draws per replicate).\n")
         f.write("\n".join(lines) + "\n")
 
 
@@ -431,14 +655,21 @@ def main():
         tab_main(res, os.path.join(a.tables, "tab-sim-main.tex"))
         fig_sensitivity(res, os.path.join(a.figures, "fig-sim-sensitivity.pdf"))
         tab_sensitivity(res, os.path.join(a.tables, "tab-sim-sensitivity.tex"))
+        tab_lcmcr(res, os.path.join(a.tables, "tab-sim-lcmcr.tex"))
     if "S5" in sc:
         with open(os.path.join(a.results, "raw", "S5.json")) as f:
             raw = json.load(f)
         fig_linkage_error(res, raw, os.path.join(a.figures, "fig-sim-linkage-error.pdf"))
         tab_linkage(res, os.path.join(a.tables, "tab-sim-linkage.tex"))
+        tab_linkage_bias(res, os.path.join(a.tables, "tab-sim-linkage-bias.tex"))
+        if "S4" in sc:
+            tab_mi(res, os.path.join(a.tables, "tab-sim-mi.tex"))
     if "S7" in sc:
         fig_referral(res, os.path.join(a.figures, "fig-sim-referral.pdf"))
         tab_referral(res, os.path.join(a.tables, "tab-sim-referral.tex"))
+    if "S8" in sc:
+        fig_le_validation(res, os.path.join(a.figures, "fig-sim-le-validation.pdf"))
+        tab_le(res, os.path.join(a.tables, "tab-sim-le.tex"))
     print("figures and tables written")
 
 

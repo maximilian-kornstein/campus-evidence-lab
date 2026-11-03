@@ -154,8 +154,10 @@ knowledge, new in the form given.
   exponential kernels the components have hypoexponential closed forms
   (\cref{prop:irf}). A channel decomposition isolates the online-to-offline
   spillover as a sum over paths; channel shares are not additive
-  (\cref{prop:at-channel}). The finite-horizon bound, the closed forms and
-  the channel decomposition are, to our knowledge, new in this form.
+  (\cref{prop:at-channel}). The ingredients are classical
+  \citep{hawkes1971,hawkes1974}; we have not found the closed forms or the
+  channel decomposition stated in this form, although both follow from
+  classical identities.
   \item\label{contrib:est} \textbf{Estimation and testing.} Maximum
   likelihood by EM over the latent branching structure (\cref{alg:em};
   \citealp{veen2008,marsan2008}), with an exact treatment of the observation
@@ -179,13 +181,19 @@ knowledge, new in the form given.
   past, the future is again a Poisson cluster process. The Bayes-optimal
   alert rule thresholds the predictive probability of a surge at
   $\pi^*=c_{\mathrm{FA}}/(c_{\mathrm{FA}}+c_{\mathrm{miss}})$. Under the
-  model an additional incident never switches an alert off, and in the
-  univariate case the rule reduces to a threshold on the current intensity
-  (\cref{thm:alert}). Reporting delays bias the model's state downward, so
-  ignoring them can postpone an alert but never bring one forward; a
-  delay-weighted state corrects the bias (\cref{prop:nowcast},
-  \cref{alg:alert}). Forecasts are evaluated with proper scores and
-  probability integral transforms (\cref{sec:forecasting}).
+  model an additional incident never switches an alert off, and the alert
+  region is an upper set in the excitation state. In the univariate case the
+  rule is a threshold curve in the current excitation, which reduces to a
+  threshold on the current intensity before any event, or when the response
+  and the kernel decay at the same rate (\cref{thm:alert}). Reporting delays
+  bias the model's state downward, so ignoring them can postpone an alert
+  but never bring one forward; a delay-weighted state corrects the bias
+  (\cref{prop:nowcast}), and an imputation algorithm alerts from delayed
+  data (\cref{alg:alert}). The monotone coupling behind these results is
+  classical; its consequences for the alert region and the delay correction
+  are, to our knowledge, new in this form. Forecasts are evaluated with
+  proper scores and probability integral transforms
+  (\cref{sec:forecasting}).
   \item\label{contrib:sim} \textbf{A simulation study.} In synthetic worlds
   with known ground truth we assess recovery of $\Amat$, spurious contagion
   under a misspecified background, attenuation by thinning and its

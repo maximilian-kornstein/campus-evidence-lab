@@ -215,14 +215,18 @@ from every model in the hierarchy are reported as well.
   counts \citep{gneiting2007} and randomised PIT histograms for calibration
   \citep{dawid1984,gneiting2007b}, using rolling-origin one-step and
   $\Delta$-step forecasts over the test period.
-  \item \emph{Placebo shocks.} We draw 1{,}000 placebo calendars. Each has
-  the same number of events per class as the real list, with dates drawn
-  uniformly from days at least $H$ days from every real event and off the
-  holiday calendar. Each placebo calendar is added to the selected model as
-  an extra shock class, and its loading is tested. The rejection frequency
-  at nominal level $0.05$ is the empirical false-positive rate of the shock
-  test. The rank of each real-event direct component $D_k$ among its
-  placebo counterparts is reported. If the empirical false-positive rate
+  \item \emph{Placebo shocks.} Placebo calibration is done for one event
+  class at a time (\cref{sec:est-placebo}). For each class we draw 1{,}000
+  placebo calendars with the same number of events and the same sizes as the
+  real class. Their dates are drawn uniformly from days off the holiday
+  calendar, with the 48-hour merging rule of \cref{sec:plan-events}, and
+  without reference to the real dates of that class. The base model is the
+  selected model with that class removed. The real class and each placebo
+  calendar are added to the base model in turn, as a shock class, and the
+  same statistics are computed for all of them. The rejection frequency of the
+  placebo loading tests at nominal level $0.05$ is the empirical
+  false-positive rate of the shock test. The rank of each real-event direct
+  component $D_k$ among its placebo counterparts is reported (\cref{lem:est-placebo}). If the empirical false-positive rate
   exceeds $0.10$, inference on shocks uses the placebo distribution in place
   of the asymptotic reference.
   \item \emph{Synthetic dry run.} Before any real data are loaded, the full

@@ -26,11 +26,12 @@ model is correct, including its background and its list of events
 The ingredients are classical. The resolvent and the first-moment formula go back to
 \citet{hawkes1971} (see also \citealp{bacry2015,laub2021}). The split by immigrant
 ancestor is the cluster representation of \citet{hawkes1974}. Resolvents of Volterra
-equations are treated in \citet{gripenberg1990}. Three results are, to our knowledge,
-not previously stated in this form: the finite-horizon bound in
-\cref{thm:attribution}(c); the hypoexponential closed forms in \cref{prop:irf}(d); and
-the channel decomposition, with its path-sum and non-additivity properties.
-\Cref{app:attrproofs} gives the proofs.
+equations are treated in \citet{gripenberg1990}. The finite-horizon bound in
+\cref{thm:attribution}(c) is an elementary consequence of the resolvent representation.
+We have not found two results stated in this form, although both are short
+consequences of classical identities: the hypoexponential closed forms in
+\cref{prop:irf}(d), and the channel decomposition, with its path-sum and
+non-additivity properties. \Cref{app:attrproofs} gives the proofs.
 
 \subsection{Set-up}\label{sec:at-setup}
 
@@ -107,9 +108,15 @@ $\Psi_k(H)=\int_0^H\psi_k$.
   \begin{equation}\label{eq:at-share-n}
     \frac{C(\infty)}{D(\infty)+C(\infty)}=n .
   \end{equation}
-  \item \emph{Finite horizons.} For every $H$, $\bm C(H)\le(\Mmat-\Imat)\,\bm D(H)$.
-  In the univariate case, $C(H)/\{D(H)+C(H)\}\le n$ for every $H$ with $D(H)>0$, and
-  the ratio tends to $n$ as $H\to\infty$.
+  \item \emph{Finite horizons.} For every $H$,
+  $\bm C(H)\le\bar\Rker(H)\,\bm D(H)\le(\Mmat-\Imat)\,\bm D(H)$. In the univariate case,
+  for every $H$ with $D(H)>0$,
+  \[
+  \frac{C(H)}{D(H)+C(H)}\le\frac{\bar\Rker(H)}{1+\bar\Rker(H)}\le n,
+  \]
+  and the ratio tends to $n$ as $H\to\infty$. If all streams share one response kernel,
+  $\psi_k=\psi$, then for each stream $k$ the share
+  $C_k(H)/\{D_k(H)+C_k(H)\}$ is at most its limit $C_k(\infty)/\{D_k(\infty)+C_k(\infty)\}$.
   \item \emph{Conditioning on the history before the event.} Let
   $\bm h_{\tau_e}(t)=\int_{[0,\tau_e]}\Phik(t-s)\,\dN(s)$, $t>\tau_e$, be the
   excitation carried over from incidents up to $\tau_e$. Then
@@ -129,9 +136,18 @@ share is $1-d_{e,k}/(\Mmat\bm d_e)_k$. Through cross-excitation, this share depe
 how the event loads on the other streams, and it can exceed $\alpha_{kk}$
 (\cref{sec:at-example}).
 
-Part (c) says that contagion takes time. Over a short window, the share is below its
-limit, so shares reported at short horizons understate the eventual contagion. This is
-why the analysis plan reports several horizons (\cref{sec:plan-estimands}).
+Part (c) says that contagion takes time. In a univariate model, and in a multivariate
+model whose streams share one response kernel, the share over a short window is at most
+its limit. Shares reported at short horizons then understate the eventual contagion.
+
+This ordering can fail when the streams respond to the event on different time scales.
+If the direct response of one stream is slow, the cascade arriving from a fast stream
+can dominate early, and that stream's share can exceed its limit. For example, take
+$\Amat=\bigl(\begin{smallmatrix}0.5&0\\0.4&0.2\end{smallmatrix}\bigr)$, all
+$\beta_{kj}=3$, $\bm\eta=(5,0.2)$ and $\bm d_e=(10,5)^{\top}$. The share of stream 2 is
+$0.879$ at $H=0.83$ but $0.692$ in the limit. The vector bound in (c) holds in every
+case. This is one reason why the analysis plan reports several horizons
+(\cref{sec:plan-estimands}).
 
 Part (d) assigns the excitation left by incidents before the event to the baseline, not
 to the event. A surge that begins during an already elevated period is therefore not
@@ -302,7 +318,10 @@ $j\in\mathcal S_{\mathrm{on}}$, with all other entries zero. Set
 $\Amat^\circ=\Amat-\bm E$ and $\Mmat^\circ=(\Imat-\Amat^\circ)^{-1}$. Write
 $\bm C(H;\Amat)$ for the contagion component of \cref{thm:attribution} computed with
 branching matrix $\Amat$, holding fixed every other parameter: the kernel shapes
-$g_{kj}$, the background, the loadings and the response kernels.
+$g_{kj}$, the background, the loadings and the response kernels. Only the
+online-to-offline entries are set to zero. The online-to-online entries are kept;
+zeroing the whole column of an online stream would also remove its excitation of
+other online streams, and would answer a different question.
 
 \begin{definition}[Online channel]\label{def:at-channel}
 The \emph{online-channel contagion} of event $e$ over horizon $H$ is
@@ -429,7 +448,8 @@ $\spr(\Amat)=1$.
 from the posterior or from a parametric bootstrap, compute
 $(\bm B,\bm D,\bm C,\bm C^{\mathrm{on}})^{(r)}$ exactly for each draw, and report
 quantiles. This propagates the dependence between components and respects the
-constraints $\sigma_k\in[0,1]$ and $C/(D+C)\le n$. Infinite-horizon totals are finite
+constraints $\sigma_k\in[0,1]$ and, in univariate models, $C/(D+C)\le n$.
+Infinite-horizon totals are finite
 only for draws with $\spr(\Amat^{(r)})<1$, so the prior must be restricted to that
 region. Otherwise only finite-horizon quantities should be reported. If event sizes
 $S_e$ are measured with error, their uncertainty enters through the draws as well. The
@@ -463,8 +483,11 @@ offline incidents (stream 2), with time measured in days, and
 \]
 Thus each online item triggers on average $0.1$ offline incidents. Offline incidents
 trigger no online volume. Online excitation decays within about half a day, and
-offline excitation decays over about two days. The background is constant and
-stationary, so $\bm B=H\,\Mmat\bm\mu$ with $\Mmat\bm\mu=(4,\,1.29)^{\top}$ per day.
+offline excitation decays over about two days. The background is constant, and we
+take the process to have run long before the event (\cref{prop:stationary}), so
+$\bm B=H\,\Mmat\bm\mu$ with $\Mmat\bm\mu=(4,\,1.29)^{\top}$ per day. For a process
+started from the empty history at time $0$, as in the standing assumptions, $\bm B$
+approaches this value as $\tau_e$ grows.
 \Cref{tab:at-illus} reports the decomposition, computed from
 \eqref{eq:at-irf-row}--\eqref{eq:at-augmented}.
 
@@ -505,8 +528,8 @@ Four features of \cref{tab:at-illus} illustrate the results above.
   online response, $\bm d_e=(0,5)^{\top}$, would have no online channel at all. With
   feedback $\alpha_{\mathrm{on},\mathrm{off}}=0.2$, such an event would have
   $\sigma_{\mathrm{off}}(\infty)=0.168$ (computed from \eqref{eq:at-chan-inf}).
-  \item Over the first week, the expected offline count, $9.00+5.00+6.63=20.62$, is
-  $2.3$ times the baseline.
+  \item Over the first week, the expected offline count, $B+D+C=20.62$ before
+  rounding, is $2.3$ times the baseline.
 \end{enumerate}
 Under the model, the reading is that most of this illustrative surge would be event-driven
 cascade, and most of that cascade would pass through the online stream. A model with

@@ -1,6 +1,6 @@
 # Bibliography key index (BIB curator: SOURCES)
 
-Status: VERIFIED 2026-11-03. refs.bib: 46 entries; bib/sources.bib: 16 entries. Each entry was checked by web search
+Status: VERIFIED 2026-11-03. refs.bib: 46 entries; bib/sources.bib: 17 entries (63 total). Each entry was checked by web search
 against publisher pages (Cambridge, OUP, T&F, SAGE, Springer, Wiley, APA), JSTOR/RePEc/EconPapers records, society
 pages (Psychometric Society, ETS, Statistics Canada) or the issuing organisation's own site. Crossref, doi.org and
 the organisations' own hosts (holocaustremembrance.com, jerusalemdeclaration.org, nexusproject.us) could not be fetched
@@ -76,6 +76,9 @@ survey and substantive sources in `bib/sources.bib`.
 - jda2021 -- Jerusalem Declaration on Antisemitism, March 2021 (definition + 15 guidelines in sections A, B, C)
 - nexus2021 -- Nexus Task Force, The Nexus Document, February 2021, updated June 2024
 
+## bib/sources.bib -- Legal framework
+- gdpr2016 -- Regulation (EU) 2016/679 (GDPR), OJ L 119, 4.5.2016, p. 1; Art. 9 special categories (political opinions, religious beliefs)
+
 ## bib/sources.bib -- Surveys of the general public
 - adl2014global -- ADL Global 100: An Index of Anti-Semitism (2014): 11-stereotype index, threshold 6 of 11
 - adl2023attitudes -- ADL, Antisemitic Attitudes in America: Topline Findings (2023; survey fielded 2022): 11 tropes measured since 1964; 6+ threshold; trope belief and anti-Israel sentiment described as "discrete" but overlapping
@@ -107,7 +110,7 @@ survey and substantive sources in `bib/sources.bib`.
 - blair2020: the authors published an errata note (eleven corrections, including the racial-prejudice CI). Do not quote
   domain-specific numbers from this paper without checking the errata; the abstract-level claims are safe.
 - cohen2009: author order Cohen, Jussim, Harber, Bhasin per Jussim's publication list and the JPSP citation (one aggregator
-  lists Harber second). DOI 10.1037/a0015338 is the standard APA DOI but was not displayed on a page reached in this session.
+  lists Harber second). DOI omitted: not displayed on any page reached in this session.
 - beattie2017: pages 2749-2767 from citing works; DOI confirmed via a T&F-mirror URL carrying the article title. Published
   online November 2016.
 - ihra2016: adoption date, plenary location (Bucharest) and the "non-legally binding" status confirmed from IHRA pages and the
@@ -125,6 +128,12 @@ survey and substantive sources in `bib/sources.bib`.
 - ajc2024*: year is the report's title year; fieldwork dates from AJC's pages.
 - No numeric findings about real attitudes are taken from any of these sources except where the background section quotes
   a figure exactly as the source reports it.
+
+- bollen1989: DOI omitted (not confirmed). lord1980, millsap2011, bollen1989 are books cited by publisher and year only; these
+  three were not individually searched (standard records). Every other refs.bib entry was confirmed by at least one search.
+- nosek2018, gelman2013, hundepool2012: copied from the companion paper's verified bibliography (../dark-figure).
+- gdpr2016: OJ reference and Art. 9 categories confirmed via legislation.gov.uk copy; page range trimmed to the first page.
+- schmid1957: pages 53-61 (DOI-linked record); one R-package manual gives 83-90, apparently an error.
 
 ## Dropped / not added
 - Kempf (ASCI survey), Frindte et al. 2005, Allington & Hirsh 2019 (AzAs scale) and the GeAs validity paper (JCA 5(2)):

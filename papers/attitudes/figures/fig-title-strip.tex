@@ -1,0 +1,30 @@
+% =====================================================================
+%  Title-page ornament (LEAD): the five category response curves of ONE
+%  graded-response item (Samejima), drawn across the text width.
+%  P(Y = c | theta) = L_c(theta) - L_{c+1}(theta), with
+%  L_c(theta) = logistic(a (theta - b_c)), a = 1.9,
+%  b = (-2.1, -0.7, 0.7, 2.1), theta in [-4.6, 4.6].
+%  Illustrative parameters. It is decoration, not data.
+% =====================================================================
+\par\noindent
+\begin{tikzpicture}[x={\dimexpr(\textwidth-1.2pt)*10/92\relax},y=1.05cm,
+    declare function={Lc(\t,\b)=1/(1+exp(-max(-9,min(9,1.9*(\t-\b)))));
+      P0(\t)=1-Lc(\t,-2.1);
+      P1(\t)=Lc(\t,-2.1)-Lc(\t,-0.7);
+      P2(\t)=Lc(\t,-0.7)-Lc(\t,0.7);
+      P3(\t)=Lc(\t,0.7)-Lc(\t,2.1);
+      P4(\t)=Lc(\t,2.1);}]
+  % upper envelope, lightly tinted
+  \fill[LabTint]
+    plot[domain=-4.6:4.6,samples=161,smooth]
+      (\x+4.6,{max(P0(\x),P1(\x),P2(\x),P3(\x),P4(\x))})
+    -- (9.2,0) -- (0,0) -- cycle;
+  % the five category curves
+  \foreach \f/\c in {P0/LabNavyLight,P4/LabNavyLight,P1/LabNavyMid,P3/LabNavyMid,P2/LabNavy}{
+    \draw[\c,line width=0.5pt,line join=round]
+      plot[domain=-4.6:4.6,samples=161,smooth] (\x+4.6,{\f(\x)});}
+  % baseline and threshold ticks b_c
+  \draw[LabRule,line width=0.4pt] (0,0) -- (9.2,0);
+  \foreach \b in {-2.1,-0.7,0.7,2.1}{
+    \draw[LabNavyLight,line width=0.4pt] (\b+4.6,-0.07) -- (\b+4.6,-0.2);}
+\end{tikzpicture}\par

@@ -1,0 +1,202 @@
+\section{Identification and invariance}\label{sec:identification}
+
+This section asks when the boundary estimands of \cref{def:boundary} are determined by the distribution of the responses, and what happens to group comparisons when items function differently across groups. We proceed in four steps.
+\begin{enumerate}[(i)]
+  \item Under the normal-ogive link, identification reduces to a factor-analytic problem for the polychoric correlation matrix (\cref{lem:id-reduction}). With two specific factors, and under mild conditions, the bifactor parameters and the boundary ECVs are identified if and only if, in at least one domain, the items differ in their general-factor share in a specific sense. With only two Israel-related items, the boundary ECVs are only partially identified, with sharp bounds (\cref{thm:ident}).
+  \item Ignoring DIF biases latent mean differences and group-specific boundary estimands. The first-order bias is an information-weighted projection of the DIF onto the loading matrix (\cref{thm:dif-bias}). DIF that is proportional to the loadings is indistinguishable from a difference in latent means.
+  \item With invariant anchor items, group comparisons are identified. A single anchor with DIF contaminates every comparison, with a bound in terms of the anchors' leverage (\cref{prop:anchor}).
+  \item A test of whether an Israel-related item lies in the boundary set, and confidence sets for $\mathcal B_\tau$ (\cref{prop:id-boundary-test}).
+\end{enumerate}
+Proofs are in \cref{app:proofs-measurement}. Some ingredients are classical: identification of factor models from their covariance structure \citep{anderson1956,bollen1989}; the polychoric formulation of the normal-ogive model \citep{olsson1979,takane1987}; partial invariance \citep{byrne1989}; and pseudo-true values of misspecified maximum likelihood \citep{white1982}. We attribute related results where they are stated. Throughout, \emph{observationally equivalent} means inducing the same probability law of the response vector $\bm Y=(Y_j)_{j\in\mathcal J}$ in every group, and \emph{identified up to reflection} means determined up to changing the sign of a factor, that is, of a whole column of $\bm A$. All ECVs are invariant under reflections.
+
+\subsection{Reduction to the polychoric correlation matrix}\label{sec:id-reduction}
+
+\begin{lemma}[Latent-response reduction]\label{lem:id-reduction}
+Under the normal-ogive link, let $\bm\theta\sim\mathrm N_3(\bm\mu,\bm\Sigma)$ in some group. Then $\bm Y$ has the law of the discretisation, at the thresholds $(b_{jc})$, of $\bm Y^*\sim\mathrm N_J(\bm A\bm\mu,\bm A\bm\Sigma\bm A^\top+\bm I_J)$. Let $s_j=(1+\bm a_j^\top\bm\Sigma\bm a_j)^{1/2}$. Two parameter values induce the same law of $\bm Y$ if and only if they induce the same standardised thresholds $\bar b_{jc}=(b_{jc}-\bm a_j^\top\bm\mu)/s_j$ and the same correlation matrix $\bm R$ of $\bm Y^*$, with $R_{jk}=\bm a_j^\top\bm\Sigma\bm a_k/(s_js_k)$ for $j\neq k$. In the reference group $R_{jk}=\bm\lambda_j^\top\bm\lambda_k$ and $\bar b_{jc}=b_{jc}(1-h_j^2)^{1/2}$, and $(\bm a_j,b_{j\cdot})\mapsto(\bm\lambda_j,\bar b_{j\cdot})$ is a bijection onto $\{h_j^2<1\}$, with inverse $\bm a_j=\bm\lambda_j/\psi_j^{1/2}$ and $b_{jc}=\bar b_{jc}/\psi_j^{1/2}$.
+\end{lemma}
+
+In the reference group, therefore, the item parameters are identified if and only if the standardised loading matrix $\bm\Lambda=(\bm\lambda_j^\top)_{j\in\mathcal J}$ is determined, within the pattern \eqref{eq:model-pattern}, by the off-diagonal entries of $\bm\Lambda\bm\Lambda^\top$. The diagonal carries no information, because it is absorbed by the uniquenesses. For a domain $\mathcal D\in\{\mathcal S,\mathcal I\}$ and items $k,l\in\mathcal D$ define the $2\times2$ determinant
+\begin{equation}\label{eq:id-det}
+  D_{kl}=\lambda_{kG}\lambda_{ls}-\lambda_{ks}\lambda_{lG}.
+\end{equation}
+It vanishes exactly when the loading vectors $(\lambda_{kG},\lambda_{ks})$ and $(\lambda_{lG},\lambda_{ls})$ are proportional, that is, when the two items have the same general-factor share and lie on the same side of the origin. We use three conditions.
+
+\begin{assumption}[Specific factors]\label{asm:id-spec}
+Each domain contains at least three items with a non-zero specific loading.
+\end{assumption}
+\begin{assumption}[A general factor in both domains]\label{asm:id-gen}
+Each domain contains at least one item with a non-zero general loading.
+\end{assumption}
+\begin{assumption}[Heterogeneity within a domain]\label{asm:id-het}
+In at least one domain $\mathcal D$ there are four distinct items $k_1,k_2,k_3,k_4\in\mathcal D$ with $D_{k_1k_4}D_{k_2k_3}\neq0$.
+\end{assumption}
+
+\Cref{asm:id-het} needs at least four items in one domain. In a domain with at least four items, all with non-zero loading vectors, it fails exactly when all of that domain's items, with at most one exception, lie on a single line through the origin of the loading plane (\cref{lem:app-classes}). It is therefore a condition on heterogeneity: some items of the domain must differ from the others in their general-factor share.
+
+\subsection{Identification of the boundary estimands}\label{sec:id-ident}
+
+\begin{theorem}[Identification]\label{thm:ident}
+Consider the normal-ogive bifactor model in the reference group, with $\bm a_j\neq\bm0$ for every item.
+\begin{enumerate}[(a)]
+  \item \emph{Sufficiency.} Under \cref{asm:id-spec,asm:id-gen,asm:id-het}, the item parameters $(\bm a_j,b_{j\cdot})_{j\in\mathcal J}$ are identified up to reflection. In particular every $\mathrm{ECV}_j$ and every boundary set $\mathcal B_\tau$ is identified.
+  \item \emph{Necessity of heterogeneity.} Suppose \cref{asm:id-spec,asm:id-gen} hold but \cref{asm:id-het} fails in both domains. This happens, for instance, when each domain has three items, or when the loadings are proportional within each domain. Then there are an open interval $T\ni1$ and a continuous injective curve $t\mapsto(\bm A(t),\bm b(t))$, $t\in T$, of observationally equivalent parameter values, with $(\bm A(1),\bm b(1))=(\bm A,\bm b)$, along which
+  \begin{equation}\label{eq:id-curve}
+    \lambda_{kG}(t)=t\,\lambda_{kG}\ \ (k\in\mathcal S),\qquad \lambda_{jG}(t)=\lambda_{jG}/t\ \ (j\in\mathcal I).
+  \end{equation}
+  If all loadings of the Israel-related items are non-zero, then $\mathrm{ECV}_j(t)$ is non-constant on $T$ for at least $|\mathcal I|-1$ items $j\in\mathcal I$, and for all of them when $|\mathcal I|=3$ or the loadings are proportional within $\mathcal I$. These ECVs are not identified, and neither is $\mathcal B_\tau$ for $\tau$ in a non-degenerate interval.
+  \item \emph{Two Israel-related items.} Suppose $\mathcal I=\{j_1,j_2\}$, the domain $\mathcal S$ contains at least three items with non-zero specific loadings and satisfies the condition of \cref{asm:id-het}, $(\lambda_{j_1G},\lambda_{j_2G})\neq\bm0$, and $\kappa=\lambda_{j_1I}\lambda_{j_2I}\neq0$. Then all general loadings, all parameters of the stereotype items, and $\kappa$ are identified, but the specific loadings of $j_1,j_2$ are identified only through their product. The identified set of $\mathrm{ECV}_{j_1}$ is the open interval
+  \begin{equation}\label{eq:id-two}
+    \Bigl(\lambda_{j_1G}^2,\ \ \frac{\lambda_{j_1G}^2(1-\lambda_{j_2G}^2)}{\lambda_{j_1G}^2(1-\lambda_{j_2G}^2)+\kappa^2}\Bigr),
+  \end{equation}
+  and every value in it is attained by an observationally equivalent parameter value. The same holds for $j_2$ with the roles exchanged. If instead $\mathcal S$ fails the condition of \cref{asm:id-het}, the curve of part (b) is present as well, and the general loadings of the Israel-related items then trade off against their specific loadings.
+  \item \emph{Correlated factors.} In the normal-ogive correlated-factors model \eqref{eq:model-cf}, $\rho_{SI}$ is identified whenever each factor has at least two items with non-zero loadings. The loadings are identified if, in addition, each factor has at least three such items or $\rho_{SI}\neq0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+By \cref{lem:id-reduction} it suffices to study $\bm\Lambda$ given $\operatorname{offdiag}(\bm\Lambda\bm\Lambda^\top)$. The cross-domain block equals $\bm\lambda_{\mathcal SG}\bm\lambda_{\mathcal IG}^\top$. It has rank one by \cref{asm:id-gen}, so any equivalent $\tilde{\bm\Lambda}$ has $\tilde{\bm\lambda}_{\mathcal SG}=t\bm\lambda_{\mathcal SG}$ and $\tilde{\bm\lambda}_{\mathcal IG}=\bm\lambda_{\mathcal IG}/t$ for a scalar $t$. Within a domain, the specific loadings must then reproduce
+\[
+  \operatorname{offdiag}\bigl(\bm\lambda_{s}\bm\lambda_{s}^\top+\delta\,\bm\lambda_{G}\bm\lambda_{G}^\top\bigr)
+  =\operatorname{offdiag}\bigl(\tilde{\bm\lambda}_{s}\tilde{\bm\lambda}_{s}^\top\bigr),
+  \qquad \delta=1-t^2\ \text{in }\mathcal S,\quad \delta=1-t^{-2}\ \text{in }\mathcal I .
+\]
+A tetrad of a rank-one matrix vanishes. A direct computation gives the tetrad of the left-hand side as $\delta D_{k_1k_4}D_{k_2k_3}$, so \cref{asm:id-het} forces $\delta=0$, hence $t=1$. The one-factor structure of the remaining specific loadings, with at least three non-zero entries (\cref{asm:id-spec}), then pins them down up to sign. This proves (a). If every tetrad coefficient vanishes in both domains, the left-hand side has one-factor structure for every small $\delta$. Solving for $\tilde{\bm\lambda}_s$ explicitly gives the curve in (b). In (c), $t=1$ is forced by $\mathcal S$, and the Israel block contributes the single equation $\lambda_{j_1I}\lambda_{j_2I}=\kappa$, constrained only by positivity of the two uniquenesses, which yields \eqref{eq:id-two}. Part (d) uses $\rho_{SI}^2=R_{kj}R_{lm}/(R_{kl}R_{jm})$ for $k,l\in\mathcal S$ and $j,m\in\mathcal I$. Details are in \cref{app:pm-ident}.
+\end{proof}
+
+\begin{remark}[Relation to the literature]\label{rem:id-literature}
+Rotational indeterminacy and the three-indicator conditions for factor models are classical \citep{anderson1956,bollen1989}, and part (d) is an instance of the two- and three-indicator rules. For bifactor models, \citet{fang2021} give necessary and sufficient conditions for identifiability with continuous and with probit binary responses. In the case of two group factors their conditions likewise require at least three items per group factor and a departure from proportionality of the general and specific loadings in at least one group factor. \citet{green2018} describe empirical underidentification of bifactor models in practice. \Cref{thm:ident} is a self-contained version for the two-specific-factor design used here. It adds an explicit tetrad form of the heterogeneity condition, the explicit curve of equivalent parameters with its consequences for the boundary ECVs, and the sharp identified set when the Israel-related domain has only two items.
+\end{remark}
+
+\begin{remark}[What identifies the boundary]\label{rem:id-heterogeneity}
+Taken together, \cref{prop:model-sl} and \cref{thm:ident} say that the bifactor decomposition is identified by heterogeneity, not by correlation. If every item of a domain has the same general-factor share, then that domain carries no information about where its common variance comes from. If this holds in both domains, the bifactor model is observationally equivalent to a whole curve of alternatives, and to a correlated-factors model when the proportionality is exact. The boundary ECVs are then bounded below by $\rho_{SI}^2$ and are otherwise unrestricted. Two consequences follow for design and analysis. First, the item bank should include, within at least one domain and preferably both, items that competing definitions place on different sides of the boundary (\cref{sec:design}). That is where heterogeneity of general-factor shares is to be expected if the competing claims differ empirically. Second, identification degrades continuously as the products $D_{k_1k_4}D_{k_2k_3}$ shrink. With near-proportional loadings the likelihood is nearly flat along a curve like that of part (b), and estimated ECVs can then wander along it in finite samples. The simulation study (\cref{sec:simulation}) should therefore report the spread of estimated ECVs in designs close to proportionality, not only their average.
+\end{remark}
+
+\begin{remark}[The logistic link]\label{rem:id-logit}
+\Cref{lem:id-reduction} is specific to the normal-ogive link. For the logistic link, two facts hold. The curves generated by proportional loadings (\cref{prop:model-sl}) leave the law of the linear predictors unchanged, so they are exact for every link. The remaining curves of \cref{thm:ident}(b)--(c) change the variances of the linear predictors. Under the logistic link they are therefore not exact equivalences. Any information that separates their points, however, comes only from the difference in shape between logistic and normal-ogive response functions. After rescaling the logistic argument by $1.702$, these functions differ by less than $0.01$ everywhere \citep{camilli1994}. Identification along these directions would rest on the assumed shape of the link, not on the data's dependence structure. We therefore impose the conditions of \cref{thm:ident} under both links and do not rely on identification by functional form.
+\end{remark}
+
+\begin{remark}[No Israel-related item loads on $G$]\label{rem:id-null}
+\Cref{asm:id-gen} fails under the strongest version of the ``distinct attitude'' hypothesis, $\bm\lambda_{\mathcal IG}=\bm0$. The polychoric correlation matrix is then block diagonal. If $\mathcal S$ satisfies the condition of \cref{asm:id-het}, the null value $\mathrm{ECV}_j=0$, $j\in\mathcal I$, is identified, but the split of the stereotype domain between $G$ and $S$ is determined only up to a rotation. If $\mathcal S$ fails it, $\mathrm{ECV}_j$ for $j\in\mathcal I$ need not be identified at all. Whenever the stereotype block admits a one-factor representation with positive uniquenesses, as it does when its loadings are proportional, the general factor can be rotated into the Israel-related domain, and every value of $\mathrm{ECV}_j\in[0,1)$ common to all $j\in\mathcal I$ is observationally equivalent (\cref{app:pm-null}). The Fisher information of the bifactor model is singular at $\bm\lambda_{\mathcal IG}=\bm0$, so likelihood-ratio tests of that hypothesis within the bifactor model are non-standard. The weaker hypothesis that the two domains share no variance, $\bm\lambda_{\mathcal SG}\bm\lambda_{\mathcal IG}^\top=\bm0$, is equivalent to a vanishing cross-domain block of the polychoric correlation matrix. It can be tested regularly on that block without fitting any factor model; within the correlated-factors model it is the hypothesis $\rho_{SI}=0$.
+\end{remark}
+
+\begin{remark}[The bifactor-$(S-1)$ alternative]\label{rem:id-s1}
+In the bifactor-$(S-1)$ model of \citet{eid2017}, the stereotype items load on $G$ only, so $G$ is by definition the stereotype factor. For $j\in\mathcal I$, $\mathrm{ECV}_j$ is then the share of item $j$'s common variance that it shares with that factor. This model is identified under weaker conditions: three stereotype items with non-zero loadings determine $\bm\lambda_{\mathcal SG}$, the cross-domain block then gives $\bm\lambda_{\mathcal IG}$, and three non-zero Israel-specific loadings give $\bm\lambda_{\mathcal II}$. The price is that the model assumes the stereotype items have no variance specific to their domain. Whether $G$ should be anchored in one domain or defined as what both domains share is itself part of the substantive question. We use the symmetric model as primary and report the $(S-1)$ variant as a sensitivity analysis.
+\end{remark}
+
+\subsection{Differential item functioning}\label{sec:id-dif}
+
+DIF is usually screened with the Mantel--Haenszel procedure \citep{holland1988} or with likelihood-ratio tests of item parameters within the item response model \citep{thissen1993}. Both condition on a matching score or an anchor set, which \cref{sec:id-anchor} examines. Here we ask what DIF does to group comparisons when it goes undetected and is ignored. Consider two groups: the reference group $g=0$, whose item parameters $(\bm A,\bm b)$ are identified by \cref{thm:ident}, and a focal group $g=1$ with latent parameters $\bm\mu=\bm\mu_1$, $\bm\Sigma=\bm\Sigma_1$, and $\bm\ell=(\log\sigma^2_{1G},\log\sigma^2_{1S},\log\sigma^2_{1I})^\top$. In group~1 the items have DIF $(\Delta\bm a_j,\Delta b_j)$, with $\Delta\bm A$ the matrix with rows $\Delta\bm a_j^\top$. The analyst ignores the DIF. A \emph{reference-linked} analysis holds the item parameters at their reference values and estimates $\bm\xi=(\bm\mu,\bm\ell)$ by maximum likelihood from the group-1 data under the invariant model. This is also the limit of concurrent calibration when the focal group is small relative to the reference group; \cref{rem:id-concurrent} treats the general case. The estimator converges to the pseudo-true value $\bm\xi^*$ that minimises the Kullback--Leibler divergence from the true group-1 law \citep{white1982}. We need two pieces of notation.
+
+\paragraph{Item coordinates and their information}
+Perturb the group-1 linear predictor of item $j$ as
+\begin{equation}\label{eq:id-coords}
+  \bm a_j^\top\bm\theta-b_{jc}\ \longmapsto\ \bm a_j^\top\bm\theta-b_{jc}+\iota_j+\beta_{jG}(\theta_G-\mu_G)+\beta_{js}(\theta_{s(j)}-\mu_{s(j)}),
+\end{equation}
+an intercept shift $\iota_j$ and two slope changes acting on the centred factors. Let $\bm x=(\bm\iota,\bm\beta)\in\mathbb R^J\times\mathbb R^{2J}$, and let $p_1(\bm y;\bm x)$ be the resulting probability of response pattern $\bm y$ in group~1, with $\bm\theta\sim\mathrm N_3(\bm\mu,\bm\Sigma)$. Let $\bm H=\E\{\nabla_{\bm x}\log p_1(\bm Y;\bm0)\nabla_{\bm x}\log p_1(\bm Y;\bm0)^\top\}$ be the Fisher information of these coordinates at $\bm x=\bm0$, partitioned into blocks $\bm H_{\iota\iota}$, $\bm H_{\iota\beta}$ and $\bm H_{\beta\beta}$. Two exact facts make $\bm H$ the right metric:
+\begin{itemize}
+  \item the invariant model with focal parameters $\bm\xi'=(\bm\mu',\bm\ell')$ is the point $\bm\iota=\bm A(\bm\mu'-\bm\mu)$, $\beta_{jf}=a_{jf}\{e^{(\ell'_f-\ell_f)/2}-1\}$. Its Jacobian at $\bm\xi'=\bm\xi$ is $\bm L=\operatorname{diag}(\bm A,\bm B)$, where $\bm B\in\mathbb R^{2J\times3}$ has the entry $a_{jf}/2$ in row $(j,f)$ and column $f$, and zeros elsewhere;
+  \item the true group-1 law with DIF is $p_1(\cdot\,;\bm x_\Delta)$, with
+  \begin{equation}\label{eq:id-xdelta}
+    \bm x_\Delta=(\bm d,\bm\delta),\qquad d_j=\Delta\bm a_j^\top\bm\mu-\Delta b_j,\qquad \bm\delta=(\Delta a_{jG},\Delta a_{js})_{j\in\mathcal J},
+  \end{equation}
+  because $(\bm a_j+\Delta\bm a_j)^\top\bm\theta-b_{jc}-\Delta b_j=\bm a_j^\top\bm\theta-b_{jc}+d_j+\Delta\bm a_j^\top(\bm\theta-\bm\mu)$.
+\end{itemize}
+Non-uniform DIF thus acts both as a slope change and, when $\bm\mu\neq\bm0$, as an intercept shift $\Delta\bm a_j^\top\bm\mu$. Finally, let $\Pi_{\bm A}=\bm A(\bm A^\top\bm H_{\iota\iota}\bm A)^{-1}\bm A^\top\bm H_{\iota\iota}$ and $\Pi_{\bm B}=\bm B(\bm B^\top\bm H_{\beta\beta}\bm B)^{-1}\bm B^\top\bm H_{\beta\beta}$, and define the efficient weights
+\[
+  \bm W_\iota=\bm H_{\iota\iota}-\bm H_{\iota\beta}\bm B(\bm B^\top\bm H_{\beta\beta}\bm B)^{-1}\bm B^\top\bm H_{\beta\iota},\qquad
+  \bm W_\beta=\bm H_{\beta\beta}-\bm H_{\beta\iota}\bm A(\bm A^\top\bm H_{\iota\iota}\bm A)^{-1}\bm A^\top\bm H_{\iota\beta}.
+\]
+
+\begin{theorem}[Bias from ignoring DIF]\label{thm:dif-bias}
+Let $F\in\{\Lambda,\Phi\}$. Suppose that in the invariant model for group~1 with reference item parameters, $\bm\xi$ is identified, lies in the interior of a compact parameter set, and has non-singular Fisher information $\bm L^\top\bm H\bm L$. Then for all DIF in a neighbourhood of zero the pseudo-true value $\bm\xi^*$ of the reference-linked analysis is unique, and the following hold.
+\begin{enumerate}[(a)]
+  \item \emph{First-order bias.} $\bm\xi^*-\bm\xi=(\bm L^\top\bm H\bm L)^{-1}\bm L^\top\bm H\bm x_\Delta+O(\|\Delta\|^2)$. Equivalently,
+  \begin{align}
+    \bm\mu^*-\bm\mu&=(\bm A^\top\bm W_\iota\bm A)^{-1}\bm A^\top\bigl\{\bm W_\iota\,\bm d+\bm H_{\iota\beta}(\bm I-\Pi_{\bm B})\bm\delta\bigr\}+O(\|\Delta\|^2),\label{eq:id-dif-mu}\\
+    \bm\ell^*-\bm\ell&=(\bm B^\top\bm W_\beta\bm B)^{-1}\bm B^\top\bigl\{\bm W_\beta\,\bm\delta+\bm H_{\beta\iota}(\bm I-\Pi_{\bm A})\bm d\bigr\}+O(\|\Delta\|^2).\label{eq:id-dif-ell}
+  \end{align}
+  Since $\bm\mu_0=\bm0$, the estimated difference in general-factor means, $\mu^*_G$, is biased by the first coordinate of \eqref{eq:id-dif-mu}.
+  \item \emph{Orthogonal and Gaussian cases.} If $\bm H_{\iota\beta}=\bm0$, then $\bm\mu^*-\bm\mu=(\bm A^\top\bm H_{\iota\iota}\bm A)^{-1}\bm A^\top\bm H_{\iota\iota}\bm d$ and $\bm\ell^*-\bm\ell=(\bm B^\top\bm H_{\beta\beta}\bm B)^{-1}\bm B^\top\bm H_{\beta\beta}\bm\delta$, up to $O(\|\Delta\|^2)$. This holds in particular when every item's group-1 thresholds are symmetric about its group-1 mean predictor, $b_{jc}-\bm a_j^\top\bm\mu=-(b_{j,C_j+1-c}-\bm a_j^\top\bm\mu)$. Uniform DIF then biases only the latent means, and non-uniform DIF biases them only through $\Delta\bm A\bm\mu$, which vanishes when the groups have equal latent means. If the latent responses \eqref{eq:model-lr} were observed (the linear-Gaussian model), then for every $\Delta$, not only to first order,
+  \begin{equation}\label{eq:id-dif-gauss}
+    \bm\mu^*-\bm\mu=(\bm A^\top\bm A)^{-1}\bm A^\top\bm d .
+  \end{equation}
+  \item \emph{Boundary estimands.} For every item $j$, the group-1 ECV reported by the analysis, $\widehat{\mathrm{ECV}}{}^{(1)}_j$ (computed from $\bm a_j$ and $\bm\ell^*$), and the true $\mathrm{ECV}^{(1)}_j$ (computed from $\bm a_j+\Delta\bm a_j$ and $\bm\ell$) satisfy exactly
+  \begin{equation}\label{eq:id-dif-ecv}
+    \logit\widehat{\mathrm{ECV}}{}^{(1)}_j-\logit\mathrm{ECV}^{(1)}_j
+    =(\ell^*_G-\ell_G)-(\ell^*_{s(j)}-\ell_{s(j)})
+     -2\log\Bigl|1+\frac{\Delta a_{jG}}{a_{jG}}\Bigr|+2\log\Bigl|1+\frac{\Delta a_{js}}{a_{js}}\Bigr|,
+  \end{equation}
+  with $\bm\ell^*-\bm\ell$ given by \eqref{eq:id-dif-ell}.
+  \item \emph{Manufacturing and masking.} (i) For every $\bm v\in\mathbb R^3$, the group-1 law with latent mean $\bm\mu$ and uniform DIF $\Delta b_j=-\bm a_j^\top\bm v$ on all items equals the law with latent mean $\bm\mu+\bm v$ and no DIF, for either link. The invariant analysis then reports $\bm\mu+\bm v$ and fits exactly. Taking $\bm v=(\beta,0,0)^\top$ manufactures a general-factor difference $\beta$ where there is none, or masks a true difference when $\beta=-\mu_G$. (ii) If DIF is uniform and confined to $\mathcal I$, and the stereotype loading vectors are not all proportional, then exact confounding is possible only with $\mu_I$, through $\Delta\bm b_{\mathcal I}\propto\bm a_{\mathcal II}$. This leaves $\mu_G$ and every ECV unbiased. For other patterns the first-order bias of $\mu_G$ is the first coordinate of \eqref{eq:id-dif-mu}, a linear functional of $\Delta\bm b_{\mathcal I}$. In the linear-Gaussian case of (b) this functional is non-zero whenever the Israel-related loading vectors are not all proportional. (iii) By \eqref{eq:id-dif-ecv}, non-uniform DIF moves the reported ECV of every item, including DIF-free ones, by the common amount $(\ell^*_G-\ell_G)-(\ell^*_{s(j)}-\ell_{s(j)})$. At the same time it hides the change in the DIF item's own ECV, which can move items into or out of $\mathcal B^{(1)}_\tau$ in either direction.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+A general lemma (\cref{lem:app-pseudo}) shows that, for a smooth model $\bm x(\bm\xi)$ on a finite outcome space and a true law at $\bm x_\Delta$, the KL projection satisfies $\bm\xi^*-\bm\xi=(\bm L^\top\bm H\bm L)^{-1}\bm L^\top\bm H\bm x_\Delta+O(\|\bm x_\Delta\|^2)$. This is the implicit function theorem applied to the expected score, with the information identity supplying the derivatives. The two bulleted facts are exact, and \eqref{eq:id-dif-mu}--\eqref{eq:id-dif-ell} are the partitioned form of this projection. In (b) the symmetry condition makes the intercept scores odd and the slope scores even under the reflection $y_j\mapsto C_j-y_j$, so their cross-information vanishes. In the linear-Gaussian case the generalised least-squares projection with covariance $\bm A\bm\Sigma'\bm A^\top+\bm I$ does not depend on $\bm\Sigma'$, by the Woodbury identity. Part (c) is \eqref{eq:model-logit-ecv} evaluated at the two parameter values, and (d)(i) is the identity $\bm a_j^\top\bm\theta-b_{jc}+\bm a_j^\top\bm v=\bm a_j^\top(\bm\theta+\bm v)-b_{jc}$. Details are in \cref{app:pm-dif}.
+\end{proof}
+
+The structure of \eqref{eq:id-dif-mu} is the main message. Up to the correction from non-uniform DIF, the bias of the latent means is an information-weighted regression of the item-level DIF intercepts $d_j$ on the item loadings $\bm a_j$. DIF whose pattern across items resembles a column of $\bm A$ is read as a difference in latent means. DIF that is orthogonal to the columns of $\bm A$, in the $\bm W_\iota$ metric, is not read that way and appears as misfit instead. Part (d)(i) is the extreme case of this. A uniform shift proportional to the general loadings is indistinguishable from a difference in the general factor, in any sample size. This is the classical confounding of DIF with impact, here made exact for the bifactor model. For the boundary question, part (d)(ii) shows that DIF on Israel-related items alone cannot be mistaken one-for-one for a difference in general hostility when the stereotype items are invariant, but it can still leak into $\mu_G$. Part (d)(iii) shows that it distorts the group-specific boundary even for items without DIF. \Cref{eq:id-dif-ecv} is exact, so the only approximation in (c) is the first-order expression for $\bm\ell^*-\bm\ell$.
+
+\begin{remark}[Concurrent calibration]\label{rem:id-concurrent}
+If the item parameters $\bm\nu$ are estimated from both groups under invariance, with group shares $\pi_0$ and $\pi_1$, then \cref{lem:app-pseudo} applies to $\bm\vartheta=(\bm\nu,\bm\xi)$ with information $\pi_0\bm{\mathcal F}^{(0)}+\pi_1\bm{\mathcal F}^{(1)}$, where $\bm{\mathcal F}^{(g)}$ is the per-respondent information in group $g$. Because the DIF parameters enter only the group-1 law, the cross-information with the DIF is $\pi_1$ times its group-1 value. The item parameters then absorb part of the DIF, so the reference group's ECVs are also biased. As $\pi_1\to0$ the result reduces to \cref{thm:dif-bias}.
+\end{remark}
+
+\subsection{Anchors and partial invariance}\label{sec:id-anchor}
+
+Let $\mathcal A\subseteq\mathcal J$ be a set of anchor items assumed invariant, and let $\bm A_{\mathcal A}$ be the corresponding rows of $\bm A$. An \emph{anchored analysis} fixes the anchors' parameters at their reference values. It estimates $(\bm\mu_1,\bm\Sigma_1)$ together with free group-1 parameters, within the pattern \eqref{eq:model-pattern}, for every non-anchor item. This is partial invariance in the sense of \citet{byrne1989}.
+
+\begin{proposition}[Anchors]\label{prop:anchor}
+\leavevmode
+\begin{enumerate}[(a)]
+  \item \emph{Identification.} Under the normal-ogive link, suppose the anchors are invariant, each has at least three response categories ($C_j\ge2$), and $\bm A_{\mathcal A}$ has full column rank three. Then $\bm\mu_1$, $\bm\Sigma_1$ (any positive definite matrix) and all group-1 item parameters are identified. Hence so are the DIF parameters of every non-anchor item and every group-1 boundary estimand. Without anchors, $\bm\mu_1$ is not identified: for every $\bm v$, the map $(\bm\mu_1,b^{(1)}_{jc})\mapsto(\bm\mu_1+\bm v,\,b^{(1)}_{jc}+\bm a_j^{(1)\top}\bm v)$ leaves the group-1 law unchanged.
+  \item \emph{Undetectable anchor DIF.} For either link, suppose the anchors carry uniform DIF $\Delta\bm b_{\mathcal A}=-\bm A_{\mathcal A}\bm v$ for some $\bm v\in\mathbb R^3$. This is always the case when $|\mathcal A|=3$ and $\bm A_{\mathcal A}$ is invertible. Then the group-1 law equals that of a model with invariant anchors, latent mean $\bm\mu_1+\bm v$, the same $\bm\Sigma_1$, and non-anchor thresholds $b^{(1)}_{kc}+\bm a_k^{(1)\top}\bm v$. The anchored analysis fits exactly, shifts every latent-mean comparison by $\bm v$, and attributes spurious uniform DIF $\bm a_k^{(1)\top}\bm v$ to every non-anchor item $k$.
+  \item \emph{General anchor DIF.} For either link, suppose the anchors carry uniform DIF $\Delta\bm b_{\mathcal A}$, and write $\bm d_{\mathcal A}=-\Delta\bm b_{\mathcal A}$. Under the regularity conditions of \cref{thm:dif-bias} for the anchored model, its pseudo-true latent mean satisfies
+  \begin{equation}\label{eq:id-anchor-bias}
+    \bm\mu_1^*-\bm\mu_1=(\bm A_{\mathcal A}^\top\bm W\bm A_{\mathcal A})^{-1}\bm A_{\mathcal A}^\top\bm W\bm d_{\mathcal A}+O(\|\bm d_{\mathcal A}\|^2).
+  \end{equation}
+  Here $\bm W\succeq0$ is the efficient information for the anchors' intercepts: the Schur complement of their block of the Fisher information with respect to all other parameters of the anchored model. The regularity conditions make $\bm A_{\mathcal A}^\top\bm W\bm A_{\mathcal A}$ non-singular. Let $\bm M=\bm W^{1/2}\bm A_{\mathcal A}$ and let $\Pi=\bm M(\bm M^\top\bm M)^{-1}\bm M^\top$. Then
+  \begin{equation}\label{eq:id-anchor-bound}
+    \|\bm\mu_1^*-\bm\mu_1\|_2\le\frac{\|\Pi\bm W^{1/2}\bm d_{\mathcal A}\|_2}{\sigma_{\min}(\bm M)}+O(\|\bm d_{\mathcal A}\|^2)\le\frac{\|\bm W^{1/2}\bm d_{\mathcal A}\|_2}{\sigma_{\min}(\bm M)}+O(\|\bm d_{\mathcal A}\|^2).
+  \end{equation}
+  If only anchor $j$ has DIF, the middle term equals $|\Delta b_j|\,h_j^{1/2}/\sigma_{\min}(\bm M)$, where $h_j=(\bm W^{1/2}\Pi\bm W^{1/2})_{jj}\le W_{jj}$ is the anchor's leverage. For non-uniform DIF on anchors, the first-order bias of $(\bm\mu_1,\bm\ell_1)$ is given by \eqref{eq:id-dif-mu}--\eqref{eq:id-dif-ell}, with $(\bm A,\bm B,\bm H)$ replaced by $\bm A_{\mathcal A}$, $\bm B_{\mathcal A}$ and the efficient information of the anchors' coordinates.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+For (a), each anchor's two known thresholds determine the mean and standard deviation of its group-1 latent response, and the polychoric correlations then give the anchors' latent covariance matrix. Full column rank of $\bm A_{\mathcal A}$ recovers $\bm\mu_1$ and $\bm\Sigma_1$. Each non-anchor item is then a regression on a known latent distribution, identified through its correlations with the anchors. Part (b) is the identity behind \cref{thm:dif-bias}(d)(i), applied to the anchors, with the non-anchor thresholds absorbing the shift. Part (c) follows from \cref{lem:app-pseudo} after profiling out the non-anchor parameters, which the anchored model leaves free. The bound uses $\bm M(\bm\mu^*_1-\bm\mu_1)=\Pi\bm W^{1/2}\bm d_{\mathcal A}$ to first order. Details are in \cref{app:pm-anchor}.
+\end{proof}
+
+Three features of \cref{prop:anchor} matter in practice. First, only the component of the anchors' DIF that the anchored model cannot detect, $\Pi\bm W^{1/2}\bm d_{\mathcal A}$, moves the latent means at first order. The detectable component appears as misfit. With exactly three anchors nothing is detectable, by part (b). Second, the error does not stay with the faulty anchor. It shifts every group comparison of latent means and the metric in which every non-anchor item's DIF and every group-specific ECV is computed. In the exact case (b) every non-anchor item acquires spurious DIF of the same sign, in proportion to its loadings. Third, the bound \eqref{eq:id-anchor-bound} is a sensitivity analysis. A stated maximum DIF on the anchors translates into a maximum bias of every comparison, and the bound is smaller for many anchors with strong, linearly independent loadings, which make $\sigma_{\min}(\bm M)$ large.
+
+\begin{remark}[Anchors from the stereotype domain only]\label{rem:id-anchor-S}
+Researchers may be unwilling to assume that any Israel-related item is invariant across, say, ideological groups. If all anchors are stereotype items, $\bm A_{\mathcal A}$ has rank at most two, so \cref{prop:anchor}(a) does not apply as stated. Suppose, however, that $\bm\Sigma_1$ is diagonal, the stereotype anchors have at least three categories and non-proportional loading vectors, and at least three Israel-related items have non-zero $I$-loadings in group~1. Then the argument of \cref{app:pm-anchor} still identifies $\mu_{1G}$, $\mu_{1S}$, $\sigma^2_{1G}$, $\sigma^2_{1S}$, all group-1 general loadings, and the products $a^{(1)}_{jI}\sigma_{1I}$ for $j\in\mathcal I$. Hence it identifies every group-1 boundary ECV. What it does not identify is $\mu_{1I}$, $\sigma^2_{1I}$, the thresholds of the Israel-related items, and their $I$-loadings separately. Comparisons of the general factor and of the boundary can therefore be anchored entirely in the stereotype domain. Comparisons of the level of Israel-related attitudes cannot.
+\end{remark}
+
+\begin{remark}[Choosing anchors]\label{rem:id-anchor-select}
+Because invariance of the anchors is an identifying assumption, anchors are usually chosen from the data. Every data-driven procedure replaces ``these items are invariant'' with a sparsity premise: most items, or most parameters, are invariant.
+\begin{itemize}
+  \item \emph{Rank-based selection and iterative purification} test items against provisional anchors, rank them by a DIF statistic, and re-link the metric using only the items not flagged \citep{lord1980,candell1988,woods2009,kopf2015}. These procedures are transparent and work well when DIF is sparse. Their starting point, however, is contaminated by whatever DIF exists, and anchors become harder to find as the share of DIF items grows \citep{woods2009,kopf2015}.
+  \item \emph{Regularised and robust methods} estimate all DIF effects jointly. They use a penalty that shrinks most of them to zero \citep{tutz2015,belzak2020}, a minimal-$\ell_1$ condition that identifies the latent distribution and supports inference without a known anchor set \citep{chen2023dif}, or a redescending M-estimator of the linking parameters that treats DIF items as outliers \citep{halpin2024}. They need no pre-specified anchors. Their answer depends on the penalty or the identifying condition, and inference after selection needs care.
+  \item \emph{Alignment} \citep{asparouhov2014} starts from the configural model and chooses group means and variances to minimise a loss that favours a few large non-invariances over many small ones. It scales to many groups, such as countries, but rests on the same sparsity premise.
+\end{itemize}
+The common limit is exact. DIF in the column space of the loading matrix, the same direction for many items in proportion to their loadings, is observationally equivalent to a difference in latent means (\cref{thm:dif-bias}(d)(i), \cref{prop:anchor}(b)). No procedure can detect it, and sparsity-based procedures attribute it to the latent means by construction. For the boundary question this matters most where DIF is plausible for a whole domain at once, as for Israel-related items across ideological groups. That is the case for anchoring in the stereotype domain (\cref{rem:id-anchor-S}) and for reporting the sensitivity bound \eqref{eq:id-anchor-bound}.
+\end{remark}
+
+\subsection{Testing the boundary}\label{sec:id-test}
+
+Membership of $\mathcal B_\tau$ is a statement about a parameter, so it should be decided by a test with stated error rates rather than by comparing a point estimate with $\tau$. Let $\widehat{\bm\vartheta}$ be the marginal maximum likelihood estimator of the reference-group item parameters from $n$ respondents. For $j\in\mathcal I$ write $g_j=\logit\mathrm{ECV}_j=2\log|a_{jG}|-2\log|a_{jI}|$, let $\widehat g_j$ be its plug-in estimate, and let $\widehat{\mathrm{se}}_j$ be its delta-method standard error, computed from the inverse observed information.
+
+\begin{proposition}[Boundary tests and confidence sets]\label{prop:id-boundary-test}
+Suppose the conditions of \cref{thm:ident}(a) hold, the true parameter is interior with non-singular Fisher information, and $a_{jG}a_{jI}\neq0$ for $j\in\mathcal I$. Fix $\tau\in(0,1)$ and $\alpha\in(0,\tfrac12)$, and let $z_{1-\alpha}$ be the standard normal quantile.
+\begin{enumerate}[(a)]
+  \item The test that rejects $H_0^{(j)}:\mathrm{ECV}_j\ge\tau$ in favour of $\mathrm{ECV}_j<\tau$ when $(\widehat g_j-\logit\tau)/\widehat{\mathrm{se}}_j<-z_{1-\alpha}$ has asymptotic size $\alpha$. The rejection probability tends to $\alpha$ at $\mathrm{ECV}_j=\tau$, to $0$ when $\mathrm{ECV}_j>\tau$, and to $1$ when $\mathrm{ECV}_j<\tau$. The signed-root likelihood-ratio test is asymptotically equivalent. At $\mathrm{ECV}_j=\tau$ the likelihood-ratio statistic for $H_0^{(j)}$ converges to the mixture $\tfrac12\chi^2_0+\tfrac12\chi^2_1$ \citep{chernoff1954,self1987}.
+  \item Let $[L_j,U_j]$, $j\in\mathcal I$, be asymptotically simultaneous level-$(1-\alpha)$ confidence intervals for $\mathrm{ECV}_j$, for instance Bonferroni-adjusted Wald intervals for $g_j$ transformed by $\operatorname{expit}$. Then the inner and outer sets $\widehat{\mathcal B}{}^{\mathrm{in}}_\tau=\{j:L_j\ge\tau\}$ and $\widehat{\mathcal B}{}^{\mathrm{out}}_\tau=\{j:U_j\ge\tau\}$ satisfy $\liminf_n\Pr(\widehat{\mathcal B}{}^{\mathrm{in}}_\tau\subseteq\mathcal B_\tau\subseteq\widehat{\mathcal B}{}^{\mathrm{out}}_\tau)\ge1-\alpha$.
+  \item The plug-in set $\{j:\widehat{\mathrm{ECV}}_j\ge\tau\}$ is not consistent for $\mathcal B_\tau$: an item with $\mathrm{ECV}_j=\tau$ belongs to it with probability tending to $\tfrac12$. At the boundary $\mathrm{ECV}_j=1$ ($a_{jI}=0$) the delta method degenerates, and $n(1-\widehat{\mathrm{ECV}}_j)$ converges in law to $V_{jI}\chi^2_1/a_{jG}^2$, where $V_{jI}$ is the asymptotic variance of $n^{1/2}\widehat a_{jI}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Under the conditions of \cref{thm:ident}(a), $n^{1/2}(\widehat{\bm\vartheta}-\bm\vartheta)$ is asymptotically normal, and $g_j$ is smooth with non-zero gradient $(2/a_{jG},-2/a_{jI})$ in the coordinates $(a_{jG},a_{jI})$. Part (a) is then the delta method together with the standard one-sided boundary asymptotics. Part (b) holds on the event that all intervals cover. Part (c) follows from the symmetry of the normal limit at $\mathrm{ECV}_j=\tau$ and from a second-order expansion at $a_{jI}=0$. Details are in \cref{app:pm-test}.
+\end{proof}
+
+Part (b) gives a pre-registrable decision rule (\cref{sec:design}). Items in $\widehat{\mathcal B}{}^{\mathrm{in}}_\tau$ are, with stated confidence, in the boundary set. Items outside $\widehat{\mathcal B}{}^{\mathrm{out}}_\tau$ are, with the same confidence, not in it. The items in between are reported as undetermined at the achieved sample size, not forced to one side. The same construction applies to $\mathcal B^{(g)}_\tau$ under the conditions of \cref{prop:anchor}(a), and to differences $\mathrm{ECV}^{(1)}_j-\mathrm{ECV}^{(0)}_j$.

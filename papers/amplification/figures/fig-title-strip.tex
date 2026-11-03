@@ -1,0 +1,29 @@
+% =====================================================================
+%  Title-page ornament (LEAD): two 96-item sessions, one per row, drawn from
+%  the invented chains of Section 4.5 (sec:markov-example), both starting in
+%  N. Top row: P_ref; bottom row: P_alg. The rows share their uniforms
+%  (common random numbers, numpy default_rng(4); next state by inverse CDF),
+%  so they differ only where the policies do. Seed 4 is the first in 1..14
+%  whose counts of A items are within one of their expectations in both rows
+%  (ref 2 vs 2.2; alg 7 vs 6.6). States: 0 = N (light), 1 = B (mid navy),
+%  2 = A (accent). It is decoration, not data.
+%  Counts: ref N 86, B 8, A 2;  alg N 67, B 22, A 7.
+% =====================================================================
+\par\noindent
+\begin{tikzpicture}[x={\textwidth/96},y=1cm]
+  \foreach \row/\yy in {{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,2,0,0,0,0,0,0,0,0,0,1,0,0,0,%
+       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,2,%
+       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}/0.4,
+      {0,1,1,2,0,0,0,0,0,0,0,0,0,0,0,2,1,2,2,0,0,0,1,1,0,0,0,0,1,1,0,0,%
+       0,1,1,0,1,1,1,1,0,0,0,0,0,0,0,0,1,2,1,1,0,0,0,0,0,0,0,1,1,1,2,2,%
+       1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}/0}{
+    \foreach \s [count=\i from 0] in \row {
+      \ifcase\s
+        \fill[LabNavyLight!38] (\i+0.15,\yy) rectangle (\i+0.85,\yy+0.28);
+      \or
+        \fill[LabNavyMid] (\i+0.15,\yy) rectangle (\i+0.85,\yy+0.28);
+      \or
+        \fill[LabAccent] (\i+0.15,\yy) rectangle (\i+0.85,\yy+0.28);
+      \fi
+    }}
+\end{tikzpicture}\par

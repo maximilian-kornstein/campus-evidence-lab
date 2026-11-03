@@ -123,7 +123,7 @@ DEFAULT = {
         max_iter=2000,
         attribution=dict(shock_index=2, H_list=[7.0, 14.0]),
     ),
-    "E5": dict(n_mc=4000, chunk=500),  # model and shock taken from E1
+    "E5": dict(n_mc=20000, chunk=1000),  # model and shock taken from E1 (first run: n_mc=4000, superseded)
     "E2": dict(
         Lam=2.0,
         gamma=0.5,
@@ -1134,6 +1134,52 @@ def _scores(cdf, pmf, y, c, V, floor):
     return prob, pit, crps, logs, mean
 
 
+def e6_new_shock_flags(cfg, cal):
+    """For each forecast window (t, t + Delta]: does a salient event arrive inside it?
+    The forecasts condition on an empty future calendar (sec:fc-predictive), so
+    they are the exact conditional law only on windows without a new event."""
+    D = cfg["Delta"]
+    tau = np.array([s[0] for s in cal], float)
+    out = []
+    for w in range(cfg["n_windows"]):
+        t = cfg["T_train"] + D * w
+        out.append(bool(np.any((tau > t) & (tau <= t + D))))
+    return out
+
+
+def e6_regenerate_calendar(cfg, rep):
+    """The calendar of replicate ``rep`` is the first draw from its generator in
+    :func:`_e6_task`, so it can be regenerated exactly from the seed."""
+    rng = rng_for("E6", 0, rep)
+    T = cfg["T_train"] + cfg["Delta"] * cfg["n_windows"]
+    return e6_calendar(cfg, T, rng)
+
+
+def e6_calibration_split(cfg, reps, flags):
+    """PIT histograms and mean forecast bias split by whether a new salient event
+    arrives inside the forecast window."""
+    out = {}
+    nb = cfg["pit_bins"]
+    F = np.concatenate([np.asarray(f, bool) for f in flags])
+    Y = np.concatenate([np.asarray(r["Y"], float) for r in reps])
+    out["n_windows_new_shock"] = int(F.sum())
+    out["n_windows_no_new_shock"] = int((~F).sum())
+    out["mean_count_new_shock"] = float(Y[F].mean()) if F.any() else NAN
+    out["mean_count_no_new_shock"] = float(Y[~F].mean()) if (~F).any() else NAN
+    for m in E6_METHODS:
+        pit = np.concatenate([np.asarray(r["pit"][m] if "pit" in r else r["methods"][m]["pit"], float) for r in reps])
+        row = {}
+        for lab, sel in (("no_new_shock", ~F), ("new_shock", F)):
+            h = np.histogram(pit[sel], bins=nb, range=(0, 1))[0]
+            e = sel.sum() / nb
+            chi2 = float(np.sum((h - e) ** 2 / e)) if e > 0 else NAN
+            row[lab] = dict(n=int(sel.sum()), pit_hist=h.tolist(), pit_chi2=chi2,
+                            pit_chi2_pvalue=float(stats.chi2.sf(chi2, nb - 1)) if e > 0 else NAN,
+                            pit_top_decile_share=float(np.mean(pit[sel] >= 0.9)) if sel.any() else NAN)
+        out[m] = row
+    return out
+
+
 E6_METHODS = ["oracle", "fitted", "fitted_naive_delay", "fitted_ht_delay", "ma_poisson", "ma_poisson_delay", "climatology"]
 
 
@@ -1207,7 +1253,9 @@ def _e6_task(args):
     fit_par = dict(mu=list(np.asarray(fit.spec.mu, float)), alpha=fit.spec.alpha.tolist(),
                    beta=float(np.asarray(fit.spec.beta).ravel()[0]), shock_beta=list(fit.spec.shock_beta),
                    eta=float(fit.spec.shock_rate_vec[0]))
-    return dict(rep=rep, Y=Y, methods=rows, state=state, fit=fit_par, n_events=[int(e.size) for e in ev], n_shocks=len(cal))
+    new_shock = e6_new_shock_flags(cfg, cal)
+    return dict(rep=rep, Y=Y, methods=rows, state=state, fit=fit_par, n_events=[int(e.size) for e in ev], n_shocks=len(cal),
+                new_shock=new_shock)
 
 
 def run_E6(cfg, runner, ctx):
@@ -1277,9 +1325,10 @@ def run_E6(cfg, runner, ctx):
                         "Delays only on the target (offline) stream; outcomes are settled counts. "
                         "fitted_ht_delay plugs the HT state into the cluster continuation (no state-uncertainty integration). "
                         "state ratios use the true parameters; theory_ratio_naive = E exp(-beta D) holds under stationarity without shocks.")
+    summary["calibration_by_new_shock"] = e6_calibration_split(cfg, reps, [r["new_shock"] for r in reps])
     raw = [dict(rep=r["rep"], Y=r["Y"], prob={m: r["methods"][m]["prob"] for m in E6_METHODS},
                 pit={m: r["methods"][m]["pit"] for m in E6_METHODS}, fit=r["fit"], n_events=r["n_events"],
-                n_shocks=r["n_shocks"]) if r.get("ok") else r for r in res]
+                n_shocks=r["n_shocks"], new_shock=r["new_shock"]) if r.get("ok") else r for r in res]
     return dict(summary=summary, reps=raw, cpu=cpu, R=cfg["R"],
                 seeds=dict(scheme="rep: SeedSequence([BASE_SEED, 6, 0, rep]); threshold pilot: SeedSequence([BASE_SEED, 6, 999, 0])"))
 
@@ -1339,6 +1388,32 @@ def save_raw(results_dir, out, quick, workers):
         json.dump(jsonify(doc), f)
 
 
+def postprocess_e6(results_dir):
+    """Add the calibration split by new-event arrival to an existing raw/E6.json.
+    The calendars are regenerated from the replicate seeds (no re-simulation of
+    incidents and no refits); the result is identical to what the current
+    ``run_E6`` computes. Provenance is recorded under ``postprocess``."""
+    p = os.path.join(results_dir, "raw", "E6.json")
+    with open(p) as f:
+        doc = json.load(f)
+    cfg = doc["config"]
+    reps = [r for r in doc["reps"] if "Y" in r]
+    flags = []
+    for r in reps:
+        cal = e6_regenerate_calendar(cfg, r["rep"])
+        if len(cal) != r["n_shocks"]:
+            raise RuntimeError(f"calendar of replicate {r['rep']} does not match the stored run")
+        flags.append(e6_new_shock_flags(cfg, cal))
+        r["new_shock"] = flags[-1]
+    doc["summary"]["calibration_by_new_shock"] = e6_calibration_split(cfg, reps, flags)
+    doc["postprocess"] = dict(what="summary.calibration_by_new_shock and reps[].new_shock added by "
+                                   "run_experiments.py --postprocess-e6 (calendars regenerated from the seeds)",
+                              when=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                              code_sha256_16=code_hashes())
+    with open(p, "w") as f:
+        json.dump(jsonify(doc), f)
+
+
 def merge(results_dir, started=None):
     raw_dir = os.path.join(results_dir, "raw")
     exps = {}
@@ -1348,7 +1423,7 @@ def merge(results_dir, started=None):
             with open(p) as f:
                 d = json.load(f)
             exps[name] = {k: d[k] for k in ("quick", "workers", "R", "seeds", "runtime", "finished", "versions",
-                                             "code_sha256_16", "config", "summary")}
+                                             "code_sha256_16", "config", "summary", "postprocess") if k in d}
     meta = dict(
         description="Simulation study for 'Shock and Contagion' (Paper 2). Synthetic data only; no real incidents.",
         base_seed=BASE_SEED,
@@ -1361,8 +1436,9 @@ def merge(results_dir, started=None):
         code_sha256_16=code_hashes(),
         raw_files={n: f"raw/{n}.json" for n in exps},
     )
+    meta["experiments_finished"] = {n: e.get("finished") for n, e in exps.items()}
     if started:
-        meta["started"] = started
+        meta["last_invocation_started"] = started  # experiments may come from several invocations (see run_log.txt)
     doc = dict(meta=meta, experiments=exps)
     with open(os.path.join(results_dir, "sim_results.json"), "w") as f:
         json.dump(jsonify(doc), f, indent=1)
@@ -1376,10 +1452,15 @@ def main(argv=None):
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--results", default=os.path.join(HERE, "..", "results"))
     ap.add_argument("--merge-only", action="store_true")
+    ap.add_argument("--postprocess-e6", action="store_true", help="add the new-event calibration split to raw/E6.json")
     a = ap.parse_args(argv)
     results_dir = os.path.abspath(a.results)
     os.makedirs(results_dir, exist_ok=True)
     started = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    if a.postprocess_e6:
+        postprocess_e6(results_dir)
+        merge(results_dir)
+        return
     if a.merge_only:
         merge(results_dir)
         return

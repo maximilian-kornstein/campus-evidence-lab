@@ -1,0 +1,54 @@
+\section{Ethics and legal considerations}\label{sec:ethics}
+
+An amplification audit studies a system that real people use, through accounts that are not real people, in order to measure exposure to content that harms a real community. Each part of that description raises an obligation. This section sets out the conditions on which the protocol of \cref{sec:protocol} depends. The audit does not proceed unless they are met. We describe the legal landscape as we understand it from the sources cited. This is not legal advice. Before registration, the protocol will be reviewed by an institutional review board and by legal counsel in the jurisdictions concerned.
+
+\subsection{Terms of service and the legal landscape}\label{sec:eth-legal}
+
+\paragraph{Terms of service}
+The terms of many services prohibit automated access, the creation of accounts that do not represent a real person, or both. A sock-puppet audit typically involves both. Breaching a service's terms is a contractual matter at least, and it can carry other civil consequences. The protocol therefore treats the terms of the chosen service as a constraint to be reviewed before registration, not as an obstacle to be engineered around. It records in the registration which terms apply and how the design relates to them.
+
+\paragraph{United States}
+Two decisions concern the federal Computer Fraud and Abuse Act (CFAA). In \emph{Sandvig v.\ Barr}, brought by researchers who wished to study discrimination by creating fictitious accounts in breach of websites' terms, the District Court for the District of Columbia concluded that violating a website's terms of service is not a crime under the statute's access provisions \citep{sandvigbarr2020}. In \emph{Van Buren v.\ United States}, the Supreme Court held that a person ``exceeds authorized access'' when they obtain information from areas of a computer, such as files, folders or databases, that are off limits to them. It described the inquiry as one of whether the gates are up or down, rather than one about the purpose of access \citep{vanburen2021}. Both decisions concern the scope of the CFAA. Neither makes a given audit lawful. Contractual and other civil claims remain possible, and other jurisdictions apply their own law.
+
+\paragraph{European Union}
+The DSA creates research access routes that did not exist before (\cref{sec:bg-governance}). Article~40(4) provides vetted access to data through a Digital Services Coordinator, under the procedures of Delegated Regulation (EU) 2025/2050 \citep{eu2022dsa,eu2025delegated}. Article~40(12) provides access to publicly accessible data for researchers who meet its conditions. In its first non-compliance decision under the DSA, the Commission found, among other things, that a provider's terms prohibited eligible researchers from independently accessing its public data, including by scraping \citep{ec2025fine}. These provisions concern access to data, and their application to a sock-puppet audit, which creates accounts and receives personalised recommendations, has not to our knowledge been settled. Recorded items may also contain personal data of the people who posted them, including data that reveal religious beliefs or political opinions. These are special categories under the General Data Protection Regulation (GDPR), so their processing for research needs a legal basis and the safeguards that the Regulation requires for scientific research \citep{eu2016gdpr}. The data-handling rules of \cref{sec:prot-data,sec:eth-security} are designed to meet them.
+
+\paragraph{Order of preference}
+These considerations fix the order of access routes in \cref{sec:prot-scope}: vetted access or a provider's research interface first, publicly accessible data second, and a sock-puppet audit only when neither can identify the estimand. In every route, the audit does not circumvent any technical access control. It does not bypass challenges, blocks or rate limits, and it does not misrepresent the researchers to the provider when asked. A puppet that the service restricts is stopped, not replaced by evasion.
+
+\paragraph{Notice to the provider}
+Telling a provider in advance that an audit is under way may change what it shows the audit accounts, which would bias the measurement. Not telling it is a form of non-disclosure. Where the access route is vetted or public-data access under Article~40, the provider knows of the research through that procedure. For a sock-puppet audit, the protocol records the choice and its justification in the registration and in the ethics application. In either case the provider is informed before publication (\cref{sec:eth-disclosure}).
+
+\subsection{Minimal footprint}\label{sec:eth-footprint}
+
+An audit of a recommender system must not become a source of the harm it measures. The protocol commits to the following rules.
+\begin{itemize}
+  \item \emph{No posting and no contact.} Puppets never post, comment, reply, message, share, react, follow or report, and never interact with a real user in any way. They never click advertisements.
+  \item \emph{No inflation of hateful content.} No persona is trained on antisemitic content (\cref{sec:prot-personas}). Items that the classifier flags are recorded as exposures but never opened, so the audit adds no views, watch time or engagement to them beyond the impression the service itself generates. Dwell time on opened items is fixed and capped. Where a logged-out session is a valid reference policy, it is used in preference to an account-based one, because it attaches no account-level signal to anything it sees.
+  \item \emph{Residual footprint.} False negatives of the classifier can still be opened. Their number is estimated from the validation sample, and we report the estimated count of antisemitic items opened by puppets, together with the total numbers of puppets, sessions and items opened.
+  \item \emph{Scale and duration.} The number of puppets is the smallest that \cref{prop:power} supports, and the sequential stopping rule of \cref{sec:prot-stopping} ends data collection for a persona as soon as the evidence is clear. Anytime-valid inference is thus an ethical device as well as a statistical one. Sessions are paced at human rates and capped per day.
+\end{itemize}
+
+\subsection{Annotator wellbeing}\label{sec:eth-annotators}
+
+Validation requires people to read and classify antisemitic content, some of it graphic, dehumanising or threatening. Research on commercial content moderation documents the psychological burden of repeated exposure to disturbing content and reviews ways of supporting the people who do this work \citep{steiger2021}. The protocol applies the following protections.
+\begin{itemize}
+  \item Participation is voluntary, with informed consent that describes the content in advance, and annotators may withdraw or skip items without penalty. Annotators are paid fairly for their time, including time spent in training and support.
+  \item Daily time on hateful content is capped, with scheduled breaks, and validation batches are mixed so that flagged items are interleaved with others.
+  \item Images and video are blurred by default and revealed only when needed for coding.
+  \item Annotators have access to confidential psychological support and are debriefed regularly. Anonymous check-ins allow the workload to be adjusted.
+  \item Annotators who are themselves members of the targeted community bring expertise, but may find the work especially distressing. No annotator is required to code a given category of content, and assignments respect their choices.
+\end{itemize}
+The research team, who also see the content, receive the same protections.
+
+\subsection{Data security}\label{sec:eth-security}
+
+Recorded items include antisemitic content and content posted by real people, and the puppets' credentials give access to accounts. All data are held in an access-controlled, encrypted research environment, with access limited to named team members and logged. Credentials are held in a secrets manager and destroyed at the end of the audit. Identifiers of posting accounts are pseudonymised at collection (\cref{sec:prot-data}). Raw content never leaves the environment. Only aggregate tables and labels with hashed identifiers are exported. We will not publish lists of antisemitic items or accounts. Such a list would serve as a directory for people seeking the content and would re-amplify it. Examples in the codebook and in publications are paraphrased.
+
+\subsection{Responsible disclosure}\label{sec:eth-disclosure}
+
+Before publication, the provider receives the findings, the protocol and the code, at least 30 days before public release. It is invited to correct factual errors and to respond. Its response, if any, is published with the results, but it has no veto over them. Content encountered during the audit that may be illegal is reported through the provider's notice mechanism under Article~16 of the DSA \citep{eu2022dsa} after the wave in which it was recorded ends, because removal during a wave would change the supply being measured. Content that indicates an imminent threat to life or safety is reported immediately to the provider and to the competent authorities, whatever the effect on the audit.
+
+\subsection{Neutrality and the limits of a single audit}\label{sec:eth-neutrality}
+
+The protocol is platform-neutral. It is written for any service with a recommendation surface and a reference policy, and the choice of service at registration is governed by the criteria of \cref{sec:prot-scope}, not by expectations about the result. An audit's conclusions hold for the service, surface, jurisdiction, window, personas, choice rule and classifier that it used. The studies reviewed in \cref{sec:background} show how much results vary across services, periods and designs. A finding that $\mathrm{AR}(d)>1$ for one persona on one surface is not evidence about other surfaces of the same service, about other services, or about the same service at another time. Nor is it evidence about the intentions of its designers, about the legality of its conduct, or about the exposure of real users, whose demand profiles an audit does not observe. A finding that $\mathrm{AR}(d)\le 1$ is equally limited. We will report every persona and every registered estimate, including null and unfavourable results, and we will state these limits alongside the results. Scope variants under different definitions of antisemitism are reported side by side, and no variant is presented as a ruling on any definition (\cref{sec:prot-validation}). Funding sources, and any relationship between the research team and the provider or with organisations that campaign on platform regulation, will be disclosed in every output.

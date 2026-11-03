@@ -14,10 +14,11 @@ section develops five pieces:
 Self-exciting models have been used for short-term crime forecasting
 \citep{mohler2011,reinhart2018} and for forecasting the popularity of online content
 \citep{zhao2015,rizoiu2017}. The decision rule (\cref{thm:alert}(a)) and the scoring
-rules are classical. The structural results are, to our knowledge, new in this form:
-the monotonicity of the predictive tail in the history and in the excitation state
-(\cref{thm:alert}(b)--(d)), and the delay-corrected state with its bias
-(\cref{prop:nowcast}). Proofs are in \cref{app:attrproofs}. Throughout, parameters are
+rules are classical. The monotone coupling behind \cref{thm:alert}(b)--(c) is the
+standard cluster, or Poisson-embedding, argument \citep{hawkes1974,bremaud1996}. What we
+add is its consequence for the shape of the Bayes alert region, the delay-corrected state
+with its bias (\cref{prop:nowcast}), and an imputation algorithm for alerting from
+delayed data (\cref{alg:alert}). Proofs are in \cref{app:attrproofs}. Throughout, parameters are
 treated as known. Parameter uncertainty enters through posterior or bootstrap draws
 (\cref{alg:alert}).
 
@@ -147,17 +148,19 @@ $c_{\mathrm{FA}},c_{\mathrm{miss}}>0$. Let
   The function $G_t$ depends on $t$ only through $\bm\mu$ on $(t,t+\Delta]$ and the
   calendar of future events. For constant $\bm\mu$ and no future events it does not
   depend on $t$.
-  \item \emph{Univariate case: a threshold on the intensity.} Let $M=1$, with
-  $\mu>0$ on $(t,t+\Delta]$ and $\mathcal U=\{n\ge c\}$ for some $c\ge1$. Suppose that
-  no event is active at $t$, that is $u(t)=0$, or that $\eta=\beta$. Then
-  $\pi_t=g_t\bigl(x(t)+u(t)\bigr)$ for a continuous, strictly increasing function $g_t$
-  of the excitation $x(t)+u(t)=\lambda(t+)-\mu(t)$. The Bayes rule alerts if and only if
+  \item \emph{Univariate case: a threshold curve.} Let $M=1$, with $\mu>0$ on
+  $(t,t+\Delta]$ and $\mathcal U=\{n\ge c\}$ for some $c\ge1$. Then
+  $\pi_t=g_t(x(t),u(t))$, where $g_t$ is continuous, nondecreasing in $u$ and strictly
+  increasing in $x$. The Bayes rule alerts if and only if
   \[
-  \lambda(t+)\ \ge\ \lambda^*_t:=\mu(t)+x^*_t,\qquad
-  x^*_t=\inf\{a\ge0:g_t(a)\ge\pi^*\}<\infty .
+  x(t)\ \ge\ x^*_t(u(t)),\qquad x^*_t(u)=\inf\{x\ge0:g_t(x,u)\ge\pi^*\}<\infty .
   \]
-  The threshold $x^*_t$ is nondecreasing in $c$ and in $\pi^*$, and nonincreasing in
-  $\Delta$.
+  The threshold curve $x^*_t(u)$ is nonincreasing in $u$, nondecreasing in $c$ and in
+  $\pi^*$, and nonincreasing in $\Delta$. If $\eta=\beta$, or if no event has occurred
+  so that $u\equiv0$, then $g_t$ depends on $x+u$ only. The rule is then a threshold on
+  the intensity: alert if and only if $\lambda(t+)\ge\lambda^*_t:=\mu(t)+x^*_t(0)$.
+  In general, replacing $u(t)$ by $0$ changes $\pi_t$ by at most $L_tu(t)$, where $L_t$
+  is a Lipschitz constant of $G_t$ in (c), for instance $L_t=\Delta/(1-n)$.
 \end{enumerate}
 \end{theorem}
 
@@ -172,10 +175,11 @@ The structural parts (b)--(d) have three operational consequences.
 \begin{enumerate}[(i)]
   \item \emph{Consistency.} Under the model, an additional incident never turns an
   alert off.
-  \item \emph{A univariate threshold.} In the univariate case, the threshold
-  $\lambda^*_t$ can be computed once, by \cref{rem:fc-pgf} or by a coupled
-  simulation. Checking for an alert then means comparing the current intensity with a
-  number.
+  \item \emph{A univariate threshold curve.} In the univariate case, the curve
+  $x^*_t(u)$ can be tabulated once, by \cref{rem:fc-pgf} or by a coupled simulation.
+  Checking for an alert then means comparing the current excitation with the curve.
+  An event's contribution $u(t)$ decays but never vanishes, so the single intensity
+  threshold $\lambda^*_t$ is exact only when $\eta=\beta$ or before any event.
   \item \emph{An upper set, not a half-space.} In the multivariate case, $\mathcal A_t$
   is an upper set but in general not a half-space. The predictive mean is affine in
   $\bm\xi(t)$, so the rule ``alert if the predictive mean exceeds a level'' has a
@@ -281,66 +285,99 @@ average, the naive state then carries a quarter of the true excitation.
 
 The unbiased nowcast has a cost in variance. The weights $1/\{p_jF_j(t-s)\}$ are large
 for recent incidents, and the conditional variance of \eqref{eq:fc-ht} is
-$\sum\Phik_{\cdot j}(s-s_i)^2\{1-p_jF_j(t-s_i)\}/\{p_jF_j(t-s_i)\}$. This variance is
-infinite in expectation when $F_j(0)=0$, $\delta=0$ and $\varphi(0)>0$, which is why a
-lag floor $\delta>0$ is used. The floor discards the available incidents in
-$(t-\delta,t]$. \Cref{alg:alert} recovers part of their information by importance
-weighting.
+$\sum\Phik_{\cdot j}(s-s_i)^2\{1-p_jF_j(t-s_i)\}/\{p_jF_j(t-s_i)\}$. This is why
+(b) requires $F_j(\delta)>0$. With $\delta=0$ this holds only if $F_j(0)>0$. Without a lag
+floor, weights for incidents arbitrarily close to $t$ are unbounded. Suppose
+$F_j(0)=0$, $F_j(u)=O(u)$ as $u\downarrow0$ and $\varphi(0)>0$. Then the conditional
+variance of the weighted sum over all incidents up to $t$ has infinite expectation. A
+lag floor $\delta>0$ avoids this, at the price of discarding the available incidents in
+$(t-\delta,t]$.
 
-An unbiased state does not give an unbiased tail probability, since $G_t$ is
-nonlinear. The algorithm therefore integrates over the uncertainty in the state by
-simulation, instead of plugging in $\hat{\bm x}(t)$.
+An unbiased state does not give a calibrated tail probability. $G_t$ is nonlinear, and
+a noisy state that happens to be high produces a high plug-in probability more often
+than a surge. Plugging $\hat{\bm x}(t)$ into $G_t$, or simulating forward from it,
+therefore does not give $\Pr(Y_t=1\mid\mathcal G_t)$ for the available data
+$\mathcal G_t$. The Bayes optimality of \cref{thm:alert}(a) then holds only for the
+oracle rule that knows the true state. \Cref{alg:alert} approximates the predictive
+probability given the available data instead. It imputes the incidents that are not yet
+available, by sequential importance sampling with the intensities of (a).
+
+\begin{lemma}[Importance weights for imputation]\label{lem:fc-is}
+Assume \cref{ass:th-model,ass:fc-report} with known parameters, and condition on the
+history up to $t-L$. Let $O$ be the incidents in $(t-L,t]$ that are available by $t$.
+Simulate the remaining incidents $U$ in $(t-L,t]$ by thinning with intensity
+$\{1-p_kF_k(t-s)\}\lambda_k(s)$, where $\lambda$ is computed from the history up to
+$t-L$, from $O$ and from the points of $U$ simulated so far. Then the conditional law of
+$U$ given $O$ has density, with respect to this proposal, proportional to
+\begin{equation}\label{eq:fc-isweight}
+  w(U)=\prod_{i\in O}\lambda_{k_i}(s_i)\,
+  \exp\Bigl\{-\sum_{k=1}^{M}\int_{t-L}^{t}p_kF_k(t-s)\,\lambda_k(s)\,\dd s\Bigr\}.
+\end{equation}
+Consequently, if $U_1,\dots,U_J$ are independent proposals and $\bm\xi_\ell(t)$ is the
+state of the completed history, then $\sum_\ell w(U_\ell)G_t(\bm\xi_\ell(t))/\sum_\ell w(U_\ell)$
+converges almost surely, as $J\to\infty$, to $\Pr(Y_t=1\mid O,\ \text{history up to }t-L)$.
+\end{lemma}
+
+In practice the history up to $t-L$ is itself incomplete. \Cref{alg:alert} replaces it
+by the weighted carried-over excitation \eqref{eq:fc-ht} with $\delta=L$. The window $L$
+is chosen so that $F_k(L)\approx1$ and the excitation carried over from before $t-L$ has
+largely decayed by $t$. The only approximations, beyond Monte Carlo error, are this
+substitution and the parameter draws. When $p_k<1$, unrecorded incidents never become
+available. A fraction $1-p_k$ of the intensity is then imputed throughout the window,
+not only near $t$.
 
 \begin{algorithm}[t]
-\caption{Real-time alerting with a delay-corrected state}\label{alg:alert}
+\caption{Real-time alerting with imputation of unreported incidents}\label{alg:alert}
 \begin{algorithmic}[1]
 \Require incidents available at $t$; parameter draws $\theta^{(1)},\dots,\theta^{(R)}$;
-  recording probabilities $p_k$ and delay distributions $F_k$; lag floor $\delta\ge0$
-  with $F_k(\delta)>0$; window $\Delta$; surge set $\mathcal U$; threshold
-  $\pi^*=c_{\mathrm{FA}}/(c_{\mathrm{FA}}+c_{\mathrm{miss}})$; paths per draw $J$
-\Ensure alert $a_t$, estimate $\hat\pi_t$, weighted predictive draws of $\bm N(t,t+\Delta]$
+  recording probabilities $p_k$ and delay distributions $F_k$; imputation window $L$
+  with $F_k(L)\approx1$; window $\Delta$; surge set $\mathcal U$; threshold
+  $\pi^*=c_{\mathrm{FA}}/(c_{\mathrm{FA}}+c_{\mathrm{miss}})$; particles per draw $J$
+\Ensure alert $a_t$ and estimate $\hat\pi_t$ of $\Pr(Y_t=1\mid\mathcal G_t)$
 \For{$r=1,\dots,R$}
-  \State compute $\hat{\bm h}^{(r)}$ by \eqref{eq:fc-ht} under $\theta^{(r)}$ \Comment{\cref{prop:nowcast}(b)}
+  \State $\hat{\bm h}^{(r)}\gets$ \eqref{eq:fc-ht} with $\delta=L$, under $\theta^{(r)}$
+    \Comment{state at $t-L$}
   \For{$\ell=1,\dots,J$}
-    \State simulate by the cluster method, under $\theta^{(r)}$, the incidents in
-      $(t-\delta,t+\Delta]$ with immigrant intensity $\bm\mu+\bm u_{t-\delta}+\hat{\bm h}^{(r)}$
-    \State $w_{r\ell}\gets\prod_{k,b}\Bin(o_{kb};\,n_{kb},\,p_kF_k(t-b))$ \Comment{optional}
-    \State $Y_{r\ell}\gets\ind{\bm N_{r\ell}(t,t+\Delta]\in\mathcal U}$
-      \Comment{thin by $p_k$ if the target is recorded counts}
+    \State impute the unavailable incidents in $(t-L,t]$ by thinning with intensity
+      $\{1-p_kF_k(t-s)\}\lambda_k(s)$, inserting the available ones
+    \State $w_{r\ell}\gets$ \eqref{eq:fc-isweight} for the completed path
+      \Comment{\cref{lem:fc-is}}
+    \State $\pi_{r\ell}\gets G_t(\bm\xi_{r\ell}(t))$ for the completed state
+      \Comment{simulation or \cref{rem:fc-pgf}}
   \EndFor
+  \State $\hat\pi^{(r)}\gets\sum_\ell w_{r\ell}\pi_{r\ell}\big/\sum_\ell w_{r\ell}$
 \EndFor
-\State $\hat\pi_t\gets\sum_{r,\ell}w_{r\ell}Y_{r\ell}\big/\sum_{r,\ell}w_{r\ell}$
-\State \Return $a_t=\ind{\hat\pi_t\ge\pi^*}$, $\hat\pi_t$ and the weighted draws
+\State $\hat\pi_t\gets R^{-1}\sum_r\hat\pi^{(r)}$
+\State \Return $a_t=\ind{\hat\pi_t\ge\pi^*}$ and $\hat\pi_t$
 \end{algorithmic}
 \end{algorithm}
 
-In \cref{alg:alert}, the product in line~5 runs over streams $k$ and over bins
-$b\subset(t-\delta,t]$ at the resolution of the reported dates. $n_{kb}$ and $o_{kb}$
-are the simulated and the available numbers of stream-$k$ incidents in bin $b$, and
-$t-b$ is the lag of the bin. $\Bin(o;n,q)$ denotes the binomial probability of $o$
-successes in $n$ trials. Without line~5, set $w_{r\ell}=1$. Several points about the algorithm follow.
+Several points about \cref{alg:alert} follow.
 \begin{itemize}
-  \item \emph{Importance weights.} The weights condition the imputed recent incidents
-  on those already reported. If reporting probabilities are constant within bins, as
-  when delays are recorded in whole days, the weights are the exact likelihood of the
-  available counts given the simulated path. The estimate $\hat\pi_t$ is then a
-  self-normalised importance-sampling estimate.
-  \item \emph{Degenerate weights.} A weight is zero when a path has fewer incidents in
-  a bin than are already available. The effective sample size should be monitored; if
-  it is small, increase $J$ or reduce $\delta$.
-  \item \emph{Monte Carlo error.} With unit weights, the Monte Carlo standard error of
-  $\hat\pi_t$ is estimated from the spread of the $R$ per-draw averages; with $J=1$ it
-  is at most $(4R)^{-1/2}$. If $|\hat\pi_t-\pi^*|$ is within two standard errors, the
-  simulation size should be increased before deciding.
-  \item \emph{Parameter uncertainty.} With posterior draws, $\hat\pi_t$ estimates the
-  posterior predictive probability, which is $\pi_t$ in \cref{thm:alert}(a) when the
-  information includes parameter uncertainty. Uncertainty in $p_k$ and $F_k$ is
-  propagated by drawing them too.
-  \item \emph{Reuse.} The same draws give the predictive distributions used for scoring
-  in \cref{sec:fc-eval}.
-  \item \emph{Univariate shortcut.} In the univariate case with no active event,
-  comparing the nowcast intensity with $\lambda^*_t$ (\cref{thm:alert}(d)) is a fast
-  plug-in approximation to the full algorithm.
+  \item \emph{Normalising the weights.} Weights are normalised within each parameter
+  draw. The draws already condition on all the data, so weighting across draws would
+  count the recent data twice.
+  \item \emph{Effective sample size.} The effective sample size
+  $(\sum_\ell w_{r\ell})^2/\sum_\ell w_{r\ell}^2$ should be monitored. If it is small,
+  $J$ should be increased or $L$ shortened.
+  \item \emph{Monte Carlo error.} The Monte Carlo standard error of $\hat\pi_t$ is
+  estimated from the spread of the $R$ per-draw estimates, or by the delta method for
+  ratio estimators when $R=1$. If $|\hat\pi_t-\pi^*|$ is within two standard errors,
+  the simulation size should be increased before deciding.
+  \item \emph{Parameter uncertainty.} With posterior draws of $\theta$, $p_k$ and $F_k$,
+  $\hat\pi_t$ estimates the posterior predictive probability. This is $\pi_t$ in
+  \cref{thm:alert}(a) when the information includes parameter uncertainty.
+  \item \emph{Calibration in practice.} The algorithm is calibrated only if the model
+  is. Before operational use, the PIT (\cref{lem:fc-pit}) and a reliability diagram of
+  $\hat\pi_t$ should be checked on held-out data. If they show miscalibration,
+  $\hat\pi_t$ should be recalibrated, for instance by isotonic regression
+  (\cref{rem:fc-brier}), before the threshold $\pi^*$ is applied.
+  \item \emph{Plug-in shortcuts.} Comparing a nowcast state with the threshold curve of
+  \cref{thm:alert}(d) is fast but is not the Bayes rule for delayed data. If it is
+  used, it should be recalibrated in the same way.
+  \item \emph{Reuse.} With $G_t$ replaced by simulated future counts, the same weighted
+  particles give the predictive distributions used for scoring in
+  \cref{sec:fc-eval}.
 \end{itemize}
 
 \subsection{Evaluation}\label{sec:fc-eval}
@@ -422,10 +459,10 @@ and $Y_t$,
 \[
 \int_0^1S_c(\pi_t,Y_t)\,\dd c=\tfrac12(\pi_t-Y_t)^2 .
 \]
-The Brier score is therefore twice the average realised cost under a uniform
-distribution of cost ratios. Every proper scoring rule for binary events is a mixture
+The Brier score is therefore twice the average realised cost when the normalised cost
+$c=\pi^*$ is drawn uniformly from $(0,1)$. Every proper scoring rule for binary events is a mixture
 of such elementary losses \citep{schervish1989}. When partners cannot agree on one cost
-ratio, the Brier score summarises performance across ratios. When they can, the
+ratio, the Brier score summarises performance across normalised costs. When they can, the
 realised cost at $\pi^*$ is the relevant measure.
 
 \Cref{thm:alert}(a) presumes that $\pi_t$ is the true conditional probability. A

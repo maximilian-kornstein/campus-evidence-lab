@@ -1,6 +1,10 @@
 % =====================================================================
 %  Shared preamble -- owned by LEAD.
 %  Section authors: do not add packages here; request them in NOTES-<owner>.md.
+%  Ported from Paper 2 (Shock and Contagion), itself a port of Paper 1 (The
+%  Dark Figure), with Paper 2's later fixes (run-in heads that never double
+%  their period; section titles that cannot be stranded from their rule), so
+%  that the four papers read as a series.
 % =====================================================================
 
 % ---- fonts & encoding (amsthm MUST precede newtxmath) ----------------
@@ -14,6 +18,7 @@
 }
 % newtx's TS1 (text-companion) metrics, ts1-qtm*, are not installed here; map
 % TS1 onto Adobe Times (psnfss) so \textbullet, \textdegree, etc. still work.
+% Without this, a plain itemize (\textbullet) aborts the run.
 \DeclareFontFamily{TS1}{ntxtlf}{}
 \DeclareFontShape{TS1}{ntxtlf}{m}{n}{<->ssub * ptm/m/n}{}
 \DeclareFontShape{TS1}{ntxtlf}{m}{it}{<->ssub * ptm/m/it}{}
@@ -34,7 +39,10 @@
 \usepackage[dvipsnames,table]{xcolor}
 
 % ---- house palette (deep navy + one burnt-orange accent) -------------
-%  Navy carries structure; the accent marks numbers and the unobserved.
+%  Same values as Papers 1-3. In this paper navy carries structure and the
+%  algorithmic policy; light navy the reference policy and neutral content;
+%  mid navy borderline content; the accent marks antisemitic content and what
+%  is fixed in advance (the stopping boundary, the registered margin).
 \definecolor{LabNavy}{HTML}{14284B}
 \definecolor{LabNavyMid}{HTML}{3D5A80}
 \definecolor{LabNavyLight}{HTML}{8DA1BE}
@@ -71,9 +79,11 @@
 \usepackage{fancyhdr}
 \usepackage{xurl}        % long URLs/DOIs in the bibliography may break anywhere
 \usepackage[colorlinks=true,linkcolor=LabNavy,citecolor=LabNavy,
-            urlcolor=LabNavyMid,bookmarksnumbered=true,pdfdisplaydoctitle=true,hypertexnames=false]{hyperref}
+            urlcolor=LabNavyMid,bookmarksnumbered=true,pdfdisplaydoctitle=true,
+            hypertexnames=false]{hyperref}
 \usepackage[capitalise,noabbrev,nameinlink]{cleveref}
-% Unique hyperref anchors for algorithm lines (requested in NOTES-BAYES.md).
+% Unique hyperref anchors for algorithm lines (several algorithms number their
+% lines from 1; without this hyperref reports duplicate destinations).
 \makeatletter\def\theHALG@line{\arabic{algorithm}.\arabic{ALG@line}}\makeatother
 
 % ---- bibliography -----------------------------------------------------
@@ -101,10 +111,12 @@
 
 % ---- section headings ---------------------------------------------------
 %  Navy titles, accent-coloured numbers; a hairline under each section.
+%  \nobreak keeps the hairline (and the text) with the title: without it a
+%  page can break between a section title and its rule.
 \titleformat{\section}[hang]
   {\normalfont\Large\bfseries\color{LabNavy}}
   {\textcolor{LabAccent}{\thesection}}{0.65em}{}
-  [{\vspace{2pt}\color{LabRule}\titlerule[0.5pt]}]
+  [{\nobreak\vspace{2pt}\nobreak\color{LabRule}\nobreak\titlerule[0.5pt]}]
 \titlespacing*{\section}{0pt}{3.0ex plus 1ex minus .3ex}{1.6ex plus .3ex}
 \titleformat{\subsection}[hang]
   {\normalfont\large\bfseries\color{LabNavy}}
@@ -114,21 +126,26 @@
   {\normalfont\normalsize\bfseries\itshape\color{LabNavy}}
   {\thesubsubsection}{0.55em}{}
 \titlespacing*{\subsubsection}{0pt}{2.0ex plus .6ex minus .2ex}{0.7ex plus .2ex}
+% Run-in heads end with a period unless the author already typed one
+% (\paragraph{Streams} and \paragraph{Streams.} both give "Streams.").
+\makeatletter
+\newcommand{\labparatitle}[1]{#1\@addpunct{.}}
+\makeatother
 \titleformat{\paragraph}[runin]
-  {\normalfont\normalsize\bfseries\color{LabNavy}}{\theparagraph}{0.5em}{}[.]
+  {\normalfont\normalsize\bfseries\color{LabNavy}}{\theparagraph}{0.5em}{\labparatitle}
 \titlespacing*{\paragraph}{0pt}{1.4ex plus .5ex minus .2ex}{0.6em}
 % Appendix sections read "Appendix A  Title".
 \appto\appendix{%
   \titleformat{\section}[hang]
     {\normalfont\Large\bfseries\color{LabNavy}}
     {\textcolor{LabAccent}{\appendixname~\thesection}}{0.65em}{}
-    [{\vspace{2pt}\color{LabRule}\titlerule[0.5pt]}]%
+    [{\nobreak\vspace{2pt}\nobreak\color{LabRule}\nobreak\titlerule[0.5pt]}]%
 }
 
 % ---- running heads --------------------------------------------------------
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\footnotesize\scshape\color{LabGrey}The Dark Figure}
+\fancyhead[L]{\footnotesize\scshape\color{LabGrey}Supply or Demand?}
 \fancyhead[R]{\footnotesize\color{LabGrey}Kornstein Lab for Antisemitism Research
   \enspace\textcolor{LabRule}{|}\enspace\textcolor{LabNavy}{\bfseries\thepage}}
 \renewcommand{\headrulewidth}{0.4pt}
@@ -214,7 +231,10 @@
 }{\popQED\endtrivlist\@endpefalse}
 \makeatother
 
-% ---- notation macros (see SPEC.md) ----------------------------------------
+% ---- notation macros (Paper 1; kept because section authors may use them) --
+%  Paper 4 notation (AR, AA, Se, Sp, P_alg, ...) is written out in full in the
+%  sections (e.g. \mathrm{AR}); section-local helpers such as \osc and \dTV
+%  are declared with \providecommand where they are used.
 \newcommand{\E}{\mathbb{E}}
 \renewcommand{\Pr}{\mathbb{P}}
 \newcommand{\Var}{\operatorname{Var}}
@@ -247,3 +267,4 @@
 \newcommand{\nFBI}{n_{\mathrm{FBI}}}
 \newcommand{\factcheck}[1]{\textcolor{red}{[FACT-CHECK: #1]}}
 \newcommand{\todo}[1]{\textcolor{orange}{[TODO: #1]}}
+

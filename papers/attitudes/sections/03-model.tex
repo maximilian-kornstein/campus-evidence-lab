@@ -1,0 +1,130 @@
+\section{A bifactor model of antisemitic attitudes}\label{sec:model}
+
+This section sets up the measurement model on which the rest of the paper builds. It is a multidimensional graded response model with a bifactor structure, estimated on two item domains: classic antisemitic stereotypes and Israel-related attitudes. We introduce a competing correlated-factors model, define the boundary estimands of \cref{def:boundary}, and state what they would and would not mean. We close by showing how the two models are related (\cref{prop:model-sl}), because that relation determines what a correlation between the two domains can and cannot reveal about the boundary.
+
+Definitions of antisemitism differ in whether, and which, Israel-related attitudes they treat as antisemitic (\cref{sec:bg-definitions}). Part of that disagreement is normative and cannot be settled by data. Part of it rests on claims about how attitudes are structured in a population. The model turns that second part into measurement claims that can be tested, and it leaves the normative part to readers. The claim that endorsement of an Israel-related statement $X$ reflects the same latent hostility as classic stereotypes becomes the claim that $X$ has a large general-factor share; the claim that $X$ expresses a distinct political attitude becomes the claim that most of its systematic variance is specific to the Israel-related domain. Both claims are restrictions on one model, tested with the same machinery and the same pre-registered threshold. A finding in either direction is informative, and neither presupposes which definition is correct. The model does not classify any statement, speaker or context, and no estimate in it is a verdict on whether a particular attitude is antisemitic.
+
+\subsection{Items, responses and the graded response model}\label{sec:model-grm}
+
+Respondents are indexed by $i=1,\dots,n$, and each belongs to one of a finite set of groups $g\in\{0,1,\dots,m\}$, such as ideological, age or national groups, with $g=0$ the reference group. Items are indexed by $j\in\mathcal J=\mathcal S\cup\mathcal I$. The set $\mathcal S$ contains statements of classic antisemitic stereotypes and $\mathcal I$ contains Israel-related statements; the two sets are disjoint, and we write $J=|\mathcal J|$. Response $Y_{ij}\in\{0,1,\dots,C_j\}$ is ordinal, with $C_j\ge1$ (for example a five-point agreement scale has $C_j=4$). Existing survey programmes measure both domains, usually with separate batteries (\cref{sec:bg-surveys}); here they are modelled jointly.
+
+Each respondent carries a latent vector $\bm\theta_i=(\theta_{iG},\theta_{iS},\theta_{iI})^\top$: a general factor $G$ and two specific factors, $S$ for the stereotype domain and $I$ for the Israel-related domain. For item $j$ let $s(j)=S$ if $j\in\mathcal S$ and $s(j)=I$ if $j\in\mathcal I$. Item $j$ has a loading vector $\bm a_j=(a_{jG},a_{jS},a_{jI})^\top$ with the \emph{bifactor pattern}
+\begin{equation}\label{eq:model-pattern}
+  a_{jI}=0\ \ (j\in\mathcal S),\qquad a_{jS}=0\ \ (j\in\mathcal I),
+\end{equation}
+so that every item loads on $G$ and on its own specific factor only. We write $a_{js}=a_{j,s(j)}$ for the specific loading and $\bm A$ for the $J\times3$ matrix with rows $\bm a_j^\top$. The graded response model \citep{samejima1969} with group-specific item parameters is
+\begin{equation}\label{eq:model-grm}
+  \Pr\bigl(Y_{ij}\ge c\mid\bm\theta_i,\,g_i=g\bigr)=F\bigl(\bm a_j^{(g)\top}\bm\theta_i-b_{jc}^{(g)}\bigr),\qquad c=1,\dots,C_j,
+\end{equation}
+with ordered thresholds $b_{j1}^{(g)}<\dots<b_{jC_j}^{(g)}$, where $F$ is either the logistic distribution function $\Lambda(x)=1/(1+e^{-x})$ or the standard normal distribution function $\Phi$ (the normal-ogive model; \citealp{lord1980}). Category probabilities are differences of adjacent terms in \eqref{eq:model-grm}, with $b_{j0}^{(g)}=-\infty$ and $b_{j,C_j+1}^{(g)}=+\infty$. Responses are conditionally independent given $\bm\theta_i$ and $g_i$ (local independence), and the latent vector has a group-specific normal distribution with orthogonal factors,
+\begin{equation}\label{eq:model-latent}
+  \bm\theta_i\mid g_i=g\ \sim\ \mathrm N_3\bigl(\bm\mu_g,\bm\Sigma_g\bigr),\qquad
+  \bm\Sigma_g=\operatorname{diag}\bigl(\sigma^2_{gG},\sigma^2_{gS},\sigma^2_{gI}\bigr),\qquad
+  \bm\mu_0=\bm0,\ \ \bm\Sigma_0=\bm I_3 .
+\end{equation}
+The reference normalisation $\bm\mu_0=\bm0$, $\bm\Sigma_0=\bm I_3$ fixes the location and scale of each factor. Orthogonality of $G$, $S$ and $I$ is what makes the decomposition below a decomposition; with correlated factors the share of an item's variance due to $G$ is not defined without further conventions. Full-information estimation of this model reduces to two-dimensional integrals, because given $\theta_{G}$ the two domains are independent \citep{gibbons1992,gibbons2007}; the multiple-group version with group-specific latent means and variances is that of \citet{cai2011}.
+
+\paragraph{Latent responses}
+Equivalently, item $j$ in group $g$ has a continuous latent response and an observed category,
+\begin{equation}\label{eq:model-lr}
+  Y^*_{ij}=\bm a_j^{(g)\top}\bm\theta_i+\varepsilon_{ij},\qquad
+  Y_{ij}=\sum_{c=1}^{C_j}\ind{Y^*_{ij}>b^{(g)}_{jc}},
+\end{equation}
+where the $\varepsilon_{ij}$ are independent of each other and of $\bm\theta_i$, with distribution function $F$ and variance $v_F$ ($v_\Phi=1$, $v_\Lambda=\pi^2/3$). Since $F$ is symmetric, $\Pr(Y_{ij}\ge c\mid\bm\theta_i)=\Pr(\varepsilon_{ij}>b_{jc}-\bm a_j^\top\bm\theta_i)=F(\bm a_j^\top\bm\theta_i-b_{jc})$, which is \eqref{eq:model-grm}. Under the normal-ogive link, \eqref{eq:model-lr} is a factor model for discretised Gaussian variables, and marginal maximum likelihood in the item response model coincides with maximum likelihood in that factor model \citep{takane1987}. In the reference group we write
+\begin{equation}\label{eq:model-std}
+  \bm\lambda_j=\frac{\bm a_j}{(v_F+\|\bm a_j\|^2)^{1/2}},\qquad h_j^2=\|\bm\lambda_j\|^2=\lambda_{jG}^2+\lambda_{js}^2,\qquad \psi_j=1-h_j^2>0,
+\end{equation}
+for the standardised loadings, the communality and the uniqueness of item $j$: $\lambda_{jf}$ is the correlation between $Y^*_{j}$ and $\theta_f$.
+
+\paragraph{Invariance and differential item functioning}
+Item $j$ is \emph{invariant} if $\bm a^{(g)}_j=\bm a_j$ and $b^{(g)}_{jc}=b_{jc}$ for every $g$ and $c$, so that the conditional law of $Y_{ij}$ given $\bm\theta_i$ does not depend on the group. This is measurement invariance in the sense of \citet{meredith1993} and \citet{millsap2011}, applied item by item. Otherwise item $j$ shows differential item functioning (DIF) in group $g$, with
+\begin{equation}\label{eq:model-dif}
+  \Delta\bm a^{(g)}_j=\bm a^{(g)}_j-\bm a_j,\qquad \Delta b^{(g)}_{jc}=b^{(g)}_{jc}-b_{jc}.
+\end{equation}
+DIF is \emph{uniform} if $\Delta\bm a^{(g)}_j=\bm0$ and \emph{non-uniform} if $\Delta\bm a^{(g)}_j\neq\bm0$. For simplicity we let uniform DIF shift all thresholds of an item by a common amount $\Delta b^{(g)}_j$; category-specific shifts are handled by the same arguments with one intercept per threshold. Throughout, $\bm a_j^{(g)}$ keeps the pattern \eqref{eq:model-pattern} (configural invariance). The differences \eqref{eq:model-dif} refer to a latent metric common to all groups. That metric is itself identified only through items assumed invariant (\cref{prop:anchor}).
+
+\subsection{The bifactor model and the general factor}\label{sec:model-bifactor}
+
+The bifactor model \eqref{eq:model-pattern}--\eqref{eq:model-latent} goes back to \citet{schmid1957} and, in item response form, to \citet{gibbons1992}; \citet{reise2012} reviews its use in measurement. Its general factor is, by construction, the dimension that the stereotype items and the Israel-related items have in common. It is \emph{not} defined by the stereotype items alone. Interpreting $G$ as ``hostility toward Jews as Jews'' is a construct-validity claim. It rests on the content of the item pool, above all of the stereotype items, and it is external to the model. If the item pool changes, $G$ changes with it. A variant that builds the asymmetry into the model, the bifactor-$(S-1)$ model of \citet{eid2017}, is discussed in \cref{rem:id-s1}.
+
+\subsection{The correlated-factors model}\label{sec:model-cf}
+
+The competing model has no general factor. Each item loads on one of two correlated domain factors,
+\begin{equation}\label{eq:model-cf}
+  Y^*_{ij}=\alpha_j\,\zeta_{i,s(j)}+\varepsilon_{ij},\qquad
+  \begin{pmatrix}\zeta_{iS}\\ \zeta_{iI}\end{pmatrix}\Bigm| g_i=0\ \sim\ \mathrm N_2\!\left(\bm0,\begin{pmatrix}1&\rho_{SI}\\ \rho_{SI}&1\end{pmatrix}\right),
+\end{equation}
+with the thresholds and link of \eqref{eq:model-grm}--\eqref{eq:model-lr}. Here $\zeta_S$ is the stereotype factor, $\zeta_I$ the Israel-attitude factor and $\rho_{SI}$ their correlation, corrected for measurement error. In group $g$ the factors have means $\bm\mu_g$ and covariance matrix $\bm\Sigma_g$, with correlation $\rho^{(g)}_{SI}$. The sign of $\rho_{SI}$ refers to an orientation of each factor, fixed by requiring a designated marker item of each domain to load positively.
+
+\subsection{The boundary estimands}\label{sec:model-boundary}
+
+\begin{definition}[Boundary estimands]\label{def:boundary}
+Let $g$ be a group and let item $j$ have $\bm a_j^{(g)}\neq\bm0$.
+\begin{enumerate}[(i)]
+  \item The \emph{item-level explained common variance} of item $j$ in group $g$ is
+  \begin{equation}\label{eq:model-ecv}
+    \mathrm{ECV}^{(g)}_j=\frac{\bigl(a^{(g)}_{jG}\bigr)^2\sigma^2_{gG}}{\bigl(a^{(g)}_{jG}\bigr)^2\sigma^2_{gG}+\bigl(a^{(g)}_{js}\bigr)^2\sigma^2_{g,s(j)}},
+    \qquad
+    \mathrm{ECV}_j=\mathrm{ECV}^{(0)}_j=\frac{a_{jG}^2}{a_{jG}^2+a_{js}^2}.
+  \end{equation}
+  The boundary estimands are $\mathrm{ECV}_j$ and $\mathrm{ECV}^{(g)}_j$ for $j\in\mathcal I$.
+  \item The \emph{latent domain correlation} is $\rho_{SI}$ of the correlated-factors model \eqref{eq:model-cf}, and $\rho^{(g)}_{SI}$ in group $g$.
+  \item For a threshold $\tau\in(0,1)$ fixed in advance (\cref{sec:design}), the \emph{boundary set} is
+  \begin{equation}\label{eq:model-bset}
+    \mathcal B_\tau=\{j\in\mathcal I:\ \mathrm{ECV}_j\ge\tau\},\qquad
+    \mathcal B^{(g)}_\tau=\{j\in\mathcal I:\ \mathrm{ECV}^{(g)}_j\ge\tau\}.
+  \end{equation}
+\end{enumerate}
+\end{definition}
+
+Write $\eta^{(g)}_j=\bm a_j^{(g)\top}\bm\theta$ for the systematic part of the latent response \eqref{eq:model-lr}. Because the factors are orthogonal, each of the following equals $\mathrm{ECV}^{(g)}_j$:
+\begin{equation}\label{eq:model-ecv-forms}
+  \frac{\Var\bigl(a^{(g)}_{jG}\theta_G\mid g\bigr)}{\Var\bigl(\eta^{(g)}_j\mid g\bigr)}
+  \;=\;\operatorname{Corr}^2\bigl(\theta_G,\eta^{(g)}_j\mid g\bigr)
+  \;=\;1-\operatorname{Corr}^2\bigl(\theta_{s(j)},\eta^{(g)}_j\mid g\bigr),
+  \qquad
+  \mathrm{ECV}_j=\frac{\lambda_{jG}^2}{h_j^2}.
+\end{equation}
+Thus $\mathrm{ECV}_j$ is the share of item $j$'s common (non-error) variance that is due to $G$, or equivalently the squared correlation between $G$ and the item's systematic component. It does not depend on the link or on $v_F$, and it is unchanged by reflecting a factor. It is the item-level counterpart of the explained common variance and of the related omega-type indices for a whole scale \citep{reise2012,rodriguez2016,zinbarg2005}. A further reading uses the logit,
+\begin{equation}\label{eq:model-logit-ecv}
+  \logit\mathrm{ECV}^{(g)}_j=2\log\bigl|a^{(g)}_{jG}\bigr|-2\log\bigl|a^{(g)}_{js}\bigr|+\log\sigma^2_{gG}-\log\sigma^2_{g,s(j)},
+\end{equation}
+which is additive in log loadings and log factor variances; \cref{thm:dif-bias,prop:id-boundary-test} use this form. The group-specific index $\mathrm{ECV}^{(g)}_j$ differs from $\mathrm{ECV}_j$ even for an invariant item whenever $\sigma^2_{gG}/\sigma^2_{g,s(j)}\neq1$. The boundary is therefore a property of an item \emph{in a population}, and a difference between groups in $\mathrm{ECV}^{(g)}_j$ need not involve DIF.
+
+\subsection{What the estimands mean, and what they do not}\label{sec:model-meaning}
+
+\paragraph{What they would mean}
+A value of $\mathrm{ECV}_j$ near one for an Israel-related item says that, in the population and within this item pool, the systematic part of responses to item $j$ varies almost entirely along the dimension shared with the classic stereotypes, and that little of it is shared only with other Israel-related items. A value near zero says the reverse: the item's systematic variance is mostly specific to the Israel-related domain. Intermediate values describe items whose responses reflect both. The boundary set $\mathcal B_\tau$ collects the items for which the first description holds to at least the pre-registered degree $\tau$. The correlation $\rho_{SI}$ answers a coarser question: whether people who score high on the stereotype dimension tend to score high on the Israel-attitude dimension. It says nothing about individual items.
+
+\paragraph{What they would not mean}
+Five readings are \emph{not} licensed.
+\begin{enumerate}[(a)]
+  \item \emph{No statement about individuals.} All three estimands are properties of a joint distribution. A large $\mathrm{ECV}_j$ does not show that a respondent who endorses item $j$ holds a high position on $G$, and so does not show that the respondent is antisemitic. In the latent-response model the correlation between $\theta_G$ and $Y^*_j$ is $\lambda_{jG}=h_j\,\mathrm{ECV}_j^{1/2}$. This is less than one even when $\mathrm{ECV}_j=1$, because every item carries unique variance, and the observed category is a coarser signal still. Likewise, in the correlated-factors model the probability that a person in the upper tail of one domain, $\zeta_I>z$, is also beyond $z$ on the other domain is $\Phi_2(-z,-z;\rho_{SI})/\Phi(-z)$, where $\Phi_2$ is the bivariate normal distribution function. This is strictly less than one whenever $|\rho_{SI}|<1$, and it tends to zero as $z$ grows.\footnote{Given $\zeta_I=x$, $\zeta_S\sim\mathrm N(\rho x,1-\rho^2)$. Given $\zeta_I>z$, $\zeta_I-z=O_p(1/z)$, so the conditional probability behaves like $1-\Phi\bigl((1-\rho)z/(1-\rho^2)^{1/2}\bigr)\to0$ for $\rho<1$.} Treating a population association as a property of each person is the individualistic counterpart of the ecological fallacy. Area-level associations, such as those between the small-area estimates of \cref{sec:smallarea}, need not equal individual-level ones either \citep{robinson1950}.
+  \item \emph{No statement about prevalence.} The estimands describe covariance, not level. An item can have $\mathrm{ECV}_j$ near one and be rarely endorsed, or near zero and be widely endorsed. Membership of $\mathcal B_\tau$ says nothing about how many people hold an attitude.
+  \item \emph{Relative to an item pool and a population.} The general factor is what the items share (\cref{sec:model-bifactor}). Adding or removing stereotype items can change $G$ and every $\mathrm{ECV}_j$. Response styles shared by all items, such as acquiescence to agree-keyed statements, also load on $G$ unless the design controls them (\cref{sec:design}). $\mathrm{ECV}^{(g)}_j$ is specific to group $g$ (\cref{sec:model-boundary}).
+  \item \emph{No causal statement.} A common factor summarises covariance. A large $\mathrm{ECV}_j$ is compatible with a single underlying attitude, with common causes of distinct attitudes, and with shared method variance. The model alone does not distinguish these explanations.
+  \item \emph{No normative statement.} Neither a large nor a small $\mathrm{ECV}_j$ settles whether endorsing item $j$ is antisemitic. One definition may treat a statement as antisemitic because of its content, whatever its covariance with stereotypes. Another may treat a statement as legitimate political speech even if its responses covary strongly with stereotypes. What the estimands can do is test the empirical premises that such positions invoke (\cref{sec:bg-definitions}).
+\end{enumerate}
+
+\subsection{Bifactor and correlated-factors representations}\label{sec:model-sl}
+
+The two models are closely related. The Schmid--Leiman transformation \citep{schmid1957} turns a model with correlated first-order factors into a bifactor model whose loadings are proportional within each domain. \Citet{yung1999} showed that higher-order factor models without direct effects are bifactor models constrained in this way. With only two domains the transformation is not unique, and this matters for the boundary.
+
+\begin{proposition}[Bifactor and correlated-factors representations]\label{prop:model-sl}
+Fix a link $F$ and thresholds $(b_{jc})$.
+\begin{enumerate}[(a)]
+  \item Let $(\alpha_j)_{j\in\mathcal J}$ and $\rho_{SI}\in[-1,1]$ be the parameters of a correlated-factors model \eqref{eq:model-cf}. For any $\gamma_S,\gamma_I\in[-1,1]$ with $\gamma_S\gamma_I=\rho_{SI}$, the bifactor model with
+  \begin{equation}\label{eq:model-sl}
+    a_{jG}=\alpha_j\gamma_{s(j)},\qquad a_{js}=\alpha_j\bigl(1-\gamma_{s(j)}^2\bigr)^{1/2}
+  \end{equation}
+  induces the same joint law of the latent responses $(Y^*_j)_{j\in\mathcal J}$, and hence of $(Y_j)_{j\in\mathcal J}$, as the correlated-factors model. Its item-level ECVs are constant within each domain: $\mathrm{ECV}_j=\gamma^2_{s(j)}$.
+  \item Conversely, a bifactor model whose loading vectors $(a_{jG},a_{js})$ lie on a common line through the origin within each domain is of the form \eqref{eq:model-sl}. Under the normal-ogive link, suppose a bifactor model has at least three items with non-zero specific loadings in each domain and at least one item with a non-zero general loading in each domain. If it is observationally equivalent to some correlated-factors model, then its loading vectors are proportional within each domain.
+  \item Consequently, the bifactor representations of a correlated-factors model with correlation $\rho_{SI}$ form the curve $\{\gamma_S\gamma_I=\rho_{SI}\}$. Along it $\mathrm{ECV}_j$, $j\in\mathcal I$, takes every value in $[\rho_{SI}^2,1]$, and $\mathrm{ECV}_k=\rho_{SI}^2/\mathrm{ECV}_j$ for $k\in\mathcal S$ when $\rho_{SI}\neq0$. The correlated-factors model identifies $\rho_{SI}$ but not the boundary ECVs. It implies only the sharp bounds $\rho_{SI}^2\le\mathrm{ECV}_j\le1$ for $j\in\mathcal I$, whose end points are attained when one specific factor vanishes.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+For (a), the vector $(\gamma_S\theta_G+(1-\gamma_S^2)^{1/2}\theta_S,\ \gamma_I\theta_G+(1-\gamma_I^2)^{1/2}\theta_I)$ is bivariate normal with unit variances and correlation $\gamma_S\gamma_I=\rho_{SI}$. It therefore has the law of $(\zeta_S,\zeta_I)$, and the latent responses inherit this. For the converse in (b), the observationally equivalent correlated-factors model forces the cross-domain block of the polychoric correlation matrix to have rank one. This makes the general loadings of each domain proportional to its correlated-factors loadings, and the one-factor structure within each domain then forces the specific loadings to be proportional too. Part (c) follows from (a) and (b). The full proof is in \cref{app:pm-sl}.
+\end{proof}
+
+\Cref{prop:model-sl} sharpens the point made in \cref{sec:bg-prior}. A correlation between the two domains, however precisely estimated, cannot by itself tell a common latent cause from correlated but distinct attitudes. Every correlated-factors model is also a bifactor model, and in that bifactor model the Israel-related items' general-factor share is anywhere between $\rho_{SI}^2$ and one. For example, it can equal one, with no Israel-specific variance at all, and the stereotype items then carry the domain-specific variance. The conventional resolution for two first-order factors constrains $\gamma_S=\gamma_I=\rho_{SI}^{1/2}$ and so reports $\mathrm{ECV}_j=\rho_{SI}$ for every item. That is a normalisation, not an estimate. What separates the two descriptions is departure from proportionality: items within a domain that differ in their general-factor share. \Cref{thm:ident} makes this precise.

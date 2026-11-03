@@ -509,3 +509,105 @@ def test_all_estimators_accept_float_counts_and_serialise():
         assert np.isfinite(e.N_hat) and e.lo <= e.hi
         assert e.N_hat - e.n_obs == pytest.approx(e.n0_hat)
         json.dumps(e.to_dict())
+
+
+# --------------------------------------------------------------------------
+# run 2: linkage variance (Cor cor:linkcorrect(i)), LE record simulator / audit, LCMCR diagnostics
+# --------------------------------------------------------------------------
+from darkfig.estimators import lcmcr_pooled, widen_interval  # noqa: E402
+from darkfig.lcmcr import convergence_diagnostics  # noqa: E402
+from darkfig.linkerror import (observed_covariance, simulate_audit, simulate_records,  # noqa: E402
+                               jacobian_expected_observed)
+
+
+def test_observed_covariance_matches_monte_carlo():
+    rng = np.random.default_rng(21)
+    t = np.rint(expected_table(1200, [[0.3, 0.35, 0.25, 0.3]], [1.0]))
+    t[0] = 0
+    for delta, eps in [(0.15, 0.0), (0.15, 0.03)]:
+        S = np.array([simulate_observed(t, delta, eps, rng)[1:] for _ in range(1500)])
+        C_mc = np.cov(S.T)
+        C_an = observed_covariance(t, delta, eps)
+        big = np.diag(C_mc) > 20
+        np.testing.assert_allclose(np.diag(C_an)[big], np.diag(C_mc)[big], rtol=0.15)
+        for _ in range(5):
+            w = rng.normal(size=15)
+            assert (w @ C_an @ w) / (w @ C_mc @ w) == pytest.approx(1.0, abs=0.15)
+    # Jacobian: eps = 0 gives the detachment matrix
+    np.testing.assert_allclose(jacobian_expected_observed(t, 0.2, 0.0), detachment_matrix(4, 0.2), atol=1e-12)
+
+
+def test_v_link_restores_coverage_in_small_le_case():
+    """Under the LE model the corrected estimator's inner interval (v_cap only) undercovers;
+    adding v_link (delta method) restores nominal coverage."""
+    rng = np.random.default_rng(22)
+    N, R, delta, eps = 1000, 150, 0.2, 0.02
+    cov_link, cov_cap = {"lp": [], "cf": []}, {"lp": [], "cf": []}
+    for _ in range(R):
+        t = sim_independent(N, [0.35, 0.3, 0.3, 0.4], rng)
+        obs = simulate_observed(t, delta, eps, rng)
+        for k, fn in (("lp", lincoln_petersen), ("cf", loglinear_closed_form)):
+            e = linkage_corrected(obs, delta, eps, estimator=fn)
+            cov_link[k].append(e.lo <= N <= e.hi)
+            cov_cap[k].append(e.extra["lo_cap"] <= N <= e.extra["hi_cap"])
+            assert e.extra["v_link"] > 0 and e.hi - e.lo > e.extra["hi_cap"] - e.extra["lo_cap"]
+    for k in cov_link:
+        assert np.mean(cov_link[k]) >= 0.89, (k, np.mean(cov_link[k]))
+        assert np.mean(cov_link[k]) - np.mean(cov_cap[k]) >= 0.05, (k, np.mean(cov_link[k]), np.mean(cov_cap[k]))
+
+
+def test_widen_interval_properties():
+    lo, hi = widen_interval(150.0, 120.0, 220.0, 100.0, 0.0)
+    assert (lo, hi) == (120.0, 220.0)
+    lo2, hi2 = widen_interval(150.0, 120.0, 220.0, 100.0, 400.0)
+    assert 100.0 < lo2 < 120.0 and hi2 > 220.0
+    # on the log(N - a) scale both sides grow by the same quadrature term
+    z = 1.959963984540054
+    add = np.log1p(400.0 / 50.0 ** 2)
+    assert np.log(50.0 / (lo2 - 100.0)) == pytest.approx(z * np.sqrt((np.log(50 / 20) / z) ** 2 + add))
+    assert np.log((hi2 - 100.0) / 50.0) == pytest.approx(z * np.sqrt((np.log(120 / 50) / z) ** 2 + add))
+
+
+def test_simulate_records_and_audit_from_le_ground_truth():
+    rng = np.random.default_rng(23)
+    t = sim_independent(2000, [0.3, 0.3, 0.25, 0.2], rng)
+    sim = simulate_records(t, 0.1, 0.03, np.random.default_rng(5))
+    assert np.array_equal(table_to_array(sim["table_out"](t))[0], table_to_array(simulate_observed(t, 0.1, 0.03, np.random.default_rng(5)))[0])
+    # a census audit recovers the realised rates exactly
+    au = simulate_audit(sim, 10 ** 9, 10 ** 9, rng)
+    assert au["delta_hat"] == pytest.approx(au["delta_true"]) and au["eps_hat"] == pytest.approx(au["eps_true"])
+    # a random audit is unbiased and its CI covers at roughly the nominal rate
+    hits_d, hits_e, d_err = [], [], []
+    for _ in range(150):
+        a = simulate_audit(sim, 200, 100, rng)
+        hits_d.append(abs(a["delta_hat"] - a["delta_true"]) <= 1.96 * a["se_delta"])
+        hits_e.append(abs(a["eps_hat"] - a["eps_true"]) <= 1.96 * a["se_eps"])
+        d_err.append(a["delta_hat"] - a["delta_true"])
+    assert np.mean(hits_d) > 0.85 and np.mean(hits_e) > 0.85
+    assert abs(np.mean(d_err)) < 0.01
+
+
+def test_convergence_diagnostics():
+    rng = np.random.default_rng(24)
+    x = rng.normal(size=(4, 1000))
+    d = convergence_diagnostics(x)
+    assert d["rhat"] < 1.01 and d["ess_bulk"] > 2500 and d["ess_tail"] > 1500
+    y = x + np.array([0, 0, 0, 1.0])[:, None]
+    assert convergence_diagnostics(y)["rhat"] > 1.05
+    ar = np.zeros((4, 2000))
+    for c in range(4):
+        e = rng.normal(size=2000)
+        for i in range(1, 2000):
+            ar[c, i] = 0.9 * ar[c, i - 1] + e[i]
+    dd = convergence_diagnostics(ar)
+    assert 150 < dd["ess_bulk"] < 1000     # AR(1), phi = 0.9: ESS ~ 8000 * 0.1 / 1.9 = 421
+
+
+def test_lcmcr_multichain_and_pooled():
+    rng = np.random.default_rng(25)
+    t = sim_independent(800, [0.4, 0.35, 0.3, 0.4], rng)
+    e = lcmcr(t, n_iter=1200, burn=400, thin=2, seed=3, n_chains=4)
+    assert e.extra["n_chains"] == 4 and len(e.extra["chain_medians"]) == 4
+    assert np.isfinite(e.extra["rhat"]) and e.extra["rhat"] < 1.1 and e.extra["n_draws"] == 4 * 400
+    p = lcmcr_pooled([t, t], seed=4, n_iter=1200, burn=400, thin=2)
+    assert p.extra["n_tables"] == 2 and p.extra["n_draws"] == 800 and p.lo < p.N_hat < p.hi

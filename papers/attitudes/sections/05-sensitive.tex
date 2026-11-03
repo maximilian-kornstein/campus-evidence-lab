@@ -1,0 +1,264 @@
+\section{Sensitive items: list experiments and social-desirability bias}\label{sec:sensitive}
+
+% Notation local to Sections 5--6 and Appendix B (owned by MODELS).
+\providecommand{\armT}{\mathsf{T}}
+\providecommand{\armC}{\mathsf{C}}
+\providecommand{\armD}{\mathsf{D}}
+\providecommand{\SDB}{\mathrm{SDB}}
+\providecommand{\ECV}{\mathrm{ECV}}
+\providecommand{\armL}{\mathsf{L}}
+
+The measurement model of \cref{sec:model} takes direct answers at face value. For items whose endorsement is socially sanctioned, a direct answer can differ from the answer a respondent would give if no one could attribute it to them (\cref{sec:bg-list}). The direction of that difference need not be the same for every item or every group. This section develops four tools for measuring it. \Cref{prop:list-var} gives the exact variance of the list-experiment estimator and characterises its cost relative to direct questioning. \Cref{thm:joint-sdb} combines direct and list responses to identify item-level social-desirability bias and the rate of hidden endorsement, and says what is lost without a monotonicity assumption. \Cref{thm:design} allocates a budget across the arms of the experiment and chooses the control list. \Cref{prop:list-irt} links the list experiment to the latent-variable model by correcting the threshold of the sensitive item. Proofs are in \cref{app:proofs-design}.
+
+We build on established results and attribute them where they are used. The item count technique is due to \citet{miller1984}. Its identifying assumptions, the difference-in-means estimator and its regression extensions are developed by \citet{imai2011}, \citet{blair2012} and \citet{glynn2013}, with an earlier multivariate estimator by \citet{corstange2009}. The test for design effects and the models for floor and ceiling effects are those of \citet{blair2012}. The recommendation to use negatively correlated control items, and sample-size formulas for the list experiment, are in \citet{glynn2013}. The combined estimator for a design in which every list respondent also answers the direct question, its monotonicity assumption and its placebo tests are due to \citet{aronow2015}. \Citet{blair2014} combine list experiments with endorsement experiments in a joint regression framework, which is the closest precedent for the link to the measurement model in \cref{sec:sens-irt}. Randomised response \citep{warner1965,blair2015} protects respondents by a different mechanism and is not treated here. Our contributions are the characterisation of the designs that attain the direct-question benchmark (\cref{prop:list-var}(b)); an explicit statement, building on \citet{aronow2015}, that in the paired design hidden and false endorsement are separately identified without monotonicity, together with the efficiency of their combined estimator (\cref{thm:joint-sdb}); the allocation rules and the comparative statics of the list choice (\cref{thm:design}); and the threshold-shift link to the item response model (\cref{prop:list-irt}).
+
+\subsection{The item count technique}\label{sec:sens-ict}
+
+Fix one sensitive statement; it is an item of the battery of \cref{sec:model}, coded as agreement. Let $Z_i\in\{0,1\}$ be respondent $i$'s truthful agreement, the answer $i$ would give if the answer could not be attributed to $i$, and let $\pi=\Pr(Z_i=1)$. A \emph{control list} consists of $J$ non-sensitive statements with indicators $W_{i1},\dots,W_{iJ}\in\{0,1\}$ and count $W_i=\sum_{j=1}^JW_{ij}$. (In \cref{sec:sens-ict,sec:sens-var,sec:sens-joint,sec:sens-design}, $J$ is the number of control statements and $j$ indexes them; from \cref{sec:sens-irt} on, $j$ again indexes items of the battery.) Respondents are randomised to three arms. In the \emph{list-control} arm $\armC$, respondents see the $J$ control statements. In the \emph{list-treatment} arm $\armT$, they see the same statements plus the sensitive one. In both, they report only how many statements they agree with, $Y_i$. In the \emph{direct} arm $\armD$, the sensitive statement is asked directly. We write $D_i\in\{0,1\}$ for the direct answer, $\pi^D=\Pr(D_i=1)$ for the direct prevalence, and
+\[
+  \SDB=\pi-\pi^D
+\]
+for the item's social-desirability bias. Arm sizes are $n_{\armT},n_{\armC},n_{\armD}$. We consider two designs. In the \emph{split} design, list-arm respondents are never asked the sensitive statement directly. In the \emph{paired} design, every respondent answers the direct question, list-arm respondents after the list. The plan of \cref{sec:design-list} is a split design with a paired subsample.
+
+\begin{assumption}[List experiment]\label{asm:le}
+Let $W_i(a)$ be the control count respondent $i$ would report in arm $a\in\{\armC,\armT\}$, $\tilde Z_i$ the contribution of the sensitive statement to $i$'s count in arm $\armT$, and $D_i(a)$ the direct answer $i$ would give in arm $a$.
+\begin{enumerate}[(i)]
+  \item \emph{Sampling and randomisation.} Respondents are drawn independently from the target population, and arms are assigned by complete randomisation with fixed sizes, independently of all potential responses.
+  \item \emph{No design effect.} $W_i(\armT)=W_i(\armC)=:W_i$.
+  \item \emph{No liars.} $\tilde Z_i=Z_i$. Hence $Y_i=W_i$ in arm $\armC$ and $Y_i=W_i+Z_i$ in arm $\armT$.
+  \item \emph{Treatment independence (paired design).} $D_i(\armD)=D_i(\armC)=D_i(\armT)=:D_i$, and asking the direct question does not change the list answer.
+\end{enumerate}
+\end{assumption}
+
+Parts (ii) and (iii) are the assumptions of \citet{blair2012}; part (iv) is the treatment-independence assumption of \citet{aronow2015}. Under \cref{asm:le}(i)--(iii) the difference in means
+\begin{equation}\label{eq:le-dim}
+  \widehat\pi=\overline Y_{\armT}-\overline Y_{\armC}
+\end{equation}
+is unbiased for $\pi$, because randomisation makes the law of $(W_i,Z_i)$ the same in both arms. If arms are assigned by independent draws, as in \cref{sec:design-list}, every statement below holds conditionally on the realised arm sizes.
+
+\subsection{The variance cost of indirect questioning}\label{sec:sens-var}
+
+Write $p_j=\Pr(W_{ij}=1)$, $c_{jk}=\Cov(W_{ij},W_{ik})$ and $\gamma_j=\Cov(W_{ij},Z_i)$. The variance of the count in each list arm is
+\begin{equation}\label{eq:le-sig}
+  \sigma_{\armC}^2=\Var(W_i)=\sum_{j=1}^Jp_j(1-p_j)+\sum_{j\neq k}c_{jk},\qquad
+  \sigma_{\armT}^2=\Var(W_i+Z_i)=\sigma_{\armC}^2+\pi(1-\pi)+2\sum_{j=1}^J\gamma_j.
+\end{equation}
+
+\begin{proposition}[Variance of the list experiment]\label{prop:list-var}
+Under \cref{asm:le}(i)--(iii), with $n_{\armT},n_{\armC}\ge1$, the estimator \eqref{eq:le-dim} is unbiased and its exact variance is
+\begin{equation}\label{eq:le-var}
+  \Var(\widehat\pi)=\frac{\sigma_{\armT}^2}{n_{\armT}}+\frac{\sigma_{\armC}^2}{n_{\armC}}.
+\end{equation}
+Let $n=n_{\armT}+n_{\armC}$ and $r=n_{\armT}/n$, and compare with the variance $\pi(1-\pi)/n$ of truthful direct questioning of $n$ respondents.
+\begin{enumerate}[(a)]
+  \item \emph{Efficiency loss.} The loss factor $L(r)=n\Var(\widehat\pi)/\{\pi(1-\pi)\}=\{\sigma_{\armT}^2/r+\sigma_{\armC}^2/(1-r)\}/\{\pi(1-\pi)\}$ is minimised at $r^*=\sigma_{\armT}/(\sigma_{\armT}+\sigma_{\armC})$, where
+  \begin{equation}\label{eq:le-loss}
+    L^*=\frac{(\sigma_{\armT}+\sigma_{\armC})^2}{\pi(1-\pi)}.
+  \end{equation}
+  \item \emph{Attaining the benchmark costs privacy.} If $0<\pi<1$, then $L^*\ge1$, with equality if and only if $W_i$ or $W_i+Z_i$ is almost surely constant, in which case the count in one of the two arms reveals $Z_i$. The converse fails: a count can reveal $Z_i$ while $L^*$ is large.
+  \item \emph{Correlation structure and list length.} $L^*$ is strictly increasing in every $c_{jk}$ and every $\gamma_j$. If $\sum_j\gamma_j\ge0$, then $L^*\ge1+4\sigma_{\armC}^2/\{\pi(1-\pi)\}$. For exchangeable control items, with $p_j=p$ and $c_{jk}=\rho\,p(1-p)$,
+  \begin{equation}\label{eq:le-exch}
+    \sigma_{\armC}^2=Jp(1-p)\{1+(J-1)\rho\},
+  \end{equation}
+  where $\rho\ge-1/(J-1)$ is necessary but not sufficient for binary items (for $p=1/2$ and odd $J$ the sharp bound is $\rho\ge-1/J$). With uncorrelated items $L^*$ grows like $4Jp(1-p)/\{\pi(1-\pi)\}$ for large $J$, and negative correlation among control items slows that growth.
+\end{enumerate}
+\end{proposition}
+
+The control items cost precision in two ways: through their own variance $\sigma_{\armC}^2$, which enters both arms, and through their covariance with the sensitive item, which enters the treatment arm. Part (b) says that no choice of control items brings the cost down to that of direct questioning without destroying the protection the design is meant to provide. It is a statement about the boundary case only, not a measure of privacy. If $W_i$ is uniform on $\{0,2\}$ and independent of $Z_i$, with $\pi=0.2$, the parity of the treatment count reveals $Z_i$, yet $L^*\approx27$. If $W_i=1-Z_i+2U_i$ with $U_i$ an independent fair coin, the control count reveals $Z_i$, and again $L^*\approx27$. Part (c) is the variance half of the case for negatively correlated control items made by \citet{glynn2013}; \cref{thm:design}(d) adds the floor-and-ceiling half. For illustration, take $J=4$ independent control items with $p_j=1/2$, a sensitive item with $\pi=0.2$ that is independent of them, and the optimal split. Then $\sigma_{\armC}^2=1$, $\sigma_{\armT}^2=1.16$ and $L^*\approx27$: the list experiment needs about 27 times the sample of a truthful direct question for the same precision. For $J=1,2,3$ the factor is $8.1$, $14.4$ and $20.7$. Arranging the four control items as two pairs with within-pair correlation $-0.6$, and no correlation between pairs, gives $\sigma_{\armC}^2=0.4$ and $L^*\approx12$.
+
+\begin{remark}[Finite-population variance]\label{rem:le-neyman}
+Condition on the $n$ sampled respondents and take the in-sample prevalence $\pi_n=n^{-1}\sum_iZ_i$ as the estimand. Under complete randomisation, Neyman's formula \citep[ch.~6]{imbens2015} gives
+$\Var(\widehat\pi\mid\text{sample})=S_{\armT}^2/n_{\armT}+S_{\armC}^2/n_{\armC}-\pi_n(1-\pi_n)/(n-1)$,
+where $S_{\armT}^2$ and $S_{\armC}^2$ are the in-sample variances (divisor $n-1$) of $W_i+Z_i$ and $W_i$. In a general experiment the last term, the variance of unit-level effects, is not identified, and the usual variance estimator is conservative. In a list experiment the unit-level effect is $Z_i\in\{0,1\}$, so the term is a known function of $\pi_n$ and can be estimated by $\widehat\pi(1-\widehat\pi)/(n-1)$.
+\end{remark}
+
+\begin{remark}[When indirect questioning pays]\label{rem:le-mse}
+The direct estimator $\overline D$ has bias $-\SDB$ and variance $\pi^D(1-\pi^D)/n$; the list estimator is unbiased with variance $L^*\pi(1-\pi)/n$. In mean squared error the list experiment is preferable exactly when $\SDB^2>\{L^*\pi(1-\pi)-\pi^D(1-\pi^D)\}/n$. In the four-item illustration with $n=2{,}000$ and $\pi^D$ close to $\pi$, this requires $|\SDB|$ above about $0.046$, and with $n=6{,}000$ above about $0.026$. This is the bias--variance trade-off discussed by \citet{blair2020}. It is why the plan of \cref{sec:design} treats the size of the bias as an empirical question for each item.
+\end{remark}
+
+\subsection{A joint model of direct and list responses}\label{sec:sens-joint}
+
+The difference $\pi-\pi^D$ is a net quantity. Some respondents who agree with the statement deny it when asked directly (\emph{hidden endorsement}); others agree when asked directly although they would not agree in private (\emph{false endorsement}), for example through acquiescence or inattentive responding. Define
+\[
+  \pi^H=\Pr(Z_i=1,D_i=0),\qquad \pi^F=\Pr(Z_i=0,D_i=1),\qquad\text{so that}\qquad \SDB=\pi^H-\pi^F .
+\]
+For $d\in\{0,1\}$ let $P_d=\Pr(D_i=d)$ and $\Delta_d=\Pr(Z_i=1\mid D_i=d)$. In the paired design we also need the variances of the list counts within strata of the direct answer, $v_{\armT d}=\Var(W_i+Z_i\mid D_i=d)$ and $v_{\armC d}=\Var(W_i\mid D_i=d)$. Means within strata are written $\overline Y_{ad}$ (arm $a$, direct answer $d$), and $\widehat P_d$ is the share of all $n=n_{\armD}+n_{\armC}+n_{\armT}$ respondents who answer $d$ to the direct question.
+
+\begin{assumption}[Monotonicity]\label{asm:le-mono}
+$\Pr(Z_i=0,D_i=1)=0$: no respondent agrees with the statement when asked directly unless they would agree in private.
+\end{assumption}
+
+\Cref{asm:le-mono} is the ``no false confessions'' assumption of \citet{aronow2015}. It is plausible when the social pressure on an item runs against agreement. It can fail through acquiescence, inattention or provocation. And under the social reference theory of \citet{blair2020} the pressure may run in different directions in different groups, so the assumption should be justified item by item and, where possible, tested (\cref{cor:le-tests}).
+
+\begin{theorem}[Joint identification and estimation of social-desirability bias]\label{thm:joint-sdb}
+Suppose \cref{asm:le}(i)--(iii) hold.
+\begin{enumerate}[(a)]
+  \item \emph{Split design.} $\pi$, $\pi^D$ and $\SDB$ are identified, and
+  \begin{equation}\label{eq:le-split}
+    \widehat{\SDB}_{\mathrm S}=\overline Y_{\armT}-\overline Y_{\armC}-\overline D_{\armD},\qquad
+    \Var\bigl(\widehat{\SDB}_{\mathrm S}\bigr)=\frac{\sigma_{\armT}^2}{n_{\armT}}+\frac{\sigma_{\armC}^2}{n_{\armC}}+\frac{\pi^D(1-\pi^D)}{n_{\armD}},
+  \end{equation}
+  is unbiased; the variance is exact. The hidden-endorsement rate is not identified: the sharp identified set for $\pi^H$ is
+  \begin{equation}\label{eq:le-bounds}
+    \bigl[\max\{0,\pi-\pi^D\},\ \min\{\pi,1-\pi^D\}\bigr].
+  \end{equation}
+  Under \cref{asm:le-mono} the set collapses to the point $\pi^H=\SDB$.
+  \item \emph{Paired design, without monotonicity.} If also \cref{asm:le}(iv) holds, then for each $d$ with $P_d>0$,
+  \begin{equation}\label{eq:le-strat}
+    \Delta_d=\E(Y_i\mid\armT,D_i=d)-\E(Y_i\mid\armC,D_i=d),
+  \end{equation}
+  so $\pi^H=P_0\Delta_0$, $\pi^F=P_1(1-\Delta_1)$, $\pi=P_0\Delta_0+P_1\Delta_1$ and $\SDB$ are all identified, without \cref{asm:le-mono}. The post-stratified estimator $\widehat{\SDB}_{\mathrm{PS}}=\sum_d\widehat P_d(\overline Y_{\armT d}-\overline Y_{\armC d})-\widehat P_1$ is consistent. If $n_a/n\to r_a>0$ for $a\in\{\armC,\armT\}$, it is asymptotically normal with
+  \begin{equation}\label{eq:le-vps}
+    n\,\mathrm{AVar}\bigl(\widehat{\SDB}_{\mathrm{PS}}\bigr)=(1+\Delta_0-\Delta_1)^2P_0P_1+\sum_{d\in\{0,1\}}P_d\Bigl(\frac{v_{\armT d}}{r_{\armT}}+\frac{v_{\armC d}}{r_{\armC}}\Bigr).
+  \end{equation}
+  \item \emph{Paired design with monotonicity: the combined estimator.} If \cref{asm:le}(iv) and \cref{asm:le-mono} hold, then $\Delta_1=1$, $\pi^F=0$ and $\SDB=\pi^H=P_0\Delta_0$. Let
+  \begin{equation}\label{eq:le-comb}
+    \widehat\pi^H=\widehat P_0\,\bigl(\overline Y_{\armT0}-\overline Y_{\armC0}\bigr),
+  \end{equation}
+  set to $0$ if no respondent in $\armT$ or in $\armC$ answers $D_i=0$. Then:
+  \begin{enumerate}[(i)]
+    \item $|\E\widehat\pi^H-\pi^H|\le P_1^{\,n_{\armT}}+P_1^{\,n_{\armC}}$;
+    \item if $n_a/n\to r_a>0$ for $a\in\{\armC,\armT\}$, then $\sqrt n(\widehat\pi^H-\pi^H)\Rightarrow\mathrm N(0,V_H)$ with
+    \begin{equation}\label{eq:le-vh}
+      V_H=\Delta_0^2P_0P_1+P_0\Bigl(\frac{v_{\armT0}}{r_{\armT}}+\frac{v_{\armC0}}{r_{\armC}}\Bigr);
+    \end{equation}
+    \item with probability tending to one, $\widehat\pi^H$ is the maximum likelihood estimator of $\pi^H$ in the model defined by \cref{asm:le,asm:le-mono}. At every interior point of that model (all probabilities $\Pr(W_i=w,Z_i=z,D_i=d)$ that the model allows are positive), $V_H$ is the Cramér--Rao bound, and no regular estimator has smaller asymptotic variance;
+    \item imposing monotonicity gains $n\,\mathrm{AVar}(\widehat{\SDB}_{\mathrm{PS}})-V_H=P_1v_{\armC1}(1/r_{\armT}+1/r_{\armC})\ge0$.
+  \end{enumerate}
+  \item \emph{What fails without monotonicity.} In the paired design under \cref{asm:le}(i)--(iv) alone, $\widehat\pi^H\to\pi^H=\SDB+\pi^F$ in probability. As an estimator of $\SDB$ it is therefore biased upward by the false-endorsement rate $\pi^F$. The combined prevalence estimator $\widehat P_1+\widehat\pi^H$ of \citet{aronow2015} converges to $\pi+\pi^F$. The post-stratified estimator of part (b) remains consistent. In the split design, \cref{asm:le-mono} is what turns the interval \eqref{eq:le-bounds} into a point.
+\end{enumerate}
+\end{theorem}
+
+Three features of the theorem shape the design of \cref{sec:design}. First, $\SDB$ itself never needs monotonicity; only its decomposition into hidden and false endorsement does, and only in the split design. Second, pairing is what identifies the decomposition: within each stratum of the direct answer the list experiment measures the truthful prevalence, so the share of direct deniers who agree in private ($\Delta_0$) and the share of direct endorsers who do not ($1-\Delta_1$) are separately estimable. Both ingredients are in \citet{aronow2015}: $\Delta_1$ is the target of their first placebo test, and $P_0\Delta_0$ is the second term of their combined estimator. Part (b) makes explicit that, read this way, they identify $\pi^H$ and $\pi^F$ without monotonicity. Third, under monotonicity, respondents who endorse directly contribute no list variance to $\widehat\pi^H$, because their treatment--control contrast is known to equal one. This is the source of the efficiency gain of \citet{aronow2015}; part (c)(iii) shows that no regular estimator does better with the same data.
+
+\begin{corollary}[Testable implications]\label{cor:le-tests}
+\begin{enumerate}[(a)]
+  \item \emph{Design effects} \citep{blair2012}. Under \cref{asm:le}(i)--(iii), for $y=0,\dots,J$,
+  \begin{equation}\label{eq:le-types}
+  \begin{aligned}
+    \Pr(W_i=y,Z_i=1)&=\Pr(Y_i\le y\mid\armC)-\Pr(Y_i\le y\mid\armT),\\
+    \Pr(W_i=y,Z_i=0)&=\Pr(Y_i\le y\mid\armT)-\Pr(Y_i\le y-1\mid\armC),
+  \end{aligned}
+  \end{equation}
+  and both must be non-negative. In the paired design under \cref{asm:le}(iv), the same holds within each stratum $D_i=d$.
+  \item \emph{Monotonicity.} Under \cref{asm:le} and \cref{asm:le-mono} in the paired design, $\Pr(Y_i=y+1\mid\armT,D_i=1)=\Pr(Y_i=y\mid\armC,D_i=1)$ for every $y$. In particular $\Delta_1=1$, which is the first placebo test of \citet{aronow2015}.
+  \item \emph{Treatment independence.} Under \cref{asm:le}(iv), the law of $D_i$ is the same in $\armD$, $\armC$ and $\armT$. Comparing $\armT$ with $\armC$ is the second placebo test of \citet{aronow2015}; the direct arm adds a comparison with respondents who never saw the list.
+\end{enumerate}
+\end{corollary}
+
+The test of \citet{blair2012} estimates the $2(J+1)$ proportions in \eqref{eq:le-types} and rejects if any is significantly negative, with a Bonferroni correction. Like every test in the corollary, it detects only violations that change the law of the observed data, and design effects of opposite signs can cancel. Passing these tests is necessary for the assumptions, not sufficient.
+
+\begin{remark}[Covariates and a parametric joint model]\label{rem:le-joint}
+All statements in \cref{thm:joint-sdb} hold conditionally on discrete pre-treatment covariates $X_i=x$, so they identify $\SDB(x)$, $\pi^H(x)$ and $\pi^F(x)$. A parametric joint model in the spirit of \citet{imai2011} writes, under \cref{asm:le-mono},
+\begin{equation}\label{eq:le-joint}
+\begin{gathered}
+  \Pr(Z_i=1\mid x)=\logit^{-1}(x^\top\beta),\qquad
+  \Pr(D_i=1\mid Z_i=1,x)=\logit^{-1}(x^\top\zeta),\\
+  W_i\mid(Z_i=z,X_i=x)\sim h_z(\cdot\,;x,\psi),
+\end{gathered}
+\end{equation}
+where $h_z$ is a binomial or beta-binomial count model \citep{imai2011} and $\alpha(x)=\logit^{-1}(x^\top\zeta)$ is the \emph{candour rate}, the probability that a private endorser endorses directly. Then $\SDB(x)=\pi(x)\{1-\alpha(x)\}$. In the split design the direct arm identifies $\pi(x)\alpha(x)$ and the list arms identify $\pi(x)$, so $\beta$ and $\zeta$ are identified when $X_i$ contains an intercept and its support spans $\mathbb R^{\dim X_i}$. In the paired design the likelihood of $(D_i,Y_i)$ is a finite mixture over $Z_i$ with known structure. If social pressure on an item runs towards agreement for some respondents, \cref{asm:le-mono} is replaced by its mirror image, $\Pr(Z_i=1,D_i=0)=0$; the theorem then holds with the roles of $D_i=0$ and $D_i=1$ exchanged, and $\SDB=-\pi^F\le0$.
+\end{remark}
+
+\subsection{Optimal design}\label{sec:sens-design}
+
+A direct interview costs $c_{\armD}$ and an interview in a list arm costs $c_{\armL}\ge c_{\armD}$; in the paired design $c_{\armL}$ includes the direct question. The budget is $B=c_{\armD}n_{\armD}+c_{\armL}(n_{\armC}+n_{\armT})$, and arm sizes are treated as continuous. For the paired design under \cref{asm:le-mono} we write the variance \eqref{eq:le-vh} in absolute terms as $\nu_0/n+b_{\armT}/n_{\armT}+b_{\armC}/n_{\armC}$, with
+\[
+  \nu_0=\Delta_0^2P_0P_1,\qquad b_{\armT}=P_0v_{\armT0},\qquad b_{\armC}=P_0v_{\armC0},\qquad \bar b=\sqrt{b_{\armT}}+\sqrt{b_{\armC}}.
+\]
+\emph{Floor and ceiling effects} \citep{blair2012} are modelled as follows: in arm $\armT$, a respondent with $Z_i=1$ and $W_i=J$ reports $J$ instead of $J+1$ with probability $\kappa_{\mathrm c}$, and a respondent with $Z_i=1$ and $W_i=0$ reports $0$ instead of $1$ with probability $\kappa_{\mathrm f}$. For a candidate control list $\ell$ (its statements and hence $J$), let $V^*_\ell$ be $B$ times the smallest variance attainable with $\ell$, and let $\operatorname{bias}_\ell$ be the resulting bias of the SDB estimator. The \emph{exposure} of a list is $e_\ell=\Pr(W_i\in\{0,J\})$.
+
+\begin{theorem}[Optimal allocation and choice of the control list]\label{thm:design}
+\begin{enumerate}[(a)]
+  \item \emph{Split design.} With $v_{\armD}=\pi^D(1-\pi^D)$, $v_{\armC}=\sigma_{\armC}^2$ and $v_{\armT}=\sigma_{\armT}^2$, the variance \eqref{eq:le-split} is minimised subject to the budget by
+  \begin{equation}\label{eq:le-neyman}
+    n_a=\frac{B}{K_{\mathrm S}}\sqrt{\frac{v_a}{c_a}}\quad(a\in\{\armD,\armC,\armT\},\ c_{\armC}=c_{\armT}=c_{\armL}),\qquad K_{\mathrm S}=\sum_a\sqrt{v_ac_a},\qquad V^*=K_{\mathrm S}^2 .
+  \end{equation}
+  With equal costs the arm shares are proportional to $(\sqrt{v_{\armD}},\sigma_{\armC},\sigma_{\armT})$.
+  \item \emph{Paired design.} Let $\delta=c_{\armL}-c_{\armD}$, the marginal cost of moving a respondent from the direct arm into a list arm. If $\nu_0\delta>c_{\armD}\bar b^2$, the optimum uses all three arms:
+  \begin{equation}\label{eq:le-paired-int}
+    n=\frac{B}{K_{\mathrm P}}\sqrt{\frac{\nu_0}{c_{\armD}}},\quad
+    n_{\armT}=\frac{B}{K_{\mathrm P}}\sqrt{\frac{b_{\armT}}{\delta}},\quad
+    n_{\armC}=\frac{B}{K_{\mathrm P}}\sqrt{\frac{b_{\armC}}{\delta}},\quad
+    K_{\mathrm P}=\sqrt{\nu_0c_{\armD}}+\bar b\sqrt\delta,\quad V^*=K_{\mathrm P}^2,
+  \end{equation}
+  with $n_{\armD}=n-n_{\armT}-n_{\armC}>0$. Otherwise the direct arm is empty, $n_{\armT}+n_{\armC}=B/c_{\armL}$, $n_{\armT}/n_{\armC}=\sqrt{b_{\armT}/b_{\armC}}$, and $V^*=c_{\armL}(\nu_0+\bar b^2)$.
+  \item \emph{Choice of list.} Let $\mathcal L$ be a finite menu of control lists, and let $\ell(B)$ minimise $\mathrm{MSE}_\ell(B)=V^*_\ell/B+\operatorname{bias}_\ell^2$ over $\mathcal L$. Under the floor-and-ceiling model,
+  \begin{equation}\label{eq:le-fcbias}
+    \operatorname{bias}_\ell=-\pi\bigl\{\kappa_{\mathrm c}\Pr(W_i=J\mid Z_i=1)+\kappa_{\mathrm f}\Pr(W_i=0\mid Z_i=1)\bigr\}
+  \end{equation}
+  in the split design, and the same expression with $\pi$ replaced by $\pi^H$ and the conditioning event by $\{Z_i=1,D_i=0\}$ in the paired design with estimator \eqref{eq:le-comb}. If $B<B'$, then $V^*_{\ell(B')}\ge V^*_{\ell(B)}$ and $\operatorname{bias}_{\ell(B')}^2\le\operatorname{bias}_{\ell(B)}^2$: larger budgets select lists that are noisier but less exposed to floor and ceiling effects. If the control count is independent of $(Z_i,D_i)$, then $|\operatorname{bias}_\ell|\le\max(\kappa_{\mathrm c},\kappa_{\mathrm f})\,\pi\,e_\ell$ (split) or $\le\max(\kappa_{\mathrm c},\kappa_{\mathrm f})\,\pi^H\,e_\ell$ (paired).
+  \item \emph{Structure of the control list.} Suppose the control count is independent of $(Z_i,D_i)$.
+  \begin{enumerate}[(i)]
+    \item For $J\ge2$ independent control items with common prevalence $p$, the exposure $p^J+(1-p)^J$ is uniquely minimised at $p=1/2$, where the variance $Jp(1-p)$ is maximised.
+    \item Let $J=2m$ items form $m$ independent pairs, each item with prevalence $1/2$ and within-pair correlation $\rho\in[-1,1]$. Then
+    \begin{equation}\label{eq:le-pairs}
+      \sigma_{\armC}^2=\frac{m(1+\rho)}2,\qquad \Pr(W_i=0)=\Pr(W_i=J)=\Bigl(\frac{1+\rho}4\Bigr)^m,
+    \end{equation}
+    and both are strictly increasing in $\rho$. Hence $V^*_\ell$, $e_\ell$ and $\mathrm{MSE}_\ell(B)$ are all minimised by the most negative admissible $\rho$.
+    \item At $\rho=-1$ the count is constant and the treatment count reveals $Z_i$ (\cref{prop:list-var}(b)), so $\rho$ must be restricted by a disclosure requirement. For any closed set $R\subset(-1,1]$ of admissible correlations, for example those meeting a bound on the mutual information $I(Y_i;Z_i\mid\armT)$ or on the share of treated respondents whose posterior $\Pr(Z_i=1\mid Y_i,\armT)$ exceeds a threshold, the MSE-optimal pair design uses $\rho^*=\min R$. Under the variance floor $\sigma_{\armC}^2\ge v$ with $0<v\le m$, $\rho^*=2v/m-1$, $\sigma_{\armC}^2=v$, and the exposure is $2\{v/(2m)\}^m$, which decreases in $m$.
+  \end{enumerate}
+\end{enumerate}
+\end{theorem}
+
+Part (a) is a Neyman-type allocation. For the inputs of the illustration in \cref{sec:design-list} ($\sigma_{\armC}^2=\sigma_{\armT}^2=1$, $\pi^D=0.2$, equal costs), equal allocation gives $n\Var=6.48$ against $5.76$ at the optimum, with shares $(1/6,5/12,5/12)$. Equal count variances implicitly assume that the control items covary slightly negatively with the sensitive item ($2\sum_j\gamma_j=-\pi(1-\pi)$). With the independent items of \cref{sec:sens-var} and $\pi=0.2$, $\sigma_{\armT}^2=1.16$; the shares become $(0.16,0.40,0.43)$, and $n\Var$ is $6.14$ against $6.96$ under equal allocation.
+
+Part (b) has a sharper message. In the paired design every list respondent also answers the direct question, so the direct-only arm only refines $\widehat P_0$. Its contribution $\nu_0=(\pi^H)^2P_1/P_0$ is second order in $\pi^H$. The direct-only arm is used if and only if $c_{\armD}/(c_{\armL}-c_{\armD})<\nu_0/\bar b^2$. By Minkowski's inequality $\sqrt{v_{\armT0}}+\sqrt{v_{\armC0}}\ge\{\Delta_0(1-\Delta_0)\}^{1/2}$, so for every control list
+\[
+  \frac{\nu_0}{\bar b^2}\le\frac{\pi^HP_1}{P_0-\pi^H},
+\]
+and if $v_{\armC0}\ge v>0$ the threshold is at most $\Delta_0^2P_1/v=O\{(\pi^H)^2\}$, or $\Delta_0^2P_1/(4v)$ if also $v_{\armT0}\ge v$. With $\pi^H=0.05$, $\pi=0.2$, $\sigma_{\armC}^2=1$ and a control count independent of $(Z_i,D_i)$, the universal bound is $0.0094$ and the exact threshold is $1.3\times10^{-4}$. A direct-only interview would have to cost about $10^{-4}$ times the extra cost of the list module for the arm to pay. A small direct arm may still be fielded to test treatment independence (\cref{cor:le-tests}(c)), but not for precision.
+
+Part (d) needs a caveat. Neither the variance floor nor the exposure $e_\ell$ measures disclosure: $e_\ell$ is the risk of floor and ceiling responses, and a small $\sigma_{\armC}^2$ is compatible with counts that are very informative about $Z_i$. With $\pi=0.2$, the two negatively correlated pairs of \cref{sec:sens-var} cut $L^*$ from about $27$ to $12$. They also double the mutual information between the treatment count and $Z_i$, from $0.11$ to $0.24$ bits, and raise the share of treated respondents whose posterior $\Pr(Z_i=1\mid Y_i,\armT)$ is at least $0.5$ from $11\%$ to $30\%$. At a fixed floor $v=1$, lengthening the list lowers the exposure but leaves the mutual information essentially unchanged ($0.11$ bits for $m=2,\dots,5$). The mutual information also rises as $\rho\to1$, because the parity of the count then becomes informative, so the admissible set $R$ in (d)(iii) is in general an interval. Negatively correlated lists trade privacy for efficiency. The plan should therefore bound a disclosure measure directly, not only the variance of the control count.
+
+\begin{corollary}[Paired versus split]\label{cor:le-paired-split}
+Let $c'_{\armL}$ be the cost of a list interview without the direct question, and suppose the control count is independent of $(Z_i,D_i)$, \cref{asm:le-mono} holds and $\pi\le1/2$. Then, for any $c_{\armD}\ge0$,
+\[
+  \frac{V^*_{\mathrm{paired}}}{V^*_{\mathrm{split}}}\le\frac{c_{\armL}}{c'_{\armL}}\Bigl\{P_0+\frac{(\pi^H)^2P_1}{P_0(\sigma_{\armT}+\sigma_{\armC})^2}\Bigr\}.
+\]
+\end{corollary}
+
+The paired design therefore wins whenever the direct question adds less than a fraction of about $P_1/P_0$ to the cost of a list interview. In the illustration above, with nearly free direct interviews and equal list costs in the two designs, the ratio of optimal variances is about $0.81$. The cost that the corollary does not price is the risk to \cref{asm:le}(iv). A direct question asked after the list may be answered differently, and a list answered after a direct denial may be pulled towards consistency. This is why the plan of \cref{sec:design-list} keeps the split design as primary and pairs only a subsample at the end of the questionnaire.
+
+\subsection{Linking the list experiment to the measurement model}\label{sec:sens-irt}
+
+The list experiment measures a single binary indicator; the measurement model of \cref{sec:model} describes the graded responses to all items. We connect them by treating social desirability as a shift of the sensitive item's thresholds between private and direct answering. Let item $j$ be sensitive, with systematic part $\eta_{ij}=\bm a_j^\top\bm\theta_i=a_{jG}\theta_{iG}+a_{js}\theta_{is}$ and latent response $Y^*_{ij}=\eta_{ij}+\varepsilon_{ij}$ as in \eqref{eq:model-lr}, and let the list statement correspond to agreement, the event that the response reaches category $c^*$.
+
+\begin{definition}[Threshold-shift model of social desirability]\label{def:le-shift}
+For a shift $\delta_j\ge0$, the \emph{private} response, the one a respondent gives when the answer cannot be attributed to them, is $\tilde Y_{ij}=\sum_{c=1}^{C_j}\ind{Y^*_{ij}>b_{jc}}$, and the \emph{direct} response is $Y_{ij}=\sum_{c=1}^{C_j}\ind{Y^*_{ij}>b_{jc}+\delta_j}$, with the same latent response $Y^*_{ij}$ and a link $F$ as in \eqref{eq:model-grm}. The list experiment measures $Z_{ij}=\ind{\tilde Y_{ij}\ge c^*}$, and $D_{ij}=\ind{Y_{ij}\ge c^*}$.
+\end{definition}
+
+The same latent response drives both answers; only the cut-points differ. In the language of \cref{sec:identification}, social desirability is \emph{uniform differential item functioning between modes} of administration, private and direct.
+
+\begin{proposition}[Correcting the threshold of a sensitive item]\label{prop:list-irt}
+Under \cref{def:le-shift}:
+\begin{enumerate}[(a)]
+  \item The direct responses follow the graded response model of \cref{sec:model} with loadings $(a_{jG},a_{js})$ and thresholds $b^D_{jc}=b_{jc}+\delta_j$. \Cref{asm:le-mono} holds, $\Pr(Z_{ij}=1\mid\bm\theta_i)=F(\eta_{ij}-b_{jc^*})$, and the hidden-endorsement curve is
+  \begin{equation}\label{eq:le-irt-eta}
+    \pi^H_j(\bm\theta_i)=F(\eta_{ij}-b_{jc^*})-F(\eta_{ij}-b_{jc^*}-\delta_j),\qquad \SDB_j=\E\,\pi^H_j(\bm\theta_i).
+  \end{equation}
+  \item \emph{Identification.} Suppose the parameters of the measurement model for the direct responses, including the law of $\bm\theta_i$ (given $X_i$, if covariates are used), are identified (\cref{thm:ident}), and a list experiment for item $j$ satisfies \cref{asm:le}(i)--(iii). Then $\delta_j$ is identified as the unique root of
+  \begin{equation}\label{eq:le-irt-root}
+    \E\,F\bigl(\eta_{ij}-b^D_{jc^*}+\delta\bigr)=\pi_j ,
+  \end{equation}
+  and so are the private thresholds $b_{jc}=b^D_{jc}-\delta_j$, the curve $\pi^H_j(\cdot)$, and $\SDB_j(x)$ for every covariate value $x$. If the root is negative, \cref{def:le-shift} is rejected.
+  \item \emph{Boundary estimands.} If $\delta_j$ is common to all groups, the direct item is invariant whenever the private item is, and $\ECV_j$, $\ECV^{(g)}_j$ and the boundary sets of \cref{def:boundary} are the same whether computed from private or direct responses. If $\delta_j$ differs between groups, the direct item has uniform DIF of size $\delta_j^{(g)}-\delta_j^{(g')}$. Ignoring it has the consequences for latent means and group-specific estimands given in \cref{thm:dif-bias}, and a list experiment in each group identifies $\delta_j^{(g)}$ whenever the group's latent distribution is identified (\cref{prop:anchor}).
+  \item \emph{Overidentification.} With $m\ge2$ covariate values, the $m$ equations $\E\{F(\eta_{ij}-b^D_{jc^*}+\delta)\mid X_i=x_l\}=\pi_j(x_l)$ share one unknown, which gives $m-1$ testable restrictions of the uniform shift.
+  \item \emph{Non-uniform shift.} Suppose instead that $Z_{ij}=\ind{\varkappa\eta_{ij}+\varepsilon_{ij}\ge b}$ with $\varkappa>0$, that $\varepsilon_{ij}$ is standard normal (the normal-ogive version), and that $\eta_{ij}\mid X_i=x_l\sim\mathrm N(\bar\eta_l,s_\eta^2)$ for $l=1,2$ with $\bar\eta_1\ne\bar\eta_2$. Then $(\varkappa,b)$ is identified by
+  \begin{equation}\label{eq:le-irt-nonunif}
+    \frac{\varkappa}{\sqrt{1+\varkappa^2s_\eta^2}}=\frac{\Phi^{-1}\{\pi_j(x_1)\}-\Phi^{-1}\{\pi_j(x_2)\}}{\bar\eta_1-\bar\eta_2},\qquad
+    b=\varkappa\bar\eta_1-\sqrt{1+\varkappa^2s_\eta^2}\;\Phi^{-1}\{\pi_j(x_1)\},
+  \end{equation}
+  provided the right-hand side of the first equation lies in $(0,1/s_\eta)$; otherwise the model is rejected.
+  \Cref{asm:le-mono} then holds for every $\bm\theta_i$ only if $\varkappa=1$, and the private and direct versions of $\ECV_j$ coincide because the loadings are rescaled jointly.
+\end{enumerate}
+\end{proposition}
+
+Part (c) is the substantive point. A uniform shift common to all groups moves levels, not structure: it biases prevalences, and differences in prevalence between groups, but leaves latent means and the boundary estimands of \cref{def:boundary} unchanged. A shift that differs between groups is uniform DIF, and its effects are those of \cref{thm:dif-bias}. The structural estimands are threatened only by a shift that acts differently on the general and specific parts of $\eta_{ij}$, for example pressure that suppresses agreement driven by hostility toward Jews but not agreement driven by a political attitude. Separating such a shift requires two slopes, one for each part of $\eta_{ij}$. Without covariates a list experiment identifies a single scalar per item; with covariates, part (e) identifies one common rescaling, but separate rescalings would need covariates whose associations with $\theta_{iG}$ and $\theta_{is}$ differ sharply. We do not pursue this and flag it as a limitation.
+
+For estimation, the list responses enter the likelihood of the measurement model. For respondent $i$ in a list arm,
+\begin{multline}\label{eq:le-irt-lik}
+  L_i=\int\Bigl\{\prod_{k\ne j}f(y_{ik}\mid\bm\theta)\Bigr\}\\
+  \times\sum_{z\in\{0,1\}}h_z\bigl(y_i-z\ind{A_i=\armT};x_i,\psi\bigr)\,F\{\eta_j(\bm\theta)-b_{jc^*}\}^z\bigl[1-F\{\eta_j(\bm\theta)-b_{jc^*}\}\bigr]^{1-z}\,\Pi(\mathrm d\bm\theta\mid x_i),
+\end{multline}
+where $f(y_{ik}\mid\bm\theta)$ are the graded-response probabilities of the other items, $A_i$ is the arm, $h_z$ is the control-count model of \eqref{eq:le-joint}, $\eta_j(\bm\theta)=a_{jG}\theta_G+a_{js}\theta_s$, and $\Pi(\cdot\mid x)$ is the latent distribution given covariates. Direct-arm respondents contribute the usual likelihood with thresholds $b_{jc}+\delta_j$. Equation \eqref{eq:le-irt-lik} assumes that the control count is independent of $\bm\theta_i$ given $(Z_{ij},X_i)$; part (b) does not need this, because it uses only the first moment of the list response. With several sensitive items, the shifts $\delta_j$ can be given a common hierarchical prior, which borrows strength across items when each list experiment alone is imprecise.

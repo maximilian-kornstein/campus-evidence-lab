@@ -1,0 +1,60 @@
+% =====================================================================
+%  Table: notation (LEAD). Symbols follow SPEC.md and Sections 3--6.
+% =====================================================================
+\begin{table}[t]
+\caption{\textbf{Notation.} Symbols used throughout. Vectors are columns;
+$\bm1$ is the vector of ones and $\bm1_{\mathcal A}$ the indicator of the
+antisemitic states.}
+\label{tab:notation}
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\newcommand{\nhead}[1]{\multicolumn{2}{@{}l}{\footnotesize\scshape\bfseries\color{LabNavy}#1}\\[1pt]}
+\begin{minipage}[t]{0.49\textwidth}
+\begin{tabularx}{\linewidth}[t]{@{}>{$}l<{$}@{\hspace{0.7em}}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\nhead{Accounts, demand and policies}
+u=1,\dots,U & puppet (synthetic account) \\
+d\in\mathcal D,\ d_0 & persona (fixed demand profile); baseline persona \\
+\mathrm{alg};\ \rho & algorithmic policy; reference ($\mathrm{chron}$, $\mathrm{rand}$, $\mathrm{pop}$) \\
+\mathcal C_t & eligible pool of items at time $t$ \\
+t=1,\dots,T;\ k & step of a session; slate positions recorded \\
+\midrule
+\nhead{Design and inference}
+w=1,\dots,W;\ n_{d\pi} & wave (block); puppets in cell $(d,\pi)$ \\
+\ell_w,\ \bar\ell & load: puppets' share of the engagement signal; its average \\
+\xi_\pi,\ \xi_\Delta & change in exposure, and in $\mathrm{AA}$, per unit of load (\cref{prop:interference}) \\
+C_t,\ [L,U] & confidence sequence after $t$ puppet pairs; its running intersection (\cref{alg:sequential}) \\
+\delta;\ \alpha & registered margin; error level \\
+\midrule
+\nhead{Measurement}
+L_c,\ \widehat L_c & true label of item $c$ ($1$: antisemitic); classifier label \\
+\mathrm{Se}_\pi(d),\ \mathrm{Sp}_\pi(d) & sensitivity and specificity on the items shown in cell $(d,\pi)$ \\
+J;\ \lambda_S & Youden's index $\mathrm{Se}+\mathrm{Sp}-1$; ratio $\mathrm{Se}_{\mathrm{alg}}/\mathrm{Se}_{\mathrm{ref}}$ \\
+q_\pi(d) & flagged share: recorded items with $\widehat L_c=1$ \\
+n_0,\ n_1 & coded validation items with $L_c=0$, with $L_c=1$ \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\textwidth}
+\begin{tabularx}{\linewidth}[t]{@{}>{$}l<{$}@{\hspace{0.7em}}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\nhead{Exposure and amplification}
+E_u(\pi) & share of antisemitic items in a session under policy $\pi$ \\
+\mu_\pi(d),\ \mu_\pi(Q) & mean exposure at persona $d$; averaged over $Q$ \\
+\mathrm{AR}_\rho,\ \mathrm{AA}_\rho & amplification ratio; additive amplification (\cref{def:amplification}) \\
+F_b & real users' demand, formed under policy $b$ \\
+\tau;\ \tau_{\mathrm{sup}},\ \tau_{\mathrm{dem}},\ \iota & total effect; supply, demand-shaping and interaction terms (\cref{thm:decomp}) \\
+\phi_{\mathrm{sup}},\ \phi_{\mathrm{dem}} & Shapley shares of supply and demand \\
+\midrule
+\nhead{Markov model of exposure}
+\mathcal X\supseteq\mathcal A;\ N,B,A & content states; antisemitic states; neutral, borderline, antisemitic \\
+P_{\mathrm{alg}},\ P_{\mathrm{ref}};\ \alpha_\pi & transition matrices; initial distribution \\
+\varpi;\ \varpi(\mathcal A) & stationary distribution; long-run exposure \\
+e_T(P,\alpha) & expected exposure in a $T$-item session \\
+Z;\ H=Z-\bm1\varpi^{\top} & fundamental matrix $(I-P+\bm1\varpi^{\top})^{-1}$; group inverse of $I-P$ \\
+\bm g_{\mathcal A}=H\bm1_{\mathcal A};\ \kappa_{\mathcal A} & exposure potential; sensitivity coefficient $\tfrac12\operatorname{osc}(\bm g_{\mathcal A})$ \\
+M_{xy};\ K(P) & mean first-passage time; Kemeny's constant \\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{table}

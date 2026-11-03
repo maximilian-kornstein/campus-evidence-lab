@@ -5,7 +5,7 @@ reflect a salient external event whose effect lasts for days (a shock with an ex
 response). It may reflect incidents triggering further incidents (contagion). Or it
 may reflect both. Inference about contagion must also cope with two features of
 incident data: many shocks are never recorded in any event calendar, and many incidents
-are never recorded at all (the dark figure of Paper~1). This section gives four sets of
+are never recorded at all (the dark figure of \citealp{kornsteinlab2026darkfigure}). This section gives four sets of
 results.
 \begin{enumerate}[(1)]
   \item Without a shock calendar, and for exponential or completely monotone kernels
@@ -342,7 +342,7 @@ contagion from shocks lies in this nonlinearity.
 
 \subsection{Under-reporting masks contagion}\label{sec:th-thinning}
 
-Paper~1 models recorded incidents as an independent thinning of all incidents, with
+\Citet{kornsteinlab2026darkfigure} model recorded incidents as an independent thinning of all incidents, with
 recording probability $p$ equal to the reciprocal of the dark-figure ratio.
 
 \begin{theorem}[Under-reporting masks contagion]\label{thm:thinning}
@@ -389,7 +389,7 @@ reduced less.
 
 \begin{corollary}[Dark-figure correction]\label{cor:th-darkfig}
 Let $\hat n'$ estimate $n'$ from recorded incidents. Let $\hat p$ estimate the
-recording probability from Paper~1 ($p=1/D$, where $D$ is the dark-figure ratio), and
+recording probability from the companion paper \citep{kornsteinlab2026darkfigure} ($p=1/D$, where $D$ is the dark-figure ratio), and
 let $\hat p$ be independent of $\hat n'$. Set $\hat n=h_{\hat p}^{-1}(\hat n')$ using
 \eqref{eq:th-hinv}. If $\hat n'\to n'$ and $\hat p\to p$, then $\hat n\to n$. By the
 delta method,
@@ -402,7 +402,7 @@ delta method,
 
 The second term in \eqref{eq:th-delta} does not shrink as $T$ grows: uncertainty about
 coverage puts a floor under the precision of any dark-figure-corrected contagion
-estimate. A Bayesian alternative passes posterior draws of $p$ from Paper~1 through
+estimate. A Bayesian alternative passes posterior draws of $p$ from the companion paper's model through
 $h_p^{-1}$. If $\hat n'$ is the Hawkes maximum likelihood estimator, its limit is the
 pseudo-true value under $N^p$, so the correction is exact only to the extent that this
 value coincides with $n'$ (\cref{thm:thinning}(d)). The simulation study quantifies the

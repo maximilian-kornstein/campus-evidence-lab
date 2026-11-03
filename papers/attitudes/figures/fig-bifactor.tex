@@ -1,0 +1,140 @@
+% =====================================================================
+%  Figure: the bifactor measurement model and its comparison model (LEAD).
+%  Path diagram. Loadings are SCHEMATIC (illustrative values, not data,
+%  not the simulation design): arrow widths grow with the slope, and the bar
+%  in each item box is ECV_j = a_jG^2 / (a_jG^2 + a_js^2), computed in TikZ
+%  from the same values.  Items 1-5 are stereotype items (set S), items 6-11
+%  Israel-related items (set I); items 1, 2, 6, 7 are anchors (set A).
+%  Requires the house colours defined in preamble.tex.
+% =====================================================================
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,
+    item/.style={rectangle,rounded corners=1.6pt,draw=LabNavyLight,line width=0.6pt,
+                 fill=white,minimum width=0.74cm,minimum height=0.62cm,inner sep=0pt},
+    anchoritem/.style={item,draw=LabAccent,line width=1.0pt,fill=LabSand},
+    gfac/.style={circle,fill=LabNavy,draw=LabNavy,text=white,minimum size=0.98cm,
+                 inner sep=0pt,font=\normalsize},
+    sfac/.style={circle,fill=white,draw=LabNavyMid,line width=0.9pt,text=LabNavyMid,
+                 minimum size=0.86cm,inner sep=0pt,font=\normalsize},
+    gl/.style={LabNavy,-{Stealth[length=3.4pt,width=2.8pt]},shorten >=0.5pt},
+    sl/.style={LabNavyMid,-{Stealth[length=3.4pt,width=2.8pt]},shorten >=0.5pt},
+    panel/.style={font=\footnotesize\bfseries,text=LabNavy,anchor=south west,inner sep=0pt},
+    note/.style={font=\scriptsize,text=LabGrey,inner sep=1pt,align=center},
+    leg/.style={font=\scriptsize,text=LabInk,anchor=west,inner sep=1pt},
+    pl/.style={font=\scriptsize,text=#1,fill=white,inner sep=0.8pt,fill opacity=0.92,text opacity=1},
+  ]
+  % ---------------- schematic item parameters ----------------
+  % index / x position / a_G / a_s / specific factor (S or I) / anchor (1/0)
+  \def\items{1/0.00/1.30/0.60/S/1, 2/0.92/1.20/0.75/S/1, 3/1.84/1.10/0.50/S/0,
+             4/2.76/1.25/0.80/S/0, 5/3.68/1.00/0.65/S/0,
+             6/4.98/1.00/0.70/I/1, 7/5.90/0.80/0.95/I/1, 8/6.82/0.50/1.20/I/0,
+             9/7.74/0.90/0.85/I/0, 10/8.66/0.35/1.30/I/0, 11/9.58/1.10/0.60/I/0}
+  \def\ylev{2.40}\def\yspec{-2.10}
+  \def\barw{0.58}
+
+  % =========================== panel (a) ===========================
+  \node[panel] at (-0.42,3.22) {(a)\enspace Bifactor model
+    \textnormal{\textcolor{LabGrey}{(primary)}}};
+
+  % factors
+  \node[gfac] (G) at (4.79,\ylev) {$G$};
+  \node[sfac] (S) at (1.84,\yspec) {$S$};
+  \node[sfac] (I) at (7.28,\yspec) {$I$};
+
+  % items: box, label, ECV bar
+  \foreach \j/\x/\ag/\as/\f/\an in \items {
+    \ifnum\an=1 \node[anchoritem] (y\j) at (\x,0) {};
+    \else \node[item] (y\j) at (\x,0) {};\fi
+    \node[font=\footnotesize,text=LabInk,inner sep=0pt] at (\x,0.085) {$Y_{\j}$};
+    \pgfmathsetmacro{\ecv}{\ag*\ag/(\ag*\ag+\as*\as)}
+    \fill[LabNavyLight!55] (\x-\barw/2,-0.215) rectangle (\x+\barw/2,-0.15);
+    \fill[LabNavy] (\x-\barw/2,-0.215) rectangle (\x-\barw/2+\ecv*\barw,-0.15);
+  }
+  % loadings (drawn on the background so that boxes sit on top)
+  \begin{scope}[on background layer]
+    \foreach \j/\x/\ag/\as/\f/\an in \items {
+      \pgfmathsetmacro{\wg}{0.22+0.42*\ag}
+      \pgfmathsetmacro{\ws}{0.22+0.42*\as}
+      \draw[gl,line width=\wg pt] (G) -- (y\j.north);
+      \draw[sl,line width=\ws pt] (\f) -- (y\j.south);
+    }
+  \end{scope}
+
+  % loading labels on the highlighted item j = 9
+  \node[pl=LabNavy] at ($(G)!0.8!(y9.north)$) {$a_{jG}$};
+  \node[pl=LabNavyMid] at ($(I)!0.55!(y9.south)$) {$a_{jI}$};
+
+  % the item-level estimand, for the highlighted item
+  \node[font=\footnotesize,text=LabNavy,anchor=west,inner sep=1pt] (ecv) at (6.3,3.0)
+    {$\mathrm{ECV}_j=\dfrac{a_{jG}^2}{a_{jG}^2+a_{jI}^2}$};
+  \node[note,anchor=north west,align=left] (ecvn) at (6.37,2.5)
+    {share of item $j$'s common variance\\[-1pt]that is due to $G$ (here $j=9$)};
+
+  % factor labels
+  \node[note,anchor=east,align=right] at ([xshift=-4pt]G.west)
+    {\textcolor{LabNavy}{general factor}\\[-1pt]loads on every item};
+  \node[note,anchor=north] at ([yshift=-2pt]S.south)
+    {\textcolor{LabNavyMid}{specific factor}: stereotype items $\mathcal{S}$};
+  \node[note,anchor=north] at ([yshift=-2pt]I.south)
+    {\textcolor{LabNavyMid}{specific factor}: Israel-related items $\mathcal{I}$};
+
+  % legend
+  \begin{scope}[shift={(-0.37,-3.32)}]
+    \node[anchoritem,minimum width=0.42cm,minimum height=0.3cm] (la) at (0,0) {};
+    \node[leg] (lat) at (0.28,0) {anchor item ($j\in\mathcal{A}$): assumed invariant across groups};
+    \draw[LabNavyLight!55,line width=2.3pt] (6.95,0) -- (7.42,0);
+    \draw[LabNavy,line width=2.3pt] (6.95,0) -- (7.22,0);
+    \node[leg] at (7.52,0) {bar: $\mathrm{ECV}_j$ (schematic)};
+  \end{scope}
+
+  % ---------------- separator ----------------
+  \draw[LabRule,line width=0.4pt] (10.42,-3.45) -- (10.42,3.35);
+
+  % =========================== panel (b) ===========================
+  \begin{scope}[shift={(10.9,0)}]
+    \node[panel] at (-0.15,3.22) {(b)\enspace Correlated factors
+      \textnormal{\textcolor{LabGrey}{(comparison)}}};
+    \node[sfac] (S2) at (0.76,\yspec) {$\zeta_S$};
+    \node[sfac] (I2) at (3.00,\yspec) {$\zeta_I$};
+    \foreach \j/\x/\f/\an in {1/0.00/S/1,2/0.38/S/1,3/0.76/S/0,4/1.14/S/0,5/1.52/S/0,
+                              6/2.05/I/1,7/2.43/I/1,8/2.81/I/0,9/3.19/I/0,10/3.57/I/0,11/3.95/I/0}{
+      \ifnum\an=1 \node[anchoritem,minimum width=0.27cm] (z\j) at (\x,0) {};
+      \else \node[item,minimum width=0.27cm] (z\j) at (\x,0) {};\fi
+      \begin{scope}[on background layer]
+        \draw[sl,line width=0.5pt] (\f2) -- (z\j.south);
+      \end{scope}
+    }
+    \draw[LabNavyMid,line width=0.8pt,{Stealth[length=3.4pt,width=2.8pt]}-{Stealth[length=3.4pt,width=2.8pt]},
+          shorten <=1pt,shorten >=1pt]
+      (S2.south) to[out=-55,in=-125] node[pos=0.5,below=0.5pt,font=\footnotesize,text=LabNavyMid]
+      {$\rho_{SI}$} (I2.south);
+    \node[note,anchor=north,text width=4.2cm] at (1.97,1.95)
+      {no general factor: the same items\\[-1pt]load on two correlated factors};
+    \node[note,anchor=north,text width=4.3cm] at (1.97,-3.55)
+      {latent correlation between the\\[-1pt]stereotype and Israel-attitude factors};
+  \end{scope}
+\end{tikzpicture}
+\caption{\textbf{The measurement model.} \emph{(a)} The bifactor graded
+response model of \cref{sec:model}. Every item loads on the general factor
+$G$, which carries the variance that all items share. Each item also loads on
+exactly one specific factor: $S$ for the classic-stereotype items
+$\mathcal{S}$ and $I$ for the Israel-related items $\mathcal{I}$. Responses are
+ordinal, with $\Pr(Y_{ij}\ge c\mid\bm\theta_i)
+=F(a_{jG}\theta_{iG}+a_{js}\theta_{is}-b_{jc})$ for item $j$'s specific factor
+$s$, and the three factors are uncorrelated (\cref{eq:model-latent}). The
+boundary estimand of \cref{def:boundary} is the share of an item's common
+variance that is due to $G$, $\mathrm{ECV}_j$ (shown for item~9); the bar in
+each box shows it, and arrow widths grow with the slopes. Anchor items
+(orange outline, $\mathcal{A}$) are assumed to function identically in every
+group and carry group comparisons when other items show differential item
+functioning (\cref{prop:anchor}). \emph{(b)} The pre-registered comparison
+model: the same items, no general factor, and two correlated domain factors
+$\zeta_S$ and $\zeta_I$, whose correlation $\rho_{SI}$ is the second boundary
+estimand. Every such model is also a bifactor model with loadings
+proportional within each domain, so it identifies $\rho_{SI}$ but not the
+item-level shares, which can lie anywhere in $[\rho_{SI}^2,1]$
+(\cref{prop:model-sl}). Schematic: the loadings are illustrative values, not
+estimates or simulation inputs.}
+\label{fig:bifactor}
+\end{figure}

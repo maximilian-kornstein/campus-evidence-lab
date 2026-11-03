@@ -1,0 +1,108 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\hypersetup{
+  pdftitle={Supply or Demand? Auditing Algorithmic Amplification of Antisemitic Content},
+  pdfauthor={Kornstein Lab for Antisemitism Research},
+  pdfsubject={Methods paper with a simulation study on a synthetic recommender and a pre-registered audit protocol; no audit of any real platform was conducted},
+  pdfkeywords={algorithm audit, recommender systems, amplification, sock-puppet audit, potential outcomes, Markov chains, interference, misclassification, confidence sequences, Digital Services Act, antisemitism}
+}
+
+\begin{document}
+
+% ======================= title block =======================
+\thispagestyle{plain}
+\begingroup
+\raggedright
+{\footnotesize\scshape\color{LabAccent}Kornstein Lab for Antisemitism Research%
+ \enspace\textcolor{LabRule}{|}\enspace\textcolor{LabGrey}{Methods paper}%
+ \enspace\textcolor{LabRule}{|}\enspace\textcolor{LabGrey}{Fourth paper of a
+ series}\par}
+\vspace{5pt}
+{\color{LabNavy}\rule{\textwidth}{1.3pt}}\par
+\vspace{16pt}
+{\fontsize{34}{38}\selectfont\color{LabNavy}Supply or Demand?%
+ \textsuperscript{\normalsize\color{LabAccent}$\ast$}\par}
+\vspace{8pt}
+{\fontsize{15.5}{19}\selectfont\color{LabInk}Auditing Algorithmic Amplification
+ of Antisemitic Content\par}
+\vspace{14pt}
+{\normalsize\color{LabInk}Kornstein Lab for Antisemitism Research\par}
+\vspace{2pt}
+{\small\color{LabGrey}November 2026\par}
+\vspace{8pt}
+\endgroup
+% Two synthetic sessions drawn from the illustrative chains of Section 4.
+% Title-page ornament; invented matrices, not data.
+\IfFileExists{figures/fig-title-strip.tex}{\input{figures/fig-title-strip}\vspace{5pt}}{}
+\begingroup
+\renewcommand{\thefootnote}{\ensuremath{\ast}}
+\footnotetext[1]{\textbf{Status.} Methods paper; simulation study on a
+synthetic recommender; no audit of any real platform was conducted. Every
+number in \cref{sec:simulation} is computed from a synthetic recommender with
+known ground truth; the audit protocol of \cref{sec:protocol} is
+pre-registered and has not been carried out. Published audits are quoted only
+as their authors report them, and nothing here is a finding about any real
+service. The companion papers
+\citep{kornsteinlab2026darkfigure,kornsteinlab2026contagion,kornsteinlab2026attitudes}
+study recorded incidents and attitudes; this paper studies what recommender
+systems supply.}
+\endgroup
+
+% ======================= abstract =======================
+\begin{tcolorbox}[enhanced,breakable,colback=LabTint,frame hidden,boxrule=0pt,
+  sharp corners,left=12pt,right=12pt,top=9pt,bottom=9pt,
+  borderline west={2pt}{0pt}{LabNavy},before skip=4pt,after skip=12pt]
+\begin{abstract}
+Whether recommender systems amplify antisemitic content beyond what users
+seek, the question of supply or demand, is central to platform
+accountability, including the systemic-risk duties of the EU Digital Services
+Act. Yet ``amplification'' is rarely defined. This is a methods paper. We
+define amplification as a causal contrast: expected exposure to antisemitic
+content under the algorithmic policy relative to a named reference policy, at
+fixed demand. For real users, observed exposure splits into demand, supply,
+demand shaping and a feedback interaction; audits with sock puppets of fixed
+demand identify only supply. A Markov model of sessions gives long-run
+exposure, rabbit holes and a perturbation bound under which small nudges have
+large effects. We state when randomised sock-puppet audits identify
+amplification, bound the bias when puppets interfere through the system they
+audit, show that classifier error that differs between arms can put a naive
+estimate on the wrong side of one, correct it by arm, and give a confidence
+sequence that lets an audit stop as soon as the evidence is clear. A
+simulation study on a synthetic recommender with known ground truth evaluates
+these tools, and a pre-registered protocol specifies an audit and its ethical
+safeguards. We have audited no real platform and report no finding about any
+service.
+\end{abstract}
+\keywords{algorithm audits; recommender systems; amplification; sock-puppet
+audits; potential outcomes; Markov chains; interference; misclassification;
+anytime-valid inference; Digital Services Act; antisemitism.}
+\end{tcolorbox}
+\suppressfloats[t]
+
+% ======================= body =======================
+% Figure 1 (the audit design) and Table 1 (notation) are \input from
+% sections/01-introduction.tex so that they float next to their first mention.
+\IfFileExists{sections/01-introduction.tex}{\input{sections/01-introduction}}{}
+\IfFileExists{sections/02-background.tex}{\input{sections/02-background}}{}
+\IfFileExists{sections/03-estimands.tex}{\input{sections/03-estimands}}{}
+% Figure: the three-state exposure chain under the two policies (Section 4).
+\IfFileExists{figures/fig-markov.tex}{\input{figures/fig-markov}}{}
+\IfFileExists{sections/04-markov.tex}{\input{sections/04-markov}}{}
+\IfFileExists{sections/05-identification.tex}{\input{sections/05-identification}}{}
+\IfFileExists{sections/06-measurement.tex}{\input{sections/06-measurement}}{}
+\IfFileExists{sections/07-simulation.tex}{\input{sections/07-simulation}}{}
+\IfFileExists{sections/08-protocol.tex}{\input{sections/08-protocol}}{}
+\IfFileExists{sections/09-ethics.tex}{\input{sections/09-ethics}}{}
+\IfFileExists{sections/10-discussion.tex}{\input{sections/10-discussion}}{}
+
+\bibliographystyle{plainnat}
+\bibliography{refs,bib/sources,bib/theory,bib/design,bib/lead}
+
+\clearpage
+\appendix
+\IfFileExists{appendix/A-proofs-estimands.tex}{\input{appendix/A-proofs-estimands}}{}
+\IfFileExists{appendix/B-proofs-design.tex}{\input{appendix/B-proofs-design}}{}
+\IfFileExists{appendix/C-simulation-details.tex}{\input{appendix/C-simulation-details}}{}
+
+\end{document}

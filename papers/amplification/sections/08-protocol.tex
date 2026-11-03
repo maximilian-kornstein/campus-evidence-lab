@@ -1,0 +1,165 @@
+\section{A pre-registered audit protocol}\label{sec:protocol}
+
+This section is the protocol we will register, time-stamped and with the commit hash of the analysis code and the classifier version, before any audit account is created or any session is run \citep{nosek2018}. It commits in advance to the service and surface, the personas, the randomisation, the interference controls, the validation design, the estimands, the stopping and decision rules, and the handling of data. Any departure will be reported as a deviation, with its reason. The estimators are those of \cref{sec:identification,sec:measurement}, evaluated on synthetic data in \cref{sec:simulation}. The protocol is written for a generic service. It names no platform, and it contains no results. The ethical and legal conditions it depends on are set out in \cref{sec:ethics}, and no step below is taken unless those conditions are met.
+
+\subsection{Service, surface and access route}\label{sec:prot-scope}
+
+The unit of audit is one recommendation \emph{surface} (for example a home feed, or a list of items recommended next to the current one) of one service, in one jurisdiction, during one audit window. The service and surface are chosen at registration by three criteria, in this order:
+\begin{enumerate}[(i)]
+  \item \emph{A reference policy is available.} AR and AA require exposure under a reference policy $\pi=\mathrm{ref}$ (\cref{def:amplification}). On a live service, the candidates are the non-profiling option that very large online platforms must offer under Article~38 of the DSA, or a reverse-chronological option where offered (\cref{sec:bg-governance}), and logged-out sessions (\cref{sec:bg-debates}). The random-from-eligible-pool and popularity-only reference policies of \cref{def:amplification} are not generally available to an outside auditor. They are evaluated in \cref{sec:simulation}, and on a live service only if data obtained under Article~40(4) permit it. If no reference policy is available for a surface, we report exposure under the algorithmic policy and the Markov summaries of \cref{prop:markov} for that surface, and no amplification estimate.
+  \item \emph{A lawful access route exists.} In order of preference: data obtained as a vetted researcher under Article~40(4) of the DSA, or through a research interface the provider offers, where these can deliver exposure under a fixed demand profile; access to publicly accessible data under Article~40(12); and a sock-puppet audit only where neither route can identify the estimand, and only after the legal review and ethics approval of \cref{sec:ethics}.
+  \item \emph{The classifier is validated for the content.} The service's dominant language(s) and formats (text, images, video transcripts) must be covered by the frozen classifier and by the annotators of \cref{sec:prot-validation}.
+\end{enumerate}
+The jurisdiction is an EU Member State, so that the DSA routes apply and the Article~38 option is in scope. All puppets present from that jurisdiction.
+
+\subsection{Personas, puppets and sessions}\label{sec:prot-personas}
+
+\paragraph{Personas}
+A persona $d\in\mathcal D$ is a demand profile. It has three components: a pool of seed items used to train the account; a choice rule that selects one item from each slate; and an interaction budget. The candidate set has four personas. Their seed pools are compiled and screened before registration, and two coders confirm that no seed item is antisemitic under the codebook of \cref{sec:prot-validation}.
+\begin{enumerate}[(a)]
+  \item \emph{General interest} ($d_0$, the baseline): mainstream news, sport, entertainment and how-to content.
+  \item \emph{Jewish interest}: Jewish culture, religion, history and community news. Users who seek such content may be targeted by antisemitic replies and recommendations, so this persona measures what the algorithm supplies to an audience that is often the target of the content.
+  \item \emph{Middle East news}: news and commentary on Israel, the Palestinian territories and the region, drawn from a seed pool balanced across outlets and viewpoints by two coders working independently.
+  \item \emph{Conspiracy-adjacent}: content on conspiracy theories about elites, finance or health that is not itself antisemitic under the codebook. This is the persona whose demand lies closest to antisemitic content without requiring any engagement with it.
+\end{enumerate}
+No persona is trained on antisemitic content. A persona that sought it out would inflate the engagement metrics of hateful items, which the protocol forbids (\cref{sec:eth-footprint}). The audit therefore asks what each policy \emph{supplies} to profiles whose demand is legitimate or adjacent, not what it delivers to users who seek antisemitic content.
+
+\paragraph{Choice rule and the avoid-on-flag constraint}
+At each step $t$ the puppet observes a slate. Every item in the first $k$ positions is recorded and scored by the frozen classifier. The puppet then opens the highest-ranked item whose classifier score is below a registered threshold $\tau_{\mathrm{safe}}$ and whose similarity to the persona's seed pool exceeds a registered threshold. If no item meets both conditions, it opens the highest-ranked item below $\tau_{\mathrm{safe}}$. Items scoring above $\tau_{\mathrm{safe}}$ are recorded as exposures but never opened. The choice rule is part of the persona, so it is applied identically under both policies. AR$(d)$ is then defined conditional on it. Because the rule depends on the classifier, false negatives can still be opened. Their number is estimated from the validation sample and reported as the residual footprint (\cref{sec:eth-footprint}).
+
+\paragraph{Exposure}
+Exposure $E_u(\pi)$ is computed as in \cref{def:amplification}, averaging over the first $k$ slate positions at each of the $T$ steps of a session and over a puppet's measurement sessions. With $k=1$ it reduces to the top-ranked item. The registered $k$ is the number of items visible without scrolling on the surface's default layout, fixed during the pilot.
+
+\paragraph{Session structure}
+Each puppet passes through a \emph{training phase} and a \emph{measurement phase}. In training, it opens a random subset of its persona's seed pool, one session per day for $D_{\mathrm{train}}$ days, with a fixed dwell time per item. Drawing a different random subset for each puppet limits the overlap in viewing between puppets of the same persona, which is a channel of interference (\cref{sec:prot-interference}). In measurement, it runs $S$ sessions, at most one per day at a randomised time, each of $T$ steps, starting from a registered entry point (the home surface, or a seed item drawn at random from the pool). \Cref{tab:prot-design} gives the design parameters. The values are candidates. The puppet counts are fixed at registration by \cref{prop:power}, and the other values by the pilot.
+
+\begin{table}[tbp]
+\centering
+\caption{Design parameters of the audit. Candidate values are illustrative and are fixed at registration as indicated; none is a result.}\label{tab:prot-design}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.3cm}>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Parameter & Candidate & Fixed by \\
+\midrule
+Personas $|\mathcal D|$ & 4 & Registration (\cref{sec:prot-personas}) \\
+Policy arms & alg, ref & Reference policy available on the surface (\cref{sec:prot-scope}) \\
+Puppets per persona--arm cell per wave & 5 & \Cref{prop:power} with pilot inputs \\
+Maximum number of waves $W_{\max}$ & 8 & \Cref{prop:power}; budget and footprint cap \\
+Training days $D_{\mathrm{train}}$; seeds opened per day & 3; 10 & Pilot (stability of recommendations) \\
+Measurement sessions $S$ per puppet & 10 & Pilot (within-puppet correlation) \\
+Steps per session $T$; positions recorded $k$ & 20; visible slate & Pilot; surface layout \\
+Sentinel (untrained) puppets per wave & 2 & Fixed \\
+Validation sample (items) & 2,000 & Precision of $\widehat{\mathrm{Se}}$, $\widehat{\mathrm{Sp}}$ per arm (\cref{sec:prot-validation}) \\
+Overall error level $\alpha$; material-difference margin $\delta$ & 0.05; 1.25 & Registration (\cref{sec:prot-stopping}) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Randomisation}\label{sec:prot-randomisation}
+
+All accounts are created in the same way, before any is assigned, so that features of account creation cannot differ systematically by arm. The audit runs in waves $w=1,\dots,W$ that start on different days. Within each wave, puppets are assigned completely at random to the $|\mathcal D|\times 2$ persona--policy cells in equal numbers. Persona training is therefore randomised, and policy is randomised independently of it. Seed subsets, session start times and the order in which puppets run within a day are also randomised. All puppets are trained in the same way whatever their arm. The policy contrast is applied only at the start of the measurement phase: puppets in the reference arm switch to the non-profiling or chronological option, or run their measurement sessions logged out with the same choice rule. Training is thus identical in distribution across arms, and the only systematic difference at measurement is the policy. This is the design whose identification conditions are stated in \cref{thm:identify}. Waves are blocks. Because every wave contains every cell, a change in the service's policy during the audit window affects both arms of a wave equally, and the blocked analysis of \cref{sec:identification} separates such drift from amplification. Known changes announced by the service during the window are logged as they occur.
+
+\subsection{Interference controls}\label{sec:prot-interference}
+
+Puppets share the learning system they audit. Through it, one puppet's behaviour can change what another is shown, which violates the no-interference condition of \cref{thm:identify}. The protocol limits interference by design, and it measures what remains so that the bound of \cref{prop:interference} can be applied with an estimated $\xi$.
+\begin{itemize}
+  \item \emph{Isolation.} Puppets never follow, message, mention or otherwise interact with any account, including each other. Each runs in its own browser profile with separate storage, and no identifier is shared between puppets.
+  \item \emph{Limited co-viewing.} Each seed item may be opened by at most a registered number of puppets per wave. Seed subsets are drawn so that puppets of the same persona overlap as little as the pool allows.
+  \item \emph{Staggered start.} Waves start on different days, and a wave's puppets start their sessions at randomised times. This limits the number of puppets active at once, which is the quantity the interference bound depends on.
+  \item \emph{Device and network hygiene.} Each puppet keeps one consistent device profile and one stable network location within the study jurisdiction for its whole life. Network locations are not rotated to evade a service's detection or rate limits, and no technical access control is circumvented (\cref{sec:eth-legal}). A puppet that is challenged, restricted or suspended is stopped and not replaced within the wave. Its attrition and the reason are recorded, and attrition is compared across arms.
+  \item \emph{Sentinels.} In each wave, a few untrained puppets run measurement sessions under the algorithmic policy. Their exposure should not depend on the number of trained puppets active at the same time. The registered test of that dependence gives the estimate of $\xi$ used in \cref{prop:interference}. Sentinels also track drift across waves.
+\end{itemize}
+
+\subsection{Classifier and validation sample}\label{sec:prot-validation}
+
+\paragraph{Frozen classifier}
+The classifier follows the lab's detection proposal \citep{kornsteinlab2026detection}. Its version, decision threshold and $\tau_{\mathrm{safe}}$ are fixed and hashed at registration and are not changed during the audit. Every recorded item receives a score; $\widehat L_c$ is the thresholded score.
+
+\paragraph{Sampling}
+The validation sample is drawn from the distinct recorded items, stratified by policy arm, persona and classifier-score band (five bands). High-score bands are oversampled, and within strata the allocation follows the Neyman rule using pilot variances \citep{neyman1934}, with a registered minimum per stratum. Each stratum contains both flagged and unflagged items, so that sensitivity and specificity are estimable separately in each arm. This is required because classifier error may differ by arm when the content mix differs (\cref{thm:misclass}). Items are sampled after each wave, which lets the validation data grow with the audit, and are weighted by the inverse of their inclusion probabilities.
+
+\paragraph{Coding}
+Two trained annotators code each sampled item independently. They are blind to arm, persona and classifier score, and work from a written codebook. The codebook has four primary categories: \emph{antisemitic} (including coded forms); \emph{quotes, reports or criticises antisemitism}; \emph{borderline or ambiguous}; and \emph{not antisemitic}. It also has a flag for content concerning Israel or Zionism. The primary label is $L_c=1$ for the first category only. Sensitivity analyses count borderline items as antisemitic, and report scope variants under the IHRA and JDA definitions where they differ \citep{ihra2016,jda2021}, side by side and without a preferred variant. A third, senior coder adjudicates disagreements; items are not dropped. Annotators complete a calibration round on items outside the audit until their agreement reaches a registered threshold. Agreement is reported as Cohen's $\kappa$ \citep{cohen1960}, overall and by stratum. Coders must be fluent in the languages of the items. The protections for annotators are those of \cref{sec:eth-annotators}.
+
+\paragraph{Use}
+The adjudicated labels give weighted estimates of sensitivity and specificity by arm. These enter the Rogan--Gladen-type correction \citep{rogangladen1978} and the delta-method variance of \cref{thm:misclass}. We report a test of equal error rates across arms, and corrected and naive estimates side by side.
+
+\subsection{Pre-registered estimands and analysis}\label{sec:prot-estimands}
+
+\paragraph{Primary}
+For each persona $d\in\mathcal D$, the misclassification-corrected amplification ratio $\mathrm{AR}(d)$ and additive amplification $\mathrm{AA}(d)$ of \cref{def:amplification}, comparing the algorithmic policy with the registered reference policy, identified under the conditions of \cref{thm:identify}.
+
+\paragraph{Secondary}
+\begin{enumerate}[(i)]
+  \item The supply/demand decomposition of \cref{thm:decomp} for each persona $d$ relative to the baseline persona $d_0$, including its interaction term. The demand contrast is the difference between personas under the reference policy; the supply contrast is the difference between policies for the baseline persona.
+  \item Markov exposure summaries (\cref{prop:markov}): transition matrices $P_{\mathrm{alg}}$ and $P_{\mathrm{ref}}$ over the content states neutral, borderline and antisemitic, estimated from step-to-step transitions of the opened items and corrected for misclassification; the implied stationary exposure, expected hitting times of the antisemitic state, and the sensitivity of stationary exposure given by \cref{thm:perturb}. These are model-based and are reported as such.
+  \item Diagnostics: the interference estimate $\xi$ and its bound (\cref{prop:interference}); drift across waves from sentinels and blocks; attrition by arm; equality of error rates across arms.
+\end{enumerate}
+
+\paragraph{Exploratory}
+Exposure by slate position, and heterogeneity by entry point.
+
+\subsection{Sequential monitoring, stopping and decision rules}\label{sec:prot-stopping}
+
+After each wave, a confidence sequence for $\log\mathrm{AR}(d)$ is updated for every persona by \cref{alg:sequential}, at level $1-\alpha/|\mathcal D|$ per persona so that the family of sequences has simultaneous coverage $1-\alpha$. Confidence sequences are valid at arbitrary stopping times \citep{howard2021,ramdas2023}. Stopping early when the evidence is clear therefore does not inflate error rates, as repeated fixed-sample tests would; the idea goes back to Wald's sequential tests \citep{wald1945}. Early stopping also reduces the footprint of the audit (\cref{sec:eth-footprint}). For each persona, data collection stops at the first wave at which one of the following holds:
+\begin{enumerate}[(S1)]
+  \item the confidence sequence lies entirely above $\log\delta$ or entirely below $-\log\delta$ (a material difference in one direction);
+  \item the confidence sequence lies entirely within $(-\log\delta,\log\delta)$ (no material difference);
+  \item the wave budget $W_{\max}$ is reached.
+\end{enumerate}
+A persona whose cells stop no longer receives puppets in later waves. The other personas continue. At the end, the conclusion for each persona is stated according to \cref{tab:prot-decisions}. Every persona is reported, whatever its result.
+
+\begin{table}[tbp]
+\centering
+\caption{Registered decision rules for persona $d$, based on the final confidence sequence for $\mathrm{AR}(d)$, with margin $\delta$; the first matching row applies. Each conclusion is stated for the audited service, surface, jurisdiction, window and persona only.}\label{tab:prot-decisions}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.2cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Final confidence sequence for $\mathrm{AR}(d)$ & Reported conclusion \\
+\midrule
+Entirely above $\delta$ & Material amplification relative to the reference policy \\
+Entirely below $1/\delta$ & Material de-amplification relative to the reference policy \\
+Entirely within $(1/\delta,\delta)$ & No material difference at margin $\delta$ \\
+Excludes 1 but straddles $\delta$ or $1/\delta$ & Difference detected; materiality undetermined \\
+Contains 1 and extends beyond the margin & Inconclusive \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Power}
+The number of puppets per cell and $W_{\max}$ are chosen by \cref{prop:power}. The registered inputs are the pilot estimates of reference-policy exposure for each persona, the between-puppet variance, the correlation within puppets across sessions, and the sensitivity and specificity of the classifier, together with $\alpha$, the margin $\delta$, and a target power of $0.8$ for the alternative $\mathrm{AR}(d)=\delta^2$. The pilot is one wave run under the full protocol. Its data are used only for these inputs and are not part of the confirmatory analysis. \Cref{sec:simulation} evaluates the validity and power of \cref{alg:sequential} on a synthetic recommender with known amplification.
+
+\paragraph{Robustness}
+The registered robustness checks are: naive versus corrected estimates; scope variants of the label; analyses by wave block; the exclusion of sentinels and of puppets with attrition; and the sensitivity of the conclusions to the interference bound.
+
+\subsection{Data minimisation and retention}\label{sec:prot-data}
+
+The audit records only what the estimands need: item identifiers, slate positions, steps, timestamps, the item content needed for classification (text, titles, transcripts or images), and classifier scores. It does not record comments, viewer lists, profile information of other users or any other data about real users beyond the items themselves. Identifiers of the accounts that posted the items are replaced by keyed hashes at collection, and the key is held separately from the data. Raw item content is retained only inside the secure environment of \cref{sec:eth-security}, and only for the validation sample and for reproducibility checks. It is deleted twelve months after publication, after which only labels, scores and hashed identifiers are kept. Puppet accounts are closed and their credentials destroyed at the end of the audit. Public outputs are aggregate exposure tables, code, the codebook (with paraphrased rather than verbatim examples) and the classifier version. Raw items are not released.
+
+\subsection{Timeline}\label{sec:prot-timeline}
+
+\Cref{tab:prot-timeline} gives the timeline. Months are counted from registration.
+
+\begin{table}[tbp]
+\centering
+\caption{Audit timeline (months from registration).}\label{tab:prot-timeline}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Months & Activity \\
+\midrule
+$-2$ to 0 & Ethics approval; legal review of the service's terms and of the access route; DSA data-access application where applicable; registration of this protocol \\
+0--1 & Classifier freeze; codebook finalised; annotator training and calibration; seed pools screened \\
+1--2 & Pilot wave; inputs to \cref{prop:power}; fixing of $k$, $T$, $S$ and puppet counts (registered as an amendment before the first confirmatory wave) \\
+2--5 & Confirmatory waves; validation sampling after each wave; confidence sequences updated after each wave; stopping per \cref{sec:prot-stopping} \\
+4--6 & Completion of validation coding and adjudication \\
+6--7 & Analysis as registered; robustness checks \\
+7--8 & Responsible disclosure to the provider, at least 30 days before release (\cref{sec:eth-disclosure}) \\
+8--9 & Publication; release of code, codebook and aggregate tables; deletion schedule begins \\
+\bottomrule
+\end{tabularx}
+\end{table}
