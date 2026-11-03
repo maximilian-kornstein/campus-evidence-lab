@@ -1,0 +1,123 @@
+\section{Discussion}\label{sec:discussion}
+
+\paragraph{What the framework makes possible}
+The usual argument about antisemitic incidents asks whose count is right.
+The framework replaces that question with a different one: what is the
+population that every list samples, and how does each list sample it? Once
+the target is defined (\cref{sec:framework}), the police count, an NGO audit
+and a community-security log become \emph{data about} the same unknown
+total, not competitors for it. Their overlaps are informative, their
+dependence is modelled rather than assumed away (\cref{prop:referral}), and
+the part of the answer that the data cannot deliver is isolated in a single
+interpretable parameter $\omega$ (\cref{thm:closed,cor:bounds}). The
+sensitivity frontier tells a reader how much unmeasured dependence a stated
+conclusion can withstand (\cref{thm:id-frontier}). Linkage
+error, which in practice is often handled silently, becomes an explicit
+operator whose effect on the estimate can be quantified and corrected
+(\cref{thm:linkbias,cor:linkcorrect}). Its residual uncertainty is carried
+into the final interval (\cref{alg:pipeline}).
+
+The funnel decomposition (\cref{prop:funnel,thm:shapley}) turns an estimate
+of the dark figure into something a policymaker can act on. A gap between
+two jurisdictions' recorded rates can arise because victims there are less
+willing to come forward, because the police are less likely to recognise a
+bias motivation, or because the agency does not submit its data. Each of
+these calls for a different response: community outreach, officer training
+or reporting infrastructure. Raw counts cannot tell these explanations apart.
+The decomposition can, to the extent that the stage-specific rates are
+identified by the auxiliary data of \cref{tab:funnel-sources}. Incidents that
+were never disclosed to anyone remain beyond the reach of every list, so
+that stage rests on victim surveys.
+
+\paragraph{Limitations}
+We stress five.
+
+\emph{Untestable assumptions.} No method escapes the basic
+non-identifiability of the unobserved cell (\cref{thm:nonid}). Our approach
+makes the identifying assumption explicit and adjustable, but it does not
+remove it. A sensitivity interval for $\omega$ is only as credible as the
+range chosen for it, and that range must be argued from knowledge of how the
+lists are generated, not from the data. It must in general be two-sided:
+the model without a $K$-way interaction can overstate the dark figure as well
+as understate it (\cref{prop:direction}, \cref{ex:id-hetero}). A one-sided
+range is justified only by a mechanism of known sign, such as referral
+(\cref{rem:id-calibrate}). Latent-class models replace the
+assumption of no highest-order interaction with conditional independence
+within classes. That is weaker in some directions and not in others. The
+Chao bound is a lower bound only when heterogeneity runs across incidents.
+Heterogeneity across lists can turn it into an upper bound
+(\cref{prop:id-mt}), so it is a diagnostic, not a floor.
+
+\emph{Scope harmonisation.} MSE requires every list to be sampling the same
+population. The FBI records criminal offences with a recorded bias
+motivation, whereas NGO audits also record non-criminal incidents under
+their own and evolving criteria \citep{adl2025audit}. Harmonisation rules
+(\cref{sec:src-harmonise,sec:plan}) can align the lists only as far as
+their records contain the information needed to apply a common
+definition. Residual mismatch
+behaves like coverage error and cannot be fully separated from it.
+
+\emph{Data access.} The methods assume record-level access to several
+lists. Police records, NGO case files and community reports contain
+sensitive information about victims who did not consent to being linked.
+Obtaining such data will require data-sharing agreements,
+privacy-preserving linkage \citep[e.g.,][]{schnell2009} and disclosure
+control for small cells \citep{hundepool2012}, possibly with formal
+privacy guarantees \citep{dwork2014}. Each of these degrades linkage
+quality or precision to some degree. Encodings for privacy-preserving
+linkage can themselves be attacked (\cref{sec:ethics-pprl}), and the ethics
+protocol of \cref{sec:ethics} may rightly rule out some linkages
+altogether.
+
+\emph{The closed-population idealisation.} Incidents occur in continuous
+time, lists have different reporting windows and lags, and records are
+added or revised after the reference period ends. Treating each state--year
+domain as a closed population is a convenient approximation. Its error is
+concentrated at period boundaries and in lists with long reporting delays.
+
+\emph{Approximate linkage-error models.} The operator
+$\Lop(\delta,\varepsilon)$ assumes that detachments and false merges occur
+independently across records, at rates that are at most list-specific
+(\cref{rem:link-listspecific}). Real linkage errors
+cluster: they are more frequent for incidents in dense places, for generic
+incident descriptions and for records with missing fields, and they may be
+correlated with capture history itself. The correction of
+\cref{cor:linkcorrect} should therefore be read as a first-order adjustment.
+Propagating linkage uncertainty by mixing over linkage draws
+(\cref{alg:pipeline}) is preferable whenever record-level comparison data are
+available. The modular posterior used there (\cref{eq:models-cut})
+deliberately ignores the information that the capture model carries about
+which records match, trading some efficiency for robustness.
+
+\paragraph{Extensions}
+Three extensions seem most valuable. First, \emph{open populations and
+continuous time}: modelling incident occurrence as a point process and each
+list as a time-varying, delayed thinning of it would remove the
+closed-population idealisation and connect dark-figure estimation to
+nowcasting of reporting delays. Second, \emph{online incidents}: here the
+unit of analysis is itself unsettled, and platform moderation and automated
+detection act as lists with their own selection and classification error, a
+direct analogue of the funnel's classification stage. Third,
+\emph{international comparison}. In the United Kingdom the Community Security Trust maintains a
+long-running list of antisemitic incidents and documents the share it receives
+from the police \citep{cst2026incidents}. The European Union Agency for
+Fundamental Rights has surveyed Jewish people in several member states about
+their experiences of antisemitism and about non-reporting
+\citep{fra2018antisemitism,fra2024antisemitism}; see
+\cref{sec:src-community,sec:src-surveys}. Combining such sources country by
+country, with the funnel decomposition as a common accounting framework, would allow cross-national
+comparisons of reporting, not only of recorded counts.
+
+\paragraph{Why measure what is missing}
+A count that omits its dark figure can mislead in both directions. Rising
+counts may reflect greater willingness to report, better classification or
+wider agency participation as much as rising incidence. Falling counts may
+reflect lost trust or lapsed reporting. Resources allocated in proportion to
+recorded incidents reward the communities and agencies that report, which
+are not necessarily those that are most affected. Nor is there reason to
+expect the dark figure to be random noise. If it is concentrated where victims
+expect least from reporting, its size is itself a measure of the distance
+between a community and the institutions meant to protect it. Estimating
+it honestly, with explicit assumptions, propagated uncertainty and a plan fixed before the data are
+seen, is how a measurement programme takes seriously the incidents that
+nobody wrote down.

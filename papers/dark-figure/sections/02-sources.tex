@@ -1,0 +1,156 @@
+\section{The lists: sources of antisemitic incident data}\label{sec:sources}
+
+Multiple-systems estimation needs $K\ge 2$ lists, each an incomplete register of the \emph{same} population $U_d$ of in-scope incidents in a domain $d$. This section reviews the candidate lists for a United States application and maps them onto the canonical four-list design used throughout the paper: $k=1$ police, $k=2$ NGO audit, $k=3$ community security organisation, and $k=4$ campus or community self-report portal. For each candidate we record the features that matter for estimation. These are its legal or organisational basis; its unit of count; how it identifies anti-Jewish bias; its geographic and temporal granularity; what is publicly available; its known coverage problems; and the ways it may depend on the other lists. Victimisation surveys are not lists, but they inform the reporting funnel of \cref{sec:funnel}; we discuss them in \cref{sec:src-surveys}. \Cref{tab:src-compare} summarises the comparison.
+
+Two conventions apply throughout. First, every figure quoted below is attributed to the organisation that published it. None of these figures is an input to the simulation study of \cref{sec:simulation}, and we have not linked any real records. Second, published totals from different lists are \emph{not} estimates of a common quantity. They differ in scope, unit and definition, which is the subject of \cref{sec:src-harmonise}.
+
+\subsection{Police-recorded hate crime: FBI statistics and NIBRS (list 1)}\label{sec:src-police}
+
+\paragraph{Basis and definition}
+The Hate Crime Statistics Act of 1990 directed the Attorney General to acquire data ``about crimes that manifest evidence of prejudice based on race, religion, sexual orientation, or ethnicity'' \citep{hcsa1990}. The Attorney General delegated the task to the FBI's Uniform Crime Reporting (UCR) Program. Rather than build a separate system, the UCR Program attached a bias element to the offences already reported to it \citep{fbi2019about}. Later legislation extended the protected categories. In the National Incident-Based Reporting System (NIBRS), anti-Jewish bias is one value (code~21, in the religion group) of the bias-motivation data element. The FBI's data-collection guidelines set the evidentiary standard: bias is reported only if the investigation reveals sufficient objective facts to lead a reasonable and prudent person to conclude that the offender's actions were motivated, in whole or in part, by bias \citep{fbimanual}. List~1 is therefore a list of \emph{crimes} whose anti-Jewish motivation a law-enforcement agency has \emph{classified} as such. Non-criminal harassment is outside its scope by construction.
+
+\paragraph{Unit, granularity and access}
+The FBI publishes counts of hate-crime incidents, offences, victims and known offenders, with single-bias and multiple-bias incidents tabulated separately. Tables are released annually at national, state and agency level through the Crime Data Explorer \citep{fbi2025summary,fbi2026hate}. For 2025, the FBI reported 1,528 single-bias incidents with an anti-Jewish bias motivation \citep{fbi2026hate}. NIBRS does not collect the names or street addresses of victims or offenders. Linkage to other lists on anything finer than agency, date, offence and location type therefore requires the agencies' own records under a data-sharing agreement (\cref{sec:plan}).
+
+\paragraph{Participation and the 2021 transition}
+Agency participation in the UCR Program is voluntary at the federal level \citep{crs2025hate}. For data year 2021 the FBI accepted only NIBRS submissions \citep{crs2025hate}. The FBI's initial 2021 hate-crime release, in December 2022, covered 11,834 agencies representing 64.8\% of the US population. The FBI then reopened the 2021 collection to accept submissions through the retired Summary Reporting System, together with additional NIBRS reports, from 3,025 agencies. Its supplemental release in March 2023 covered 14,859 agencies representing 91.1\% of the population \citep{fbi2023supp,doj2023hate2021}. According to the Congressional Research Service, the FBI again accepted both formats from 2022 onward \citep{crs2025hate}. For 2024, the FBI reported that 16,419 agencies participated in the hate-crime collection (about 85\% of agencies enrolled in the UCR Program), covering 95.1\% of the population. The FBI does not estimate counts for non-participating agencies, and published counts need not cover all twelve months for every participating agency \citep{fbi2025summary}.
+
+\paragraph{Coverage issues}
+Participation measures \emph{submission}, not detection. Whether an antisemitic crime reaches list~1 depends on whether it is reported to police, whether the agency classifies the bias, and whether the agency submits. These are the stages $\rpol$, $\rcls$ and $\rsub$ of the funnel in \cref{sec:funnel}. The 2021 episode shows that $\rsub$ can shift abruptly for reasons unrelated to victimisation. This is why the small-area model of \cref{eq:smallarea} ties police-list coverage to agency participation rather than treating it as constant.
+
+\paragraph{Dependence risks}
+Other lists draw on list~1: the ADL Audit lists law enforcement among its sources (\cref{sec:src-audit}), and Clery reporting draws on police statistics (\cref{sec:src-campus}). Referral also runs the other way, from community security organisations to the police (\cref{sec:src-community}). Finally, the severity and visibility of an incident plausibly raise its capture probability on every list. That is heterogeneity, which appears as positive dependence when it is ignored.
+
+\subsection{The NGO audit: ADL Audit of Antisemitic Incidents (list 2)}\label{sec:src-audit}
+
+\paragraph{Basis and scope}
+ADL has tracked antisemitic incidents in the United States since 1979 \citep{adl2026audit}. ADL describes its annual Audit as including both criminal and non-criminal incidents of harassment, vandalism and assault against individuals and groups, as reported to ADL by victims, law enforcement, the media and partner organisations. It also states that the Audit is neither a poll nor a catalogue of every expression of antisemitism \citep{adl2025audit}. Incidents fall into three categories:
+\begin{itemize}
+  \item \emph{assault}: an attempt to inflict physical harm on people who are Jewish or perceived to be Jewish, with evidence of antisemitic animus;
+  \item \emph{harassment}: verbal or written;
+  \item \emph{vandalism}: property damage with evidence of antisemitic intent or impact \citep{adl2025audit,adl2026audit}.
+\end{itemize}
+ADL assesses each report for credibility and counts each incident once, however many times it is reported. Its counting rules can treat a related series of acts as a single incident \citep{adl2026audit}. The Audit's unit is therefore an \emph{incident} as ADL defines it. That unit is broader than a crime and does not always coincide with a police incident.
+
+\paragraph{Definitional change}
+Since 7 October 2023, the Audit has included certain expressions of opposition to Zionism and of support for violent resistance against Israel or Zionists. ADL states that it continues to exclude legitimate political protest, including support for Palestinian rights and opposition to Israeli policies \citep{adl2025audit,adl2026audit}. ADL reported that a majority (58\%) of the incidents it recorded for 2024 contained elements related to Israel or Zionism \citep{adl2025audit}. ADL's Audit recorded 9,354 incidents for 2024, the highest total in the Audit's history \citep{adl2025audit}, and 6,274 for 2025 \citep{adl2026audit}. Because the scope rule changed mid-series, Audit totals before and after October 2023 measure partly different populations. Any time-series use must account for this (\cref{sec:src-harmonise}).
+
+\paragraph{Sources and referral}
+ADL reports that the largest source of Audit incidents is direct reports from victims. Its researchers also monitor media reports and other online spaces \citep{adl2025audit,adl2026audit}. Beginning with the 2021 Audit, ADL incorporated reports from partner Jewish organisations: the Community Security Initiative, the Community Security Service, Hillel International, the Secure Community Network, the Union for Reform Judaism and the United Synagogue of Conservative Judaism. ADL attributed 494 incidents in 2021 to these new partnerships \citep{adl2022audit}. The Audit is thus explicitly a \emph{compiled} list: some of its records originate in list~1 and some in list~3.
+
+\paragraph{Access}
+ADL's H.E.A.T. Map (Hate, Extremism, Antisemitism, Terrorism) publishes incident-level listings. Users can chart them geographically and download them as a CSV file, and some details are removed to protect victims' privacy \citep{adlheatmap,adl2025audit,adl2022audit}. The public listing therefore supports coarse linkage on date, place and category. Provenance fields (the channel through which ADL learned of each incident) are not, to our knowledge, part of the public file. They are the single most valuable variable to request under a data-sharing agreement, because they allow the referral channel to be modelled directly.
+
+\paragraph{Dependence risks}
+An incident that appears in list~1 can enter list~2 through a channel that does not exist for incidents never reported to police. This is the \emph{referral dependence} formalised in \cref{prop:referral}: a fraction $q$ of police-captured incidents is forwarded to the audit. It induces positive dependence between lists~1 and~2, and \cref{prop:referral} shows that the Lincoln--Petersen estimator then underestimates $N$. The partner channel creates the same structure between lists~3 and~2.
+
+\subsection{Community security organisations (list 3)}\label{sec:src-community}
+
+\paragraph{Secure Community Network (United States)}
+The Secure Community Network (SCN) was founded in 2004 under the auspices of the Jewish Federations of North America and the Conference of Presidents of Major American Jewish Organizations. It describes itself as the official safety and security organisation of the Jewish community in North America \citep{scnwho}. SCN operates a round-the-clock Duty Desk and command centre. These take in threat and incident information, analyse it, and share it with law enforcement and community partners \citep{scnmonitoring}. SCN publishes periodic \emph{aggregate} summaries of the threat incidents and suspicious activity it logs, for example monthly updates with a heat map \citep{scn2024monthly}. We did not find a public incident-level SCN dataset or a published coding manual. Use as a list would therefore require a data-sharing agreement, and its scope (threats and suspicious activity, which include non-criminal and non-incident reports) would need to be mapped onto the common ontology of \cref{sec:src-harmonise}. SCN has two dependence risks. It is an ADL Audit partner (\cref{sec:src-audit}), and it passes information to law enforcement, which creates referral into list~1.
+
+\paragraph{Community Security Trust (United Kingdom), as a comparator}
+The UK's Community Security Trust (CST) maintains a long-running list dedicated to antisemitic incidents. It illustrates what a mature community-security list documents. CST recorded 3,700 antisemitic incidents in the UK in 2025, the second-highest annual total it has reported, up from 3,556 in 2024 \citep{cst2026incidents}. Three features of CST's reporting matter here. First, CST reports a screening stage: a further 3,001 potential incidents reported to it in 2025 were excluded because, on investigation, CST did not deem them antisemitic. Second, CST quantifies its referral overlap with the police: 587 (16\%) of its 2025 incidents were reported to CST by police forces under information-sharing agreements, including a national agreement with the National Police Chiefs' Council. Third, CST discloses a coverage shock: since March 2024 a technical problem has disrupted the flow of reports from the Metropolitan Police \citep{cst2026incidents}. A US community list would need to document the same three features (screening, provenance and feed interruptions) before it could serve in MSE.
+
+\subsection{Campus data: the Clery Act (candidate for list 4)}\label{sec:src-campus}
+
+\paragraph{Basis and unit}
+The Jeanne Clery Disclosure of Campus Security Policy and Campus Crime Statistics Act \citep{cleryact} and its implementing regulation, 34~C.F.R.\ \S~668.46 \citep{ecfr668}, require institutions that participate in federal student-aid programmes to disclose crime statistics for their Clery geography. The Department of Education's Office of Postsecondary Education collects these statistics in the annual Campus Safety and Security Survey. Each survey covers the three preceding calendar years. The data are public at institution level through the Campus Safety and Security Data Analysis Cutting Tool \citep{edcss}. Hate crimes are reported for the Clery crimes, plus larceny-theft, simple assault, intimidation and destruction, damage or vandalism of property \citep{ecfr668}.
+
+\paragraph{Bias categories: religion, not anti-Jewish}
+The regulation's bias categories are race, religion, gender, gender identity, sexual orientation, ethnicity, national origin and disability \citep{ecfr668}. The Clery Act does not require sub-categories such as anti-Jewish. In Dear Colleague Letter GEN-24-09 (29 July 2024), the Department of Education invited institutions to \emph{voluntarily} disclose sub-categories drawn from the FBI's list, which includes anti-Jewish. It also discouraged them from using the formal statistical grids of the Annual Security Report or the Department's annual collection for this purpose, suggesting channels such as email, websites or social media \citep{ed2024subcat}. As a result, the Campus Safety and Security data identify religion-motivated campus hate crimes but not anti-Jewish ones. Used as-is, they would be a list for a \emph{superset} of the target population. That is exactly the scope mismatch that \cref{ex:src-scope} shows to be harmful. The Clery data can bound the campus sub-population from above (anti-Jewish $\le$ religion), but they cannot serve as a capture list.
+
+\paragraph{Dependence}
+Institutions must make a reasonable, good-faith effort to obtain crime statistics for their Clery geography from local or state police, and may rely on police information \citep{ecfr668}. Clery counts are thus partly derived from list~1. For list~4 we therefore propose a campus or community \emph{self-report portal} (for example, a university's bias-incident reporting system) whose records identify anti-Jewish bias, used under agreement, rather than the Clery aggregates. A campus portal can capture only campus incidents. Outside the campus stratum its capture probability is a structural zero, which violates \cref{asm:fw-scope}(b) unless it is declared. The portal is therefore used only within the campus stratum (\cref{sec:plan-models}).
+
+\subsection{City and state open data: list 1 at higher resolution}\label{sec:src-local}
+
+City and state police data are not additional lists. They are list~1 observed at an earlier stage of the funnel and at finer resolution. Their value lies in (a) richer linkage keys and (b) measuring $\rsub$, the loss between local classification and federal submission.
+
+\paragraph{New York City}
+The NYPD Hate Crimes dataset on NYC Open Data contains confirmed hate-crime incidents. Each row is a complaint, with complaint year and month, precinct and patrol borough, offence descriptions and a bias-motive field that takes the value \texttt{ANTI-JEWISH} \citep{nypdhate}. Because it is released publicly at complaint level, New York City is a natural candidate pilot (\cref{sec:plan}). Reporting-system transitions affect it too. The New York State Comptroller reported that the Division of Criminal Justice Services did not publish 2023 hate-crime data for New York City, and therefore published no statewide total for that year, because of the NYPD's transition in data-reporting systems as part of its move to NIBRS \citep{osc2024hate}.
+
+\paragraph{California}
+Under California Penal Code section~13023, law-enforcement agencies report hate crimes to the state Department of Justice. The Department's annual \emph{Hate Crime in California} report counts hate-crime \emph{events}, each comprising one or more offences against one or more victims by one or more suspects, under the definition in Penal Code section~422.55 \citep{cadoj2026hate}. The Department reported that anti-Jewish bias events rose from 289 in 2023 to 310 in 2024 \citep{cadoj2025hate} and fell to 289 in 2025 \citep{cadoj2026hate}. It cautioned that not all agencies could submit a full year of data for 2024 \citep{cadoj2025hate}. The unit (event) differs from the FBI's incident, so state and federal counts need not agree even for identical underlying reports.
+
+\subsection{Victimisation surveys: not lists, but anchors for the funnel}\label{sec:src-surveys}
+
+\paragraph{NCVS}
+The National Crime Victimization Survey (NCVS), conducted for the Bureau of Justice Statistics (BJS), measures victimisations whether or not they were reported to police. A victimisation counts as a hate crime when the victim perceives a bias motivation and reports at least one of three kinds of evidence: the offender used hate language, the offender left hate symbols, or police confirmed the bias \citep{bjs2021hate}. BJS publishes estimates of the share of hate-crime victimisations reported to police and of reasons for not reporting \citep{bjs2021hate}. A body of work uses these data to study who reports hate crime \citep{zaykowski2010,lantz2022,pezzella2019}. For our purposes the NCVS has three limitations. It is a sample survey of persons and households, so it does not cover crimes against institutions such as synagogues or schools. Its hate-crime definition rests on victim perception rather than police classification. And we found no published BJS estimate specific to anti-Jewish bias, as distinct from religion or hate crime overall. The NCVS can therefore constrain $\rpol$ for hate crime in general, but not identify it for antisemitic incidents. The analysis plan uses it only for triangulation (\cref{sec:plan}).
+
+\paragraph{FRA surveys of Jewish people in the EU}
+The EU Agency for Fundamental Rights (FRA) has surveyed self-identified Jewish people directly. The second survey (2018) had 16,395 respondents in 12 EU Member States \citep{fra2018antisemitism}. FRA reported that 79\% of respondents who had experienced antisemitic harassment in the five years before the survey had not reported the most serious incident to the police or to any other organisation \citep{fra2018antisemitism}. The third survey, published in July 2024, collected responses from almost 8,000 Jewish people aged 16 or over in 13 Member States between January and June 2023 \citep{fra2024antisemitism}. These surveys are not US data and their designs differ from the NCVS, so we do not transport their numbers. They matter conceptually. FRA measures non-reporting to \emph{any} organisation, so its finding is direct evidence that a common stratum of incidents is missed by police and civil-society lists alike. In capture--recapture terms that is heterogeneity, and it is what \cref{thm:chao} and the latent-class models of \cref{sec:models} are built to address.
+
+\begin{table}[tbp]
+\centering
+\caption{Candidate sources for a US application. ``List'' indicates the role in the canonical $K=4$ design; CST and FRA are international comparators. All entries summarise the sources' own documentation (see text for citations).}\label{tab:src-compare}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.55cm}*{5}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Source (role) & Basis; unit & Anti-Jewish identification & Granularity; public access & Main coverage issues & Main dependence risks \\
+\midrule
+FBI UCR/\allowbreak NIBRS (list 1) & Hate Crime Statistics Act 1990; crimes (incidents, offences) & NIBRS bias code 21; ``sufficient objective facts'' standard & Agency $\times$ year tables; NIBRS records without names or addresses & Voluntary participation; 2021 NIBRS-only year; no estimation for non-participants & Feeds ADL and Clery (referral); receives community referrals; severity heterogeneity \\
+\addlinespace
+NYPD open data (list 1, NYC) & Police complaints; confirmed hate crimes & Bias-motive value \texttt{ANTI-JEWISH} & Complaint $\times$ month $\times$ precinct; public rows & 2023 state publication gap during NIBRS transition & Same system as FBI list, not an independent list \\
+\addlinespace
+California DOJ (list 1, CA) & Penal Code \S~13023; hate-crime events & Anti-Jewish bias category & Annual report and data files & Partial-year submissions in 2024 & Same system as FBI list \\
+\addlinespace
+ADL Audit, H.E.A.T. Map (list 2) & NGO; criminal and non-criminal incidents & ADL categories; rule for Israel/Zionism-related expression since Oct.\ 2023 & Incident; place and date; public CSV with redactions & Mid-series scope change; depends on reports reaching ADL & Ingests police and partner-organisation reports \\
+\addlinespace
+SCN (list 3) & Community security; threats, suspicious activity & Not publicly documented & Aggregate periodic summaries; records only by agreement & Scope broader than crimes & ADL partner; refers to law enforcement \\
+\addlinespace
+CST (UK comparator) & Community security; incidents & CST criteria; 3,001 reports screened out (2025) & Annual and half-year reports & Metropolitan Police feed disrupted since March 2024 & 16\% of 2025 incidents reported to CST by police \\
+\addlinespace
+Clery / Campus Safety and Security Survey (campus) & Clery Act; crimes in Clery geography & Religion only; anti-Jewish sub-category voluntary and outside data grids & Institution $\times$ year; public & Superset of target; on-campus geography only & Built partly from police statistics \\
+\addlinespace
+NCVS (survey) & BJS household survey; victimisations & Victim perception plus evidence; no anti-Jewish estimate found & National; pooled years & Persons and households only; not a list & Auxiliary: triangulation of $\rpol$ \\
+\addlinespace
+FRA surveys (EU comparator) & EU surveys of Jewish people (2018, 2024) & Respondent-reported antisemitism & Country; survey waves & Not US; different design & Auxiliary: evidence of common non-reporting \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Definitional harmonisation}\label{sec:src-harmonise}
+
+\paragraph{Crimes versus incidents}
+The candidate lists count different things. The police lists (FBI, NYPD, California) and Clery count \emph{crimes}, using police or institutional classification of bias under a legal standard. The ADL Audit counts \emph{incidents}, including non-criminal harassment. SCN logs \emph{threats and suspicious activity}. Units also differ: an FBI incident, a California event, an NYPD complaint and an ADL incident (which may consolidate a series of acts) are not interchangeable.
+
+\paragraph{A common ontology}
+We map every record, from every list, into a shared ontology before estimation. Each record is coded on five axes:
+\begin{enumerate}[(i)]
+  \item \emph{conduct}: assault; threat or intimidation; property damage or vandalism; other offence; non-criminal conduct;
+  \item \emph{bias}: anti-Jewish as the single bias, anti-Jewish among multiple biases, or not established;
+  \item \emph{target}: an individual, an institution, or public space with no specific victim;
+  \item \emph{setting}: campus, online or other;
+  \item \emph{content flag}: whether the conduct involves Israel- or Zionism-related expression.
+\end{enumerate}
+The primary estimand (\cref{sec:plan}) is the number of \emph{criminal antisemitic incidents}. These are incidents whose conduct is an offence under the jurisdiction's criminal law, whose anti-Jewish bias meets a stated evidentiary standard, and which occurred in domain $d$. Records outside this scope are dropped. Capture is then defined from each list's own classification. Incident $i$ is captured by list $k$ ($Y_{ik}=1$) if list $k$ holds a record of $i$ that it itself classifies as antisemitic. So an antisemitic crime that police recorded without a bias code is \emph{not} captured by list~1. That loss is the $\rcls$ stage of the funnel, not a linkage failure. Scope must be coded from each record independently and blind to linkage. Otherwise, incidents captured by several lists would have more chances to be coded as in scope, and scope would depend on the capture history. We fix the coding rule in advance and vary it in sensitivity analyses (\cref{sec:plan}).
+
+\paragraph{Why MSE needs a common scope}
+Every capture--recapture model assumes that each list \emph{could} capture every member of $U_d$ (\cref{asm:fw-scope}). If list $k$ cannot capture some sub-population, for example the police list and non-criminal harassment, then $\Pr(Y_{ik}=1)=0$ there: a \emph{structural zero}. Unless it is modelled, a structural zero masquerades as heterogeneity or list interaction.
+
+\begin{example}[Scope mismatch as hidden heterogeneity]\label{ex:src-scope}
+Let $U=A\cup B$, where $A$ holds $N_A$ criminal incidents and $B$ holds $N_B$ non-criminal ones, and suppose the target is $N=N_A+N_B$. List~1 captures only incidents in $A$, each with probability $p_1$. List~2 captures incidents independently of list~1, with probability $p_{2A}$ in $A$ and $p_{2B}$ in $B$. Then $\E n_{1+}=N_Ap_1$, $\E n_{2+}=N_Ap_{2A}+N_Bp_{2B}$ and $\E n_{11}=N_Ap_1p_{2A}$, so the Lincoln--Petersen estimator converges to
+\begin{equation}\label{eq:src-scope}
+  \frac{\E n_{1+}\,\E n_{2+}}{\E n_{11}} \;=\; N_A + N_B\,\frac{p_{2B}}{p_{2A}}.
+\end{equation}
+This equals $N$ only if $p_{2B}=p_{2A}$ and equals $N_A$ only if $p_{2B}=0$. In general it estimates neither. With $K>2$ lists, the same mechanism shows up as spurious interaction terms in the log-linear model and contaminates the extrapolation to $\nzero$.
+\end{example}
+
+There are two remedies. One is to restrict every list to the common scope before estimation, so that the estimand is $N_A$; this is our primary choice. The other is to model the strata separately, with their structural zeros declared. $N_B$ is then estimated only from lists that can capture $B$, which requires at least two such lists. The ADL Audit's change of scope in October 2023 is a structural zero in \emph{time}: for earlier periods, part of today's scope had capture probability zero on list~2. Domains $d$ should therefore not straddle that change without an explicit indicator.
+
+\paragraph{Definitions of antisemitism}
+For criminal incidents, the police lists' legal standard for bias (\cref{sec:src-police}) governs list~1. The lists differ most in how they treat Israel- or Zionism-related expression. This is also where two widely cited definitional texts, the IHRA working definition \citep{ihra2016} and the Jerusalem Declaration on Antisemitism \citep{jda2021}, differ. We do not adjudicate between them. Our ontology records the content flag (axis~v) as a separate attribute. The estimand can then be computed under alternative scope rules, with and without flagged incidents, and the results reported side by side. Because the primary estimand is restricted to crimes, the flag affects it only where an offence is also present.
+
+\subsection{Dependence between lists and how the paper addresses it}\label{sec:src-dependence}
+
+The review above identifies four mechanisms that make the lists dependent.
+\begin{enumerate}[(a)]
+  \item \emph{Referral.} One list's records are inputs to another. Police reports feed the ADL Audit. Partner organisations, including SCN, feed the Audit. Police statistics feed Clery disclosures. Community security organisations pass information to police. CST shows the size such a channel can reach: 16\% of its 2025 incidents came from the police. \Cref{prop:referral} models referral as forwarding a fraction $q$ of one list's captures to another and gives the resulting bias. The analysis plan requests provenance fields so that $q$ can be estimated rather than assumed, and it varies $q$ over a pre-specified grid.
+  \item \emph{Heterogeneity.} Severity, visibility, target type (an institution rather than a private individual), location and media attention plausibly raise capture probabilities on all lists at once. FRA's finding that most respondents who had been harassed did not report the most serious incident to \emph{any} organisation points the same way. Unmodelled positive dependence of this kind typically biases independence-based estimators downward. \Cref{prop:direction} gives the exact direction in terms of the sign of the oriented highest-order interaction. \Cref{thm:chao} gives a heterogeneity-robust lower bound. The latent-class and covariate-dependent models of \cref{sec:models} model heterogeneity explicitly.
+  \item \emph{Specialisation.} Some lists are designed to reach incidents that others miss, for example a campus portal for campus incidents, or a community organisation for threats to institutions. This can produce negative dependence, which typically biases independence-based estimators upward (\cref{prop:direction}).
+  \item \emph{Unidentified residual dependence.} With $K$ lists, the highest-order interaction $\omega$ is not identified from the observed cells (\cref{thm:nonid}), so some restriction such as \cref{asm:fw-dependence} is unavoidable. \Cref{thm:closed} treats $\omega$ as a sensitivity parameter, and \cref{cor:bounds} gives sharp bounds for $N$ over a stated range of $\omega$. The analysis plan pre-specifies that range.
+\end{enumerate}
+Linkage error interacts with all four. False non-matches split one incident into several apparent incidents with fewer captures each, and false matches merge distinct incidents. Both distort the capture-history table before any dependence model is fitted (\cref{thm:linkbias}). They are corrected and propagated as described in \cref{sec:linkage} and \cref{alg:pipeline}.

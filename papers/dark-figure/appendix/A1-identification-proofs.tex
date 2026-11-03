@@ -1,0 +1,217 @@
+\section{Proofs for Section~\ref{sec:identification}}\label{app:idproofs}
+
+Throughout, $\sum_{\h}$ and $\prod_{\h}$ without qualification run over $\Hobs$, and $\bar\omega=(-1)^K\omega$. We use the identities \eqref{eq:fw-signsum} and the key identity \eqref{eq:fw-key} repeatedly. For completeness, \eqref{eq:fw-key} follows from \eqref{eq:fw-omega} by isolating the term $T=\emptyset$:
+\[
+  \omega=(-1)^K\log\mu_{\zero}+\sum_{\h}(-1)^{K-|\h|}\log\mu_{\h}
+  \;\Longrightarrow\;
+  \log\mu_{\zero}=(-1)^K\omega-\sum_{\h}(-1)^{|\h|}\log\mu_{\h}=\bar\omega+\sum_{\h}s_{\h}\log\mu_{\h}.
+\]
+The Möbius sums \eqref{eq:fw-mobius} for $S\neq\emptyset$ annihilate additive constants, because $\sum_{T\subseteq S}(-1)^{|S|-|T|}=0$. Hence $\omega$ computed from $\bm\pi$ equals $\omega$ computed from $\bm\mu=N\bm\pi$, and \eqref{eq:fw-key} applies to $\bm\pi$. Writing $\bm\pi_+=(1-\pi_{\zero})\bm\pi^c$ and using the degree-one homogeneity of $\mathcal A$ gives \eqref{eq:fw-keyM}. Finally, \eqref{eq:fw-slice} follows by splitting the sum \eqref{eq:fw-omega} into the sets $T\not\ni k$, for which $(-1)^{K-|T|}=-(-1)^{K-1-|T|}$, and $T=T'\cup\{k\}$ with $T'\subseteq\Kset\setminus\{k\}$, for which $(-1)^{K-|T|}=(-1)^{K-1-|T'|}$.
+
+\subsection{Preliminary lemmas}\label{app:id-prelim}
+
+\begin{proof}[Proof of \cref{lem:id-param}]
+Fix $\omega$. \emph{Injectivity.} Let $\bm u,\bm u'\in\Theta_\omega$ with $\bm\mu_+(\bm u)=\bm\mu_+(\bm u')$, and let $\bm\mu,\bm\mu'$ be the full mean vectors defined by \eqref{eq:fw-loglin}. Both satisfy \eqref{eq:fw-key} with the same $\omega$, so $\mu_{\zero}=e^{\bar\omega}\mathcal A(\bm\mu_+)=\mu'_{\zero}$. Hence $\bm\mu=\bm\mu'$ on all of $\Hset$, and $\bm u=\bm u'$ by \cref{lem:fw-mobius}.
+\emph{Surjectivity.} Given $\bm\mu_+\in(0,\infty)^{\Hobs}$, set $\mu_{\zero}=e^{\bar\omega}\mathcal A(\bm\mu_+)$ and define $\bm u$ from the full vector $\bm\mu$ by \eqref{eq:fw-mobius}. By \cref{lem:fw-mobius}, $\bm u$ reproduces $\bm\mu$ through \eqref{eq:fw-loglin}, so $\bm\mu_+(\bm u)=\bm\mu_+$. Moreover,
+\[
+  u_{\Kset}=(-1)^K\log\mu_{\zero}+\sum_{\h}(-1)^{K-|\h|}\log\mu_{\h}
+  =\omega+\sum_{\h}\bigl\{(-1)^Ks_{\h}+(-1)^{K-|\h|}\bigr\}\log\mu_{\h}=\omega,
+\]
+because $(-1)^Ks_{\h}=(-1)^{K+|\h|+1}=-(-1)^{K-|\h|}$. Thus $\bm u\in\Theta_\omega$, and the inverse is as stated.
+\end{proof}
+
+\begin{lemma}[Block independence]\label{lem:id-block}
+Suppose that under (M) the history splits into independent blocks: $\Kset=A\sqcup B$ with $A,B\neq\emptyset$ and $\pi_{\h}=\pi^A_{\h_A}\pi^B_{\h_B}$, where $\h_A$ and $\h_B$ are the sub-histories on $A$ and $B$. Then $u_S=0$ for every $S$ that meets both $A$ and $B$; in particular $\omega=0$.
+\end{lemma}
+
+\begin{proof}
+Write $\log\pi_{\h}=a(\h_A)+b(\h_B)$, and for $T\subseteq\Kset$ write $T_A=T\cap A$ and $T_B=T\cap B$. Let $S$ meet both blocks, with $S_A=S\cap A\neq\emptyset$ and $S_B=S\cap B\neq\emptyset$. By \eqref{eq:fw-mobius},
+\[
+  \sum_{T\subseteq S}(-1)^{|S|-|T|}a(T_A)
+  =\Bigl\{\sum_{T_A\subseteq S_A}(-1)^{|S_A|-|T_A|}a(T_A)\Bigr\}\Bigl\{\sum_{T_B\subseteq S_B}(-1)^{|S_B|-|T_B|}\Bigr\}=0,
+\]
+because the second factor equals $(1-1)^{|S_B|}=0$. The same argument with the roles of $A$ and $B$ exchanged disposes of $b$, so $u_S=0$. Since $\Kset$ meets both blocks, $\omega=u_{\Kset}=0$.
+\end{proof}
+
+\begin{lemma}[Total variation under (M)]\label{lem:id-tv}
+Under (M), let $P$ and $P'$ be the laws of the observed table $\bm n_+$ under $(N,\bm\pi)$ and $(N',\bm\pi')$, where $\bm\pi^c=\bm\pi'^c$. Then $\mathrm{TV}(P,P')=\mathrm{TV}\bigl(\Bin(N,1-\pi_{\zero}),\,\Bin(N',1-\pi'_{\zero})\bigr)$.
+\end{lemma}
+
+\begin{proof}
+By \cref{lem:fw-factor}, $P(\bm n_+)=b(n)\,\mathcal M(\bm n_+;n,\bm\pi^c)$ and $P'(\bm n_+)=b'(n)\,\mathcal M(\bm n_+;n,\bm\pi^c)$, where $b$ and $b'$ are the two binomial probability mass functions and $n=\sum_{\h}n_{\h}$. Hence
+$2\,\mathrm{TV}(P,P')=\sum_{n\ge0}|b(n)-b'(n)|\sum_{\bm n_+:\,\sum_{\h}n_{\h}=n}\mathcal M(\bm n_+;n,\bm\pi^c)=\sum_{n\ge0}|b(n)-b'(n)|$.
+\end{proof}
+
+\subsection{Proof of \texorpdfstring{\cref{thm:nonid}}{the non-identification theorem}}\label{app:id-nonid}
+
+\emph{Part (a).} Let $\bm\mu_+=\bm\mu_+(\bm u)$. By \cref{lem:id-param}, for each $\omega'$ there is exactly one $\bm u(\omega')\in\Theta_{\omega'}$ with $\bm\mu_+(\bm u(\omega'))=\bm\mu_+$. By \eqref{eq:fw-key}, $\mu_{\zero}(\bm u(\omega'))=e^{(-1)^K\omega'}\mathcal A(\bm\mu_+)=e^{(-1)^K(\omega'-\omega)}\mu_{\zero}(\bm u)$. In \eqref{eq:fw-mobius} only the $T=\emptyset$ term changes along the curve, so
+$u_S(\omega')-u_S=(-1)^{|S|}\{\log\mu_{\zero}(\bm u(\omega'))-\log\mu_{\zero}(\bm u)\}=(-1)^{K-|S|}(\omega'-\omega)$.
+Under (P), the observed table has law $\bigotimes_{\h}\Pois(\mu_{\h})$. This depends on $\bm u$ only through $\bm\mu_+$, so the law and the likelihood \eqref{eq:fw-likP} are constant along the curve. The map $\omega'\mapsto e^{(-1)^K(\omega'-\omega)}$ is a bijection from $\mathbb R$ onto $(0,\infty)$, which gives the stated ranges of $\mu_{\zero}$ and $\E N=\mu_{\mathrm{obs}}+\mu_{\zero}$. Every $u_S$ moves with slope $\pm1$, so none is identified.
+
+\emph{Part (b), first claims.} The conditional law of $\bm n_+$ given $n$ is $\mathcal M(\cdot\,;n,\bm\pi^c)$ by \cref{lem:fw-factor}. Fix $\omega$ and $\bm\pi^c$ in the interior of the simplex on $\Hobs$. Equation \eqref{eq:fw-keyM} determines a unique $\pi_{\zero}\in(0,1)$, namely $\pi_{\zero}=e^{\bar\omega}\mathcal A(\bm\pi^c)/\{1+e^{\bar\omega}\mathcal A(\bm\pi^c)\}$. Setting $\bm\pi_+=(1-\pi_{\zero})\bm\pi^c$ then determines $\bm\pi$. The vector so defined satisfies $\pi_{\zero}=e^{\bar\omega}\mathcal A(\bm\pi_+)$, and it also satisfies \eqref{eq:fw-key} with its own top interaction $\omega(\bm\pi)$; comparing the two gives $\omega(\bm\pi)=\omega$. Conversely, $\bm\pi^c$ and $\omega$ determine $\pi_{\zero}$, and hence $\bm\pi$. This proves the bijection.
+
+\emph{Part (b), no ratio-consistent estimator.} Fix $\bm\pi^c$ in the interior and $\omega\neq\omega'$. Let $a,a'\in(0,1)$ be the corresponding values of $\pi_{\zero}$, and $\bm\pi,\bm\pi'$ the corresponding probability vectors. By \eqref{eq:fw-keyM}, $\logit a-\logit a'=(-1)^K(\omega-\omega')\neq0$, so $c:=(1-a)/(1-a')\neq1$. Take integers $N_\nu\to\infty$ and set $N'_\nu=\lceil cN_\nu\rceil$. Then the binomial means $m_\nu=N_\nu(1-a)$ and $m'_\nu=N'_\nu(1-a')$ satisfy $0\le m'_\nu-m_\nu<1$, and $N'_\nu/N_\nu\to c$. Let $P_\nu$ and $P'_\nu$ be the laws of the observed table under $(N_\nu,\bm\pi)$ and $(N'_\nu,\bm\pi')$.
+
+\emph{Step 1: $\liminf_\nu\{1-\mathrm{TV}(P_\nu,P'_\nu)\}>0$.} By \cref{lem:id-tv} it suffices to compare $b_\nu=\Bin(N_\nu,1-a)$ and $b'_\nu=\Bin(N'_\nu,1-a')$. Their variances are $\sigma_\nu^2=m_\nu a$ and $\sigma_\nu'^2=m'_\nu a'$. Fix $C>0$. The de Moivre--Laplace local limit theorem \citep[Ch.~VII]{feller1968} gives, uniformly over integers $x$ with $|x-m_\nu|\le C\sigma_\nu$,
+\[
+  b_\nu(x)=\{1+o(1)\}\,\sigma_\nu^{-1}\phi(z_x),\qquad z_x=(x-m_\nu)/\sigma_\nu,
+\]
+where $\phi$ is the standard normal density. Because $(m'_\nu-m_\nu)/\sigma_\nu\to0$ and $\sigma'_\nu/\sigma_\nu\to r^{1/2}$ with $r=a'/a$, the same theorem applied to $b'_\nu$ gives, uniformly over the same range,
+$b'_\nu(x)=\{1+o(1)\}\,\sigma_\nu^{-1}\phi_r(z_x)$, where $\phi_r(z)=r^{-1/2}\phi(zr^{-1/2})$ is the $\mathrm N(0,r)$ density. Therefore
+\begin{align*}
+  1-\mathrm{TV}(b_\nu,b'_\nu)=\sum_x\min\{b_\nu(x),b'_\nu(x)\}
+  &\ge\{1+o(1)\}\sum_{|z_x|\le C}\sigma_\nu^{-1}\min\{\phi(z_x),\phi_r(z_x)\}\\
+  &\longrightarrow\int_{-C}^{C}\min\{\phi(z),\phi_r(z)\}\,dz>0,
+\end{align*}
+since the sum on the right of the inequality is a Riemann sum with mesh $\sigma_\nu^{-1}\to0$.
+
+\emph{Step 2.} Suppose some estimator satisfies $\Nhat/N\to1$ in probability as $N\to\infty$, for every fixed $\bm\pi$. Assume $c>1$; otherwise exchange the roles of the two sequences. Consider the test $\varphi_\nu=\ind{\Nhat>(1+c)N_\nu/2}$. Under $P_\nu$, $\Nhat/N_\nu\to1<(1+c)/2$, so $\E_{P_\nu}\varphi_\nu\to0$. Under $P'_\nu$, $\Nhat/N_\nu=(\Nhat/N'_\nu)(N'_\nu/N_\nu)\to c>(1+c)/2$, so $\E_{P'_\nu}(1-\varphi_\nu)\to0$. But every test satisfies $\E_{P}\varphi+\E_{P'}(1-\varphi)\ge1-\mathrm{TV}(P,P')$, and by Step~1 the right-hand side has a positive $\liminf$. This contradiction completes the proof. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{thm:closed}}{the closed-form theorem}}\label{app:id-closed}
+
+\emph{Part (a).} With $\omega$ fixed, the parameter space is $\Theta_\omega$. By \eqref{eq:fw-likP}, the log-likelihood depends on $\bm u$ only through $\bm\mu_+(\bm u)$:
+$\ell(\bm u)=\sum_{\h}\{n_{\h}\log\mu_{\h}(\bm u)-\mu_{\h}(\bm u)\}+\mathrm{const}$.
+By \cref{lem:id-param}, $\bm u\mapsto\bm\mu_+(\bm u)$ is a bijection from $\Theta_\omega$ onto $(0,\infty)^{\Hobs}$. Maximising $\ell$ over $\Theta_\omega$ is therefore equivalent to maximising $g(\bm\mu_+)=\sum_{\h}(n_{\h}\log\mu_{\h}-\mu_{\h})$ over the open orthant, and $g$ is a sum of functions of single coordinates. If $n_{\h}>0$, the map $\mu\mapsto n_{\h}\log\mu-\mu$ is strictly concave with unique maximiser $n_{\h}$. If $n_{\h}=0$, the map $\mu\mapsto-\mu$ has no maximiser on $(0,\infty)$. Hence a maximiser exists if and only if every $n_{\h}>0$, and it is then unique, with $\widehat{\bm\mu}_+=\bm n_+$. The maximum likelihood estimator $\widehat{\bm u}$ is the preimage of $\bm n_+$, so $\widehat\mu_{\zero}=\exp(\widehat u_\emptyset)=e^{\bar\omega}\mathcal A(\bm n_+)$ by \cref{lem:id-param}.
+
+\emph{Part (b).} By \cref{thm:nonid}(b), with $\omega$ fixed, $\bm\pi^c$ ranges over the interior of the simplex. The conditional likelihood $\mathcal M(\bm n_+;n,\bm\pi^c)\propto\prod_{\h}(\pi^c_{\h})^{n_{\h}}$ has an interior maximiser if and only if every $n_{\h}>0$, and it is then unique and equal to $\bm n_+/n$. By \eqref{eq:fw-keyM} and homogeneity, $\widehat\pi_{\zero}/(1-\widehat\pi_{\zero})=e^{\bar\omega}\mathcal A(\bm n_+/n)=e^{\bar\omega}\mathcal A(\bm n_+)/n$. Hence
+$n/(1-\widehat\pi_{\zero})=n\{1+\widehat\pi_{\zero}/(1-\widehat\pi_{\zero})\}=n+e^{\bar\omega}\mathcal A(\bm n_+)=\Nhat(\omega)$.
+For the binomial factor $B(N)=\binom{N}{n}\widehat\pi_{\zero}^{\,N-n}(1-\widehat\pi_{\zero})^n$ and $N>n$, we have $B(N)/B(N-1)=N\widehat\pi_{\zero}/(N-n)$. This is at least one if and only if $N\le n/(1-\widehat\pi_{\zero})=\Nhat(\omega)$, with equality only when $N=\Nhat(\omega)$. So $B$ is non-decreasing up to $\lfloor\Nhat(\omega)\rfloor$ and strictly decreasing afterwards. Its maximum is attained at $\lfloor\Nhat(\omega)\rfloor$, and also at $\Nhat(\omega)-1$ if $\Nhat(\omega)$ is an integer.
+
+\emph{Part (c).} For $K=2$, $\Hobs=\{10,01,11\}$ with signs $(+1,+1,-1)$, so $\widehat n_{\zero}(\omega)=e^{\omega}n_{10}n_{01}/n_{11}$, and $\omega=\log\{\mu_{11}\mu_{00}/(\mu_{10}\mu_{01})\}$ by \eqref{eq:fw-omega}. At $\omega=0$,
+$\Nhat(0)=n_{10}+n_{01}+n_{11}+n_{10}n_{01}/n_{11}=(n_{10}+n_{11})(n_{01}+n_{11})/n_{11}=n_{1+}n_{2+}/n_{11}$.
+
+\emph{Part (d).} In the regime of \cref{def:id-regime}, $n_{\h}/\mu_{\h}\to1$ in probability for every $\h\in\Hset$, so $\Pr(n_{\h}>0\ \forall\h)\to1$. On this event, a Taylor expansion of $\log(1+x)$ at $x=(n_{\h}-\mu_{\h})/\mu_{\h}=O_p(\tau^{-1/2})$ gives
+\begin{equation}\label{eq:id-app-lin}
+  \log n_{\h}-\log\mu_{\h}=\frac{n_{\h}-\mu_{\h}}{\mu_{\h}}+O_p(\tau^{-1}).
+\end{equation}
+Since $v_+$ and $v$ are of exact order $\tau^{-1}$, remainders of order $O_p(\tau^{-1})$ are negligible after division by $v_+^{1/2}$ or $v^{1/2}$.
+
+(i) By \eqref{eq:fw-key}, $\log\widehat n_{\zero}(\omega)-\log\mu_{\zero}=\sum_{\h}s_{\h}(\log n_{\h}-\log\mu_{\h})$, whose linear part is $L_1=\sum_{\h}s_{\h}(n_{\h}-\mu_{\h})/\mu_{\h}$. Under (P) the summands are independent with variances $s_{\h}^2/\mu_{\h}=1/\mu_{\h}$, so $\Var L_1=v_+$. Each standardised Poisson count is asymptotically normal, so $L_1/v_+^{1/2}\Rightarrow\mathrm N(0,1)$. Under (M), the multivariate central limit theorem gives $N^{-1/2}(\bm n-N\bm\pi)\Rightarrow\mathrm N(0,\operatorname{diag}\bm\pi-\bm\pi\bm\pi^{\top})$. Since $N^{1/2}L_1=\sum_{\h}(s_{\h}/\pi_{\h})N^{-1/2}(n_{\h}-N\pi_{\h})$, its limit variance is
+$\sum_{\h}s_{\h}^2/\pi_{\h}-(\sum_{\h}s_{\h})^2=\sum_{\h}1/\pi_{\h}-1=N(v_+-N^{-1})$, by \eqref{eq:fw-signsum}. This quantity is positive because each $\pi_{\h}<1$.
+
+(ii) Now $\log\widehat n_{\zero}(\omega)-\log\nzero$ equals $\sum_{\h}s_{\h}(\log n_{\h}-\log\mu_{\h})-(\log\nzero-\log\mu_{\zero})$, whose linear part is $L_2=\sum_{\h\in\Hset}c_{\h}(n_{\h}-\mu_{\h})$ with $c_{\h}=s_{\h}/\mu_{\h}$ for $\h\in\Hobs$ and $c_{\zero}=-1/\mu_{\zero}$. Under (P), $\Var L_2=\sum_{\h\in\Hset}c_{\h}^2\mu_{\h}=v$. Under (M), the limit variance of $N^{1/2}L_2$ is
+\[
+  \sum_{\h\in\Hset}(Nc_{\h})^2\pi_{\h}-\Bigl(\sum_{\h\in\Hset}Nc_{\h}\pi_{\h}\Bigr)^2
+  =\sum_{\h\in\Hset}\frac1{\pi_{\h}}-\Bigl(\sum_{\h\in\Hobs}s_{\h}-1\Bigr)^2=\sum_{\h\in\Hset}\frac1{\pi_{\h}}=Nv,
+\]
+again by \eqref{eq:fw-signsum}. So $L_2/v^{1/2}\Rightarrow\mathrm N(0,1)$ under both models. Finally, $\Nhat(\omega)-N=\widehat n_{\zero}(\omega)-\nzero=\mu_{\zero}\{L_2+o_p(v^{1/2})\}$, so $(\Nhat(\omega)-N)/(\mu_{\zero}v^{1/2})\Rightarrow\mathrm N(0,1)$, and $\mu_{\zero}^2v=\mu_{\zero}^2v_++\mu_{\zero}$.
+
+(iii) The ratio $\widehat v_+/v_+$ is a weighted average of the ratios $\mu_{\h}/n_{\h}$, with weights $\mu_{\h}^{-1}/v_+$, and each ratio tends to one in probability. The same holds for $\widehat v/v$, because $\widehat n_{\zero}(\omega)/\mu_{\zero}\to1$ by (i).
+
+\emph{The $K=2$ variance in \cref{rem:id-intervals}.} With $\omega=0$, $\mu_{00}=\mu_{10}\mu_{01}/\mu_{11}$, and
+\[
+  \mu_{00}^2\Bigl(\frac1{\mu_{10}}+\frac1{\mu_{01}}+\frac1{\mu_{11}}\Bigr)+\mu_{00}
+  =\frac{\mu_{10}\mu_{01}}{\mu_{11}^3}\bigl(\mu_{01}\mu_{11}+\mu_{10}\mu_{11}+\mu_{10}\mu_{01}+\mu_{11}^2\bigr)
+  =\frac{\mu_{10}\mu_{01}\,\mu_{1+}\mu_{2+}}{\mu_{11}^3}. \qquad\qed
+\]
+
+\subsection{Proof of \texorpdfstring{\cref{cor:bounds}}{the bounds corollary}}\label{app:id-bounds}
+
+\emph{Part (a).} Under (P), the law $\bigotimes_{\h}\Pois(\mu_{\h})$ of the observed table identifies $\bm\mu_+$, and conversely. By \cref{lem:id-param}, the parameter values compatible with $\bm\mu_+$ and with $|\omega'|\le\Omega$ are exactly $\{\bm u(\omega'):|\omega'|\le\Omega\}$, one for each $\omega'$, with $\mu_{\zero}=e^{(-1)^K\omega'}\mathcal A(\bm\mu_+)$. As $\omega'$ runs over $[-\Omega,\Omega]$, so does $(-1)^K\omega'$, and the increasing map $t\mapsto e^t\mathcal A(\bm\mu_+)$ carries $[-\Omega,\Omega]$ onto the stated interval, with each point attained exactly once. Under (M), the conditional law of $\bm n_+$ given any $n\ge1$ identifies $\bm\pi^c$. By \cref{thm:nonid}(b), each $\omega'$ then corresponds to exactly one $\bm\pi$, and its odds are $\pi_{\zero}/(1-\pi_{\zero})=e^{(-1)^K\omega'}\mathcal A(\bm\pi^c)$ by \eqref{eq:fw-keyM}. The rest of the argument is as under (P).
+
+\emph{Part (b).} By \eqref{eq:id-closed}, $\widehat n_{\zero}(\omega)=e^{(-1)^K\omega}\widehat n_{\zero}(0)$, and $(-1)^K\omega$ ranges over $[-\Omega,\Omega]$.
+
+\emph{Part (c).} Let $\alpha\in(0,\tfrac12)$, $\widehat\theta=\log\widehat n_{\zero}(0)$, $\theta_0=\log\mathcal A(\bm\mu_+)$ and $t=\bar\omega\in[-\Omega,\Omega]$, so that $\log\mu_{\zero}=\theta_0+t$ and $\log\widehat n_{\zero}(\omega)=\widehat\theta+t$. By \cref{thm:closed}(d)(i), $Z=(\widehat\theta-\theta_0)/v_+^{1/2}\Rightarrow\mathrm N(0,1)$, and $\rho=(\widehat v_+/v_+)^{1/2}\to1$. The coverage event is
+\[
+  \Bigl\{\frac{t-\Omega}{v_+^{1/2}}-c\rho\le Z\le\frac{t+\Omega}{v_+^{1/2}}+c\rho\Bigr\}.
+\]
+For $d\ge0$, the equation $\Phi(c+d)-\Phi(-c)=1-\alpha$ has a unique root $c(d)\in[z_{1-\alpha},z_{1-\alpha/2}]$, because the left side increases in $c$, is at most $1-\alpha$ at $c=z_{1-\alpha}$, and is at least $1-\alpha$ at $c=z_{1-\alpha/2}$. Moreover, $c(d)\to z_{1-\alpha}$ as $d\to\infty$. If $\Omega=0$, then $c=z_{1-\alpha/2}$ and the coverage tends to $1-\alpha$. If $\Omega>0$, then $d=2\Omega\widehat v_+^{-1/2}\to\infty$ in probability, so $c\to z_{1-\alpha}$. If $|t|<\Omega$, both ends of the event diverge and the coverage tends to one. If $t=\Omega$, the upper end diverges and the lower end tends to $-z_{1-\alpha}$, so the coverage tends to $1-\alpha$; the case $t=-\Omega$ is symmetric. Replacing $c$ by $z_{1-\alpha/2}\ge c$ only enlarges the interval. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{prop:direction}}{the direction-of-bias proposition}}\label{app:id-direction}
+
+By \eqref{eq:id-closed}, $\widehat n_{\zero}(0)=e^{-\bar\omega}\widehat n_{\zero}(\omega)$, where $\omega$ is the true value. By \cref{thm:closed}(d)(ii), $\log\widehat n_{\zero}(\omega)-\log\nzero=O_p(\tau^{-1/2})$, so $\widehat n_{\zero}(0)/\nzero\to e^{-\bar\omega}$. Since $n/N\to1-\pi_{\zero}$ and $\nzero/N\to\pi_{\zero}$ in probability under either model,
+$\Nhat(0)/N=n/N+\{\widehat n_{\zero}(0)/\nzero\}(\nzero/N)\to1-\pi_{\zero}+e^{-\bar\omega}\pi_{\zero}$.
+Multiplying \eqref{eq:fw-slice} by $(-1)^K$ gives $\bar\omega=(-1)^{K-1}\{\psi_k(0)-\psi_k(1)\}$. Imposing $\omega=0$ in \eqref{eq:fw-slice} sets $\psi_k(0)=\psi_k(1)$. Part (a): for $K=2$, $\bar\omega=\omega=\log\mathrm{OR}_{12}$ by \eqref{eq:fw-omega}. Part (b): for $K=3$ and $k=3$, \eqref{eq:fw-slice} gives $\psi_3(1)=\log\{\mu_{111}\mu_{001}/(\mu_{101}\mu_{011})\}=\log\mathrm{OR}_{12\mid h_3=1}$ and $\psi_3(0)=\log\{\mu_{110}\mu_{000}/(\mu_{100}\mu_{010})\}=\log\mathrm{OR}_{12\mid h_3=0}$, so $\bar\omega=\psi_3(0)-\psi_3(1)$. By \cref{lem:id-param}, the pairwise terms are unrestricted in the $\omega=0$ model, so any pattern of pairwise dependence is compatible with any value of $\omega$. Part (c) restates the sign rule. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{prop:id-hetero}}{the heterogeneity proposition}}\label{app:id-hetero}
+
+Under the assumptions, the histories are i.i.d.\ with $\pi_{\h}=\vartheta_{|\h|}$, where $\vartheta_j=\int p^j(1-p)^{K-j}\,dF(p)$. By \eqref{eq:fw-omega} applied to $\bm\pi$,
+\[
+  \omega=\sum_{j=0}^K(-1)^{K-j}\binom Kj\log\vartheta_j=\Delta^K\Lambda(0),
+  \qquad
+  \Lambda(t)=\log\int p^t(1-p)^{K-t}\,dF(p),
+\]
+where $\Delta f(t)=f(t+1)-f(t)$. The second equality is the binomial expansion of $\Delta^K=(E-I)^K$, where $E$ is the unit shift and $I$ the identity; the two operators commute. Since $F$ is supported in $[\eta,1-\eta]$, $X=\logit p$ is bounded. Hence $\Lambda(t)=\log\int(1-p)^Ke^{tX}dF$ is finite and infinitely differentiable on $\mathbb R$, and differentiation under the integral is justified by bounded convergence on compact $t$-sets. The family $G_t$, with $dG_t/dF\propto(1-p)^Ke^{tX}=p^t(1-p)^{K-t}$, is the exponential family generated by $X$ under $G_0$, and $\Lambda-\Lambda(0)$ is the cumulant generating function of $X$ under $G_0$. Hence $\log\E_{G_t}e^{sX}=\Lambda(t+s)-\Lambda(t)$, and $\Lambda^{(r)}(t)=\kappa_r(t)$ for every $r\ge1$. For smooth $f$, $\Delta f(t)=\int_0^1f'(t+u)\,du$. By induction on $K$,
+\[
+  \Delta^Kf(t)=\int_{[0,1]^{K-1}}\bigl\{f^{(K-1)}(t+1+\textstyle\sum_{j<K}u_j)-f^{(K-1)}(t+\sum_{j<K}u_j)\bigr\}\,du
+  =\int_{[0,1]^K}f^{(K)}\bigl(t+\textstyle\sum_{j\le K}u_j\bigr)\,du .
+\]
+With $f=\Lambda$ and $t=0$, this gives $\omega=\E\{\kappa_K(S_K)\}$, which is \eqref{eq:id-irwinhall}.
+
+\emph{Part (a).} The density of $G_t$ with respect to $F$ is bounded above and away from zero on $[\eta,1-\eta]$. Since $F$ is non-degenerate, $X$ is non-degenerate under every $G_t$, so $\kappa_2(t)=\Var_{G_t}(X)>0$ and $\omega>0$. \Cref{prop:direction}(a) then gives underestimation.
+
+\emph{Part (b): both signs occur for every $K\ge3$.} Let $\beta_r(s)$ denote the $r$th cumulant of a Bernoulli$(s)$ variable. Then $\beta_2(s)=s(1-s)$ and $\beta_{r+1}(s)=s(1-s)\beta_r'(s)$; the recursion follows by differentiating the cumulant generating function $\log(1-s+se^{\lambda})$ with respect to its natural parameter. By induction, $\beta_r$ is a polynomial of degree $r$ with leading coefficient $(-1)^{r-1}(r-1)!\neq0$, and it vanishes at $s=0$ and $s=1$ for $r\ge2$. For $r\ge3$, $\beta_{r-1}$ is not identically zero and vanishes at both endpoints, so $\beta_{r-1}'$ takes both signs on $(0,1)$: if it had one sign, $\beta_{r-1}$ would be monotone between two zeros and hence identically zero. Therefore $\beta_r=s(1-s)\beta_{r-1}'$ takes both signs on $(0,1)$.
+
+Now take a two-point $F$ with atoms $p^{(1)}<p^{(2)}$, where $p^{(1)}\in(\eta,1-\eta)$ is fixed and $p^{(2)}\in[\eta,1-\eta]$, where $\logit p^{(2)}-\logit p^{(1)}=\delta$, and weights $1-w$ and $w$. Under $G_t$, $X$ is a shifted and scaled Bernoulli variable, with jump $\delta$ and success probability
+\[
+  \varsigma(t)=\frac{w\,(p^{(2)})^t(1-p^{(2)})^{K-t}}{(1-w)(p^{(1)})^t(1-p^{(1)})^{K-t}+w\,(p^{(2)})^t(1-p^{(2)})^{K-t}},
+\]
+so that $\kappa_K(t)=\delta^K\beta_K(\varsigma(t))$, since a shift changes only the first cumulant. Let $\delta\downarrow0$, so that $p^{(2)}\downarrow p^{(1)}$. Then $\varsigma(t)\to w$ uniformly on $[0,K]$, so $\omega/\delta^K=\E\{\beta_K(\varsigma(S_K))\}\to\beta_K(w)$. Choosing $w$ with $\beta_K(w)>0$, or with $\beta_K(w)<0$, and $\delta$ small enough gives $\omega$ of either sign. The final claim of (b) follows from \cref{prop:direction}. \qed
+
+\subsection{Proofs of \texorpdfstring{\cref{thm:chao,prop:id-mt}}{the Chao bound and its reversal}}\label{app:id-chao}
+
+\begin{proof}[Proof of \cref{thm:chao} \citep{chao1987}]
+Conditionally on $\bm p$, $|\h_i|\sim\Bin(K,p_i)$ independently over $i$, so $\E f_j=\binom Kj\sum_ip_i^j(1-p_i)^{K-j}$. Let $x_i=(1-p_i)^{K/2}$ and $y_i=p_i(1-p_i)^{K/2-1}$; the exponents are non-negative because $K\ge2$, with $0^0=1$. Then $\sum_ix_i^2=\E f_0$, $K\sum_ix_iy_i=\E f_1$ and $\binom K2\sum_iy_i^2=\E f_2$. By the Cauchy--Schwarz inequality,
+\[
+  \frac{(\E f_1)^2}{K^2}=\Bigl(\sum_ix_iy_i\Bigr)^2\le\sum_ix_i^2\sum_iy_i^2=\E f_0\,\frac{\E f_2}{\binom K2},
+\]
+which rearranges to \eqref{eq:id-chao}, since $\binom K2/K^2=(K-1)/(2K)$. The second form follows from $N=\sum_j\E f_j=\E n+\E f_0$. Equality holds if and only if $\bm x$ and $\bm y$ are linearly dependent. When every $p_i\in(0,1)$, all $x_i>0$ and $y_i/x_i=p_i/(1-p_i)$, so equality holds if and only if the $p_i$ are all equal. If the $p_i$ are i.i.d.\ from $F$, the histories are i.i.d., and by the strong law $f_j/N\to\varphi_j=\binom Kj\int p^j(1-p)^{K-j}dF$ almost surely, with $\varphi_2>0$. Therefore
+$\Nhat_{\mathrm C}/N\to1-\varphi_0+\frac{K-1}{K}\varphi_1^2/(2\varphi_2)=\lambda_{\mathrm C}$.
+The Cauchy--Schwarz inequality in $L^2(F)$, applied to $x(p)=(1-p)^{K/2}$ and $y(p)=p(1-p)^{K/2-1}$, gives $\lambda_{\mathrm C}\le1$. Equality holds if and only if $p/(1-p)$ is $F$-almost surely constant, that is, if and only if $F$ is a point mass.
+\end{proof}
+
+\begin{proof}[Proof of \cref{prop:id-mt}]
+Under $M_t$, every incident has $\Pr(\h_i=\h_T)=\prod_{k\in T}a_k\prod_{k\notin T}(1-a_k)=P\prod_{k\in T}r_k$, where $P=\prod_k(1-a_k)$ and $r_k=a_k/(1-a_k)>0$. Hence $\E f_j=NPe_j(\bm r)$, where $e_j$ is the elementary symmetric polynomial of degree $j$. Using $e_1^2=\sum_kr_k^2+2e_2$, the claimed inequality $\frac{K-1}{K}e_1^2/(2e_2)\ge1$ is equivalent to $(K-1)e_1^2\ge K(e_1^2-\sum_kr_k^2)$, that is, to $K\sum_kr_k^2\ge(\sum_kr_k)^2$. This is the Cauchy--Schwarz inequality, with equality if and only if all $r_k$, equivalently all $a_k$, are equal. By the strong law, $f_j/N\to Pe_j(\bm r)$ almost surely. Hence $\Nhat_{\mathrm C}/N\to1-P+P\,\frac{K-1}{K}e_1^2/(2e_2)\ge1$.
+\end{proof}
+
+\subsection{Proof of \texorpdfstring{\cref{prop:referral}}{the referral proposition}}\label{app:id-referral}
+
+\emph{Part (a).} We have $\Pr(Y_1=1,Y_2=1)=p_1\Pr(\max(D,R)=1)=p_1\{1-(1-p_2)(1-q)\}=p_1\{p_2+q(1-p_2)\}$. Also $\Pr(Y_1=1,Y_2=0)=p_1(1-p_2)(1-q)$, and when $Y_1=0$ we have $Y_2=D$, which gives $\pi_{01}$ and $\pi_{00}$. Then
+\[
+  \mathrm{OR}_{12}=\frac{p_1\{p_2+q(1-p_2)\}(1-p_1)(1-p_2)}{p_1(1-p_2)(1-q)(1-p_1)p_2}
+  =\frac{p_2(1-q)+q}{p_2(1-q)}=1+\frac{q}{p_2(1-q)},
+\]
+and $u_{12}=\omega=\log\mathrm{OR}_{12}$ by \eqref{eq:fw-omega} with $K=2$. The monotonicity claims are immediate.
+
+\emph{Part (b).} By the strong law, $n_{1+}/N\to p_1$, $n_{2+}/N\to\pi_{11}+\pi_{01}=p_2+p_1q(1-p_2)$ and $n_{11}/N\to\pi_{11}>0$. Hence
+$\Nhat_{\mathrm{LP}}/N\to p_1\{p_2+p_1q(1-p_2)\}/[p_1\{p_2+q(1-p_2)\}]$.
+Subtracting this limit from one gives $q(1-p_2)(1-p_1)/\{p_2+q(1-p_2)\}$. Also $\widehat n_{\zero}^{\mathrm{LP}}=n_{10}n_{01}/n_{11}$, so $\widehat n_{\zero}^{\mathrm{LP}}/\nzero\to\pi_{10}\pi_{01}/(\pi_{11}\pi_{00})=1/\mathrm{OR}_{12}$.
+
+\emph{Part (c).} The recoded histories $(Y_1,Y_2^\circ)=(Y_1,D)$ are i.i.d.\ with independent components. Their odds ratio is therefore one, so $\omega=0$. By the strong law, $\Nhat^\circ/N\to p_1p_2/(p_1p_2)=1$. For general $K$, the recoded histories \emph{are} the direct-capture histories $(Y_1,D,Y_3,\dots,Y_K)$, so any restriction those satisfy carries over unchanged.
+
+\emph{Part (d).} Let $Z_i=R_iY_{i1}$ and $U^\circ=\{i:Z_i=0\}$. Membership in $U^\circ$ is decided independently for each incident, and every flagged incident is observed, so $n_Z=N-|U^\circ|$. On $\{Z=0\}$, either $Y_1=0$ or $R=0$, and in both cases $Y_2=D$. Hence
+\begin{align*}
+  \Pr(Y_1=1,Y_2=1,Z=0)&=p_1(1-q)p_2, & \Pr(Y_1=1,Y_2=0,Z=0)&=p_1(1-q)(1-p_2),\\
+  \Pr(Y_1=0,Y_2=1,Z=0)&=(1-p_1)p_2, & \Pr(Y_1=0,Y_2=0,Z=0)&=(1-p_1)(1-p_2),
+\end{align*}
+whose odds ratio is one. In the reduced table, the police total is $n_{1+}-n_Z$, the both-lists cell is $m_{11}$, and the NGO-only cell is $n_{01}$, since every incident with $Y_1=0$ is unflagged. By the strong law,
+\[
+  \frac{(n_{1+}-n_Z)(m_{11}+n_{01})}{N\,m_{11}}\to\frac{p_1(1-q)\{p_1(1-q)p_2+(1-p_1)p_2\}}{p_1(1-q)p_2}=1-p_1q,
+\]
+and $n_Z/N\to p_1q$. Adding the two limits gives $\Nhat^{\ddagger}/N\to1$.
+
+\emph{Part (e).} The history law factorises as $\pi_{\h}=\pi^{\{1,2\}}_{(h_1,h_2)}\,\pi^{B}_{\h_B}$ with $B=\{3,\dots,K\}$. By \cref{lem:id-block}, $u_S=0$ whenever $S$ meets both $\{1,2\}$ and $B$; in particular $\omega=0$. The model of \cref{thm:closed} with $\omega=0$ is therefore correctly specified, and $\widehat n_{\zero}(0)/\nzero\to1$ by \cref{thm:closed}(d)(ii). \qed
+
+\subsection{Proof of \texorpdfstring{\cref{thm:id-frontier}}{the frontier theorem}}\label{app:id-frontier}
+
+\emph{Part (a).} By \cref{cor:bounds}(a), the parameter values observationally equivalent to the truth with $|\omega'|\le\Omega$ all share $\bm\mu_+$, and hence $\mu_{1+}=\sum_{\h:h_1=1}\mu_{\h}$. Their dark figures fill $[e^{-\Omega}\mathcal A(\bm\mu_+),e^{\Omega}\mathcal A(\bm\mu_+)]$. So $\mathsf C_\kappa$ holds at all of them if and only if $e^{-\Omega}\mathcal A(\bm\mu_+)>\kappa\mu_{1+}$, that is, if and only if $\Omega<\Omega^*_\kappa$.
+
+\emph{Part (b).} Let $t=\bar\omega\ge-\Omega$. Since $\widehat n_{\zero}(\omega)=e^{t}\widehat n_{\zero}(0)$, we have $\log\widehat n_{\zero}(0)-\Omega\le\log\widehat n_{\zero}(\omega)$. Define the pivot
+\[
+  W=\log\frac{\widehat n_{\zero}(\omega)}{n_{1+}}-\log\frac{\mu_{\zero}}{\mu_{1+}}
+   =\sum_{\h}s_{\h}\log\frac{n_{\h}}{\mu_{\h}}-\log\frac{n_{1+}}{\mu_{1+}},
+\]
+where the second expression uses \eqref{eq:fw-key} and does not involve $\omega$. When $\mathsf C_\kappa$ fails, $\log\{\mu_{\zero}/(\kappa\mu_{1+})\}\le0$, and therefore
+\[
+  \{\widehat\Omega_{\kappa,\alpha}>\Omega\}
+  =\Bigl\{\log\frac{\widehat n_{\zero}(0)}{\kappa n_{1+}}-\Omega>z_{1-\alpha}\widehat s_1\Bigr\}
+  \subseteq\Bigl\{\log\frac{\widehat n_{\zero}(\omega)}{\kappa n_{1+}}>z_{1-\alpha}\widehat s_1\Bigr\}
+  \subseteq\{W>z_{1-\alpha}\widehat s_1\}.
+\]
+By \eqref{eq:id-app-lin} and $\log(n_{1+}/\mu_{1+})=(n_{1+}-\mu_{1+})/\mu_{1+}+O_p(\tau^{-1})$, the linear part of $W$ is $\sum_{\h}c_{\h}(n_{\h}-\mu_{\h})$ with $c_{\h}=s_{\h}/\mu_{\h}-h_1/\mu_{1+}$. Under (P), its variance is
+\[
+  \sum_{\h}c_{\h}^2\mu_{\h}=\sum_{\h}\frac1{\mu_{\h}}-\frac{2}{\mu_{1+}}\sum_{\h:h_1=1}s_{\h}+\frac{1}{\mu_{1+}}=v_++\frac1{\mu_{1+}}=:s_1^2,
+\]
+by the second identity in \eqref{eq:fw-signsum}. Under (M), the multinomial covariance subtracts $(\sum_{\h}c_{\h}\mu_{\h})^2/N=(\sum_{\h}s_{\h}-1)^2/N=0$, by the first identity. So $W/s_1\Rightarrow\mathrm N(0,1)$ under both models, and $\widehat s_1/s_1\to1$ as in \cref{thm:closed}(d)(iii). Hence $\limsup\Pr(\widehat\Omega_{\kappa,\alpha}>\Omega)\le\lim\Pr(W>z_{1-\alpha}\widehat s_1)=\alpha$. If $t=-\Omega$ and $\mu_{\zero}=\kappa\mu_{1+}$, both inclusions are equalities, and the limit equals $\alpha$.
+
+\emph{Part (c).} In the regime of \cref{def:id-regime}, $\log\widehat n_{\zero}(0)-\log\mathcal A(\bm\mu_+)\to0$ and $\log n_{1+}-\log\mu_{1+}\to0$ in probability. By homogeneity, $\mathcal A(\bm\mu_+)/\mu_{1+}=\mathcal A(\bm m_+)/m_{1+}$ does not depend on $\tau$, and $\widehat s_1\to0$. Hence $\widehat\Omega_{\kappa,\alpha}\to\Omega^*_\kappa$ in probability, and $\Pr(\widehat\Omega_{\kappa,\alpha}>\Omega)\to1$ whenever $\Omega<\Omega^*_\kappa$. \qed

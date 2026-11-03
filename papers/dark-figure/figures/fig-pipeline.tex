@@ -1,0 +1,184 @@
+% =====================================================================
+%  Figure: the estimation pipeline (LEAD).  Glyphs are schematic.
+%  Requires the house colours defined in preamble.tex.
+% =====================================================================
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,
+    tile/.style={rounded corners=3pt,draw=LabRule,line width=0.6pt,fill=white,
+                 minimum width=2.8cm,minimum height=2.7cm,inner sep=0pt},
+    ttl/.style={font=\footnotesize\bfseries,text=LabNavy,align=center,
+                anchor=north,inner sep=0pt,text width=2.7cm},
+    ref/.style={font=\scriptsize,text=LabGrey,align=center,anchor=south,
+                inner sep=0pt,text width=2.7cm},
+    flowarrow/.style={-{Stealth[length=4.5pt]},LabNavy,line width=0.8pt},
+    glyph/.style={LabNavy,line width=0.6pt},
+    lab/.style={font=\tiny,text=LabGrey,inner sep=0.5pt},
+  ]
+  % ------------------------------------------------------------------
+  % tile helper:  \tile{name}{x}{y}{title}{reference}
+  \newcommand{\tile}[5]{%
+    \node[tile] (#1) at (#2,#3) {};
+    \node[ttl] at ([yshift=-5pt]#1.north) {#4};
+    \node[ref] at ([yshift=4pt]#1.south) {#5};}
+  \def\yA{0}\def\yB{-4.05}
+  \def\gx{-0.1}  % vertical offset of glyph centres within a tile
+
+  % ---------------- row I: from records to links ----------------------
+  \tile{t1}{0}{\yA}{$K$ lists of\\raw records}{\S\ref{sec:sources}}
+  \tile{t2}{3.3}{\yA}{Within-list\\de-duplication}{\S\ref{sec:linkage}}
+  \tile{t3}{6.6}{\yA}{Blocking}{\S\ref{sec:linkage}}
+  \tile{t4}{9.9}{\yA}{Fellegi--Sunter /\\Bayesian linkage}{Alg.~\ref{alg:fsem}, Thm.~\ref{thm:review}}
+  \tile{t5}{13.2}{\yA}{Posterior over\\linkages $\Lambda$}{\S\ref{sec:linkage}--\ref{sec:models}}
+
+  % ---------------- row II: from links to the dark figure ------------
+  \tile{t6}{0}{\yB}{Capture-history\\table $\{n_{\h}\}$}{\S\ref{sec:framework}, Thm.~\ref{thm:linkbias}}
+  \tile{t7}{3.3}{\yB}{MSE posterior\\of $N$}{Thm.~\ref{thm:closed}, Eq.~(\ref{eq:lcmcr})}
+  \tile{t8}{6.6}{\yB}{Sensitivity to\\the interaction $\omega$}{Cor.~\ref{cor:bounds}}
+  \tile{t9}{9.9}{\yB}{Dark figure\\$\nzero=N-n$}{\S\ref{sec:models}, Eq.~(\ref{eq:smallarea})}
+  \tile{t10}{13.2}{\yB}{Funnel\\decomposition}{Prop.~\ref{prop:funnel}, Thm.~\ref{thm:shapley}}
+
+  % ---------------- arrows ----------------
+  \foreach \a/\b in {t1/t2,t2/t3,t3/t4,t4/t5,t6/t7,t7/t8,t8/t9,t9/t10}{
+    \draw[flowarrow] (\a.east) -- (\b.west);}
+  \draw[flowarrow,rounded corners=6pt] (t5.south) -- ++(0,-0.62) -| (t6.north);
+  \node[fill=white,font=\scriptsize,text=LabNavy,inner sep=3pt] at (6.6,-1.97)
+    {draws $\Lambda^{(1)},\dots,\Lambda^{(M)}$\ $\longmapsto$\ tables $n^{(m)}$\ $\longmapsto$\
+     $N^{(m)}$:\ linkage uncertainty is propagated, not ignored (Alg.~\ref{alg:pipeline})};
+
+  % ================== glyphs ==================
+  % 1. raw records: K = 4 stacks of different sizes
+  \begin{scope}[shift={(t1.center)},yshift=\gx cm]
+    \foreach \k/\hgt in {1/1.05,2/0.85,3/0.65,4/0.45}{
+      \pgfmathsetmacro{\xx}{-0.81+0.43*(\k-1)}
+      \draw[glyph,fill=LabTint,rounded corners=1pt] (\xx,-0.5) rectangle ++(0.34,\hgt);
+      \foreach \j in {1,...,8}{
+        \pgfmathsetmacro{\yy}{-0.5+0.12*\j}
+        \pgfmathparse{\yy< -0.5+\hgt-0.05 ? 1 : 0}
+        \ifnum\pgfmathresult=1 \draw[LabNavyLight,line width=0.4pt] (\xx+0.06,\yy) -- ++(0.22,0);\fi}
+      \node[lab,anchor=north] at (\xx+0.17,-0.52) {$k{=}\k$};
+    }
+  \end{scope}
+
+  % 2. within-list de-duplication: near-duplicates collapse
+  \begin{scope}[shift={(t2.center)},yshift=\gx cm]
+    \foreach \y/\c in {0.45/LabNavy,0.27/LabNavy,0.0/LabNavyLight,-0.27/LabAccent,-0.45/LabAccent}{
+      \fill[\c] (-0.55,\y) circle (2.1pt);}
+    \draw[LabGrey,line width=0.4pt,rounded corners=2pt] (-0.7,0.17) rectangle (-0.4,0.56);
+    \draw[LabGrey,line width=0.4pt,rounded corners=2pt] (-0.7,-0.56) rectangle (-0.4,-0.17);
+    \draw[-{Stealth[length=3pt]},LabGrey,line width=0.5pt] (-0.2,0) -- (0.25,0);
+    \foreach \y/\c in {0.3/LabNavy,0.0/LabNavyLight,-0.3/LabAccent}{
+      \fill[\c] (0.55,\y) circle (2.1pt);}
+  \end{scope}
+
+  % 3. blocking: compare only within blocks
+  \begin{scope}[shift={(t3.center)},yshift=\gx cm]
+    \def\c{0.17}
+    \foreach \i/\j/\n in {0/0/2,2/2/3,5/5/1}{
+      \fill[LabNavy!30] (-0.51+\i*\c,0.51-\j*\c) rectangle ++(\n*\c,-\n*\c);}
+    \draw[LabRule,line width=0.3pt,step=\c,shift={(-0.51,-0.51)}] (0,0) grid (6*\c,6*\c);
+    \draw[LabNavy,line width=0.5pt] (-0.51,-0.51) rectangle (0.51,0.51);
+    \node[lab,anchor=north] at (0,-0.53) {pairs compared};
+  \end{scope}
+
+  % 4. Fellegi--Sunter weights: u- and m-distributions, review band
+  \begin{scope}[shift={(t4.center)},yshift=\gx cm]
+    \fill[LabAccent!18] (-0.12,-0.45) rectangle (0.32,0.42);
+    \draw[LabGrey,line width=0.6pt,domain=-1.15:0.9,samples=50,smooth]
+      plot (\x,{-0.45+0.95*exp(-((\x+0.55)^2)/0.09)});
+    \draw[LabNavy,line width=0.8pt,domain=-0.4:1.15,samples=50,smooth]
+      plot (\x,{-0.45+0.62*exp(-((\x-0.62)^2)/0.07)});
+    \draw[LabNavy,line width=0.4pt] (-1.2,-0.45) -- (1.2,-0.45);
+    \node[lab,anchor=north] at (0,-0.47) {weight $w=\log m/u$};
+    \node[lab,text=LabAccent] at (0.1,0.22) {review};
+  \end{scope}
+
+  % 5. posterior over Lambda: a stack of sampled partitions
+  \begin{scope}[shift={(t5.center)},yshift=\gx cm]
+    \foreach \o in {0.16,0.08}{
+      \draw[LabRule,fill=white,rounded corners=1.5pt,line width=0.5pt]
+        (-0.75+\o,-0.5+\o) rectangle (0.6+\o,0.45+\o);}
+    \draw[LabNavyLight,fill=white,rounded corners=1.5pt,line width=0.5pt]
+      (-0.75,-0.5) rectangle (0.6,0.45);
+    \foreach \cx/\ys in {-0.45/{0.25,0,-0.25},-0.07/{0.25,-0.05,-0.3},0.3/{0.15,-0.2}}{
+      \foreach \yy in \ys {\fill[LabNavy] (\cx,\yy) circle (1.5pt);}}
+    \draw[LabNavy,line width=0.6pt] (-0.45,0.25) -- (-0.07,0.25) -- (0.3,0.15);
+    \draw[LabNavy,line width=0.6pt] (-0.45,0) -- (-0.07,-0.05);
+    \draw[LabAccent,line width=0.6pt,dash pattern=on 1.5pt off 1pt] (-0.07,-0.3) -- (0.3,-0.2);
+    \node[lab,anchor=north] at (-0.075,-0.52) {$\Lambda^{(m)}\sim p(\Lambda\mid\text{records})$};
+  \end{scope}
+
+  % 6. capture histories: a 3-list Venn diagram; outside = dark figure
+  \begin{scope}[shift={(t6.center)},yshift=\gx cm]
+    \draw[LabNavy,line width=0.5pt,rounded corners=1.5pt] (-1.15,-0.62) rectangle (1.15,0.6);
+    \fill[LabNavy,fill opacity=0.13] (-0.2,0.08) circle (0.36) (0.2,0.08) circle (0.36) (0,-0.24) circle (0.36);
+    \draw[LabNavy,line width=0.5pt] (-0.2,0.08) circle (0.36) (0.2,0.08) circle (0.36) (0,-0.24) circle (0.36);
+    \node[lab,text=LabNavy] at (-0.66,0.3) {$1$};
+    \node[lab,text=LabNavy] at (0.66,0.3) {$2$};
+    \node[lab,text=LabNavy] at (0.47,-0.48) {$3$};
+    \fill[LabNavy] (0,-0.02) circle (0.9pt);
+    \node[lab,text=LabAccent,font=\scriptsize] at (0.8,-0.42) {$\nzero\,?$};
+  \end{scope}
+
+  % 7. MSE posterior of N (to the right of the observed n)
+  \begin{scope}[shift={(t7.center)},yshift=\gx cm]
+    \fill[LabNavy!14,domain=-0.15:0.85,samples=40,smooth]
+      plot (\x,{-0.45+0.85*exp(-((\x-0.3)^2)/0.12)}) -- (0.85,-0.45) -- (-0.15,-0.45) -- cycle;
+    \draw[LabNavy,line width=0.8pt,domain=-0.55:1.15,samples=60,smooth]
+      plot (\x,{-0.45+0.85*exp(-((\x-0.3)^2)/0.12)});
+    \draw[LabNavy,line width=0.4pt] (-1.15,-0.45) -- (1.2,-0.45);
+    \draw[LabAccent,line width=0.7pt] (-0.75,-0.45) -- (-0.75,0.4);
+    \node[lab,text=LabAccent,anchor=south] at (-0.75,0.4) {$n$};
+    \node[lab,anchor=north] at (0.3,-0.47) {$N$};
+  \end{scope}
+
+  % 8. sensitivity: N-hat as a function of omega, with the bound band
+  \begin{scope}[shift={(t8.center)},yshift=\gx cm]
+    \fill[LabAccent!14] (-0.35,-0.5) rectangle (0.45,0.6);
+    \draw[LabNavy,line width=0.4pt,-{Stealth[length=2.5pt]}] (-1.0,-0.5) -- (1.15,-0.5);
+    \draw[LabNavy,line width=0.4pt,-{Stealth[length=2.5pt]}] (-1.0,-0.5) -- (-1.0,0.6);
+    \draw[LabNavy,line width=0.9pt,domain=-0.95:0.85,samples=40,smooth]
+      plot (\x,{-0.38+0.38*exp(1.05*\x)});
+    \draw[LabGrey,line width=0.4pt,dash pattern=on 1.5pt off 1pt] (-1.0,{-0.38+0.38*exp(-0.3675)}) -- (-0.35,{-0.38+0.38*exp(-0.3675)});
+    \draw[LabGrey,line width=0.4pt,dash pattern=on 1.5pt off 1pt] (-1.0,{-0.38+0.38*exp(0.4725)}) -- (0.45,{-0.38+0.38*exp(0.4725)});
+    \node[lab,anchor=north] at (0.05,-0.52) {$\omega\in[\underline\omega,\overline\omega]$};
+    \node[lab,anchor=east] at (-1.0,0.45) {$\widehat N$};
+  \end{scope}
+
+  % 9. the dark figure: posterior of n_0
+  \begin{scope}[shift={(t9.center)},yshift=\gx cm]
+    \fill[LabAccent!22,domain=-0.95:1.15,samples=60,smooth]
+      plot (\x,{-0.45+0.82*exp(-((\x+0.25)^2)/0.16)}) -- (1.15,-0.45) -- (-0.95,-0.45) -- cycle;
+    \draw[LabAccent,line width=0.9pt,domain=-0.95:1.15,samples=60,smooth]
+      plot (\x,{-0.45+0.82*exp(-((\x+0.25)^2)/0.16)});
+    \draw[LabNavy,line width=0.4pt] (-1.0,-0.45) -- (1.2,-0.45);
+    \draw[LabNavy,line width=0.5pt] (-1.0,-0.45) -- ++(0,0.06);
+    \node[lab,anchor=north] at (-1.0,-0.47) {$0$};
+    \node[lab,anchor=north] at (0.3,-0.47) {$\nzero$ by state $\times$ year};
+  \end{scope}
+
+  % 10. funnel decomposition: Shapley shares (incidence + four stages)
+  \begin{scope}[shift={(t10.center)},yshift=\gx cm]
+    \def\xo{-0.3}
+    \foreach \y/\w/\c/\l in {0.48/-0.42/LabNavyLight/{\theta},0.24/0.62/LabNavy/{\rvic},
+                             0/0.38/LabNavyMid/{\rpol},-0.24/0.95/LabAccent/{\rcls},
+                             -0.48/0.28/LabNavyLight/{\rsub}}{
+      \fill[\c] (\xo,\y-0.08) rectangle ++(\w,0.16);
+      \node[lab,anchor=east] at (-0.78,\y) {$\l$};}
+    \draw[LabNavy,line width=0.4pt] (\xo,-0.62) -- (\xo,0.62);
+    \node[lab,anchor=north] at (0.1,-0.6) {Shapley shares};
+  \end{scope}
+\end{tikzpicture}
+\caption{\textbf{From records to the dark figure.} Top row: records from
+$K$ lists are de-duplicated within lists, restricted by blocking to plausible
+candidate pairs, and linked across lists with a Fellegi--Sunter or Bayesian
+model; uncertain pairs (orange band) can be sent to clerical review. The
+output is a \emph{posterior distribution} over linkage structures $\Lambda$
+rather than a single matching. Bottom row: each draw $\Lambda^{(m)}$ induces a
+capture-history table; multiple-systems estimation yields a posterior for
+$N$; the untestable $K$-way interaction $\omega$ is varied over a stated range;
+and the dark figure $\nzero=N-n$ (the region outside every list) is reported
+by domain and decomposed along the reporting funnel of \cref{fig:funnel}.
+Labels under each tile point to the corresponding results.}
+\label{fig:pipeline}
+\end{figure}

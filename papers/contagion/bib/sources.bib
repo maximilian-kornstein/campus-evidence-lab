@@ -1,0 +1,200 @@
+% bib/sources.bib -- Paper 2 (Shock and Contagion), owned by SOURCES.
+% Data sources, official documentation and empirical literature not in refs.bib.
+% Empirical keys already in refs.bib (king2013, muller2021, williams2020,
+% loeffler2018, lewis2012, mohler2011, reinhart2018, hohle2014, mcgough2020)
+% are NOT duplicated here.
+% Entries with note = {VERIFY ...} could not be checked against the primary
+% source during drafting (web access was restricted); the verification pass
+% must confirm them before submission.
+
+% Allow long URLs in the bibliography to break at hyphens (no package needed).
+@preamble{ "\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks\do\-}" }
+
+% ---------------------------------------------------------------- NYC study
+
+@article{rosenbaum2025,
+  author  = {Rosenbaum, Janet E.},
+  title   = {Antisemitic hate crimes in {N}ew {Y}ork {C}ity: an analysis of administrative data, 2019--2024},
+  journal = {Journal of Public Health Policy},
+  volume  = {46},
+  number  = {4},
+  pages   = {816--829},
+  year    = {2025},
+  doi     = {10.1057/s41271-025-00596-4}
+}
+
+% ---------------------------------------------------------------- FBI / NIBRS
+@manual{fbi2025nibrs,
+  author       = {{Federal Bureau of Investigation}},
+  title        = {National Incident-Based Reporting System User Manual, Version 2025.0},
+  organization = {U.S. Department of Justice, Federal Bureau of Investigation, Criminal Justice Information Services Division},
+  year         = {2025},
+  url          = {https://le.fbi.gov/file-repository/nibrs-user-manual-2025-0-062625.pdf},
+  note         = {Accessed November 2026}
+}
+
+@manual{fbi2025nibrstech,
+  author       = {{Federal Bureau of Investigation}},
+  title        = {National Incident-Based Reporting System Technical Specification, Version 2025.0},
+  organization = {U.S. Department of Justice, Federal Bureau of Investigation, Criminal Justice Information Services Division},
+  year         = {2025},
+  url          = {https://le.fbi.gov/file-repository/2025-0-nibrs-technical-specification-062625.pdf},
+  note         = {Accessed November 2026}
+}
+
+@misc{fbi2026nibrs,
+  author       = {{Federal Bureau of Investigation}},
+  title        = {National Incident-Based Reporting System ({NIBRS})},
+  howpublished = {FBI Uniform Crime Reporting Program web page},
+  year         = {2026},
+  url          = {https://www.fbi.gov/how-we-can-help-you/more-fbi-services-and-information/ucr/nibrs},
+  note         = {Accessed November 2026}
+}
+
+@misc{fbi2025release,
+  author       = {{Federal Bureau of Investigation}},
+  title        = {{FBI} Releases 2024 Reported Crimes in the Nation Statistics},
+  howpublished = {Press release, 5 August 2025},
+  year         = {2025},
+  url          = {https://www.fbi.gov/news/press-releases/fbi-releases-2024-reported-crimes-in-the-nation-statistics},
+  note         = {Accessed November 2026}
+}
+
+% ---------------------------------------------------------------- event data
+@article{raleigh2010,
+  author  = {Raleigh, Clionadh and Linke, Andrew and Hegre, H{\aa}vard and Karlsen, Joakim},
+  title   = {Introducing {ACLED}: An Armed Conflict Location and Event Dataset},
+  journal = {Journal of Peace Research},
+  volume  = {47},
+  number  = {5},
+  pages   = {651--660},
+  year    = {2010},
+  doi     = {10.1177/0022343310378914},
+  note    = {VERIFY: metadata not re-checked during drafting}
+}
+
+@inproceedings{leetaru2013,
+  author    = {Leetaru, Kalev and Schrodt, Philip A.},
+  title     = {{GDELT}: Global data on events, location, and tone, 1979--2012},
+  booktitle = {Paper presented at the International Studies Association Annual Convention},
+  address   = {San Francisco, CA},
+  year      = {2013},
+  note      = {VERIFY: metadata not re-checked during drafting}
+}
+
+% ---------------------------------------------------------------- platform access
+@misc{eu2022dsa,
+  author       = {{European Parliament and Council of the European Union}},
+  title        = {Regulation ({EU}) 2022/2065 of 19 {O}ctober 2022 on a Single Market for Digital Services and amending {D}irective 2000/31/{EC} ({D}igital {S}ervices {A}ct)},
+  howpublished = {Official Journal of the European Union, L 277, 27 October 2022, pp.~1--102},
+  year         = {2022},
+  url          = {https://eur-lex.europa.eu/eli/reg/2022/2065/oj},
+  note         = {Article 40. VERIFY: text and implementing status not re-checked during drafting}
+}
+
+% ---------------------------------------------------------------- Kornstein Lab
+@misc{kornsteinlab2026darkfigure,
+  author       = {{Kornstein Lab for Antisemitism Research}},
+  title        = {The Dark Figure: Estimating Unreported Antisemitic Hate Crime with {B}ayesian Record Linkage and Multiple-Systems Estimation},
+  howpublished = {Companion methods paper},
+  year         = {2026},
+  note         = {November 2026}
+}
+
+@misc{kornsteinlab2026detection,
+  author       = {{Kornstein Lab for Antisemitism Research}},
+  title        = {Evaluating algorithms for antisemitism detection},
+  howpublished = {Design-stage research proposal},
+  year         = {2026},
+  note         = {Reports no empirical results}
+}
+
+@misc{kornsteinlab2026measurement,
+  author       = {{Kornstein Lab for Antisemitism Research}},
+  title        = {Measuring antisemitism in online discourse},
+  howpublished = {Design-stage research proposal},
+  year         = {2026},
+  note         = {Reports no empirical results}
+}
+
+% ---- Entries below are copied verbatim (same keys) from the companion paper's
+% ---- verified bib (../dark-figure/bib/sources.bib) for consistency across papers.
+
+@misc{nypdhate,
+  author       = {{New York City Police Department}},
+  title        = {{NYPD} Hate Crimes},
+  year         = {2026},
+  howpublished = {NYC Open Data, dataset bqiq-cu78},
+  url          = {https://data.cityofnewyork.us/Public-Safety/NYPD-Hate-Crimes/bqiq-cu78},
+  urldate      = {2026-11},
+  note         = {Accessed November 2026}
+}
+
+@techreport{osc2024hate,
+  author      = {{Office of the New York State Comptroller}},
+  title       = {The Concerning Growth of Hate Crime in {N}ew {Y}ork {S}tate},
+  institution = {Office of Budget Policy and Analysis, Office of the New York State Comptroller},
+  address     = {Albany, NY},
+  year        = {2024},
+  month       = aug,
+  url         = {https://www.osc.ny.gov/reports/concerning-growth-hate-crime-new-york-state},
+  urldate     = {2026-11},
+  note        = {Accessed November 2026}
+}
+
+@techreport{fbi2023supp,
+  author      = {{Federal Bureau of Investigation}},
+  title       = {Supplemental Hate Crime Statistics, 2021},
+  institution = {Uniform Crime Reporting Program, Criminal Justice Information Services Division},
+  year        = {2023},
+  month       = mar,
+  url         = {https://le.fbi.gov/file-repository/supplemental-hate-crime-statistics-2021.pdf},
+  urldate     = {2026-11},
+  note        = {Accessed November 2026}
+}
+
+@techreport{crs2025hate,
+  author      = {{Congressional Research Service}},
+  title       = {Federal Data on Hate Crimes in the United States},
+  institution = {Congressional Research Service},
+  type        = {CRS Report},
+  number      = {R46318},
+  year        = {2025},
+  url         = {https://www.congress.gov/crs-product/R46318},
+  urldate     = {2026-11},
+  note        = {Updated December 16, 2025. Accessed November 2026}
+}
+
+@techreport{adl2025audit,
+  author      = {{Anti-Defamation League}},
+  title       = {Audit of Antisemitic Incidents 2024},
+  institution = {ADL Center on Extremism},
+  address     = {New York},
+  year        = {2025},
+  month       = apr,
+  url         = {https://www.adl.org/resources/report/audit-antisemitic-incidents-2024},
+  urldate     = {2026-11},
+  note        = {Accessed November 2026}
+}
+
+@misc{adlheatmap,
+  author       = {{Anti-Defamation League}},
+  title        = {{H.E.A.T.} {M}ap: Hate, Extremism, Antisemitism, Terrorism},
+  year         = {n.d.},
+  howpublished = {Interactive map and downloadable incident data, ADL Center on Extremism},
+  url          = {https://www.adl.org/resources/tools-to-track-hate/heat-map},
+  urldate      = {2026-11},
+  note         = {Accessed November 2026}
+}
+
+@techreport{cst2026incidents,
+  author      = {{Community Security Trust}},
+  title       = {Antisemitic Incidents Report 2025},
+  institution = {Community Security Trust},
+  address     = {London},
+  year        = {2026},
+  month       = feb,
+  url         = {https://cst.org.uk/research/cst-publications/antisemitic-incidents-report-2025},
+  urldate     = {2026-11},
+  note        = {Accessed November 2026}
+}

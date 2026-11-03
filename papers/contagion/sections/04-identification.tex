@@ -1,0 +1,477 @@
+\section{Identification: contagion, common shocks and under-reporting}\label{sec:identification}
+
+Incidents cluster in time. The substantive question is \emph{why}. Clustering may
+reflect a salient external event whose effect lasts for days (a shock with an extended
+response). It may reflect incidents triggering further incidents (contagion). Or it
+may reflect both. Inference about contagion must also cope with two features of
+incident data: many shocks are never recorded in any event calendar, and many incidents
+are never recorded at all (the dark figure of Paper~1). This section gives four sets of
+results.
+\begin{enumerate}[(1)]
+  \item Without a shock calendar, the autocorrelation of counts cannot distinguish
+    contagion from clustered exogenous shocks
+    (\cref{thm:equiv,prop:th-cm,prop:th-mv}). Omitting shocks therefore creates
+    apparent contagion (\cref{thm:spurious}).
+  \item Identification is restored by a recorded shock calendar, by higher-order
+    information, or by provenance links (\cref{cor:equiv-id}).
+  \item Independent under-recording attenuates apparent contagion in closed form, which
+    permits a dark-figure correction (\cref{thm:thinning,cor:th-darkfig,prop:th-hetthin}).
+  \item Online-to-offline Granger non-causality is equivalent to a zero cross-excitation
+    kernel, with caveats (\cref{prop:granger}).
+\end{enumerate}
+The tension between ``true'' and ``apparent'' contagion is old. \Citet{feller1943}
+showed that the negative binomial law arises both from a contagion urn and from a
+Poisson law with a heterogeneous rate. \Cref{thm:equiv} is a dynamic, second-order
+analogue for self-exciting processes. Full proofs are in \cref{app:idproofs}.
+
+\paragraph{Conventions.} $H(\mu,n,\beta)$ denotes the stationary univariate Hawkes
+process with kernel $\varphi(t)=n\beta e^{-\beta t}$, $n\in(0,1)$, and mean
+$\bar\Lambda=\mu/(1-n)$ (\cref{prop:stationary}). Two stationary point processes are
+\emph{second-order equivalent} if they have the same mean and the same Bartlett
+spectrum. $\Pr_X$ denotes the law of a process $X$, and $F_\infty=2\pi f(0)/\bar\Lambda$
+is the asymptotic index of dispersion (\cref{sec:th-second}).
+
+\subsection{Second-order observational equivalence}\label{sec:th-equiv}
+
+Unrecorded shocks are modelled as random.
+
+\begin{definition}[Shot-noise Cox process]\label{def:th-sncox}
+Let $\nu\ge0$ and $\eta,a,\gamma>0$. Let $\{c_\ell\}$ be a homogeneous Poisson process
+on $\mathbb R$ with rate $\eta$; these are the times of unrecorded shocks. Define
+\[
+\xi(t)=\nu+\sum_{\ell:\,c_\ell\le t}a\,e^{-\gamma(t-c_\ell)} .
+\]
+Conditionally on $\xi$, let $N$ be a Poisson process with intensity $\xi$. We write
+$N\sim C(\nu,\eta,a,\gamma)$ \citep{cox1955,moller2003}.
+\end{definition}
+
+The process $C$ has no contagion: given the shocks, incidents occur independently.
+Each shock produces $\Pois(m)$ incidents, $m=a/\gamma$, at independent
+$\mathrm{Exp}(\gamma)$ delays, so $C$ is also a Neyman--Scott cluster process with mean
+$\nu+\eta m$. Any stationary Cox process directed by $\xi$ has Bartlett spectrum
+$(2\pi)^{-1}[\bar\Lambda+\hat c_\xi(\omega)]$, where $c_\xi$ is the covariance function
+of $\xi$ and $\hat c_\xi\ge0$ (\cref{lem:th-cox2}). By Campbell's theorem,
+$c_\xi(u)=\{\eta a^2/(2\gamma)\}e^{-\gamma|u|}$ for $C$, so
+\begin{equation}\label{eq:th-fC}
+  f_C(\omega)=\frac1{2\pi}\Big[\nu+\frac{\eta a}{\gamma}+\frac{\eta a^2}{\gamma^2+\omega^2}\Big].
+\end{equation}
+
+\begin{theorem}[Second-order observational equivalence]\label{thm:equiv}
+Let $H=H(\mu,n,\beta)$ and $C=C(\nu,\eta,a,\gamma)$.
+\begin{enumerate}[(a)]
+  \item $H$ and $C$ are second-order equivalent if and only if
+  \begin{equation}\label{eq:th-match}
+    \gamma=\beta(1-n),\qquad \nu+\frac{\eta a}{\gamma}=\bar\Lambda,\qquad
+    \eta a^2=\bar\Lambda\,\beta^2 n(2-n).
+  \end{equation}
+  \item For given $H$, the solutions of \eqref{eq:th-match} form a one-parameter
+  family, indexed by the shock amplitude $a\in[a_{\min},\infty)$ with
+  $a_{\min}=\beta n(2-n)/(1-n)$:
+  \[
+    \gamma=\beta(1-n),\qquad
+    \eta=\frac{\bar\Lambda\beta^2 n(2-n)}{a^2},\qquad
+    \nu=\bar\Lambda\Big(1-\frac{a_{\min}}{a}\Big).
+  \]
+  Equivalently, the mean number of incidents per shock, $m=a/\gamma$, satisfies
+  $m\ge m_{\min}=n(2-n)/(1-n)^2=F_\infty-1$, and $\eta m^2=\bar\Lambda(F_\infty-1)$.
+  The lower bound $a=a_{\min}$ gives $\nu=0$: every incident is then shock-driven.
+  \item For any matched pair and any bin width $\Delta>0$, the binned counts of $H$
+  and of $C$ have the same mean and autocovariance function. Hence they also share
+  their variance-time curves, index of dispersion and expected periodograms. As
+  $T\to\infty$, every continuous function of finitely many empirical means and
+  autocovariances of binned counts has the same probability limit under $H$ and
+  under $C$.
+\end{enumerate}
+\end{theorem}
+
+The extra degree of freedom $a$ is invisible at second order. It trades off frequent,
+small shocks ($a\downarrow a_{\min}$) against rare, large ones ($a\to\infty$, with
+$\nu\to\bar\Lambda$). The shock response decays at rate $\beta(1-n)$, the inverse
+of the \emph{cluster} time scale of $H$, rather than at the kernel rate $\beta$. Thus a
+Hawkes
+fit with branching ratio $n$ is matched, in its autocorrelations, by a world without
+contagion in which unrecorded shocks each trigger on average at least
+$(1-n)^{-2}-1$ incidents. The full laws of $H$ and $C$ do differ
+(\cref{cor:equiv-id}(ii)).
+
+\paragraph{General kernels.} The exponential kernel is not special. Completely monotone
+kernels have the form $g(t)=\int_{(0,\infty)}e^{-bt}\sigma(\dd b)$ for a positive
+measure $\sigma$. They include finite mixtures of exponentials and the Lomax (Omori-type) kernels
+$g(t)=(\vartheta/\varsigma)(1+t/\varsigma)^{-\vartheta-1}$ with
+$\vartheta,\varsigma>0$.
+
+\begin{proposition}[Completely monotone kernels]\label{prop:th-cm}
+Let $H$ be the stationary Hawkes process with background $\mu$ and kernel
+$\varphi=ng$, where $n\in(0,1)$ and $g$ is a completely monotone probability density
+on $(0,\infty)$ with $g(0+)<\infty$.
+\begin{enumerate}[(a)]
+  \item The resolvent $R=\sum_{m\ge1}\varphi^{*m}$ is completely monotone. The
+  covariance density of $H$ has the form $c_H(u)=\int e^{-b|u|}\,\mathcal K(\dd b)$ for a
+  positive measure $\mathcal K$ with $Z:=\int \mathcal K(\dd b)/b=\bar\Lambda(F_\infty-1)/2$. If $g$ is a
+  mixture of $K$ exponentials, then $\mathcal K$ has at most $K$ atoms.
+  \item Fix $A\ge F_\infty-1=n(2-n)/(1-n)^2$. Let $\{c_\ell\}$ be Poisson with rate
+  $\eta=2Z/A^2$, and give the shocks independent rates $B_\ell$ with law
+  $\pi(\dd b)=\mathcal K(\dd b)/(bZ)$. The Cox process directed by
+  \[
+  \xi(t)=\nu+\sum_{\ell:\,c_\ell\le t}A\,B_\ell\,e^{-B_\ell(t-c_\ell)},
+  \qquad \nu=\bar\Lambda-\eta A\ \ (\ge0),
+  \]
+  is second-order equivalent to $H$. Each shock produces $\Pois(A)$ incidents with an
+  exponential response at a random rate, and there is no contagion.
+  \item In particular, $f_H(\omega)\ge\bar\Lambda/(2\pi)$ for every $\omega$.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Delayed excitation leaves a second-order trace]\label{rem:th-noncm}
+By \cref{lem:th-cox2}, every Cox process satisfies $f\ge\bar\Lambda/(2\pi)$. Since
+$2\pi f_H(\omega)/\bar\Lambda=|1-\hat\varphi(\omega)|^{-2}$, a Hawkes process with
+$2\operatorname{Re}\hat\varphi(\omega)<|\hat\varphi(\omega)|^2$ at some $\omega$ is
+second-order distinguishable from \emph{every} Cox process. This happens whenever
+$\operatorname{Re}\hat g$ becomes negative, as it does for delayed or hump-shaped
+kernels. An example is the gamma kernel $g(t)\propto t^{k-1}e^{-\beta t}$ with $k>1$,
+for which $\hat g(\omega)=(1+i\omega/\beta)^{-k}$. For $k=2$ a direct calculation gives
+\[
+\min_\omega 2\pi f_H(\omega)/\bar\Lambda=1-n/4,
+\]
+attained at $\omega=\beta\sqrt{3-n}$. The dip lies at frequencies of the order of the
+inverse delay, so it is easily lost when counts are binned coarsely. For kernels that
+are not completely monotone but still satisfy $f_H\ge\bar\Lambda/(2\pi)$, whether a
+second-order-equivalent Cox process always exists remains open.
+\end{remark}
+
+\paragraph{Several streams.} If $\Phik$ is diagonal, the streams are independent, and
+\cref{thm:equiv,prop:th-cm} apply to each stream with its own shock process. Cross-excitation
+is different. Write $\bm E(\omega)=2\pi\bm f(\omega)-\operatorname{diag}(\bar{\bm\Lambda})$
+for the \emph{excess spectral matrix}.
+
+\begin{proposition}[Multivariate streams]\label{prop:th-mv}
+\begin{enumerate}[(a)]
+  \item For every stationary $M$-variate Cox process with square-integrable driver and
+  integrable covariance, $\bm E(\omega)=\hat{\bm c}_\xi(\omega)$ is Hermitian and
+  positive semidefinite for every $\omega$.
+  \item For the Hawkes process of \cref{prop:stationary},
+  $\bm E_H(\omega)=\bm G(\omega)\operatorname{diag}(\bar{\bm\Lambda})\bm G(\omega)^{*}-\operatorname{diag}(\bar{\bm\Lambda})$
+  with $\bm G=(\Imat-\hat\Phik)^{-1}$. Suppose some stream $k$ receives no excitation
+  ($\varphi_{kl}\equiv0$ for all $l$) but excites another stream $j$
+  ($\alpha_{jk}>0$). Then $\bm E_H(\omega)$ is not positive semidefinite for $\omega$
+  near $0$, and no $M$-variate Cox process, with any common or idiosyncratic shocks, is
+  second-order equivalent to it.
+  \item Consider common shocks with random loadings
+  $\bm a_\ell\in[0,\infty)^M$ and stream-specific response shapes $s_k\ge0$:
+  \[
+  \xi_k(t)=\nu_k+\sum_\ell a_{\ell k}\,s_k(t-c_\ell).
+  \]
+  The cross-covariance is
+  $c_{kj}(u)=\eta\,\E[a_ka_j]\int s_k(t+u)s_j(t)\,\dd t$. It is symmetric in $u$ when
+  $s_k=s_j$, but asymmetric in general. Lead--lag cross-correlation between two streams
+  is therefore not, by itself, evidence of directional excitation.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Spurious contagion from unrecorded shocks}\label{sec:th-spurious}
+
+Now reverse the direction. Suppose that the truth has no contagion and that the
+analyst fits a Hawkes process with a constant background.
+
+\begin{theorem}[Spurious contagion]\label{thm:spurious}
+Let $N$ be a stationary Cox process directed by a stationary $\xi\ge0$ with mean
+$\bar\Lambda>0$, $\E\xi(0)^2<\infty$ and integrable covariance $c_\xi\not\equiv0$.
+Define the \emph{burstiness index}
+\[
+\kappa=\frac1{\bar\Lambda}\int_{\mathbb R}c_\xi(u)\,\dd u=\frac{\hat c_\xi(0)}{\bar\Lambda}\ \ge0,
+\qquad\text{so that }F_\infty=1+\kappa .
+\]
+\begin{enumerate}[(a)]
+  \item \emph{Exact projection.} If $c_\xi(u)=\sigma^2e^{-\gamma|u|}$, then exactly one
+  exponential Hawkes process is second-order equivalent to $N$. Its parameters are
+  \begin{equation}\label{eq:th-nstar}
+    n^{*}=1-(1+\kappa)^{-1/2},\qquad \beta^{*}=\gamma(1+\kappa)^{1/2},\qquad
+    \mu^{*}=\bar\Lambda(1+\kappa)^{-1/2},
+  \end{equation}
+  where $\kappa=2\sigma^2/(\bar\Lambda\gamma)$. For $C(\nu,\eta,a,\gamma)$,
+  $\kappa=\eta a^2/(\bar\Lambda\gamma^2)$. The second-order structure of a two-state
+  regime-switching rate is also exponential: if $\xi$ switches between $\lambda_0$
+  and $\lambda_1$ at rates $q_{01}$ and $q_{10}$, with
+  $\pi_1=q_{01}/(q_{01}+q_{10})$, then
+  $\kappa=2(\lambda_1-\lambda_0)^2\pi_0\pi_1/\{\bar\Lambda(q_{01}+q_{10})\}$.
+  \item \emph{Moment-based estimators.} In the setting of (a), let $N$ be ergodic. Let
+  $\hat\theta_T=G(\hat{\bm m}_T)$, where $\hat{\bm m}_T$ collects the empirical mean and
+  finitely many empirical autocovariances of the binned counts on $[0,T]$, and $G$ is
+  continuous. If $\hat\theta_T$ is consistent for $(\mu,n,\beta)$ under every
+  stationary exponential Hawkes process, then $\hat\theta_T\to(\mu^*,n^*,\beta^*)$ in
+  probability under $N$.
+  \item \emph{Any covariance shape.} The dispersion functional
+  $n_F=1-F_\infty^{-1/2}$ equals $n$ for every stationary Hawkes process, whatever its
+  kernel. Applied to $N$, it equals $n^*=1-(1+\kappa)^{-1/2}$, which is positive
+  whenever $\kappa>0$.
+  \item \emph{Likelihood.} Now let $N$ be any stationary point process with mean
+  $\bar\Lambda$, $\E N(0,1]^2<\infty$ and covariance density $c$; for a Cox process,
+  $c=c_\xi$. Fit the family
+  $\lambda_\theta(t)=\mu+n\int_{(-\infty,t)}g_\beta(t-s)\,\dN(s)$ with
+  $\theta=(\mu,n,\beta)\in(0,\infty)\times[0,1)\times\mathcal B$, where each $g_\beta$
+  is a probability density on $(0,\infty)$ with $\int_0^\infty g_\beta|c|<\infty$. Let
+  \[
+  L(\theta)=\E\int_0^1\log\lambda_\theta(t)\,\dN(t)-\E\lambda_\theta(0)
+  \]
+  be the expected log-likelihood per unit time. If $\int_0^\infty g_{\beta_0}(u)c(u)\,\dd u>0$
+  for some $\beta_0\in\mathcal B$, then
+  \[
+  \sup_{\theta:\,n>0}L(\theta)>\sup_{\theta:\,n=0}L(\theta)=\bar\Lambda\log\bar\Lambda-\bar\Lambda .
+  \]
+  Hence every maximiser of $L$, that is, every pseudo-true value of the misspecified
+  maximum likelihood estimator, has $n>0$. For $C(\nu,\eta,a,\gamma)$ with exponential
+  $g_\beta$, $\int g_\beta c=\eta a^2\beta/\{2\gamma(\beta+\gamma)\}>0$ for every $\beta$.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Reading \cref{thm:spurious}]\label{rem:th-spurious}
+\begin{enumerate}[(i)]
+  \item \emph{Interpreting $\kappa$.} For $C$, $\kappa=s\,m$, where $s=\eta m/\bar\Lambda$
+  is the share of incidents triggered by unrecorded shocks and $m$ is the mean number
+  of incidents per shock. Hence $n^*=1-(1+sm)^{-1/2}$. As a purely arithmetical
+  illustration, $s=0.3$ and $m=10$ give $n^*=1/2$. Rare, large shocks and slow regime
+  switches give large $\kappa$, and so apparent near-criticality ($n^*\uparrow1$). This
+  is consistent with the ``apparent criticality'' that \citet{filimonov2015} discuss
+  for Hawkes fits to data with non-stationary activity.
+  \item \emph{What is and is not claimed.} Parts (a)--(c) concern second-order
+  estimators. These include variance-time and autocovariance fits, and spectral
+  (Whittle-type) estimators from binned counts \citep{cheysson2022}, whose population
+  contrast is minimised where the model spectrum equals the true one. Part (d) proves
+  only that the likelihood pseudo-true value has $n>0$. That value depends on the law
+  of $N$ beyond second order, so it need not equal $n^*$. Nothing forces the members of
+  the matched family of \cref{thm:equiv}, which all share $n^*$, to share it. The
+  simulation study (\cref{sec:simulation}) compares maximum likelihood fits with $n^*$.
+  Under the usual conditions for misspecified likelihoods \citep{white1982,ogata1978},
+  the estimator converges to the maximisers of $L$; we do not verify those conditions
+  here.
+  \item \emph{Consequence.} Salient events that are missing from the calendar, or whose
+  response is mis-specified, are absorbed into $\Amat$. Contagion estimates should
+  therefore be reported together with the shock calendar, and with their sensitivity to
+  omitting events from it.
+\end{enumerate}
+\end{remark}
+
+\subsection{Restoring identification}\label{sec:th-restore}
+
+\begin{corollary}[Identification restored]\label{cor:equiv-id}
+\begin{enumerate}[(i)]
+  \item \emph{Recorded shocks.} Consider model \eqref{eq:th-intensity} on $[0,T]$,
+  started from the empty history, under \cref{ass:th-model}, with the calendar
+  $(\tau_e,S_e)$ observed. Let
+  $m_k(t)=\mu_k(t)+\sum_e\beta_kS_e\psi_k(t-\tau_e)$ be the immigrant intensity. The
+  law of $\bm N$ on $[0,T]$ determines $m_k$ almost everywhere on $[0,T]$, and each
+  $\varphi_{kj}$ almost everywhere on $(0,T)$. Two further conditions complete
+  identification of all parameters:
+  \begin{itemize}
+    \item each kernel family is determined by its restriction to $(0,T)$, as
+      exponential, gamma and power-law families are;
+    \item the map $(\theta_k,\beta_k,\psi_k)\mapsto m_k$ is injective. This holds,
+      for instance, when $\tau_1>0$, some $S_e>0$, $\mu_k$ is constant (or
+      analytic in $t$ with linearly independent basis functions), and $\psi_k$
+      belongs to a family determined by its restriction to an interval.
+  \end{itemize}
+  In particular, when the $g_{kj}$ do not vanish on $(0,T)$, $\Amat=\zero$ is
+  distinguishable from every $\Amat\ne\zero$: clustering explained by recorded shocks
+  is not confounded with contagion.
+  \item \emph{Higher-order information.} Let $C=C(\nu,\eta,a,\gamma)$ be arbitrary.
+  Then $\Pr_H\neq\Pr_C$. Counts over long windows already reveal this. The limits
+  $\varkappa_j=\lim_{T\to\infty}T^{-1}\operatorname{cum}_j N(0,T]$ are
+  $\mu\E S^j$ ($S\sim$ Borel$(n)$) for $H$ and $\nu+\eta\E[\Pois(m)^j]$ for $C$.
+  Matching $\varkappa_1,\varkappa_2,\varkappa_3$ determines $(\nu,\eta,m)$
+  uniquely, with $\gamma$ free. With $\gamma=\beta(1-n)$, this choice is a member of
+  the family of \cref{thm:equiv}. For every such $C$,
+  \[
+  \varkappa_4^{H}-\varkappa_4^{C}=\frac{\mu\,n^3\,Q(1-n)}{(1-n)^7(2-n)}>0,\qquad
+  Q(u)=2u^4+8u^3+15u^2+16u+6 ,
+  \]
+  so no shot-noise Cox process matches the first four cumulant rates of $H$.
+  \item \emph{Provenance.} Suppose each true parent--offspring pair is recorded as a
+  link independently with probability $q\in(0,1]$, and there are no false links. Links
+  might come, for example, from perpetrator-confirmed imitation, a shared perpetrator
+  or a shared campaign. In the stationary multivariate model, the expected number of
+  links per unit time from stream $j$ to stream $k$ is
+  $q\,\alpha_{kj}\bar\Lambda_j$. Hence the support of $\Amat$ (the contagion graph) is
+  identified even when $q$ is unknown, and $\Amat$ is identified when $q$ is known.
+\end{enumerate}
+\end{corollary}
+
+Part (i) is the basis of the shock-augmented likelihood in \cref{sec:estimation}. Once
+shocks are recorded, the exogenous explanation becomes the nested sub-model
+$\Amat=\zero$, and the boundary likelihood-ratio test of $\alpha_{kj}=0$ applies. The
+result is relative to the calendar: unrecorded shocks remain subject to
+\cref{thm:spurious}. Hawkes models with exogenous news events in the intensity are
+used in finance for the same reason \citep{rambaldi2015}. Part (ii) is a
+statement of principle. Fourth-order cumulants are expensive to estimate, and the
+practical vehicle for higher-order information is the full likelihood.
+
+\begin{remark}[Why intensity jumps do not settle the question]\label{rem:th-filter}
+It is sometimes said that a Hawkes intensity jumps at events whereas a Cox intensity
+does not. This is true only of the Cox intensity \emph{given} the latent driver $\xi$,
+which is unobservable. With respect to the observed history, the Cox intensity is the
+filter $\lambda^N(t)=\E[\xi(t)\mid\Hist^N_{t-}]$. Wherever $\xi$ is continuous, Bayes'
+rule shows that $\lambda^N$ jumps at each event by
+$\Var(\xi(t)\mid\Hist^N_{t-})/\E(\xi(t)\mid\Hist^N_{t-})\ge0$ \citep[cf.][]{bremaud1981}.
+Learning about an unobserved shock looks like self-excitation.
+
+What does separate the models is the \emph{form} of the filter. For a Hawkes process
+the observable intensity is affine in the past. \Cref{lem:th-affine} shows that, among
+all stationary laws second-order equivalent to $H$, $\Pr_H$ is the only one whose
+observable intensity is affine in the past (with a square-integrable kernel). By (ii),
+the filter of every matched $C$ is therefore nonlinear. The information that separates
+contagion from shocks lies in this nonlinearity.
+\end{remark}
+
+\subsection{Under-reporting masks contagion}\label{sec:th-thinning}
+
+Paper~1 models recorded incidents as an independent thinning of all incidents, with
+recording probability $p$ equal to the reciprocal of the dark-figure ratio.
+
+\begin{theorem}[Under-reporting masks contagion]\label{thm:thinning}
+Let $H=H(\mu,n,\beta)$, and let $N^p$ be its independent $p$-thinning: each incident
+is recorded independently, with probability $p\in(0,1]$, independently of $H$.
+\begin{enumerate}[(a)]
+  \item $N^p$ is stationary with mean $p\bar\Lambda$ and Bartlett spectrum
+  \[
+  f_p(\omega)=\frac{p\bar\Lambda}{2\pi}\Big[1+\frac{p\,\beta^2 n(2-n)}{\beta^2(1-n)^2+\omega^2}\Big].
+  \]
+  \item $N^p$ is second-order equivalent to exactly one exponential Hawkes process,
+  $H(\mu',n',\beta')$, with
+  \[
+  \beta'(1-n')=\beta(1-n),\qquad \beta'^2=\beta^2(1-n)^2+p\,\beta^2n(2-n),\qquad
+  \mu'=p\bar\Lambda(1-n'),
+  \]
+  \begin{equation}\label{eq:th-hp}
+    n'=h_p(n)=1-\frac{1-n}{\sqrt{(1-n)^2+p\,n(2-n)}} .
+  \end{equation}
+  Equivalently, $F'_\infty-1=p\,(F_\infty-1)$: thinning scales the excess dispersion by $p$.
+  \item For $p\in(0,1)$, $h_p$ is a strictly increasing bijection of $[0,1)$, and
+  $pn<h_p(n)<n$ for $n\in(0,1)$. Moreover $h_p(n)=pn+O(n^2)$ as $n\downarrow0$,
+  $h_p(n)\to1$ as $n\uparrow1$, $h_p(n)\to0$ as $p\downarrow0$, $h_1(n)=n$, and
+  $\beta(1-n)\le\beta'\le\beta$. The inverse is
+  \begin{equation}\label{eq:th-hinv}
+    h_p^{-1}(n')=1-\Big[1+\frac{(1-n')^{-2}-1}{p}\Big]^{-1/2}.
+  \end{equation}
+  \item For $p<1$, $N^p$ is not a Hawkes process, for any kernel and any constant
+  background. Thus $n'$ is an \emph{apparent} branching ratio in a precise sense. It is
+  the branching ratio of the unique exponential Hawkes process that is second-order
+  equivalent to $N^p$. It is therefore the probability limit under $N^p$ of every
+  moment-based estimator as in \cref{thm:spurious}(b). We do not identify the
+  pseudo-true value of the Hawkes maximum likelihood estimator under $N^p$, which
+  need not equal $n'$.
+\end{enumerate}
+\end{theorem}
+
+Attenuation is never worse than the naive factor $p$, and it is weakest near
+criticality. Recording reduces each individual offspring count by the factor $p$, but
+the dispersion of whole clusters, which is what second-order statistics see, is
+reduced less.
+
+\begin{corollary}[Dark-figure correction]\label{cor:th-darkfig}
+Let $\hat n'$ estimate $n'$ from recorded incidents. Let $\hat p$ estimate the
+recording probability from Paper~1 ($p=1/D$, where $D$ is the dark-figure ratio), and
+let $\hat p$ be independent of $\hat n'$. Set $\hat n=h_{\hat p}^{-1}(\hat n')$ using
+\eqref{eq:th-hinv}. If $\hat n'\to n'$ and $\hat p\to p$, then $\hat n\to n$. By the
+delta method,
+\begin{equation}\label{eq:th-delta}
+  \Var(\hat n)\approx\Big[\frac{(1-n)^3}{p\,(1-n')^3}\Big]^2\Var(\hat n')
+  +\Big[\frac{n(1-n)(2-n)}{2p}\Big]^2\Var(\hat p),
+  \qquad \Var(\hat p)\approx\frac{\Var(\hat D)}{D^4}.
+\end{equation}
+\end{corollary}
+
+The second term in \eqref{eq:th-delta} does not shrink as $T$ grows: uncertainty about
+coverage puts a floor under the precision of any dark-figure-corrected contagion
+estimate. A Bayesian alternative passes posterior draws of $p$ from Paper~1 through
+$h_p^{-1}$. If $\hat n'$ is the Hawkes maximum likelihood estimator, its limit is the
+pseudo-true value under $N^p$, so the correction is exact only to the extent that this
+value coincides with $n'$ (\cref{thm:thinning}(d)). The simulation study quantifies the
+gap.
+
+\paragraph{Heterogeneous recording.} Severe incidents may be both more likely to be
+recorded and more likely to trigger further incidents. Suppose each incident carries an
+\emph{unpredictable} mark $X\in\{1,\dots,K\}$, such as a severity class. Marks are
+i.i.d.\ with law $\pi$, independent of the past. An incident with mark $x$ has expected
+direct offspring $n_x$ and is recorded independently with probability $p_x$, and the
+kernel is $\beta e^{-\beta t}$. Write $\E$, $\Var$ and $\Cov$ for moments under $\pi$,
+and set $\bar n=\E n_X<1$ and $\bar p=\E p_X$.
+
+\begin{proposition}[Heterogeneous recording]\label{prop:th-hetthin}
+The recorded process is stationary with mean $\bar p\bar\Lambda$, where
+$\bar\Lambda=\mu/(1-\bar n)$, and Bartlett spectrum
+\[
+f_{\mathrm{rec}}(\omega)=\frac{\bar p\bar\Lambda}{2\pi}\Big[1+\frac{\beta^2\{2(1-\bar n)\E[p_Xn_X]+\bar p\,\E[n_X^2]\}}{\beta^2(1-\bar n)^2+\omega^2}\Big].
+\]
+This is the spectrum of an exponential Hawkes process with branching ratio
+\[
+n''=1-\frac{1-\bar n}{\sqrt{(1-\bar n)^2+2(1-\bar n)\E[p_Xn_X]+\bar p\,\E[n_X^2]}} .
+\]
+The homogeneous correction of \cref{cor:th-darkfig} with $p=\bar p$ returns
+$n_{\mathrm{naive}}=h_{\bar p}^{-1}(n'')$, where
+\[
+(1-n_{\mathrm{naive}})^{-2}=(1-\bar n)^{-2}\Big[1+\frac{2(1-\bar n)\Cov(p_X,n_X)}{\bar p}+\Var(n_X)\Big].
+\]
+It overstates $\bar n$ whenever $2(1-\bar n)\Cov(p_X,n_X)/\bar p+\Var(n_X)>0$, in
+particular when more productive incidents are recorded more often.
+\end{proposition}
+
+With $p_x\equiv p$ and $n_x\equiv n$, \cref{prop:th-hetthin} reduces to
+\cref{thm:thinning}. Heterogeneous productivity alone ($p\equiv1$) already inflates the
+apparent branching ratio of unmarked data, to $1-(1-\bar n)/\sqrt{1+\Var(n_X)}$. The
+remedy is to model marks explicitly, with mark-specific productivities, and to use
+category-specific coverage when it is available. With stream-specific recording
+probabilities $\bm P=\operatorname{diag}(p_k)$, the excess spectral matrix becomes
+$\bm P\bm E_H\bm P$. This need not be of multivariate exponential-Hawkes form, and
+the univariate correction cannot simply be applied stream by stream, because cascades
+pass through unrecorded incidents. The multivariate case calls for an explicit thinning
+model.
+
+\subsection{Granger causality between online and offline streams}\label{sec:th-granger}
+
+Let $V=[M]$. Stream $j$ does \emph{not Granger-cause} stream $k$, relative to $V$, if
+the intensity $\lambda_k$ of $N_k$ with respect to $\Hist^V$ has a version that is
+predictable with respect to $\Hist^{V\setminus\{j\}}$, the history generated by the
+shock calendar and the other streams. This is local independence in the sense of
+\citet{didelez2008}, the continuous-time analogue of \citet{granger1969}.
+
+\begin{proposition}[Granger non-causality; \citealp{eichler2017}]\label{prop:granger}
+Under \eqref{eq:th-intensity} and \cref{ass:th-model}, with the process started from
+the empty history on $[0,T]$, stream $j$ does not Granger-cause stream $k$ if and only
+if $\varphi_{kj}=0$ almost everywhere on $(0,T)$. For exponential kernels, this holds
+if and only if $\alpha_{kj}=0$.
+\end{proposition}
+
+\Citet{eichler2017} prove the corresponding equivalence for stationary Hawkes processes
+and build graphical models on it. \Cref{app:idproofs} gives a short proof for the
+shock-augmented model. With $k=\mathrm{off}$ and $j=\mathrm{on}$, the hypothesis
+$\alpha_{\mathrm{off},\mathrm{on}}=0$ states that online volume carries no predictive
+information about offline incidents beyond that in the other modelled streams and the
+calendar. This is the hypothesis tested by the boundary-corrected likelihood-ratio test
+of \cref{sec:estimation}.
+
+\begin{remark}[Caveats for online-to-offline inference]\label{rem:th-granger-caveats}
+\begin{enumerate}[(i)]
+  \item \emph{Common shocks.} Granger causality is relative to the information set.
+  A salient event that is missing from the calendar, and that affects online volume
+  faster than offline incidents, induces online-to-offline Granger causality in the
+  modelled system even if $\alpha_{\mathrm{off},\mathrm{on}}=0$
+  (\cref{prop:th-mv}(c)).
+  \item \emph{Classifier error.} The online stream is measured with false positives
+  and false negatives. Suppose that, under the null, the offline intensity depends
+  only on the offline history and the calendar. Then it is predictable for every
+  filtration that contains these, so classifier errors that are independent of the
+  offline stream cannot \emph{create} online-to-offline causality. Under the
+  alternative they dilute the signal, attenuating the estimated cross-excitation and
+  the power of the test.
+  \item \emph{Under-recording with reverse excitation.} Suppose offline incidents are
+  recorded with $p<1$, trigger online volume ($\alpha_{\mathrm{on},\mathrm{off}}>0$)
+  and self-excite ($\alpha_{\mathrm{off},\mathrm{off}}>0$). Relative to the observed
+  history $\mathcal G$, the intensity of recorded offline incidents is
+  $p\,\E[\lambda_{\mathrm{off}}(t)\mid\mathcal G_{t-}]$. This depends on the online
+  history whenever that history is informative about \emph{unrecorded} offline
+  incidents. Online volume may then predict recorded offline incidents with
+  $\alpha_{\mathrm{off},\mathrm{on}}=0$. We do not formalise the size of this effect.
+  \item \emph{Timestamps.} If offline incidents are dated by report time rather than
+  occurrence time, online reactions to an incident can precede its record and appear
+  as online-to-offline excitation.
+\end{enumerate}
+\end{remark}

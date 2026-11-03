@@ -1,0 +1,93 @@
+% Shared preamble — owned by LEAD. Section authors: do not add packages; request them in NOTES-<owner>.md.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,mathtools,amsthm}
+\IfFileExists{newtxtext.sty}{%
+  \usepackage{newtxtext}\usepackage[varvw]{newtxmath}%
+}{%
+  \usepackage{mathptmx}\usepackage{amssymb}%
+}
+\usepackage[letterpaper,margin=1.05in,headheight=14pt]{geometry}
+\usepackage{thmtools}
+\usepackage{bm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{microtype}
+\usepackage{booktabs,array,tabularx}
+\usepackage{graphicx}
+\usepackage{caption,subcaption}
+\usepackage[shortlabels]{enumitem}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,fit,backgrounds,decorations.pathreplacing}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,linkcolor=MidnightBlue,citecolor=MidnightBlue,urlcolor=MidnightBlue]{hyperref}
+\usepackage[capitalise,noabbrev,nameinlink]{cleveref}
+
+\captionsetup{font=small,labelfont=bf,labelsep=period}
+\setlength{\parskip}{0pt}
+\setlist{itemsep=2pt,topsep=4pt}
+
+% ---- theorem environments (one shared counter) ----
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}{Assumption}
+\renewcommand{\theassumption}{A\arabic{assumption}}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\crefname{assumption}{Assumption}{Assumptions}
+\crefname{algorithm}{Algorithm}{Algorithms}
+\crefname{appendix}{Appendix}{Appendices}
+
+% ---- notation macros (see SPEC.md) ----
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\ind}[1]{\mathbf{1}\!\left\{#1\right\}}
+\newcommand{\Kset}{[K]}
+\newcommand{\Hset}{\mathcal{H}}
+\newcommand{\Hobs}{\mathcal{H}_{+}}          % nonzero histories
+\newcommand{\zero}{\mathbf{0}}
+\newcommand{\h}{\bm{h}}
+\newcommand{\nzero}{n_{\zero}}
+\newcommand{\Nhat}{\widehat{N}}
+\newcommand{\Link}{\Lambda}
+\newcommand{\Linkhat}{\widehat{\Lambda}}
+\newcommand{\Lop}{\mathcal{T}}               % linkage operator T(delta, eps)
+\newcommand{\dirichlet}{\operatorname{Dir}}
+\newcommand{\DP}{\operatorname{DP}}
+\newcommand{\Bern}{\operatorname{Bernoulli}}
+\newcommand{\Pois}{\operatorname{Poisson}}
+\newcommand{\Mult}{\operatorname{Multinomial}}
+\newcommand{\Bin}{\operatorname{Binomial}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\logit}{\operatorname{logit}}
+\newcommand{\argmin}{\operatorname*{arg\,min}}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+\newcommand{\rvic}{\rho_{\mathrm{vic}}}
+\newcommand{\rpol}{\rho_{\mathrm{pol}}}
+\newcommand{\rcls}{\rho_{\mathrm{cls}}}
+\newcommand{\rsub}{\rho_{\mathrm{sub}}}
+\newcommand{\nFBI}{n_{\mathrm{FBI}}}
+\newcommand{\factcheck}[1]{\textcolor{red}{[FACT-CHECK: #1]}}
+\newcommand{\todo}[1]{\textcolor{orange}{[TODO: #1]}}
+
+% ---- Paper 2 (contagion) notation macros ----
+\newcommand{\Hist}{\mathcal{F}}            % history / filtration F_t
+\newcommand{\Amat}{\bm{A}}                 % branching matrix [alpha_kj]
+\newcommand{\Imat}{\bm{I}}
+\newcommand{\Mmat}{\bm{M}}                 % contagion multiplier (I - A)^{-1}
+\newcommand{\spr}{\varrho}                 % spectral radius
+\newcommand{\Rker}{\bm{R}}                 % resolvent kernel
+\newcommand{\Phik}{\bm{\Phi}}              % excitation kernel matrix
+\newcommand{\dN}{\mathrm{d}N}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Lam}{\Lambda}                 % compensator

@@ -1,0 +1,162 @@
+\section{Statistical framework}\label{sec:framework}
+
+This section sets up the multiple-systems problem for a single domain. It introduces the sampling models and the log-linear parameterisation that the rest of the paper builds on, and it states the assumptions under which the dark figure can be identified. We fix a domain $d$ (for example a state--year) and suppress it from the notation; \cref{sec:models} brings the domain index back when it pools information across domains. The material is classical \citep{darroch1958,fienberg1972,bishop1975,international1995}. We present it so that the role of the single untestable parameter, the highest-order interaction $\omega$, is explicit from the start, because \cref{sec:identification} is organised around it.
+
+\subsection{Incidents, lists and the incomplete table}\label{sec:fw-table}
+
+Let $U$ be the set of in-scope antisemitic incidents that occur in the domain during the reference period. Its size $N$ is unknown, and incidents are indexed by $i\in\{1,\dots,N\}$. Incidents are recorded by $K$ lists, indexed by $k\in\Kset$. In our canonical configuration $K=4$: police records submitted to the FBI ($k=1$), an NGO audit ($k=2$), a community security organisation ($k=3$), and a campus or community self-report portal ($k=4$); see \cref{sec:sources}. Let $Y_{ik}=1$ if list $k$ records incident $i$ and $Y_{ik}=0$ otherwise. The \emph{capture history} of incident $i$ is $\h_i=(Y_{i1},\dots,Y_{iK})\in\Hset=\{0,1\}^K$, and we write $|\h|=\sum_k h_k$ for the number of lists that record an incident with history $\h$. The cell counts are
+\[
+  n_{\h}=\#\{i:\h_i=\h\},\qquad \h\in\Hset .
+\]
+Let $\Hobs=\Hset\setminus\{\zero\}$ denote the $2^K-1$ non-zero histories. The $2^K$ table $(n_{\h})_{\h\in\Hset}$ is \emph{incomplete}: an incident that no list records leaves no trace, so the cell $\nzero$ is missing by construction. It is not a structural zero, and it is not missing at random; it is simply unobservable. The data are $\bm n_+=(n_{\h})_{\h\in\Hobs}$. From them we form the number of distinct observed incidents, the dark figure, the list sizes, the frequency counts and the dark-figure ratios:
+\begin{equation}\label{eq:fw-dark}
+  n=\sum_{\h\in\Hobs}n_{\h},\qquad
+  \nzero=N-n,\qquad
+  n_{k+}=\sum_{\h:\,h_k=1}n_{\h},\qquad
+  f_j=\sum_{\h:\,|\h|=j}n_{\h},\qquad
+  D_k=\frac{N}{n_{k+}} .
+\end{equation}
+Here $f_j$ is the number of incidents recorded by exactly $j$ lists, so $f_0=\nzero$. The ratio $D_k$ is the number of in-scope incidents per incident recorded by list $k$; $D_1$ is the multiplier that converts the police count into the total.
+
+We often identify a history with its support. For $T\subseteq\Kset$, let $\h_T$ denote the history with $\supp(\h_T)=T$, so $\h_\emptyset=\zero$ and $\h_{\Kset}=\bm 1=(1,\dots,1)$. For small $K$ we abbreviate, e.g.\ $n_{101}=n_{(1,0,1)}$. Two pieces of notation recur throughout. The \emph{alternating sign} of a history is $s_{\h}=(-1)^{|\h|+1}$, which is $+1$ if an odd number of lists record the incident and $-1$ if an even number do. The \emph{alternating product} of a positive vector $\bm x=(x_{\h})_{\h\in\Hobs}$ is
+\begin{equation}\label{eq:fw-altprod}
+  \mathcal A(\bm x)=\prod_{\h\in\Hobs}x_{\h}^{\,s_{\h}}
+  =\frac{\prod_{|\h|\ \mathrm{odd}}x_{\h}}{\prod_{|\h|\ \mathrm{even},\,\h\neq\zero}x_{\h}} .
+\end{equation}
+There are $2^{K-1}$ odd and $2^{K-1}-1$ non-empty even subsets of $\Kset$. Hence
+\begin{equation}\label{eq:fw-signsum}
+  \sum_{\h\in\Hobs}s_{\h}=1,
+  \qquad\text{and}\qquad
+  \sum_{\h\in\Hobs:\,h_k=1}s_{\h}=\sum_{\bm g\in\{0,1\}^{K-1}}(-1)^{|\bm g|}=0\quad(k\in\Kset,\ K\ge2).
+\end{equation}
+The first identity makes $\mathcal A$ positively homogeneous of degree one: $\mathcal A(c\bm x)=c\,\mathcal A(\bm x)$ for $c>0$.
+
+\subsection{Sampling models}\label{sec:fw-sampling}
+
+\begin{definition}[Sampling models]\label{def:fw-models}
+\leavevmode
+\begin{itemize}[leftmargin=2.4em]
+  \item[(M)] \emph{Multinomial model.} $N$ is a fixed unknown integer. The histories $\h_1,\dots,\h_N$ are independent and identically distributed with $\Pr(\h_i=\h)=\pi_{\h}$, where $\bm\pi=(\pi_{\h})_{\h\in\Hset}$ lies in the interior of the probability simplex. Equivalently, $(n_{\h})_{\h\in\Hset}\sim\Mult(N,\bm\pi)$.
+  \item[(P)] \emph{Poisson model.} The counts $n_{\h}$, $\h\in\Hset$, are independent with $n_{\h}\sim\Pois(\mu_{\h})$ and $\mu_{\h}>0$, and $N=\sum_{\h\in\Hset}n_{\h}$.
+\end{itemize}
+In both models we write $\mu_{\h}=\E n_{\h}$, so $\mu_{\h}=N\pi_{\h}$ under (M). We also write $\bm\mu_+=(\mu_{\h})_{\h\in\Hobs}$ and $\mu_{\mathrm{obs}}=\sum_{\h\in\Hobs}\mu_{\h}=\E n$.
+\end{definition}
+
+Both models treat incidents as exchangeable and independent. Exchangeability does not mean that incidents are equally easy to record. Suppose incident $i$ has list-specific capture probabilities $\bm p_i=(p_{i1},\dots,p_{iK})$ drawn independently from a distribution $F$, and lists record independently given $\bm p_i$. Then the histories are i.i.d.\ with $\pi_{\h}=\int\prod_k p_k^{h_k}(1-p_k)^{1-h_k}\,dF(\bm p)$. Heterogeneity in reporting propensity (a violent assault versus a slur shouted in passing) therefore enters through $\bm\pi$, where it appears as interactions between lists (\cref{prop:id-hetero}); the latent-class models of \cref{sec:models} use exactly this representation. What (M) and (P) do rule out is dependence \emph{between} incidents, such as a series of incidents by one perpetrator that is reported, or missed, as a bundle. We regard independence across incidents as part of the sampling model and do not list it separately.
+
+\begin{lemma}[Likelihood factorisation]\label{lem:fw-factor}
+\leavevmode
+\begin{enumerate}[(a)]
+  \item Under (P), $N\sim\Pois(\mu_\bullet)$ with $\mu_\bullet=\sum_{\h\in\Hset}\mu_{\h}$. Conditionally on $N$, $(n_{\h})_{\h\in\Hset}\sim\Mult(N,\bm\mu/\mu_\bullet)$.
+  \item Let $\pi^c_{\h}=\pi_{\h}/(1-\pi_{\zero})$ for $\h\in\Hobs$; under (P), $\pi^c_{\h}=\mu_{\h}/\mu_{\mathrm{obs}}$. Write $\mathcal M(\bm n_+;n,\bm\pi^c)=n!\prod_{\h\in\Hobs}(\pi^c_{\h})^{n_{\h}}/n_{\h}!$. The likelihoods of the observed table under (M) and under (P) are
+  \begin{align}
+    L_M(N,\bm\pi)
+      &=\frac{N!}{(N-n)!\,\prod_{\h\in\Hobs}n_{\h}!}\;\pi_{\zero}^{\,N-n}\prod_{\h\in\Hobs}\pi_{\h}^{\,n_{\h}}\notag\\
+      &=\binom{N}{n}\pi_{\zero}^{\,N-n}(1-\pi_{\zero})^{n}\;\mathcal M(\bm n_+;n,\bm\pi^c),\qquad N\in\{n,n+1,\dots\},\label{eq:fw-likM}\\
+    L_P(\bm\mu)
+      &=\prod_{\h\in\Hobs}\frac{e^{-\mu_{\h}}\mu_{\h}^{n_{\h}}}{n_{\h}!}
+       =\frac{e^{-\mu_{\mathrm{obs}}}\mu_{\mathrm{obs}}^{\,n}}{n!}\;\mathcal M(\bm n_+;n,\bm\pi^c).\label{eq:fw-likP}
+  \end{align}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Part (a) is the standard Poisson--multinomial relation. For (b) under (M), the observed table is the multinomial vector with the $\nzero=N-n$ unseen incidents summed out. Its probability is the first expression in \eqref{eq:fw-likM}; substituting $\pi_{\h}=(1-\pi_{\zero})\pi^c_{\h}$ and $\sum_{\h\in\Hobs}n_{\h}=n$ gives the second. Under (P), multiply the Poisson probabilities and use $\mu_{\h}=\mu_{\mathrm{obs}}\pi^c_{\h}$.
+\end{proof}
+
+Equation \eqref{eq:fw-likM} is the observed-data likelihood in $N$. The population size enters only through the binomial factor, which says that $n\sim\Bin(N,1-\pi_{\zero})$. The conditional multinomial factor carries all the information about the composition of the observed table and none about $N$. Maximising it first and then plugging into the binomial factor gives the conditional maximum likelihood estimator of \citet{sanathanan1972}. Under (P) the situation is starker: the cell mean $\mu_{\zero}$ does not appear in \eqref{eq:fw-likP} at all. Any information about the dark figure must therefore come from a model that ties $\mu_{\zero}$ to the observed-cell means $\bm\mu_+$. The log-linear parameterisation makes that tie explicit.
+
+\subsection{Hierarchical log-linear models}\label{sec:fw-loglinear}
+
+The saturated log-linear model writes every cell mean as
+\begin{equation}\label{eq:fw-loglin}
+  \log\mu_{\h}=\sum_{S\subseteq\supp(\h)}u_S,\qquad \h\in\Hset,
+\end{equation}
+so that $u_\emptyset=\log\mu_{\zero}$. Under (M) the same expansion is used for $\log\pi_{\h}$, and normalisation fixes $u_\emptyset=\log\pi_{\zero}$. The parameterisation is a bijection, by Möbius inversion on the Boolean lattice \citep{rota1964}.
+
+\begin{lemma}[Möbius inversion]\label{lem:fw-mobius}
+For functions $f,g$ on the subsets of $\Kset$, $g(S)=\sum_{T\subseteq S}f(T)$ for all $S$ if and only if $f(S)=\sum_{T\subseteq S}(-1)^{|S|-|T|}g(T)$ for all $S$. Consequently, \eqref{eq:fw-loglin} defines a bijection between $\bm u\in\mathbb R^{2^K}$ and $\bm\mu\in(0,\infty)^{\Hset}$, with inverse
+\begin{equation}\label{eq:fw-mobius}
+  u_S=\sum_{T\subseteq S}(-1)^{|S|-|T|}\log\mu_{\h_T},\qquad S\subseteq\Kset .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+If $g(S)=\sum_{R\subseteq S}f(R)$ for all $S$, then
+$\sum_{T\subseteq S}(-1)^{|S\setminus T|}g(T)=\sum_{R\subseteq S}f(R)\sum_{T:\,R\subseteq T\subseteq S}(-1)^{|S\setminus T|}=\sum_{R\subseteq S}f(R)\,(1-1)^{|S\setminus R|}=f(S)$.
+The converse is the same computation with the roles of $f$ and $g$ exchanged. Apply this with $g(S)=\log\mu_{\h_S}$ and $f=\bm u$.
+\end{proof}
+
+By \eqref{eq:fw-mobius}, each $u_S$ is a log contrast. The main effect $u_{\{k\}}=\log(\mu_{\h_{\{k\}}}/\mu_{\zero})$ is the log-odds of being recorded by list $k$ alone rather than by no list. The two-way term $u_{\{k,l\}}$ is the log odds ratio between lists $k$ and $l$ among incidents missed by every other list. In general, $u_S$ is a generalised log odds ratio of the lists in $S$, computed in the stratum missed by every list outside $S$. Every $u_S$ involves the unobservable cell, through the term $T=\emptyset$. The highest-order interaction
+\begin{equation}\label{eq:fw-omega}
+  \omega=u_{\Kset}=\sum_{T\subseteq\Kset}(-1)^{K-|T|}\log\mu_{\h_T}
+\end{equation}
+plays a special role. For $K=2$, $\omega=\log\{\mu_{11}\mu_{00}/(\mu_{10}\mu_{01})\}$ is the log odds ratio between the two lists. For $K=3$, $\omega=\log\mathrm{OR}_{12\mid h_3=1}-\log\mathrm{OR}_{12\mid h_3=0}$. This is the change in the police--NGO odds ratio between incidents that the community security organisation records and incidents that it misses. In general, splitting the sum in \eqref{eq:fw-omega} according to whether $k\in T$ gives, for every $k$,
+\begin{gather}
+  \omega=\psi_k(1)-\psi_k(0),\label{eq:fw-slice}\\
+  \psi_k(1)=\sum_{T\subseteq\Kset\setminus\{k\}}(-1)^{K-1-|T|}\log\mu_{\h_{T\cup\{k\}}},\qquad
+  \psi_k(0)=\sum_{T\subseteq\Kset\setminus\{k\}}(-1)^{K-1-|T|}\log\mu_{\h_{T}} .\notag
+\end{gather}
+Here $\psi_k(x)$ is the $(K-1)$-way interaction of the other lists within the stratum $h_k=x$. The stratum $h_k=1$ is fully observed. The unobservable cell lies in the stratum $h_k=0$, where $\log\mu_{\zero}$ enters $\psi_k(0)$ with coefficient $(-1)^{K-1}$. Since $\omega$ is symmetric in the lists, any list may play the role of $k$.
+
+Isolating the term $T=\emptyset$ in \eqref{eq:fw-omega} and using $(-1)^{K}(-1)^{K-|T|}=(-1)^{|T|}$ gives the identity on which \cref{sec:identification} rests. It holds for every $\bm\mu\in(0,\infty)^{\Hset}$:
+\begin{equation}\label{eq:fw-key}
+  \mu_{\zero}=e^{\bar\omega}\,\mathcal A(\bm\mu_+),
+  \qquad \bar\omega=(-1)^K\omega .
+\end{equation}
+We call $\bar\omega$ the \emph{oriented} top interaction. It is the log of the factor by which the expected dark figure exceeds the alternating-product extrapolation $\mathcal A(\bm\mu_+)$ from the observed cells. Under (M), applying \eqref{eq:fw-key} to $\bm\pi$ and using the homogeneity of $\mathcal A$ gives the equivalent form
+\begin{equation}\label{eq:fw-keyM}
+  \frac{\pi_{\zero}}{1-\pi_{\zero}}=e^{\bar\omega}\,\mathcal A(\bm\pi^c).
+\end{equation}
+
+A \emph{hierarchical} log-linear model is specified by a generating class $\mathcal S$: a family of subsets of $\Kset$ that contains $\emptyset$ and all singletons and is closed under taking subsets. The model sets $u_S=0$ for $S\notin\mathcal S$. Graphical and decomposable models \citep{madigan1997} are special cases. As \citet{fienberg1972} observed, the $K$-way term cannot be estimated from an incomplete $2^K$ table. The models used to project into the missing cell therefore exclude it, $\Kset\notin\mathcal S$. Every such model satisfies $\omega=0$ and hence, by \eqref{eq:fw-key}, $\mu_{\zero}=\mathcal A(\bm\mu_+)$.
+
+\begin{remark}[Coding]\label{rem:fw-coding}
+\Cref{eq:fw-loglin} uses corner-point (reference-cell) coding. \Citet{bishop1975} use effect coding, in which $h_k$ is replaced by $x_k=2h_k-1\in\{-1,1\}$. Because $\mathcal S$ is closed under subsets, the columns $\{\prod_{k\in S}h_k\}_{S\in\mathcal S}$ and $\{\prod_{k\in S}x_k\}_{S\in\mathcal S}$ span the same space, so the two codings define the same hierarchical models. The top-order coefficients differ only by the positive factor $2^{-K}$. Statements such as ``$\omega=0$'' or ``$\omega>0$'' are therefore free of the coding.
+\end{remark}
+
+\subsection{Assumptions}\label{sec:fw-assumptions}
+
+\begin{assumption}[Closed population]\label{asm:fw-closed}
+For each domain, $U$ is a fixed set of incidents defined by incident date and location. Every list refers to the same reference period, and each incident belongs to exactly one domain.
+\end{assumption}
+
+\begin{assumption}[Perfect linkage]\label{asm:fw-linkage}
+The capture histories are observed without error. Records of the same incident are linked, and records of different incidents are not: $\Linkhat=\Link^*$.
+\end{assumption}
+
+\begin{assumption}[Harmonised scope]\label{asm:fw-scope}
+(a) Every retained record of every list refers to an incident in $U$, under a common definition, reference period and domain. (b) Every incident in $U$ is eligible to be recorded by every list: no list has a remit that structurally excludes part of $U$.
+\end{assumption}
+
+\begin{assumption}[Dependence restriction]\label{asm:fw-dependence}
+The highest-order interaction satisfies either (a) $\omega=\omega_0$ for a known $\omega_0$ (a point restriction; $\omega_0=0$ is the conventional model without a $K$-way interaction), or (b) $|\omega|\le\Omega$ for a known $\Omega\ge0$ (a sensitivity restriction).
+\end{assumption}
+
+\Cref{asm:fw-closed} is mild for incident data but has a practical edge. Lists record incidents with different lags, so a domain must be defined by the date of the incident, not the date of the record, and the analysis must wait until late records have arrived. \Cref{asm:fw-linkage} is never exactly true: police, NGO and community records share no identifier, and linkage on date, place, incident type and narrative makes errors that move mass between cells. \Cref{sec:linkage} replaces it with an explicit error model. \Cref{asm:fw-scope}(a) requires harmonising definitions. Statutory hate-crime categories, NGO audit categories and community-reporting categories differ (\cref{sec:sources,sec:plan}), and only a common definitional core can be compared across lists. Its failure is not innocuous. Out-of-scope records seen by one list only fall in cells with $|\h|=1$, which enter \eqref{eq:fw-altprod} with exponent $+1$, so the closed-form estimate of \cref{thm:closed} grows in proportion to such contamination. \Cref{asm:fw-scope}(b) fails if, say, a campus portal can record only campus incidents. In that case the domain must be restricted to the portal's remit, or the portal must be used only in a stratum where it operates. Finally, \cref{asm:fw-dependence} is the identifying assumption. \Cref{thm:nonid} shows that the data cannot test it, and \cref{sec:identification} studies what it buys and what happens when it fails, including the two main mechanisms that produce dependence in this application: referral between organisations (\cref{prop:referral}) and heterogeneous visibility of incidents (\cref{prop:id-hetero}).
+
+\subsection{An illustrative table}\label{sec:fw-example}
+
+\begin{table}[t]
+\centering
+\caption{A hypothetical $K=3$ capture table for one domain. \textbf{The numbers are invented for illustration and are not data.} Lists: police (1), NGO audit (2), community security organisation (3). The last row gives the exponent $s_{\h}$ with which each cell enters the alternating product \eqref{eq:fw-altprod}.}
+\label{tab:fw-example}
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+History $\h=(h_1,h_2,h_3)$ & $100$ & $010$ & $001$ & $110$ & $101$ & $011$ & $111$ & $000$\\
+\midrule
+Count $n_{\h}$ (illustrative) & 240 & 180 & 120 & 90 & 40 & 60 & 30 & ?\\
+Lists recording, $|\h|$ & 1 & 1 & 1 & 2 & 2 & 2 & 3 & 0\\
+Exponent $s_{\h}$ & $+1$ & $+1$ & $+1$ & $-1$ & $-1$ & $-1$ & $+1$ & ---\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{example}[Illustrative numbers, not data]\label{ex:fw-example}
+\Cref{tab:fw-example} shows a hypothetical table with $n=760$ observed incidents, list sizes $n_{1+}=400$, $n_{2+}=360$, $n_{3+}=250$, and frequency counts $f_1=540$, $f_2=190$, $f_3=30$. Applying the Lincoln--Petersen estimator to two lists at a time, ignoring the third, gives $1200$ for lists $(1,2)$, $1429$ for $(1,3)$ and $1000$ for $(2,3)$. Such disagreement is a symptom of dependence or heterogeneity. The model with $\omega=0$ uses all three lists. Among incidents that the community security organisation records, the police--NGO odds ratio is $n_{111}n_{001}/(n_{101}n_{011})=30\cdot120/(40\cdot60)=1.5$. The restriction $\omega=0$ asserts the same odds ratio of $1.5$ among incidents that it misses, which pins down the missing cell:
+\[
+  \widehat n_{000}=1.5\times\frac{n_{100}\,n_{010}}{n_{110}}=1.5\times\frac{240\cdot180}{90}=720
+  =\frac{n_{100}\,n_{010}\,n_{001}\,n_{111}}{n_{110}\,n_{101}\,n_{011}}=\mathcal A(\bm n_+).
+\]
+The implied total is $\Nhat=1480$, with a police dark-figure ratio of $\widehat D_1=3.7$. We return to this table in \cref{sec:identification} to illustrate interval estimation, the sensitivity bounds and the sensitivity frontier. None of these numbers describes any real jurisdiction.
+\end{example}

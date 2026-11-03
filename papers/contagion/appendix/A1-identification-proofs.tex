@@ -1,0 +1,539 @@
+\section{Proofs for Section~\ref{sec:identification}}\label{app:idproofs}
+
+Throughout, a stationary $M$-variate point process $\bm N$ with mean
+$\bar{\bm\Lambda}$ has a covariance measure
+$\operatorname{diag}(\bar{\bm\Lambda})\delta_0(\dd u)+\bm c(u)\,\dd u$, and Bartlett
+spectrum \eqref{eq:th-bartlett-def}. All Bartlett spectra below have continuous
+densities. Equality of spectra therefore means equality of these densities at every
+$\omega$.
+
+\subsection{Auxiliary lemmas}\label{app:th-lemmas}
+
+\begin{lemma}[Cox processes and independent thinning]\label{lem:th-cox2}
+\begin{enumerate}[(a)]
+  \item Let $\bm N$ be an $M$-variate stationary Cox process directed by
+  $\bm\xi=(\xi_k)$. Assume $\E\xi_k(0)^2<\infty$, write $\bar{\bm\Lambda}$ for the mean
+  and $\bm c_\xi(u)=\Cov\{\bm\xi(t+u),\bm\xi(t)\}$ for the covariance, and assume
+  $\bm c_\xi$ has integrable entries. Then $\bm N$ has covariance density $\bm c_\xi$
+  and Bartlett spectrum
+  $(2\pi)^{-1}[\operatorname{diag}(\bar{\bm\Lambda})+\hat{\bm c}_\xi(\omega)]$, where
+  $\hat{\bm c}_\xi(\omega)$ is Hermitian and positive semidefinite for every $\omega$.
+  \item Let $\bm N$ be stationary with mean $\bar{\bm\Lambda}$ and covariance density
+  $\bm c$. Record each point of stream $k$ independently with probability $p_k$, and
+  let $\bm P=\operatorname{diag}(p_k)$. The recorded process $\bm N^{\bm P}$ has mean
+  $\bm P\bar{\bm\Lambda}$ and covariance density $\bm P\bm c(u)\bm P$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Given $\bm\xi$, the streams are independent Poisson processes. Hence, for bounded
+Borel sets $I,J$,
+\[
+\E[N_k(I)N_j(J)\mid\bm\xi]=\delta_{kj}\int_{I\cap J}\xi_k
++\int_I\xi_k\int_J\xi_j .
+\]
+Taking expectations gives
+$\Cov\{N_k(I),N_j(J)\}=\delta_{kj}\bar\Lambda_k|I\cap J|+\int_I\int_J c_{\xi,kj}(t-s)\,\dd t\,\dd s$.
+For $\bm w\in\mathbb C^M$, the function $\bm w^*\bm c_\xi(u)\bm w$ is the covariance
+function of the stationary process $\bm w^*\bm\xi$. It is integrable, so by Fej\'er's
+theorem its Fourier transform is
+\[
+\lim_{T\to\infty}T^{-1}\,\E\Big|\int_0^Te^{-i\omega t}\{\bm w^*\bm\xi(t)-\E\bm w^*\bm\xi(t)\}\,\dd t\Big|^2\ge0 .
+\]
+
+(b) Let $R_i$ be the recording indicators. Pairs of distinct points contribute
+$\E[R_iR_{i'}]=p_kp_j$ times the second factorial moment measure, whose density off the
+diagonal is $\bar\Lambda_k\bar\Lambda_j+c_{kj}$. Each point paired with itself
+contributes $p_k\bar\Lambda_k|I\cap J|$ when $k=j$. Subtracting
+$p_kp_j\bar\Lambda_k\bar\Lambda_j|I||J|$ gives the claim.
+\end{proof}
+
+\begin{lemma}[Poisson cluster processes]\label{lem:th-cluster}
+Let $N$ be a stationary Poisson cluster process on $\mathbb R$. Cluster centres form a
+Poisson process of rate $r$. Each centre $x$ carries an independent copy of a finite
+random configuration $\{y_1,\dots,y_S\}$, possibly empty, placed at $x+y_i$. Assume
+$\E e^{\theta_0S}<\infty$ for some $\theta_0>0$. Then:
+\begin{enumerate}[(a)]
+  \item for every $j\ge1$,
+  $\varkappa_j=\lim_{T\to\infty}T^{-1}\operatorname{cum}_jN(0,T]=r\,\E S^j$;
+  \item the law of $N$ determines $w(k)=r\Pr(S=k)$ for every $k\ge1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Let $Y(x)$ be the number of points of a cluster centred at $x$ that fall in
+$(0,T]$. The marked Poisson process of centres has Laplace functional
+\[
+\log\E e^{-sN(0,T]}=-r\int_{\mathbb R}\E[1-e^{-sY(x)}]\,\dd x,\qquad s\ge0 .
+\]
+For every cluster, $Y(x)^j\le S^{j-1}Y(x)$ and $\int Y(x)\,\dd x=ST$. Hence
+$\int\E Y(x)^j\,\dd x\le T\,\E S^j<\infty$. By dominated convergence, the right-hand
+side is $j$ times differentiable at $s=0+$, with $j$th derivative
+$(-1)^jr\int\E Y(x)^j\,\dd x$. Therefore $\E N(0,T]^j<\infty$ by monotone convergence,
+and
+\[
+\operatorname{cum}_jN(0,T]=r\int_{\mathbb R}\E Y(x)^j\,\dd x .
+\]
+Let $D=\max_iy_i-\min_iy_i$. Then $Y(x)=S$ on an interval of $x$-values of length
+$(T-D)_+$, so
+\[
+S^j(1-D/T)_+\le T^{-1}\int Y(x)^j\,\dd x\le S^j .
+\]
+Dominated convergence gives $T^{-1}\operatorname{cum}_jN(0,T]\to r\E S^j$.
+
+(b) Suppose two such processes have the same law. By (a), $r\E S^j=r'\E S'^j$ for every
+$j\ge1$. The finite measures $\nu(k)=k\,w(k)$ and $\nu'(k)=k\,w'(k)$ on
+$\{1,2,\dots\}$ then have the same moments of every order $j\ge0$. Both have finite
+exponential moments for $\theta<\theta_0$. Their generating functions
+$\sum_k\nu(k)z^k$ are therefore analytic for $|z|<e^{\theta_0}$ and agree, so
+$\nu=\nu'$ and hence $w=w'$.
+\end{proof}
+
+By \cref{prop:stationary}, a stationary Hawkes process with any kernel satisfies
+\cref{lem:th-cluster} with $r=\mu$ and $S\sim$ Borel$(n)$. The process
+$C(\nu,\eta,a,\gamma)$ superposes a Poisson process of rate $\nu$ (clusters of size $1$)
+and a Neyman--Scott process with $r=\eta$ and $S\sim\Pois(m)$. It therefore satisfies
+the lemma with $w_C(k)=\nu\ind{k=1}+\eta e^{-m}m^k/k!$. Independent $p$-thinning of a
+Poisson cluster process gives a Poisson cluster process with cluster size
+$\Bin(S,p)$.
+
+\begin{lemma}[Janossy densities identify the intensity]\label{lem:th-janossy}
+Let $\bm N$ be an $M$-variate point process on $[0,T]$ with $\E\bm N[0,T]<\infty$. Its
+intensity, with respect to its own history and a deterministic calendar, is
+$\lambda_k(t)=h_k(t;\bm N|_{[0,t)})$ for measurable functionals with
+$h_k\ge h_{\min}>0$. For a configuration $x$ on $[0,t]$ with points
+$(s_1,k_1),\dots,(s_m,k_m)$, $s_1<\dots<s_m$, the Janossy density of
+$\bm N|_{[0,t]}$ is
+\[
+j_t(x)=\prod_{i=1}^m h_{k_i}(s_i;x_{<s_i})\exp\Big\{-\sum_k\int_0^t h_k(u;x_{<u})\,\dd u\Big\}>0
+\]
+\citep[Ch.~7]{daley2003}. For a configuration $x$ on $[0,t)$,
+$h_k(t;x)=j_t(x\cup\{(t,k)\})/j_t(x)$. Consequently, if two such specifications
+$h^{(1)},h^{(2)}$ give the same law on $[0,T]$, then
+$h^{(1)}_k(t;x)=h^{(2)}_k(t;x)$ for almost every $(t,x)$ with respect to Lebesgue
+measure times the Lebesgue--Poisson measure. In particular this holds for almost every
+$t$ at $x=\emptyset$, and for almost every $(s,t)$ at $x=\{(s,j)\}$.
+\end{lemma}
+
+\begin{proof}
+Adding a point at the right end $t$ multiplies $j_t$ by $h_k(t;x)$ and leaves the
+integral unchanged, which gives the ratio formula. The law determines its Janossy
+densities up to null sets. Since $j_t>0$, almost-everywhere statements under the law
+transfer to the Lebesgue--Poisson reference measure. The empty configuration is an atom
+of that measure, and the one-point configurations carry the measure $\dd s$.
+\end{proof}
+
+\begin{lemma}[Affine observable intensity characterises the Hawkes law]\label{lem:th-affine}
+Let $H=H(\mu,\varphi)$ be a stationary Hawkes process with kernel
+$\varphi\in L^1\cap L^2$, $\int\varphi=n<1$. Let $N$ be a stationary point process,
+second-order equivalent to $H$, whose intensity with respect to its own history is
+$\lambda(t)=c+\int_{(-\infty,t)}h(t-s)\,\dN(s)$, with $c>0$, $h\ge0$,
+$h\in L^1\cap L^2$ and $\int h<1$. Then $h=\varphi$ almost everywhere, $c=\mu$, and
+$\Pr_N=\Pr_H$.
+\end{lemma}
+
+\begin{proof}
+Let $c_N$ be the covariance density of $N$. Since $\dN(t)-\lambda(t)\dd t$ is
+orthogonal to $\Hist_{t-}$, we have $\Cov\{\dN(t)-\lambda(t)\dd t,\dN(s)\}=0$ for
+$s<t$. Expanding $\Cov\{\lambda(t),\dN(s)\}$ gives, for $u>0$,
+\begin{equation}\label{eq:th-wh}
+c_N(u)=\bar\Lambda h(u)+\int_0^\infty h(v)\,c_N(u-v)\,\dd v .
+\end{equation}
+The kernel $\varphi$ solves \eqref{eq:th-wh} with the same $c_N=c_H$, since $H$ has
+affine intensity with kernel $\varphi$. The difference $d=h-\varphi\in L^1\cap L^2$ is
+supported on $(0,\infty)$ and satisfies
+$\bar\Lambda d(u)+\int_0^\infty d(v)c_N(u-v)\,\dd v=0$ for $u>0$. Multiply by $d(u)$,
+integrate over $u>0$ and apply Parseval:
+\[
+0=\frac1{2\pi}\int|\hat d(\omega)|^2\{\bar\Lambda+\hat c_N(\omega)\}\,\dd\omega
+=\int|\hat d(\omega)|^2f_H(\omega)\,\dd\omega .
+\]
+Since $|1-\hat\varphi|\le1+n$, we have $f_H\ge\bar\Lambda(1+n)^{-2}/(2\pi)>0$. Hence
+$\hat d=0$, and so $d=0$. Taking expectations of the intensity gives
+$c=\bar\Lambda(1-n)=\mu$. Thus $N$ is a stationary solution of the Hawkes equation with
+parameters $(\mu,\varphi)$, and $\Pr_N=\Pr_H$ by the uniqueness result of
+\citet{bremaud1996}.
+\end{proof}
+
+\subsection{Proof of \texorpdfstring{\cref{thm:equiv}}{Theorem (equivalence)}}
+
+(a) By \eqref{eq:th-fH} and \eqref{eq:th-fC}, the means are $\bar\Lambda$ and
+$\nu+\eta a/\gamma$. Given equal means, the spectra agree if and only if
+\[
+\frac{\bar\Lambda\beta^2n(2-n)}{\beta^2(1-n)^2+x}=\frac{\eta a^2}{\gamma^2+x}
+\qquad\text{for all }x=\omega^2\ge0 .
+\]
+Both numerators are positive. Cross-multiplying and comparing coefficients in $x$
+gives $\eta a^2=\bar\Lambda\beta^2n(2-n)$ and $\gamma^2=\beta^2(1-n)^2$. The converse is
+immediate.
+
+(b) Solving \eqref{eq:th-match} for given $a$ gives
+$\eta=\bar\Lambda\beta^2n(2-n)/a^2$ and
+\[
+\nu=\bar\Lambda-\frac{\eta a}{\gamma}
+=\bar\Lambda\Big(1-\frac{\beta n(2-n)}{a(1-n)}\Big),
+\]
+which is nonnegative if and only if $a\ge a_{\min}$. With $m=a/\gamma$,
+$m_{\min}=a_{\min}/\{\beta(1-n)\}=n(2-n)/(1-n)^2$, which equals $F_\infty-1$ by
+\cref{prop:th-spectrum}. Also $\eta m^2=\eta a^2/\gamma^2=\bar\Lambda n(2-n)/(1-n)^2$.
+
+(c) For bins $I,J$, $\Cov\{N(I),N(J)\}$ integrates the covariance measure, which is
+the inverse Fourier transform of the Bartlett spectrum. The variance-time curve
+$\Var N(0,w]=\bar\Lambda w+2\int_0^w(w-u)c(u)\,\dd u$, the index of dispersion and the
+expected periodogram are functionals of the same objects. Both $H$ and $C$ are
+stationary Poisson cluster processes with almost surely finite clusters, so they are
+mixing \citep[Ch.~12]{daley2008}. Their binned count sequences are therefore stationary
+and ergodic, with finite second moments. By Birkhoff's theorem, empirical means and
+autocovariances converge almost surely to the common population values. The
+continuous mapping theorem concludes the proof. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{prop:th-cm}}{Proposition (CM kernels)}}
+
+\emph{Step 1: finite mixtures.} Let $\varphi(t)=\sum_{i=1}^Kc_ie^{-b_it}$ with
+$0<b_1<\dots<b_K$, $c_i>0$ and $\sum_ic_i/b_i=n<1$. Its Laplace transform
+$\tilde\varphi(z)=\sum_ic_i/(z+b_i)$ is strictly decreasing on each interval between
+consecutive poles. On $(-b_1,\infty)$ it falls from $+\infty$ to $0$ and equals $n<1$
+at $z=0$. Hence $\tilde\varphi=1$ at exactly one point $z_1\in(-b_1,0)$. On each
+$(-b_{i+1},-b_i)$ it falls from $+\infty$ to $-\infty$, which gives one more root
+$z_{i+1}$.
+
+Write $1-\tilde\varphi=P/Q$ with $Q(z)=\prod_i(z+b_i)$, so that $P$ is monic of degree
+$K$. These $K$ roots are then all the roots of $P$; they are real, negative and simple.
+Moreover $Q-P$ has degree $K-1$, so
+\[
+\tilde R=\frac{\tilde\varphi}{1-\tilde\varphi}=\frac{Q-P}{P}
+=\sum_{l=1}^K\frac{r_l}{z-z_l},\qquad
+r_l=\frac{1}{-\tilde\varphi'(z_l)}>0,
+\]
+since $\tilde\varphi(z_l)=1$ and $\tilde\varphi'<0$. The function
+$\sum_lr_le^{z_lt}$ and the resolvent $R=\sum_m\varphi^{*m}\in L^1$ have the same
+Laplace transform on $z\ge0$. Hence $R(t)=\sum_lr_le^{z_lt}$, a positive combination of
+decaying exponentials, which is completely monotone. Also
+$R(0+)=\lim_{z\to\infty}z\tilde R(z)=\varphi(0+)$.
+
+\emph{Step 2: general completely monotone kernels.} By Bernstein's theorem,
+$\varphi(t)=n\int_{(0,\infty)}e^{-bt}\sigma(\dd b)$ with $\int\sigma(\dd b)/b=1$. Fix
+$m\ge1$ and partition $(2^{-m},2^m]$ into cells of width $2^{-m}$. Let
+\[
+\varphi_m(t)=n\sum_I\sigma(I)e^{-b_I^+t},
+\]
+where $b_I^+$ is the right end of cell $I$. Each $\varphi_m$ is a finite exponential
+mixture. Refining a cell or extending the range can only increase $\varphi_m$, so
+$\varphi_m\le\varphi_{m+1}\le\varphi$, and $\varphi_m\uparrow\varphi$ pointwise by
+monotone convergence. Hence $\int\varphi_m\le n<1$ and, by Step 1, each
+$R_m=\sum_k\varphi_m^{*k}$ is completely monotone.
+
+Convolution powers are monotone in the kernel, so $R_m\uparrow R$ pointwise by monotone
+convergence. The limit $R$ is nonincreasing and integrable, with $\int R=n/(1-n)$, so it
+is finite on $(0,\infty)$. A pointwise limit of completely monotone functions is
+completely monotone \citep[Cor.~1.6]{schilling2012}. Moreover
+\[
+R(0+)=\sup_mR_m(0+)=\sup_m\varphi_m(0+)\le\varphi(0+)<\infty .
+\]
+
+\emph{Step 3: covariance.} By \cref{prop:th-spectrum},
+$2\pi f_H=\bar\Lambda|1+\hat R|^2$, so for $u\ne0$
+\[
+c_H(u)=\bar\Lambda\Big[R(|u|)+\int_0^\infty R(v)R(v+|u|)\,\dd v\Big].
+\]
+Write $R(t)=\int e^{-bt}\varpi(\dd b)$. By Tonelli,
+$\int_0^\infty R(v)R(v+u)\,\dd v=\iint e^{-b'u}(b+b')^{-1}\varpi(\dd b)\varpi(\dd b')$.
+Hence $c_H(u)=\int e^{-b|u|}\mathcal K(\dd b)$ with
+\[
+\mathcal K(\dd b)=\bar\Lambda\Big[1+\int\frac{\varpi(\dd b')}{b+b'}\Big]\varpi(\dd b)\ge0 .
+\]
+If $\varpi$ has $K$ atoms, so does $\mathcal K$. Also
+$Z=\int \mathcal K(\dd b)/b=\tfrac12\int_{\mathbb R}c_H=\tfrac12\{2\pi f_H(0)-\bar\Lambda\}=\bar\Lambda(F_\infty-1)/2$,
+and $\int \mathcal K(\dd b)=c_H(0)<\infty$ by Step 2.
+
+\emph{Step 4: a Cox process with the same second-order structure.} Each shot integrates
+to $A$, so $\E\xi=\nu+\eta A=\bar\Lambda$. By Campbell's theorem for the marked Poisson
+process $\{(c_\ell,B_\ell)\}$, for $u\ge0$,
+\[
+\Cov\{\xi(t),\xi(t+u)\}=\eta\,\E\int_{-\infty}^tA^2B^2e^{-B(t-c)}e^{-B(t+u-c)}\,\dd c
+=\frac{\eta A^2}{2}\int b\,e^{-bu}\,\pi(\dd b)=\frac{\eta A^2}{2Z}\int e^{-bu}\mathcal K(\dd b),
+\]
+which equals $c_H(u)$ for $\eta=2Z/A^2$. Then
+$\nu=\bar\Lambda-2Z/A=\bar\Lambda\{1-(F_\infty-1)/A\}\ge0$ if and only if
+$A\ge F_\infty-1$. Also $\E\xi^2<\infty$ because $c_H(0)<\infty$. By
+\cref{lem:th-cox2}(a), the Cox process has mean $\bar\Lambda$ and covariance density
+$c_H$, so it is second-order equivalent to $H$.
+
+\emph{Step 5.} $2\pi f_H(\omega)=\bar\Lambda+\int2b(b^2+\omega^2)^{-1}\mathcal K(\dd b)\ge\bar\Lambda$.
+
+\emph{Gamma kernel (\cref{rem:th-noncm}).} For $g(t)=\beta^2te^{-\beta t}$, put
+$x=\omega^2/\beta^2$. Then
+\[
+|1-\hat\varphi|^2=\frac{(1-n-x)^2+4x}{(1+x)^2}.
+\]
+Its derivative in $x$ has the sign of $3-n-x$, so it is maximised at $x=3-n$, where it
+equals $4/(4-n)$. Hence $\min_\omega2\pi f_H/\bar\Lambda=1-n/4$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{prop:th-mv}}{Proposition (multivariate)}}
+
+(a) This is \cref{lem:th-cox2}(a).
+
+(b) Row $k$ of $\Imat-\hat\Phik$ is $\bm e_k^{\top}$, so
+$\bm e_k^{\top}=\bm e_k^{\top}\bm G$. Hence $(\bm G\bm D\bm G^*)_{kk}=\bar\Lambda_k$ and
+$(\bm G\bm D\bm G^*)_{jk}=G_{jk}\bar\Lambda_k$, where
+$\bm D=\operatorname{diag}(\bar{\bm\Lambda})$. Thus $E_{H,kk}\equiv0$ and
+$E_{H,jk}=G_{jk}\bar\Lambda_k$. At $\omega=0$,
+$\bm G(0)=\Mmat=\sum_m\Amat^m\ge\Amat$ entrywise, so $G_{jk}(0)\ge\alpha_{jk}>0$.
+Since $\hat\Phik$ is continuous, $G_{jk}\neq0$ on a neighbourhood $U$ of $0$. On $U$,
+the principal $2\times2$ submatrix of $\bm E_H$ indexed by $\{k,j\}$ has determinant
+$-|E_{H,jk}|^2<0$, so $\bm E_H$ is not positive semidefinite there. By (a), no Cox
+process has this spectrum.
+
+(c) Campbell's theorem gives
+$\Cov\{\xi_k(t+u),\xi_j(t)\}=\eta\E[a_ka_j]\int s_k(t+u-c)s_j(t-c)\,\dd c$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{thm:spurious}}{Theorem (spurious contagion)}}
+
+(a) By \cref{lem:th-cox2}, $2\pi f_N(\omega)=\bar\Lambda+2\sigma^2\gamma/(\gamma^2+\omega^2)$.
+An exponential Hawkes process has
+$2\pi f(\omega)=\bar\Lambda_H+\bar\Lambda_H\beta^2n(2-n)/\{\beta^2(1-n)^2+\omega^2\}$.
+As in the proof of \cref{thm:equiv}(a), second-order equivalence holds if and only if
+$\bar\Lambda_H=\bar\Lambda$, $\beta(1-n)=\gamma$ and
+$\bar\Lambda\beta^2n(2-n)=2\sigma^2\gamma$. Using
+$\beta^2n(2-n)=\gamma^2\{(1-n)^{-2}-1\}$, the last condition becomes
+\[
+(1-n)^{-2}=1+2\sigma^2/(\bar\Lambda\gamma)=1+\kappa ,
+\]
+since $\int c_\xi=2\sigma^2/\gamma$. This has the unique solution $n^*\in(0,1)$, and
+then $\beta^*=\gamma/(1-n^*)$ and $\mu^*=\bar\Lambda(1-n^*)$. For the shot-noise process,
+$\sigma^2=\eta a^2/(2\gamma)$. For the two-state chain,
+$\Pr(X_u=1\mid X_0=1)=\pi_1+\pi_0e^{-(q_{01}+q_{10})u}$, which gives
+$c_\xi(u)=(\lambda_1-\lambda_0)^2\pi_0\pi_1e^{-(q_{01}+q_{10})|u|}$.
+
+(b) Let $\bm m(\theta)$ denote the population counterpart of $\hat{\bm m}_T$. Since $N$
+is stationary and ergodic with finite second moments, $\hat{\bm m}_T\to\bm m(\theta^*)$
+almost surely under $N$, by Birkhoff's theorem and (a). Under $H(\theta^*)$, which is
+ergodic (proof of \cref{thm:equiv}(c)), also $\hat{\bm m}_T\to\bm m(\theta^*)$, and by
+assumption $G(\hat{\bm m}_T)\to\theta^*$. Continuity of $G$ then forces
+$G(\bm m(\theta^*))=\theta^*$. Hence, under $N$,
+$\hat\theta_T=G(\hat{\bm m}_T)\to G(\bm m(\theta^*))=\theta^*$.
+
+(c) $\hat c_\xi$ is continuous because $c_\xi\in L^1$, so
+$F_\infty(N)=1+\hat c_\xi(0)/\bar\Lambda=1+\kappa$. For a Hawkes process,
+$F_\infty=|1-\hat\varphi(0)|^{-2}=(1-n)^{-2}$, so $n_F=n$.
+
+(d) Fix $\beta$ and set $X(t)=\int_{(-\infty,t)}g_\beta(t-s)\,\dN(s)\ge0$, a predictable
+stationary process with $\E X=\bar\Lambda$. The second factorial moment measure of $N$
+has density $\bar\Lambda^2+c(t-s)$ off the diagonal, so
+\begin{equation}\label{eq:th-EXdN}
+\E\int_0^1X(t)\,\dN(t)=\int_0^1\int_{-\infty}^{t}g_\beta(t-s)\{\bar\Lambda^2+c(t-s)\}\,\dd s\,\dd t
+=\bar\Lambda^2+I_\beta,
+\qquad I_\beta=\int_0^\infty g_\beta c .
+\end{equation}
+Since $\log\mu\le\log\lambda_\theta\le\log\mu+nX/\mu$, the function $L$ is finite.
+
+For $n=0$, $L(\mu,0,\beta)=\bar\Lambda\log\mu-\mu$, which is uniquely maximised at
+$\mu=\bar\Lambda$ with value $\bar\Lambda\log\bar\Lambda-\bar\Lambda$. Now fix
+$\mu=\bar\Lambda$ and $\beta=\beta_0$. By concavity, the difference quotients
+$D_n=\{\log(\bar\Lambda+nX)-\log\bar\Lambda\}/n\ge0$ increase to $X/\bar\Lambda$ as
+$n\downarrow0$. By monotone convergence and \eqref{eq:th-EXdN},
+\[
+\frac{L(\bar\Lambda,n,\beta_0)-L(\bar\Lambda,0,\beta_0)}{n}
+=\E\int_0^1D_n\,\dN-\bar\Lambda\ \longrightarrow\ \frac{I_{\beta_0}}{\bar\Lambda}>0 .
+\]
+Hence $L(\bar\Lambda,n,\beta_0)>\bar\Lambda\log\bar\Lambda-\bar\Lambda$ for all small
+$n>0$. For $C$, $c(u)=\{\eta a^2/(2\gamma)\}e^{-\gamma|u|}$, and integrating against
+$\beta e^{-\beta u}$ gives the stated $I_\beta$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{cor:equiv-id}}{Corollary (identification)}}
+
+(i) Under \cref{ass:th-model} the Volterra resolvent of $\Phik$ on $[0,T]$ is
+integrable, so $\E\bm N[0,T]<\infty$, and the intensity has the form of
+\cref{lem:th-janossy} with
+\[
+h_k(t;x)=m_k(t)+\sum_j\sum_{s\in x_j}\varphi_{kj}(t-s),\qquad h_k\ge\inf\mu_k>0 .
+\]
+Take two parameter values with the same law. Taking $x=\emptyset$ in
+\cref{lem:th-janossy} gives $m^{(1)}_k=m^{(2)}_k$ almost everywhere on $[0,T]$. Taking
+$x=\{(s,j)\}$ then gives $\varphi^{(1)}_{kj}(t-s)=\varphi^{(2)}_{kj}(t-s)$ for almost
+every $0<s<t<T$. By Fubini, $\varphi^{(1)}_{kj}=\varphi^{(2)}_{kj}$ almost everywhere
+on $(0,T)$.
+
+For the sufficient condition, $m_k=\mu_k$ on $(0,\tau_1)$. This determines $\mu_k$ when
+$\mu_k$ is constant, and on all of $[0,T]$ by analytic continuation when it is analytic.
+Then $\sum_eS_e\beta_k\psi_k(t-\tau_e)=m_k(t)-\mu_k(t)$ is known. On
+$[\tau_1,\tau_2)$, where only the first shock is active, this determines $\beta_k\psi_k$
+on an interval (if $S_1>0$; otherwise use the first $e$ with $S_e>0$). By assumption
+this determines $(\beta_k,\psi_k)$. Finally, if $\alpha_{kj}>0$ and $g_{kj}$ does not
+vanish on $(0,T)$, then $\varphi_{kj}\ne0$ on a set of positive measure, so the law
+differs from that with $\alpha_{kj}=0$.
+
+(ii) By \cref{lem:th-cluster}(a) and \cref{prop:stationary}(c), the cumulant rates of $H$
+are $\mu\E S^j$. Normalise $\mu=1$ (all $\varkappa_j$ scale linearly in $\mu$) and write
+$u=1-n$. Then
+\[
+\varkappa_1=u^{-1},\quad \varkappa_2=u^{-3},\quad \varkappa_3=(3-2u)u^{-5},\quad
+\varkappa_4=(15-20u+6u^2)u^{-7}.
+\]
+The cumulant rates of $C$ are $\nu+\eta\E[\Pois(m)^j]$, with
+$\E\Pois(m)^j=m$, $m+m^2$, $m+3m^2+m^3$ and $m+7m^2+6m^3+m^4$ for $j=1,\dots,4$.
+Matching $j=1,2,3$ gives $\eta m^2=\varkappa_2-\varkappa_1$ and
+$\eta(3m^2+m^3)=\varkappa_3-\varkappa_1$, hence
+\[
+m+3=\frac{\varkappa_3-\varkappa_1}{\varkappa_2-\varkappa_1}
+=\frac{3+u+u^2+u^3}{u^2(1+u)},\qquad
+m=\frac{(1-u)(3+4u+2u^2)}{u^2(1+u)}>0 .
+\]
+This determines $(\nu,\eta,m)$ uniquely, with $\gamma$ free. Moreover
+\[
+m-m_{\min}=\frac{(1-u)(2+2u+u^2)}{u^2(1+u)}>0 ,
+\]
+so with $\gamma=\beta(1-n)$ this is a member of the family of \cref{thm:equiv}. Since
+$7m^2+6m^3+m^4=m^2\{(m+3)^2-2\}$,
+\[
+\varkappa_4^C=\varkappa_1+\frac{(\varkappa_3-\varkappa_1)^2}{\varkappa_2-\varkappa_1}-2(\varkappa_2-\varkappa_1),
+\qquad
+\varkappa_4^H-\varkappa_4^C=\frac{\mathcal D}{\varkappa_2-\varkappa_1},
+\]
+where
+\[
+\mathcal D=(\varkappa_4-\varkappa_1)(\varkappa_2-\varkappa_1)+2(\varkappa_2-\varkappa_1)^2-(\varkappa_3-\varkappa_1)^2 .
+\]
+Direct expansion gives
+\[
+u^{10}\mathcal D=6-8u-13u^2+20u^3+2u^4-4u^5-5u^6+2u^8=(1-u)^4\,Q(u).
+\]
+Using $\varkappa_2-\varkappa_1=n(2-n)(1-n)^{-3}$ yields the stated difference, which is
+positive for $n\in(0,1)$ since $Q>0$ on $(0,1)$. If $\Pr_H=\Pr_C$, all cumulant rates
+would coincide, which is impossible.
+
+A second proof uses \cref{lem:th-cluster}(b). For the Borel law,
+$\Pr(S=2)\Pr(S=4)/\Pr(S=3)^2=32/27$. For the cluster law of $C$ the same ratio is $3/4$,
+since the $\nu$-component only affects $k=1$.
+
+(iii) In the cluster representation, each stream-$j$ incident has $\Pois(\alpha_{kj})$
+stream-$k$ offspring, independently of everything else. By stationarity, the
+parent--offspring pairs of type $(j,k)$ therefore occur at rate $\alpha_{kj}\bar\Lambda_j$
+per unit time, and each is recorded with probability $q$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{thm:thinning}}{Theorem (thinning)} and \texorpdfstring{\cref{cor:th-darkfig}}{Corollary (dark-figure correction)}}
+
+(a) This follows from \cref{lem:th-cox2}(b) with $M=1$ and \eqref{eq:th-fH}.
+
+(b) By the argument of \cref{thm:equiv}(a), $H(\mu',n',\beta')$ is second-order
+equivalent to $N^p$ if and only if $\bar\Lambda'=p\bar\Lambda$,
+$\beta'(1-n')=\beta(1-n)=:b$ and $\beta'^2n'(2-n')=p\beta^2n(2-n)$. Put
+$F(x)=(1-x)^{-2}$. Then $\beta^2n(2-n)=b^2\{F(n)-1\}$ and similarly for $n'$, so the
+last condition reads $F(n')-1=p\{F(n)-1\}$. This determines $n'$ uniquely, and then
+$\beta'^2=b^2F(n')=\beta^2(1-n)^2+p\beta^2n(2-n)$ and $\mu'=\bar\Lambda'(1-n')$.
+
+(c) The function $F$ is a strictly increasing, strictly convex bijection
+$[0,1)\to[1,\infty)$ with $F(0)=1$, and
+\[
+h_p=F^{-1}\circ\{1+p(F-1)\}.
+\]
+Hence $h_p$ is an increasing bijection. Next, $h_p(n)<n$ if and only if
+$(1-p)\{F(n)-1\}>0$. Also $h_p(n)>pn$ if and only if
+$F(pn)<(1-p)F(0)+pF(n)$, which is strict convexity. The expansion follows from
+$F(n)=1+2n+O(n^2)$. Finally,
+\[
+\beta'=b\,F(n')^{1/2}=\beta\{F(n')/F(n)\}^{1/2}\in[\beta(1-n),\beta],
+\]
+and solving $F(n)=1+\{F(n')-1\}/p$ gives \eqref{eq:th-hinv}.
+
+(d) $N^p$ is a Poisson cluster process with $r=\mu$ and cluster size
+$S_p\mid S\sim\Bin(S,p)$, where $S\sim$ Borel$(n)$, so $\E e^{\theta S_p}<\infty$ for
+small $\theta>0$. Suppose $N^p$ were a stationary Hawkes process with constant
+background $\mu''$ and some kernel of mass $n''$. By \cref{prop:stationary}(b),
+$n''<1$, and it is a Poisson cluster process with Borel$(n'')$ clusters. By
+\cref{lem:th-cluster}(b), $\mu\Pr(S_p=k)=\mu''\Pr(\text{Borel}(n'')=k)$ for $k\ge1$.
+
+For any Borel law with $n''>0$,
+\[
+\frac{\Pr(1)\Pr(3)}{\Pr(2)^2}=\frac{e^{-n''}\tfrac32n''^2e^{-3n''}}{(n''e^{-2n''})^2}=\frac32 .
+\]
+If $n''=0$, then $\Pr(2)=0<\Pr(S_p=2)$, which is already a contradiction. For $S_p$,
+write the Borel generating function as $G(z)=T(\zeta z)/n$, where $\zeta=ne^{-n}$ and
+$T(y)=\sum_{k\ge1}k^{k-1}y^k/k!$ is the tree function, which satisfies $T=ye^T$. Then
+$\Pr(S_p=k)=p^kG^{(k)}(1-p)/k!=(p\zeta)^kT^{(k)}(y)/(n\,k!)$ with
+$y=\zeta(1-p)\in(0,e^{-1})$. Differentiating $T=ye^T$ and writing $\tau=T(y)\in(0,1)$,
+\[
+T'=\frac{e^\tau}{1-\tau},\qquad T''=\frac{e^{2\tau}(2-\tau)}{(1-\tau)^3},\qquad
+T'''=\frac{e^{3\tau}(2\tau^2-8\tau+9)}{(1-\tau)^5}.
+\]
+Therefore
+\[
+\frac{\Pr(S_p=1)\Pr(S_p=3)}{\Pr(S_p=2)^2}=\frac23\,\frac{T'T'''}{(T'')^2}
+=\frac23\,\frac{2\tau^2-8\tau+9}{(2-\tau)^2}
+=\frac32+\frac{\tau(4-\tau)}{6(2-\tau)^2}>\frac32 ,
+\]
+a contradiction. The statement about moment-based estimators follows as in
+\cref{thm:spurious}(b), since $N^p$ is a Poisson cluster process (hence ergodic) and is
+second-order equivalent to $H(\mu',n',\beta')$.
+
+\emph{Proof of \cref{cor:th-darkfig}.} Write $h^{-1}(n',p)=1-\mathcal F^{-1/2}$ with
+$\mathcal F=1+\{(1-n')^{-2}-1\}/p=(1-n)^{-2}$. Then
+\[
+\frac{\partial h^{-1}}{\partial n'}=\frac{\mathcal F^{-3/2}}{p\,(1-n')^3}=\frac{(1-n)^3}{p\,(1-n')^3},
+\qquad
+\frac{\partial h^{-1}}{\partial p}=-\frac{\mathcal F^{-3/2}\{(1-n')^{-2}-1\}}{2p^2}
+=-\frac{n(1-n)(2-n)}{2p},
+\]
+using $(1-n')^{-2}-1=p\{(1-n)^{-2}-1\}$. The map $h^{-1}$ is $C^1$ on
+$(0,1)\times(0,1]$. Consistency follows from the continuous mapping theorem, and
+\eqref{eq:th-delta} from the delta method and independence. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{prop:th-hetthin}}{Proposition (heterogeneous recording)}}
+
+Marks are unpredictable with law $\pi$, so incidents with mark $x$ have intensity
+$\pi_x\{\mu+\sum_in_{X_i}g(t-t_i)\}$. The marked process is therefore a $K$-variate
+Hawkes process with background $\mu\bm\pi$, branching matrix $\Amat=\bm\pi\bm n^{\top}$
+and common kernel $g$. Since $\Amat$ has rank one, $\spr(\Amat)=\bm n^{\top}\bm\pi=\bar n<1$.
+By the Sherman--Morrison formula,
+$(\Imat-\Amat)^{-1}=\Imat+\bm\pi\bm n^{\top}/(1-\bar n)$, so
+$\bar{\bm\Lambda}=\mu\bm\pi/(1-\bar n)=\bar\Lambda\bm\pi$. Similarly, with
+$\hat\Phik=\hat g\,\bm\pi\bm n^{\top}$,
+\[
+\bm G=\Imat+\mathsf H\bm\pi\bm n^{\top},\qquad \mathsf H=\hat g/(1-\bar n\hat g).
+\]
+The recorded process is $\mathbf 1^{\top}\bm N^{\bm P}$ with $\bm P=\operatorname{diag}(p_x)$.
+By \cref{lem:th-cox2}(b) and \cref{prop:th-spectrum}, with
+$\bm D=\bar\Lambda\operatorname{diag}(\bm\pi)$ and $\bm p=(p_x)$,
+\[
+2\pi f_{\mathrm{rec}}=\bm p^{\top}\bar{\bm\Lambda}+\bm p^{\top}(\bm G\bm D\bm G^*-\bm D)\bm p .
+\]
+Since
+$\bm G\bm D\bm G^*-\bm D=\mathsf H\bm\pi\bm n^{\top}\bm D+\bar{\mathsf H}\bm D\bm n\bm\pi^{\top}+|\mathsf H|^2(\bm n^{\top}\bm D\bm n)\bm\pi\bm\pi^{\top}$,
+and $\bm p^{\top}\bm\pi=\bar p$, $\bm n^{\top}\bm D\bm p=\bar\Lambda\E[p_Xn_X]$,
+$\bm n^{\top}\bm D\bm n=\bar\Lambda\E[n_X^2]$,
+\[
+2\pi f_{\mathrm{rec}}=\bar p\bar\Lambda\big[1+2\operatorname{Re}(\mathsf H)\E[p_Xn_X]+|\mathsf H|^2\bar p\,\E[n_X^2]\big].
+\]
+For $g(t)=\beta e^{-\beta t}$, $\mathsf H=\beta/(b+i\omega)$ with $b=\beta(1-\bar n)$, so
+$2\operatorname{Re}\mathsf H=2\beta b/(b^2+\omega^2)$ and
+$|\mathsf H|^2=\beta^2/(b^2+\omega^2)$. This gives the stated spectrum. Matching with
+an exponential Hawkes spectrum, as in \cref{thm:thinning}(b), gives $b''=b$ and
+\[
+(1-n'')^{-2}=1+\frac{2(1-\bar n)\E[p_Xn_X]+\bar p\,\E[n_X^2]}{(1-\bar n)^2}.
+\]
+Finally, $(1-n_{\mathrm{naive}})^{-2}=1+\{(1-n'')^{-2}-1\}/\bar p$. Substituting
+$\E[p_Xn_X]=\bar p\bar n+\Cov(p_X,n_X)$, $\E[n_X^2]=\bar n^2+\Var(n_X)$ and
+$1-(1-\bar n)^2=2\bar n(1-\bar n)+\bar n^2$ gives the stated expression. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{prop:granger}}{Proposition (Granger)}}
+
+As in the proof of \cref{cor:equiv-id}(i), the intensity has the form of
+\cref{lem:th-janossy} with
+$h_k(t;x)=m_k(t)+\sum_l\sum_{s\in x_l}\varphi_{kl}(t-s)$.
+
+If $\varphi_{kj}=0$ almost everywhere on $(0,T)$, then $h_k(t;x)$ depends on $x$ only
+through $x_{-j}$, the configuration with stream $j$ removed. Hence $\lambda_k$ is
+$\Hist^{V\setminus\{j\}}$-predictable.
+
+Conversely, suppose $\lambda_k$ has a $\Hist^{V\setminus\{j\}}$-predictable version.
+Predictable processes of a point-process history are measurable functionals of the
+history strictly before $t$ \citep[Ch.~14]{daley2008}. So
+$h_k(t;x)=\Psi(t,x_{-j})$ for $\Pr\otimes\dd t$-almost every $(t,x)$, and, because the
+Janossy densities are positive, for almost every $(t,x)$ with respect to Lebesgue
+measure times the Lebesgue--Poisson measure. The configurations $x=\emptyset$ and
+$x=\{(s,j)\}$ have the same $x_{-j}=\emptyset$. Hence
+\[
+m_k(t)=\Psi(t,\emptyset)=m_k(t)+\varphi_{kj}(t-s)\qquad\text{for almost every }0<s<t<T,
+\]
+that is, $\varphi_{kj}=0$ almost everywhere on $(0,T)$. For exponential kernels,
+$g_{kj}>0$ everywhere, so this is equivalent to $\alpha_{kj}=0$. \qed

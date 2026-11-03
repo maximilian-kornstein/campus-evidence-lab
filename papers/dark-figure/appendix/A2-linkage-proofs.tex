@@ -1,0 +1,223 @@
+\section{Proofs for Section~\ref{sec:linkage}}\label{app:linkproofs}
+
+We use the notation of \cref{sec:linkage}. Cells are indexed by non-empty supports $g,h\subseteq\Kset$. Sums over $g$ run over non-empty $g$. For a fixed list $k$ we use the alternating-sum identity
+\begin{equation}\label{eq:link-altsum}
+  \sum_{\emptyset\ne g\subseteq J}(-1)^{|g|+1}\prod_{j\in g}x_j=1-\prod_{j\in J}(1-x_j),
+  \qquad\text{in particular}\qquad
+  \sum_{\emptyset\ne g\subseteq J}(-1)^{|g|+1}=1\quad(J\ne\emptyset),
+\end{equation}
+which follows by expanding the product. Norms on $\mathbb R^{\Hobs}$ are $\ell_1$ unless stated otherwise.
+
+\subsection{Proof of \texorpdfstring{\cref{prop:link-fs}}{the Fellegi--Sunter optimality}}\label{app:link-fs}
+
+We give the standard Neyman--Pearson argument \citep[Ch.~3]{lehmann2005}; the result is Theorem~1 of \citet{fellegi1969}. Use the conventions $w=+\infty$ if $u(\gamma)=0<m(\gamma)$ and $w=-\infty$ if $m(\gamma)=0<u(\gamma)$, and discard $\gamma$ with $m(\gamma)=u(\gamma)=0$. Because $T_\lambda<T_\mu$, the link and non-link regions of $\phi^\star$ are disjoint, so $\phi^\star$ is a decision rule. Let $\phi$ satisfy $\mu(\phi)\le\mu^\star$ and $\lambda(\phi)\le\lambda^\star$.
+
+Put $c=e^{T_\mu}$. By construction, $\phi^\star_{\mathrm L}(\gamma)=1$ if $m(\gamma)>c\,u(\gamma)$ and $\phi^\star_{\mathrm L}(\gamma)=0$ if $m(\gamma)<c\,u(\gamma)$. Hence $\{\phi^\star_{\mathrm L}(\gamma)-\phi_{\mathrm L}(\gamma)\}\{m(\gamma)-c\,u(\gamma)\}\ge0$ for every $\gamma$. Summing over $\gamma$,
+\begin{equation}\label{eq:link-np1}
+  \sum_\gamma m(\gamma)\{\phi^\star_{\mathrm L}(\gamma)-\phi_{\mathrm L}(\gamma)\}\ \ge\ c\,\{\mu^\star-\mu(\phi)\}\ \ge\ 0 .
+\end{equation}
+Similarly, with $c'=e^{T_\lambda}$, $\phi^\star_{\mathrm N}(\gamma)=1$ if $m(\gamma)<c'u(\gamma)$ and $\phi^\star_{\mathrm N}(\gamma)=0$ if $m(\gamma)>c'u(\gamma)$. Hence $\{\phi^\star_{\mathrm N}-\phi_{\mathrm N}\}\{c'u-m\}\ge0$ pointwise, and
+\begin{equation}\label{eq:link-np2}
+  c'\sum_\gamma u(\gamma)\{\phi^\star_{\mathrm N}(\gamma)-\phi_{\mathrm N}(\gamma)\}\ \ge\ \lambda^\star-\lambda(\phi)\ \ge\ 0 .
+\end{equation}
+Since $\phi_{\mathrm C}=1-\phi_{\mathrm L}-\phi_{\mathrm N}$, \eqref{eq:link-np1} and $\lambda(\phi)\le\lambda^\star$ give
+\[
+  \textstyle\sum_\gamma m\phi_{\mathrm C}=1-\sum_\gamma m\phi_{\mathrm L}-\lambda(\phi)\ \ge\ 1-\sum_\gamma m\phi^\star_{\mathrm L}-\lambda^\star=\sum_\gamma m\phi^\star_{\mathrm C}.
+\]
+Likewise \eqref{eq:link-np2} and $\mu(\phi)\le\mu^\star$ give $\sum_\gamma u\phi_{\mathrm C}=1-\mu(\phi)-\sum_\gamma u\phi_{\mathrm N}\ge1-\mu^\star-\sum_\gamma u\phi^\star_{\mathrm N}=\sum_\gamma u\phi^\star_{\mathrm C}$. For any proportion $p$ of matches, the review probability is $p\sum m\phi_{\mathrm C}+(1-p)\sum u\phi_{\mathrm C}$, which $\phi^\star$ therefore minimises. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{prop:link-detach}}{the detachment proposition}}\label{app:link-detach}
+
+Consider one true incident with support $h$, and let $S\subseteq h$ be the set of lists whose records do not detach. Then $\Pr(S=g)=(1-\delta)^{|g|}\delta^{|h|-|g|}$ for $g\subseteq h$. The incident produces the cluster vector
+\[
+  \bm Z_h=\bm e_S\ind{S\ne\emptyset}+\sum_{k\in h\setminus S}\bm e_{\{k\}} .
+\]
+If $S=\{j\}$, then $\bm e_S=\bm e_{\{j\}}$ and the remaining singletons lie in other cells. In every case $\bm Z_h$ is a $0/1$ vector with at most $|h|$ non-zero entries. For $|g|\ge2$, $\E(\bm Z_h)_g=\Pr(S=g)=\ind{g\subseteq h}(1-\delta)^{|g|}\delta^{|h|-|g|}$. For $g=\{k\}$, $\E(\bm Z_h)_{\{k\}}=\ind{k\in h}\{\Pr(S=\{k\})+\Pr(k\notin S)\}=\ind{k\in h}\{(1-\delta)\delta^{|h|-1}+\delta\}$. This is \eqref{eq:link-D}. Detachments are independent across records, hence across incidents, and $\tilde{\bm n}$ is the sum of the independent vectors $\bm Z_{h_b}$ over the true incidents $b$. So $\E\tilde{\bm n}=\mathcal D_\delta\bm t$.
+
+(i) Every term of \eqref{eq:link-D} vanishes unless $g\subseteq h$. For $g=h$ with $|h|\ge2$ the singleton term is absent and the entry is $(1-\delta)^{|h|}$. For $g=h=\{k\}$ it is $(1-\delta)+\delta=1$. A matrix that is triangular with respect to a linear extension of inclusion has determinant equal to the product of its diagonal entries, which is positive for $\delta<1$.
+
+(ii) The clusters of $\bm Z_h$ partition the records of the incident, so $(\bm Z_h)_{k+}=\ind{k\in h}=(\bm e_h)_{k+}$ pathwise. Taking expectations, $(\mathcal D_\delta\bm e_h)_{k+}=(\bm e_h)_{k+}$, and linearity gives the claim. The column sum is $\E\sum_g(\bm Z_h)_g=\Pr(S\ne\emptyset)+\E|h\setminus S|=1-\delta^{|h|}+|h|\delta$.
+
+(iii) Let $\mathcal U=\{h:|h|\ge2\}$ and let $\mathcal S$ be the set of singletons. Since $g\subseteq h$ is impossible for $g\in\mathcal U$ and $h\in\mathcal S$, we have $\bm y_{\mathcal U}=(\mathcal D_\delta)_{\mathcal U\mathcal U}\bm x_{\mathcal U}$. On $\mathcal U\times\mathcal U$ the singleton term vanishes, so $(\mathcal D_\delta)_{gf}=(1-\delta)^{|g|}\delta^{|f|-|g|}\ind{g\subseteq f}$. Let $E_{hg}=(-\delta)^{|g|-|h|}(1-\delta)^{-|g|}\ind{h\subseteq g}$ for $h,g\in\mathcal U$. For $h,f\in\mathcal U$, every $g$ with $h\subseteq g\subseteq f$ lies in $\mathcal U$. Hence
+\[
+  (E\,\mathcal D_\delta)_{hf}=\sum_{h\subseteq g\subseteq f}(-\delta)^{|g|-|h|}(1-\delta)^{-|g|}(1-\delta)^{|g|}\delta^{|f|-|g|}
+  =\delta^{|f|-|h|}\sum_{h\subseteq g\subseteq f}(-1)^{|g|-|h|}=\ind{h=f},
+\]
+by the binomial theorem. Thus $\bm x_{\mathcal U}=E\bm y_{\mathcal U}$, which is \eqref{eq:link-mobius}. By (ii), $y_{k+}=x_{k+}=x_{\{k\}}+\sum_{h\ni k,|h|\ge2}x_h$, which is the first equality in \eqref{eq:link-singleinv}. For the second, substitute \eqref{eq:link-mobius} and exchange sums:
+\[
+  \sum_{h\ni k,\,|h|\ge2}x_h=\sum_{g\ni k,\,|g|\ge2}\frac{y_g}{(1-\delta)^{|g|}}\sum_{h:\,k\in h\subseteq g,\ |h|\ge2}(-\delta)^{|g|-|h|} .
+\]
+Writing $h=\{k\}\cup h'$ with $\emptyset\ne h'\subseteq g\setminus k$, the inner sum is $(1-\delta)^{|g|-1}-(-\delta)^{|g|-1}$. Since $y_{k+}=y_{\{k\}}+\sum_{g\ni k,|g|\ge2}y_g$, the coefficient of $y_g$ in $x_{\{k\}}$ is $1-(1-\delta)^{-1}+(-\delta)^{|g|-1}(1-\delta)^{-|g|}$, as claimed.
+
+(iv) The records of lists $j$ and $k$ of an incident with $h\supseteq\{j,k\}$ lie in a common cluster if and only if $j,k\in S$. If either detaches, it is a singleton. No cluster contains records from two different true incidents, because (D) only splits. Hence $\tilde n_{jk}$ is a sum of $t_{jk}$ independent $\Bern((1-\delta)^2)$ variables.
+
+(v) $\tilde{\bm n}-\mathcal D_\delta\bm t=\sum_b(\bm Z_{h_b}-\E\bm Z_{h_b})$ with independent summands, and $\E\|\bm Z_h-\E\bm Z_h\|_2^2\le\E\|\bm Z_h\|_2^2\le|h|\le K$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{lem:link-merge}}{the merging lemma}}\label{app:link-merge}
+
+Condition on $\tilde\Link$ throughout. Let $\mathcal C$ be its set of clusters, $\mathrm{type}(c)\in\Hobs$ the support of $c\in\mathcal C$, $\mathcal S_k$ the list-$k$ singletons, $\mathcal S=\bigcup_k\mathcal S_k$ (so $|\mathcal S|=A$), and $P_k=\{c\in\mathcal C:k\notin\mathrm{type}(c)\}$, so $|P_k|=C_k:=C_k(\tilde{\bm n})$. Let $\chi_r\sim\Bern(\varepsilon)$, $r\in\mathcal S$, be the selection indicators, $\mathcal F=\{r:\chi_r=1\}$, and process $\mathcal F$ in uniformly random order.
+
+\emph{Idealised process.} For each $r\in\mathcal S_k$ let $B_r$ be uniform on $P_k$, with the $B_r$ independent of each other and of $(\chi,\text{order})$. Note that $r\notin P_k$. Put $\bm m_r=-\bm d_{\mathrm{type}(B_r)\cup k,k}$ and $\bm X=\sum_{r\in\mathcal F}\bm m_r$. Then
+\[
+  \E\bm X=\sum_k\varepsilon A_k\sum_{g\not\ni k}\frac{\tilde n_g}{C_k}\bigl(-\bm d_{g\cup k,k}\bigr)=\varepsilon\,\bm q(\tilde{\bm n}),
+  \qquad A_k=\tilde n_{\{k\}} .
+\]
+The three cells $g\cup k$, $g$ and $\{k\}$ of $\bm d_{g\cup k,k}$ are distinct, so $\|\bm m_r\|_2^2=3$ and $\|\bm m_r\|_1=3$. Set $\bm\xi=\bm X-\varepsilon\bm q(\tilde{\bm n})=\sum_{r\in\mathcal S}(\chi_r\bm m_r-\E\chi_r\bm m_r)$. This is a sum of independent mean-zero vectors with $\E\|\bm\xi\|_2^2\le\sum_r\E\|\chi_r\bm m_r\|_2^2=3\varepsilon A$.
+
+\emph{Coupling.} Run (M) with the same $\chi$ and order. Let $r\in\mathcal S_k$ be the $j$-th element of $\mathcal F$ to be processed, and let $m_j\le j-1$ be the number of merges performed before it. Call a cluster \emph{touched} if it took part in an earlier merge, either as the merging singleton or as the target. An untouched cluster is alive and has its original type. A merging singleton dies. A target never dies: it then has at least two records, so it is not a singleton and never merges. Let $P_k^\circ$ be the untouched members of $P_k$, and let $\mathcal P_j$ be the set of current clusters whose support excludes $k$. Then $P_k^\circ\subseteq\mathcal P_j$, $|P_k\setminus P_k^\circ|\le2m_j$, and $|\mathcal P_j\setminus P_k^\circ|\le m_j$, because the touched clusters that are alive are earlier targets. If $r$ is still a singleton, (M) draws $V_r$ uniformly from $\mathcal P_j$. (If $\mathcal P_j=\emptyset$, the step does nothing and we count it as bad. Then $P_k^\circ=\emptyset$, so $C_k\le2m_j$ and the bound below is trivial.) We draw $(B_r,V_r)$ from a maximal coupling of the uniform laws on $P_k$ and on $\mathcal P_j$, given the past \citep{lindvall1992}. For $r\in\mathcal S\setminus\mathcal F$, for $r\in\mathcal F$ that is no longer a singleton at its turn, and when $\mathcal P_j=\emptyset$, we draw $B_r$ independently. Conditionally on the past, $B_r$ is uniform on $P_k$. The $B_r$ are therefore independent and uniform, and independent of $(\chi,\text{order})$, so the idealised process has the law described above. A maximal coupling satisfies $\Pr(B=V=c)=\min\{\Pr(B=c),\Pr(V=c)\}$, so
+\[
+  \Pr\bigl(B_r=V_r\in P_k^\circ\mid\text{past}\bigr)=\frac{|P_k^\circ|}{\max(C_k,|\mathcal P_j|)}\ge\frac{C_k-2m_j}{C_k+m_j}\ge1-\frac{3m_j}{C_k}.
+\]
+
+Call $r\in\mathcal F$ \emph{good} if it is still a singleton at its turn and $B_r=V_r\in P_k^\circ$. Then the actual change in the table is $\bm m_r$, because $V_r$ is untouched and has type $\mathrm{type}(B_r)$. Otherwise $r$ is \emph{bad}. Either (a) it was the target of an earlier merge, so that it is no longer a singleton at its turn, or (b) it is still a singleton but the coupling fails. Let $\bm a_r$ be the actual change caused by $r\in\mathcal F$: zero if $r$ is skipped, and otherwise $-\bm d_{\mathrm{type}(V_r)\cup k,k}$ with the current type of $V_r$. Both $\|\bm a_r\|_1$ and $\|\bm m_r\|_1$ are at most $3$. Put $\bm\zeta=(\bm n-\tilde{\bm n})-\bm X=\sum_{r\text{ bad}}(\bm a_r-\bm m_r)$. Then $\|\bm\zeta\|_1\le6\,\#\{\text{bad}\}$, and $\bm n=\tilde{\bm n}+\varepsilon\bm q(\tilde{\bm n})+\bm\xi+\bm\zeta$.
+
+\emph{Counting bad steps.} For (b), $|\mathcal F|\sim\Bin(A,\varepsilon)$ gives
+\[
+  \E\#(\mathrm b)\le\E\sum_{j=1}^{|\mathcal F|}\frac{3(j-1)}{C_{\min}}=\frac{3}{2C_{\min}}\E\bigl[|\mathcal F|(|\mathcal F|-1)\bigr]=\frac{3\varepsilon^2A(A-1)}{2C_{\min}} .
+\]
+For (a), map each such $r\in\mathcal F$ to the first earlier step $r'$ whose target was $r$. This map is injective, because each step has one target. The step $r'$ merged, so it is not of type (a). If $r'$ is good, then $B_{r'}=V_{r'}=r\in\mathcal F$. Hence $\#(\mathrm a)\le\#(\mathrm b)+\#\{r'\in\mathcal F:B_{r'}\in\mathcal F\}$. Since the $B$ are independent of $\chi$, and $c\ne r'$ for $c\in P_k$,
+\[
+  \E\#\{r'\in\mathcal F:B_{r'}\in\mathcal F\}=\sum_k\varepsilon A_k\sum_{c\in P_k\cap\mathcal S}\frac{\varepsilon}{C_k}\le\frac{\varepsilon^2A^2}{C_{\min}} .
+\]
+Therefore $\E\#\{\text{bad}\}\le2\E\#(\mathrm b)+\varepsilon^2A^2/C_{\min}\le4\varepsilon^2A^2/C_{\min}$, and $\E\|\bm\zeta\|_1\le24\varepsilon^2A^2/C_{\min}$. Finally $\E[\bm n\mid\tilde\Link]-\tilde{\bm n}-\varepsilon\bm q(\tilde{\bm n})=\E\bm\zeta$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{lem:link-response}}{the split-merge calculus}}\label{app:link-response}
+
+\emph{Step 1 (a Lipschitz bound for the drift).} For $c>0$ let $\mathcal K_c=\{\bm x\ge\bm0:C_k(\bm x)\ge c\|\bm x\|_1\ \forall k\}$. It is a convex cone, being the non-negative orthant intersected with half-spaces. On $\mathcal K_c$,
+\[
+  \frac{\partial\bm q}{\partial x_f}=-\sum_k\Bigl[\ind{f=\{k\}}\sum_{g\not\ni k}\frac{x_g}{C_k}\bm d_{g\cup k,k}
+  +x_{\{k\}}\sum_{g\not\ni k}\Bigl(\frac{\ind{f=g}}{C_k}-\frac{x_g\ind{k\notin f}}{C_k^2}\Bigr)\bm d_{g\cup k,k}\Bigr].
+\]
+Its $\ell_1$ norm is at most $3+6\sum_kx_{\{k\}}/C_k\le3+6/c$. Hence $\bm q$ is Lipschitz on $\mathcal K_c$, with constant $L_c=3+6/c$ in $\ell_1$.
+
+\emph{Step 2 (location of the tables).} Every true incident whose support excludes $k$ leaves at least one cluster whose support excludes $k$, and distinct incidents leave distinct clusters. So $C_k(\tilde{\bm n})\ge C_k(\bm t)$, and also $C_k(\mathcal D_\delta\bm t)\ge C_k(\bm t)$ on taking expectations. The number of clusters never exceeds the number of records, so $\|\tilde{\bm n}\|_1\le K\|\bm t\|_1$, and likewise $\|\mathcal D_\delta\bm t\|_1\le K\|\bm t\|_1$. Under \cref{ass:link-pop}, therefore, $\tilde{\bm n}$ and $\mathcal D_\delta\bm t$ lie in $\mathcal K_c$ for every large $N$, with $c=\tfrac12\min_kC_k(\bm\tau)/(K\|\bm\tau\|_1)>0$. Moreover $A\le K\|\bm t\|_1$ and $C_{\min}(\tilde{\bm n})\ge\min_kC_k(\bm t)$.
+
+\emph{Step 3 (the observed table).} By \cref{prop:link-detach}(v), $\tilde{\bm n}=\mathcal D_\delta\bm t+\bm\rho_1$ with $\E\|\bm\rho_1\|_2^2\le K\|\bm t\|_1$. By \cref{lem:link-merge} and Step~1,
+\[
+  \bm n=\Lop_{\delta,\varepsilon}(\bm t)+\bm\rho_1+\varepsilon\{\bm q(\tilde{\bm n})-\bm q(\mathcal D_\delta\bm t)\}+\bm\xi+\bm\zeta,
+\]
+where $\|\bm q(\tilde{\bm n})-\bm q(\mathcal D_\delta\bm t)\|_1\le L_c\|\bm\rho_1\|_1$, $\E\|\bm\xi\|_2^2\le3K\|\bm t\|_1$, and $\E\|\bm\zeta\|_1\le24\varepsilon^2K^2\|\bm t\|_1^2/\min_kC_k(\bm t)$. All constants are free of $\delta$ and $\varepsilon$. Chebyshev's inequality, applied in the $(2^K-1)$-dimensional space, and Markov's inequality give
+\begin{equation}\label{eq:link-nexp}
+  \bigl\|\bm n/N-\Lop_{\delta,\varepsilon}(\bm\tau_N)\bigr\|_1=O_p^{\mathrm u}\bigl(\varepsilon^2+N^{-1/2}\bigr),
+\end{equation}
+using the homogeneity $\Lop_{\delta,\varepsilon}(\bm t)/N=\Lop_{\delta,\varepsilon}(\bm\tau_N)$.
+
+\emph{Step 4 (expansion in the rates).} On $[0,1)^2\times\{\bm x:C_k(\bm x)>0\ \forall k\}$ the map $(\delta,\varepsilon,\bm x)\mapsto\Lop_{\delta,\varepsilon}(\bm x)$ is infinitely differentiable, because $\mathcal D_\delta$ is polynomial in $\delta$ and $\bm q$ is rational with non-vanishing denominators. It equals $\bm x$ at $\delta=\varepsilon=0$. Hence, for a compact neighbourhood $\mathcal V$ of $\bm\tau$ and $\eta_0$ small, $\Lop_{\delta,\varepsilon}(\mathcal V)$ lies in the region where $F$ is $C^2$ whenever $(\delta,\varepsilon)\in[0,\eta_0]^2$. Taylor's theorem in $(\delta,\varepsilon)$ then gives, uniformly in $\bm x\in\mathcal V$,
+\[
+  F(\Lop_{\delta,\varepsilon}(\bm x))=F(\bm x)+\delta\,\nabla F(\bm x)^{\top}\partial_\delta\mathcal D_\delta\bm x\big|_{\delta=0}+\varepsilon\,\nabla F(\bm x)^{\top}\bm q(\bm x)+O\bigl((\delta+\varepsilon)^2\bigr).
+\]
+Differentiating \eqref{eq:link-D} at $\delta=0$ gives $\partial_\delta(\mathcal D_\delta)_{gh}|_0=-|h|\ind{g=h}+\ind{g\subseteq h,|h\setminus g|=1}+\ind{g=\{k\},k\in h}$. For $|h|=1$ the column vanishes. For $|h|\ge2$ it equals $\sum_{k\in h}(\bm e_{h\setminus k}+\bm e_{\{k\}}-\bm e_h)=\sum_{k\in h}\bm d_{h,k}$. So $\partial_\delta\mathcal D_\delta\bm x|_0=\sum_{|h|\ge2}x_h\sum_{k\in h}\bm d_{h,k}$.
+
+\emph{Step 5 (assembly).} $F$ is Lipschitz on a neighbourhood $\mathcal W$ of $\bm\tau$. By \eqref{eq:link-nexp}, for every $\eta>0$ there are $\eta_0$ and $N_0$ such that $\bm n/N\in\mathcal W$ and $\Lop_{\delta,\varepsilon}(\bm\tau_N)\in\mathcal W$ with probability at least $1-\eta$. On this event, $|F(\bm n/N)-F(\Lop_{\delta,\varepsilon}(\bm\tau_N))|$ is bounded by a constant times the left side of \eqref{eq:link-nexp}. Combining with Step~4 at $\bm x=\bm\tau_N\in\mathcal V$, and using homogeneity of degree one of $F$, $\Lop$ and $\bm q$ and of degree zero of $\nabla F$,
+\[
+  \frac{F(\bm n)-F(\bm t)}{N}=F(\bm n/N)-F(\bm\tau_N)
+  =\frac{\delta}{N}\nabla F(\bm t)^{\top}\sum_{|h|\ge2}t_h\sum_{k\in h}\bm d_{h,k}+\frac{\varepsilon}{N}\nabla F(\bm t)^{\top}\bm q(\bm t)+O_p^{\mathrm u}\bigl((\delta+\varepsilon)^2+N^{-1/2}\bigr).
+\]
+Inserting the definition \eqref{eq:link-q} of $\bm q$ gives \eqref{eq:link-response}. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{thm:linkbias}}{the linkage-bias theorem}}\label{app:link-bias}
+
+(i) By \eqref{eq:link-margins}, $n_{k+}=t_{k+}$. For $K=2$, $\Nhat_{\mathrm{LP}}(\bm x)=x_{1+}x_{2+}/x_{11}$, which gives the first identity. By \cref{thm:closed}(c), $\widehat n_{\zero}(\bm x)=x_{10}x_{01}/x_{11}$ with $x_{10}=x_{1+}-x_{11}$ and $x_{01}=x_{2+}-x_{11}$. On $0<y<\min(a,b)$ the function $f(y)=(a-y)(b-y)/y$ has
+\[
+  f'(y)=-\frac{(a-y)+(b-y)}{y}-\frac{(a-y)(b-y)}{y^2}<0 .
+\]
+Under (D), a cluster that contains records of both lists consists of records of one true incident with support $\{1,2\}$, and each such incident yields at most one such cluster. So $\tilde n_{11}\le t_{11}$. Under (M) with $K=2$, the clusters into which a list-1 singleton can merge are exactly the list-2 singletons, and vice versa. Every merge therefore turns one $\{1\}$-cluster and one $\{2\}$-cluster into a $\{1,2\}$-cluster, and no merge destroys a $\{1,2\}$-cluster. Hence $n_{11}\ge\tilde n_{11}$. If $\varepsilon=0$, then $n_{11}\le t_{11}$ and both estimators weakly increase. If $\delta=0$, then $n_{11}\ge t_{11}$ and both decrease.
+
+(ii) For $K=2$, $C_1(\bm x)=x_{\{2\}}$ and $C_2(\bm x)=x_{\{1\}}$. By \eqref{eq:link-q}, $q(\bm x)_{11}=x_{\{1\}}x_{\{2\}}/C_1+x_{\{2\}}x_{\{1\}}/C_2=x_{\{1\}}+x_{\{2\}}$. With $\tilde{\bm x}=\mathcal D_\delta\bm t$, we have $\tilde x_{11}=(1-\delta)^2t_{11}$ and, by conservation of margins, $\tilde x_{\{k\}}=t_{k+}-(1-\delta)^2t_{11}$. So
+\[
+  \Lop_{\delta,\varepsilon}(\bm t)_{11}=(1-\delta)^2(1-2\varepsilon)\,t_{11}+\varepsilon(t_{1+}+t_{2+}).
+\]
+By \eqref{eq:link-nexp} and $\tau_{11}>0$, $n_{11}/t_{11}=(1-\delta)^2(1-2\varepsilon)+\varepsilon(t_{1+}+t_{2+})/t_{11}+O_p^{\mathrm u}(\varepsilon^2+N^{-1/2})$. Moreover $(t_{1+}+t_{2+})/t_{11}=\hat p_2^{-1}+\hat p_1^{-1}$. The bracket in \eqref{eq:link-LP} is bounded away from zero for small rates, so inverting and expanding to first order gives \eqref{eq:link-LP}. For $\varepsilon=0$, $n_{11}=\tilde n_{11}\sim\Bin(t_{11},(1-\delta)^2)$ by \cref{prop:link-detach}(iv). For two lists $j\ne k$ of a $K$-list system the same argument applies to $\Nhat^{(jk)}_{\mathrm{LP}}(\bm x)=x_{j+}x_{k+}/x_{jk}$.
+
+(iii) $F=\widehat n_{\zero}(\omega;\cdot)=e^{(-1)^K\omega}\mathcal A$ is positively homogeneous of degree one (\cref{sec:fw-table}) and smooth on $(0,\infty)^{\Hobs}$. Apply \cref{lem:link-response} and divide by $F(\bm t)/N=F(\bm\tau_N)$, which is bounded away from zero. Since $\nabla F/F=\nabla\log\mathcal A$, the factor $e^{(-1)^K\omega}$ cancels, and the relative error is $\delta\Sigma_\delta-\varepsilon\Sigma_\varepsilon+O_p^{\mathrm u}((\delta+\varepsilon)^2+N^{-1/2})$, where by \eqref{eq:link-splitsens}
+\begin{align*}
+  \Sigma_\delta&=\sum_{|h|\ge2}t_h\sum_{k\in h}\partial_{h,k}\log\mathcal A(\bm t)
+  =\sum_k\sum_{g\not\ni k}t_{g\cup k}\Bigl[\frac1{t_{\{k\}}}+(-1)^{|g|+1}\Bigl(\frac1{t_{g\cup k}}+\frac1{t_g}\Bigr)\Bigr],\\
+  \Sigma_\varepsilon&=\sum_k\frac{t_{\{k\}}}{C_k(\bm t)}\sum_{g\not\ni k}t_g\Bigl[\frac1{t_{\{k\}}}+(-1)^{|g|+1}\Bigl(\frac1{t_{g\cup k}}+\frac1{t_g}\Bigr)\Bigr].
+\end{align*}
+Here we wrote $h=g\cup k$ with $g=h\setminus k\ne\emptyset$, so that $(-1)^{|h|}=(-1)^{|g|+1}$. By \eqref{eq:link-altsum}, $\sum_{g\not\ni k}(-1)^{|g|+1}=1$. Also $\sum_{g\not\ni k}t_{g\cup k}=t_{k+}-t_{\{k\}}$ and $\sum_{g\not\ni k}t_g=C_k(\bm t)$. Hence $\Sigma_\delta=\sum_k\{b_k+1+a_k\}$ and $\Sigma_\varepsilon=\sum_k\{1+(t_{\{k\}}/C_k)(1+\bar a_k)\}$, which is \eqref{eq:link-betas}. The coefficients are ratios of cells, so they are scale-free.
+
+(iv) $b_k\ge0$ because $t_{k+}\ge t_{\{k\}}$. Under \eqref{eq:link-H}, $\beta_\delta\ge K$ and $\beta_\varepsilon\le-K$. For $K=2$, $a_1=t_{11}/t_{\{2\}}>0$ and $\bar a_1=t_{\{2\}}/t_{11}>0$, and symmetrically for $k=2$. The factorised case is \cref{lem:link-H} below. \qed
+
+\begin{lemma}[A sufficient condition for \eqref{eq:link-H}]\label{lem:link-H}
+Fix $k$. Suppose there are $c_k>0$ and $\phi_{jk}\in[\frac12,2]$ ($j\ne k$) such that $t_{g\cup k}/t_g=c_k\prod_{j\in g}\phi_{jk}$ for every non-empty $g\not\ni k$. Then
+\[
+  a_k(\bm t)=c_k\Bigl\{1-\prod_{j\ne k}(1-\phi_{jk})\Bigr\}\ge0,
+  \qquad
+  \bar a_k(\bm t)=c_k^{-1}\Bigl\{1-\prod_{j\ne k}\bigl(1-\phi_{jk}^{-1}\bigr)\Bigr\}\ge0 .
+\]
+\end{lemma}
+
+\begin{proof}
+Both identities are \eqref{eq:link-altsum} with $x_j=\phi_{jk}$ and with $x_j=\phi_{jk}^{-1}$. For $\phi\in[\frac12,2]$, both $|1-\phi|\le1$ and $|1-\phi^{-1}|\le1$, so the products lie in $[-1,1]$.
+\end{proof}
+
+Under independent capture, $t_{g\cup k}/t_g=p_k/(1-p_k)$ for all $g$, so $\phi_{jk}\equiv1$. For $K=3$ and $k=3$, the three equations $t_{\{1,3\}}/t_{\{1\}}=c_3\phi_{13}$, $t_{\{2,3\}}/t_{\{2\}}=c_3\phi_{23}$ and $t_{\{1,2,3\}}/t_{\{1,2\}}=c_3\phi_{13}\phi_{23}$ have the unique positive solution
+\[
+  c_3=\frac{t_{\{1,3\}}t_{\{2,3\}}t_{\{1,2\}}}{t_{\{1\}}t_{\{2\}}t_{\{1,2,3\}}},\qquad
+  \phi_{13}=\frac{t_{\{1,2,3\}}\,t_{\{2\}}}{t_{\{1,2\}}\,t_{\{2,3\}}},\qquad
+  \phi_{23}=\frac{t_{\{1,2,3\}}\,t_{\{1\}}}{t_{\{1,2\}}\,t_{\{1,3\}}},
+\]
+and similarly for $k=1,2$. Each $\phi_{jk}$ is the odds ratio between lists $j$ and $k$ among the incidents recorded by the third list. This proves the claim made after \cref{thm:linkbias}.
+
+\subsection{Proof of \texorpdfstring{\cref{cor:link-indep}}{the independent-capture corollary}}\label{app:link-indep}
+
+Let $\theta_k=p_k/(1-p_k)$. Then $t_{g\cup k}/t_g=\theta_k$ for every $g\not\ni k$, so $c_k=\theta_k$ and $\phi_{jk}\equiv1$ in \cref{lem:link-H}, giving $a_k=\theta_k$ and $\bar a_k=\theta_k^{-1}$. Next, $t_{k+}/t_{\{k\}}=\sum_{g'\subseteq\Kset\setminus k}\prod_{j\in g'}\theta_j=\prod_{j\ne k}(1+\theta_j)=1/q_{-k}$, so $b_k=q_{-k}^{-1}-1$ and $\beta_\delta=\sum_k\theta_k+\sum_kq_{-k}^{-1}$. Up to the same proportionality constant, $t_{\{k\}}=p_kq_{-k}$ and $C_k=(1-p_k)(1-q_{-k})$, the latter being the probability of being missed by list $k$ and recorded by another list. Hence $t_{\{k\}}/C_k=\theta_kq_{-k}/(1-q_{-k})$, and $(t_{\{k\}}/C_k)(1+\bar a_k)=(1+\theta_k)q_{-k}/(1-q_{-k})=q_{-k}/\{(1-p_k)(1-q_{-k})\}$, because $1+\theta_k=(1-p_k)^{-1}$. As $\max_kp_k\to0$, $\theta_k\to0$ and $q_{-k}\to1$, so $\beta_\delta\to K$. Also $1-q_{-k}=\{1+o(1)\}\sum_{j\ne k}p_j$, which gives the stated rate for $\beta_\varepsilon$. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{cor:linkcorrect}}{the linkage-corrected estimator}}\label{app:link-correct}
+
+(i) With $\varepsilon=0$, $\bm n=\tilde{\bm n}$ and $\E[\hat{\bm t}\mid\Link^\star]=\mathcal D_\delta^{-1}\mathcal D_\delta\bm t=\bm t$. Moreover $\hat{\bm t}-\bm t=\sum_b\mathcal D_\delta^{-1}(\bm Z_{h_b}-\E\bm Z_{h_b})$ is a sum of independent, bounded, mean-zero vectors. There are $t_h=N\tau_{N,h}$ incidents of type $h$, so the Lindeberg--Feller theorem gives $N^{-1/2}(\hat{\bm t}-\bm t)\Rightarrow\mathrm N(\bm0,\Sigma)$ with $\Sigma=\sum_h\tau_h\mathcal D_\delta^{-1}\Cov(\bm Z_h)\mathcal D_\delta^{-\top}$. By homogeneity, $F(\hat{\bm t})-F(\bm t)=N\{F(\hat{\bm t}/N)-F(\bm\tau_N)\}=\nabla F(\bm\tau_N)^{\top}(\hat{\bm t}-\bm t)+N\,O_p(\|\hat{\bm t}/N-\bm\tau_N\|^2)$, and the remainder is $O_p(1)$. The delta method gives the conditional limit with $v_{\mathrm{link}}=\nabla F(\bm\tau)^{\top}\Sigma\nabla F(\bm\tau)$, which is the stated sum.
+
+Now let the histories be independent and identically distributed with cell probabilities $\bm\pi$. Write $U_N=N^{-1/2}\{F(\bm t)-NF(\bm\pi_+)\}$ and $W_N=N^{-1/2}\{F(\hat{\bm t})-F(\bm t)\}$. Then $U_N\Rightarrow\mathrm N(0,v_{\mathrm{cap}})$ by the delta method. Conditionally on $\bm t$, $W_N\Rightarrow\mathrm N(0,v_{\mathrm{link}})$ along almost every sequence, because $\bm\tau_N\to\bm\pi_+$ almost surely. Hence $\E[e^{\mathrm i(aU_N+bW_N)}]=\E[e^{\mathrm iaU_N}\E(e^{\mathrm ibW_N}\mid\bm t)]\to e^{-a^2v_{\mathrm{cap}}/2}e^{-b^2v_{\mathrm{link}}/2}$ by dominated convergence, and $U_N+W_N\Rightarrow\mathrm N(0,v_{\mathrm{cap}}+v_{\mathrm{link}})$.
+
+For $K=2$ only incidents with $h=\{1,2\}$ contribute to $v_{\mathrm{link}}$. With $\varrho=(1-\delta)^2$, $\bm Z_{\{1,2\}}$ equals $\bm e_{11}$ with probability $\varrho$ and $\bm e_{10}+\bm e_{01}$ otherwise. So $\Cov(\bm Z_{\{1,2\}})=\varrho(1-\varrho)\bm v\bm v^{\top}$ with $\bm v=\bm e_{11}-\bm e_{10}-\bm e_{01}$. The $K=2$ case of \eqref{eq:link-mobius}--\eqref{eq:link-singleinv} gives $\mathcal D_\delta^{-1}\bm v=\bm v/\varrho$, because $\delta(2-\delta)=1-\varrho$. For $F=\log\Nhat_{\mathrm{LP}}$, $\nabla F(\bm\tau)^{\top}\bm v=-1/\tau_{11}$. Hence $v_{\mathrm{link}}=\tau_{11}(1-\varrho)/(\varrho\,\tau_{11}^2)=(\varrho^{-1}-1)/\tau_{11}$. Under independent capture $\tau_{11}=p_1p_2$. The perfect-linkage variance of $\log\Nhat_{\mathrm{LP}}$ is $v_{\mathrm{cap}}=(1-p_1)(1-p_2)/(p_1p_2)$, the variance of the influence function $Y_1/p_1+Y_2/p_2-Y_1Y_2/(p_1p_2)$. The ratio is \eqref{eq:link-vif}, and it is the same for $\Nhat_{\mathrm{LP}}$ as for its logarithm. Finally, $\hat t_{11}=n_{11}/\varrho$ and the margins are unchanged, so $\Nhat_{\mathrm{LP}}(\hat{\bm t})=\varrho\,n_{1+}n_{2+}/n_{11}$.
+
+(ii) Write $\Psi=\Lop_{\delta,\varepsilon}$. Its Jacobian is $\nabla\Psi(\bm x)=\{I+\varepsilon\nabla\bm q(\mathcal D_\delta\bm x)\}\mathcal D_\delta$. This is continuous in $(\delta,\varepsilon,\bm x)$ and equals $I$ at $\delta=\varepsilon=0$. Choose $\eta,r>0$ such that $\|\nabla\Psi(\bm x)-I\|_{1\to1}\le\frac12$ for $(\delta,\varepsilon)\in[0,\eta]^2$ and $\|\bm x-\bm x_0\|_1\le2r$, for every $\bm x_0$ in a neighbourhood $\mathcal V$ of $\bm\tau$. Fix such $\bm x_0$ and $\bm y$ with $\|\bm y-\Psi(\bm x_0)\|_1\le r$. The map $\bm x\mapsto\bm x-\Psi(\bm x)+\bm y$ is a $\frac12$-contraction of the ball $\{\|\bm x-\bm x_0\|_1\le2r\}$ into itself, since
+\[
+  \|\bm x-\Psi(\bm x)+\bm y-\bm x_0\|_1\le\|(\bm x-\bm x_0)-(\Psi(\bm x)-\Psi(\bm x_0))\|_1+\|\bm y-\Psi(\bm x_0)\|_1\le r+r .
+\]
+By Banach's theorem it has a unique fixed point $\hat{\bm x}$, which solves $\Psi(\hat{\bm x})=\bm y$, and $\|\hat{\bm x}-\bm x_0\|_1\le2\|\bm y-\Psi(\bm x_0)\|_1$. Take $\bm x_0=\bm\tau_N$ and $\bm y=\bm n/N$. By \eqref{eq:link-nexp}, $\|\bm y-\Psi(\bm\tau_N)\|_1\le r$ with probability tending to one, for $\eta$ small. Hence $\hat{\bm t}=N\hat{\bm x}$ is the unique solution in the ball $\|\bm x-\bm t\|_1\le2rN$, and $\|\hat{\bm t}/N-\bm\tau_N\|_1=O_p^{\mathrm u}(\varepsilon^2+N^{-1/2})$. Lipschitz continuity of $F$ near $\bm\tau$ and homogeneity complete the proof. The contraction is the undamped iteration $\bm x\gets\bm x+(\bm n-\Psi(\bm x))$ of the simulation code, so for small rates that iteration converges geometrically.
+
+(iii) By the implicit function theorem, $\theta\mapsto\hat{\bm t}(\theta)/N$ is continuously differentiable near $\theta_0$, with derivative $-\{\nabla_{\bm x}\Lop_\theta\}^{-1}\partial_\theta\Lop_\theta$ evaluated at $\hat{\bm t}(\theta_0)/N$. That point converges to $\bm\tau$ up to $O(\varepsilon^2)$ by (ii). Hence $N^{-1/2}\{F(\hat{\bm t}(\hat\theta))-F(\hat{\bm t}(\theta_0))\}=\sqrt{N/m}\,\bm c_N^{\top}\sqrt m(\hat\theta-\theta_0)+o_p(1)$ with $\bm c_N\to\bm c$. Since $\hat\theta$ is independent of $\bm n$ given $\Link^\star$, the two limits are independent, and Slutsky's lemma gives the claim. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{prop:totalvar}}{the total-variance decomposition}}\label{app:link-totalvar}
+
+(i) is the law of total variance under $p(N,\Link\mid D)$. For (ii), $\Linkhat$ is fixed given $D$, so $G(\Linkhat)$ is a constant, and $\E[(N-G(\Linkhat))^2\mid D]=\Var(N\mid D)+\{\E[N\mid D]-G(\Linkhat)\}^2$. If $V(\Link)\equiv V_w$ on the support, the reported $V(\Linkhat)=V_w$ falls short of this by $V_b+\{\E[N\mid D]-G(\Linkhat)\}^2\ge V_b$. For (iii), let $N\mid D\sim\mathrm N(\bar N,s^2)$ with $s^2=V_w+V_b$, let $b=G(\Linkhat)-\bar N$, and let $w=z_{\alpha/2}V_w^{1/2}$. The coverage is $\Phi\{(w-b)/s\}+\Phi\{(w+b)/s\}-1=:\kappa(b)$. Its derivative is $\kappa'(b)=s^{-1}[\varphi\{(w+b)/s\}-\varphi\{(w-b)/s\}]$, which is $\le0$ for $b\ge0$ and $\ge0$ for $b\le0$, because $|w+b|\ge|w-b|$ exactly when $b\ge0$. So $\kappa$ is maximised at $b=0$, where it equals $2\Phi(w/s)-1=2\Phi\{z_{\alpha/2}(1+V_b/V_w)^{-1/2}\}-1$. For (iv), $N-\bar Q=(N-\E[N\mid D])-(\bar Q-\E[N\mid D])$, and the two terms are independent given $D$, so $\E[(N-\bar Q)^2\mid D]=\Var(N\mid D)+\Var(\bar Q\mid D)=V_w+V_b+V_b/M$. Finally $\E[\bar U\mid D]=V_w$, and $\E[B_M\mid D]=V_b$ because $B_M$ is the unbiased sample variance of $M$ independent draws. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{thm:review}}{the review theorem}}\label{app:link-review}
+
+(i) For independent $O_1,\dots,O_L$ with finite ranges, the Hoeffding decomposition \citep{hoeffding1948,efron1981} is
+\[
+  G_T(O_T)=\sum_{T'\subseteq T}(-1)^{|T|-|T'|}\E[G\mid O_{T'}],\qquad T\ne\emptyset .
+\]
+It has $\E[G_T\mid O_{T'}]=0$ unless $T\subseteq T'$, the terms are mutually uncorrelated, and $\E[G\mid O_S]-\E G=\sum_{\emptyset\ne T\subseteq S}G_T$. Hence $\Var(\E[G\mid O_S])=\sum_{\emptyset\ne T\subseteq S}\sigma_T^2$, and
+\[
+  V(S)=\Var G-\Var(\E[G\mid O_S])=\sum_{T\not\subseteq S}\sigma_T^2 .
+\]
+For $T=\{u\}$, $G_{\{u\}}=\E[G\mid O_u]-\E G$. For a binary $I_\ell$, $\E[G\mid I_\ell]=\E[G\mid I_\ell=0]+\Delta_\ell I_\ell$, so $\sigma_\ell^2=\Delta_\ell^2\pi_\ell(1-\pi_\ell)$ and $\Cov(G,I_\ell)=\Cov(\E[G\mid I_\ell],I_\ell)=\Delta_\ell\pi_\ell(1-\pi_\ell)$. This gives \eqref{eq:link-sigma}. The identity $\Var(\E[G\mid O_u])=\Cov(G,I_\ell)^2/\{\pi_\ell(1-\pi_\ell)\}$ uses no independence.
+
+(ii) $\sum_{u\notin S}\sigma_u^2=\sum_u\sigma_u^2-\sum_{u\in S}\sigma_u^2$. The $B$ largest terms maximise $\sum_{u\in S}\sigma_u^2$ over $|S|\le B$; exchanging any chosen term for a larger unchosen one can only increase the sum. Let $S^\star$ minimise $V$ over $|S|\le B$, and write $V(S)=V_1(S)+V_{\mathrm{int}}(S)$, where $V_1$ is the main-effect part and $0\le V_{\mathrm{int}}(S)\le I_{\mathrm{int}}$. Then $V(S_{\mathrm g})\le V_1(S^\star)+I_{\mathrm{int}}\le V(S^\star)+I_{\mathrm{int}}$.
+
+(iii) Let $\xi_\ell=I_\ell-\pi_\ell$, $\bm X=\sum_\ell\xi_\ell\bm v_\ell$ and $\bm X_{-\ell}=\bm X-\xi_\ell\bm v_\ell$. Then $\bm n(I)=\bar{\bm n}+\bm X$, and $\bar{\bm n}=\E\bm n(I)$ lies in the convex hull of the attainable tables. By the mean-value theorem,
+\[
+  \Delta_\ell=\E\int_0^1\nabla F\bigl(\bar{\bm n}+\bm X_{-\ell}+(s-\pi_\ell)\bm v_\ell\bigr)^{\top}\bm v_\ell\,ds ,
+\]
+and $|\nabla F(\bm y)^{\top}\bm v_\ell-g_\ell|\le H\|\bm y-\bar{\bm n}\|_2\,\bar v$. Since $\E\|\bm X_{-\ell}\|_2\le(\E\|\bm X\|_2^2)^{1/2}\le\bar vS_1^{1/2}$, we get $|\Delta_\ell-g_\ell|\le H\bar v(\bar vS_1^{1/2}+\bar v)$. For the interactions, write $G=F(\bar{\bm n})+\sum_\ell g_\ell\xi_\ell+R$, with $|R|\le\frac H2\|\bm X\|_2^2$ by Taylor's theorem. The linear part has Hoeffding components of order one only. So the components of order at least two of $G$ are those of $R$, and $I_{\mathrm{int}}\le\Var R\le\E R^2\le\frac{H^2}4\E\|\bm X\|_2^4$. Expanding $\|\bm X\|_2^4=\sum_{a,b,c,d}\xi_a\xi_b\xi_c\xi_d\langle\bm v_a,\bm v_b\rangle\langle\bm v_c,\bm v_d\rangle$, only paired or fully coincident indices have non-zero mean. Using $\E\xi_a^4\le\E\xi_a^2=\pi_a(1-\pi_a)$ and $\langle\bm v_a,\bm v_b\rangle^2\le\bar v^4$ gives $\E\|\bm X\|_2^4\le\bar v^4(S_1+3S_1^2)$. If $F$ is homogeneous of degree one, then $\nabla^2F(\bm x)=N^{-1}\nabla^2F(\bm x/N)$, so $H=O(N^{-1})$ on tables of order $N$.
+
+(iv) Index the units so that $\sigma_1^2/c_1\ge\sigma_2^2/c_2\ge\cdots$, and assume $\sum_uc_u>B$, since otherwise all units are reviewed. Let $j$ be the first index with $\sum_{u\le j}c_u>B$, and let $x^{\mathrm g}_u=1$ for $u<j$, $x^{\mathrm g}_j=(B-\sum_{u<j}c_u)/c_j\in[0,1)$, and $x^{\mathrm g}_u=0$ for $u>j$. For any $x\in[0,1]^L$ with $\sum_uc_ux_u\le B$,
+\[
+  \sum_u\sigma_u^2(x^{\mathrm g}_u-x_u)=\sum_u\frac{\sigma_u^2}{c_u}\,c_u(x^{\mathrm g}_u-x_u)\ \ge\ \frac{\sigma_j^2}{c_j}\sum_uc_u(x^{\mathrm g}_u-x_u)\ \ge\ 0 .
+\]
+The first inequality holds because $c_u(x^{\mathrm g}_u-x_u)\ge0$ for $u<j$ and $\le0$ for $u>j$. The second holds because $\sum_uc_ux^{\mathrm g}_u=B$. So $x^{\mathrm g}$ solves the linear relaxation \citep{dantzig1957}, and $W^\star\le\sum_u\sigma_u^2x^{\mathrm g}_u\le\sum_{u\in S_{\mathrm g}}\sigma_u^2+\sigma_j^2$. If $c_j\le B$, then $\{j\}$ is feasible and $\max\{\sum_{S_{\mathrm g}}\sigma_u^2,\sigma_j^2\}\ge W^\star/2$ \citep{kellerer2004}. \qed
+
+\subsection{Proof of \texorpdfstring{\cref{prop:link-audit}}{the audit proposition}}\label{app:link-audit}
+
+(i) Under simple random sampling without replacement within strata, $\E[N_h\bar{\bm y}_h]=\sum_{\ell\in\mathcal P_h}\bm y_\ell$, and the covariance of $N_h\bar{\bm y}_h$ is $N_h^2(1-n_h/N_h)\bm S_{y,h}/n_h$ \citep[Ch.~5]{cochran1977}. In an asymptotic framework in which $N_h$ and $n_h$ tend to infinity and the stratum means converge, $\hat{\bm Y}/\sum_hN_h-\bm Y/\sum_hN_h\to0$ in probability. Since $\psi$ is continuous, and in \eqref{eq:link-psi} depends on $\bm Y$ only through ratios, $\hat\theta\to\theta$ in probability.
+
+(ii) A first-order Taylor expansion of $\bm a^{\top}\psi$ at $\bm Y$ gives $\bm a^{\top}(\hat\theta-\theta)=\sum_hN_h(\bar z_h-\bar Z_h)+o_p(\cdot)$, where $\bar Z_h$ is the population mean of $z$ in stratum $h$. Its design variance is $V_{\mathrm{aud}}=\sum_hN_h^2S_{z,h}^2/n_h-\sum_hN_hS_{z,h}^2$. The second term does not depend on the allocation. By the Cauchy--Schwarz inequality,
+\[
+  \Bigl(\sum_h\frac{N_h^2S_{z,h}^2}{n_h}\Bigr)\Bigl(\sum_hc_hn_h\Bigr)\ge\Bigl(\sum_hN_hS_{z,h}\sqrt{c_h}\Bigr)^2,
+\]
+with equality if and only if $N_hS_{z,h}/\sqrt{n_h}\propto\sqrt{c_hn_h}$, that is, $n_h\propto N_hS_{z,h}/\sqrt{c_h}$ \citep{neyman1934}. With $\sum_hc_hn_h=C$, the minimum is as stated.
+
+(iii) If all pairs in stratum $h$ share one decision status, then each coordinate of $\bm y_\ell$ is an affine function of $I_\ell$ with stratum-specific coefficients. For example, in a stratum of linked edges $\bm y_\ell=(I_\ell,0,1-I_\ell)$. Hence $z_\ell=\alpha_h+\lambda_hI_\ell$ and $S_{z,h}=|\lambda_h|S_{I,h}$. For a binary variable with stratum proportion $P_h$, $S_{I,h}^2=N_hP_h(1-P_h)/(N_h-1)$. Calibration within strata means $P_h=\bar\pi_h$. \qed

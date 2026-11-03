@@ -1,0 +1,92 @@
+% =====================================================================
+%  Figure: the Boolean lattice behind the closed form (LEAD).
+%  Requires the house colours defined in preamble.tex.
+% =====================================================================
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,
+    hnode/.style={circle,minimum size=0.86cm,inner sep=0pt,font=\footnotesize},
+    num/.style={hnode,fill=LabNavy,text=white},
+    den/.style={hnode,fill=white,draw=LabAccent,line width=0.9pt,text=LabAccent},
+    tgt/.style={hnode,fill=LabSand,draw=LabAccent,line width=0.9pt,
+                dash pattern=on 2pt off 1.5pt,text=LabAccent},
+    edge/.style={LabRule,line width=0.8pt},
+    sgn/.style={font=\scriptsize\bfseries,inner sep=0.5pt},
+    lvl/.style={font=\scriptsize,text=LabGrey,anchor=east,inner sep=0pt},
+    formula/.style={font=\small,text=LabInk,anchor=north,inner sep=0pt},
+    panel/.style={font=\footnotesize\bfseries,text=LabNavy,anchor=south west,inner sep=0pt},
+  ]
+  \def\dy{1.25}
+  % ======================= (a) K = 2 =======================
+  \begin{scope}[shift={(0,0)}]
+    \node[panel] at (-1.75,3*\dy+0.2) {(a)\enspace $K=2$};
+    \node[tgt] (a00) at (0,0)      {$00$};
+    \node[num] (a10) at (-0.95,\dy) {$10$};
+    \node[num] (a01) at (0.95,\dy)  {$01$};
+    \node[den] (a11) at (0,2*\dy)   {$11$};
+    \begin{scope}[on background layer]
+      \draw[edge] (a00) -- (a10) -- (a11) -- (a01) -- (a00);
+    \end{scope}
+    \node[sgn,text=LabNavy,anchor=south west] at (a10.north east) {$+$};
+    \node[sgn,text=LabNavy,anchor=south west] at (a01.north east) {$+$};
+    \node[sgn,text=LabAccent,anchor=south west] at (a11.north east) {$-$};
+    \node[formula] at (0,-0.75)
+      {$\widehat{n}_{00}=e^{\omega}\,\dfrac{n_{10}\,n_{01}}{n_{11}}$};
+    \node[font=\scriptsize,text=LabGrey,anchor=north] at (0,-1.75)
+      {Lincoln--Petersen when $\omega=0$};
+  \end{scope}
+
+  % ======================= (b) K = 3 =======================
+  \begin{scope}[shift={(6.3,0)}]
+    \node[panel] at (-2.6,3*\dy+0.2) {(b)\enspace $K=3$};
+    \node[tgt] (b000) at (0,0)        {$000$};
+    \node[num] (b100) at (-1.55,\dy)  {$100$};
+    \node[num] (b010) at (0,\dy)      {$010$};
+    \node[num] (b001) at (1.55,\dy)   {$001$};
+    \node[den] (b110) at (-1.55,2*\dy){$110$};
+    \node[den] (b101) at (0,2*\dy)    {$101$};
+    \node[den] (b011) at (1.55,2*\dy) {$011$};
+    \node[num] (b111) at (0,3*\dy)    {$111$};
+    \begin{scope}[on background layer]
+      \foreach \a/\b in {b000/b100,b000/b010,b000/b001,
+                         b100/b110,b100/b101,b010/b110,b010/b011,b001/b101,b001/b011,
+                         b110/b111,b101/b111,b011/b111}{\draw[edge] (\a) -- (\b);}
+    \end{scope}
+    \foreach \n in {b100,b010,b001,b111}{
+      \node[sgn,text=LabNavy,anchor=south west] at (\n.north east) {$+$};}
+    \foreach \n in {b110,b101,b011}{
+      \node[sgn,text=LabAccent,anchor=south west] at (\n.north east) {$-$};}
+    % rank annotations
+    \foreach \r/\t in {0/{target},1/{$|\h|=1$},2/{$|\h|=2$},3/{$|\h|=3$}}{
+      \node[lvl] at (-2.35,\r*\dy) {\t};}
+    \node[formula] at (0,-0.75)
+      {$\widehat{n}_{000}=e^{-\omega}\,
+        \dfrac{n_{100}\,n_{010}\,n_{001}\,n_{111}}{n_{110}\,n_{101}\,n_{011}}$};
+    \node[font=\scriptsize,text=LabGrey,anchor=north] at (0,-1.75)
+      {no three-way interaction when $\omega=0$};
+  \end{scope}
+
+  % ======================= legend =======================
+  \begin{scope}[shift={(10.3,2.6)}]
+    \node[num,minimum size=0.42cm] (l1) at (0,0) {};
+    \node[font=\scriptsize,anchor=west,align=left] at (0.35,0) {odd $|\h|$:\\[-2pt]numerator};
+    \node[den,minimum size=0.42cm] (l2) at (0,-0.85) {};
+    \node[font=\scriptsize,anchor=west,align=left] at (0.35,-0.85) {even $|\h|$:\\[-2pt]denominator};
+    \node[tgt,minimum size=0.42cm] (l3) at (0,-1.7) {};
+    \node[font=\scriptsize,anchor=west,align=left] at (0.35,-1.7) {unobserved\\[-2pt]cell $\nzero$};
+  \end{scope}
+\end{tikzpicture}
+\caption{\textbf{The closed form as an alternating product over the Boolean
+lattice $\{0,1\}^K$.} Nodes are capture histories, ordered by the number
+of lists $|\h|$; edges add one list. Under a log-linear model whose only
+unidentified parameter is the $K$-way interaction $\omega$, the unobserved
+cell is $\widehat{n}_{\zero}=e^{\bar\omega}\mathcal{A}(\bm n_+)$ with
+$\bar\omega=(-1)^K\omega$ and $\mathcal{A}(\bm n_+)=\prod_{\h\neq\zero}
+n_{\h}^{s_{\h}}$, $s_{\h}=(-1)^{|\h|+1}$ (\cref{eq:fw-key,thm:closed}).
+Histories at odd rank enter the numerator and those at even rank the
+denominator. Panel~(a) is the
+Lincoln--Petersen estimator; panel~(b) the three-list case. Because $\omega$
+enters only through the factor $e^{\bar\omega}$, an interval for $\omega$
+maps monotonically to an interval for $\nzero$ (\cref{cor:bounds}).}
+\label{fig:lattice}
+\end{figure}

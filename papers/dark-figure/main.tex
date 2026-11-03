@@ -1,0 +1,101 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\hypersetup{
+  pdftitle={The Dark Figure: Estimating Unreported Antisemitic Hate Crime with Bayesian Record Linkage and Multiple-Systems Estimation},
+  pdfauthor={Kornstein Lab for Antisemitism Research},
+  pdfsubject={Methods paper with simulation study on synthetic data; no empirical estimates from real incident data},
+  pdfkeywords={multiple-systems estimation, capture-recapture, record linkage, hate crime, antisemitism, sensitivity analysis, Bayesian nonparametrics}
+}
+
+\begin{document}
+
+% ======================= title block =======================
+\thispagestyle{plain}
+\begingroup
+\raggedright
+{\footnotesize\scshape\color{LabAccent}Kornstein Lab for Antisemitism Research%
+ \enspace\textcolor{LabRule}{|}\enspace\textcolor{LabGrey}{Methods paper}\par}
+\vspace{5pt}
+{\color{LabNavy}\rule{\textwidth}{1.3pt}}\par
+\vspace{16pt}
+{\fontsize{34}{38}\selectfont\color{LabNavy}The Dark Figure%
+ \textsuperscript{\normalsize\color{LabAccent}$\ast$}\par}
+\vspace{8pt}
+{\fontsize{15.5}{19}\selectfont\color{LabInk}Estimating Unreported Antisemitic
+ Hate Crime\\ with Bayesian Record Linkage and Multiple-Systems Estimation\par}
+\vspace{14pt}
+{\normalsize\color{LabInk}Kornstein Lab for Antisemitism Research\par}
+\vspace{2pt}
+{\small\color{LabGrey}November 2026\par}
+\vspace{10pt}
+\endgroup
+\begingroup
+\renewcommand{\thefootnote}{\ensuremath{\ast}}
+\footnotetext[1]{\textbf{Status.} Methods paper; simulation study on
+synthetic data; no empirical estimates. Every number in
+\cref{sec:simulation} is computed from synthetic data with known ground
+truth; the real-data analysis of \cref{sec:plan} is pre-registered and has
+not been carried out.}
+\endgroup
+
+% ======================= abstract =======================
+\begin{tcolorbox}[enhanced,breakable,colback=LabTint,frame hidden,boxrule=0pt,
+  sharp corners,left=12pt,right=12pt,top=9pt,bottom=9pt,
+  borderline west={2pt}{0pt}{LabNavy},before skip=4pt,after skip=12pt]
+\begin{abstract}
+Public debate and policy on antisemitism rely on counts of incidents, but
+every count is a partial list. Police statistics capture only incidents that
+victims report, officers classify as bias-motivated and agencies submit, and
+non-governmental audits use different definitions and intake channels. The
+total, including the incidents that appear on no list (the \emph{dark
+figure}), is never observed. This is a methods paper. It develops a framework
+for estimating the dark figure of antisemitic hate crime by combining record
+linkage with multiple-systems estimation. We derive a closed-form $K$-list
+estimator in which the untestable highest-order interaction is an explicit
+sensitivity parameter, with sharp two-sided bounds. With three or more lists,
+neither positive dependence nor heterogeneity fixes the sign of the bias. We
+also model referral between lists. We represent linkage error as a linear
+operator on capture-history tables, derive its first-order bias for $K$
+lists and a corrected estimator, and
+propagate linkage uncertainty through a Bayesian latent-class and small-area
+model. A multiplicative reporting funnel with a Shapley decomposition locates
+where incidents are lost between victimisation and federal statistics. A
+simulation study on synthetic data with known ground truth evaluates the
+estimators, and a pre-registered analysis plan specifies the real-data
+analysis, including harmonisation, privacy-preserving linkage and an ethics
+protocol. We report no empirical estimates from real data.
+\end{abstract}
+\keywords{multiple-systems estimation; capture--recapture; record linkage;
+hate crime; antisemitism; sensitivity analysis; Bayesian nonparametrics.}
+\end{tcolorbox}
+\suppressfloats[t]
+
+% ======================= body =======================
+% Figures 1--2 (funnel, pipeline) and Table 1 (notation) are \input from
+% sections/01-introduction.tex so that they float next to their first mention.
+\IfFileExists{sections/01-introduction.tex}{\input{sections/01-introduction}}{}
+\IfFileExists{sections/02-sources.tex}{\input{sections/02-sources}}{}
+\IfFileExists{sections/03-framework.tex}{\input{sections/03-framework}}{}
+% Figure: the Boolean lattice behind the closed form (Section 4).
+\IfFileExists{figures/fig-lattice.tex}{\input{figures/fig-lattice}}{}
+\IfFileExists{sections/04-identification.tex}{\input{sections/04-identification}}{}
+\IfFileExists{sections/05-linkage.tex}{\input{sections/05-linkage}}{}
+\IfFileExists{sections/06-models.tex}{\input{sections/06-models}}{}
+\IfFileExists{sections/07-funnel.tex}{\input{sections/07-funnel}}{}
+\IfFileExists{sections/08-simulation.tex}{\input{sections/08-simulation}}{}
+\IfFileExists{sections/09-analysis-plan.tex}{\input{sections/09-analysis-plan}}{}
+\IfFileExists{sections/10-ethics.tex}{\input{sections/10-ethics}}{}
+\IfFileExists{sections/11-discussion.tex}{\input{sections/11-discussion}}{}
+
+\bibliographystyle{plainnat}
+\bibliography{refs,bib/sources,bib/theory,bib/linkage,bib/bayes,bib/lead}
+
+\clearpage
+\appendix
+\IfFileExists{appendix/A1-identification-proofs.tex}{\input{appendix/A1-identification-proofs}}{}
+\IfFileExists{appendix/A2-linkage-proofs.tex}{\input{appendix/A2-linkage-proofs}}{}
+\IfFileExists{appendix/B-computation.tex}{\input{appendix/B-computation}}{}
+\IfFileExists{appendix/C-simulation-details.tex}{\input{appendix/C-simulation-details}}{}
+
+\end{document}

@@ -1,0 +1,141 @@
+% =====================================================================
+%  Figure: the reporting funnel (LEAD).  Schematic -- widths are NOT data.
+%  Requires the house colours defined in preamble.tex.
+% =====================================================================
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,
+    stage/.style={font=\footnotesize\bfseries,text=LabNavy,align=center,
+                  anchor=south,inner sep=1pt,text width=2.3cm},
+    rho/.style={font=\small,text=LabNavy,inner sep=1pt},
+    src/.style={font=\scriptsize\itshape,text=LabGrey,align=center,inner sep=1pt,text width=2.3cm},
+    leaklab/.style={font=\scriptsize,text=LabGrey,align=center,anchor=north,
+                    inner sep=1pt,text width=2.1cm},
+    listline/.style={line width=0.9pt,LabNavyMid},
+    listlab/.style={font=\scriptsize,text=LabNavy,anchor=west,inner sep=1pt},
+  ]
+  % ---------------- geometry (schematic) ----------------
+  \def\bw{0.25}   % half bar width
+  \def\rin{0.22}  % inner radius of the leaks
+  \def\yend{-4.55}
+  % x positions and heights of the five stages
+  \def\xA{0}    \def\hA{4.0}
+  \def\xB{2.8}  \def\hB{3.0}
+  \def\xC{5.6}  \def\hC{2.0}
+  \def\xD{8.4}  \def\hD{1.45}
+  \def\xE{11.2} \def\hE{1.12}
+
+  % leak macro: #1 = x of source bar, #2 = h source, #3 = h next
+  \newcommand{\leak}[3]{%
+    \pgfmathsetmacro{\a}{#1+\bw}%
+    \pgfmathsetmacro{\rout}{\rin+#2-#3}%
+    \pgfmathsetmacro{\xi}{\a+\rin}%
+    \pgfmathsetmacro{\xo}{\a+\rout}%
+    \pgfmathsetmacro{\xm}{(\xi+\xo)/2}%
+    \fill[LabAccent!16] (\a,-#3) arc[start angle=90,end angle=0,radius=\rout]
+        -- (\xo,\yend) -- (\xm,\yend-0.28) -- (\xi,\yend)
+        -- (\xi,-#2-\rin) arc[start angle=0,end angle=90,radius=\rin] -- cycle;
+    \draw[LabAccent!75,line width=0.5pt] (\a,-#3) arc[start angle=90,end angle=0,radius=\rout]
+        -- (\xo,\yend) -- (\xm,\yend-0.28) -- (\xi,\yend)
+        -- (\xi,-#2-\rin) arc[start angle=0,end angle=90,radius=\rin];
+  }
+
+  % ---------------- flows (retained mass) ----------------
+  \foreach \xa/\xb/\hb in {\xA/\xB/\hB,\xB/\xC/\hC,\xC/\xD/\hD,\xD/\xE/\hE}{
+    \fill[LabNavy!9] (\xa+\bw,0) rectangle (\xb-\bw,-\hb);
+  }
+  % ---------------- leaks (lost from the police record) ----------------
+  \leak{\xA}{\hA}{\hB}
+  \leak{\xB}{\hB}{\hC}
+  \leak{\xC}{\hC}{\hD}
+  \leak{\xD}{\hD}{\hE}
+
+  % ---------------- stage bars ----------------
+  \fill[LabNavy]      (\xA-\bw,0) rectangle (\xA+\bw,-\hA);
+  \fill[LabNavy!88]   (\xB-\bw,0) rectangle (\xB+\bw,-\hB);
+  \fill[LabNavy!80]   (\xC-\bw,0) rectangle (\xC+\bw,-\hC);
+  \fill[LabNavy!72]   (\xD-\bw,0) rectangle (\xD+\bw,-\hD);
+  \fill[LabNavy!64]   (\xE-\bw,0) rectangle (\xE+\bw,-\hE);
+
+  % ---------------- stage labels ----------------
+  \node[stage] at (\xA,0.12) {Incidents\\[-1pt]\normalfont$N$};
+  \node[stage] at (\xB,0.12) {Disclosed\\[-1pt]\normalfont$N_V$};
+  \node[stage] at (\xC,0.12) {Reported\\[-1pt]to police};
+  \node[stage] at (\xD,0.12) {Classified as\\[-1pt]antisemitic};
+  \node[stage] at (\xE,0.12) {Submitted\\[-1pt]to the FBI};
+
+  % ---------------- multiplicative factors & identifying sources ----------
+  \foreach \xa/\xb/\r/\s in {
+      \xA/\xB/\rvic/{victim survey:\\[-2pt]told anyone},
+      \xB/\xC/\rpol/{NCVS-type survey:\\[-2pt]told the police},
+      \xC/\xD/\rcls/{police--NGO\\[-2pt]linked overlap},
+      \xD/\xE/\rsub/{agency\\[-2pt]participation data}}{
+    \node[rho] at ({(\xa+\xb)/2},-0.32) {$\times\,\r$};
+    \node[src,anchor=north] at ({(\xa+\xb)/2},-0.52) {\s};
+  }
+  \node[src,anchor=north,text width=1.2cm] at (\xB,-\hB-0.08) {MSE};
+
+  % ---------------- the recorded count ----------------
+  \node[anchor=west,inner sep=1pt] (nfbi) at (\xE+\bw+0.12,-0.5)
+      {\color{LabNavy}$\nFBI$};
+  \node[anchor=north west,font=\scriptsize,text=LabGrey,inner sep=1pt]
+      at (nfbi.south west) {list $k{=}1$};
+
+  % ---------------- leak labels ----------------
+  \foreach \x/\dh/\r/\t in {
+      \xA/1.0/\rvic/{never disclosed},
+      \xB/1.0/\rpol/{not reported\\[-2pt]to police},
+      \xC/0.55/\rcls/{not recorded\\[-2pt]as bias crime},
+      \xD/0.33/\rsub/{recorded but\\[-2pt]not submitted}}{
+    \pgfmathsetmacro{\xm}{\x+\bw+\rin+\dh/2}
+    \node[font=\footnotesize,text=LabAccent,anchor=north,inner sep=1pt]
+        (ll) at (\xm,\yend-0.36) {$1-\r$};
+    \node[leaklab] at (ll.south) {\t};
+  }
+
+  % ---------------- parallel lists (capture from the whole population) ----
+  \foreach \y/\k/\name in {1.55/2/{NGO audit},2.05/3/{community security org.},
+                           2.55/4/{campus / portal}}{
+    \draw[listline] (\xB,\y) -- (\xE+\bw,\y);
+    \fill[LabNavyMid] (\xE+\bw,\y) circle (1.6pt);
+    \node[listlab] at (\xE+\bw+0.12,\y) {$n_{\k+}$\enspace\textcolor{LabGrey}{\name}};
+  }
+  % sampling ticks: every list learns of incidents once they are disclosed
+  \draw[LabNavyMid,line width=0.5pt] (\xB,0.95) -- (\xB,2.55);
+  \foreach \y in {1.55,2.05,2.55}{\fill[LabNavyMid] (\xB,\y) circle (1.4pt);}
+  \node[font=\scriptsize\itshape,text=LabGrey,anchor=east,align=right,inner sep=1pt]
+      at (\xB-0.15,2.05) {parallel lists\\[-2pt]sample the\\[-2pt]disclosed};
+
+  % referral dependence: police-recorded incidents flow into the NGO audit
+  \draw[-{Stealth[length=4pt]},LabAccent,line width=0.8pt,dash pattern=on 2.5pt off 1.5pt]
+      ({(\xC+\xD)/2},0.02) -- ({(\xC+\xD)/2},1.49);
+  \node[font=\scriptsize\itshape,text=LabAccent,anchor=west,inner sep=1pt]
+      at ({(\xC+\xD)/2+0.05},1.0) {referral};
+
+  % MSE closes the loop: K lists -> linkage -> estimate of N
+  \draw[-{Stealth[length=5pt]},LabNavy,line width=0.7pt,rounded corners=5pt]
+      (\xE+\bw,2.8) -- (\xE+\bw,3.25) -- (\xB,3.25) -- (\xB,2.72);
+  \node[fill=white,font=\scriptsize,text=LabNavy,inner sep=3pt]
+      at ({(\xB+\xE+\bw)/2},3.25)
+      {link the $K$ lists, then multiple-systems estimation:\enspace $\widehat N_V$};
+  % a victim survey closes the first stage
+  \node[font=\scriptsize,text=LabNavy,anchor=south,align=center,inner sep=1pt]
+      at (\xA,1.1) {$N=N_V/\rvic$\\[-1pt]\textcolor{LabGrey}{\itshape(survey)}};
+\end{tikzpicture}
+\caption{\textbf{The reporting funnel.} Each in-scope antisemitic incident must
+pass four filters before it appears in the FBI's hate-crime count:
+the victim or a witness discloses it ($\rvic$), it reaches the police
+($\rpol$), the police record an antisemitic bias motivation ($\rcls$), and
+the agency submits the record to the FBI ($\rsub$), so that
+$\E[\nFBI\mid U_d]=N\rvic\rpol\rcls\rsub$ (\cref{prop:funnel}). Orange
+streams are incidents lost from the police record at each stage; grey italics
+name the auxiliary data that inform each factor (\cref{tab:funnel-sources}).
+Parallel lists (NGO audit, community security organisation, campus or
+self-report portal) learn of disclosed incidents through channels other than
+the police pipeline, except through \emph{referral} (dashed), the dependence
+formalised in \cref{prop:referral}. Linking the $K$ lists and applying
+multiple-systems estimation recovers the number of disclosed incidents
+$N_V$. A victim survey supplies $\rvic$, and hence $N$ and the dark figure
+$\nzero=N-n$ of incidents on no list. Widths are schematic, not estimates.}
+\label{fig:funnel}
+\end{figure}

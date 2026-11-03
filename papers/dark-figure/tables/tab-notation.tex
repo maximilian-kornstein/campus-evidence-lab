@@ -1,0 +1,59 @@
+% =====================================================================
+%  Table: notation (LEAD).  Symbols follow SPEC.md exactly.
+% =====================================================================
+\begin{table}[t]
+\caption{\textbf{Notation.} Symbols used throughout. Bold $\h$ denotes a
+capture history; $\zero$ is the all-zero history.}
+\label{tab:notation}
+\small
+\renewcommand{\arraystretch}{1.08}
+\newcommand{\nhead}[1]{\multicolumn{2}{@{}l}{\footnotesize\scshape\bfseries\color{LabNavy}#1}\\[1pt]}
+\begin{minipage}[t]{0.485\textwidth}
+\begin{tabularx}{\linewidth}[t]{@{}>{$}l<{$}@{\hspace{0.8em}}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\nhead{Population and lists}
+d & domain (state $s$ $\times$ year $t$) \\
+U_d,\ N & in-scope antisemitic incidents; unknown size \\
+k\in\Kset & list; $K=4$: police (FBI), NGO audit, community security org., campus/self-report portal \\
+Y_{ik} & $1$ if incident $i$ is on list $k$ \\
+\midrule
+\nhead{Capture histories and counts}
+\h\in\Hset=\{0,1\}^K & capture history; $|\h|=\sum_k h_k$ \\
+n_{\h} & incidents with history $\h$ \\
+n=\sum_{\h\neq\zero}n_{\h} & distinct incidents observed \\
+\nzero=N-n & \textbf{the dark figure} \\
+n_{k+},\ f_j & size of list $k$; incidents on exactly $j$ lists \\
+D_k=N/n_{k+} & dark-figure ratio relative to list $k$ \\
+\midrule
+\nhead{Reporting funnel}
+\rvic & victim or witness discloses to anyone \\
+\rpol & reported to police $\mid$ disclosed \\
+\rcls & classified as antisemitic $\mid$ reported \\
+\rsub & submitted to the FBI $\mid$ classified \\
+N_V & disclosed incidents; what list-based MSE estimates \\
+\nFBI & police list size; $\E\,\nFBI=N\rvic\rpol\rcls\rsub$ \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\begin{tabularx}{\linewidth}[t]{@{}>{$}l<{$}@{\hspace{0.8em}}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\nhead{Capture models}
+\mu_{\h}=\E[n_{\h}] & expected cell count \\
+u_S,\ S\subseteq\Kset & log-linear terms: $\log\mu_{\h}=\sum_{S\subseteq\supp(\h)}u_S$ \\
+\omega=u_{\Kset} & highest-order interaction; sensitivity parameter \\
+p_{ik} & $\Pr(Y_{ik}=1\mid x_i)$, capture probability \\
+z_i,\ \pi_j,\ \lambda_{jk} & latent class; class weight; class-$j$ capture probability on list $k$ \\
+\midrule
+\nhead{Record linkage}
+r\in R_k,\ a_r & record of list $k$; its attributes \\
+\Link,\ \Link^{*},\ \Linkhat & linkage structure (partition of records into incidents); truth; estimate \\
+\gamma_{rr'} & comparison vector of a record pair \\
+m(\gamma),\ u(\gamma) & $\Pr(\gamma\mid\text{match})$, $\Pr(\gamma\mid\text{non-match})$ \\
+w=\log(m/u) & Fellegi--Sunter weight \\
+\delta,\ \varepsilon & false non-match rate; false match rate \\
+\Lop(\delta,\varepsilon) & linkage operator on capture-history tables \\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{table}
