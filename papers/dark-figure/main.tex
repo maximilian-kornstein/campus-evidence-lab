@@ -65,7 +65,8 @@ noise and are linked by a Fellegi--Sunter model. The resulting errors are
 dominated by swaps, links to the wrong partner, which the stylised model
 omits, and the correction then over-corrects. We therefore propagate linkage
 uncertainty by mixing over linkage draws and use the correction only as a
-diagnostic. We also specify, but do not evaluate, a Bayesian latent-class and
+diagnostic; in the simulation, mixing over approximate draws from a plug-in
+linkage posterior did not remove the linkage bias either. We also specify, but do not evaluate, a Bayesian latent-class and
 spatiotemporal small-area model. A multiplicative reporting funnel with a
 Shapley decomposition locates where incidents are lost between the offence
 and federal statistics. A pre-registered analysis plan covers harmonisation,
@@ -98,6 +99,11 @@ hate crime; antisemitism; sensitivity analysis; Bayesian nonparametrics.}
 \section*{Declarations}
 \paragraph{Funding} None.
 \paragraph{Competing interests} None declared.
+\paragraph{AI assistance} This paper was drafted with substantial assistance
+from AI language models (Anthropic's Claude), directed and reviewed by the
+Kornstein Lab; all derivations were checked numerically and by independent
+automated review, and all simulation numbers are produced by the released
+code.
 \paragraph{Code and data availability} The code for the simulation study (the
 \texttt{darkfig} Python package, the experiment driver with its deterministic
 seeds, and the scripts that produce every figure and table of

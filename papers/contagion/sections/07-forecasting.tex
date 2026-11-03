@@ -2,25 +2,24 @@
 
 Community-security organisations and public agencies need to know, on a given day,
 whether the coming days are likely to bring an unusual number of incidents. This
-section develops five pieces:
+section develops four pieces:
 \begin{itemize}
   \item predictive distributions from the fitted model;
   \item an alert rule with an explicit trade-off between the costs of false alarms and
   missed surges;
   \item a correction of the model's state for reporting delays;
-  \item methods to evaluate forecasts and alerts;
-  \item a monitor for changes in the parameters themselves.
+  \item methods to evaluate forecasts and alerts.
 \end{itemize}
 Self-exciting models have been used for short-term crime forecasting
 \citep{mohler2011,reinhart2018} and for forecasting the popularity of online content
 \citep{zhao2015,rizoiu2017}. The decision rule (\cref{thm:alert}(a)) and the scoring
 rules are classical. The monotone coupling behind \cref{thm:alert}(b)--(c) is the
 standard cluster, or Poisson-embedding, argument \citep{hawkes1974,bremaud1996}. What we
-add is its consequence for the shape of the Bayes alert region, the delay-corrected state
-with its bias (\cref{prop:nowcast}), and an imputation algorithm for alerting from
-delayed data (\cref{alg:alert}). Proofs are in \cref{app:attrproofs}. Throughout, parameters are
-treated as known. Parameter uncertainty enters through posterior or bootstrap draws
-(\cref{alg:alert}).
+add is its consequence for the shape of the Bayes alert region and the delay-corrected
+state with its bias (\cref{prop:nowcast}). Proofs are in \cref{app:attrproofs}; exact
+predictive distributions, an imputation algorithm for alerting from delayed data and a
+monitor for changes in the parameters are in \cref{app:fc-supp}. Throughout, parameters
+are treated as known. Parameter uncertainty enters through posterior or bootstrap draws.
 
 \subsection{Predictive distributions}\label{sec:fc-predictive}
 
@@ -29,6 +28,14 @@ Future salient events are unknown at time $t$. We forecast conditionally on a gi
 calendar of future events, which is empty unless stated. If event arrivals are modelled
 as a marked Poisson process, the results below hold conditionally on its realisation,
 and therefore also after averaging over it.
+The choice of future calendar matters for calibration. % ALIGN-WITH-SIM
+A forecaster that sets the future calendar to empty while events in fact keep arriving
+is misspecified: its predictive law is not the conditional law of the count, and its
+probability integral transform is not uniform over windows that contain a new event
+(\cref{lem:fc-pit}). A forecaster that averages over a model for event arrivals is
+calibrated when windows are pooled, if that model is correct. What no forecaster can do
+is \emph{time} the events. That limits the recall of an alert rule, not its
+calibration (\cref{sec:sim-alert}).
 
 \begin{lemma}[The future given the past]\label{lem:fc-future}
 Assume \cref{ass:th-model}, and fix $t\ge0$ and the calendar of events. For $s>t$, let
@@ -75,37 +82,10 @@ $x_{kj}(t)(1-e^{-\beta_{kj}\Delta_{\mathrm a}})/\beta_{kj}$. Each generation-0 p
 as in \cref{sec:th-cluster}, truncated at $t+\Delta_{\mathrm a}$. Repeating this $J$ times gives a
 Monte Carlo predictive distribution with error of order $J^{-1/2}$. Thinning
 simulation from $\bm\xi(t)$ \citep{ogata1981} is an alternative.
-
-\begin{remark}[Exact predictive distributions]\label{rem:fc-pgf}
-The predictive law can also be computed without simulation. Fix a target stream $k$
-and the window $W=(t,t+\Delta_{\mathrm a}]$. For a cluster rooted at a stream-$j$ incident at time
-$s$, let $G_j(z;s)$ be the probability generating function of the number of its members
-in stream $k$ and in $W$, root included. The branching structure gives
-\begin{equation}\label{eq:fc-pgf-cluster}
-  G_j(z;s)=z^{\ind{j=k,\ s\in W}}\exp\Bigl\{\sum_{i=1}^{M}\int_s^{t+\Delta_{\mathrm a}}\varphi_{ij}(r-s)\bigl(G_i(z;r)-1\bigr)\,\dd r\Bigr\},
-\end{equation}
-and the Poisson immigrants of \cref{lem:fc-future} give
-\begin{equation}\label{eq:fc-pgf}
-  \E\bigl[z^{N_k(W)}\mid\Hist_t\bigr]
-  =\exp\Bigl\{\sum_{j=1}^{M}\int_t^{t+\Delta_{\mathrm a}}\nu_{t,j}(s)\bigl(G_j(z;s)-1\bigr)\,\dd s\Bigr\}.
-\end{equation}
-For exponential kernels, the inner integrals in \eqref{eq:fc-pgf-cluster} satisfy $M^2$
-ordinary differential equations, solved backwards in $s$. In the univariate case,
-$I(s)=\int_s^{t+\Delta_{\mathrm a}}\varphi(r-s)\{G(z;r)-1\}\,\dd r$ solves
-\[
-I'=\beta I-n\beta\,(ze^{I}-1),\qquad I(t+\Delta_{\mathrm a})=0,
-\]
-and $G=ze^{I}$ on $W$. Evaluating \eqref{eq:fc-pgf} at the $L$th roots of unity and
-applying the discrete Fourier transform gives the predictive probability mass function.
-The aliasing error in each probability is at most the predictive probability of $L$ or
-more incidents.
-
-Because $\bm\nu_t$ is affine in $\bm\xi(t)$, the logarithm of \eqref{eq:fc-pgf} is
-affine in $\bm\xi(t)$. The predictive law is therefore the law at $\bm\xi=\zero$
-convolved with independent compound Poisson laws whose rates are proportional to the
-coordinates of $\bm\xi(t)$. This is the analytic form of the coupling in the proof of
-\cref{thm:alert}.
-\end{remark}
+The predictive law can also be computed without simulation. Its probability generating
+function solves $M^2$ ordinary differential equations backwards in time, and a discrete
+Fourier transform then gives the predictive probability mass function
+(\cref{rem:fc-pgf} in \cref{app:fc-pgf}).
 
 \subsection{Bayes-optimal alerting}\label{sec:fc-alert}
 
@@ -298,87 +278,17 @@ a noisy state that happens to be high produces a high plug-in probability more o
 than a surge. Plugging $\hat{\bm x}(t)$ into $G_t$, or simulating forward from it,
 therefore does not give $\Pr(Y_t=1\mid\mathcal G_t)$ for the available data
 $\mathcal G_t$. The Bayes optimality of \cref{thm:alert}(a) then holds only for the
-oracle rule that knows the true state. \Cref{alg:alert} approximates the predictive
-probability given the available data instead. It imputes the incidents that are not yet
-available, by sequential importance sampling with the intensities of (a).
-
-\begin{lemma}[Importance weights for imputation]\label{lem:fc-is}
-Assume \cref{ass:th-model,ass:fc-report} with known parameters, and condition on the
-history up to $t-L$. Let $O$ be the incidents in $(t-L,t]$ that are available by $t$.
-Simulate the remaining incidents $U$ in $(t-L,t]$ by thinning with intensity
-$\{1-p_kF_k(t-s)\}\lambda_k(s)$, where $\lambda$ is computed from the history up to
-$t-L$, from $O$ and from the points of $U$ simulated so far. Then the conditional law of
-$U$ given $O$ has density, with respect to this proposal, proportional to
-\begin{equation}\label{eq:fc-isweight}
-  w(U)=\prod_{i\in O}\lambda_{k_i}(s_i)\,
-  \exp\Bigl\{-\sum_{k=1}^{M}\int_{t-L}^{t}p_kF_k(t-s)\,\lambda_k(s)\,\dd s\Bigr\}.
-\end{equation}
-Consequently, if $U_1,\dots,U_J$ are independent proposals and $\bm\xi_\ell(t)$ is the
-state of the completed history, then $\sum_\ell w(U_\ell)G_t(\bm\xi_\ell(t))/\sum_\ell w(U_\ell)$
-converges almost surely, as $J\to\infty$, to $\Pr(Y_t=1\mid O,\ \text{history up to }t-L)$.
-\end{lemma}
-
-In practice the history up to $t-L$ is itself incomplete. \Cref{alg:alert} replaces it
-by the weighted carried-over excitation \eqref{eq:fc-ht} with $\delta=L$. The window $L$
-is chosen so that $F_k(L)\approx1$ and the excitation carried over from before $t-L$ has
-largely decayed by $t$. The only approximations, beyond Monte Carlo error, are this
-substitution and the parameter draws. When $p_k<1$, unrecorded incidents never become
-available. A fraction $1-p_k$ of the intensity is then imputed throughout the window,
-not only near $t$.
-
-\begin{algorithm}[t]
-\caption{Real-time alerting with imputation of unreported incidents}\label{alg:alert}
-\begin{algorithmic}[1]
-\Require incidents available at $t$; parameter draws $\vartheta^{(1)},\dots,\vartheta^{(R)}$;
-  recording probabilities $p_k$ and delay distributions $F_k$; imputation window $L$
-  with $F_k(L)\approx1$; window $\Delta_{\mathrm a}$; surge set $\mathcal U$; threshold
-  $\pi^*=c_{\mathrm{FA}}/(c_{\mathrm{FA}}+c_{\mathrm{miss}})$; particles per draw $J$
-\Ensure alert $a_t$ and estimate $\hat\pi_t$ of $\Pr(Y_t=1\mid\mathcal G_t)$
-\For{$r=1,\dots,R$}
-  \State $\hat{\bm h}^{(r)}\gets$ \eqref{eq:fc-ht} with $\delta=L$, under $\vartheta^{(r)}$
-    \Comment{state at $t-L$}
-  \For{$\ell=1,\dots,J$}
-    \State impute the unavailable incidents in $(t-L,t]$ by thinning with intensity
-      $\{1-p_kF_k(t-s)\}\lambda_k(s)$, inserting the available ones
-    \State $w_{r\ell}\gets$ \eqref{eq:fc-isweight} for the completed path
-      \Comment{\cref{lem:fc-is}}
-    \State $\pi_{r\ell}\gets G_t(\bm\xi_{r\ell}(t))$ for the completed state
-      \Comment{simulation or \cref{rem:fc-pgf}}
-  \EndFor
-  \State $\hat\pi^{(r)}\gets\sum_\ell w_{r\ell}\pi_{r\ell}\big/\sum_\ell w_{r\ell}$
-\EndFor
-\State $\hat\pi_t\gets R^{-1}\sum_r\hat\pi^{(r)}$
-\State \Return $a_t=\ind{\hat\pi_t\ge\pi^*}$ and $\hat\pi_t$
-\end{algorithmic}
-\end{algorithm}
-
-Several points about \cref{alg:alert} follow.
-\begin{itemize}
-  \item \emph{Normalising the weights.} Weights are normalised within each parameter
-  draw. The draws already condition on all the data, so weighting across draws would
-  count the recent data twice.
-  \item \emph{Effective sample size.} The effective sample size
-  $(\sum_\ell w_{r\ell})^2/\sum_\ell w_{r\ell}^2$ should be monitored. If it is small,
-  $J$ should be increased or $L$ shortened.
-  \item \emph{Monte Carlo error.} The Monte Carlo standard error of $\hat\pi_t$ is
-  estimated from the spread of the $R$ per-draw estimates, or by the delta method for
-  ratio estimators when $R=1$. If $|\hat\pi_t-\pi^*|$ is within two standard errors,
-  the simulation size should be increased before deciding.
-  \item \emph{Parameter uncertainty.} With posterior draws of $\vartheta$, $p_k$ and $F_k$,
-  $\hat\pi_t$ estimates the posterior predictive probability. This is $\pi_t$ in
-  \cref{thm:alert}(a) when the information includes parameter uncertainty.
-  \item \emph{Calibration in practice.} The algorithm is calibrated only if the model
-  is. Before operational use, the PIT (\cref{lem:fc-pit}) and a reliability diagram of
-  $\hat\pi_t$ should be checked on held-out data. If they show miscalibration,
-  $\hat\pi_t$ should be recalibrated, for instance by isotonic regression
-  (\cref{rem:fc-brier}), before the threshold $\pi^*$ is applied.
-  \item \emph{Plug-in shortcuts.} Comparing a nowcast state with the threshold curve of
-  \cref{thm:alert}(d) is fast but is not the Bayes rule for delayed data. If it is
-  used, it should be recalibrated in the same way.
-  \item \emph{Reuse.} With $G_t$ replaced by simulated future counts, the same weighted
-  particles give the predictive distributions used for scoring in
-  \cref{sec:fc-eval}.
-\end{itemize}
+oracle rule that knows the true state. Plugging a nowcast into the threshold rule is a
+shortcut, not the Bayes rule for delayed data. \Cref{alg:alert} in \cref{app:fc-sis}
+approximates the predictive probability given the available data instead. It imputes the
+incidents that are not yet available, by sequential importance sampling with the
+intensities of (a) (\cref{lem:fc-is}), and so targets the Bayes rule under delays. We have
+not run it: the simulation study evaluates only the plug-in shortcut
+(\cref{sec:sim-alert}). Whichever rule is used, the probability integral transform
+(\cref{lem:fc-pit}) and a reliability diagram of the alert probabilities should be checked
+on held-out data before operational use. If they show miscalibration, the probabilities
+should be recalibrated, for instance by isotonic regression of $Y_t$ on $\hat\pi_t$ over
+the training period, before the threshold $\pi^*$ is applied.
 
 \subsection{Evaluation}\label{sec:fc-eval}
 
@@ -451,56 +361,14 @@ $\sum_t\{c_{\mathrm{FA}}a_t(1-Y_t)+c_{\mathrm{miss}}(1-a_t)Y_t\}$, is the criter
 (\cref{sec:plan-decisions}) is made in these units. Alerts issued daily for overlapping
 windows have dependent outcomes, so intervals use a block bootstrap.
 
-\begin{remark}[Cost-weighted losses and the Brier score]\label{rem:fc-brier}
-Normalise the costs so that $c_{\mathrm{FA}}=c$ and $c_{\mathrm{miss}}=1-c$. Then
-$\pi^*=c$, and the loss of the rule $\ind{\pi_t\ge c}$ is
-$S_c(\pi_t,Y_t)=c\,(1-Y_t)\ind{\pi_t\ge c}+(1-c)\,Y_t\ind{\pi_t<c}$. For all $\pi_t$
-and $Y_t$,
-\[
-\int_0^1S_c(\pi_t,Y_t)\,\dd c=\tfrac12(\pi_t-Y_t)^2 .
-\]
-The Brier score is therefore twice the average realised cost when the normalised cost
-$c=\pi^*$ is drawn uniformly from $(0,1)$. Every proper scoring rule for binary events is a mixture
-of such elementary losses \citep{schervish1989}. When partners cannot agree on one cost
-ratio, the Brier score summarises performance across normalised costs. When they can, the
+The Brier score is twice the average realised cost when the normalised cost
+$\pi^*$ is drawn uniformly from $(0,1)$ (\cref{rem:fc-brier} in \cref{app:fc-brier}). It
+summarises performance when partners cannot agree on one cost ratio; when they can, the
 realised cost at $\pi^*$ is the relevant measure.
 
-\Cref{thm:alert}(a) presumes that $\pi_t$ is the true conditional probability. A
-forecast that is not calibrated should therefore be recalibrated before the threshold
-$\pi^*$ is applied, for instance by isotonic regression of $Y_t$ on $\pi_t$ over the
-training period.
-\end{remark}
-
-\subsection{Detecting regime shifts}\label{sec:fc-cusum}
-
-Alerts concern the next $\Delta_{\mathrm a}$ days with the parameters held fixed. A different
-question is whether the parameters themselves have changed, through a sustained rise
-either in the background or in contagion.
-
-\begin{remark}[A CUSUM monitor]\label{rem:fc-cusum}
-For a pre-change model $\vartheta_0$ and an alternative $\vartheta_1$, let
-\[
-\ell(t)=\sum_{k=1}^{M}\Bigl[\sum_{i:\,t^k_i\le t}\log\frac{\lambda^{\vartheta_1}_k(t^k_i)}{\lambda^{\vartheta_0}_k(t^k_i)}
--\int_0^t\bigl\{\lambda^{\vartheta_1}_k(s)-\lambda^{\vartheta_0}_k(s)\bigr\}\,\dd s\Bigr]
-\]
-be the log-likelihood ratio of the data on $[0,t]$, with both intensities computed from
-the same observed history. Page's CUSUM statistic
-$\mathcal W(t)=\ell(t)-\min_{s\le t}\ell(s)$ signals at the first $t$ with
-$\mathcal W(t)\ge h$ \citep{page1954}. Two detectors can run in parallel:
-\begin{itemize}
-  \item one whose alternative is a shift in the background, $\bm\mu\mapsto(1+\epsilon_\mu)\bm\mu$
-  with $\Amat$ fixed;
-  \item one whose alternative is a shift in contagion,
-  $\Amat\mapsto(1+\epsilon_A)\Amat$ with $\bm\mu$ fixed.
-\end{itemize}
-Comparing them shows which kind of change better explains a sustained departure. The
-threshold $h$ is calibrated by simulation under $\vartheta_0$ to a target average run
-length to false alarm. The optimality theory of the CUSUM is for independent
-observations; here it serves as a monitoring statistic.
-
-Two cautions apply. First, the detectors inherit the identification limits of
-\cref{sec:identification}. Over short stretches, a shift in the background and a shift
-in contagion can produce similar data, so the comparison is a diagnostic, not a test
-that separates the two. Second, the statistics must be computed on settled data or with
-the nowcast of \cref{prop:nowcast}, because reporting delays mimic a recent decline.
-\end{remark}
+\paragraph{Regime shifts} Alerts concern the next $\Delta_{\mathrm a}$ days with the
+parameters held fixed. Whether the parameters themselves have changed, through a sustained
+rise either in the background or in contagion, is a different question.
+\Cref{sec:fc-cusum} sketches a CUSUM monitor for it (\cref{rem:fc-cusum}). It inherits the
+identification limits of \cref{sec:identification} and must be run on settled data or with
+the nowcast of \cref{prop:nowcast}.

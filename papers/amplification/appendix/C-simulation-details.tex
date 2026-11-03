@@ -1,0 +1,139 @@
+% =====================================================================
+%  Appendix C -- Simulation details (owner: phase-2 SIM writer).
+%  Source of truth: results/sim_results.json (meta.configs, meta.runtime_s).
+% =====================================================================
+\section{Simulation details}\label{app:simdetails}
+
+This appendix documents the simulation study of \cref{sec:simulation}. All data are synthetic. The catalogue, the classifier, the personas and the users are generated from random numbers and invented parameters, and no real platform, item or user is represented. The source of truth is \texttt{results/sim\_results.json}, which records the configurations (\texttt{meta.configs}), the seeds, the software versions and the runtimes of every run, as well as the results. \texttt{results/SUMMARY.md} prints the same values, formatted by \texttt{code/write\_summary.py}. The code is the package \texttt{code/ampsim} (version 1.0.0), with modules for the catalogue and classifier (\texttt{world}), the recommender and the accounts (\texttt{engine}), validation and correction (\texttt{measurement}), Markov chains (\texttt{markov}) and confidence sequences (\texttt{sequential}), and the scripts \texttt{run\_experiments.py}, \texttt{make\_figures.py} and \texttt{write\_summary.py}.
+
+\subsection{Configuration}\label{app:sim-config}
+
+\Cref{tab:sim-config} lists the parameters of the synthetic world. Three mechanisms need more detail than the table gives.
+
+\paragraph{Catalogue} An item of topic $t$ and type $j$ has the embedding $x_c=(e_t+a_j e_A+0.35\,\epsilon_c)/\|e_t+a_je_A+0.35\,\epsilon_c\|$, where $e_t$ is the direction of topic $t$, $e_A$ the antisemitism direction, $a_j$ the loading of the type and $\epsilon_c$ standard normal in eight dimensions. The numbers of borderline and antisemitic items in each topic are proportional to the topic's size and to its relative propensity, scaled so that $4\%$ of all items are antisemitic and twice as many are borderline. Half of the antisemitic items are coded. Each item also has an engagement prior (``bait''), a background popularity $w_c$ (log-normal, with a loading on bait) and a posting rate (log-normal, with a multiplier by type). The persona seed pool is the set of the $200$ neutral items most similar to the persona's taste vector. No seed is borderline or antisemitic.
+
+\paragraph{Popularity and load} Global popularity is $p_c=Vw_c$ when it is frozen, where $V$ is the background volume of openings per round. In E2 it is updated after every round as $p\leftarrow\delta p+(1-\delta)(Vw+o)$, where $o$ counts the puppets' openings in the round and $\delta=0.5^{1/100}$, a half-life of one day of $100$ rounds. Between sessions the remaining rounds of the day pass with $o=0$. For a target traffic share $\rho$, $V=n(1-\rho)/\rho$, where $n$ is the number of puppets and sentinels. The realised traffic share is the puppets' openings divided by those openings plus $V$ times the number of active rounds. The load is the puppets' share of the engagement with the items they opened, $\sum_co_c/\sum_{c:o_c>0}(o_c+Vw_c\,r)$ over the $r$ active rounds of a wave, averaged over waves.
+
+\paragraph{Evolving demand} After each formation session in E3, a user's taste moves toward the mean embedding of the items opened, $\theta\leftarrow(1-0.05)\theta+0.05\,\bar x$, renormalised. For $x\in\{B,A\}$, the appetite becomes $\alpha_x+0.4f_x-0.1\{\alpha_x-\alpha_x(0)\}$, capped at $2$, where $f_x$ is the share of the session's openings in state $x$. The share of the eligible pool drawn from followed borderline and antisemitic items becomes $s+0.02(f_B+f_A)-0.1\{s-s(0)\}$, clipped to $[0,0.5]$; it starts at zero. Real users start from their persona's taste and appetites plus normal noise (s.d.\ $0.15$ on taste, then renormalised, and $0.3$ on the appetites for $B$ and $A$), with new accounts ($v_u=0$) and no training.
+
+\begin{table}[tp]
+\centering
+\caption{Configuration of the synthetic world (\texttt{meta.configs} of \texttt{results/sim\_results.json}). All values are invented. Topic order: news, sport, entertainment, Jewish culture and community, Middle East, conspiracy. Type order: neutral, borderline, coded antisemitic, explicit antisemitic. Appetites are utility shifts for the content states $(N,B,A)$ in the choice rule of naturalistic accounts; they make the synthetic personas differ and describe no real users.}\label{tab:sim-config}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.6cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Parameter & Value \\
+\midrule
+\multicolumn{2}{@{}l}{\emph{Catalogue}} \\
+Items; embedding dimension & $5{,}000$; $8$ \\
+Topic shares of items & $0.30$, $0.18$, $0.18$, $0.08$, $0.11$, $0.15$ \\
+Propensity of borderline and antisemitic items by topic & $0.4$, $0.1$, $0.1$, $1.0$, $1.5$, $2.0$ \\
+Antisemitic share; borderline-to-antisemitic ratio; coded share & $0.04$; $2$; $0.5$ \\
+Loading $a_j$ on $e_A$ by type; embedding noise s.d. & $0$, $0.5$, $0.7$, $1.4$; $0.35$ \\
+Bait: mean by type; s.d. & $0$, $0.5$, $0.4$, $0.3$; $0.3$ \\
+Background popularity: s.d.\ of log; loading on bait & $1.0$; $1.0$ \\
+Posting rate: multiplier by type; s.d.\ of log & $1$, $1.2$, $1.3$, $1.5$; $0.5$ \\
+Item neighbours; persona seed pool & $15$; $200$ neutral items \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Recommender}} \\
+Eligible pool; trending candidates; slate $k$ & $50$; $15$; $4$ \\
+Algorithmic score: weights on $\langle v_u,x_c\rangle$, log popularity, bait; Gumbel scale & $2.0$, $0.3$, $1.0$; $0.5$ \\
+Embedding update $v_u\leftarrow(1-\lambda)v_u+\lambda x_c$ & $\lambda=0.1$ \\
+Popularity-only feed: Gumbel scale & $0.05$ \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Choice and sessions}} \\
+Protocol puppets: $\tau_{\mathrm{safe}}$; similarity threshold & $-0.5$; $0.25$ \\
+Naturalistic: weights on taste, bait, position, current item & $3.0$, $0.8$, $-0.3$, $2.0$ \\
+Naturalistic: utility of opening nothing & $1.0$ (E3); $-50$, so never (E4) \\
+Training: days $\times$ seeds per day; seeds drawn per puppet & $3\times10$; $30$ \\
+Measurement: sessions $S$ $\times$ steps $T$; rounds per day & $10\times20$; $100$ \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Synthetic personas: topic weights; appetites $(N,B,A)$}} \\
+General interest ($d_0$) & news $1$, sport $0.8$, entertainment $0.8$; $(0,-0.5,-2.5)$ \\
+Jewish interest & Jewish culture $1$, news $0.4$, entertainment $0.25$; $(0,-1.0,-4.0)$ \\
+Middle East news & Middle East $1$, news $0.5$, Jewish culture $0.2$; $(0,0,-2.0)$ \\
+Conspiracy-adjacent & conspiracy $1$, news $0.3$, Middle East $0.25$; $(0,0.5,-1.0)$ \\
+Shares in the E3 population & $0.6$, $0.1$, $0.15$, $0.15$ \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Demand evolution (E3)}} \\
+Taste drift; appetite gain, decay, cap & $0.05$; $0.4$, $0.1$, $2.0$ \\
+Followed-fringe gain, decay, cap & $0.02$, $0.1$, $0.5$ \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Classifier regimes: flag rate by type}} \\
+ND, non-differential & $0.02$, $0.02$, $0.85$, $0.85$ \\
+DU, borderline false positives & $0.01$, $0.40$, $0.85$, $0.85$ \\
+DD, coded false negatives & $0.02$, $0.02$, $0.35$, $0.95$ \\
+NDI, item-level noise & as ND in expectation; realised $0.016$, $0.023$, $0.86$, $0.79$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Experiments}\label{app:sim-experiments}
+
+\paragraph{E1} For each of the four regimes, one pool of $1{,}000$ protocol puppets per persona and policy (algorithmic, reverse-chronological, random, popularity-only), simulated in chunks of $1{,}000$ accounts with popularity frozen. The pools are saved in \texttt{results/raw/pool\_<regime>.npz} as per-puppet impression counts by true type and score band. An audit draws $U\in\{5,10,20,40,80\}$ puppets per cell with replacement, $R=1{,}000$ times. Its validation sample draws $100$ impressions per score band and arm without replacement (all of a band if it has fewer), for $500$ per arm; $250$ and $1{,}000$ are also run with $U=20$. Pooled error rates are estimated from both arms' samples, weighted by inverse inclusion probabilities. The variance of the corrected estimators is computed by the delta method from the between-puppet covariance of the band shares and binomial variances, with the finite-population correction, for the validated band prevalences. The true $\mathrm{AR}$ and $\mathrm{AA}$ are those of the pools, with Monte Carlo standard errors.
+
+\paragraph{E1b} For each variant, $1{,}000$ protocol puppets per persona and arm (algorithmic and reverse-chronological), recording the true and flagged shares of each of their $10$ sessions; in the bucket variant every account has a shift drawn from $\mathrm N(0,1)$ that is added to the algorithm's weight on bait. Audits draw $U\in\{10,20,40\}$ puppets per cell, $R=2{,}000$ times. Known error rates are the realised exposure-weighted rates of the pool, pooled over the arms or by arm. External validation draws $\widehat\Se$ from $\mathrm{Bin}(300,\Se)/300$ and $\widehat\Sp$ from $\mathrm{Bin}(1{,}500,\Sp)/1{,}500$, pooled or separately per arm, and uses the variances \eqref{eq:mc-varAA}--\eqref{eq:mc-varAR} or those of \cref{thm:misclass}(d).
+
+\paragraph{E2} Three designs, each with $15$ protocol puppets per persona and arm (algorithmic, reverse-chronological and popularity-only) and $8$ untrained sentinels with the general persona's follow profile on the algorithmic feed: simultaneous (seed pool of $40$ items, one wave); low co-viewing (seed pool of $200$, one wave); staggered (seed pool of $40$, five waves with gaps of five days). The simultaneous design is run at traffic shares $0$, $0.02$, $0.05$, $0.1$, $0.2$ and $0.3$, the other two at $0$, $0.1$ and $0.3$, each with $R=24$ replications. Baseline sentinels are measured before each audit without feeding popularity. The randomised-saturation estimates pair replication $i$ at the lower share with replication $i+12$ (modulo $24$) at the higher share, so that the two audits are independent. The slopes $\xi$ are the largest ratios of $|\text{shift}|$ to load over the grid.
+
+\paragraph{E3} $3{,}000$ real users and two formed copies, as in \cref{sec:sim-decomp}, with checkpoints at $H\in\{3,10,20,40\}$ sessions. At each checkpoint, each copy is evaluated for three sessions under each policy (four cells), and a fixed-demand counterpart of each cell (the user's current demand held fixed, a new account, three burn-in and three evaluation sessions) checks \cref{asm:demand}. Standard errors are delta-method standard errors over users. The persona-contrast decomposition and the protocol-puppet audit use the ND pool of E1.
+
+\paragraph{E4} Base runs: $250$ untrained naturalistic accounts per persona and policy (algorithmic, reverse-chronological), three burn-in sessions, ten estimation sessions of $20$ steps and one session of $200$ steps. Perturbation runs use the algorithmic policy only. In the tilt runs the algorithm's score of every item with $L_c=1$ is raised by $\varepsilon\in\{0,0.1,0.25,0.5,1\}$. In the replacement runs the opened item is replaced by a uniformly drawn antisemitic item with probability $\varepsilon\in\{0,0.01,0.02,0.05\}$. Transition matrices are maximum-likelihood estimates over the states of consumed items; a row without departures takes the pooled next-state distribution. Bootstrap standard errors resample accounts ($200$ resamples).
+
+\paragraph{E5} For each persona and for regimes ND and DD, $R=2{,}000$ audits of $400$ pairs (one algorithmic and one reverse-chronological puppet), drawn with replacement from the E1 pools. For each puppet, $\min(10,\text{flagged positions})$ flagged positions are coded by a hypergeometric draw. Variants: $\alpha\in\{0.05,0.0125\}$; burn-in $b\in\{0,1\}$; range $\{1\}$, $[0.95,1.05]$ (ND) or $[0.8,1.2]$ (DD). The mixture is tuned to $t^\ast=40$; $\delta=1.25$; stopping rules are evaluated with $W_{\max}\in\{8,40\}$. The exact betting sequence uses $R=200$ audits and a grid of $300$ log-spaced values of the ratio on $[0.1,10]$. Power calculations use the target power $0.8$.
+
+\subsection{Seeds and Monte Carlo error}\label{app:sim-seeds}
+
+\paragraph{Seeds} Every random stream is \texttt{numpy.random.SeedSequence([20261103, id, *keys])}, with experiment ids world $0$, E1 $1$, E2 $2$, E3 $3$, E4 $4$ and E5 $5$; E1b uses the id of E1. The world is \texttt{SeedSequence([20261103, 0])}. The keys are as follows, with regimes indexed ND $0$, DU $1$, DD $2$, NDI $3$, and policies alg $0$, chron $1$, random $2$, popular $3$.
+\begin{itemize}
+  \item E1: $(0,\text{regime})$ for the assignment of puppets to chunks, $(1,\text{regime},\text{chunk})$ for their simulation, $(2,\text{regime},\text{reference},\text{persona},U)$ for the audits, and $(3,\text{regime},\text{reference},\text{persona},n_{\mathrm{val}})$ for the validation-size runs.
+  \item E1b: $(10,\text{regime},v)$, $(11,\text{regime},v,\text{chunk})$ and $(12,100\cdot\text{regime}+v,\text{persona},U)$, with $v=1$ for the bucket variant and $0$ otherwise.
+  \item E2: $(1,\text{design},\text{replication})$, the same for every traffic share, which gives common random numbers across shares.
+  \item E3: $(0)$ for the users, $(1,\text{policy})$ for the audit at $F_0$, $(2,\text{formation policy},H)$ for formation, and $(3,H,\text{formation},\text{evaluation})$ and $(4,H,\text{formation},\text{evaluation})$ for the cells and their fixed-demand counterparts.
+  \item E4: $(1,0)$ for the base runs and $(1,1)$ for every perturbation run, which gives common random numbers across $\varepsilon$; $(9)$ for the bootstrap.
+  \item E5: $(2,\text{regime},\text{persona})$.
+\end{itemize}
+
+\paragraph{Monte Carlo error} The MCSE of a coverage or rejection rate $c$ is $\{c(1-c)/R\}^{1/2}$: $0.7$ points near $95\%$ with $R=1{,}000$, $0.5$ with $R=2{,}000$ ($0.25$ near $98.75\%$), and $4.4$ with $R=24$. Means and biases are reported with their standard errors over replications. The true values of E1 and E5 are means over the pools of $1{,}000$ puppets per cell. Their MCSE is at most $0.020$ for $\mathrm{AR}$ relative to the reverse-chronological reference, and at most $0.035$ over all references.
+
+\subsection{Software, runs and runtimes}\label{app:sim-runs}
+
+The study was run with Python 3.13.18, NumPy 2.5.3 and SciPy 1.18.1, with two worker processes, single-threaded linear algebra and reduced priority (\texttt{nice}). Figures were drawn with Matplotlib 3.11.2. The $21$ unit tests in \texttt{code/tests/} pass. The results come from five runs (\cref{tab:sim-runs}). Each run after the first updated only the experiments it names, loading the E1 pools from \texttt{results/raw/}. The JSON field \texttt{meta.runtime\_s.total\_wall} still holds the wall time of run~1; the list \texttt{meta.runtime\_s.runs} is the authoritative record. The run logs in \texttt{results/} belong to runs 1 (\texttt{run\_log.txt}), 3 (\texttt{run\_log\_E1b\_E5.txt}), 4 (\texttt{run\_log\_E5.txt}) and 5 (\texttt{run\_log\_E1b.txt}). The warnings in the log of run~1 come from the configurations in which the pooled correction is undefined in every audit (regime DU, random reference, general persona, $U\ge20$). Their summaries are recorded as missing values.
+
+\begin{table}[tp]
+\centering
+\caption{Runs of the simulation study (\texttt{meta.runtime\_s.runs}). Wall time of the run, and CPU time by part, in seconds.}\label{tab:sim-runs}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}cl r >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{3.3cm}@{}}
+\toprule
+Run & Experiments & Wall & CPU by part & Status \\
+\midrule
+1 & E1, E2, E3, E4 & 755.2 & E1 pools $76.5$, $76.1$, $77.7$, $76.1$ (ND, DU, DD, NDI); E2 $565.0$; E3 $384.8$; E4 $189.9$ & current for E1--E4 \\
+2 & E5 & 329.6 & E5 $328.6$ & superseded \\
+3 & E1b, E5 & 311.7 & E1b $36.9$; E5 $286.2$ & superseded \\
+4 & E5 & 11.4 & E5 $10.5$ & current for E5 \\
+5 & E1b & 27.4 & E1b $39.1$ & current for E1b \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{The superseded runs}\label{app:sim-superseded}
+
+\paragraph{E5} Runs 2 and 3 evaluated an earlier version of \cref{alg:sequential}. It was a Fieller-type confidence sequence for $\mathrm{AR}$ on the flagged shares $\bar Q_u$. The false-positive rate of each arm was bounded through an anytime-valid sequence for the positive predictive value, from $50$ coded flagged exposures per arm and wave; the ratio of the arms' Youden indices was given the range $[0.95,1.05]$; and $\alpha$ was split, $80\%$ to the sequence and $20\%$ to the validation. Those runs used $R=1{,}000$ audits and regime ND only. Run 3 repeated run 2 with one correction: the confidence sequence for $\mathrm{AA}$ had been checked after every pair rather than at the end of every wave, as an audit looks. \Cref{sec:measurement} then revised \cref{alg:sequential} into its present form: the confirmed-flagged statistic $Y_u=\bar Q_u\widehat P_u$, the delta-method normal-mixture sequence for $\log\mathrm{AR}$, the burn-in and the declared range for $\lambda_S$. The earlier runs therefore evaluated an algorithm that the paper no longer states. E5 was rewritten to evaluate \cref{alg:sequential} as stated, with the null case, regime DD, runs with and without the burn-in, the peeking comparator on the same statistic, the stopping rules on the log scale, and \cref{prop:power}(d). Run 4 replaced all of its results. No number from runs 2 or 3 appears in this paper, and their results are no longer in \texttt{results/}.
+
+\paragraph{E1b} Run 5 recomputed E1b with the same seeds in order to add two diagnostics, $\kappa_{\Sp}$ and the median delta-method s.d.\ of $\log\widehat{\mathrm{AR}}$. Every quantity that runs 3 and 5 share is identical.
+
+\subsection{Reproduction}\label{app:sim-repro}
+
+From \texttt{papers/amplification/code/}, the three current runs, the summary, the figures and tables, and the tests are reproduced by
+\begin{verbatim}
+OPENBLAS_NUM_THREADS=1 nice -n 10 python run_experiments.py --only E1,E2,E3,E4
+OPENBLAS_NUM_THREADS=1 nice -n 10 python run_experiments.py --only E5 --merge
+OPENBLAS_NUM_THREADS=1 nice -n 10 python run_experiments.py --only E1b --merge
+python write_summary.py      # results/SUMMARY.md
+python make_figures.py       # figures/fig-sim-*.pdf and tables/tab-sim-*.tex
+python -m pytest tests/ -q   # 21 tests
+\end{verbatim}
+The first command takes about $13$ minutes with two workers, and the other two well under a minute each (\cref{tab:sim-runs}). \texttt{run\_experiments.py} without \texttt{--only} runs all six experiments at once from the same seeds, and \texttt{--quick} makes a smoke run that writes \texttt{results/sim\_results\_quick.json}. \Cref{tab:sim-main,tab:sim-checks,tab:sim-designs} are generated by \texttt{make\_figures.py}. Every other number in \cref{sec:simulation} is read from \texttt{results/sim\_results.json}, or computed from values in it (for instance a relative error or a range over personas).

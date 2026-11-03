@@ -6,7 +6,7 @@
 \centering
 \begin{tikzpicture}[x=1cm,y=1cm,
     tile/.style={rounded corners=3pt,draw=LabRule,line width=0.6pt,fill=white,
-                 minimum width=2.8cm,minimum height=2.7cm,inner sep=0pt},
+                 minimum width=2.8cm,minimum height=2.86cm,inner sep=0pt},
     ttl/.style={font=\footnotesize\bfseries,text=LabNavy,align=center,
                 anchor=north,inner sep=0pt,text width=2.7cm},
     ref/.style={font=\scriptsize,text=LabGrey,align=center,anchor=south,
@@ -22,7 +22,7 @@
     \node[ttl] at ([yshift=-5pt]#1.north) {#4};
     \node[ref] at ([yshift=4pt]#1.south) {#5};}
   \def\yA{0}\def\yB{-4.05}
-  \def\gx{-0.1}  % vertical offset of glyph centres within a tile
+  \def\gx{-0.18} % vertical offset of glyph centres within a tile
 
   % ---------------- row I: from records to links ----------------------
   \tile{t1}{0}{\yA}{$K$ lists of\\raw records}{\S\ref{sec:sources}}

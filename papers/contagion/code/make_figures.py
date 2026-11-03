@@ -1,17 +1,18 @@
 #!/usr/bin/env python
-"""Figures and the main LaTeX table for the simulation section (sec:simulation).
+"""Figures and LaTeX tables for the simulation section (sec:simulation) and its appendix.
 
 Reads ../results/sim_results.json (and ../results/raw/E4.json for the null
 p-values) written by run_experiments.py, and writes
-  ../figures/fig-sim-recovery.pdf     E1: relative bias / RMSE by parameter; CI coverage by quantity
-  ../figures/fig-sim-spurious.pdf     E2: fitted n vs kappa with n* = 1 - (1+kappa)^{-1/2}; remedies
-  ../figures/fig-sim-thinning.pdf     E3: fitted n vs p with n'(p); corrected estimates; heterogeneous recording
+  ../figures/fig-sim-recovery.pdf     E1: relative bias / RMSE by parameter; CI coverage by quantity (appendix)
+  ../figures/fig-sim-spurious.pdf     E2: fitted n vs kappa with n* = 1 - (1+kappa)^{-1/2}; long window; remedies
+  ../figures/fig-sim-thinning.pdf     E3: fitted n vs p; corrected estimates; variance floor; heterogeneous recording
   ../figures/fig-sim-lrt.pdf          E4: size / power, null p-value P-P plot, common-shock false positives
-  ../figures/fig-sim-attribution.pdf  E5: B / D / C and shares, exact vs Monte Carlo vs estimated
-  ../figures/fig-sim-alert.pdf        E6: realised cost, precision / recall, PIT
-  ../tables/tab-sim-main.tex          summary of E1-E5 (booktabs tabular only)
-No titles inside plots; captions belong in LaTeX. Style matches Paper 1
-(../dark-figure/code/make_figures.py): serif, stix mathtext, Okabe-Ito colours.
+  ../figures/fig-sim-attribution.pdf  E5: B / D / C and shares, exact vs Monte Carlo vs estimated (appendix)
+  ../figures/fig-sim-alert.pdf        E6: realised cost, precision / recall, PIT (no-future-event vs integrating)
+  ../tables/tab-sim-e1.tex ... tab-sim-e6.tex   one booktabs tabular per experiment (one metric per column)
+No titles inside plots; captions belong in LaTeX. Legends sit outside the data region.
+Style matches Paper 1 (../dark-figure/code/make_figures.py): serif, stix mathtext,
+Okabe-Ito colours, every series also with its own marker / line style.
 Usage (from code/): python make_figures.py [--results ../results] [--figures ../figures] [--tables ../tables]
 """
 
@@ -116,7 +117,7 @@ def _param_label(nm):
     if nm == "beta":
         return r"$\beta$"
     if nm.startswith("shock_beta["):
-        return rf"$\beta_{{{int(nm[11]) + 1}}}$"
+        return rf"$\upsilon_{{{int(nm[11]) + 1}}}$"
     if nm == "eta":
         return r"$\eta$"
     return nm
@@ -150,7 +151,7 @@ def fig_recovery(res, path):
     groups = [("$\\mu_k$", lambda n, d: n.startswith("mu[") and not d),
               ("$\\alpha_{kj}$", lambda n, d: n.startswith("alpha[") and not d),
               ("$\\beta,\\eta$", lambda n, d: n in ("beta", "eta") and not d),
-              ("$\\beta_k$", lambda n, d: n.startswith("shock_beta[") and not d),
+              ("$\\upsilon_k$", lambda n, d: n.startswith("shock_beta[") and not d),
               ("$M_{kj}$", lambda n, d: n.startswith("Mult[") and d),
               ("$\\varrho$", lambda n, d: n == "rho(A)" and d),
               ("$B_k$", lambda n, d: n.startswith("B[") and d),
@@ -196,7 +197,9 @@ def _family_label(c):
 
 
 def fig_spurious(res, path):
-    confs = res["experiments"]["E2"]["summary"]["configs"]
+    confs_all = res["experiments"]["E2"]["summary"]["configs"]
+    confs = [c for c in confs_all if not c.get("long_T")]
+    longs = [c for c in confs_all if c.get("long_T")]
     fams = []
     for c in confs:
         if c["family"] not in fams:
@@ -204,7 +207,7 @@ def fig_spurious(res, path):
     kap_all = np.array([c["kappa"] for c in confs])
     kk = np.geomspace(kap_all.min() / 1.3, kap_all.max() * 1.3, 200)
     nstar = 1 - (1 + kk) ** -0.5
-    fig, axes = plt.subplots(1, 2, figsize=(W2, 2.65), layout="constrained", sharey=True)
+    fig, axes = plt.subplots(1, 2, figsize=(W2, 3.05), layout="constrained", sharey=True)
     for ax in axes:
         _style(ax, "both")
         ax.set_xscale("log")
@@ -232,11 +235,18 @@ def fig_spurious(res, path):
     if shown_moment:
         handles.append(Line2D([], [], color=INK2, marker="o", mfc="white", ls="none", ms=3.6,
                               label=r"dispersion estimator $1-\hat F^{-1/2}$"))
+    if longs:
+        for c in longs:
+            col, mk, lab = _family_label(c)
+            kx = c["kappa"] * 1.13
+            ax1.errorbar(kx, _f(c["fits"]["const"]["n_eff"]["mean"]), yerr=1.96 * _f(c["fits"]["const"]["n_eff"]["mcse"]),
+                         fmt="*", ms=7.5, color=col, mec="#222222", mew=0.5, capsize=0, zorder=4)
+        T_long = _f(longs[0]["T"])
+        handles.append(Line2D([], [], color=FAM_STYLE["rare"][0], marker="*", mec="#222222", mew=0.5, ls="none", ms=7.5,
+                              label=rf"rare, constant background, $T={T_long:.0f}$"))
     ax1.set_ylabel(r"fitted branching ratio $\hat n_{\mathrm{eff}}$")
     _panel(ax1, "a")
-    ax1.legend(handles=handles, loc="upper left", frameon=False, fontsize=6.6)
     # (b) remedies
-    h2 = [Line2D([], [], color=TRUTH, lw=1.2, label=r"$n^*$ (constant background)")]
     for f in fams:
         cs = [c for c in confs if c["family"] == f]
         col, mk, lab = _family_label(cs[0])
@@ -251,12 +261,13 @@ def fig_spurious(res, path):
             m = np.array([_f(c["fits"]["shocks"]["n_eff"]["mean"]) for _, c in ks])
             e = np.array([1.96 * _f(c["fits"]["shocks"]["n_eff"]["mcse"]) for _, c in ks])
             ax2.errorbar(kx, m, yerr=e, fmt=mk + ":", ms=4, color=col, lw=0.9, capsize=0, zorder=3)
-    h2 += [Line2D([], [], color=INK2, marker="o", mfc="white", ls="--", ms=4, lw=0.9, label="spline background"),
-           Line2D([], [], color=INK2, marker="o", ls=":", ms=4, lw=0.9, label="shock times known")]
-    ax2.legend(handles=h2, loc="upper left", frameon=False, fontsize=6.6)
+    handles += [Line2D([], [], color=INK2, marker="o", mfc="white", ls="--", ms=4, lw=0.9, label="(b) spline background"),
+                Line2D([], [], color=INK2, marker="o", ls=":", ms=4, lw=0.9, label="(b) shock times known")]
     _panel(ax2, "b")
-    ymax = max(0.9, max(_f(c["fits"]["const"]["n_eff"]["mean"]) for c in confs) + 0.2)
+    ymax = max(0.8, max(_f(c["fits"]["const"]["n_eff"]["mean"]) for c in confs) + 0.12)
     ax1.set_ylim(-0.05, ymax)
+    fig.legend(handles=handles, loc="outside upper center", ncol=3, frameon=False, fontsize=6.8,
+               handlelength=2.2, columnspacing=1.6)
     fig.savefig(path)
     plt.close(fig)
 
@@ -265,6 +276,8 @@ def fig_spurious(res, path):
 # E3  Thinning
 # ---------------------------------------------------------------------------
 N_STYLE = [(C_BLUE, "o"), (C_VERM, "s"), (C_GREEN, "D"), (C_PINK, "^")]
+R_RAMP = ["#000000", "#3d3d3d", "#696969", "#949494"]  # one-hue grey ramp (lightest >= 3:1 on white): p known, r = 0.1, 0.3, 0.5
+R_MARK = ["o", "s", "D", "^"]
 
 
 def _h(n, p):
@@ -272,17 +285,17 @@ def _h(n, p):
     return 1 - (1 - n) / np.sqrt(q + p * (1 - q))
 
 
-def fig_thinning(res, path):
+def fig_thinning(res, path, n_floor=0.5):
     s = res["experiments"]["E3"]["summary"]
     hom = s["homogeneous"]
-    fig, axes = plt.subplots(1, 3, figsize=(W2, 2.5), layout="constrained", gridspec_kw=dict(width_ratios=[1, 1, 1.05]))
-    ax1, ax2, ax3 = axes
+    fig, axes = plt.subplots(2, 2, figsize=(W2, 4.55), layout="constrained")
+    (ax1, ax2), (ax3, ax4) = axes
     pp = np.linspace(0.05, 1, 200)
-    for ax in (ax1, ax2):
+    for ax in (ax1, ax2, ax3):
         _style(ax, "both")
         ax.set_xlabel(r"recording probability $p$")
         ax.set_xlim(0.1, 1.05)
-    hd1, hd2 = [], []
+    handles = []
     for i, h in enumerate(hom):
         col, mk = N_STYLE[i % len(N_STYLE)]
         n = _f(h["n"])
@@ -292,7 +305,7 @@ def fig_thinning(res, path):
         ax1.plot(pp, _h(n, pp), color=col, lw=1.0, zorder=2)
         ax1.plot(pp, n * pp, color=col, lw=0.6, ls=":", zorder=2)
         ax1.errorbar(p, m, yerr=e, fmt=mk, ms=4, color=col, capsize=0, zorder=3)
-        hd1.append(Line2D([], [], color=col, marker=mk, ms=4, lw=1.0, label=f"$n={n:g}$"))
+        handles.append(Line2D([], [], color=col, marker=mk, ms=4, lw=1.0, label=f"$n={n:g}$"))
         mk_ = np.array([_f(r["corrected_known_p"]["mean"]) for r in h["by_p"]])
         ek = np.array([1.96 * _f(r["corrected_known_p"]["sd"]) / math.sqrt(max(r["corrected_known_p"]["n"], 1)) for r in h["by_p"]])
         me = np.array([_f(r["corrected_est_p"]["mean"]) for r in h["by_p"]])
@@ -300,50 +313,75 @@ def fig_thinning(res, path):
         ax2.axhline(n, color=col, lw=0.8, zorder=1)
         ax2.errorbar(p - 0.012, mk_, yerr=ek, fmt=mk, ms=4, color=col, capsize=0, zorder=3)
         ax2.errorbar(p + 0.012, me, yerr=ee, fmt=mk, ms=4, mfc="white", color=col, capsize=0, zorder=3)
-    hd1 += [Line2D([], [], color=INK2, lw=1.0, label=r"$n'=h_p(n)$"), Line2D([], [], color=INK2, lw=0.6, ls=":", label=r"$pn$")]
-    ax1.legend(handles=hd1, loc="upper left", frameon=False, fontsize=6.6)
+    handles += [Line2D([], [], color=INK2, lw=1.0, label=r"(a) $n'=h_p(n)$"),
+                Line2D([], [], color=INK2, lw=0.6, ls=":", label=r"(a) $pn$"),
+                Line2D([], [], color=INK2, marker="o", ls="none", ms=4, label=r"(b) $h_p^{-1}(\hat n')$, $p$ known"),
+                Line2D([], [], color=INK2, marker="o", mfc="white", ls="none", ms=4,
+                       label=r"(b) $h_{\hat p}^{-1}(\hat n')$, $\hat p$ with 10% error")]
     ax1.set_ylabel(r"fitted $\hat n'$ (recorded incidents)")
-    ax1.set_ylim(0, 1.0)
-    hd2 = [Line2D([], [], color=INK2, marker="o", ls="none", ms=4, label=r"$h_p^{-1}(\hat n')$, $p$ known"),
-           Line2D([], [], color=INK2, marker="o", mfc="white", ls="none", ms=4, label=r"$h_{\hat p}^{-1}(\hat n')$, $p$ estimated")]
-    ax2.legend(handles=hd2, loc="upper left", frameon=False, fontsize=6.6)
+    ax1.set_ylim(0, 0.8)
     ax2.set_ylabel(r"corrected $\hat n$")
-    ax2.set_ylim(0, 1.0)
+    ax2.set_ylim(0, 0.9)
     _panel(ax1, "a")
     _panel(ax2, "b")
-    # (c) heterogeneous recording
+    # (c) variance floor: RMSE of the corrected estimate against p, by the relative error of p_hat
+    hh = [h for h in hom if abs(_f(h["n"]) - n_floor) < 1e-9]
+    if hh and hh[0]["by_p"][0].get("corrected_est_p_by_r"):
+        h = hh[0]
+        p = np.array([_f(r["p"]) for r in h["by_p"]])
+        rk = np.array([_f(r["corrected_known_p"]["rmse"]) for r in h["by_p"]])
+        ax3.plot(p, rk, marker=R_MARK[0], ms=4, lw=0.9, color=R_RAMP[0], zorder=3)
+        hc = [Line2D([], [], color=R_RAMP[0], marker=R_MARK[0], ms=4, lw=0.9, label="$p$ known")]
+        rlist = [x["r"] for x in h["by_p"][0]["corrected_est_p_by_r"]]
+        for i, r_ in enumerate(rlist):
+            rm = np.array([_f(r["corrected_est_p_by_r"][i]["rmse"]) for r in h["by_p"]])
+            fl = _f(h["by_p"][0]["corrected_est_p_by_r"][i]["floor_sd"])
+            col = R_RAMP[min(i + 1, len(R_RAMP) - 1)]
+            ax3.plot(p, rm, marker=R_MARK[min(i + 1, 3)], ms=4, lw=0.9, color=col, zorder=3)
+            ax3.axhline(fl, color=col, lw=0.8, ls=(0, (3, 2)), zorder=2)
+            hc.append(Line2D([], [], color=col, marker=R_MARK[min(i + 1, 3)], ms=4, lw=0.9, label=f"error {100 * r_:.0f}%"))
+        hc.append(Line2D([], [], color=INK2, lw=0.8, ls=(0, (3, 2)), label="floor (dashed)"))
+        ax3.set_ylabel(rf"RMSE of corrected $\hat n$ ($n={n_floor:g}$)")
+        top = max(0.16, 1.55 * np.nanmax([_f(x["rmse"]) for r in h["by_p"] for x in r["corrected_est_p_by_r"]]))
+        ax3.set_ylim(0, top)
+        ax3.legend(handles=hc, loc="upper center", ncol=3, frameon=False, fontsize=6.3, columnspacing=1.0,
+                   handlelength=1.8)
+    _panel(ax3, "c")
+    # (d) heterogeneous recording
     het = s["heterogeneous"]
-    _style(ax3, "y")
+    _style(ax4, "y")
     x = np.arange(len(het))
     for i, h in enumerate(het):
         th = h["theory"]
-        ax3.plot([i - 0.32, i - 0.04], [th["n_app_theory"]] * 2, color=TRUTH, lw=1.1, zorder=2)
-        ax3.plot([i + 0.04, i + 0.32], [th["n_naive_theory"]] * 2, color=TRUTH, lw=1.1, zorder=2)
+        ax4.plot([i - 0.32, i - 0.04], [th["n_app_theory"]] * 2, color=TRUTH, lw=1.1, zorder=2)
+        ax4.plot([i + 0.04, i + 0.32], [th["n_naive_theory"]] * 2, color=TRUTH, lw=1.1, zorder=2)
         a = h["n_app_vs_theory"]
         b = h["n_corrected_vs_naive_theory"]
-        ax3.errorbar(i - 0.18, _f(a["mean"]), yerr=1.96 * _f(a["sd"]) / math.sqrt(max(a["n"], 1)), fmt="o", ms=4,
+        ax4.errorbar(i - 0.18, _f(a["mean"]), yerr=1.96 * _f(a["sd"]) / math.sqrt(max(a["n"], 1)), fmt="o", ms=4,
                      color=C_BLUE, capsize=0, zorder=3)
-        ax3.errorbar(i + 0.18, _f(b["mean"]), yerr=1.96 * _f(b["sd"]) / math.sqrt(max(b["n"], 1)), fmt="s", ms=4,
+        ax4.errorbar(i + 0.18, _f(b["mean"]), yerr=1.96 * _f(b["sd"]) / math.sqrt(max(b["n"], 1)), fmt="s", ms=4,
                      color=C_VERM, capsize=0, zorder=3)
     nbar = het[0]["theory"]["n_bar"]
-    ax3.axhline(nbar, color=INK2, lw=0.7, ls="--", zorder=1)
-    ax3.set_xticks(x)
-    short = {"positive": "Cov$>0$", "homogeneous": "$p$ equal", "negative": "Cov$<0$", "complete": "$p=1$"}
+    ax4.axhline(nbar, color=INK2, lw=0.7, ls="--", zorder=1)
+    ax4.set_xticks(x)
+    short = {"positive": r"Cov$>$0", "homogeneous": "equal", "negative": r"Cov$<$0", "complete": "complete"}
     labs = []
     for h in het:
         px = h["theory"]["p_x"]
-        labs.append(f"{short.get(h['case'], h['case'])}\n({px[0]:g},{px[1]:g})")
-    ax3.set_xticklabels(labs, fontsize=6.2)
+        labs.append(f"({px[0]:g}, {px[1]:g})\n{short.get(h['case'], h['case'])}")
+    ax4.set_xticklabels(labs, fontsize=7)
     nx = het[0]["theory"]["n_x"]
-    ax3.set_xlabel(rf"$(p_1,p_2)$, with $(n_1,n_2)=({nx[0]:g},{nx[1]:g})$", fontsize=7.5)
-    ax3.set_ylabel("branching ratio")
-    ax3.set_ylim(0.2, 0.75)
-    ax3.legend(handles=[Line2D([], [], color=C_BLUE, marker="o", ls="none", ms=4, label=r"fitted $\hat n''$"),
+    ax4.set_xlabel(rf"recording $(p_1,p_2)$; $(n_1,n_2)=({nx[0]:g},{nx[1]:g})$")
+    ax4.set_ylabel("branching ratio")
+    ax4.set_ylim(0.25, 0.8)
+    ax4.set_xlim(-0.5, len(het) - 0.5)
+    ax4.legend(handles=[Line2D([], [], color=C_BLUE, marker="o", ls="none", ms=4, label=r"fitted $\hat n''$"),
                         Line2D([], [], color=C_VERM, marker="s", ls="none", ms=4, label=r"$h_{\bar p}^{-1}(\hat n'')$"),
                         Line2D([], [], color=TRUTH, lw=1.1, label="theory"),
                         Line2D([], [], color=INK2, lw=0.7, ls="--", label=r"true $\bar n$")],
-               loc="upper left", frameon=False, fontsize=6.3, ncol=2)
-    _panel(ax3, "c")
+               loc="upper center", frameon=False, fontsize=6.5, ncol=4, columnspacing=1.0, handlelength=1.6)
+    _panel(ax4, "d")
+    fig.legend(handles=handles, loc="outside upper center", ncol=4, frameon=False, fontsize=6.8, columnspacing=1.4)
     fig.savefig(path)
     plt.close(fig)
 
@@ -368,7 +406,7 @@ def fig_lrt(res, raw4, path):
     ax1.set_xlabel(r"true $\alpha_{\mathrm{off},\mathrm{on}}$")
     ax1.set_ylabel("rejection rate at 5%")
     ax1.set_ylim(0, 1.02)
-    ax1.legend(loc="lower right", frameon=False, fontsize=6.6)
+    ax1.legend(loc="lower right", bbox_to_anchor=(1.0, 0.09), frameon=False, fontsize=6.6)
     _panel(ax1, "a")
     # (b) null p-values P-P
     _style(ax2, "both")
@@ -382,12 +420,12 @@ def fig_lrt(res, raw4, path):
         band = 1.36 / math.sqrt(n)
         ax2.fill_between(u, np.clip(u - band, 0, 1), u + band, color="#eeeeee", lw=0, zorder=0)
         p0 = np.mean(p >= 1 - 1e-12)
-        ax2.text(0.02, 0.47, rf"$\Pr(\mathrm{{LR}}=0)={p0:.2f}$", fontsize=6.8, va="top")
+        ax2.text(0.48, 0.02, rf"$\Pr(\mathrm{{LR}}=0)={p0:.2f}$", fontsize=6.8, va="bottom", ha="right")
     ax2.set_xlim(0, 0.5)
     ax2.set_ylim(0, 0.5)
     ax2.set_xlabel(r"nominal level $u$")
     ax2.set_ylabel(r"$\Pr(p\text{-value}\leq u)$ under $H_0$")
-    ax2.legend(loc="lower right", frameon=False, fontsize=6.6)
+    ax2.legend(loc="upper left", frameon=False, fontsize=6.6)
     _panel(ax2, "b")
     # (c) common shock
     _style(ax3, "y")
@@ -464,12 +502,13 @@ def fig_attribution(res, path):
     # (b) shares
     _style(ax2, "y")
     items = []
+    short = ["A", "B", "online"]
     for k in range(M):
-        items.append((f"share[{k}]@{tag}", rf"$\frac{{C_{k + 1}}}{{D_{k + 1}+C_{k + 1}}}$", "share", k))
+        items.append((f"share[{k}]@{tag}", short[k] if k < len(short) else str(k + 1), "share", k))
     for sh in val["shares"]:
         if "sigma_exact" in sh:
             k = sh["stream"]
-            items.append((f"sigma[{k}]@{tag}", rf"$\sigma_{k + 1}$", "sigma", k))
+            items.append((f"sigma[{k}]@{tag}", short[k] if k < len(short) else str(k + 1), "sigma", k))
     for i, (key, lab, kind, k) in enumerate(items):
         sh = [x for x in val["shares"] if x["stream"] == k][0]
         ex = sh["share_exact"] if kind == "share" else sh["sigma_exact"]
@@ -483,7 +522,12 @@ def fig_attribution(res, path):
             ax2.errorbar(i + 0.02 + 0.2 * ti, _f(q["mean"]), yerr=_f(q["sd"]), fmt=marks[ti % 2], ms=3.6,
                          color=cols[ti % 2], capsize=0, elinewidth=0.9, zorder=3)
     ax2.set_xticks(range(len(items)))
-    ax2.set_xticklabels([it[1] for it in items], fontsize=7.5)
+    ax2.set_xticklabels([it[1] for it in items], fontsize=7)
+    n_sh = sum(it[2] == "share" for it in items)
+    ax2.axvline(n_sh - 0.5, color=GRID, lw=0.6)
+    ax2.text((n_sh - 1) / 2, 1.0, r"$C_k/(D_k+C_k)$", transform=ax2.get_xaxis_transform(), ha="center", va="bottom", fontsize=7)
+    ax2.text(n_sh + (len(items) - n_sh - 1) / 2, 1.0, r"$\sigma_k$", transform=ax2.get_xaxis_transform(), ha="center",
+             va="bottom", fontsize=7)
     ax2.set_ylim(0, 1)
     ax2.set_ylabel(rf"share, $H={H:g}$")
     _panel(ax2, "b")
@@ -494,108 +538,162 @@ def fig_attribution(res, path):
 # ---------------------------------------------------------------------------
 # E6  Alerting
 # ---------------------------------------------------------------------------
+# (colour, marker, line style, hollow marker?, label). Solid lines / filled markers: forecasters that
+# integrate over future events (the conditional law given the past); dashed / hollow: no future events.
 M_STYLE = {
-    "oracle": (TRUTH, "o", "-", "Hawkes, true parameters"),
-    "fitted": (C_BLUE, "o", "-", "Hawkes, fitted"),
-    "ma_poisson": (C_VERM, "s", "--", "moving-average Poisson"),
-    "climatology": (C_ORANGE, "^", "-.", "climatology"),
-    "fitted_naive_delay": (C_PINK, "v", ":", "Hawkes, fitted, naive state"),
-    "fitted_ht_delay": (C_GREEN, "D", "-", "Hawkes, fitted, HT nowcast"),
-    "ma_poisson_delay": (C_VERM, "s", ":", "MA Poisson, available counts"),
+    "oracle": (TRUTH, "o", "--", True, "true par., no future events"),
+    "oracle_int": (TRUTH, "o", "-", False, "true par., integrating"),
+    "fitted": (C_BLUE, "s", "--", True, "fitted, no future events"),
+    "fitted_int": (C_BLUE, "s", "-", False, "fitted, integrating"),
+    "fitted_naive_delay": (C_PINK, "v", "--", True, "fitted, naive state, no future events"),
+    "fitted_ht_delay": (C_GREEN, "D", "--", True, "fitted, HT nowcast, no future events"),
+    "fitted_naive_delay_int": (C_PINK, "v", "-", False, "delays: naive state"),
+    "fitted_ht_delay_int": (C_GREEN, "D", "-", False, "delays: HT nowcast"),
+    "ma_poisson": (C_VERM, "^", "-.", False, "moving-average (MA) Poisson"),
+    "ma_poisson_delay": (C_VERM, "^", ":", True, "delays: MA Poisson, available"),
+    "climatology": (C_ORANGE, "X", "-.", False, "climatology"),
 }
+E6_KEYS = list(M_STYLE)
 
 
-E6_KEYS = ["oracle", "fitted", "fitted_naive_delay", "fitted_ht_delay", "ma_poisson", "ma_poisson_delay", "climatology"]
+def _mhandle(m):
+    col, mk, ls, hollow, lab = M_STYLE[m]
+    return Line2D([], [], color=col, marker=mk, ls=ls, ms=3.8, lw=0.9, mfc="white" if hollow else col, label=lab)
 
 
-def _pit_panel(ax, hists, keys, title_note):
+def _pit_density(h):
+    h = np.array(h, float)
+    return h / max(h.sum(), 1) * h.size
+
+
+def _pit_panel(ax, hists, keys, note):
     _style(ax, "y")
-    top = 1.8
+    top = 1.6
     for m in keys:
-        col, mk, ls, lab = M_STYLE[m]
-        h = np.array(hists[m], float)
-        nb = h.size
-        dens = h / max(h.sum(), 1) * nb
-        top = max(top, dens.max() * 1.45)
-        ax.stairs(dens, np.linspace(0, 1, nb + 1), color=col, lw=1.1, ls=ls, label=lab)
+        if m not in hists:
+            continue
+        col, mk, ls, hollow, lab = M_STYLE[m]
+        dens = _pit_density(hists[m])
+        top = max(top, dens.max() * 1.18)
+        ax.stairs(dens, np.linspace(0, 1, dens.size + 1), color=col, lw=1.1, ls=ls)
     ax.axhline(1.0, color=INK2, lw=0.6)
     ax.set_xlabel("randomised PIT")
     ax.set_xlim(0, 1)
-    ax.set_ylim(0, top)
-    ax.text(0.5, 0.97, title_note, transform=ax.transAxes, ha="center", va="top", fontsize=6.8, color="#222222")
-    ax.legend(loc="upper center", bbox_to_anchor=(0.5, 0.89), frameon=False, fontsize=5.8, ncol=1)
+    ax.set_ylim(0, top + 0.35)
+    ax.text(0.5, 0.98, note, transform=ax.transAxes, ha="center", va="top", fontsize=6.8, color="#222222")
 
 
 def fig_alert(res, path):
     s = res["experiments"]["E6"]["summary"]
     meth = s["methods"]
     split = s.get("calibration_by_new_shock")
+    has_int = "oracle_int" in meth
     ratios = sorted(meth["oracle"]["alerts"].keys(), key=float)
     rx = np.array([float(r) for r in ratios])
-    fig, axes = plt.subplots(2, 3, figsize=(W2, 4.4), layout="constrained")
+    fig, axes = plt.subplots(2, 3, figsize=(W2, 5.0), layout="constrained")
     (ax1, ax2, ax3), (ax4, ax5, ax6) = axes
+    base = s["surge_rate_test"]
 
     def cost_panel(ax, keys):
         _style(ax, "y")
+        keys = [m for m in keys if m in meth]
         n = len(keys)
-        offs = np.linspace(-0.06, 0.06, n) if n > 1 else [0.0]
+        offs = np.linspace(-0.07, 0.07, n) if n > 1 else [0.0]
         for i, m in enumerate(keys):
-            col, mk, ls, lab = M_STYLE[m]
+            col, mk, ls, hollow, lab = M_STYLE[m]
             c = np.array([_f(meth[m]["alerts"][r]["cost_per_window"]["mean"]) for r in ratios])
             e = np.array([1.96 * _f(meth[m]["alerts"][r]["cost_per_window"]["mcse"]) for r in ratios])
-            ax.errorbar(rx * (1 + offs[i]), c, yerr=e, fmt=mk, ls=ls, ms=3.6, lw=0.9, color=col, capsize=0, label=lab, zorder=3)
-        base = s["surge_rate_test"]
-        ax.plot(rx, np.minimum(rx * base, 1 - base), color="#999999", lw=0.8, ls=(0, (1, 1)), zorder=1,
-                label="best constant rule")
+            ax.errorbar(rx * (1 + offs[i]), c, yerr=e, fmt=mk, ls=ls, ms=3.6, lw=0.9, color=col,
+                        mfc="white" if hollow else col, capsize=0, zorder=3)
+        ax.plot(rx, np.minimum(rx * base, 1 - base), color="#999999", lw=0.8, ls=(0, (1, 1)), zorder=1)
         ax.set_xscale("log")
         ax.set_xticks(rx)
         ax.set_xticklabels([f"{x:g}" for x in rx])
         ax.minorticks_off()
         ax.set_xlabel(r"cost ratio $c_{\mathrm{miss}}/c_{\mathrm{FA}}$")
-        ax.set_ylim(0, 1.05)
-        ax.legend(loc="upper left", frameon=False, fontsize=5.8)
+        ax.set_ylim(0, 1.0)
 
-    cost_panel(ax1, ["oracle", "fitted", "ma_poisson", "climatology"])
+    k_a = ["oracle", "oracle_int", "fitted", "fitted_int", "ma_poisson", "climatology"]
+    cost_panel(ax1, k_a)
     ax1.set_ylabel("realised cost per window")
+    ax1.text(0.03, 0.97, "complete data", transform=ax1.transAxes, ha="left", va="top", fontsize=6.8)
     _panel(ax1, "a")
-    cost_panel(ax2, ["fitted", "fitted_naive_delay", "fitted_ht_delay", "ma_poisson_delay"])
+    k_b = (["fitted_int", "fitted_naive_delay_int", "fitted_ht_delay_int", "ma_poisson_delay"] if has_int
+           else ["fitted", "fitted_naive_delay", "fitted_ht_delay", "ma_poisson_delay"])
+    cost_panel(ax2, k_b)
+    ax2.text(0.03, 0.97, "reporting delays", transform=ax2.transAxes, ha="left", va="top", fontsize=6.8)
     _panel(ax2, "b")
     # (c) precision-recall at the three thresholds
     _style(ax3, "both")
-    for m in ["oracle", "fitted", "fitted_naive_delay", "fitted_ht_delay", "ma_poisson", "climatology"]:
-        col, mk, ls, lab = M_STYLE[m]
+    k_c = ["oracle", "oracle_int", "fitted", "fitted_int", "fitted_naive_delay_int", "fitted_ht_delay_int", "ma_poisson",
+           "climatology"]
+    for m in [m for m in k_c if m in meth]:
+        col, mk, ls, hollow, lab = M_STYLE[m]
         rec = [_f(meth[m]["alerts"][r]["recall"]) for r in ratios]
         pre = [_f(meth[m]["alerts"][r]["precision"]) for r in ratios]
-        ax3.plot(rec, pre, marker=mk, ls=ls, ms=3.6, lw=0.8, color=col, label=lab)
-    ax3.axhline(s["surge_rate_test"], color="#999999", lw=0.8, ls=(0, (1, 1)))
-    ax3.set_xlim(0, 1.02)
-    ax3.set_ylim(0, 1.02)
+        ax3.plot(rec, pre, marker=mk, ls=ls, ms=3.6, lw=0.8, color=col, mfc="white" if hollow else col)
+    ax3.axhline(base, color="#999999", lw=0.8, ls=(0, (1, 1)))
+    ax3.set_xlim(0, 1.0)
+    ax3.set_ylim(0, 1.0)
     ax3.set_xlabel("recall (hit rate)")
     ax3.set_ylabel("precision")
-    ax3.text(0.97, 0.97, "markers as in (a), (b);\nthree points per method =\nthree cost ratios", transform=ax3.transAxes,
-             ha="right", va="top", fontsize=6.0, color="#222222")
+    ax3.text(0.97, 0.97, "one point per cost ratio", transform=ax3.transAxes, ha="right", va="top", fontsize=6.4)
     _panel(ax3, "c")
     # (d)-(f) PIT histograms
     hall = {m: meth[m]["pit_hist"] for m in meth}
-    _pit_panel(ax4, hall, ["oracle", "fitted", "ma_poisson", "climatology"], "all forecast windows")
+    _pit_panel(ax4, hall, ["oracle", "oracle_int", "fitted", "fitted_int"], "all 1800 windows")
     ax4.set_ylabel("density")
     _panel(ax4, "d")
-    if split is not None:
+    if split is not None and has_int:
+        m = "oracle_int"
+        col = M_STYLE[m][0]
+        d_no = _pit_density(split[m]["no_new_shock"]["pit_hist"])
+        d_new = _pit_density(split[m]["new_shock"]["pit_hist"])
+        _style(ax5, "y")
+        edges = np.linspace(0, 1, d_no.size + 1)
+        ax5.stairs(d_new, edges, color=col, lw=1.1, ls="-", zorder=3)
+        ax5.stairs(d_no, edges, color=INK2, lw=1.1, ls=(0, (2, 1.2)), zorder=3)
+        ax5.axhline(1.0, color=INK2, lw=0.6)
+        top = max(d_new.max(), d_no.max())
+        ax5.set_ylim(0, top * 1.22)
+        ax5.set_xlim(0, 1)
+        ax5.set_xlabel("randomised PIT")
+        n_new, n_no = split[m]["new_shock"]["n"], split[m]["no_new_shock"]["n"]
+        ax5.text(0.5, 0.98, "true par., integrating, by window", transform=ax5.transAxes, ha="center", va="top",
+                 fontsize=6.8, color="#222222")
+        ax5.annotate(f"event arrives\n({n_new} windows)", xy=(0.85, d_new[-2]), xytext=(0.52, top * 0.80), fontsize=6.4,
+                     ha="center", va="center", arrowprops=dict(arrowstyle="-", color=INK2, lw=0.5))
+        ax5.annotate(f"no event\n({n_no} windows)", xy=(0.15, d_no[1]), xytext=(0.3, top * 0.45), fontsize=6.4,
+                     ha="center", va="center", arrowprops=dict(arrowstyle="-", color=INK2, lw=0.5))
+        _panel(ax5, "e")
+        _pit_panel(ax6, hall, ["fitted_int", "fitted_naive_delay_int", "fitted_ht_delay_int"], "delays, all windows")
+        _panel(ax6, "f")
+    elif split is not None:  # pragma: no cover - older result files
         hno = {m: split[m]["no_new_shock"]["pit_hist"] for m in E6_KEYS if m in split}
-        _pit_panel(ax5, hno, ["oracle", "fitted", "ma_poisson", "climatology"], "windows without a new event")
+        _pit_panel(ax5, hno, ["oracle", "fitted"], "windows without a new event")
         _panel(ax5, "e")
         _pit_panel(ax6, hno, ["fitted", "fitted_naive_delay", "fitted_ht_delay"], "no new event, with delays")
         _panel(ax6, "f")
-    else:  # pragma: no cover - older result files
+    else:  # pragma: no cover
         ax5.axis("off")
         ax6.axis("off")
+    order = ["oracle_int", "oracle", "fitted_int", "fitted", "ma_poisson", "climatology", "fitted_naive_delay_int",
+             "fitted_ht_delay_int", "ma_poisson_delay"]
+    hd = [_mhandle(m) for m in order if m in meth]
+    hd.append(Line2D([], [], color="#999999", lw=0.8, ls=(0, (1, 1)), label="best constant rule; (c) surge rate"))
+    fig.legend(handles=hd, loc="outside upper center", ncol=3, frameon=False, fontsize=6.6, columnspacing=1.8,
+               handlelength=2.3)
     fig.savefig(path)
     plt.close(fig)
 
 
 # ---------------------------------------------------------------------------
-# Table
+# Tables: one booktabs tabular per experiment, one metric per column. The table
+# environments (captions, panels) are in sections/08-simulation.tex and appendix C.
 # ---------------------------------------------------------------------------
+TABLES = ["tab-sim-e1.tex", "tab-sim-e2.tex", "tab-sim-e3.tex", "tab-sim-e4.tex", "tab-sim-e5.tex", "tab-sim-e6.tex"]
+
+
 def _num(x, d=3, sign=False):
     x = _f(x)
     if not np.isfinite(x):
@@ -604,134 +702,213 @@ def _num(x, d=3, sign=False):
     return s.replace("-", "$-$").replace("+", "$+$") if sign else s.replace("-", "$-$")
 
 
-def _pct(x):
+def _pct(x, d=1):
+    """Percentage with d decimals, rounded half up (so 0.025 -> 2.5 and 0.0625 -> 6.3)."""
+    from decimal import Decimal, ROUND_HALF_UP
     x = _f(x)
-    return "---" if not np.isfinite(x) else f"{100 * x:.0f}"
+    if not np.isfinite(x):
+        return "---"
+    q = Decimal(1).scaleb(-d)
+    return str(Decimal(repr(100 * x)).quantize(q, rounding=ROUND_HALF_UP))
 
 
-def table_main(res, path):
-    ex = res["experiments"]
-    L = []
-    A = L.append
-    A("% Generated by code/make_figures.py from results/sim_results.json -- do not edit by hand.")
-    A("% Bias and RMSE are relative to the stated target; Cov.: coverage of nominal 95% intervals (%),")
-    A("% or, for E4, the rejection rate at the 5% level (%). E2: n_eff = alpha_hat * mean(1 - exp(-beta_hat (T - t_l))),")
-    A("% the in-window branching ratio of a fit to Cox data with NO contagion; the target is the second-order pseudo-true")
-    A("% value n* = 1 - (1 + kappa)^(-1/2) for the constant-background MLE and the true n = 0 for the remedies (spline")
-    A("% background, shock times known). E4: Target = true alpha_off,on, Mean = mean estimate of alpha_off,on, last")
-    A("% column = rejection rate (%) at the 5% level. E1 group rows (several entries) report the mean |bias|,")
-    A("% the mean RMSE and the range of coverages over the entries.")
-    rs = {k: v.get("R") for k, v in ex.items()}
-    A(f"% Replications: {json.dumps(rs)}")
-    A(r"\begin{tabular}{@{}lllrrrrr@{}}")
-    A(r"\toprule")
-    A(r"Exp. & Quantity & Setting & Target & Mean & Bias & RMSE & Cov. \\")
-    A(r"\midrule")
-    if "E1" in ex:
-        lab = {"mu[0]": r"$\mu_1$", "alpha[0,0]": r"$\alpha_{11}$", "alpha[0,2]": r"$\alpha_{13}$ (on$\to$off)",
-               "alpha[2,0]": r"$\alpha_{31}$ (off$\to$on)", "beta": r"$\beta$", "shock_beta[2]": r"$\beta_3$ (online loading)",
-               "eta": r"$\eta$"}
-        dlab = {"Mult[0,2]": r"$M_{13}$", "rho(A)": r"$\varrho(\Amat)$"}
-        first = True
-        for bt in ex["E1"]["summary"]["by_T"]:
-            T = f"$T={_f(bt['T']):.0f}$"
-            rows = [(lab[n], bt["params"][n]) for n in lab] + [(dlab[n], bt["derived"][n]) for n in dlab]
-            for name, v in rows:
-                A(f"{'E1' if first else ''} & {name} & {T} & {_num(v['truth'])} & {_num(v['mean'])} & "
-                  f"{_num(v['bias'], sign=True)} & {_num(v['rmse'])} & {_pct(v['coverage'])} \\\\")
-                first = False
-            for grp, nm in (("alpha", r"all $\alpha_{kj}$ (9)"), ("Mult", r"all $M_{kj}$ (9)"),
-                            ("shock_beta", r"all $\beta_k$ (3)")):
-                g = bt["aggregates"][grp]
-                A(f" & {nm} & {T} & --- & --- & {_num(g['mean_abs_bias'])} & {_num(g['mean_rmse'])} & "
-                  f"{_pct(g['coverage_min'])}--{_pct(g['coverage_max'])} \\\\")
-            A(r"\addlinespace")
-    if "E2" in ex:
-        confs = ex["E2"]["summary"]["configs"]
-        fam_lab = {"rare": "rare shocks", "frequent": "freq.\\ shocks", "slow": "slow regimes"}
-        first = True
-        for c in confs:
-            ks = [x["kappa"] for x in confs if x["family"] == c["family"]]
-            klo = min([k for k in ks if k >= 1.0] or ks)
-            if c["kappa"] not in (klo, max(ks)):
-                continue
-            for fk, fl in (("const", "const."), ("spline", "spline"), ("shocks", "shocks known")):
-                if fk not in c["fits"]:
-                    continue
-                v = c["fits"][fk]["n_eff"]
-                if fk == "const":  # target: the second-order pseudo-true value n*
-                    tgt = _f(c["theory"]["n_star"])
-                    g = c["fits"][fk]["gap_neff_minus_nstar"]
-                    bias, sd, n = _f(g["mean"]), _f(g["sd"]), g["n"]
-                else:  # remedies: target is the true n = 0 (no contagion)
-                    tgt = 0.0
-                    bias, sd, n = _f(v["mean"]), _f(v["sd"]), v["n"]
-                rmse = math.sqrt(bias ** 2 + sd ** 2 * (n - 1) / max(n, 1)) if n else float("nan")
-                qn = r"$\hat n_{\mathrm{eff}}$"
-                tg = f"$n^*={_num(tgt)}$" if fk == "const" else "$n=0$"
-                A(f"{'E2' if first else ''} & {qn}, {fl} & {fam_lab.get(c['family'], c['family'])}, $\\kappa={c['kappa']:g}$ & "
-                  f"{tg} & {_num(v['mean'])} & {_num(bias, sign=True)} & {_num(rmse)} & --- \\\\")
-                first = False
-        A(r"\addlinespace")
-    if "E3" in ex:
-        first = True
-        for h in ex["E3"]["summary"]["homogeneous"]:
-            if abs(_f(h["n"]) - 0.5) > 1e-9 and abs(_f(h["n"]) - 0.7) > 1e-9:
-                continue
-            for r in h["by_p"]:
-                if abs(_f(r["p"]) - 0.4) > 1e-9:
-                    continue
-                st = f"$n={_f(h['n']):g}$, $p={_f(r['p']):g}$"
-                for nm, key, tgt in ((r"$\hat n'$ vs $n'(p)$", "naive_vs_napp", r["n_app_theory"]),
-                                     (r"$\hat n'$ vs $n$", "naive_vs_n", h["n"]),
-                                     (r"$h_p^{-1}(\hat n')$, $p$ known", "corrected_known_p", h["n"]),
-                                     (r"$h_{\hat p}^{-1}(\hat n')$, $p$ est.", "corrected_est_p", h["n"])):
-                    v = r[key]
-                    A(f"{'E3' if first else ''} & {nm} & {st} & {_num(tgt)} & {_num(v['mean'])} & {_num(v['bias'], sign=True)} & "
-                      f"{_num(v['rmse'])} & {_pct(v['coverage'])} \\\\")
-                    first = False
-        for h in ex["E3"]["summary"]["heterogeneous"]:
-            if h["case"] != "positive":
-                continue
-            v = h["n_corrected_vs_nbar"]
-            A(f" & $h_{{\\bar p}}^{{-1}}(\\hat n'')$ & heterog., $\\mathrm{{Cov}}(p_X,n_X)>0$ & {_num(v['truth'])} & {_num(v['mean'])} & "
-              f"{_num(v['bias'], sign=True)} & {_num(v['rmse'])} & --- \\\\")
-        A(r"\addlinespace")
-    if "E4" in ex:
-        first = True
-        for r in ex["E4"]["summary"]["scenarios"]:
-            if r["name"] == "common_shock":
-                rows = [(r"rejection, calendar omitted", r["without_shocks"]["reject_0.05"], r["alpha_hat"]),
-                        (r"rejection, calendar in model", r["with_shocks"]["reject_0.05"], r["alpha_hat_with_shocks"])]
-                st = r"common shock"
-            else:
-                rows = [(r"rejection ($\bar\chi^2$)", r["without_shocks"]["reject_0.05"], r["alpha_hat"])]
-                st = "size" if r["name"] == "size" else "power"
-            for nm, rr, ah in rows:
-                A(f"{'E4' if first else ''} & {nm} & {st}, $\\alpha_{{\\mathrm{{off,on}}}}={_f(r['alpha_true']):g}$ & "
-                  f"{_num(r['alpha_true'], 2)} & {_num(ah['mean'])} & --- & --- & {_pct(rr['rate'])} \\\\")
-                first = False
-        A(r"\addlinespace")
-    if "E5" in ex:
-        s = ex["E5"]["summary"]
-        H = s["H_list"][-1]
-        tag = f"H{H:g}"
-        est = s["estimated"][-1]
-        first = True
-        for key, nm in ((f"B[0]@{tag}", r"$B_1$"), (f"D[0]@{tag}", r"$D_1$"), (f"C[0]@{tag}", r"$C_1$"),
-                        (f"share[0]@{tag}", r"$C_1/(D_1+C_1)$"), (f"sigma[0]@{tag}", r"$\sigma_1$ (online channel)"),
-                        (f"C[2]@{tag}", r"$C_3$ (online)"), ("C[0]@inf", r"$C_1(\infty)$")):
-            v = est["quantities"].get(key)
-            if v is None:
-                continue
-            hh = r"$H=\infty$" if key.endswith("inf") else f"$H={H:g}$"
-            A(f"{'E5' if first else ''} & {nm} & {hh}, $T={_f(est['T']):.0f}$ & {_num(v['truth'])} & {_num(v['mean'])} & "
-              f"{_num(v['bias'], sign=True)} & {_num(v['rmse'])} & {_pct(v['coverage'])} \\\\")
-            first = False
-    A(r"\bottomrule")
-    A(r"\end{tabular}")
+def _header(L, note):
+    L.append("% Generated by code/make_figures.py from results/sim_results.json -- do not edit by hand.")
+    for line in note:
+        L.append("% " + line)
+
+
+def _write(path, L):
     with open(path, "w") as f:
         f.write("\n".join(L) + "\n")
+
+
+def table_e1(res, path):
+    ex = res["experiments"]
+    L = []
+    _header(L, ["E1 recovery. Cov.: coverage (%) of nominal 95% intervals. Group rows: mean |bias|, mean RMSE and",
+                "range of coverage over the entries."])
+    L += [r"\begin{tabular}{@{}llrrrrr@{}}", r"\toprule",
+          r"Quantity & Setting & Target & Mean & Bias & RMSE & Cov.\ (\%) \\", r"\midrule"]
+    lab = {"mu[0]": r"$\mu_1$", "alpha[0,0]": r"$\alpha_{11}$", "alpha[0,2]": r"$\alpha_{13}$ (on$\to$off)",
+           "alpha[2,0]": r"$\alpha_{31}$ (off$\to$on)", "beta": r"$\beta$", "shock_beta[2]": r"$\upsilon_3$ (online loading)",
+           "eta": r"$\eta$"}
+    dlab = {"Mult[0,2]": r"$M_{13}$", "rho(A)": r"$\varrho(\Amat)$"}
+    bts = ex["E1"]["summary"]["by_T"]
+    for i, bt in enumerate(bts):
+        T = f"$T={_f(bt['T']):.0f}$"
+        rows = [(lab[n], bt["params"][n]) for n in lab] + [(dlab[n], bt["derived"][n]) for n in dlab]
+        for name, v in rows:
+            L.append(f"{name} & {T} & {_num(v['truth'])} & {_num(v['mean'])} & {_num(v['bias'], sign=True)} & "
+                     f"{_num(v['rmse'])} & {_pct(v['coverage'], 0)} \\\\")
+        for grp, nm in (("alpha", r"all $\alpha_{kj}$ (9)"), ("Mult", r"all $M_{kj}$ (9)"), ("shock_beta", r"all $\upsilon_k$ (3)")):
+            g = bt["aggregates"][grp]
+            L.append(f"{nm} & {T} & --- & --- & {_num(g['mean_abs_bias'])} & {_num(g['mean_rmse'])} & "
+                     f"{_pct(g['coverage_min'], 0)}--{_pct(g['coverage_max'], 0)} \\\\")
+        if i < len(bts) - 1:
+            L.append(r"\addlinespace")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    _write(path, L)
+
+
+def _mm(d, dd=3):
+    """mean (median) of an mstat dict."""
+    return f"{_num(d['mean'], dd)} ({_num(d['median'], dd)})"
+
+
+def table_e2(res, path):
+    s = res["experiments"]["E2"]["summary"]
+    L = []
+    _header(L, ["E2 (no contagion). n_eff = alpha_hat * mean(1 - exp(-beta_hat (T - t_l))): mean (median) over replicates.",
+                "Shocks: shocks per path, median [min, max] (incl. the 40-day lead-in). Ridge: fits with beta_hat * T < 1,",
+                "for the constant / spline / shocks-known fits ('-' = fit not run)."])
+    L += [r"\begin{tabular}{@{}lrrcrcccc@{}}", r"\toprule",
+          r" & & & & & \multicolumn{3}{c}{$\hat n_{\mathrm{eff}}$, mean (median)} & \\",
+          r"\cmidrule(lr){6-8}",
+          r"Family & $\kappa$ & $T$ & Shocks per path & $n^*$ & Constant & Spline & Shocks known & Ridge \\",
+          r"\midrule"]
+    fam_lab = {"rare": r"Rare ($m=16$)", "frequent": r"Frequent ($m=4$)", "slow": r"Slow switching"}
+    prev = None
+    for c in s["configs"]:
+        key = (c["family"], c.get("long_T", False))
+        if prev is not None and key != prev:
+            L.append(r"\addlinespace")
+        fam = fam_lab.get(c["family"], c["family"]) if key != prev else ""
+        if c.get("long_T") and key != prev:
+            fam = fam_lab.get(c["family"], c["family"]) + ", long"
+        prev = key
+        ns = c.get("n_shots")
+        shots = f"{_f(ns['median']):g} [{_f(ns['min']):.0f}, {_f(ns['max']):.0f}]" if ns else "---"
+        cells, ridge = [], []
+        for fk in ("const", "spline", "shocks"):
+            if fk in c["fits"]:
+                cells.append(_mm(c["fits"][fk]["n_eff"]))
+                ridge.append(str(c["fits"][fk]["ridge"]["n"]))
+            else:
+                cells.append("---")
+                ridge.append("-")
+        L.append(f"{fam} & {c['kappa']:g} & {_f(c['T']):.0f} & {shots} & {_num(c['theory']['n_star'])} & "
+                 f"{cells[0]} & {cells[1]} & {cells[2]} & {'/'.join(ridge)} \\\\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    _write(path, L)
+
+
+def table_e3(res, path, p_row=0.4):
+    s = res["experiments"]["E3"]["summary"]
+    L = []
+    _header(L, [f"E3 at p = {p_row:g}. Floor: r n (1 - n)(2 - n) / 2, the p-term of eq:th-delta for relative error r of p_hat.",
+                "Cov.: coverage (%) of nominal 95% intervals (R = 40)."])
+    L += [r"\begin{tabular}{@{}llrrrrrr@{}}", r"\toprule",
+          r"Setting & Estimator & Target & Mean & Bias & RMSE & Floor & Cov.\ (\%) \\", r"\midrule"]
+    first = True
+    for h in s["homogeneous"]:
+        n = _f(h["n"])
+        if abs(n - 0.3) < 1e-9:
+            continue
+        for r in h["by_p"]:
+            if abs(_f(r["p"]) - p_row) > 1e-9:
+                continue
+            if not first:
+                L.append(r"\addlinespace")
+            first = False
+            st = f"$n={n:g}$, $p={_f(r['p']):g}$"
+            rows = [(r"$\hat n'$ (naive) vs $n'(p)$", r["naive_vs_napp"], r["n_app_theory"], None),
+                    (r"$\hat n'$ (naive) vs $n$", r["naive_vs_n"], n, None),
+                    (r"$h_p^{-1}(\hat n')$, $p$ known", r["corrected_known_p"], n, None)]
+            for x in r.get("corrected_est_p_by_r", []):
+                rows.append((rf"$h_{{\hat p}}^{{-1}}(\hat n')$, ${100 * x['r']:.0f}\%$ error", x, n, x["floor_sd"]))
+            for i, (nm, v, tgt, fl) in enumerate(rows):
+                L.append(f"{st if i == 0 else ''} & {nm} & {_num(tgt)} & {_num(v['mean'])} & {_num(_f(v['mean']) - _f(tgt), sign=True)} & "
+                         f"{_num(v['rmse'])} & {_num(fl) if fl is not None else '---'} & {_pct(v['coverage'])} \\\\")
+    for h in s["heterogeneous"]:
+        if h["case"] != "positive":
+            continue
+        v = h["n_corrected_vs_nbar"]
+        L.append(r"\addlinespace")
+        L.append(f"heterog., $\\mathrm{{Cov}}(p_X,n_X)>0$ & $h_{{\\bar p}}^{{-1}}(\\hat n'')$ & {_num(v['truth'])} & {_num(v['mean'])} & "
+                 f"{_num(v['bias'], sign=True)} & {_num(v['rmse'])} & --- & --- \\\\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    _write(path, L)
+
+
+def table_e4(res, path):
+    sc = res["experiments"]["E4"]["summary"]["scenarios"]
+    L = []
+    _header(L, ["E4. Rejection rates (%) at the 5% level with the chi-bar-square and the naive chi2_1 reference;",
+                "P(LR = 0): share of statistics equal to 0 (%)."])
+    L += [r"\begin{tabular}{@{}lrrrrrr@{}}", r"\toprule",
+          r"Scenario & $R$ & True $\alpha_{\mathrm{off,on}}$ & Mean $\hat\alpha_{\mathrm{off,on}}$ & "
+          r"Reject., $\bar\chi^2$ (\%) & Reject., $\chi^2_1$ (\%) & $\Pr(\mathrm{LR}=0)$ (\%) \\", r"\midrule"]
+    for r in sc:
+        if r["name"] == "common_shock":
+            rows = [("common shocks, calendar omitted", r["without_shocks"], r["alpha_hat"]),
+                    ("common shocks, calendar in model", r["with_shocks"], r["alpha_hat_with_shocks"])]
+        else:
+            rows = [("size" if r["name"] == "size" else "power", r["without_shocks"], r["alpha_hat"])]
+        for nm, w, ah in rows:
+            L.append(f"{nm} & {r['R']} & {_f(r['alpha_true']):g} & {_num(ah['mean'])} & {_pct(w['reject_0.05']['rate'])} & "
+                     f"{_pct(w['reject_naive_chi2_1_0.05']['rate'])} & {_pct(w['P_stat_zero']['rate'])} \\\\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    _write(path, L)
+
+
+def table_e5(res, path):
+    s = res["experiments"]["E5"]["summary"]
+    H = s["H_list"][-1]
+    tag = f"H{H:g}"
+    est = s["estimated"][-1]
+    L = []
+    _header(L, [f"E5 plug-in estimates from the E1 fits at T = {_f(est['T']):.0f}, H = {H:g} (and infinity). Cov.: coverage (%)",
+                "of nominal 95% delta-method intervals (logit scale for shares)."])
+    L += [r"\begin{tabular}{@{}lrrrrr@{}}", r"\toprule",
+          r"Quantity & Truth & Mean & Bias & RMSE & Cov.\ (\%) \\", r"\midrule"]
+    for key, nm in ((f"B[0]@{tag}", r"$B_1$"), (f"D[0]@{tag}", r"$D_1$"), (f"C[0]@{tag}", r"$C_1$"),
+                    (f"share[0]@{tag}", r"$C_1/(D_1+C_1)$"), (f"sigma[0]@{tag}", r"$\sigma_1$ (online channel)"),
+                    (f"D[2]@{tag}", r"$D_3$ (online)"), (f"C[2]@{tag}", r"$C_3$ (online)"), ("C[0]@inf", r"$C_1(\infty)$")):
+        v = est["quantities"].get(key)
+        if v is None:
+            continue
+        L.append(f"{nm} & {_num(v['truth'])} & {_num(v['mean'])} & {_num(v['bias'], sign=True)} & {_num(v['rmse'])} & "
+                 f"{_pct(v['coverage'], 0)} \\\\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    _write(path, L)
+
+
+E6_ROWS = [("Complete data", [("oracle", r"Hawkes, true par., no future events"), ("oracle_int", r"Hawkes, true par., integrating"),
+                              ("fitted", r"Hawkes, fitted, no future events"), ("fitted_int", r"Hawkes, fitted, integrating"),
+                              ("ma_poisson", "Moving-average Poisson"), ("climatology", "Climatology")]),
+           ("Reporting delays", [("fitted_naive_delay", r"Fitted, naive state, no future events"),
+                                 ("fitted_ht_delay", r"Fitted, HT nowcast, no future events"),
+                                 ("fitted_naive_delay_int", r"Fitted, naive state, integrating"),
+                                 ("fitted_ht_delay_int", r"Fitted, HT nowcast, integrating"),
+                                 ("ma_poisson_delay", "Moving-average Poisson, available counts")])]
+
+
+def table_e6(res, path, pr_ratio="5"):
+    s = res["experiments"]["E6"]["summary"]
+    meth = s["methods"]
+    ratios = sorted(meth["oracle"]["alerts"].keys(), key=float)
+    L = []
+    _header(L, ["E6. Cost per window at c_miss/c_FA = " + ", ".join(ratios) + f"; precision and recall at c_miss/c_FA = {pr_ratio};",
+                "Brier score of the surge probability; pooled PIT chi2 (9 df, 1800 windows); mean forecast minus outcome."])
+    L += [r"\begin{tabular}{@{}lrrrrrrrr@{}}", r"\toprule",
+          r" & \multicolumn{3}{c}{Cost per window} & & & & & \\", r"\cmidrule(lr){2-4}",
+          r"Forecaster & " + " & ".join(f"{_f(r):g}" for r in ratios) + r" & Prec. & Recall & Brier & PIT $\chi^2_9$ & Bias \\",
+          r"\midrule"]
+    for gi, (grp, rows) in enumerate(E6_ROWS):
+        if gi:
+            L.append(r"\addlinespace")
+        L.append(rf"\multicolumn{{9}}{{@{{}}l}}{{\emph{{{grp}}}}} \\")
+        for m, nm in rows:
+            if m not in meth:
+                continue
+            v = meth[m]
+            a = v["alerts"]
+            L.append(f"\\quad {nm} & " + " & ".join(_num(a[r]["cost_per_window"]["mean"]) for r in ratios) +
+                     f" & {_num(a[pr_ratio]['precision'])} & {_num(a[pr_ratio]['recall'])} & {_num(v['brier']['mean'], 4)} & "
+                     f"{_f(v['pit_chi2']):.1f} & {_num(v['mean_bias']['mean'], 2, sign=True)} \\\\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    _write(path, L)
 
 
 def main(argv=None):
@@ -745,26 +922,21 @@ def main(argv=None):
     os.makedirs(a.tables, exist_ok=True)
     ex = res["experiments"]
     done = []
-    if "E1" in ex:
-        fig_recovery(res, os.path.join(a.figures, "fig-sim-recovery.pdf"))
-        done.append("fig-sim-recovery.pdf")
-    if "E2" in ex:
-        fig_spurious(res, os.path.join(a.figures, "fig-sim-spurious.pdf"))
-        done.append("fig-sim-spurious.pdf")
-    if "E3" in ex:
-        fig_thinning(res, os.path.join(a.figures, "fig-sim-thinning.pdf"))
-        done.append("fig-sim-thinning.pdf")
-    if "E4" in ex:
-        fig_lrt(res, load_raw(a.results, "E4"), os.path.join(a.figures, "fig-sim-lrt.pdf"))
-        done.append("fig-sim-lrt.pdf")
-    if "E5" in ex:
-        fig_attribution(res, os.path.join(a.figures, "fig-sim-attribution.pdf"))
-        done.append("fig-sim-attribution.pdf")
-    if "E6" in ex:
-        fig_alert(res, os.path.join(a.figures, "fig-sim-alert.pdf"))
-        done.append("fig-sim-alert.pdf")
-    table_main(res, os.path.join(a.tables, "tab-sim-main.tex"))
-    done.append("tab-sim-main.tex")
+    jobs = [("E1", "fig-sim-recovery.pdf", lambda p: fig_recovery(res, p)),
+            ("E2", "fig-sim-spurious.pdf", lambda p: fig_spurious(res, p)),
+            ("E3", "fig-sim-thinning.pdf", lambda p: fig_thinning(res, p)),
+            ("E4", "fig-sim-lrt.pdf", lambda p: fig_lrt(res, load_raw(a.results, "E4"), p)),
+            ("E5", "fig-sim-attribution.pdf", lambda p: fig_attribution(res, p)),
+            ("E6", "fig-sim-alert.pdf", lambda p: fig_alert(res, p))]
+    for name, fn, f in jobs:
+        if name in ex:
+            f(os.path.join(a.figures, fn))
+            done.append(fn)
+    tabs = [("E1", table_e1), ("E2", table_e2), ("E3", table_e3), ("E4", table_e4), ("E5", table_e5), ("E6", table_e6)]
+    for (name, f), fn in zip(tabs, TABLES):
+        if name in ex:
+            f(res, os.path.join(a.tables, fn))
+            done.append(fn)
     print("wrote", ", ".join(done))
 
 

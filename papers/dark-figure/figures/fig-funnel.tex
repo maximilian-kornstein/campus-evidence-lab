@@ -60,7 +60,7 @@
   % ---------------- stage labels ----------------
   \node[stage] at (\xA,0.12) {Incidents\\[-1pt]\normalfont$N$};
   \node[stage] at (\xB,0.12) {Reaches a\\[-1pt]channel\enspace\normalfont$N_V$};
-  \node[stage] at (\xC,0.12) {Reported\\[-1pt]to police};
+  \node[stage] at (\xC,0.12) {Reaches\\[-1pt]the police};
   \node[stage] at (\xD,0.12) {Classified as\\[-1pt]antisemitic};
   \node[stage] at (\xE,0.12) {Submitted\\[-1pt]to the FBI};
 
@@ -87,7 +87,7 @@
   % ---------------- leak labels ----------------
   \foreach \x/\dh/\r/\t in {
       \xA/1.0/\rvic/{reached no\\[-2pt]channel},
-      \xB/1.0/\rpol/{not reported\\[-2pt]to police},
+      \xB/1.0/\rpol/{did not reach\\[-2pt]the police},
       \xC/0.55/\rcls/{not recorded\\[-2pt]as bias crime},
       \xD/0.33/\rsub/{recorded but\\[-2pt]not submitted}}{
     \pgfmathsetmacro{\xm}{\x+\bw+\rin+\dh/2}
@@ -131,7 +131,7 @@ passes four filters before it appears in the FBI's hate-crime count: it reaches
 a recording channel, by a report or by the channel's own detection
 ($\rvic$); it reaches the police ($\rpol$); the police record an antisemitic
 bias motivation ($\rcls$); and the agency submits the record to the FBI
-($\rsub$), so that $\E[\nFBI\mid U_d]=N_V\rpol\rcls\rsub$ (\cref{prop:funnel}).
+($\rsub$), so that $\E[\nFBI\mid U_d]=\E[N_V\mid U_d]\,\rpol\rcls\rsub$ (\cref{prop:funnel}).
 Orange streams are incidents lost from the police record at each stage; grey
 italics name the auxiliary data that inform each factor
 (\cref{tab:funnel-sources}). The other lists record incidents that reach them

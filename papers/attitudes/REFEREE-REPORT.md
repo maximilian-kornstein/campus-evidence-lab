@@ -1,0 +1,31 @@
+# Paper 3 — whole-paper referee report (saved by orchestrator)
+
+Recommendation: MAJOR REVISION. Core sound & reproducible (20+ §7 numbers match JSON). Problems: scope, plan–evidence consistency, asymmetric wording. Fixable without new theory.
+
+## MAJOR
+1. Identification stated too loosely (main.tex:64–66; 01:86–92, 158–166). With 3 items/domain ECVs unidentified whatever the loadings (Thm 4.2(b)). Replace 01:87–92 with: "…identified by heterogeneity, not correlation: some domain must contain at least four items whose general-factor shares are not all equal save one. With three items per domain, or proportional loadings, a curve of parameter values fits equally well…". Add "at least four items in one domain" to abstract and C2. 04:5's "if and only if" overstates for ECVs ((b) guarantees non-identification for only |I|−1 of them).
+2. Multistart claim (main.tex:73–74; 01:215; 07:127): in the |I|=2 design starts DISAGREED (ECV spread 0.19–0.22; 07:43). "do not reveal" → "need not reveal"; 07:127 → "agreement across starts exposed the two-item case but neither the proportional nor the near-proportional case."
+3. Stereotype-only anchoring promoted (10:31–34, 07:127, 04:172) but not planned: D3 (08:148) demands two anchors/factor; sensitivity list (08:136) omits it; E2 puts DIF only on Israel items (07:134(iv)) so "protects comparisons of G" is true by construction. Fix: pre-register stereotype-only anchoring for E4/E6; report bound eq:id-anchor-bound under a stated max anchor DIF; add an E2 cell with ideology-type DIF on stereotype anchors. Replace 10:32–34 with: "…need not assume Israel-related items function identically across groups; it assumes the stereotype anchors do, which is testable only in part (Prop. 4.10(b))."
+4. Two directional misspecifications untested, both inflate ECVs toward "in": cross-loading of IT (trope-based Israel items) on S (admitted 10:119–121); acquiescence (only 4 reverse-keyed items, none in IT, 08:33; method factor only a sensitivity). Fix: pre-register IT×S residual-correlation/cross-loading check; put method factor in primary model or balance keying; sensitivity refit with 𝓘 = IP only; simulate both misspecifications.
+5. List-experiment privacy: "protect individual answers" (01:106; 02:80) overclaims (counts 0 or J+1 disclose Z; floor & exposure aren't disclosure measures, 05:212). §5 says plan should bound disclosure but 08:95 doesn't; §9 silent; §9 also omits that the 20% paired subsample (08:98) records the direct answer. Fix: "protect" → "reduce what an individual answer reveals"; pre-register bounds on I(Y;Z|T) and share of treated with posterior ≥0.5; add risks to §9.2. E5 underpowered (SDB=0.05 needs ~20k, 08:101, vs n=6,000): demote E5 to secondary or register a precision target.
+6. Plan vs evidence: D2(iii) diagnostic (08:147) is a WLS Jacobian ratio, undefined for primary MML fit; power study (08:155) uses the LI code. Either make validated LI estimator primary or define & simulate an MML analogue. Revised DIF screen (BH only, 08:83) never rerun end-to-end (no such strategy in JSON; at κ=0.2 flags I3 in only 41%): simulate it or say "revised, not re-simulated". D2(ii) Bonferroni over ~3,600 tetrads is powerless: use an intersection–union test (for every k∈𝒟, reject proportionality of 𝒟∖{k}), matching asm:id-het exactly.
+7. Neutrality (replacement text):
+- Title → "Where Does Criticism End?" (current title asserts an endpoint, labels all Israel items "criticism").
+- main.tex:54; 01:3 "hostility expressed toward Israel" → "negative attitudes toward Israel".
+- 02:3 "a political attitude like any other" → "a political attitude distinct from such hostility".
+- 03:5; 10:26: low ECV shows distinctness from G, not that the residual is "political". After 03:5 add: "The model does not say what the domain-specific attitude is; calling it political disagreement or a distinct form of hostility is interpretation, not estimate."
+- 05:257 "agreement driven by hostility toward Jews … political attitude" → "the part of agreement that covaries with the stereotype items … the part specific to the Israel domain".
+- 08:25 "IP: Israel, policy criticism" (contains Zionism, BDS, historical comparisons) → "ID: Israel, disputed categories".
+- 02:74; 04:182; 08:70 DIF presumed only for Israel items → "Israel-related items, and some stereotype items".
+- 09:3 "held in good faith" → "political positions held by large parts of the public".
+- 09:11 debriefing: one rule for all items: "Inclusion of any statement does not mean the researchers regard it as true, false, acceptable or unacceptable."
+- 10:72–74 "stereotype items that define it" contradicts 03:48 → "the stereotype items, whose content the definitions do not dispute, give G its interpretation; Israel items also shape it."
+- 01:20; 02:13 JDA's critique of IHRA reported without reciprocal critique: drop it or add sourced critiques of JDA/Nexus.
+- 10:172 "not a weapon" → "harder to use selectively"; 10:48 "honest" → "calibrated"; 02:52 → "the empirical part of that dispute is what…".
+
+## MINOR
+- Notation: J (03:9 vs 05:17); h (communality 03:35, leverage 04:161, index threshold 01:116/06:60, "k of N" 02:74); κ (04:47, 05:169, 07:53); δ (04:61, 04:100, 05:228); π₀/π₁ (04:141); g_j vs group g (04:187); τ_fu² vs τ (06:16); G_g, S_i (06:60); estimands E1–E9 vs experiments E1–E5 (Fig. 2 caption). Suggested: experiments → X1–X5; leverage lev_j; index "q of M"; group shares w_g; floor/ceiling φ_c/φ_f; threshold shift ς_j; RE variance ω².
+- Fig. 2 "← mainly item-specific" wrong → "mainly shared with other Israel-related items". Fig. 3(c) legend collides with panel label; grey out non-identified designs (I2 shows 88% "correct"); (b) legend "sandwich" vs caption "Wald".
+- Table 5 float page ~1/3 empty; Block C count 8 but two comparison states per IP item → 16. Table 4: add row for revised procedure. R=40 → coverage MCSE ~7 pts; state it. Prop 5.10's δ_j identification not simulated: add to §7.7.
+- Bib: Paper 1 appears as 2026b; FRA 2024 title "fra" → "FRA"; Cai (2011) lacks issue/DOI; bookmark "Sections 5-6" needs en dash.
+- Length ~87 pp, 17 formal environments in §4. Merge "Four obstacles" into C1–C6; trim Related work (~2 pp); move §5.4+Cor 5.6, Rems 5.2, 5.5, 4.4–4.6, 4.9, 4.12, Prop 5.10(d–e), Prop 6.3(c–e)+Ex 6.4 to appendices. Target ~70 pp.

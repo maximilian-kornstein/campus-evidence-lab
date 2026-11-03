@@ -47,7 +47,7 @@ high-profile public statements, are indexed by $e$. Event $e$ occurs at time $\t
 and has size $S_e\ge0$. Our working model is the linear multivariate Hawkes process
 \citep{hawkes1971} augmented by these exogenous shocks:
 \begin{equation}\label{eq:th-intensity}
-  \lambda_k(t)=\mu_k(t)+\sum_{e:\,\tau_e<t}\beta_k S_e\,\psi_k(t-\tau_e)
+  \lambda_k(t)=\mu_k(t)+\sum_{e:\,\tau_e<t}\upsilon_k S_e\,\psi_k(t-\tau_e)
   +\sum_{j=1}^{M}\int_{0}^{t-}\varphi_{kj}(t-s)\,\dN_j(s),
   \qquad \varphi_{kj}=\alpha_{kj}\,g_{kj}.
 \end{equation}
@@ -58,7 +58,7 @@ and has size $S_e\ge0$. Our working model is the linear multivariate Hawkes proc
     seasonal basis $B$ and is bounded between two positive constants on $[0,T]$.
     Calendar effects such as holiday periods belong to $\mu_k$, not to the shocks.
   \item The shock responses satisfy $\psi_k\ge0$, $\int\psi_k=1$ and $\psi_k(u)=0$
-    for $u<0$. The loadings satisfy $\beta_k\ge0$.
+    for $u<0$. The loadings satisfy $\upsilon_k\ge0$.
   \item Each $g_{kj}$ is a probability density on $(0,\infty)$, and $\alpha_{kj}\ge0$.
 \end{enumerate}
 \end{assumption}
@@ -76,10 +76,8 @@ $\spr(\Amat)$ is below one, $\int\Rker=\sum_{m\ge1}\Amat^m$ is finite and the
 The workhorse special case uses exponential kernels,
 $g_{kj}(t)=\beta_{kj}e^{-\beta_{kj}t}$. In the univariate case,
 $\varphi(t)=n\beta e^{-\beta t}$, the branching ratio is $n=\alpha$ and, when $n<1$,
-the stationary mean rate is $\bar\Lambda=\mu/(1-n)$. To avoid confusion, the loading
-$\beta_k$ in \eqref{eq:th-intensity} always carries a stream subscript, whereas the
-decay rate $\beta$ (or $\beta_{kj}$) of an exponential kernel does not refer to a
-stream alone.
+the stationary mean rate is $\bar\Lambda=\mu/(1-n)$. Throughout, $\beta$ (or
+$\beta_{kj}$) is a decay rate and $\upsilon_k$ a shock loading.
 
 \subsection{The cluster representation}\label{sec:th-cluster}
 
@@ -89,7 +87,7 @@ For \eqref{eq:th-intensity} the construction is as follows.
   \item \emph{Immigrants.} Stream $k$ receives \emph{background immigrants}, a Poisson
     process with intensity $\mu_k(t)$. Independently, it receives \emph{shock
     immigrants}, a Poisson process with intensity
-    $\sum_e\beta_kS_e\psi_k(t-\tau_e)$.
+    $\sum_e\upsilon_kS_e\psi_k(t-\tau_e)$.
   \item \emph{Offspring.} Each point of stream $j$ at time $s$, whether an immigrant or
     not, independently generates offspring in each stream $k$. These offspring form a
     Poisson process with intensity $\varphi_{kj}(t-s)$, $t>s$. Equivalently, there are
@@ -134,32 +132,7 @@ Suppose there are no shocks, $\mu_k(t)\equiv\mu_k>0$ for every $k$, and
 \end{enumerate}
 \end{proposition}
 
-\begin{proof}
-(a) The offspring structure is a multitype Galton--Watson process with mean matrix
-$\Amat$, where column $j$ lists the expected offspring of a type-$j$ parent. It is
-subcritical when $\spr(\Amat)<1$, so every cluster is almost surely finite. Its
-expected type-$k$ content, given a type-$j$ root, is $\sum_{g\ge0}(\Amat^g)_{kj}=\Mmat_{kj}$.
-The immigrants form a homogeneous Poisson process on $\mathbb R$, so the
-superposition of clusters is stationary, with mean $\Mmat\bm\mu$. That it has the
-stated intensity is shown by \citet{hawkes1974}. Uniqueness in law is shown by
-\citet{bremaud1996}. The offspring fraction follows from
-$\bar{\bm\Lambda}-\bm\mu=\Amat\bar{\bm\Lambda}$.
-
-(b) Taking expectations in the intensity gives
-$\bar{\bm\Lambda}=\bm\mu+\Amat\bar{\bm\Lambda}$ with $\bar{\bm\Lambda}$ finite.
-Every entry of $\bar{\bm\Lambda}$ is at least $\mu_k>0$. Let $\bm w\ge\zero$,
-$\bm w\neq\zero$, be a left Perron vector of the nonnegative matrix $\Amat$, so that
-$\bm w^{\top}\Amat=\spr(\Amat)\bm w^{\top}$. Then
-$(1-\spr(\Amat))\,\bm w^{\top}\bar{\bm\Lambda}=\bm w^{\top}\bm\mu>0$. Since
-$\bm w^{\top}\bar{\bm\Lambda}>0$, it follows that $\spr(\Amat)<1$.
-
-(c) The cluster size is the total progeny of a Galton--Watson process with
-$\Pois(n)$ offspring. Its law is the classical Borel law
-\citep[see][]{dwass1969}. The probability generating function $G$ satisfies
-$G(z)=z\exp\{n(G(z)-1)\}$, which gives the moments by repeated differentiation at
-$z=1$. Stirling's formula gives $\Pr(S=k)\asymp k^{-3/2}(ne^{1-n})^k$, which yields the
-exponential-moment bound.
-\end{proof}
+The proof is in \cref{app:fw-proofs}.
 
 Part (b) uses $\mu_k>0$. Without immigrants, critical processes with finite mean
 intensity can be stationary under heavy-tailed kernels \citep{bremaud2001}. In our
@@ -211,27 +184,7 @@ $F_\infty=(1-n)^{-2}$, whatever the kernel. For the exponential kernel,
 Here $n(2-n)=1-(1-n)^2$.
 \end{proposition}
 
-\begin{proof}[Proof sketch]
-Moments of all orders exist because the cluster sizes have exponential moments
-(\cref{prop:stationary}(c) and its multitype analogue). Write
-$\dN=\bm\lambda\,\dd t+\dd\bm{\mathcal M}$, where $\bm{\mathcal M}$ is a martingale
-with orthogonal increments and $\E[\dd\mathcal M_k(t)\,\dd\mathcal M_j(t)]=\delta_{kj}\bar\Lambda_k\,\dd t$.
-The streams have no common points. Since $\bar{\bm\Lambda}=\bm\mu+\Amat\bar{\bm\Lambda}$,
-the centred measure $\dN-\bar{\bm\Lambda}\,\dd t$ satisfies the renewal-type equation
-$\dN-\bar{\bm\Lambda}\dd t=\Phik*(\dN-\bar{\bm\Lambda}\dd t)+\dd\bm{\mathcal M}$.
-Because $\int\Rker<\infty$, its stationary solution is
-$(\delta_0\Imat+\Rker)*\dd\bm{\mathcal M}$. Since
-$\Imat+\hat\Rker=(\Imat-\hat\Phik)^{-1}$, the Fourier transform of the covariance
-measure is \eqref{eq:th-bartlett}. Moreover $\Imat-\hat\Phik(\omega)$ is invertible for every $\omega$, because
-$\spr(\hat\Phik(\omega))\le\spr(|\hat\Phik(\omega)|)\le\spr(\Amat)<1$, where
-$|\cdot|$ is taken entrywise.
-\Citet{hawkes1971} gives a direct derivation from the integral equation for $\bm c$.
-For the univariate formulas, expand
-$|1+\hat R|^2=1+\hat R+\overline{\hat R}+|\hat R|^2$ and invert term by term. Then
-$F_\infty=|1-\hat\varphi(0)|^{-2}=(1-n)^{-2}$. For the exponential kernel,
-$\hat\varphi(\omega)=n\beta/(\beta+i\omega)$ and
-$|1-\hat\varphi(\omega)|^{-2}=(\beta^2+\omega^2)/(\beta^2(1-n)^2+\omega^2)$.
-\end{proof}
+A proof sketch is in \cref{app:fw-proofs}.
 
 Two features of \eqref{eq:th-fH} matter later. First, the correlation time of the
 counts is $1/\{\beta(1-n)\}$, which is longer than the kernel time scale $1/\beta$:
@@ -272,8 +225,9 @@ hypothesis that online hostility precedes offline incidents.
     connected with an earlier incident. Responsibility for an act rests with its
     perpetrator.
   \item A positive $\alpha_{kj}$ is not proof of a causal mechanism.
-    \Cref{sec:identification} shows that unobserved common shocks can mimic contagion
-    exactly at second order, for exponential and completely monotone kernels. It also shows that under-recording attenuates contagion,
+    \Cref{sec:identification} shows that, within a single stream, unobserved shocks can
+    mimic contagion exactly at second order, for exponential and completely monotone
+    kernels. It also shows that under-recording attenuates contagion,
     and that common drivers can induce online-to-offline Granger causality without any
     direct link.
   \item Shocks are modelled as \emph{salient external events} whose timing is taken

@@ -1,4 +1,4 @@
-\section{Proofs for Section~\ref{sec:identification}}\label{app:idproofs}
+\section{Proofs for Sections~\ref{sec:framework} and~\ref{sec:identification}}\label{app:idproofs}
 
 Throughout, a stationary $M$-variate point process $\bm N$ with mean
 $\bar{\bm\Lambda}$ has a covariance measure
@@ -6,6 +6,57 @@ $\operatorname{diag}(\bar{\bm\Lambda})\delta_0(\dd u)+\bm c(u)\,\dd u$, and Bart
 spectrum \eqref{eq:th-bartlett-def}. All Bartlett spectra below have continuous
 densities. Equality of spectra therefore means equality of these densities at every
 $\omega$.
+
+\subsection{Proofs for Section~\ref{sec:framework}}\label{app:fw-proofs}
+
+\begin{proof}[Proof of \cref{prop:stationary}]
+(a) The offspring structure is a multitype Galton--Watson process with mean matrix
+$\Amat$, where column $j$ lists the expected offspring of a type-$j$ parent. It is
+subcritical when $\spr(\Amat)<1$, so every cluster is almost surely finite. Its
+expected type-$k$ content, given a type-$j$ root, is $\sum_{g\ge0}(\Amat^g)_{kj}=\Mmat_{kj}$.
+The immigrants form a homogeneous Poisson process on $\mathbb R$, so the
+superposition of clusters is stationary, with mean $\Mmat\bm\mu$. That it has the
+stated intensity is shown by \citet{hawkes1974}. Uniqueness in law is shown by
+\citet{bremaud1996}. The offspring fraction follows from
+$\bar{\bm\Lambda}-\bm\mu=\Amat\bar{\bm\Lambda}$.
+
+(b) Taking expectations in the intensity gives
+$\bar{\bm\Lambda}=\bm\mu+\Amat\bar{\bm\Lambda}$ with $\bar{\bm\Lambda}$ finite.
+Every entry of $\bar{\bm\Lambda}$ is at least $\mu_k>0$. Let $\bm w\ge\zero$,
+$\bm w\neq\zero$, be a left Perron vector of the nonnegative matrix $\Amat$, so that
+$\bm w^{\top}\Amat=\spr(\Amat)\bm w^{\top}$. Then
+$(1-\spr(\Amat))\,\bm w^{\top}\bar{\bm\Lambda}=\bm w^{\top}\bm\mu>0$. Since
+$\bm w^{\top}\bar{\bm\Lambda}>0$, it follows that $\spr(\Amat)<1$.
+
+(c) The cluster size is the total progeny of a Galton--Watson process with
+$\Pois(n)$ offspring. Its law is the classical Borel law
+\citep[see][]{dwass1969}. The probability generating function $G$ satisfies
+$G(z)=z\exp\{n(G(z)-1)\}$, which gives the moments by repeated differentiation at
+$z=1$. Stirling's formula gives $\Pr(S=k)\asymp k^{-3/2}(ne^{1-n})^k$, which yields the
+exponential-moment bound.
+\end{proof}
+
+\begin{proof}[Proof sketch of \cref{prop:th-spectrum}]
+Moments of all orders exist because the cluster sizes have exponential moments
+(\cref{prop:stationary}(c) and its multitype analogue). Write
+$\dN=\bm\lambda\,\dd t+\dd\bm{\mathcal M}$, where $\bm{\mathcal M}$ is a martingale
+with orthogonal increments and $\E[\dd\mathcal M_k(t)\,\dd\mathcal M_j(t)]=\delta_{kj}\bar\Lambda_k\,\dd t$.
+The streams have no common points. Since $\bar{\bm\Lambda}=\bm\mu+\Amat\bar{\bm\Lambda}$,
+the centred measure $\dN-\bar{\bm\Lambda}\,\dd t$ satisfies the renewal-type equation
+$\dN-\bar{\bm\Lambda}\dd t=\Phik*(\dN-\bar{\bm\Lambda}\dd t)+\dd\bm{\mathcal M}$.
+Because $\int\Rker<\infty$, its stationary solution is
+$(\delta_0\Imat+\Rker)*\dd\bm{\mathcal M}$. Since
+$\Imat+\hat\Rker=(\Imat-\hat\Phik)^{-1}$, the Fourier transform of the covariance
+measure is \eqref{eq:th-bartlett}. Moreover $\Imat-\hat\Phik(\omega)$ is invertible for every $\omega$, because
+$\spr(\hat\Phik(\omega))\le\spr(|\hat\Phik(\omega)|)\le\spr(\Amat)<1$, where
+$|\cdot|$ is taken entrywise.
+\Citet{hawkes1971} gives a direct derivation from the integral equation for $\bm c$.
+For the univariate formulas, expand
+$|1+\hat R|^2=1+\hat R+\overline{\hat R}+|\hat R|^2$ and invert term by term. Then
+$F_\infty=|1-\hat\varphi(0)|^{-2}=(1-n)^{-2}$. For the exponential kernel,
+$\hat\varphi(\omega)=n\beta/(\beta+i\omega)$ and
+$|1-\hat\varphi(\omega)|^{-2}=(\beta^2+\omega^2)/(\beta^2(1-n)^2+\omega^2)$.
+\end{proof}
 
 \subsection{Auxiliary lemmas}\label{app:th-lemmas}
 

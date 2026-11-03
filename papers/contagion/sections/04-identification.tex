@@ -8,11 +8,15 @@ incident data: many shocks are never recorded in any event calendar, and many in
 are never recorded at all (the dark figure of \citealp{kornsteinlab2026darkfigure}). This section gives four sets of
 results.
 \begin{enumerate}[(1)]
-  \item Without a shock calendar, and for exponential or completely monotone kernels
-    with no excite-only streams, the autocorrelation of counts cannot distinguish
-    contagion from clustered exogenous shocks (\cref{thm:equiv,prop:th-cm}). Delayed
-    kernels and excite-only streams do leave second-order traces
-    (\cref{rem:th-noncm,prop:th-mv}). Omitting shocks creates apparent contagion
+  \item Without a shock calendar, for a single stream or for streams that do not excite
+    one another, and for exponential or completely monotone kernels, the autocorrelation
+    of counts cannot distinguish contagion from clustered exogenous shocks
+    (\cref{thm:equiv,prop:th-cm}). Delayed kernels leave a second-order trace
+    (\cref{rem:th-noncm}). So does cross-excitation whenever the excess spectral matrix
+    fails to be positive semidefinite at some frequency, as it does for excite-only
+    streams and when cross-excitation dominates self-excitation
+    (\cref{prop:th-mv,ex:th-mv-cross}); contagion \emph{between} streams is then
+    identified at second order. Omitting shocks creates apparent contagion
     (\cref{thm:spurious}).
   \item Identification is restored by a recorded shock calendar, by higher-order
     information, or by provenance links (\cref{cor:equiv-id}).
@@ -141,9 +145,12 @@ are not completely monotone but still satisfy $f_H\ge\bar\Lambda/(2\pi)$, whethe
 second-order-equivalent Cox process always exists remains open.
 \end{remark}
 
-\paragraph{Several streams.} If $\Phik$ is diagonal, the streams are independent, and
-\cref{thm:equiv,prop:th-cm} apply to each stream with its own shock process. Cross-excitation
-is different. Write $\bm E(\omega)=2\pi\bm f(\omega)-\operatorname{diag}(\bar{\bm\Lambda})$
+\paragraph{Several streams.} The equivalence results so far are proved for a single stream.
+If $\Phik$ is diagonal, the streams are independent Hawkes processes, and
+\cref{thm:equiv,prop:th-cm} apply to each stream with its own shock process. These are the
+only multivariate cases in which we prove equivalence. Cross-excitation is different,
+because a Cox process can reproduce only an excess spectrum that is positive semidefinite
+at every frequency. Write $\bm E(\omega)=2\pi\bm f(\omega)-\operatorname{diag}(\bar{\bm\Lambda})$
 for the \emph{excess spectral matrix}.
 
 \begin{proposition}[Multivariate streams]\label{prop:th-mv}
@@ -172,6 +179,41 @@ for the \emph{excess spectral matrix}.
   is therefore not, by itself, evidence of directional excitation.
 \end{enumerate}
 \end{proposition}
+
+Part (a) gives a necessary condition for second-order equivalence with any Cox process:
+$\bm E_H(\omega)\succeq0$ for every $\omega$. Whether it is also sufficient when $\Phik$ is not
+diagonal is open. Part (b) shows that it fails for excite-only streams. The next example
+shows that it also fails, at every frequency, when cross-excitation dominates
+self-excitation.
+
+\begin{example}[Cross-excitation that dominates self-excitation]\label{ex:th-mv-cross}
+Let $M=2$, $\mu_1=\mu_2$, exponential kernels with a common decay $\beta$, and
+$\Amat=\bigl(\begin{smallmatrix}s&c\\c&s\end{smallmatrix}\bigr)$ with $s,c\ge0$ and $s+c<1$.
+Then $\bar\Lambda_1=\bar\Lambda_2=\bar\Lambda$ and $\hat\Phik(\omega)=h(\omega)\Amat$, with
+$h(\omega)=\beta/(\beta+i\omega)$. The matrix $\bm E_H(\omega)$ has the eigenvectors
+$(1,1)$ and $(1,-1)$ of $\Amat$, with eigenvalues
+$\bar\Lambda\{|1-\epsilon h(\omega)|^{-2}-1\}$ for $\epsilon=s+c$ and $\epsilon=s-c$. Since
+$\operatorname{Re}h=|h|^2$, we have $|1-\epsilon h|^2=1-|h|^2\epsilon(2-\epsilon)$, so the
+eigenvalue is nonnegative for every $\omega$ if and only if $0\le\epsilon\le2$. Hence
+$\bm E_H(\omega)\succeq0$ for all $\omega$ if and only if $c\le s$. If $c>s$, the eigenvalue
+for $(1,-1)$ is negative at every $\omega$. At $\omega=0$ it equals
+$\bar\Lambda\{(1+c-s)^{-2}-1\}$, which for
+$\Amat=\bigl(\begin{smallmatrix}0&a\\a&0\end{smallmatrix}\bigr)$ is
+$\bar\Lambda\{(1+a)^{-2}-1\}<0$. Over long windows,
+\[
+\frac{\Var\{N_1(0,T]-N_2(0,T]\}}{\E\{N_1(0,T]+N_2(0,T]\}}\ \longrightarrow\ (1+c-s)^{-2}<1 .
+\]
+Every Cox process has $\Var(N_1-N_2)\ge\E(N_1+N_2)$, because given its driver the two
+counts are independent Poisson variables. A direct simulation with $a=0.5$ and
+$\beta=\mu_k=1$, over 3{,}996 windows of length 50, gives a ratio of $0.450$, against the
+limit $(1.5)^{-2}=0.444$.
+\end{example}
+
+The example has a positive reading. Mutual excitation between two streams makes their
+counts move together more tightly than independent Poisson noise allows, and no
+configuration of common or idiosyncratic unrecorded shocks can reproduce that. Contagion
+between streams is therefore often identifiable at second order, even where contagion
+within a stream is not.
 
 \subsection{Spurious contagion from unrecorded shocks}\label{sec:th-spurious}
 
@@ -248,9 +290,10 @@ Define the \emph{burstiness index}
   only that the likelihood pseudo-true value has $n>0$. That value depends on the law
   of $N$ beyond second order, so it need not equal $n^*$. Nothing forces the members of
   the matched family of \cref{thm:equiv}, which all share $n^*$, to share it. The
-  simulation study compares maximum likelihood fits with $n^*$: they are close to $n^*$
-  for frequent small shocks and below it for rare large shocks and slow regime switches
-  (\cref{sec:sim-spurious}).
+  simulation study compares maximum likelihood fits with $n^*$: they are close to $n^*$ % ALIGN-WITH-SIM (E2 rerun)
+  for frequent small shocks and below it for rare large shocks and slow regime switches.
+  In the designs with few shocks per path, however, finite-sample bias cannot be
+  separated from a difference in the pseudo-true value (\cref{sec:sim-spurious}).
   Under the usual conditions for misspecified likelihoods \citep{white1982,ogata1978},
   the estimator converges to the maximisers of $L$; we do not verify those conditions
   here.
@@ -268,20 +311,20 @@ Define the \emph{burstiness index}
   \item \emph{Recorded shocks.} Consider model \eqref{eq:th-intensity} on $[0,T]$,
   started from the empty history, under \cref{ass:th-model}, with the calendar
   $(\tau_e,S_e)$ observed. Let
-  $m_k(t)=\mu_k(t)+\sum_e\beta_kS_e\psi_k(t-\tau_e)$ be the immigrant intensity. The
+  $m_k(t)=\mu_k(t)+\sum_e\upsilon_kS_e\psi_k(t-\tau_e)$ be the immigrant intensity. The
   law of $\bm N$ on $[0,T]$ determines $m_k$ almost everywhere on $[0,T]$, and each
   $\varphi_{kj}$ almost everywhere on $(0,T)$. Two further conditions complete
   identification of all parameters:
   \begin{itemize}
     \item each kernel family is determined by its restriction to $(0,T)$, as
       exponential, gamma and power-law families are;
-    \item the map $(\theta_k,\beta_k,\psi_k)\mapsto m_k$ is injective. The data on
-      $[\tau_1,\tau_2)$ identify only the product $\beta_kS_1\psi_k$ there. Injectivity
+    \item the map $(\theta_k,\upsilon_k,\psi_k)\mapsto m_k$ is injective. The data on
+      $[\tau_1,\tau_2)$ identify only the product $\upsilon_kS_1\psi_k$ there. Injectivity
       therefore holds, for instance, when $\tau_1>0$, $S_1>0$, $\mu_k$ is constant
       (or analytic in $t$ with linearly independent basis functions), and the
-      \emph{scaled} family $\{c\,\psi:c>0,\psi\in\Psi_k\}$ is determined by its
-      restriction to an interval. An example is $\Psi_k$ consisting of functions that
-      are analytic on $(0,\infty)$; then $\int\psi_k=1$ pins down $\beta_k$. A
+      \emph{scaled} family $\{c\,\psi:c>0,\psi\in\mathfrak S_k\}$ is determined by its
+      restriction to an interval. An example is a family $\mathfrak S_k$ of functions that
+      are analytic on $(0,\infty)$; then $\int\psi_k=1$ pins down $\upsilon_k$. A
       family such as $\psi_s=s^{-1}\mathbf 1_{[0,s]}$ fails this condition.
   \end{itemize}
   Spline backgrounds are not analytic, so this sufficient condition does not cover the
@@ -390,14 +433,14 @@ reduced less.
 
 \begin{corollary}[Dark-figure correction]\label{cor:th-darkfig}
 Let $\hat n'$ estimate $n'$ from recorded incidents. Let $\hat p$ estimate the
-recording probability from the companion paper \citep{kornsteinlab2026darkfigure} ($p=1/D$, where $D$ is the dark-figure ratio), and
+recording probability from the companion paper \citep{kornsteinlab2026darkfigure} ($p=1/\mathcal D$, where $\mathcal D$ is the dark-figure ratio), and
 let $\hat p$ be independent of $\hat n'$. Set $\hat n=h_{\hat p}^{-1}(\hat n')$ using
 \eqref{eq:th-hinv}. If $\hat n'\to n'$ and $\hat p\to p$, then $\hat n\to n$. By the
 delta method,
 \begin{equation}\label{eq:th-delta}
   \Var(\hat n)\approx\Big[\frac{(1-n)^3}{p\,(1-n')^3}\Big]^2\Var(\hat n')
   +\Big[\frac{n(1-n)(2-n)}{2p}\Big]^2\Var(\hat p),
-  \qquad \Var(\hat p)\approx\frac{\Var(\hat D)}{D^4}.
+  \qquad \Var(\hat p)\approx\frac{\Var(\hat{\mathcal D})}{\mathcal D^4}.
 \end{equation}
 \end{corollary}
 
@@ -407,7 +450,7 @@ estimate. A Bayesian alternative passes posterior draws of $p$ from the companio
 $h_p^{-1}$. If $\hat n'$ is the Hawkes maximum likelihood estimator, its limit is the
 pseudo-true value under $N^p$, so the correction is exact only to the extent that this
 value coincides with $n'$ (\cref{thm:thinning}(d)). In the simulation study the mean
-maximum likelihood estimate is within $0.0104$ of $n'$ for every combination of $n$ and $p$
+maximum likelihood estimate is within $0.0104$ of $n'$ for every combination of $n$ and $p$ % ALIGN-WITH-SIM (E3 rerun)
 that was studied (\cref{sec:sim-thinning}).
 
 \paragraph{Heterogeneous recording.} Severe incidents may be both more likely to be
@@ -442,8 +485,8 @@ With $p_x\equiv p$ and $n_x\equiv n$, \cref{prop:th-hetthin} reduces to
 apparent branching ratio of unmarked data, to $1-(1-\bar n)/\sqrt{1+\Var(n_X)}$. The
 remedy is to model marks explicitly, with mark-specific productivities, and to use
 category-specific coverage when it is available. With stream-specific recording
-probabilities $\bm P=\operatorname{diag}(p_k)$, the excess spectral matrix becomes
-$\bm P\bm E_H\bm P$. This need not be of multivariate exponential-Hawkes form, and
+probabilities $p_k$, the excess spectral matrix becomes
+$\operatorname{diag}(\bm p)\,\bm E_H\operatorname{diag}(\bm p)$ (\cref{lem:th-cox2}(b)). This need not be of multivariate exponential-Hawkes form, and
 the univariate correction cannot simply be applied stream by stream, because cascades
 pass through unrecorded incidents. The multivariate case calls for an explicit thinning
 model.

@@ -1,0 +1,704 @@
+% =====================================================================
+%  Appendix (TEXT-REVISER, revision 1): candidate data sources, the full
+%  pre-registered analysis plan and the full ethics protocol, moved out of
+%  Sections 2, 9 and 10 to shorten the main text. Every label is preserved.
+% =====================================================================
+\section{Candidate data sources}\label{app:data}
+
+This appendix gives the source-by-source detail summarised in \cref{sec:data-incidents}.
+For every source we record what can be checked in the provider's own documentation: the
+timestamp the record carries, its temporal and geographic resolution, the anti-Jewish bias
+category, and how the data can be obtained. Properties that we could not confirm from
+primary documentation at the time of writing (November 2026) are marked as such and are not
+used in any argument. \Cref{tab:data-streams} summarises the candidate streams.
+
+\subsection{Incident streams}\label{app:data-incidents}
+
+\paragraph{City-level open data: NYPD hate crimes.}
+The New York City Police Department publishes a file of confirmed hate-crime
+incidents on the NYC Open Data portal (dataset \texttt{bqiq-cu78})
+\citep{nypdhate}, beginning in 2019. According to the portal's data
+dictionary, \emph{Complaint Year Number} and \emph{Month Number} give the
+year and month in which the incident occurred, and \emph{Record Create Date}
+gives the date on which the report was filed. A \emph{Bias Motive
+Description} field holds the NYPD's bias category, whose values include
+\texttt{ANTI-JEWISH}. Geography is given by the complaint precinct, the
+patrol borough and the county; each of the city's five counties is
+coterminous with a borough. For point-process work the file thus has a
+two-level time structure: the occurrence time is interval-censored to a
+calendar month, while the report date is known to the day. We treat the
+record-creation date as a report date and model the delay between occurrence
+and record creation explicitly (\cref{sec:data-delays}), with the
+occurrence month as a constraint. Whether day-level occurrence dates can be
+obtained from the NYPD, for example under a data-use agreement, is an open
+feasibility question for the pilot (\cref{sec:plan}); we do not assume it.
+Changes to reporting systems are structural breaks for time-series use. The
+New York State Comptroller reported that the state's Division of Criminal
+Justice Services did not publish 2023 hate-crime data for New York City
+because of the NYPD's transition in data-reporting systems as part of its
+move to NIBRS \citep{osc2024hate}. \Citet{rosenbaum2025} analyses NYPD
+administrative hate-crime records for 2019--2024 at monthly resolution.
+Adjusting for the Jewish population of each borough, the study reports
+that monthly anti-Jewish hate crimes were on average about twice as common
+in the first year of the Israel--Hamas war as in the preceding years of the
+study period (prevalence ratio 1.97, 95\% CI 1.64--2.35). Monthly
+resolution suffices for such before--after contrasts but not for kernels
+on the scale of days.
+
+\paragraph{FBI NIBRS.}
+The FBI's Uniform Crime Reporting Program retired its Summary Reporting
+System on 1 January 2021 and moved to collection through the National
+Incident-Based Reporting System (NIBRS) \citep{fbi2026nibrs}. For hate
+crimes, however, the FBI reopened the 2021 collection to summary-format
+submissions \citep{fbi2023supp}. According to the Congressional Research
+Service, it has accepted both formats since 2022 \citep{crs2025hate}. Each
+NIBRS incident carries the mandatory Data Element~3, \emph{Incident
+Date/Hour}. The date is recorded as \texttt{YYYYMMDD} and the hour on a
+24-hour clock. When the incident date is unknown, the report date is entered
+instead and flagged with a report-date indicator
+\citep{fbi2025nibrs,fbi2025nibrstech}. Anti-Jewish bias is code~21 of Data
+Element~8A, \emph{Bias Motivation} \citep{fbi2025nibrs}. The geographic unit
+is the reporting agency, identified by its ORI number. NIBRS submissions
+thus supply occurrence dates, and hours where recorded, for individual
+anti-Jewish incidents. For summary-format submissions we have not confirmed
+comparable date fields, so the stream is restricted to NIBRS records. The
+data are also slow. National statistics for data year 2024 were released on
+5 August 2025 \citep{fbi2025release}, so for that year the lag from
+occurrence to national availability was roughly 7 to 19 months, depending
+on when in the year an incident occurred. Agency participation varies by
+agency and year; the companion paper models it.
+
+\paragraph{ADL Audit and H.E.A.T.\ Map.}
+ADL describes its annual Audit as covering criminal and non-criminal
+incidents of harassment, vandalism and assault, as reported to ADL by
+victims, law enforcement, the media and partner organisations
+\citep{adl2025audit}. An ADL stream therefore measures a different quantity
+from a police stream, and the two reach the record through different funnels
+(\cref{sec:data-thinning}). ADL states that since 7 October 2023 the Audit
+has included certain expressions of opposition to Zionism and of support for
+violent resistance against Israel or Zionists, while continuing to exclude
+legitimate political protest \citep{adl2025audit}. For a point-process model
+this matters for a structural reason, separate from any substantive
+judgement. A change in recording scope at a date that is also a candidate
+shock time $\tau_e$ is not identified separately from the shock term unless
+the change is modelled explicitly. An ADL stream therefore needs a scope-break
+indicator in $\mu_k(t)$, or records coded under a constant scope rule. ADL's
+H.E.A.T.\ Map (Hate, Extremism, Antisemitism, Terrorism) publishes
+incident-level listings that can be downloaded as a CSV file, with some
+details removed to protect victims' privacy \citep{adlheatmap}. We have not
+confirmed whether the listed date is the date of occurrence or of report to
+ADL, nor how redaction affects dates. These checks are part of the pilot's
+feasibility stage.
+
+\paragraph{CST (United Kingdom).}
+The Community Security Trust records antisemitic incidents in the United
+Kingdom and publishes annual reports, most recently for 2025
+\citep{cst2026incidents}. CST data would serve as an international comparison
+stream. That report illustrates a further threat to time-series analysis.
+CST states that since March 2024 a technical problem has disrupted the flow
+of reports to it from the Metropolitan Police \citep{cst2026incidents}. In
+the notation of \cref{sec:data-thinning}, an interruption in a referral feed
+is a step change in the recording probability $p_k(t)$, which a model with
+constant $p_k$ would read as a change in the incident process itself.
+Incident-level records with dates would require a data-sharing agreement,
+and a CST stream is therefore conditional.
+
+\begin{table}[!htbp]
+\centering
+\caption{Candidate data streams for the pre-registered analysis. ``TBC'':
+not confirmed from the provider's documentation at the time of writing; to
+be confirmed before registration. Delays are from occurrence to
+availability to analysts.}
+\label{tab:data-streams}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.35cm}
+  >{\raggedright\arraybackslash}X
+  >{\raggedright\arraybackslash}p{2.2cm}
+  >{\raggedright\arraybackslash}X
+  >{\raggedright\arraybackslash}p{2.6cm}@{}}
+\toprule
+Stream & Time stamp (resolution) & Geography & Delay to availability & Access \\
+\midrule
+NYPD hate crimes \citep{nypdhate}
+  & Occurrence: month; record creation: day. From 2019.
+  & Precinct, patrol borough, county
+  & Report delay bounded by occurrence month and record date; refresh schedule TBC
+  & Public download (NYC Open Data) \\
+FBI NIBRS \citep{fbi2025nibrs,fbi2026nibrs,crs2025hate}
+  & Incident date and hour; report date substituted (flagged) if incident date unknown. NIBRS from 2021; hate-crime collection also accepts summary format since 2022.
+  & Reporting agency (ORI)
+  & Annual national release; data year 2024 released 5 Aug.\ 2025
+  & Public (FBI Crime Data Explorer) \\
+ADL Audit / H.E.A.T.\ Map \citep{adl2025audit,adlheatmap}
+  & Incident date listed; occurrence vs.\ report date TBC. Scope change from 7 Oct.\ 2023.
+  & Place listed; resolution TBC
+  & TBC
+  & Public map; CSV download with redactions \\
+CST (UK) \citep{cst2026incidents}
+  & TBC
+  & TBC
+  & Annual report; 2025 report published Feb.\ 2026
+  & Incident-level records by agreement (TBC) \\
+ACLED \citep{raleigh2010}
+  & TBC
+  & Event location
+  & TBC
+  & Provider terms (TBC) \\
+GDELT \citep{leetaru2013}
+  & TBC
+  & Event location
+  & TBC
+  & Provider terms (TBC) \\
+Platform data \citep{eu2022dsa}
+  & Post time stamps (binned for analysis)
+  & Varies
+  & Depends on access route
+  & DSA Art.~40 procedure; status TBC \\
+Classifier volume \citep{kornsteinlab2026detection,kornsteinlab2026measurement}
+  & Bin chosen by design (e.g.\ day)
+  & None or coarse
+  & Construction lag only
+  & Lab-constructed from a defined corpus \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Platform data access}\label{app:data-platform}
+
+Article~40 of the EU Digital Services Act provides a procedure by which
+vetted researchers may obtain data from very large online platforms and
+very large online search engines for research that contributes to the detection,
+identification and understanding of systemic risks in the Union. It also
+contains a separate provision on access to publicly accessible data, and it
+leaves technical conditions to delegated acts \citep{eu2022dsa}. Whether a
+given project qualifies, and on what terms, is decided through that
+procedure. We have not confirmed its operational status for the platforms
+and periods of interest, and the plan in \cref{sec:plan} treats online
+streams as optional, so that the offline analysis does not depend on them.
+The terms of any research interface used will be recorded at registration.
+
+\subsection{Prior empirical literature}\label{sec:data-lit}
+
+\Citet{mohler2011} developed self-exciting point-process models of
+crime; \citet{reinhart2018} reviews spatio-temporal versions and their
+applications. Related applications include a spatiotemporal test of whether
+gun violence is contagious \citep{loeffler2018} and self-exciting models of
+civilian deaths in Iraq \citep{lewis2012}. For hate crime specifically,
+\citet{king2013} study the temporal clustering of hate-motivated offending.
+Two studies examine links between online content and offline hate crime:
+\citet{muller2021} study social media and hate crime, and
+\citet{williams2020} examine anti-Black and anti-Muslim social-media posts
+as predictors of offline racially and religiously aggravated crime. For
+anti-Jewish incidents, \citet{rosenbaum2025} compares monthly NYPD counts
+before and after a salient external event (see above). We use this
+literature to motivate the questions, not as prior estimates. None of these
+studies estimates a multivariate branching matrix for antisemitic incidents,
+and our framework does not take its parameter values from them. Separating
+exogenous shocks from contagion is the identification problem of
+\cref{sec:identification}.
+
+\section{The pre-registered analysis plan in full}\label{app:plan}
+
+This appendix sets out in full the analysis plan summarised in \cref{sec:plan}, which we
+intend to register before any outcome data are examined. It fixes the candidate data, the
+estimands, the procedure for listing external events, the model hierarchy and its tests,
+the sensitivity analyses, the validation checks and the decision rules. The numerical
+settings below (horizons, thresholds, grids, replicate numbers) are proposals. They will be
+frozen at registration; any change made before registration will be documented, and any
+change made after it will be reported as a deviation. The simulation study
+(\cref{sec:simulation}) evaluates, on synthetic data with known ground truth, some of the
+tools these rules rely on: EM estimation, surge attribution, the boundary test, the
+thinning correction and a plug-in alert. It does not evaluate the block tests of
+\cref{sec:plan-models}, the placebo calibration, the time-rescaling check, the Bayesian fit
+or the selection and decision rules themselves; they are checked in the synthetic dry run
+(V4). No part of the plan has yet been carried out on real data.
+
+\subsection{Candidate pilot}\label{sec:plan-pilot}
+
+\paragraph{Setting.}
+The candidate pilot is New York City, using the NYPD hate-crime file
+described in \cref{sec:data-incidents} \citep{nypdhate}. We restrict it
+to records whose bias motive is \texttt{ANTI-JEWISH} and use the period from
+2019 onwards. The offline streams $k$ are the five boroughs. Sparse streams
+are handled by shrinkage on $\Amat$ (\cref{sec:estimation}), not by merging
+streams on the basis of observed counts, which would let outcome data shape
+the model. The offence category serves as a mark in a secondary analysis.
+The final 12 months of data available at the freeze date form the hold-out
+test period, and all earlier data form the training period.
+
+\paragraph{Two designs, chosen before outcome data are seen.}
+The NYPD file records the month of occurrence and the day of record creation
+(\cref{sec:data-incidents}). The design is chosen on data availability
+alone:
+\begin{enumerate}[(A)]
+  \item \emph{Design A} (conditional): if day-level occurrence dates can be
+  obtained under a data-use agreement, the model is fitted to occurrence
+  days, with within-day ties handled as in \cref{sec:data-needs}.
+  \item \emph{Design B} (default): the model is fitted to record-creation
+  dates, treated as a report-time process. The occurrence month enters as an
+  interval constraint on each delay, and the delay distribution is modelled
+  explicitly (\cref{sec:data-delays}). Contagion parameters then describe the
+  report-time process, and sensitivity to the delay model is analysis~S4.
+\end{enumerate}
+
+\paragraph{Additional streams.}
+Three further sources are conditional on access being confirmed during the
+feasibility stage: (i) a classifier-based online volume series
+(\cref{sec:data-online}); (ii) an ADL stream, if its export provides
+day-level dates; and (iii) a CST stream as an international replication. A
+national NIBRS analysis of anti-Jewish incidents is retrospective only,
+because of the release lag (\cref{sec:data-incidents}). If a conditional
+stream is unavailable it is dropped, and the primary analysis is unaffected.
+
+\paragraph{Feasibility gates.}
+Before registration we will: confirm the data dictionaries and archive the
+data vintages (F1); choose between Designs A and B (F2); record the
+licence terms of the event sources (F3); confirm or abandon the online
+streams (F4); and obtain ethics approval (F5; \cref{sec:ethics}).
+
+\subsection{Primary estimands}\label{sec:plan-estimands}
+
+\begin{enumerate}[E1.]
+  \item \emph{Branching matrix.} The matrix $\Amat=[\alpha_{kj}]$ for the
+  recorded streams has three parts: the diagonal $\alpha_{kk}$
+  (within-borough self-excitation); the off-diagonal offline entries
+  (cross-borough excitation); and, when online streams are included, the
+  online$\to$offline and offline$\to$online blocks. We report each entry
+  with its interval, together with $\spr(\Amat)$ and
+  $\Mmat=(\Imat-\Amat)^{-1}$. Estimates are reported on the recorded scale
+  first. Thinning-corrected values (\cref{thm:thinning}) are reported
+  alongside and labelled as model-based (\cref{sec:data-thinning}).
+  \item \emph{Surge decomposition.} For each pre-registered event $e$ and
+  stream $k$ we report the decomposition $\E[N_k(\tau_e,\tau_e+H]] =
+  B_k + D_k + C_k$ of \cref{thm:attribution} and, where online streams are
+  included, the online$\to$offline spillover share. The primary horizon is
+  $H=14$ days, with $H\in\{7,28\}$ as secondary horizons. Results are
+  summarised by event class. Event-level results appear in an appendix under
+  neutral identifiers (\cref{sec:plan-events}).
+  \item \emph{Alert performance.} We evaluate the rule of \cref{thm:alert}
+  and \cref{alg:alert}, with window $\Delta_{\mathrm a}=7$ days. For each stream the
+  surge threshold $c$ is the 95th percentile of the training-period
+  distribution of 7-day counts. The cost ratio $c_{\mathrm{miss}}/c_{\mathrm{FA}}$
+  is agreed with community-security partners before registration, with
+  $\{2,5,10\}$ as the default grid. Metrics are the hit rate, false-alarm
+  rate, realised cost and the Brier and log scores for the exceedance event.
+  Two baselines serve as comparators: the background-only model M0 and a
+  persistence rule that raises an alert when the previous window exceeded
+  $c$.
+\end{enumerate}
+Secondary estimands are the kernel time scales, the class-level shock
+loadings $\beta_k$ and the seasonal components of $\mu_k(t)$.
+
+\subsection{Pre-specified external events}\label{sec:plan-events}
+
+The event list is fixed by the following procedure. Every step is completed
+before the analysis team loads any incident data for the study period.
+\begin{enumerate}[1.]
+  \item \emph{Classes.} Event classes are defined by type: (a) onset or
+  major escalation of armed conflict; (b) terrorist or other mass-casualty
+  attacks; (c) high-profile public statements by public officials or other
+  prominent figures. The operational definitions are applied identically
+  whatever the location, the parties, the perpetrators or the victims. We do
+  not select events by their presumed relevance to antisemitism. Relevance
+  is estimated through the loadings $\beta_k$, and events that are
+  irrelevant to the outcome should receive loadings near zero. A secondary
+  list restricts the pool to events whose coverage matches a keyword list
+  that is fixed and deposited in advance.
+  \item \emph{Salience threshold.} For each candidate event, a salience
+  index is computed from the event datasets alone
+  (\cref{sec:data-events}). It is the coverage attributed to the event over
+  $[\tau_e,\tau_e+2\text{ days}]$, divided by the median daily coverage over
+  the preceding 365 days. An event enters the list if its index exceeds a
+  threshold $s^\star$. The threshold is set, using event data only, so that
+  the list contains between 10 and 30 events over the study period. The
+  size $S_e$ is the logarithm of the index.
+  \item \emph{Blind coding.} Two coders independently review the candidates
+  above the threshold. They merge duplicates, assign each event to a class
+  and set $\tau_e$ to the time of first public report in the pilot city's
+  time zone, to the day (or the hour under Design A). The coders have no
+  access to incident data, which a separate data custodian holds until the
+  freeze. Agreement is reported as Cohen's $\kappa$ for class and as the
+  share of $\tau_e$ that agree to within one day. A third coder resolves
+  disagreements. Events less than 48 hours apart are merged into a single
+  shock at the earlier time.
+  \item \emph{Freeze.} The list ($\tau_e$, class, $S_e$, source identifiers)
+  is written to a file. The file's SHA-256 hash is posted with the
+  registration and the file is deposited with the registry. Events after the
+  freeze, which are needed for prospective evaluation, are coded under the
+  same rules within seven days and appended with time-stamped hashes.
+  \item \emph{Neutral identifiers.} Each event is reported by class and
+  date. Descriptions follow the conventions of \cref{sec:ethics}.
+\end{enumerate}
+
+\subsection{Model hierarchy, block tests and selection rules}\label{sec:plan-models}
+
+The models are nested:
+\begin{enumerate}
+  \item[M0] Background only: $\mu_k(t)=\exp(B(t)^\top\theta_k)$. The basis
+  $B$ is a cubic B-spline in calendar time with knot spacing $h_b=60$ days, so that the
+  number $K_b$ of basis functions grows with the length of the study period, plus
+  day-of-week effects and indicators for a holiday calendar fixed in advance.
+  \item[M1] M0 plus shocks $\sum_e\upsilon_k S_e\psi_k(t-\tau_e)$, with an
+  exponential response kernel $\psi_k$; the loading $\upsilon_k$ and the
+  kernel are specific to each stream and shared by all events of a class.
+  \item[M2] M1 plus self-excitation (diagonal $\Amat$).
+  \item[M3] M2 plus cross-stream offline excitation (the off-diagonal entries of the
+  offline block of $\Amat$).
+  \item[M4] M3 plus the online$\to$offline and offline$\to$online blocks, when online
+  streams are available.
+\end{enumerate}
+The kernels are exponential, with one common decay rate within each block: the diagonal
+(M2), the offline off-diagonal entries (M3), and each of the two online blocks (M4). We
+estimate by maximum likelihood via EM (\cref{alg:em}), with parametric bootstrap intervals
+from 500 replicates. A Bayesian fit with shrinkage on $\Amat$ (\cref{sec:est-bayes}) is
+co-primary for M3 and M4.
+
+\paragraph{Block tests.} Each step of the hierarchy adds a block of parameters that share
+one rate: the loadings with their response rate (M0$\to$M1), or a block of entries of
+$\Amat$ with its common decay (M1$\to$M2, M2$\to$M3, and for M4 first the online$\to$offline
+block, then the offline$\to$online block). Under the null that every entry of the block is
+zero, that rate is not identified, so the chi-bar-square reference
+\eqref{eq:est-chibar} does not apply (\cref{rem:est-lrt}(i)). Each step is therefore decided
+by the following registered test.
+\begin{enumerate}[(i)]
+  \item \emph{Statistic.} The sup-LR statistic \eqref{eq:est-suplr},
+  $\mathrm{LR}_{\sup}=\max_g2\{\ell_T(\hat\vartheta_{j+1}(\beta_g))-\ell_T(\tilde\vartheta_j)\}$,
+  where $\tilde\vartheta_j$ is the fit of the smaller model and
+  $\hat\vartheta_{j+1}(\beta)$ the fit of the larger model with the new block's rate fixed
+  at $\beta$ and every other parameter free.
+  \item \emph{Grid.} $G=9$ rates whose half-lives $\log2/\beta_g$ are equally spaced on the
+  log scale from $0.5$ to $21$ days ($0.5,\,0.8,\,1.3,\,2.0,\,3.2,\,5.2,\,8.3,\,13.2,\,21$
+  days). The longest half-life is about a third of the knot spacing $h_b$, which keeps the
+  cascade time scale apart from the background (\cref{sec:est-mle}).
+  \item \emph{Reference.} The parametric bootstrap \eqref{eq:est-pboot} from the fit of the
+  smaller model, with the observed calendar and $B=499$ replicates. In each replicate both
+  models are refitted, the larger one at every grid value, starting from the null fit with
+  small positive block entries (\cref{app:comp-tests}). The step is taken if
+  $p_{\mathrm B}\le0.05$. The upcrossing approximation $p_{\mathrm D}$
+  (\cref{app:est-davies}) is reported as a secondary quantity only.
+  \item \emph{Order.} The block tests are applied in the fixed order of the hierarchy, each
+  at level $0.05$ and only if the previous step was taken. This fixed-sequence procedure
+  controls the family-wise error rate of the block decisions at $0.05$.
+  \item \emph{Entries and the Holm family.} Within the blocks that were accepted, each entry
+  $\alpha_{kj}$ is tested by the boundary test \eqref{eq:est-chibar}, whose decay is
+  identified through the other entries of its block. If every other entry of the block is
+  estimated as zero under the entry's null, that entry is tested with the sup-LR procedure
+  of (i)--(iii) instead. All entry-level tests in the accepted blocks form one family, and
+  Holm's procedure \citep{holm1979} controls its family-wise error rate at $0.05$. Decision
+  rules D1 and D2 refer to these Holm-adjusted tests.
+  \item \emph{Fallbacks.} The synthetic dry run (V4, \cref{sec:plan-validation}) checks the
+  size and the cost of the block tests before any real data are loaded. If only the cost
+  check fails, the score-based sup-statistic of \cref{app:est-davies} replaces the sup-LR
+  statistic, with the same grid and $B=999$ replicates. If the size check fails, the block's
+  rate is fixed in advance at the median of the grid (half-life $3.2$ days), and the block
+  is tested by the likelihood-ratio statistic at that rate, with the parametric bootstrap
+  reference of (iii). If that test also fails the size check, the step is decided by the
+  out-of-sample log score alone, its excitation estimates are reported as exploratory, and
+  no contagion claim under D1 or D2 is made for that block. The fallback used is reported
+  for every step.
+\end{enumerate}
+
+\paragraph{Selection rules.} Moving from $\mathrm{M}j$ to $\mathrm{M}(j{+}1)$ requires both
+of the following:
+\begin{enumerate}[(a)]
+  \item the block test of the step rejects at level $0.05$;
+  \item the out-of-sample log score improves.
+\end{enumerate}
+The reported model is the largest model that meets both criteria. Estimates from every
+model in the hierarchy are reported as well.
+
+\subsection{Sensitivity analyses}\label{sec:plan-sens}
+
+\begin{enumerate}[S1.]
+  \item \emph{Background flexibility.} We vary the knot spacing
+  $h_b\in\{30,60,120,365\}$ days and also fit a random-walk log-background.
+  A misspecified, too rigid background produces spurious contagion
+  (\cref{thm:spurious}), and second-order structure cannot settle the
+  question (\cref{thm:equiv}). Self-excitation that vanishes under a more
+  flexible background while goodness of fit remains acceptable is reported
+  as not robustly distinguishable from background variation. An overly
+  flexible background can absorb genuine contagion. In the simulation study a
+  spline background removed the spurious contagion of slow regime switches but
+  not that of fast unrecorded shocks (\cref{sec:sim-spurious}); how much
+  genuine contagion it absorbs was not studied and is checked in the
+  synthetic dry run (V4).
+  \item \emph{Thinning.} We use (a) posterior draws of $p_k$ from the
+  companion paper, mapped to streams as in \cref{sec:data-thinning}; (b) a
+  grid $p_k\in\{0.1,0.25,0.5,0.75,1\}$; and (c) salience-dependent recording,
+  $p_k(t)=p_k\{1+\varepsilon\sum_e\psi(t-\tau_e)\}$ with
+  $\varepsilon\in\{0,0.25,0.5,1\}$ (capped at one), which violates the
+  independence condition of \cref{thm:thinning}. In addition, (d) known
+  recording breaks, such as reporting-system transitions, scope changes and
+  interrupted referral feeds (\cref{sec:data-incidents}), enter $\mu_k(t)$
+  as step indicators, and results are reported with and without the
+  affected periods.
+  \item \emph{Kernel family.} We compare exponential, gamma, power-law and
+  nonparametric (histogram) kernels \citep{marsan2008}.
+  \item \emph{Delay distribution.} Under Design B we fit the delay
+  distribution in three versions: estimated from the month and
+  record-creation bounds; with its scale shifted by $\pm50\%$; and with a
+  heavy-tailed (log-normal) form. We compare the report-time analysis with
+  an occurrence-month aggregate analysis. Nowcast corrections follow
+  \cref{prop:nowcast}.
+  \item \emph{Event list.} We halve and double $s^\star$, drop each event in
+  turn, compare class-specific and pooled loadings, and vary the shock
+  kernel $\psi$.
+  \item \emph{Spatial resolution.} We compare boroughs with patrol boroughs.
+  \item \emph{Online measurement error.} We compare uncorrected and corrected
+  series (\cref{eq:data-classerr}), with period-specific error rates and
+  propagated uncertainty.
+  \item \emph{Ties.} We compare at least 20 within-day randomisations with
+  the discrete-time INAR fit (\cref{eq:inar}).
+\end{enumerate}
+
+\subsection{Validation}\label{sec:plan-validation}
+
+\begin{enumerate}[V1.]
+  \item \emph{Goodness of fit.} Following \citet{brown2002}, we apply the
+  time-rescaling theorem (\cref{prop:rescaling}) stream by stream: a
+  Kolmogorov--Smirnov test on rescaled inter-event times, with times
+  randomised within the recorded resolution. Because the parameters are
+  estimated, the reference distribution is obtained by parametric
+  bootstrap.
+  \item \emph{Out-of-sample performance.} We compute log scores for daily
+  counts \citep{gneiting2007} and randomised PIT histograms for calibration
+  \citep{dawid1984,gneiting2007b}, using rolling-origin one-step and
+  $\Delta_{\mathrm a}$-step forecasts over the test period.
+  \item \emph{Placebo shocks.} Placebo calibration is done for one event class at a time
+  (\cref{sec:est-placebo}). For each class we draw 1{,}000 placebo calendars with the same
+  number of events as the real class, and permute the real sizes over them. Their dates are
+  drawn uniformly from \emph{all} days of the training period, holidays included, subject
+  only to the 48-hour merging rule of \cref{sec:plan-events} within each calendar, and
+  without reference to the real dates of that class. Excluding holidays, or any other set of
+  days on which a real event could fall, would break the exchangeability on which the rank
+  test rests. The base model is the selected model with that class removed. The real class
+  and each placebo calendar are added to the base model in turn, as a shock class, and the
+  same statistics are computed for all of them. The rejection frequency of the placebo
+  loading tests at nominal level $0.05$ is the empirical false-positive rate of the shock
+  test. The rank of each real-event direct component $D_k$ among its placebo counterparts is
+  reported. The rank $p$-value is exact under the randomisation hypothesis of
+  \cref{lem:est-placebo}, that the real dates are exchangeable with draws from this design;
+  otherwise it is reported as a calibration, not as a test. If the empirical
+  false-positive rate exceeds $0.10$, inference on shocks uses the placebo distribution in
+  place of the asymptotic reference.
+  \item \emph{Synthetic dry run.} Before any real data are loaded, the full pipeline is run
+  on synthetic data generated as in \cref{sec:simulation}, at the pilot's number of
+  streams, length of study period and calendar size. It uses $R=200$ datasets from each of
+  two configurations: a null configuration without excitation (M1), and an alternative
+  with self-excitation $0.3$ and cross-stream entries $0.05$, both with a spline
+  background. It checks (a) the size of each block test of \cref{sec:plan-models} at a
+  configuration that satisfies its null (the null configuration for the excitation blocks,
+  and the same configuration without shocks for M0$\to$M1), which passes if the rejection
+  rate is at most $0.075$ (Monte Carlo standard error about $0.015$); (b) its cost, which passes if one block test takes at
+  most seven days on the project's computing allocation; (c) the coverage of the intervals
+  for $\alpha_{kj}$ and for the surge decomposition at the alternative; and (d) the
+  selection and decision rules, including whether a spline background with spacing $h_b$
+  absorbs genuine contagion. Failures of (a) or (b) trigger the fallbacks of
+  \cref{sec:plan-models}.
+\end{enumerate}
+
+\subsection{Decision rules}\label{sec:plan-decisions}
+
+\begin{enumerate}[D1.]
+  \item \emph{Self-excitation} in stream $k$ is claimed only if: the test of
+  $\alpha_{kk}=0$ rejects after the Holm correction; the 95\% interval for
+  $\alpha_{kk}$ excludes zero under the most flexible background in S1;
+  goodness of fit (V1) is not rejected at level $0.01$; and the placebo
+  false-positive rate (V3) is at most $0.10$. Otherwise we report that
+  self-excitation is not distinguishable from background variation at the
+  available resolution.
+  \item \emph{Cross-stream and online$\to$offline excitation} are claimed
+  under the same criteria applied to $\alpha_{kj}$. They are described as
+  Granger-type predictive dependence (\cref{prop:granger}) and never as
+  causation.
+  \item \emph{Surge decompositions} are reported for every pre-registered
+  event, whatever its size or significance. A surge is described as
+  predominantly due to contagion only if the 95\% interval for
+  $C_k/(D_k+C_k)$ lies above $0.5$ under the primary model and under the
+  S1 and S2 variants.
+  \item \emph{Thinning-corrected} branching ratios are never reported
+  without the $p_k$ used and the S2 range.
+  \item \emph{Alerts} are recommended for operational use with partners only
+  if, in the test period, the rule's realised cost is lower than that of
+  both baselines, with a bootstrap 95\% interval for the difference that
+  excludes zero, and the PIT shows no marked miscalibration. Otherwise the
+  alert analysis is reported as a research result only.
+  \item \emph{Null results and deviations} are reported in full.
+\end{enumerate}
+
+\subsection{Replication package}\label{sec:plan-replication}
+
+The package will contain:
+\begin{enumerate}[(i)]
+  \item the estimation and simulation code with a pinned environment;
+  \item the frozen event list and its hash;
+  \item acquisition scripts with dataset identifiers, vintages, download
+  dates and SHA-256 checksums;
+  \item derived counts by stream, at the resolutions and subject to the
+  small-cell rules of \cref{sec:ethics-irb};
+  \item for restricted streams (platform or partner data), the code together
+  with a synthetic dataset of the same structure;
+  \item all results as machine-readable files, with scripts that regenerate
+  every table and figure; and
+  \item the deviations log.
+\end{enumerate}
+Raw records are redistributed only where the provider's terms permit.
+
+\subsection{Timeline}\label{sec:plan-timeline}
+
+\Cref{tab:plan-timeline} gives the timeline in months from the start of the
+feasibility stage.
+
+\begin{table}[!htbp]
+\centering
+\caption{Timeline of the pre-registered analysis, in months from the start
+of the feasibility stage. Each gate must be passed before the next phase
+begins.}
+\label{tab:plan-timeline}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}l l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{4.2cm}@{}}
+\toprule
+Phase & Months & Activities & Gate / output \\
+\midrule
+P0 Feasibility & 0--2 & Confirm data dictionaries and access terms (F1--F4); choose Design A or B; submit for ethics review & Ethics approval; design fixed \\
+P1 Events and registration & 2--3 & Blind coding; freeze event list; register plan & Time-stamped registration; hash deposited \\
+P2 Dry run & 3 & Full pipeline on synthetic data (V4) & Coverage and selection rules checked \\
+P3 Training fit & 4--6 & Fit M0--M4; apply selection rules & Selected model \\
+P4 Test evaluation & 7 & V1--V3; back-test of alerts & Out-of-sample report \\
+P5 Sensitivity & 7--9 & S1--S8 & Robustness tables \\
+P6 Reporting & 9--11 & Paper; replication package; partner debrief under \cref{sec:ethics} & Public release \\
+P7 Prospective & 12--24 & Prospective alert evaluation under embargo & Embargoed evaluation report \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{The ethics protocol in full}\label{app:ethics}
+
+This appendix gives in full the protocol summarised in \cref{sec:ethics}. It accompanies
+the plan of \cref{app:plan} and complements the companion paper's protocol for victim
+privacy and record linkage \citep{kornsteinlab2026darkfigure}.
+
+\subsection{Risks of forecasting}\label{sec:ethics-risks}
+
+\paragraph{Stigmatisation.}
+A map of elevated predicted intensity can be read as a statement about the
+people who live in an area. That reading applies to neighbourhoods where
+Jewish residents are targeted, which can come to be seen as ``dangerous''.
+It applies equally to any community that observers might wrongly treat as a
+source of incidents. The model contains no information about perpetrators,
+and its spatial units are recording areas, not communities. Alerts and published maps are therefore
+at the borough level or coarser, and never street- or venue-level heat maps.
+Finer units used in sensitivity analysis S6 are reported only as summary
+statistics. No output ranks neighbourhoods or communities.
+
+\paragraph{Self-fulfilling and self-defeating alerts.}
+An alert can change what it predicts. Publicity can raise reporting, which
+inflates recorded counts (the time-varying $p_k$ of analysis S2). Protective
+deployment can prevent incidents, which makes a correct alert look like a
+false alarm. Either effect contaminates prospective evaluation. Alerts
+during the prospective period (phase P7) are therefore shared only under the
+protocol below, and evaluation reports state which alerts were acted on.
+
+\paragraph{Information hazards.}
+Forecasts that name ``hot'' dates or locations could help someone planning
+an attack, and could encourage imitation. We therefore publish methods,
+code and retrospective results, but no live or near-live forecasts and no
+forecast tied to a specific site. Retrospective results are released only
+after an embargo (\cref{sec:ethics-disclosure}).
+
+\subsection{Responsible disclosure of alerts}\label{sec:ethics-disclosure}
+
+Alerts produced during the prospective evaluation are handled as follows.
+\begin{enumerate}[1.]
+  \item \emph{Recipients.} Alerts go only to vetted community-security
+  partners, and to a police liaison where the partner agreement provides for
+  this. Each partner signs an agreement that limits use to protective
+  purposes, such as security staffing and victim support, and excludes
+  enforcement targeting of any community.
+  \item \emph{Content.} An alert gives the borough or coarser area, the
+  window $\Delta_{\mathrm a}$, the predicted probability of exceeding the threshold
+  with its uncertainty, and a fixed statement of the model's limitations.
+  It contains no individual-level information and no attribution to
+  persons, groups or communities.
+  \item \emph{Human review.} A named member of the research team reviews
+  every alert before release, and may withhold an alert that is plainly
+  driven by a data artefact.
+  \item \emph{Channel and logging.} Alerts are sent over an encrypted
+  channel. Each alert, the decision to release or withhold it, and the
+  partner's acknowledgement are logged for audit.
+  \item \emph{Embargo.} Alerts are not published. Aggregate evaluation
+  results (hit and false-alarm rates by quarter and borough) are published
+  no earlier than 90 days after the end of the period they cover.
+  \item \emph{Suspension.} Alerts are suspended if rolling calibration
+  deteriorates beyond a pre-specified tolerance, or if a partner reports
+  misuse.
+\end{enumerate}
+
+\subsection{Language and attribution}\label{sec:ethics-language}
+
+The model attributes \emph{timing}, not blame. A positive shock loading
+$\beta_k$, or a large direct component $D_k$ after event $e$, means that
+recorded incidents in stream $k$ rose after $\tau_e$ by more than the
+background and the contagion terms predict. It does not mean that the
+parties to the event, the communities associated with them, or the people
+who discussed it caused any incident. Incidents are committed by
+individual perpetrators, about whom the model contains no information. We
+therefore:
+\begin{enumerate}[(i)]
+  \item describe events as \emph{salient external events} of a stated class
+  and date, and do not characterise them politically;
+  \item never describe a community, nationality or religious group as a
+  source, driver or cause of incidents;
+  \item phrase every result in terms of recorded incidents and statistical
+  association; this includes the online$\to$offline coefficients, which
+  are Granger-type (\cref{prop:granger}); and
+  \item report event-level decompositions in an appendix under neutral
+  identifiers, with class-level summaries in the main text.
+\end{enumerate}
+
+\subsection{Political neutrality}\label{sec:ethics-neutrality}
+
+The paper takes no position on any political conflict, government, movement
+or public figure. Neutrality is built into the procedure, not just asserted:
+event classes are defined by type and apply to all parties alike
+(\cref{sec:plan-events}); the event list is frozen before outcome data are
+seen, so events cannot be selected after the fact; every pre-registered
+event is reported whatever the result (rule D3); and the event-coding rules
+and frozen list are public. Before registration, the event-coding protocol
+will be reviewed by at least two external reviewers with differing
+perspectives on the events likely to be coded. Their comments and our
+responses will be deposited with the registration.
+
+\subsection{Online data}\label{sec:ethics-online}
+
+Online data are used only under the terms of the access route through which
+they are obtained, including any conditions on data protection and security
+attached to access under Article~40 of the Digital Services Act
+\citep{eu2022dsa}. The analysis uses aggregate counts per time bin. We do
+not build account-level scores or profiles, do not link online accounts to
+offline incidents, victims or suspects, and do not publish post text,
+handles or quotations that would allow re-identification. Annotation
+samples for estimating classifier error (\cref{eq:data-classerr}) are held
+under access control and deleted when the retention period agreed with the
+data provider and the ethics board ends. Classifier outputs are used only as
+aggregate series. They are never used to flag individuals.
+
+\subsection{Ethics review and data security}\label{sec:ethics-irb}
+
+The protocol, including this section, will be submitted to an institutional
+review board or equivalent research ethics committee before any data are
+accessed (gate F5). This applies even to publicly downloadable data, because
+the plan combines several streams and may involve partner and platform
+data. Restricted data are kept on encrypted storage with role-based access,
+and use is logged. The custodian who holds the incident data during event
+coding (\cref{sec:plan-events}) is separate from the coders. Outputs follow
+a minimum-cell rule: counts below 10 are not shown below the borough level,
+and any table that could reveal a single incident's date and location is
+suppressed or coarsened. Derived counts are released at a resolution no
+finer than the source itself publishes; for restricted streams, they are
+released weekly or more coarsely. Data are retained no longer than the agreements
+allow, and the replication package contains only data whose release is
+permitted (\cref{sec:plan-replication}).

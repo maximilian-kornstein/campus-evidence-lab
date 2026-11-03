@@ -3,13 +3,9 @@
 The framework of \cref{sec:framework} needs three kinds of input:
 timestamped streams of recorded incidents, a calendar of salient external
 events (the shock times $\tau_e$ and sizes $S_e$), and, where available,
-binned series of online activity. This section reviews candidate sources
-for each. For every source we record what can be checked in the provider's
-own documentation: the timestamp the record carries, its temporal and
-geographic resolution, the anti-Jewish bias category, and how the data can
-be obtained. Properties that we could not confirm from primary documentation
-at the time of writing (November 2026) are marked as such and are not used
-in any argument. No real data have been analysed for this paper, and nothing
+binned series of online activity. This section sets out what each must
+provide; \cref{app:data} reviews candidate sources against the providers' own
+documentation. No real data have been analysed for this paper, and nothing
 in this section is an empirical finding about antisemitism. Coverage,
 definitional harmonisation and under-recording are treated in the companion
 paper \citep{kornsteinlab2026darkfigure}; here the focus is on \emph{time}.
@@ -47,94 +43,22 @@ from occurrence times alone.
 
 \subsection{Incident streams}\label{sec:data-incidents}
 
-\paragraph{City-level open data: NYPD hate crimes.}
-The New York City Police Department publishes a file of confirmed hate-crime
-incidents on the NYC Open Data portal (dataset \texttt{bqiq-cu78})
-\citep{nypdhate}, beginning in 2019. According to the portal's data
-dictionary, \emph{Complaint Year Number} and \emph{Month Number} give the
-year and month in which the incident occurred, and \emph{Record Create Date}
-gives the date on which the report was filed. A \emph{Bias Motive
-Description} field holds the NYPD's bias category, whose values include
-\texttt{ANTI-JEWISH}. Geography is given by the complaint precinct, the
-patrol borough and the county; each of the city's five counties is
-coterminous with a borough. For point-process work the file thus has a
-two-level time structure: the occurrence time is interval-censored to a
-calendar month, while the report date is known to the day. We treat the
-record-creation date as a report date and model the delay between occurrence
-and record creation explicitly (\cref{sec:data-delays}), with the
-occurrence month as a constraint. Whether day-level occurrence dates can be
-obtained from the NYPD, for example under a data-use agreement, is an open
-feasibility question for the pilot (\cref{sec:plan}); we do not assume it.
-Changes to reporting systems are structural breaks for time-series use. The
-New York State Comptroller reported that the state's Division of Criminal
-Justice Services did not publish 2023 hate-crime data for New York City
-because of the NYPD's transition in data-reporting systems as part of its
-move to NIBRS \citep{osc2024hate}. \Citet{rosenbaum2025} analyses NYPD
-administrative hate-crime records for 2019--2024 at monthly resolution.
-Adjusting for the Jewish population of each borough, the study reports
-that monthly anti-Jewish hate crimes were on average about twice as common
-in the first year of the Israel--Hamas war as in the preceding years of the
-study period (prevalence ratio 1.97, 95\% CI 1.64--2.35). Monthly
-resolution suffices for such before--after contrasts but not for kernels
-on the scale of days.
-
-\paragraph{FBI NIBRS.}
-The FBI's Uniform Crime Reporting Program retired its Summary Reporting
-System on 1 January 2021 and moved to collection through the National
-Incident-Based Reporting System (NIBRS) \citep{fbi2026nibrs}. For hate
-crimes, however, the FBI reopened the 2021 collection to summary-format
-submissions \citep{fbi2023supp}. According to the Congressional Research
-Service, it has accepted both formats since 2022 \citep{crs2025hate}. Each
-NIBRS incident carries the mandatory Data Element~3, \emph{Incident
-Date/Hour}. The date is recorded as \texttt{YYYYMMDD} and the hour on a
-24-hour clock. When the incident date is unknown, the report date is entered
-instead and flagged with a report-date indicator
-\citep{fbi2025nibrs,fbi2025nibrstech}. Anti-Jewish bias is code~21 of Data
-Element~8A, \emph{Bias Motivation} \citep{fbi2025nibrs}. The geographic unit
-is the reporting agency, identified by its ORI number. NIBRS submissions
-thus supply occurrence dates, and hours where recorded, for individual
-anti-Jewish incidents. For summary-format submissions we have not confirmed
-comparable date fields, so the stream is restricted to NIBRS records. The
-data are also slow. National statistics for data year 2024 were released on
-5 August 2025 \citep{fbi2025release}, so for that year the lag from
-occurrence to national availability was roughly 7 to 19 months, depending
-on when in the year an incident occurred. Agency participation varies by
-agency and year; the companion paper models it.
-
-\paragraph{ADL Audit and H.E.A.T.\ Map.}
-ADL describes its annual Audit as covering criminal and non-criminal
-incidents of harassment, vandalism and assault, as reported to ADL by
-victims, law enforcement, the media and partner organisations
-\citep{adl2025audit}. An ADL stream therefore measures a different quantity
-from a police stream, and the two reach the record through different funnels
-(\cref{sec:data-thinning}). ADL states that since 7 October 2023 the Audit
-has included certain expressions of opposition to Zionism and of support for
-violent resistance against Israel or Zionists, while continuing to exclude
-legitimate political protest \citep{adl2025audit}. For a point-process model
-this matters for a structural reason, separate from any substantive
-judgement. A change in recording scope at a date that is also a candidate
-shock time $\tau_e$ is not identified separately from the shock term unless
-the change is modelled explicitly. An ADL stream therefore needs a scope-break
-indicator in $\mu_k(t)$, or records coded under a constant scope rule. ADL's
-H.E.A.T.\ Map (Hate, Extremism, Antisemitism, Terrorism) publishes
-incident-level listings that can be downloaded as a CSV file, with some
-details removed to protect victims' privacy \citep{adlheatmap}. We have not
-confirmed whether the listed date is the date of occurrence or of report to
-ADL, nor how redaction affects dates. These checks are part of the pilot's
-feasibility stage.
-
-\paragraph{CST (United Kingdom).}
-The Community Security Trust records antisemitic incidents in the United
-Kingdom and publishes annual reports, most recently for 2025
-\citep{cst2026incidents}. CST data would serve as an international comparison
-stream. That report illustrates a further threat to time-series analysis.
-CST states that since March 2024 a technical problem has disrupted the flow
-of reports to it from the Metropolitan Police \citep{cst2026incidents}. In
-the notation of \cref{sec:data-thinning}, an interruption in a referral feed
-is a step change in the recording probability $p_k(t)$, which a model with
-constant $p_k$ would read as a change in the incident process itself.
-Incident-level records with dates would require a data-sharing agreement,
-and a CST stream is therefore conditional.
+\Cref{app:data} reviews four candidate incident streams, and \cref{tab:data-streams}
+summarises them. Three points matter for what follows. First, the hate-crime file of the
+New York City Police Department \citep{nypdhate}, the candidate pilot, gives the month of
+occurrence and the day of record creation. Its occurrence times are thus interval-censored
+to a month, while report dates are known to the day. Second, FBI NIBRS records carry the
+incident date and hour \citep{fbi2025nibrs}, but national releases lag occurrence by
+roughly 7 to 19 months, which suits retrospective estimation of $\Amat$ but not alerting.
+Third, recording systems, scopes and referral feeds change: New York City's transition to
+NIBRS interrupted the state's publication of its hate-crime data \citep{osc2024hate}, ADL
+widened its recording scope from 7 October 2023 \citep{adl2025audit}, and police referrals
+to CST have been disrupted since March 2024 \citep{cst2026incidents}. A change of scope at a
+candidate shock time is not identified separately from the shock unless it is modelled, and
+an interrupted referral feed is a step change in the recording probability $p_k(t)$ of
+\cref{sec:data-thinning}. Such breaks enter the background as indicators
+(\cref{sec:plan-sens}). Monthly analyses of NYPD records \citep{rosenbaum2025} suffice for
+before--after contrasts, but not for kernels on the scale of days.
 
 \subsection{Reporting delays and nowcasting}\label{sec:data-delays}
 
@@ -158,28 +82,19 @@ nowcast, as developed for infectious-disease surveillance
 \citep{hohle2014,mcgough2020} and adapted to the Hawkes setting in
 \cref{prop:nowcast}. Estimating $F_k$ needs records that carry both an
 occurrence and a report time. In the NYPD file the month of occurrence and
-the record-creation date bound each delay. NIBRS supplies the occurrence date
-directly, but its release lag makes it a source for retrospective estimation
-of $\Amat$ rather than for alerting. Open-data files may also be revised after
+the record-creation date bound each delay. Open-data files may also be revised after
 first release, so every analysis will be tied to an archived, checksummed
 vintage of each file.
 
 \subsection{External-event calendars}\label{sec:data-events}
 
-The shock term $\sum_e \beta_k S_e \psi_k(t - \tau_e)$ requires event times
+The shock term $\sum_e \upsilon_k S_e \psi_k(t - \tau_e)$ requires event times
 and sizes that are fixed independently of the incident data. Two established
-event datasets can supply candidate events: ACLED \citep{raleigh2010} and
-GDELT \citep{leetaru2013}. We have not re-verified their current
-geographic and temporal coverage or their licence terms for this draft.
-Before registration we will record the terms in force on the download date
-and comply with them, including any limits on redistributing raw records.
-Where redistribution is not permitted, the replication package will contain
-event identifiers, dates and derived salience scores together with
-re-download scripts, not the raw records.
-
+event datasets, ACLED \citep{raleigh2010} and GDELT \citep{leetaru2013}, can supply
+candidate events; their licence terms will be recorded and respected at registration.
 Neither dataset settles which events are \emph{salient} for the outcome. The
 risk is that the analyst picks events after seeing surges, which would bias
-the shock loadings $\beta_k$ upwards and the contagion terms downwards. We
+the shock loadings $\upsilon_k$ upwards and the contagion terms downwards. We
 therefore fix the event list before outcome data are examined, using a
 content-neutral procedure set out in full in \cref{sec:plan-events}:
 \begin{enumerate}[(i)]
@@ -199,18 +114,10 @@ list.
 
 \subsection{Online signals}\label{sec:data-online}
 
-\paragraph{Platform data access.}
-Article~40 of the EU Digital Services Act provides a procedure by which
-vetted researchers may obtain data from very large online platforms and
-very large online search engines for research that contributes to the detection,
-identification and understanding of systemic risks in the Union. It also
-contains a separate provision on access to publicly accessible data, and it
-leaves technical conditions to delegated acts \citep{eu2022dsa}. Whether a
-given project qualifies, and on what terms, is decided through that
-procedure. We have not confirmed its operational status for the platforms
-and periods of interest, and the plan in \cref{sec:plan} treats online
-streams as optional, so that the offline analysis does not depend on them.
-The terms of any research interface used will be recorded at registration.
+Access to platform data, for example through the vetted-researcher procedure of
+Article~40 of the EU Digital Services Act \citep{eu2022dsa}, is not confirmed for the
+platforms and periods of interest (\cref{app:data-platform}). The plan therefore treats
+online streams as optional, so that the offline analysis does not depend on them.
 
 \paragraph{Classifier-based volume series and their measurement error.}
 An online stream enters the model as a binned count series, which is handled
@@ -224,48 +131,28 @@ reported through both precision and recall, not a single score. For the
 time-series use, let $U_t$ be the number of posts in bin $t$, $V_t$ the
 number that are antisemitic under the reference annotation, and
 $\widehat V_t$ the number flagged. If each post is flagged independently
-with probability $\eta_1$ when antisemitic and $\eta_0$ otherwise, then
+with probability $e_1$ when antisemitic and $e_0$ otherwise, then
 \begin{equation}\label{eq:data-classerr}
   \E\bigl[\widehat V_t \mid U_t, V_t\bigr]
-  = \eta_1 V_t + \eta_0\,(U_t - V_t),
+  = e_1 V_t + e_0\,(U_t - V_t),
   \qquad
-  \widetilde V_t = \frac{\widehat V_t - \eta_0 U_t}{\eta_1 - \eta_0}
-  \quad (\eta_1 > \eta_0),
+  \widetilde V_t = \frac{\widehat V_t - e_0 U_t}{e_1 - e_0}
+  \quad (e_1 > e_0),
 \end{equation}
-where $\widetilde V_t$ is conditionally unbiased for $V_t$ when $\eta_0$ and
-$\eta_1$ are known. The uncorrected series loads on total volume $U_t$ with
-weight $\eta_0$. If total posting volume rises after a salient external
+where $\widetilde V_t$ is conditionally unbiased for $V_t$ when $e_0$ and
+$e_1$ are known. The uncorrected series loads on total volume $U_t$ with
+weight $e_0$. If total posting volume rises after a salient external
 event, the uncorrected series rises even when $V_t$ does not, and a common
 shock can then masquerade as online-to-offline excitation. The error rates
 are not fixed constants. The detection proposal singles out quotation and
 criticism of antisemitic expression as hard cases, and if the share of such
-posts changes after events, $\eta_0$ moves with the shocks. The plan
-therefore estimates $(\eta_0, \eta_1)$ on validation samples stratified by
+posts changes after events, $e_0$ moves with the shocks. The plan
+therefore estimates $(e_0, e_1)$ on validation samples stratified by
 period, propagates their uncertainty, and reports corrected and uncorrected
 analyses (\cref{sec:plan-sens}). Any estimated online-to-offline coefficient
 $\alpha_{\mathrm{off},\mathrm{on}}$ is interpreted as Granger-type
 predictive dependence in the sense of \citet{eichler2017}
 (\cref{prop:granger}), not as a structural causal effect.
-
-\subsection{Prior empirical literature}\label{sec:data-lit}
-
-\Citet{mohler2011} developed self-exciting point-process models of
-crime; \citet{reinhart2018} reviews spatio-temporal versions and their
-applications. Related applications include a spatiotemporal test of whether
-gun violence is contagious \citep{loeffler2018} and self-exciting models of
-civilian deaths in Iraq \citep{lewis2012}. For hate crime specifically,
-\citet{king2013} study the temporal clustering of hate-motivated offending.
-Two studies examine links between online content and offline hate crime:
-\citet{muller2021} study social media and hate crime, and
-\citet{williams2020} examine anti-Black and anti-Muslim social-media posts
-as predictors of offline racially and religiously aggravated crime. For
-anti-Jewish incidents, \citet{rosenbaum2025} compares monthly NYPD counts
-before and after a salient external event (see above). We use this
-literature to motivate the questions, not as prior estimates. None of these
-studies estimates a multivariate branching matrix for antisemitic incidents,
-and our framework does not take its parameter values from them. Separating
-exogenous shocks from contagion is the identification problem of
-\cref{sec:identification}.
 
 \subsection{How the dark-figure estimates enter: recorded streams are thinned}\label{sec:data-thinning}
 
@@ -274,9 +161,9 @@ assumption that each true incident in stream $k$ is recorded independently
 with probability $p_k$, the recorded stream is a $p_k$-thinning of the true
 one. By \cref{thm:thinning}, contagion estimated from recorded data then
 targets an attenuated apparent branching ratio, not the true one. The
-companion paper supplies $p_k$. In its notation the dark-figure ratio
-relative to list $k$ is $D_k = N/n_{k+}$, so $p_k$ is estimated by
-$1/\widehat D_k$. Its funnel
+companion paper supplies $p_k$. Its dark-figure ratio relative to list $k$,
+written here $\mathcal D_k=N/n_{k+}$, is the ratio of all incidents to those on the
+list, so $p_k$ is estimated by $1/\widehat{\mathcal D}_k$. Its funnel
 decomposition shows that $p_k$ depends on the source: a city police stream
 such as the NYPD file is reached through disclosure, reporting to police and
 bias classification ($p \approx \rvic\rpol\rcls$); the FBI stream adds
@@ -292,67 +179,3 @@ Recording would then no longer be independent of the history, the recorded
 surge would overstate the true surge, and \cref{thm:thinning} would not
 apply as stated. The plan treats time-varying $p_k$ as a pre-specified
 sensitivity analysis (\cref{sec:plan-sens}).
-
-\Cref{tab:data-streams} summarises the candidate streams.
-
-\begin{table}[tbp]
-\centering
-\caption{Candidate data streams for the pre-registered analysis. ``TBC'':
-not confirmed from the provider's documentation at the time of writing; to
-be confirmed before registration. Delays are from occurrence to
-availability to analysts.}
-\label{tab:data-streams}
-\footnotesize
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.35cm}
-  >{\raggedright\arraybackslash}X
-  >{\raggedright\arraybackslash}p{2.2cm}
-  >{\raggedright\arraybackslash}X
-  >{\raggedright\arraybackslash}p{2.6cm}@{}}
-\toprule
-Stream & Time stamp (resolution) & Geography & Delay to availability & Access \\
-\midrule
-NYPD hate crimes \citep{nypdhate}
-  & Occurrence: month; record creation: day. From 2019.
-  & Precinct, patrol borough, county
-  & Report delay bounded by occurrence month and record date; refresh schedule TBC
-  & Public download (NYC Open Data) \\
-FBI NIBRS \citep{fbi2025nibrs,fbi2026nibrs,crs2025hate}
-  & Incident date and hour; report date substituted (flagged) if incident date unknown. NIBRS from 2021; hate-crime collection also accepts summary format since 2022.
-  & Reporting agency (ORI)
-  & Annual national release; data year 2024 released 5 Aug.\ 2025
-  & Public (FBI Crime Data Explorer) \\
-ADL Audit / H.E.A.T.\ Map \citep{adl2025audit,adlheatmap}
-  & Incident date listed; occurrence vs.\ report date TBC. Scope change from 7 Oct.\ 2023.
-  & Place listed; resolution TBC
-  & TBC
-  & Public map; CSV download with redactions \\
-CST (UK) \citep{cst2026incidents}
-  & TBC
-  & TBC
-  & Annual report; 2025 report published Feb.\ 2026
-  & Incident-level records by agreement (TBC) \\
-ACLED \citep{raleigh2010}
-  & TBC
-  & Event location
-  & TBC
-  & Provider terms (TBC) \\
-GDELT \citep{leetaru2013}
-  & TBC
-  & Event location
-  & TBC
-  & Provider terms (TBC) \\
-Platform data \citep{eu2022dsa}
-  & Post time stamps (binned for analysis)
-  & Varies
-  & Depends on access route
-  & DSA Art.~40 procedure; status TBC \\
-Classifier volume \citep{kornsteinlab2026detection,kornsteinlab2026measurement}
-  & Bin chosen by design (e.g.\ day)
-  & None or coarse
-  & Construction lag only
-  & Lab-constructed from a defined corpus \\
-\bottomrule
-\end{tabularx}
-\end{table}

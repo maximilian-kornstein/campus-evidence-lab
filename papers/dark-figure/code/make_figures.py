@@ -76,8 +76,8 @@ PIPE_LABEL = dict(oracle="Oracle linkage", naive="Naive (best linkage)", correct
                   corrected_true=r"Corrected, realised $(\delta,\varepsilon)$",
                   corrected_tv="Corrected + audit var.", corrected_lefit="Corrected, best-fit LE")
 EST_LABEL = dict(lp="LP", cf="CF", bma="BMA", chao="Chao", lcmcr="LCMCR")
-EST_LONG = dict(lp="Lincoln--Petersen", cf="Closed form ($\\omega=0$)", bma="Log-linear BMA",
-                chao="Chao lower bound", lcmcr="LCMCR")
+EST_LONG = dict(lp="Lincoln–Petersen", cf="Closed form ($\\omega=0$)", bma="Log-linear BMA",
+                chao="Chao's estimator", lcmcr="LCMCR")
 SC_SHORT = dict(S1="S1: independence", S2="S2: heterogeneity", S3="S3: referral",
                 S4="S4: heterog. + noise")
 

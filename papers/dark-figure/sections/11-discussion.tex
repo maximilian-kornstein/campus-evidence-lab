@@ -85,7 +85,9 @@ incident descriptions and in records with missing fields, and may be
 correlated with capture history itself. The correction is therefore a
 diagnostic. Mixing over linkage draws (\cref{alg:pipeline}) is our primary
 approach, but it propagates only the uncertainty that the linkage posterior
-expresses and cannot remove a bias shared by every draw; the random audit
+expresses and cannot remove a bias shared by every draw (in our simulation,
+approximate draws from a plug-in pairwise posterior were centred no better
+than the point linkage); the random audit
 and the calibration study of \cref{sec:plan-validation} are the guard. The
 modular posterior (\cref{eq:models-cut}) also ignores the information that
 the capture model carries about which records match, trading some

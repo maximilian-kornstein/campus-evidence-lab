@@ -1,318 +1,59 @@
 \section{A pre-registered analysis plan}\label{sec:plan}
 
-This section sets out the analysis plan that we intend to register before
-any outcome data are examined. It fixes the candidate data, the estimands,
-the procedure for listing external events, the model hierarchy, the
-sensitivity analyses, the validation checks and the decision rules. The
-numerical settings below (horizons, thresholds, grids) are proposals. They
-will be frozen at registration; any change made before registration will be
-documented, and any change made after it will be reported as a deviation. The
-simulation study (\cref{sec:simulation}) evaluates, on synthetic data with
-known ground truth, the main tools these rules rely on: estimation, the
-boundary test, the thinning correction, surge attribution and the alert rule.
-It does not evaluate the selection and decision rules themselves; they are
-checked in the synthetic dry run (V4). No part of the plan has yet been
-carried out on real data.
+This section summarises the analysis plan that we intend to register before any outcome
+data are examined. \Cref{app:plan} gives it in full, with the replication package and the
+timeline. The numerical settings are proposals until registration; later changes will be
+reported as deviations. No part of the plan has been carried out on real data. The
+simulation study (\cref{sec:simulation}) evaluates EM estimation, surge attribution, the
+boundary test, the thinning correction and a plug-in alert, but not the block tests, the
+placebo calibration or the selection and decision rules of the plan. These must first pass
+a synthetic dry run (V4).
 
-\subsection{Candidate pilot}\label{sec:plan-pilot}
+\paragraph{Data and design.} The candidate pilot is the New York City Police Department's
+hate-crime file \citep{nypdhate}, restricted to anti-Jewish records from 2019 onwards, with
+the five boroughs as offline streams and the final 12 months as a hold-out test period
+(\cref{sec:plan-pilot}). The design is chosen on data availability alone. If day-level
+occurrence dates can be obtained under a data-use agreement, the model is fitted to them
+(Design A). Otherwise it is fitted to record-creation dates as a report-time process, with
+an explicit delay distribution and the occurrence month as a constraint (Design B). Online,
+ADL and CST streams are conditional on access being confirmed.
 
-\paragraph{Setting.}
-The candidate pilot is New York City, using the NYPD hate-crime file
-described in \cref{sec:data-incidents} \citep{nypdhate}. We restrict it
-to records whose bias motive is \texttt{ANTI-JEWISH} and use the period from
-2019 onwards. The offline streams $k$ are the five boroughs. Sparse streams
-are handled by shrinkage on $\Amat$ (\cref{sec:estimation}), not by merging
-streams on the basis of observed counts, which would let outcome data shape
-the model. The offence category serves as a mark in a secondary analysis.
-The final 12 months of data available at the freeze date form the hold-out
-test period, and all earlier data form the training period.
+\paragraph{Estimands.} (E1) The branching matrix $\Amat$, with $\spr(\Amat)$ and $\Mmat$,
+on the recorded scale first and thinning-corrected alongside. (E2) The surge decomposition
+$B_k+D_k+C_k$ of \cref{thm:attribution} for every pre-registered event at $H=14$ days, with
+$7$ and $28$ days as secondary horizons, and the online-channel share where online streams
+are included. (E3) Alert performance with window $\Delta_{\mathrm a}=7$ days against a
+background-only model and a persistence rule, at cost ratios agreed with
+community-security partners (\cref{sec:plan-estimands}).
 
-\paragraph{Two designs, chosen before outcome data are seen.}
-The NYPD file records the month of occurrence and the day of record creation
-(\cref{sec:data-incidents}). The design is chosen on data availability
-alone:
-\begin{enumerate}[(A)]
-  \item \emph{Design A} (conditional): if day-level occurrence dates can be
-  obtained under a data-use agreement, the model is fitted to occurrence
-  days, with within-day ties handled as in \cref{sec:data-needs}.
-  \item \emph{Design B} (default): the model is fitted to record-creation
-  dates, treated as a report-time process. The occurrence month enters as an
-  interval constraint on each delay, and the delay distribution is modelled
-  explicitly (\cref{sec:data-delays}). Contagion parameters then describe the
-  report-time process, and sensitivity to the delay model is analysis~S4.
-\end{enumerate}
+\paragraph{Events.} The event list is fixed blind to incident data by the procedure of
+\cref{sec:data-events}: classes defined by type, a salience index computed from event data
+alone with a threshold that yields 10 to 30 events, independent coding by two coders without
+access to incident data, and a hashed freeze before incident data are loaded
+(\cref{sec:plan-events}).
 
-\paragraph{Additional streams.}
-Three further sources are conditional on access being confirmed during the
-feasibility stage: (i) a classifier-based online volume series
-(\cref{sec:data-online}); (ii) an ADL stream, if its export provides
-day-level dates; and (iii) a CST stream as an international replication. A
-national NIBRS analysis of anti-Jewish incidents is retrospective only,
-because of the release lag (\cref{sec:data-incidents}). If a conditional
-stream is unavailable it is dropped, and the primary analysis is unaffected.
+\paragraph{Models and tests.} The models are nested: background only (M0), plus shocks
+(M1), self-excitation (M2), cross-borough excitation (M3) and online$\leftrightarrow$offline
+blocks (M4). Each block of $\Amat$ has one common exponential decay, and the background is a
+cubic B-spline with knot spacing $h_b=60$ days plus day-of-week and holiday effects. A step
+is taken only if its block test rejects at level $0.05$ and the out-of-sample log score
+improves. A block's decay is not identified when all its entries vanish, so each block test
+uses the sup-LR statistic \eqref{eq:est-suplr} over nine decays with half-lives from $0.5$
+to $21$ days, referred to a parametric bootstrap with $B=499$ replicates from the null fit.
+The block tests are applied in a fixed sequence. Entry-level tests within the accepted
+blocks form one Holm family at level $0.05$. If the dry run shows a block test to be too
+slow or oversized, registered fallbacks apply (\cref{sec:plan-models}).
 
-\paragraph{Feasibility gates.}
-Before registration we will: confirm the data dictionaries and archive the
-data vintages (F1); choose between Designs A and B (F2); record the
-licence terms of the event sources (F3); confirm or abandon the online
-streams (F4); and obtain ethics approval (F5; \cref{sec:ethics}).
-
-\subsection{Primary estimands}\label{sec:plan-estimands}
-
-\begin{enumerate}[E1.]
-  \item \emph{Branching matrix.} The matrix $\Amat=[\alpha_{kj}]$ for the
-  recorded streams has three parts: the diagonal $\alpha_{kk}$
-  (within-borough self-excitation); the off-diagonal offline entries
-  (cross-borough excitation); and, when online streams are included, the
-  online$\to$offline and offline$\to$online blocks. We report each entry
-  with its interval, together with $\spr(\Amat)$ and
-  $\Mmat=(\Imat-\Amat)^{-1}$. Estimates are reported on the recorded scale
-  first. Thinning-corrected values (\cref{thm:thinning}) are reported
-  alongside and labelled as model-based (\cref{sec:data-thinning}).
-  \item \emph{Surge decomposition.} For each pre-registered event $e$ and
-  stream $k$ we report the decomposition $\E[N_k(\tau_e,\tau_e+H]] =
-  B_k + D_k + C_k$ of \cref{thm:attribution} and, where online streams are
-  included, the online$\to$offline spillover share. The primary horizon is
-  $H=14$ days, with $H\in\{7,28\}$ as secondary horizons. Results are
-  summarised by event class. Event-level results appear in an appendix under
-  neutral identifiers (\cref{sec:plan-events}).
-  \item \emph{Alert performance.} We evaluate the rule of \cref{thm:alert}
-  and \cref{alg:alert}, with window $\Delta_{\mathrm a}=7$ days. For each stream the
-  surge threshold $c$ is the 95th percentile of the training-period
-  distribution of 7-day counts. The cost ratio $c_{\mathrm{miss}}/c_{\mathrm{FA}}$
-  is agreed with community-security partners before registration, with
-  $\{2,5,10\}$ as the default grid. Metrics are the hit rate, false-alarm
-  rate, realised cost and the Brier and log scores for the exceedance event.
-  Two baselines serve as comparators: the background-only model M0 and a
-  persistence rule that raises an alert when the previous window exceeded
-  $c$.
-\end{enumerate}
-Secondary estimands are the kernel time scales, the class-level shock
-loadings $\beta_k$ and the seasonal components of $\mu_k(t)$.
-
-\subsection{Pre-specified external events}\label{sec:plan-events}
-
-The event list is fixed by the following procedure. Every step is completed
-before the analysis team loads any incident data for the study period.
-\begin{enumerate}[1.]
-  \item \emph{Classes.} Event classes are defined by type: (a) onset or
-  major escalation of armed conflict; (b) terrorist or other mass-casualty
-  attacks; (c) high-profile public statements by public officials or other
-  prominent figures. The operational definitions are applied identically
-  whatever the location, the parties, the perpetrators or the victims. We do
-  not select events by their presumed relevance to antisemitism. Relevance
-  is estimated through the loadings $\beta_k$, and events that are
-  irrelevant to the outcome should receive loadings near zero. A secondary
-  list restricts the pool to events whose coverage matches a keyword list
-  that is fixed and deposited in advance.
-  \item \emph{Salience threshold.} For each candidate event, a salience
-  index is computed from the event datasets alone
-  (\cref{sec:data-events}). It is the coverage attributed to the event over
-  $[\tau_e,\tau_e+2\text{ days}]$, divided by the median daily coverage over
-  the preceding 365 days. An event enters the list if its index exceeds a
-  threshold $s^\star$. The threshold is set, using event data only, so that
-  the list contains between 10 and 30 events over the study period. The
-  size $S_e$ is the logarithm of the index.
-  \item \emph{Blind coding.} Two coders independently review the candidates
-  above the threshold. They merge duplicates, assign each event to a class
-  and set $\tau_e$ to the time of first public report in the pilot city's
-  time zone, to the day (or the hour under Design A). The coders have no
-  access to incident data, which a separate data custodian holds until the
-  freeze. Agreement is reported as Cohen's $\kappa$ for class and as the
-  share of $\tau_e$ that agree to within one day. A third coder resolves
-  disagreements. Events less than 48 hours apart are merged into a single
-  shock at the earlier time.
-  \item \emph{Freeze.} The list ($\tau_e$, class, $S_e$, source identifiers)
-  is written to a file. The file's SHA-256 hash is posted with the
-  registration and the file is deposited with the registry. Events after the
-  freeze, which are needed for prospective evaluation, are coded under the
-  same rules within seven days and appended with time-stamped hashes.
-  \item \emph{Neutral identifiers.} Each event is reported by class and
-  date. Descriptions follow the conventions of \cref{sec:ethics}.
-\end{enumerate}
-
-\subsection{Model hierarchy and selection rules}\label{sec:plan-models}
-
-The models are nested:
-\begin{enumerate}
-  \item[M0] Background only: $\mu_k(t)=\exp(B(t)^\top\theta_k)$. The basis
-  $B$ is a cubic B-spline in calendar time with one knot per $K_b=60$ days,
-  plus day-of-week effects and indicators for a holiday calendar fixed in
-  advance.
-  \item[M1] M0 plus shocks $\sum_e\beta_k S_e\psi_k(t-\tau_e)$, with an
-  exponential response kernel $\psi_k$; the loading $\beta_k$ and the
-  kernel are specific to each stream and shared by all events of a class.
-  \item[M2] M1 plus self-excitation (diagonal $\Amat$).
-  \item[M3] M2 plus cross-stream offline excitation (the full offline block
-  of $\Amat$).
-  \item[M4] M3 plus online$\leftrightarrow$offline blocks, when online
-  streams are available.
-\end{enumerate}
-The kernels are exponential, with a common decay rate within each block. We
-estimate by maximum likelihood via EM (\cref{alg:em}), with parametric
-bootstrap intervals from 500 replicates. A Bayesian fit with shrinkage on
-$\Amat$ (\cref{sec:estimation}) is co-primary for M3 and M4. Moving from
-$\mathrm{M}j$ to $\mathrm{M}(j{+}1)$ requires both of the following:
-\begin{enumerate}[(a)]
-  \item the boundary-corrected likelihood-ratio test of \cref{prop:lrt}
-  \citep{self1987} rejects at level $0.05$. The decay rate is not
-  identified when $\alpha_{kj}=0$, so the test follows the treatment in
-  \cref{sec:estimation} \citep{davies1987}. Off-diagonal entries are tested
-  individually with a Holm correction at family-wise level $0.05$;
-  \item the out-of-sample log score improves.
-\end{enumerate}
-The reported model is the largest model that meets both criteria. Estimates
-from every model in the hierarchy are reported as well.
-
-\subsection{Sensitivity analyses}\label{sec:plan-sens}
-
-\begin{enumerate}[S1.]
-  \item \emph{Background flexibility.} We vary
-  $K_b\in\{30,60,120,365\}$ days and also fit a random-walk log-background.
-  A misspecified, too rigid background produces spurious contagion
-  (\cref{thm:spurious}), and second-order structure cannot settle the
-  question (\cref{thm:equiv}). Self-excitation that vanishes under a more
-  flexible background while goodness of fit remains acceptable is reported
-  as not robustly distinguishable from background variation. An overly
-  flexible background can absorb genuine contagion. In the simulation study a
-  spline background removed the spurious contagion of slow regime switches but
-  not that of fast unrecorded shocks (\cref{sec:sim-spurious}); how much
-  genuine contagion it absorbs was not studied and is checked in the
-  synthetic dry run (V4).
-  \item \emph{Thinning.} We use (a) posterior draws of $p_k$ from the
-  companion paper, mapped to streams as in \cref{sec:data-thinning}; (b) a
-  grid $p_k\in\{0.1,0.25,0.5,0.75,1\}$; and (c) salience-dependent recording,
-  $p_k(t)=p_k\{1+\varepsilon\sum_e\psi(t-\tau_e)\}$ with
-  $\varepsilon\in\{0,0.25,0.5,1\}$ (capped at one), which violates the
-  independence condition of \cref{thm:thinning}. In addition, (d) known
-  recording breaks, such as reporting-system transitions, scope changes and
-  interrupted referral feeds (\cref{sec:data-incidents}), enter $\mu_k(t)$
-  as step indicators, and results are reported with and without the
-  affected periods.
-  \item \emph{Kernel family.} We compare exponential, gamma, power-law and
-  nonparametric (histogram) kernels \citep{marsan2008}.
-  \item \emph{Delay distribution.} Under Design B we fit the delay
-  distribution in three versions: estimated from the month and
-  record-creation bounds; with its scale shifted by $\pm50\%$; and with a
-  heavy-tailed (log-normal) form. We compare the report-time analysis with
-  an occurrence-month aggregate analysis. Nowcast corrections follow
-  \cref{prop:nowcast}.
-  \item \emph{Event list.} We halve and double $s^\star$, drop each event in
-  turn, compare class-specific and pooled loadings, and vary the shock
-  kernel $\psi$.
-  \item \emph{Spatial resolution.} We compare boroughs with patrol boroughs.
-  \item \emph{Online measurement error.} We compare uncorrected and corrected
-  series (\cref{eq:data-classerr}), with period-specific error rates and
-  propagated uncertainty.
-  \item \emph{Ties.} We compare at least 20 within-day randomisations with
-  the discrete-time INAR fit (\cref{eq:inar}).
-\end{enumerate}
-
-\subsection{Validation}\label{sec:plan-validation}
-
-\begin{enumerate}[V1.]
-  \item \emph{Goodness of fit.} Following \citet{brown2002}, we apply the
-  time-rescaling theorem (\cref{prop:rescaling}) stream by stream: a
-  Kolmogorov--Smirnov test on rescaled inter-event times, with times
-  randomised within the recorded resolution. Because the parameters are
-  estimated, the reference distribution is obtained by parametric
-  bootstrap.
-  \item \emph{Out-of-sample performance.} We compute log scores for daily
-  counts \citep{gneiting2007} and randomised PIT histograms for calibration
-  \citep{dawid1984,gneiting2007b}, using rolling-origin one-step and
-  $\Delta_{\mathrm a}$-step forecasts over the test period.
-  \item \emph{Placebo shocks.} Placebo calibration is done for one event
-  class at a time (\cref{sec:est-placebo}). For each class we draw 1{,}000
-  placebo calendars with the same number of events and the same sizes as the
-  real class. Their dates are drawn uniformly from days off the holiday
-  calendar, with the 48-hour merging rule of \cref{sec:plan-events}, and
-  without reference to the real dates of that class. The base model is the
-  selected model with that class removed. The real class and each placebo
-  calendar are added to the base model in turn, as a shock class, and the
-  same statistics are computed for all of them. The rejection frequency of the
-  placebo loading tests at nominal level $0.05$ is the empirical
-  false-positive rate of the shock test. The rank of each real-event direct
-  component $D_k$ among its placebo counterparts is reported (\cref{lem:est-placebo}). If the empirical false-positive rate
-  exceeds $0.10$, inference on shocks uses the placebo distribution in place
-  of the asymptotic reference.
-  \item \emph{Synthetic dry run.} Before any real data are loaded, the full
-  pipeline is run on synthetic data generated as in \cref{sec:simulation},
-  with parameters spanning the range considered plausible, to check
-  interval coverage and the selection rules.
-\end{enumerate}
-
-\subsection{Decision rules}\label{sec:plan-decisions}
-
-\begin{enumerate}[D1.]
-  \item \emph{Self-excitation} in stream $k$ is claimed only if: the test of
-  $\alpha_{kk}=0$ rejects after the Holm correction; the 95\% interval for
-  $\alpha_{kk}$ excludes zero under the most flexible background in S1;
-  goodness of fit (V1) is not rejected at level $0.01$; and the placebo
-  false-positive rate (V3) is at most $0.10$. Otherwise we report that
-  self-excitation is not distinguishable from background variation at the
-  available resolution.
-  \item \emph{Cross-stream and online$\to$offline excitation} are claimed
-  under the same criteria applied to $\alpha_{kj}$. They are described as
-  Granger-type predictive dependence (\cref{prop:granger}) and never as
-  causation.
-  \item \emph{Surge decompositions} are reported for every pre-registered
-  event, whatever its size or significance. A surge is described as
-  predominantly due to contagion only if the 95\% interval for
-  $C_k/(D_k+C_k)$ lies above $0.5$ under the primary model and under the
-  S1 and S2 variants.
-  \item \emph{Thinning-corrected} branching ratios are never reported
-  without the $p_k$ used and the S2 range.
-  \item \emph{Alerts} are recommended for operational use with partners only
-  if, in the test period, the rule's realised cost is lower than that of
-  both baselines, with a bootstrap 95\% interval for the difference that
-  excludes zero, and the PIT shows no marked miscalibration. Otherwise the
-  alert analysis is reported as a research result only.
-  \item \emph{Null results and deviations} are reported in full.
-\end{enumerate}
-
-\subsection{Replication package}\label{sec:plan-replication}
-
-The package will contain:
-\begin{enumerate}[(i)]
-  \item the estimation and simulation code with a pinned environment;
-  \item the frozen event list and its hash;
-  \item acquisition scripts with dataset identifiers, vintages, download
-  dates and SHA-256 checksums;
-  \item derived counts by stream, at the resolutions and subject to the
-  small-cell rules of \cref{sec:ethics-irb};
-  \item for restricted streams (platform or partner data), the code together
-  with a synthetic dataset of the same structure;
-  \item all results as machine-readable files, with scripts that regenerate
-  every table and figure; and
-  \item the deviations log.
-\end{enumerate}
-Raw records are redistributed only where the provider's terms permit.
-
-\subsection{Timeline}\label{sec:plan-timeline}
-
-\Cref{tab:plan-timeline} gives the timeline in months from the start of the
-feasibility stage.
-
-\begin{table}[t]
-\centering
-\caption{Timeline of the pre-registered analysis, in months from the start
-of the feasibility stage. Each gate must be passed before the next phase
-begins.}
-\label{tab:plan-timeline}
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}l l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{4.2cm}@{}}
-\toprule
-Phase & Months & Activities & Gate / output \\
-\midrule
-P0 Feasibility & 0--2 & Confirm data dictionaries and access terms (F1--F4); choose Design A or B; submit for ethics review & Ethics approval; design fixed \\
-P1 Events and registration & 2--3 & Blind coding; freeze event list; register plan & Time-stamped registration; hash deposited \\
-P2 Dry run & 3 & Full pipeline on synthetic data (V4) & Coverage and selection rules checked \\
-P3 Training fit & 4--6 & Fit M0--M4; apply selection rules & Selected model \\
-P4 Test evaluation & 7 & V1--V3; back-test of alerts & Out-of-sample report \\
-P5 Sensitivity & 7--9 & S1--S8 & Robustness tables \\
-P6 Reporting & 9--11 & Paper; replication package; partner debrief under \cref{sec:ethics} & Public release \\
-P7 Prospective & 12--24 & Prospective alert evaluation under embargo & Embargoed evaluation report \\
-\bottomrule
-\end{tabularx}
-\end{table}
+\paragraph{Sensitivity, validation and decisions.} Eight sensitivity analyses vary the
+background flexibility ($h_b\in\{30,60,120,365\}$ days), the recording model, the kernel
+family, the delay model, the event list, the spatial resolution, the correction for online
+measurement error and the treatment of ties (\cref{sec:plan-sens}). Validation uses
+time-rescaling goodness of fit with a bootstrap reference (V1), out-of-sample scores and PIT
+histograms (V2), placebo calendars whose dates are drawn from \emph{all} days of the
+training period, so that the randomisation hypothesis of \cref{lem:est-placebo} can hold
+(V3), and the synthetic dry run (V4) (\cref{sec:plan-validation}). Contagion in a stream is
+claimed only if its Holm-adjusted test rejects, its interval excludes zero under the most
+flexible background, goodness of fit is not rejected and the placebo false-positive rate is
+at most $0.10$. Cross-stream effects are described as Granger-type predictive dependence,
+never as causation. Alerts are recommended for operational use only if they beat both
+baselines in realised cost (\cref{sec:plan-decisions}).
