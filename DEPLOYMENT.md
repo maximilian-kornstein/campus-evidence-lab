@@ -1,132 +1,30 @@
-# Deployment
+# Kornstein Lab deployment
 
-Campus Evidence Lab is a static site. The deployable artifact is `dist/`.
+The current implementation is shared on the **`rebrand/kornstein-ui-reset` handoff branch pending review**. It has not been merged into `main` or deployed. Subsequent visual implementation work stays local until reviewed.
 
-## Local Build
-
-```sh
-npm run build
-```
-
-The build runs:
-
-- data validation
-- content-safety QA
-- data-quality QA
-- record-hash integrity check
-- CSV generation
-- source audit generation
-- robots generation
-- release notes generation
-- event, school, and brief page generation
-- sitemap generation
-- site QA against the source tree
-- accessibility QA against the source tree
-- render QA against the source tree
-- static copy into `dist/`
-- site QA against `dist/`
-- accessibility QA against `dist/`
-- render QA against `dist/`
-
-## GitHub Pages
-
-GitHub Pages deployment is configured in `.github/workflows/pages.yml`.
-
-After the repository is pushed to GitHub:
-
-1. Open repository Settings -> Pages.
-2. Set source to GitHub Actions.
-3. Run the `Deploy GitHub Pages` workflow or push to `main`.
-
-The workflow runs `npm ci`, `npm run build`, uploads `dist/`, and deploys the verified static artifact.
-The workflow sets `SITE_URL` to the GitHub Pages project URL so `sitemap.xml`, `rss.xml`, and `robots.txt` point to the first public deployment.
-
-If `origin` is not configured yet, create the public GitHub repository first, then publish with:
-
-```sh
-npm run publish:github -- <repository-url>
-```
-
-If `origin` already points to the intended repository, use:
-
-```sh
-npm run publish:github
-```
-
-## Cloudflare Pages
-
-This project is configured for Cloudflare Pages.
-
-```sh
-npx wrangler login
-npm run launch:preflight
-npm run deploy:cloudflare
-```
-
-`launch:preflight` reports missing launch prerequisites, including a missing GitHub remote and a missing or failed live source audit. Wrangler login is only required for direct Cloudflare CLI deployment.
-
-Before public launch, run the advisory live source audit once from a networked local environment:
-
-```sh
-npm run audit:sources:live
-npm run audit:sources:live:check
-```
-
-This writes `data/source-audit-live.json`, which is included in `dist/` as a public proof artifact. CI keeps the deterministic metadata audit in `data/source-audit.json` and does not call external publishers.
-
-The deploy command runs `npm run build` first, then deploys `dist/`:
-
-```sh
-npx wrangler pages deploy dist --project-name campus-evidence-lab
-```
-
-Set `SITE_URL` when deploying to a non-default public URL:
-
-```sh
-SITE_URL=https://<public-site-url> npm run build
-```
-
-After deployment, verify the public artifact:
-
-```sh
-npm run verify:public -- <public-site-url>
-```
-
-## GitHub Integration
-
-Use these settings for a Cloudflare Pages Git integration:
-
-- Build command: `npm run build`
-- Build output directory: `dist`
-- Node version: `22`
-
-## GitHub Actions
-
-The repository workflow runs the same release gate as deployment:
+## Build
 
 ```sh
 npm ci
-npm run build
+npm run check
 ```
 
-Use `npm ci` in CI so the locked `jsdom` render-QA dependency is installed exactly from `package-lock.json`.
+Use Node.js 22 or later. Publish only `dist/`, never the repository root. The build clears stale output and copies an explicit list of pages, artwork, fonts, reader code, PDFs, PDF renders, and security headers. Legacy archive/data generators are not part of the active build.
 
-## Deployment Gate
+Optional `SITE_URL` generates a sitemap containing the seven public content routes. Reader and 404 pages are noindex. Use the real deployment base URL, not an invented Kornstein hostname.
 
-Do not deploy if `npm run build` fails. The QA gate checks:
+PDF outputs are committed: deployment does not require TeX. To regenerate them locally, use `node scripts/build-papers.mjs` with `pdflatex` and `pdftocairo` installed, then run the normal checks.
 
-- minimum `100` event records
-- generated event pages
-- generated school pages
-- generated brief pages
-- generated source pages
-- sitemap coverage
-- required data downloads
-- source audit coverage
-- manifest totals
-- HTTPS source URLs
-- internal static links
-- accessibility and HTML semantics
-- dynamic rendering for dashboard, events, schools, briefs, sources, quality, downloads, and submit
-- content safety checks for attribution, privacy, and neutral language
-- data quality checks for derived fields, dates, brief coverage, and community coverage
+## Existing hosting
+
+The existing GitHub Pages workflow deploys `dist/` when changes reach `main` or the workflow is manually dispatched. Its existing domain is retained. No DNS or hosting ownership change is implied by this rebrand.
+
+Cloudflare's existing `wrangler.toml` also points to `dist/`. The `_headers` rules apply there; GitHub Pages does not support that file's header directives.
+
+Retired routes return the custom 404 page. They do not redirect to a successful generic page. The site uses root-relative URLs and is intended for the existing root-domain deployment; a project-subpath host would require a base-path adaptation.
+
+## Acceptance
+
+Browser screenshots at the reference desktop size and mobile sizes must be compared before marking visual acceptance complete. That verification is currently blocked by unavailable browser tools, as recorded in [docs/ui-implementation.md](docs/ui-implementation.md).
+
+Existing externally deployed Signals workers are separate services. These source and build changes do not shut them down or change their schedules.

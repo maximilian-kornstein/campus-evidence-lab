@@ -1,100 +1,57 @@
-# Campus Evidence Lab
+# Kornstein Lab
 
-Campus Evidence Lab is a static-first public evidence archive for campus civil rights records.
+For a local session continuing the visual goal, start with [LOCAL_SESSION.md](LOCAL_SESSION.md), the [approved mockup gallery](docs/design-references/README.md), and [the ready-to-paste goal prompt](LOCAL_GOAL_PROMPT.txt).
 
-The current foundation includes:
+Clone the `rebrand/kornstein-ui-reset` branch to retrieve this implementation. The default `main` branch still contains the earlier site pending review; the handoff branch has not been deployed.
 
-- structured sample data
-- data schemas
-- methodology notes
-- record and snapshot hashing
-- archived snapshot manifests
-- generated snapshot index
-- validation scripts
-- CSV export generation
-- denormalized research exports with joined school, source, and event-reference fields
-- public changelog generation
-- generated release notes for the current dataset snapshot
-- public launch preflight checks and launch checklist
-- RSS feed generation for briefs
-- generated event detail pages
-- public source detail pages
-- public quality and review workflow metrics
-- correction and review-log data artifacts
-- flagship report and gold v1 review packet artifacts
-- generated source-audit artifact for provenance review
-- content-safety QA for attribution, privacy, and neutral language
-- data-quality QA for cross-file consistency and release thresholds
-- accessibility QA for document semantics, tables, links, and form labels
-- GitHub issue templates for source submissions, corrections, duplicate reports, and school metadata corrections
-- reviewer checklist issue template for documented methodology, source, classification, research-guide, and data-export review
-- public trust packet, acknowledgment status page, outreach draft, and partner acknowledgment policy
-- GitHub Actions data validation workflow
-- GitHub Pages deployment workflow
-- static event sitemap
-- Cloudflare Pages configuration
-- public About and License pages
-- severe minimalist dashboard, event database, school, brief, source, quality, methodology, impact, contributor guide, research guide, submit, and data pages
-- public flagship report and gold v1 review packet pages
-- static-first usability surfaces for filtered exports, shareable searches, school dossiers, research citation packets, and reviewer queues
-- minimal Solidity snapshot registry for optional public dataset-hash attestations
-- analysis briefs for responsible use, source availability limits, ED data limits, and reviewer-network readiness
+Kornstein Lab for Antisemitism Research focuses on quantitative methods and algorithms for studying antisemitism.
 
-Run locally:
+This local implementation follows the approved homepage, Research, Data & Methods, About, three paper-detail mockups, and LaTeX PDF reader. The paper content is explicitly a set of research proposals, not completed findings. The retired public-records UI remains excluded from the site.
+
+## Development
+
+The website requires Node.js 22 or later and no third-party JavaScript dependencies. Fonts and artwork are served locally.
 
 ```sh
-npm run prepare:data
 npm run check
 npm run dev
 ```
 
-Then open `http://localhost:5173`.
+`check` builds the site, validates routes/assets/metadata, and runs the integration tests. `dev` rebuilds and serves only `dist/` at `http://localhost:5173`. Restart it after editing source files. Set `PORT` to change the local port.
 
-Build for deployment:
+## Pages
 
-```sh
-npm run build
-```
+- `/`: homepage
+- `/research/`: research index
+- `/methods/`: Data & Methods
+- `/about/`: About
+- `/research/measurement/`: Measuring antisemitism in online discourse
+- `/research/detection/`: Evaluating algorithms for antisemitism detection
+- `/research/narratives/`: Mapping the spread of antisemitic narratives
+- `/reader/?paper=measurement`: PDF reader; also accepts `detection` and `narratives`
 
-The deployable output is `dist/`. See [DEPLOYMENT.md](DEPLOYMENT.md).
+The reader displays SVG pages rendered directly from the real, downloadable LaTeX PDFs. Zoom, download, paper selection, and return navigation work locally. A screen-reader transcript accompanies each preview; the PDF itself contains selectable text. The one-page proposals intentionally disable previous/next page controls.
 
-Run the local Solidity registry tests:
+## Papers
 
-```sh
-npm run test:contracts
-```
-
-The registry is documented in [docs/snapshot-registry.md](docs/snapshot-registry.md). No mainnet deployment is included or authorized by default.
-
-Before public launch, run:
-
-```sh
-npm run launch:preflight
-```
-
-For the public proof package, refresh the advisory live URL audit:
+Sources are in `papers/`, with committed PDF and SVG output in `pdfs/`. Normal site builds do not require TeX. To rebuild the papers after editing the sources:
 
 ```sh
-npm run audit:sources:live
-npm run audit:sources:live:check
+node scripts/build-papers.mjs
 ```
 
-To publish to a new public GitHub repository after creating it:
+This requires `pdflatex` and `pdftocairo`. See [papers/README.md](papers/README.md).
 
-```sh
-npm run publish:github -- <repository-url>
-```
+## Visual verification
 
-After the site is live:
+The eight approved references are retained in `docs/design-references/`. Layout measurements, responsive styling, and static checks are implemented, but **browser screenshot comparison is still blocked because this session has no browser-control or screenshot tool**. Do not describe the UI as pixel-perfect or visually accepted until that comparison is performed. See [the verification handoff](docs/ui-implementation.md).
 
-```sh
-npm run verify:public -- <public-site-url>
-```
+## Build boundary
 
-See [PUBLIC_LAUNCH.md](PUBLIC_LAUNCH.md) for the GitHub and Cloudflare launch checklist.
+Only the explicit files in `scripts/build-static.mjs` enter `dist/`. The build deletes stale output first. Historical data, backend utilities, old feeds, TeX sources, and design references are not published. Retired URLs return the 404 page. See [DEPLOYMENT.md](DEPLOYMENT.md).
 
-The current dataset is conservative and public-source only. It is meant to prove the workflow, interface, and review standards across a broader civil-rights schema before private submissions or broader automation are considered.
+In the full repository, the old package manifests remain as `package.legacy.json` and `package-lock.legacy.json` for historical reference. They are not active configuration. The portable local-session snapshot omits those manifests, the historical data/backend files, and Git history. Use the original repository's pre-reset history to recover the former archive application as a whole.
 
-Review operations are documented in [docs/review-workflow.md](docs/review-workflow.md). Content safety rules are documented in [docs/content-safety.md](docs/content-safety.md). Responsible public use is published at `/research-guide/`. The public codebook is published at `/codebook/`, coverage limits at `/coverage/`, task workflows at `/workflows/`, release replication at `/replicate/`, flagship findings at `/flagship/`, gold v1 review packets at `/gold-records/`, and credibility boundaries at `/credibility/`. The current public review state is published in `data/review-log.json`; correction outcomes are published in `data/corrections.json`.
+The removed Signals generation and activation workflows cannot regenerate site pages through active CI. Already deployed external services are separate and have not been modified. The manual distribution-withdrawal workflow is retained.
 
-Contribution standards are documented in [docs/contributing.md](docs/contributing.md). The public intake page can generate structured source, correction, duplicate, and school metadata packets for GitHub issue review.
+Licensing: [LICENSE.md](LICENSE.md), [DATA_LICENSE.md](DATA_LICENSE.md), and [Inter's OFL](assets/fonts/OFL.txt).

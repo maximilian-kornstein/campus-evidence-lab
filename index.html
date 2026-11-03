@@ -1,54 +1,55 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Evidence Lab</title>
-    <link rel="stylesheet" href="assets/styles.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Kornstein Lab for Antisemitism Research. Quantitative and algorithmic research on antisemitism.">
+    <meta name="theme-color" content="#faf8f6">
+    <title>Kornstein Lab — Antisemitism Research</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/styles.css">
   </head>
-  <body data-page="dashboard">
-    <header class="site-header">
-      <div class="site-header__inner">
-        <a class="brand" href="./">
-          <span class="brand__name">Campus Evidence Lab</span>
-          <span class="brand__tag">Public evidence infrastructure</span>
-        </a>
-        <nav class="nav" aria-label="Primary navigation">
-          <a href="./" data-nav="dashboard">Dashboard</a>
-          <a href="accountability-room/" data-nav="accountability">Accountability</a>
-          <a href="events/" data-nav="events">Events</a>
-          <a href="schools/" data-nav="schools">Schools</a>
-          <a href="briefs/" data-nav="briefs">Briefs</a>
-          <a href="signals/" data-nav="signals">Signals</a>
-          <a href="sources/" data-nav="sources">Sources</a>
-          <a href="quality/" data-nav="quality">Quality</a>
-          <a href="methodology/" data-nav="methodology">Methodology</a>
-          <a href="impact/" data-nav="impact">Impact</a>
-          <a href="guide/" data-nav="guide">Guide</a>
-          <a href="downloads/" data-nav="downloads">Data</a>
-          <a href="policies/" data-nav="policies">Policies</a>
-          <a href="protocol/" data-nav="protocol">Protocol</a>
-          <a href="submit/" data-nav="submit">Submit</a>
-          <a href="about/" data-nav="about">About</a>
-          <a href="license/" data-nav="license">License</a>
+  <body class="page-home">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="wordmark" href="/" aria-label="Kornstein Lab home">Kornstein Lab<span aria-hidden="true"></span></a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="/research/">Research</a>
+          <a href="/methods/">Data &amp; Methods</a>
+          <a href="/about/">About</a>
         </nav>
-      </div>
-    </header>
-    <main class="main">
-      <p class="page-kicker">Public evidence infrastructure</p>
-      <h1 class="page-title">Campus Evidence Lab</h1>
-      <p class="page-intro">Inspect 10,000 canonical public records and 150,000 accepted import-wave QA candidates across generated institution pages, source packets, imports, correction paths, and reproducible data artifacts.</p>
-      <p class="limit-line">No rankings. No safety scores. No legal findings.</p>
-      <div class="hero-actions" aria-label="Primary actions">
-        <a class="button-link button-link--primary" href="demo/">Take the 90-Second Demo</a>
-        <a class="button-link" href="accountability-room/">Accountability Room</a>
-        <a class="button-link" href="events/?focus=search">Search Records</a>
-        <a class="button-link" href="research-workspace/?focus=records&title=Campus%20Evidence%20Lab%20Reporting%20Packet&question=What%20public-source%20records%20support%20this%20reporting%20question%3F">Build Reporting Packet</a>
-        <a class="button-link" href="downloads/">Download Data</a>
-      </div>
-      <div id="dashboard-root" data-error-root></div>
-    </main>
-    <footer class="site-footer">Campus Evidence Lab / Public-source records / Import-wave QA / Corrections and right-of-reply</footer>
-    <script type="module" src="assets/app.js"></script>
+      </header>
+      <main id="main">
+        <section class="home-hero" aria-labelledby="page-title">
+          <h1 id="page-title">Quantitative and algorithmic<br class="desktop-break"> research on antisemitism<span class="period">.</span></h1>
+        </section>
+        <a class="featured-paper" href="/research/measurement/" aria-labelledby="featured-title">
+          <div class="paper-card__copy">
+            <h2 id="featured-title">Measuring antisemitism in online discourse</h2>
+            <span class="arrow-link" aria-hidden="true">→</span>
+          </div>
+          <div class="artwork artwork--orange" aria-hidden="true"></div>
+        </a>
+        <div class="paper-grid">
+          <a class="paper-card" href="/research/detection/" aria-labelledby="detection-title">
+            <div class="paper-card__copy">
+              <h2 id="detection-title">Evaluating algorithms for antisemitism detection</h2>
+              <span class="arrow-link" aria-hidden="true">→</span>
+            </div>
+            <div class="artwork artwork--lavender" aria-hidden="true"></div>
+          </a>
+          <a class="paper-card" href="/research/narratives/" aria-labelledby="narratives-title">
+            <div class="paper-card__copy">
+              <h2 id="narratives-title">Mapping the spread of antisemitic narratives</h2>
+              <span class="arrow-link" aria-hidden="true">→</span>
+            </div>
+            <div class="artwork artwork--sand" aria-hidden="true"></div>
+          </a>
+        </div>
+        <div class="all-research"><a class="text-link" href="/research/">All research <span aria-hidden="true">→</span></a></div>
+      </main>
+      <footer class="site-footer"><a class="site-footer__brand" href="/">Kornstein Lab</a></footer>
+    </div>
   </body>
 </html>

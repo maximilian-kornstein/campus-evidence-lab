@@ -1,0 +1,29 @@
+\input{style.tex}
+\begin{document}
+\papertitle{Evaluating algorithms for antisemitism detection}
+\begin{paperabstract}
+This proposed study evaluates how algorithms distinguish antisemitic expression from quotation, criticism, and other contextual uses. It examines classification errors, consistency, and performance across different kinds of text.
+\end{paperabstract}
+
+\section{Introduction}
+We propose a contextual evaluation of algorithms for detecting antisemitism. The aim is to compare model outputs with reviewed annotations and examine failure modes across linguistic settings.
+
+\section{Evaluation framework}
+An illustrative classification measure is
+\[
+  F_1=\frac{2PR}{P+R},\qquad
+  P=\frac{\mathrm{TP}}{\mathrm{TP}+\mathrm{FP}},\quad
+  R=\frac{\mathrm{TP}}{\mathrm{TP}+\mathrm{FN}}.
+\]
+Precision $P$ and recall $R$ summarize different error costs. We would report both with uncertainty and contextual error analysis, rather than rely on a single score. Undefined ratios require explicit handling.
+
+\section{Proposed methodology}
+\begin{methodlist}
+  \item Contextual annotation.
+  \item Algorithm benchmarking.
+  \item Error and robustness analysis.
+\end{methodlist}
+
+\section{Limitations}
+Annotation judgments and corpus selection may limit transfer across languages and contexts. Model performance remains to be measured; this proposal reports no benchmark results.
+\end{document}

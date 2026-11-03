@@ -25,7 +25,7 @@ jobs:
           node-version: "22"
           cache: "npm"
       - run: npm ci
-      - run: npm run build
+      - run: npm run check
         env:
           SITE_URL: https://campusevidencelab.org
       - uses: actions/configure-pages@v5
