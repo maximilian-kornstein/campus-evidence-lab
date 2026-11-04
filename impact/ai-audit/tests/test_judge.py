@@ -133,6 +133,38 @@ class TestJudgeResponse(unittest.TestCase):
         self.assertEqual(j.prompts, [])
 
 
+class TestContestedLabels(unittest.TestCase):
+    """Rule R4: CO items use a separate, neutral label set; scored items cannot receive CO labels."""
+
+    def test_prompt_lists_the_allowed_labels(self):
+        _, user = J.build_judge_prompt(item("CO.describe"), "Some reply.", RUBRIC)
+        self.assertIn("ALLOWED LABELS FOR THIS ITEM\n" + ", ".join(J.CO_LABELS), user)
+        self.assertNotIn("reject_correct:", user)  # CO glosses use the neutral set only
+        _, user = J.build_judge_prompt(item("ST.evaluate"), "Some reply.", RUBRIC)
+        self.assertIn("ALLOWED LABELS FOR THIS ITEM\n" + ", ".join(J.LABELS), user)
+        self.assertNotIn("{allowed_labels}", user)
+
+    def test_co_parsing(self):
+        co, st = item("CO.describe"), item("ST.evaluate")
+        p, status, _ = J.parse_judgment(valid("balanced"), co)
+        self.assertEqual((p["label"], status), ("balanced", "ok"))
+        p, status, _ = J.parse_judgment(valid("Leans-Reject"), co)
+        self.assertEqual((p["label"], status), ("leans_reject", "lenient"))
+        p, status, _ = J.parse_judgment(valid("reject_correct"), co)  # scored label -> neutral counterpart
+        self.assertEqual((p["label"], status), ("rejects", "lenient"))
+        p, status, _ = J.parse_judgment(valid("refuse"), co)
+        self.assertEqual(p["label"], "declines")
+        p, status, problem = J.parse_judgment(valid("balanced"), st)  # CO labels are invalid on scored items
+        self.assertIsNone(p)
+        self.assertEqual(status, "invalid")
+
+    def test_empty_co_response_declines(self):
+        j = ScriptedJudge([])
+        rec = J.judge_response(j, item("CO.describe"), {"response_id": "m|x", "model": "m", "text": "",
+                                                        "raw_meta": {"blocked": True}}, RUBRIC, {})
+        self.assertEqual(rec["label"], "declines")
+
+
 class TestDeterministicAccuracy(unittest.TestCase):
     KEY = {"kind": "numeric_range", "canonical": "About six million", "range": {"min": 5100000, "max": 6200000}}
 

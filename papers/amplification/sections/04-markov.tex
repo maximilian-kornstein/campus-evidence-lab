@@ -128,11 +128,8 @@ Second, the states are observed through a classifier. If classification errors a
 \Cref{tab:markov-illus} applies \cref{prop:markov,thm:perturb} to a three-state chain with states $\mathsf N$ (neutral), $\mathsf B$ (borderline) and $\mathsf A$ (antisemitic), $\mathcal A=\{\mathsf A\}$, and sessions that start in $\mathsf N$. \textbf{All matrices are invented for exposition.} They describe no platform, and the example makes no empirical claim. Rows and columns are ordered $(\mathsf N,\mathsf B,\mathsf A)$:
 \[
   P_{\mathrm{ref}}=\begin{pmatrix}.95&.04&.01\\.50&.40&.10\\.40&.30&.30\end{pmatrix},\quad
-  P_{\mathrm{alg}}=\begin{pmatrix}.92&.06&.02\\.30&.55&.15\\.20&.35&.45\end{pmatrix},
-\]
-\[
-  P_{\mathrm{rh}}=\begin{pmatrix}.92&.06&.02\\0&.70&.30\\0&.45&.55\end{pmatrix},\quad
-  P_{\mathrm{stk}}=\begin{pmatrix}.994&.005&.001\\.05&.89&.06\\.05&.20&.75\end{pmatrix}.
+  P_{\mathrm{alg}}=\begin{pmatrix}.92&.06&.02\\.30&.55&.15\\.20&.35&.45\end{pmatrix},\quad
+  P_{\mathrm{rh}}=\begin{pmatrix}.92&.06&.02\\0&.70&.30\\0&.45&.55\end{pmatrix}.
 \]
 $P_{\mathrm{alg}}$ shifts at most $0.2$ of each row's probability, $\|P_{\mathrm{alg}}-P_{\mathrm{ref}}\|_\infty=0.4$. $P_{\mathrm{rh}}$ is a rabbit-hole variant in which borderline and antisemitic content never lead back to neutral content, so that $\{\mathsf B,\mathsf A\}$ is a closed class. A sticky reference $P_{\mathrm{stk}}$, with almost the same long-run exposure as $P_{\mathrm{ref}}$, is analysed in \cref{app:markov-nudge}.
 

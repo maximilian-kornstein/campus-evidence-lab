@@ -20,6 +20,11 @@ a category every non-empty stratum gets at least min(3, stratum size), so rare l
 probabilities are recorded, and Se/Sp are estimated with inverse-probability weights, so they refer to
 the whole population of responses rather than to the over-sampled sample. Wilson intervals use the
 Kish effective sample size. The labeller sees neither the model's name nor the judge's label.
+
+Labeller wellbeing (docs/ETHICS.md section 6): the sample is shuffled so strata are interleaved, responses to
+trope, denial and symmetry items are blurred until the labeller chooses to show them, the form shows the per-session
+cap, and any item can be skipped (left unlabelled) and passed to a second labeller. Contested (CO) items are never
+sampled: they are not scored.
 """
 
 from __future__ import annotations
@@ -36,7 +41,7 @@ from collections import Counter, defaultdict
 
 from .items import CATEGORY_NAMES, load_items, load_json
 from .judge import ACCURACY, LABELS, load_judgments, render_conversation
-from .metrics import indicator, rg_metrics
+from .metrics import assert_co_excluded, in_pool, indicator, rg_metrics
 from .runio import (RESPONSES, VALIDATION, latest_by, load_manifest, now_iso, read_records, rel, resolve,
                     write_json)
 from .stats import wilson
@@ -44,6 +49,8 @@ from .stats import wilson
 SAMPLE_DIR = "validation"
 DEFAULT_N = 150
 MIN_PER_STRATUM = 3
+SESSION_CAP = 50  # responses per labelling session (docs/ETHICS.md section 6)
+SENSITIVE_PREFIXES = ("ST.", "CT.", "CR.", "SY.", "HF.denial_bait")  # blurred until the labeller opts to read
 CSV_FIELDS = ["sample_id", "category", "rubric_key", "item_id", "human_label", "human_accuracy", "notes"]
 
 
@@ -100,7 +107,7 @@ def allocate(strata_sizes: dict, n_total: int) -> dict:
 
 def draw_sample(judgments: list[dict], items: dict, n: int, seed: int) -> list[dict]:
     pop = [j for j in judgments if not j.get("judge_error") and j["item_id"] in items
-           and items[j["item_id"]].scored and j["category"] != "CO"]
+           and items[j["item_id"]].scored and items[j["item_id"]].category != "CO"]
     strata = defaultdict(list)
     for j in sorted(pop, key=lambda j: j["response_id"]):
         strata[(j["category"], j["label"])].append(j)
@@ -117,9 +124,27 @@ def draw_sample(judgments: list[dict], items: dict, n: int, seed: int) -> list[d
             sample.append({"judgment": j, "stratum": f"{key[0]}|{key[1]}", "stratum_size": len(strata[key]),
                            "n_sampled": k, "inclusion_prob": pi, "weight": 1 / pi})
     rng.shuffle(sample)  # present in random order so strata are not visible from position
+    sample = spread_worst(sample)
     for i, s in enumerate(sample, 1):
         s["sample_id"] = f"V{i:03d}"
     return sample
+
+
+def spread_worst(sample: list[dict], cap: int = SESSION_CAP) -> list[dict]:
+    """Interleave the over-sampled judge-'endorse' responses evenly through the (already shuffled) sample, so that no
+    labelling session of ``cap`` responses gets more than its share of the worst content (docs/ETHICS.md section 6).
+    Blinding is unaffected: the order carries no label the labeller can see."""
+    worst = [x for x in sample if x["stratum"].endswith("|endorse")]
+    rest = [x for x in sample if not x["stratum"].endswith("|endorse")]
+    if not worst or not rest:
+        return sample
+    out, step = [], len(sample) / len(worst)
+    slots = {int(i * step + step / 2) for i in range(len(worst))}
+    wi, ri = iter(worst), iter(rest)
+    for pos in range(len(sample)):
+        nxt = next(wi, None) if pos in slots else next(ri, None)
+        out.append(nxt if nxt is not None else next(ri, None) or next(wi))
+    return out
 
 
 def export(run_dir: pathlib.Path, n: int = DEFAULT_N, seed: int = 7, log=print) -> dict:
@@ -135,7 +160,8 @@ def export(run_dir: pathlib.Path, n: int = DEFAULT_N, seed: int = 7, log=print) 
         it = items[j["item_id"]]
         resp = responses[j["response_id"]]
         rows.append({"sample_id": s["sample_id"], "category": it.category, "rubric_key": it.rubric_key,
-                     "item_id": it.id, "conversation": render_conversation(it), "response": resp.get("text") or "",
+                     "item_id": it.id, "sensitive": it.rubric_key.startswith(SENSITIVE_PREFIXES),
+                     "conversation": render_conversation(it), "response": resp.get("text") or "",
                      "target_claim": it.target_claim or "", "expected_behavior": it.expected_behavior,
                      "accuracy_key": it.accuracy_key or None})
         key[s["sample_id"]] = {"response_id": j["response_id"], "model": j["model"], "item_id": it.id,
@@ -227,6 +253,7 @@ def kappa(pairs: list[tuple[str, str]]) -> float | None:
 
 def import_labels(run_dir: pathlib.Path, labels_path: pathlib.Path, simulated: bool = False, log=print) -> dict:
     manifest, rubric, items, judgments, responses = _run_context(run_dir)
+    assert_co_excluded(rubric)
     key = load_json(run_dir / SAMPLE_DIR / "sample_key.json")["samples"]
     labels = read_labels(labels_path)
     jby = {j["response_id"]: j for j in judgments}
@@ -247,7 +274,7 @@ def import_labels(run_dir: pathlib.Path, labels_path: pathlib.Path, simulated: b
         keys = set(spec["rubric_keys"])
         by_cat = defaultdict(list)
         for sid, k, j, lab, it in rows:
-            if it.rubric_key not in keys:
+            if it.rubric_key not in keys or not in_pool(spec, it):
                 continue
             if spec["indicator"]["type"].startswith("accuracy") and lab["accuracy"] is None and it.accuracy_key:
                 continue  # accuracy not labelled
@@ -316,7 +343,8 @@ def simulate(run_dir: pathlib.Path, n: int = DEFAULT_N, seed: int = 7, log=print
             if not it.accuracy_key:
                 acc = "not_applicable"
             else:
-                acc = "correct" if intended in ("correct", "reject_correct") else "incorrect"
+                acc = "correct" if intended in ("correct", "reject_correct") or (
+                    it.category == "LC" and intended == "neutral") else "incorrect"
             w.writerow({"sample_id": sid, "category": it.category, "rubric_key": it.rubric_key, "item_id": it.id,
                         "human_label": label, "human_accuracy": acc, "notes": "SIMULATED (mock demo)"})
     return import_labels(run_dir, path, simulated=True, log=log)
@@ -351,6 +379,7 @@ fieldset{border:1px solid var(--line);border-radius:8px;margin:10px 0;padding:8p
 .opt{display:block;padding:4px 0}.gloss{color:var(--ink2);font-size:.875rem}
 textarea,select{font:inherit;width:100%;padding:6px;border-radius:6px;border:1px solid var(--line);
 background:var(--bg);color:var(--ink)}details{margin:8px 0}
+.resp.veiled pre{filter:blur(6px);user-select:none}.resp .show{margin:6px 0}
 """
 
 FORM_JS = r"""
@@ -364,7 +393,8 @@ if(a)a.classList.toggle('done',!!(state[r.sample_id]&&state[r.sample_id].label))
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function render(){const root=document.getElementById('items');
 DATA.rows.forEach((r,i)=>{const s=state[r.sample_id]||{};const g=DATA.glosses[r.rubric_key]||{};
-const opts=DATA.labels.map(l=>'<label class="opt"><input type="radio" name="l-'+r.sample_id+'" value="'+l+'"'+
+const labs=DATA.labelsets[r.rubric_key]||DATA.labels;const veil=r.sensitive&&!s.shown;
+const opts=labs.map(l=>'<label class="opt"><input type="radio" name="l-'+r.sample_id+'" value="'+l+'"'+
 (s.label===l?' checked':'')+'> <b>'+l+'</b> <span class="gloss">'+esc(g[l]||'')+'</span></label>').join('');
 const acc=r.accuracy_key?'<label>Accuracy against the key <select data-acc="'+r.sample_id+'"><option value="">(choose)</option>'+
 DATA.accuracy.map(a=>'<option'+(s.accuracy===a?' selected':'')+'>'+a+'</option>').join('')+'</select></label>'+
@@ -375,7 +405,9 @@ el.innerHTML='<h2 class="meta"><span class="chip">'+esc(r.sample_id)+'</span><sp
 (r.target_claim?'<p><b>Target claim:</b> '+esc(r.target_claim)+'</p>':'')+
 '<p><b>Expected behaviour:</b> '+esc(r.expected_behavior)+'</p>'+
 '<details><summary>Rubric instructions</summary><p class="gloss">'+esc(DATA.instructions[r.rubric_key]||'')+'</p></details>'+
-'<h3>Conversation</h3><pre>'+esc(r.conversation)+'</pre><h3>Response to label</h3><pre>'+esc(r.response||'(empty)')+'</pre>'+
+'<h3>Conversation</h3><pre>'+esc(r.conversation)+'</pre><h3>Response to label</h3><div class="resp'+(veil?' veiled':'')+'" id="r-'+r.sample_id+'">'+
+(veil?'<button type="button" class="show" data-show="'+r.sample_id+'">Show response (may contain hateful content)</button>':'')+
+'<pre>'+esc(r.response||'(empty)')+'</pre></div>'+
 '<fieldset><legend>Label</legend>'+opts+'</fieldset>'+acc+
 '<label>Notes (optional)<textarea rows="2" data-notes="'+r.sample_id+'">'+esc(s.notes||'')+'</textarea></label>';
 root.appendChild(el)});
@@ -383,6 +415,9 @@ root.addEventListener('change',e=>{const t=e.target;let id,f,v;
 if(t.name&&t.name.startsWith('l-')){id=t.name.slice(2);f='label';v=t.value}
 else if(t.dataset.acc){id=t.dataset.acc;f='accuracy';v=t.value}else return;
 state[id]=Object.assign({},state[id],{[f]:v});save()});
+root.addEventListener('click',e=>{const t=e.target;if(t.dataset&&t.dataset.show){const id=t.dataset.show;
+state[id]=Object.assign({},state[id],{shown:true});const d=document.getElementById('r-'+id);if(d)d.classList.remove('veiled');
+t.remove();save()}});
 root.addEventListener('input',e=>{const t=e.target;if(t.dataset.notes){const id=t.dataset.notes;
 state[id]=Object.assign({},state[id],{notes:t.value});save()}});update()}
 function csvCell(s){s=String(s==null?'':s);return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
@@ -403,7 +438,9 @@ render();
 
 
 def render_form(rows: list[dict], rubric: dict, manifest: dict) -> str:
+    sets = rubric.get("label_sets") or {}
     data = {"run_id": manifest.get("run_id", "run"), "rows": rows, "labels": list(LABELS), "accuracy": list(ACCURACY),
+            "labelsets": {k: sets.get(v.get("label_set") or "scored", list(LABELS)) for k, v in rubric["rubrics"].items()},
             "glosses": {k: v["glosses"] for k, v in rubric["rubrics"].items()},
             "instructions": {k: v["instructions"] for k, v in rubric["rubrics"].items()},
             "catnames": CATEGORY_NAMES}
@@ -414,8 +451,11 @@ def render_form(rows: list[dict], rubric: dict, manifest: dict) -> str:
 <body><main>
 <h1>KLAA judge validation: label {len(rows)} responses</h1>
 <p class="note"><b>Content note.</b> Some responses may contain antisemitic or other bigoted text produced by the
-model under test. Take breaks. Label what the response itself asserts, using the glosses for each item's rubric.
-You are not shown which model wrote a response or how the judge labelled it.</p>
+model under test. Responses to trope, denial and symmetry items are blurred until you choose to show them. Take
+breaks: label at most {SESSION_CAP} responses or 60 minutes per session (your progress is saved). You may skip any
+item, for example a denial item you prefer not to read, by leaving it unlabelled; it will be passed to a second
+labeller. Label what the response itself asserts, using the glosses for each item's rubric. You are not shown which
+model wrote a response or how the judge labelled it.</p>
 <p>Your labels are saved in this browser as you go. When you are done, click <b>Export CSV</b> and run
 <code>python -m harness.validate import --run results/{html.escape(str(manifest.get('run_id', 'RUN')))} --labels FILE.csv</code>.
 This file works offline and sends nothing anywhere.</p>

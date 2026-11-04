@@ -4,7 +4,9 @@ This document sets the rules for collecting, handling and publishing results of 
 
 ## 1. What the benchmark contains and why
 
-To test whether a model rejects antisemitic tropes, the items have to name them. The ST, CT, CR and HF items quote classic tropes, conspiracy theories, collective-blame claims and Holocaust-denial claims. The SY items quote the analogous tropes about other groups. The items are written to test rejection, using forms such as "Is it true that…" and "Agree or disagree…". A small number ask the model to write such content, purely to test whether it refuses. No item invents a slur or adds detail that a trope does not already carry. No item concerns a private individual.
+To test whether a model rejects antisemitic tropes, the items have to name them. The ST, CT, CR and HF items quote classic tropes, conspiracy theories, collective-blame claims and Holocaust-denial claims. The SY items quote the analogous tropes about other groups, including dehumanising claims about Palestinians and collective blame of Israelis. The items are written to test rejection, using forms such as "Is it true that…" and "Agree or disagree…". A small number ask the model to write such content, purely to test whether it refuses. No item invents a slur or adds detail that a trope does not already carry; the coded items added in v1.1 ("(((they)))", "Khazarian mafia", "adrenochrome", "Zionist bankers") name the code without restating propaganda content. No item concerns a private individual.
+
+The benchmark is not a definition of antisemitism and must not be used to classify human speech or speakers or to train or tune moderation classifiers (`docs/DATA_CARD.md`).
 
 ## 2. Handling model outputs
 
@@ -18,7 +20,8 @@ Model outputs may contain antisemitic or other hateful content, Holocaust denial
   - is never a complete piece of generated propaganda;
   - comes with its item id, so the prompt can be read in `bench/items.jsonl`.
 
-  Examples of *good* behaviour, such as refusals and rebuttals, may be quoted more fully.
+  Examples of *good* behaviour, such as refusals and rebuttals, may be quoted more fully, **but a quoted rebuttal must not restate the trope or denial claim at length**: quote the rejection and the correcting facts, and replace any extended restatement of the claim with a bracketed description. The same applies to examples in talks, papers and social-media posts about the results.
+- **Persona results are published only pooled** across models (`docs/METHODS.md` §8.8). Per-model results for adversarial system-persona variants would show which personas move which model, a jailbreak map; they are shared only privately with the developer concerned.
 - **Retention.** Raw outputs are kept for `<N>` years for verification and re-analysis, then deleted, unless the PI decides otherwise and records the decision.
 - **Keys and credentials.** API keys come only from environment variables and are never written to disk, logs or results.
 
@@ -52,21 +55,35 @@ The benchmark's neutrality principle (`docs/METHODS.md` §2) also governs how re
 
 ## 6. Reviewer wellbeing
 
-Labelling means reading hateful content, including Holocaust denial, aimed at the reviewer's own community or others.
+Labelling means reading hateful content, including Holocaust denial, aimed at the reviewer's own community or others. The stratified design over-samples rare labels such as `endorse`, which concentrates the worst content in the validation sample; the measures below counter that.
 
 - **Participation is voluntary.** Labelling is never a condition of anyone's role, and no one is asked to label because of their own background. A labeller can stop at any time without giving a reason.
 - **Content warning and preparation.** Before the first session, the labeller reads `docs/METHODS.md` §5 and a short set of worked examples, and is told what kinds of content to expect.
-- **Session limits.** At most 50 responses or 60 minutes per session, whichever comes first, with a break of at least 15 minutes between sessions and no more than three sessions a day. The labelling form works offline and can be paused.
-- **Support.** The labeller can raise concerns with the PI at any time. The lab will point to `<institutional counselling or employee-assistance service>`. Distressing items can be skipped and passed to a second labeller.
+- **Interleaved strata.** The sample is shuffled, and responses that the judge labelled `endorse` are spread evenly through it (`harness.validate`), so no session gets a cluster of the worst content. Blinding is unaffected.
+- **Blurred until chosen.** In the labelling form, responses to trope, denial and symmetry items are blurred until the labeller chooses to show them.
+- **Session limits.** At most 50 responses or 60 minutes per session, whichever comes first, with a break of at least 15 minutes between sessions and no more than three sessions a day. Because the worst content is spread evenly, a 50-response session holds only its proportional share of over-sampled endorsements (for example about 7 if 21 of the 150 sampled responses are endorsements, the minimum the design draws when every category has some). The labelling form works offline and can be paused.
+- **Opt-out of denial items.** A labeller may opt out of Holocaust-denial items (HF denial-bait) altogether, or skip any item, by leaving it unlabelled; skipped items go to a second labeller, and the report states how many.
+- **Support.** The labeller can raise concerns with the PI at any time. The lab will point to `<institutional counselling or employee-assistance service>`. **Filling in this placeholder with a named, working service is a pre-registration blocker** (`docs/PREREGISTRATION.md` §0): no labelling starts until it is done.
 - **Debrief.** After each labelling round, the PI and labeller review the experience, and the procedures are adjusted if needed.
 - **Labeller anonymity.** Labellers are not named in public outputs unless they choose to be.
+
+## 6a. Safety of staff and labellers after publication
+
+Publishing results about antisemitism, Israel and Palestine can draw harassment from more than one direction. Before publication the PI puts the following in place:
+
+- **Minimal naming.** Public outputs name the lab, not individual labellers; labellers are never named unless they choose to be. Staff named as authors or contacts consent in advance and may choose a role address instead of a personal one.
+- **Clean public artefacts.** Before any repository, dataset or site is made public, personal data is removed: commit author names and e-mails where staff ask for it, labeller notes, file paths and validation files (which stay private under §2).
+- **Single contact route.** Press and public enquiries go to an institutional press or communications office, not to individuals.
+- **Monitoring and response.** For at least four weeks after publication, a named person monitors for harassment, doxxing or threats against staff or labellers. Threats are documented and reported to institutional security and, where appropriate, the police; the institution's legal and IT-security teams are told in advance. Targeted staff can have their public profile details reduced and are offered support (§6).
+- **No engagement with pile-ons.** Staff are not expected to respond publicly to abuse. Factual corrections go through the lab's official channel.
+- **Plan recorded.** The names of the monitoring person and the institutional contacts are recorded in `docs/PREREGISTRATION.md` §9 before publication.
 
 ## 7. Dual use
 
 A public benchmark could be misused, for example to tune a model to evade the test while still producing harmful content, or to collect prompts that elicit propaganda.
 
 - The items only ask whether a model rejects or refuses; they contain no successful jailbreaks.
-- Harmful completions are never published (§2).
+- Harmful completions are never published (§2), and per-model persona results are published only pooled (§2).
 - The lab should consider keeping a private hold-out split for future releases, to detect over-fitting to the public items (open issue; see `docs/PREREGISTRATION.md` §1).
 
 ## 8. AI-assistance disclosure
@@ -82,5 +99,5 @@ If an audited model comes from the same developer as an assistant used to build 
 ## 9. Approval and review
 
 - Publication requires PI approval (`docs/PREREGISTRATION.md` §9).
-- `<State whether the lab will seek institutional ethics review or an exemption, given that the study involves no human subjects other than the lab's own labellers.>`
+- `<State whether the lab will seek institutional ethics review or an exemption, given that the study involves no human subjects other than the lab's own labellers.>` This decision, the counselling service in §6 and the post-publication safety plan in §6a are completed before pre-registration.
 - These rules are reviewed before each release, and changes are logged with the release notes.

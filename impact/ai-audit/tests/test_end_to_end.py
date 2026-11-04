@@ -120,6 +120,68 @@ class TestEndToEnd(unittest.TestCase):
         self.assertIsNone(re.search(r'<(script|link|img)[^>]+(src|href)="(https?:)?//', page))
         self.assertNotIn("@import", page)
         self.assertIn("prefers-color-scheme:dark", page)
+        # usage / data-card statement (Review A #14)
+        self.assertIn("How to use these results", page)
+        self.assertIn("not a definition of antisemitism", page)
+        self.assertIn("DATA_CARD.md", page)
+        # CO shown only with neutral labels (rule R4)
+        self.assertIn("Leans affirm", page)
+        self.assertIn("never scored, ranked or aggregated", page)
+        # persona variants appear only pooled across models (Review B #9)
+        self.assertIn("pooled across all models", page)
+        if "system-persona" in scored["robustness_pooled"]:
+            self.assertIn("System persona", page)
+        for m in scored["models"]:
+            per_model_persona = (m.get("robustness") or {}).get("system-persona", {}).get("metrics", {}).get("AER")
+            if per_model_persona and per_model_persona["variant"] is not None:
+                cell = f'{100 * per_model_persona["variant"]:.1f}% / {100 * per_model_persona["matched_base"]:.1f}%'
+                pooled = scored["robustness_pooled"]["system-persona"]["metrics"]["AER"]
+                pooled_cell = f'{100 * pooled["variant"]:.1f}% / {100 * pooled["matched_base"]:.1f}%'
+                if cell != pooled_cell:
+                    self.assertNotIn(cell, page)
+        # secondary metrics and SG subsets
+        self.assertIn("Holocaust distortion rate", page)
+        if any(m["SG"].get("subsets") for m in scored["models"]):
+            self.assertIn("Hamas / armed-group mirrors", page)
+
+    def test_co_labels_are_descriptive_and_unscored(self):
+        for m in self.scores["models"]:
+            co = m["categories"].get("CO")
+            self.assertIsNotNone(co)
+            self.assertEqual(co["label_set"], "CO")
+            self.assertTrue(set(co["labels"]) <= set(J.CO_LABELS))
+            self.assertGreater(sum(co["labels"].values()), 0)
+        judged_co = [json.loads(l) for l in open(self.run_dir / "judgments.jsonl") if '"category": "CO"' in l]
+        self.assertTrue(judged_co)
+        self.assertTrue(all(j["label"] in J.CO_LABELS for j in judged_co if j.get("label")))
+
+    def test_validation_form_blurs_trope_responses(self):
+        import shutil
+        run3 = pathlib.Path(self.tmp.name) / "demo3"
+        shutil.copytree(self.run_dir, run3)
+        V.export(run3, n=60, seed=2, log=lambda *a: None)
+        html_form = (run3 / "validation" / "label_form.html").read_text()
+        self.assertIn("Show response (may contain hateful content)", html_form)
+        self.assertIn('"sensitive": true', html_form)
+        self.assertIn("at most 50 responses", html_form)
+
+    def test_site_publishes_persona_results_only_pooled(self):
+        mod = load_site_builder()
+        fake = json.loads(json.dumps(self.scores))
+        rates = [0.123, 0.456, 0.789, 0.321]
+        per_model = []
+        for m, r in zip(fake["models"], rates):
+            m["robustness"]["system-persona"] = {"flip_rate": r, "n_flip_pairs": 10, "flip_by_metric": {},
+                                                 "metrics": {"AER": {"variant": r, "n": 10, "wilson": [0, 1],
+                                                                     "matched_base": 0.05, "n_base": 10}}}
+            per_model.append(m["robustness"])
+        fake["robustness_pooled"] = SC.RunScorer.pooled_robustness(per_model)
+        page = mod.build(fake)
+        pooled = fake["robustness_pooled"]["system-persona"]["metrics"]["AER"]["variant"]
+        self.assertAlmostEqual(pooled, sum(rates) / len(rates))
+        self.assertIn(f"{100 * pooled:.1f}%", page)
+        for r in rates:  # no per-model persona figure appears anywhere on the public page
+            self.assertNotIn(f"{100 * r:.1f}%", page)
 
     def test_site_without_mock_has_no_banner(self):
         mod = load_site_builder()

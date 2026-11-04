@@ -5,7 +5,8 @@ Reads ../results/sim_results.json and writes
   ../figures/fig-sim-ar.pdf            E1: AR estimates by classifier regime; CI coverage vs puppets per cell
   ../figures/fig-sim-interference.pdf  E2: bias of AA vs load; arm shifts; remedies and saturation extrapolation
   ../figures/fig-sim-decomp.pdf        E3: supply / demand decomposition vs formation length; persona contrasts
-  ../figures/fig-sim-markov.pdf        E4: Markov predictions vs simulation; perturbation (tilt, replacement nudge)
+  ../figures/fig-sim-markov.pdf        E4 / E4b: consumed-item and slate-state chains, predictions vs simulation
+  ../figures/fig-sim-perturb.pdf       E4: perturbation (tilt, replacement nudge), appendix
   ../figures/fig-sim-sequential.pdf    E5 (benchmark design): alg:sequential coverage, width and power; comparators
   ../figures/fig-sim-primary.pdf       E5b/E5s: registered primary analysis; tails, miss rates, the pilot check
   ../tables/tab-sim-primary.tex        E5b main table
@@ -312,13 +313,13 @@ def fig_decomp(res, path):
 # E4
 # ---------------------------------------------------------------------------
 def fig_markov(res, path):
+    """Fig. 6: (a) E4, consumed-item chains of naturalistic accounts, predictions vs simulation (log axes);
+    (b) E4b, slate-state chains of protocol puppets, long-run impression exposure (log axes)."""
     e4 = res["E4"]
     has_b = "E4b" in res
-    if has_b:
-        fig, axes = plt.subplots(2, 2, figsize=(W2, 4.7), layout="constrained")
-        axes = axes.ravel()
-    else:
-        fig, axes = plt.subplots(1, 3, figsize=(W2, 2.45), layout="constrained")
+    fig, axes = plt.subplots(1, 2 if has_b else 1, figsize=(W2, 2.75) if has_b else (W1, 2.75), layout="constrained",
+                             squeeze=False)
+    axes = axes.ravel()
     ax = axes[0]
     _style(ax, "both")
     lim = [np.inf, 0]
@@ -342,54 +343,20 @@ def fig_markov(res, path):
     ax.set_ylim(lo_, lim[1] * 1.25)
     _logfmt(ax)
     ax.set_xlabel("Markov prediction (%)")
-    ax.set_ylabel("Simulated exposure (%)")
+    ax.set_ylabel("Simulated consumed exposure (%)")
     ax.legend(handles=[Line2D([], [], marker="o", color=INK2, ls="none", ms=3.6, label=rf"$e_{{{T}}}$"),
                        Line2D([], [], marker="s", color=INK2, ls="none", ms=3.6, label=rf"$e_{{{TL}}}$ (long session)"),
-                       Line2D([], [], marker="^", color=INK2, ls="none", ms=3.6, label=r"$\varpi(A)$ vs tail"),
+                       Line2D([], [], marker="^", color=INK2, ls="none", ms=3.6, label=r"$\varpi(\mathcal{A})$ vs tail"),
                        Line2D([], [], marker="o", color=INK2, mfc="white", ls="none", ms=3.6, label="open: chron")],
               frameon=False, fontsize=6.2, loc="upper left", handletextpad=0.2)
-    _tag(ax, "(a)")
-    ax = axes[1]
-    _style(ax, "both")
-    tl = e4["perturbation"]["tilt"]
-    for p in PERS:
-        rows = tl[p]["rows"]
-        eps = [r["eps"] for r in rows]
-        ax.plot(eps, [100 * r["sim_delta_tail"] for r in rows], color=PCOL[p], marker=PMARK[p], ms=3.4, mec="white",
-                mew=0.4, lw=1.2)
-        ax.plot(eps, [100 * r["model"]["delta_A"] for r in rows], color=PCOL[p], ls="--", lw=0.9)
-        ax.plot(eps, [100 * r["model"]["first_order_A"] for r in rows], color=PCOL[p], ls=":", lw=0.9)
-    ax.set_xlabel(r"Score tilt $\varepsilon$ toward $L_c=1$")
-    ax.set_ylabel(r"$\Delta$ long-run exposure (pp)")
-    ax.legend(handles=[Line2D([], [], color=INK2, marker="o", ms=3, label="simulated (tail)"),
-                       Line2D([], [], color=INK2, ls="--", label=r"chain, exact $\Delta\varpi_A$"),
-                       Line2D([], [], color=INK2, ls=":", label="first order")],
-              frameon=False, fontsize=6.2, loc="upper left")
-    _tag(ax, "(b)")
-    ax = axes[2]
-    _style(ax, "both")
-    rp = e4["perturbation"]["replace"]
-    for p in PERS:
-        rows = [r for r in rp[p]["rows"] if r["eps"] > 0]
-        eps = [r["eps"] for r in rows]
-        ax.plot(eps, [100 * r["sim_tail"] for r in rows], color=PCOL[p], marker=PMARK[p], ms=3.4, mec="white",
-                mew=0.4, lw=1.2)
-        ax.plot(eps, [100 * r["pred_c_exact_piA"] for r in rows], color=PCOL[p], ls="--", lw=0.9)
-        ax.plot(eps, [100 * r["pred_c_first_order_piA"] for r in rows], color=PCOL[p], ls=":", lw=0.9)
-    ax.set_xlabel(r"Replacement probability $\varepsilon$")
-    ax.set_ylabel(r"Long-run exposure (%)")
-    ax.legend(handles=[Line2D([], [], color=INK2, marker="o", ms=3, label="simulated (tail)"),
-                       Line2D([], [], color=INK2, ls="--", label="Thm 4.2(c), base chain"),
-                       Line2D([], [], color=INK2, ls=":", label="first order")],
-              frameon=False, fontsize=6.2, loc="upper left")
-    _tag(ax, "(c)")
+    _tag(ax, "(a) E4: consumed items")
     if has_b:
-        ax = axes[3]
+        ax = axes[1]
         _style(ax, "both")
         e4b = res["E4b"]["regimes"]
-        meth = [("true3", "slate chain, true states", "#000000", "o", None),
-                ("naive3", "observed states, uncorrected", "#D55E00", "s", None),
-                ("corr2_min", "observed, corrected (minimal comp.)", "#0072B2", "D", "white"),
+        meth = [("true3", "true slate states", "#000000", "o", None),
+                ("naive3", "observed, uncorrected", "#D55E00", "s", None),
+                ("corr2_min", "observed, corrected (approx.)", "#0072B2", "D", "white"),
                 ("corr2_oracle", "observed, corrected (true comp.)", "#56B4E9", "v", "white")]
         lo, hi = np.inf, 0
         for key, lab, col, mk_, mfc in meth:
@@ -412,7 +379,51 @@ def fig_markov(res, path):
         ax.set_xlabel("Simulated long-run exposure (%)")
         ax.set_ylabel(r"Prediction $\varpi(\mathcal{A})\,\bar k_{\mathcal{A}}/k$ (%)")
         ax.legend(frameon=False, fontsize=6.0, loc="upper left", handletextpad=0.2, borderaxespad=0.2)
-        _tag(ax, "(d) protocol puppets, slate states")
+        _tag(ax, "(b) E4b: slate states, protocol puppets")
+    handles = [Line2D([], [], color=PCOL[p], marker=PMARK[p], ls="none", ms=3.6, label=PERS_LABEL[p]) for p in PERS]
+    handles.append(Line2D([], [], color=INK2, marker="o", ls="none", ms=0, label="(a): colour = persona"))
+    fig.legend(handles=handles[:-1], loc="outside lower center", ncol=4, frameon=False, fontsize=7.0)
+    _save(fig, path)
+
+
+def fig_perturb(res, path):
+    """Appendix figure: E4 perturbations of the consumed-item chains (thm:perturb (a)-(c))."""
+    e4 = res["E4"]
+    fig, axes = plt.subplots(1, 2, figsize=(W2, 2.45), layout="constrained")
+    ax = axes[0]
+    _style(ax, "both")
+    tl = e4["perturbation"]["tilt"]
+    for p in PERS:
+        rows = tl[p]["rows"]
+        eps = [r["eps"] for r in rows]
+        ax.plot(eps, [100 * r["sim_delta_tail"] for r in rows], color=PCOL[p], marker=PMARK[p], ms=3.4, mec="white",
+                mew=0.4, lw=1.2)
+        ax.plot(eps, [100 * r["model"]["delta_A"] for r in rows], color=PCOL[p], ls="--", lw=0.9)
+        ax.plot(eps, [100 * r["model"]["first_order_A"] for r in rows], color=PCOL[p], ls=":", lw=0.9)
+    ax.set_xlabel(r"Score tilt $\varepsilon$ toward $L_c=1$")
+    ax.set_ylabel(r"$\Delta$ long-run exposure (pp)")
+    ax.legend(handles=[Line2D([], [], color=INK2, marker="o", ms=3, label="simulated (tail)"),
+                       Line2D([], [], color=INK2, ls="--", label=r"chain, exact $\Delta\varpi_A$"),
+                       Line2D([], [], color=INK2, ls=":", label="first order")],
+              frameon=False, fontsize=6.2, loc="upper left")
+    _tag(ax, "(a)")
+    ax = axes[1]
+    _style(ax, "both")
+    rp = e4["perturbation"]["replace"]
+    for p in PERS:
+        rows = [r for r in rp[p]["rows"] if r["eps"] > 0]
+        eps = [r["eps"] for r in rows]
+        ax.plot(eps, [100 * r["sim_tail"] for r in rows], color=PCOL[p], marker=PMARK[p], ms=3.4, mec="white",
+                mew=0.4, lw=1.2)
+        ax.plot(eps, [100 * r["pred_c_exact_piA"] for r in rows], color=PCOL[p], ls="--", lw=0.9)
+        ax.plot(eps, [100 * r["pred_c_first_order_piA"] for r in rows], color=PCOL[p], ls=":", lw=0.9)
+    ax.set_xlabel(r"Replacement probability $\varepsilon$")
+    ax.set_ylabel(r"Long-run exposure (%)")
+    ax.legend(handles=[Line2D([], [], color=INK2, marker="o", ms=3, label="simulated (tail)"),
+                       Line2D([], [], color=INK2, ls="--", label="Thm 4.2(c), base chain"),
+                       Line2D([], [], color=INK2, ls=":", label="first order")],
+              frameon=False, fontsize=6.2, loc="upper left")
+    _tag(ax, "(b)")
     handles = [Line2D([], [], color=PCOL[p], marker=PMARK[p], ls="-", ms=3.6, label=PERS_LABEL[p]) for p in PERS]
     fig.legend(handles=handles, loc="outside lower center", ncol=4, frameon=False, fontsize=7.0)
     _save(fig, path)
@@ -617,7 +628,7 @@ def tab_primary(res, path):
     with open(path, "w") as f:
         f.write("% Generated by code/make_figures.py from results/sim_results.json -- do not edit by hand.\n")
         f.write(f"% E5b: registered primary analysis; S = {c['S']} sessions, m = {c['m']}, m' = {c['m_open'] + c['m_unf']}, waves of "
-                f"{c['wave']} pairs, W_max = {c['W_max']}, b = {c['burn']}, t* = {c['t_star']}, R = {c['R']}.\n")
+                f"{c['wave']} pairs, W_max = {c['W_max']}, b = {c['burn']}, n* = {c['t_star']}, R = {c['R']}.\n")
         f.write("\n".join(L) + "\n")
 
 
@@ -733,7 +744,7 @@ def tab_designs(res, path):
         row(r"Null AR$=1$: false detection by wave 8, Alg.~1; peeking (\%)",
             [f"{100 * nd[p]['null']['a05_b1']['excludes_0_by_wave']['8']:.1f}; {100 * nd[p]['null']['peeking']['rejects_AR1_by_Wmax']:.1f}" for p in PERS])
         row(r"P(excludes AR$=1$) by wave 8 (\%)", [f"{100 * nd[p]['alt']['a05_b1']['excludes_0_by_wave']['8']:.1f}" for p in PERS])
-        row(r"$n_{\mathrm{fix}}$; $n_{\mathrm{seq}}$ from $A_Y$ (pairs)", [f"{nd[p]['alt']['power']['n_fix_Y']:.0f}; {nd[p]['alt']['power']['n_seq_Y']:.0f}" for p in PERS])
+        row(r"$n_{\mathrm{fix}}$; $n_{\mathrm{seq}}$ from $V_Y$ (pairs)", [f"{nd[p]['alt']['power']['n_fix_Y']:.0f}; {nd[p]['alt']['power']['n_seq_Y']:.0f}" for p in PERS])
         row(r"Power at $n_{\mathrm{fix}}$ (fixed); by horizon (sequential)",
             [(f"{nd[p]['alt']['power']['fixed_power_at_n_fix_Y']:.2f}" if nd[p]['alt']['power'].get('fixed_power_at_n_fix_Y') is not None else "--")
              + "; " + (f"{nd[p]['alt']['power']['seq_power_by_horizon']:.2f}" if nd[p]['alt']['power'].get('seq_power_by_horizon') is not None else "--")
@@ -773,7 +784,7 @@ def tab_checks(res, path, U="20"):
         row(r"Coverage $\log\mathrm{AR}$: cluster-robust; sessions iid (\%)",
             [f"{100 * P_[p]['by_U'][U][k]['cluster']['logAR']['coverage']:.1f}; {100 * P_[p]['by_U'][U][k]['session']['logAR']['coverage']:.1f}" for p in PERS])
         if nm == "ND":
-            row(r"Naive AR; $\omega+(1-\omega)\mathrm{AR}$; true AR",
+            row(r"Naive AR; $w_0+(1-w_0)\mathrm{AR}$; true AR",
                 [f"{P_[p]['naive_AR_pop']:.3f}; {P_[p]['naive_AR_attenuation_formula']:.3f}; {P_[p]['AR']:.3f}" for p in PERS])
             x = "external_pooled"
             row(r"External validation: s.d.\ of $\log\widehat{\mathrm{AR}}$, MC; delta (median)",
@@ -829,6 +840,7 @@ def main():
         fig_decomp(res, os.path.join(a.figures, "fig-sim-decomp.pdf"))
     if "E4" in res:
         fig_markov(res, os.path.join(a.figures, "fig-sim-markov.pdf"))
+        fig_perturb(res, os.path.join(a.figures, "fig-sim-perturb.pdf"))
     if "E5" in res:
         fig_sequential(res, os.path.join(a.figures, "fig-sim-sequential.pdf"))
     if "E5b" in res:

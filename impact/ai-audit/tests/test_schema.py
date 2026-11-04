@@ -30,7 +30,16 @@ class TestSchemaLoad(unittest.TestCase):
         for k in ("AER", "HACC", "ORR", "SG", "KS"):
             self.assertIn(k, r["metrics"])
         self.assertAlmostEqual(sum(r["metrics"]["KS"]["weights"].values()), 1.0)
-        self.assertEqual(set(r["judge"]["output_schema"]["properties"]["label"]["enum"]), set(r["labels"]))
+        self.assertEqual(set(r["judge"]["output_schema"]["properties"]["label"]["enum"]),
+                         set(r["labels"]) | set(r["co_labels"]))
+        self.assertEqual(r["rubrics"]["CO.describe"]["label_set"], "CO")
+        self.assertEqual(set(r["rubrics"]["CO.describe"]["glosses"]), set(r["label_sets"]["CO"]))
+        for k in ("AER_broad", "HF_DISTORTION", "LC_FACT"):
+            self.assertIn(k, r["metrics"])
+            self.assertFalse(r["metrics"][k]["headline"])
+        for name, m in r["metrics"].items():  # CO is never aggregated
+            if isinstance(m, dict):
+                self.assertNotIn("CO.describe", m.get("rubric_keys", []), name)
 
     def test_validator_catches_bad_items(self):
         rec = S.sample_records()[0]
@@ -71,6 +80,65 @@ class TestSchemaLoad(unittest.TestCase):
             self.assertEqual(v.base_id, v.variant_of)
             if v.variant_type == "pressure":
                 self.assertGreaterEqual(len(v.messages), 3)  # scripted assistant turns are kept
+
+
+class TestBenchValidator(unittest.TestCase):
+    """bench/validate.py cross-field rules added in v1.1: CO object coding, the HF.fact -> HF.denial_bait variant
+    exception, mirror-set tags and the 25% cap on any one mirror group."""
+
+    @classmethod
+    def setUpClass(cls):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("bench_validate", S.BENCH / "validate.py")
+        cls.V = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.V)
+        cls.rubric = I.load_json(S.RUBRIC)
+        cls.keys = set(cls.rubric["rubrics"])
+
+    def errs(self, recs, full=False):
+        return self.V.check_items(recs, self.keys, full)
+
+    def test_full_item_set_passes(self):
+        recs = [json.loads(l) for l in (S.BENCH / "items.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(self.errs(recs, full=True), [])
+        self.assertEqual(self.V.check_rubric(self.rubric), [])
+        schema = I.load_json(S.SCHEMA)
+        bad = [e for r in recs for e in I.validate_against_schema(r, schema)]
+        self.assertEqual(bad, [])
+
+    def test_co_object_rules(self):
+        co = json.loads(json.dumps(next(r for r in S.sample_records() if r["category"] == "CO")))
+        self.assertEqual(self.errs([co]), [])
+        unanimous = json.loads(json.dumps(co))
+        unanimous["object_definitions"].update(ihra="not", jda="not", nexus="not")
+        self.assertTrue(any("unanimous" in e for e in self.errs([unanimous])))
+        wrong = json.loads(json.dumps(co))  # polarity 'opposes' but the target claim is coded as contested
+        wrong["definitions"] = dict(co["object_definitions"])
+        self.assertTrue(any("polarity" in e for e in self.errs([wrong])))
+        scored = dict(co, scored=True)
+        self.assertTrue(any("never scored" in e for e in self.errs([scored])))
+        no_obj = {k: v for k, v in co.items() if k != "object"}
+        self.assertTrue(I.validate_against_schema(no_obj, I.load_json(S.SCHEMA)))
+
+    def test_denial_bait_variant_exception(self):
+        recs = S.sample_records()
+        m1 = next(r for r in recs if r["id"] == "HF-001-m1")
+        self.assertEqual(m1["rubric_key"], "HF.denial_bait")
+        self.assertEqual(self.errs(recs), [])
+        other = json.loads(json.dumps(m1))
+        other.update(id="HF-001-p9", variant_type="paraphrase")
+        self.assertTrue(any("rubric_key differs" in e for e in self.errs(recs + [other])))
+
+    def test_mirror_group_cap_and_mirror_sets(self):
+        recs = [json.loads(l) for l in (S.BENCH / "items.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+        sy = [r for r in recs if r["category"] == "SY" and "variant_of" not in r]
+        for r in sy[:40]:
+            r["group"] = "muslims"
+        self.assertTrue(any("above the cap" in e for e in self.errs(recs, full=True)))
+        recs = [json.loads(l) for l in (S.BENCH / "items.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+        cr_mirror = next(r for r in recs if r["category"] == "SY" and r.get("mirror_of", "").startswith("CR-"))
+        cr_mirror["tags"] = [t for t in cr_mirror["tags"] if not t.startswith("mirror_set:")]
+        self.assertTrue(any("mirror_set" in e for e in self.errs(recs, full=True)))
 
 
 class TestItemsHash(unittest.TestCase):

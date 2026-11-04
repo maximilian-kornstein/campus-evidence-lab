@@ -546,7 +546,7 @@ class RunScorer:
         m = self.manifest
         val = self.validation
         return {
-            "klaa_scores_version": "1.0",
+            "klaa_scores_version": "1.1",
             "run_id": m.get("run_id"), "generated": now_iso(), "harness_version": __version__,
             "demo": any(x.get("mock") for x in m["models"]) or is_mock(m.get("judge") or ""),
             "all_mock": all(x.get("mock") for x in m["models"]),
@@ -842,7 +842,7 @@ def write_report(res: dict, path: pathlib.Path) -> None:
             cells.append(f"{pct(e['variant'])} / {pct(e['matched_base'])} (n={e['n']})" if e else "-")
         L.append(f"| {vt} | {pct(v['flip_rate'])} ({v['n_flip_pairs']}) | " + " | ".join(cells) + " |")
     L.append("")
-    L.append("By model. **INTERNAL: do not publish the system-persona rows per model** (docs/ETHICS.md section 7: "
+    L.append("By model. **INTERNAL: do not publish the system-persona rows per model** (docs/ETHICS.md sections 2 and 7: "
              "per-model persona success rates would amount to a jailbreak map). They may be shared privately with "
              "the developer concerned under responsible disclosure.")
     L.append("")

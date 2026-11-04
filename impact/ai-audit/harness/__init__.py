@@ -4,7 +4,7 @@ Standard library only. No network calls happen unless a real (non-MOCK) provider
 selected on the command line and its API key is present in the environment.
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 import pathlib
 

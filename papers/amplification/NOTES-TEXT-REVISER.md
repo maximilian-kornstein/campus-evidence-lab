@@ -58,13 +58,13 @@ notation below. Table 1 (`tables/tab-notation.tex`) lists each symbol once.
 Unchanged: `\tau, \tau_{sup}, \tau_{dem}, \iota` (decomposition), `\omega_w` (wave weights), `\kappa_{\mathcal A}` (sensitivity
 coefficient), `\varpi`, `Z`, `H`, `K(P)`, `M_{xy}`, `\xi_\pi`, `\xi_\Delta`, `\ell`, `\lambda_S`, `J`, `q_\pi`, `Y_u`, `\widetilde E_u`, `\delta`, `\alpha`, `\beta` (power), `\rho` (reference policy), `F_b`.
 
-### Still to align in SIM-owned files (grep, 2026-11-04 01:00)
-- `07:52` `\kappa_a/\kappa_r` -> `r_a/r_r` (eq:mc-diff now reads `\mathrm{AR}\cdot r_a/r_r`).
+### Still to align in SIM-owned files (grep, 2026-11-04, after the last compile)
+- `07:50` `\kappa_a/\kappa_r` -> `r_a/r_r` (eq:mc-diff now reads `\mathrm{AR}\cdot r_a/r_r`).
 - `07:48` "scenario A of tab:mc-signflip" -> "scenario I".
-- `07:70` `Q=F_0` -> `\Lambda=F_0`.
-- `07:127`, `C:191`, `tab-sim-designs.tex:41` `A_Y` -> `V_Y`.
-- `C:183`, `tab-sim-checks.tex:14` `\kappa_{\Sp}` -> `\mathrm{cv}_{\Sp}`; `C:183` `\tau^2` -> `\sigma^2_{\mathrm s}`.
-- `tab:sim-personas` is referenced in 07 but not defined (as of the last compile).
+- `07:68` `Q=F_0` -> `\Lambda=F_0`.
+- `C:173`, `C:204`, `tables/tab-sim-designs.tex:41` `A_Y` -> `V_Y`.
+- `C:196` `\tau^2` -> `\sigma^2_{\mathrm s}`.
+- Page budget: Section 7 now spans about 10 pages (31-41); my sections total about 39 pages, so the main text is about 49 pages. Reaching ~45 needs Section 7 at about 6 pages (e.g. E1b, E2 and E3 detail to Appendix C).
 
 ## 2. Structural changes that move labels (all labels preserved)
 - Prop 4.4 `prop:markov-mle` -> Appendix A.6 (`app:markov-estimation`); Sec. 4.4 keeps a short summary (`sec:markov-estimation`).

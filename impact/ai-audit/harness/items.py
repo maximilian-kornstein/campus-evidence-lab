@@ -1,4 +1,4 @@
-"""Loading bench items (bench/schema.json, version 1.0.0) and the rubric.
+"""Loading bench items (bench/schema.json, version 1.1.0) and the rubric.
 
 One JSONL line is one conversation. Robustness variants (paraphrase, system-persona, pressure) are
 their own items with ``variant_of`` pointing at a base item; headline metrics use base items and the

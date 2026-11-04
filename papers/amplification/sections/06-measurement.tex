@@ -102,9 +102,8 @@ the normal-mixture boundary of \citet{robbins1970} in units of the planned horiz
   \State $\widehat\sigma_n^{\,2}\gets n^{-1}\sum_{i\le n}\bigl(O_{a,i}/\bar O_a-O_{r,i}/\bar O_r\bigr)^2$ \Comment{$n$ times the variance of $\log\widehat\vartheta_n$}
   \State $h_n\gets\widehat\sigma_n\,(n^\ast)^{1/2}\,h(n/n^\ast)/n$ \Comment{normal-mixture radius}
   \State $C_n\gets\bigl[\log\widehat\vartheta_n-\log\lambda_+-h_n,\ \log\widehat\vartheta_n-\log\lambda_-+h_n\bigr]$
-  \If{$w>b$} $\mathrm{LB}\gets\max(\mathrm{LB},\min C_n)$;\quad $\mathrm{UB}\gets\min(\mathrm{UB},\max C_n)$ \EndIf \Comment{burn-in}
-  \If{$\mathrm{LB}>\log\delta$ \textbf{or} $\mathrm{UB}<-\log\delta$ \textbf{or} $-\log\delta<\mathrm{LB}\le\mathrm{UB}<\log\delta$} \textbf{stop} \Comment{S1--S2}
-  \EndIf
+  \State \textbf{if} $w>b$ \textbf{then} $\mathrm{LB}\gets\max(\mathrm{LB},\min C_n)$;\ $\mathrm{UB}\gets\min(\mathrm{UB},\max C_n)$ \Comment{after burn-in}
+  \State \textbf{if} $\mathrm{LB}>\log\delta$ \textbf{or} $\mathrm{UB}<-\log\delta$ \textbf{or} $-\log\delta<\mathrm{LB}\le\mathrm{UB}<\log\delta$ \textbf{then stop} \Comment{S1--S2}
 \EndFor
 \State \Return $[\mathrm{LB},\mathrm{UB}]$ for $\log\mathrm{AR}(d)$ and the conclusion of \cref{tab:prot-decisions}
 \end{algorithmic}
