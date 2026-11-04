@@ -26,9 +26,9 @@
         <div class="reader-toolbar" role="group" aria-label="Document controls">
           <a class="reader-back" id="reader-back" href="/research/measurement/"><span aria-hidden="true">←</span> Paper</a>
           <div class="reader-controls">
-            <button type="button" class="page-control" disabled aria-label="Previous page"><span aria-hidden="true">‹</span></button>
-            <span class="page-count" aria-label="Page 1 of 1">1 / 1</span>
-            <button type="button" class="page-control" disabled aria-label="Next page"><span aria-hidden="true">›</span></button>
+            <button type="button" class="page-control" id="reader-prev" disabled aria-label="Previous page" aria-controls="reader-sheet"><span aria-hidden="true">‹</span></button>
+            <span class="page-count" id="reader-count" aria-label="Page 1 of 1">1 / 1</span>
+            <button type="button" class="page-control" id="reader-next" disabled aria-label="Next page" aria-controls="reader-sheet"><span aria-hidden="true">›</span></button>
             <label class="zoom-control">
               <span class="visually-hidden">Zoom</span>
               <select id="reader-zoom" disabled>
@@ -44,6 +44,13 @@
         <div class="reader-canvas" id="reader-canvas" tabindex="0" role="region" aria-label="Document preview, scroll to read at increased zoom">
           <div class="reader-sheet" id="reader-sheet">
             <img class="paper-preview" id="reader-preview" src="/pdfs/measurement-page.svg" width="710" height="775" alt="" aria-hidden="true">
+            <div class="reader-end" id="reader-end" hidden>
+              <p class="reader-end__note" id="reader-end-note">Preview ends here.</p>
+              <p class="reader-end__actions">
+                <a class="button button--primary" id="reader-end-open" href="/pdfs/measurement.pdf" target="_blank" rel="noopener">Open full PDF <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+                <a class="reader-end__download" id="reader-end-download" href="/pdfs/measurement.pdf" download="measurement.pdf">Download PDF</a>
+              </p>
+            </div>
           </div>
         </div>
         <p class="visually-hidden" id="reader-status" role="status" aria-live="polite"></p>
@@ -67,9 +74,14 @@
           <p>Platform coverage, ambiguous language, and annotation disagreement may affect estimates. The proposal does not establish observed prevalence or causal explanations; no empirical results are reported here.</p>
         </section>
         <noscript>
-          <p>The preview shows the measurement proposal. Open a PDF directly:
+          <p>The preview shows the measurement proposal. Open a PDF directly. Papers:
+            <a href="/pdfs/dark-figure.pdf">The Dark Figure</a>,
+            <a href="/pdfs/contagion.pdf">Shock and Contagion</a>,
+            <a href="/pdfs/attitudes.pdf">Where Does Criticism End?</a>, and
+            <a href="/pdfs/amplification.pdf">Supply or Demand?</a>
+            Proposals:
             <a href="/pdfs/measurement.pdf">Measurement</a>,
-            <a href="/pdfs/detection.pdf">Detection</a>, or
+            <a href="/pdfs/detection.pdf">Detection</a>, and
             <a href="/pdfs/narratives.pdf">Narratives</a>.
           </p>
         </noscript>

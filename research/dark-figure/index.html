@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The Dark Figure: a methods paper on estimating unreported antisemitic hate crime by linking overlapping incident lists. Simulation study on synthetic data; no real-world estimates.">
+    <meta name="theme-color" content="#faf8f6">
+    <title>The Dark Figure — Kornstein Lab</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body class="paper-page paper-page--full paper-page--dark-figure">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="wordmark" href="/" aria-label="Kornstein Lab home">Kornstein Lab<span aria-hidden="true"></span></a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="/research/">Research</a>
+          <a href="/methods/">Data &amp; Methods</a>
+          <a href="/about/">About</a>
+        </nav>
+      </header>
+      <main class="paper-main" id="main" tabindex="-1">
+        <div class="paper-hero">
+          <div class="paper-heading">
+            <a class="back-link" href="/research/"><span aria-hidden="true">←</span> Research</a>
+            <h1>The Dark Figure</h1>
+            <p class="paper-subtitle">Estimating unreported antisemitic hate crime</p>
+            <div class="paper-actions">
+              <a class="button button--primary" href="/reader/?paper=dark-figure">View PDF <span aria-hidden="true">↗</span></a>
+              <a class="paper-download" href="/pdfs/dark-figure.pdf" download="dark-figure.pdf">Download PDF</a>
+            </div>
+          </div>
+          <div class="artwork artwork--dark-figure" aria-hidden="true"></div>
+        </div>
+        <div class="paper-body">
+          <section class="paper-section" aria-labelledby="abstract-title">
+            <h2 id="abstract-title">Abstract</h2>
+            <p>Counts of antisemitic incidents are always partial: police statistics, NGO audits and community reporting channels each record only some of the same incidents. This paper develops a framework for estimating the dark figure, the incidents that appear on no list, by linking records across lists and analysing their overlap with <span class="nowrap">multiple-systems</span> estimation. One key assumption cannot be tested from the data, so the paper treats it as an explicit sensitivity parameter and reports the range of estimates it allows. It is a methods paper: its results come from simulations on synthetic data, and it reports no <span class="nowrap">real-world</span> findings. It also sets out an analysis plan and an ethics protocol for a future study of real records.</p>
+          </section>
+          <section class="paper-section" id="methods" aria-labelledby="methods-title">
+            <h2 id="methods-title">Methods</h2>
+            <ul class="methods-outline">
+              <li><span class="nowrap">Multiple-systems</span> estimation across overlapping lists</li>
+              <li>Sensitivity bounds for an untestable assumption</li>
+              <li>Referral between lists and provenance data</li>
+              <li>Record linkage and the propagation of linkage error</li>
+              <li>A reporting funnel that locates where incidents are lost</li>
+            </ul>
+          </section>
+          <section class="paper-section" aria-labelledby="simulations-title">
+            <h2 id="simulations-title">What the simulations show</h2>
+            <ul class="paper-findings">
+              <li>In simulated data, when one list copied records from another, the classic <span class="nowrap">two-list</span> estimate was about 39% too low; using each record’s provenance cut the error to about 1%.</li>
+              <li>In simulated data, the sensitivity ranges usually contained the true number of missed incidents, but were often too wide to guide policy without outside information.</li>
+              <li>In simulated data with realistic record errors, the stylised linkage correction overcorrected (about 47% too high, against 40% uncorrected), so the paper uses it only as a diagnostic.</li>
+            </ul>
+          </section>
+        </div>
+      </main>
+      <footer class="site-footer"><a class="site-footer__brand" href="/">Kornstein Lab</a></footer>
+    </div>
+  </body>
+</html>

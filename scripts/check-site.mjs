@@ -1,7 +1,7 @@
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { ROOT, REQUIRED_FILES, OPTIONAL_FILES, INDEXED_ROUTES, PAPER_SLUGS } from "./build-static.mjs";
+import { ROOT, REQUIRED_FILES, OPTIONAL_FILES, INDEXED_ROUTES, PAPER_SLUGS, FULL_PAPER_SLUGS, previewFiles } from "./build-static.mjs";
 
 async function listFiles(directory, prefix = "") {
   const files = [];
@@ -12,6 +12,11 @@ async function listFiles(directory, prefix = "") {
   }
   return files;
 }
+
+const isPdf = (data) => data.subarray(0, 5).equals(Buffer.from("%PDF-")) && data.subarray(-1024).includes(Buffer.from("%%EOF"));
+// A RIFF/WEBP header whose chunk size matches the file catches truncated renders.
+const isWebp = (data) => data.length > 12 && data.subarray(0, 4).equals(Buffer.from("RIFF"))
+  && data.subarray(8, 12).equals(Buffer.from("WEBP")) && data.readUInt32LE(4) + 8 === data.length;
 
 export async function checkSite(dist = path.join(ROOT, "dist")) {
   const files = await listFiles(dist);
@@ -62,13 +67,15 @@ export async function checkSite(dist = path.join(ROOT, "dist")) {
       throw new Error(`${file} must be marked noindex`);
     }
   }
+  for (const slug of [...PAPER_SLUGS, ...FULL_PAPER_SLUGS]) {
+    if (!isPdf(await readFile(path.join(dist, `pdfs/${slug}.pdf`)))) throw new Error(`Invalid PDF document: ${slug}`);
+  }
   for (const slug of PAPER_SLUGS) {
-    const pdf = await readFile(path.join(dist, `pdfs/${slug}.pdf`));
-    if (!pdf.subarray(0, 5).equals(Buffer.from("%PDF-")) || !pdf.subarray(-1024).includes(Buffer.from("%%EOF"))) {
-      throw new Error(`Invalid PDF document: ${slug}`);
-    }
     const svg = await readFile(path.join(dist, `pdfs/${slug}-page.svg`), "utf8");
     if (!/<svg\b[^>]*\bviewBox=/i.test(svg)) throw new Error(`Missing PDF page rendering: ${slug}`);
+  }
+  for (const file of FULL_PAPER_SLUGS.flatMap(previewFiles)) {
+    if (!isWebp(await readFile(path.join(dist, file)))) throw new Error(`Invalid preview image: ${file}`);
   }
   if (files.includes("sitemap.xml")) {
     const sitemap = await readFile(path.join(dist, "sitemap.xml"), "utf8");

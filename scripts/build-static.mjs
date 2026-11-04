@@ -3,12 +3,25 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const ROOT = fileURLToPath(new URL("../", import.meta.url));
+// One-page research proposals: PDF plus a single SVG page rendering.
 export const PAPER_SLUGS = ["measurement", "detection", "narratives"];
+// Methods papers: full PDF plus WebP renders of the first PREVIEW_PAGES pages
+// (scripts/build-paper-previews.mjs), in the order the research page lists them.
+export const FULL_PAPER_SLUGS = ["dark-figure", "contagion", "attitudes", "amplification"];
+// Home-page artwork actually used by the featured (wide) and half-width cards.
+export const HOME_ARTWORK = [
+  "assets/artwork-home-featured-dark-figure.png", "assets/artwork-home-featured-amplification.png",
+  "assets/artwork-home-card-contagion.png", "assets/artwork-home-card-attitudes.png",
+];
+export const PREVIEW_PAGES = 12;
+export const previewFiles = (slug) => Array.from({ length: PREVIEW_PAGES },
+  (_, index) => `pdfs/${slug}/page-${String(index + 1).padStart(2, "0")}.webp`);
+const RESEARCH_SLUGS = [...FULL_PAPER_SLUGS, ...PAPER_SLUGS];
 export const PAGE_FILES = [
   "index.html", "404.html", "research/index.html", "methods/index.html", "about/index.html",
-  ...PAPER_SLUGS.map((slug) => `research/${slug}/index.html`), "reader/index.html",
+  ...RESEARCH_SLUGS.map((slug) => `research/${slug}/index.html`), "reader/index.html",
 ];
-export const INDEXED_ROUTES = ["", "research/", "methods/", "about/", ...PAPER_SLUGS.map((slug) => `research/${slug}/`)];
+export const INDEXED_ROUTES = ["", "research/", "methods/", "about/", ...RESEARCH_SLUGS.map((slug) => `research/${slug}/`)];
 export const REQUIRED_FILES = [
   ...PAGE_FILES,
   "assets/styles.css", "assets/favicon.svg", "assets/artwork-reference.png", "assets/reader.js",
@@ -17,6 +30,11 @@ export const REQUIRED_FILES = [
   "assets/artwork-about.png",
   ...PAPER_SLUGS.map((slug) => `assets/artwork-paper-${slug}.png`),
   ...PAPER_SLUGS.flatMap((slug) => [`pdfs/${slug}.pdf`, `pdfs/${slug}-page.svg`]),
+  ...FULL_PAPER_SLUGS.flatMap((slug) => [
+    `assets/artwork-paper-${slug}.png`, `assets/artwork-research-${slug}.png`,
+    `pdfs/${slug}.pdf`, ...previewFiles(slug),
+  ]),
+  ...HOME_ARTWORK,
 ];
 export const OPTIONAL_FILES = [];
 

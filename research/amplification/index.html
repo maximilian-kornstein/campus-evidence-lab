@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Supply or Demand? A methods paper on defining and auditing algorithmic amplification of antisemitic content. Simulation study on a synthetic recommender; no real platform was audited.">
+    <meta name="theme-color" content="#faf8f6">
+    <title>Supply or Demand? — Kornstein Lab</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body class="paper-page paper-page--full paper-page--amplification">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="wordmark" href="/" aria-label="Kornstein Lab home">Kornstein Lab<span aria-hidden="true"></span></a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="/research/">Research</a>
+          <a href="/methods/">Data &amp; Methods</a>
+          <a href="/about/">About</a>
+        </nav>
+      </header>
+      <main class="paper-main" id="main" tabindex="-1">
+        <div class="paper-hero">
+          <div class="paper-heading">
+            <a class="back-link" href="/research/"><span aria-hidden="true">←</span> Research</a>
+            <h1>Supply or Demand?</h1>
+            <p class="paper-subtitle">Auditing algorithmic amplification of antisemitic content</p>
+            <div class="paper-actions">
+              <a class="button button--primary" href="/reader/?paper=amplification">View PDF <span aria-hidden="true">↗</span></a>
+              <a class="paper-download" href="/pdfs/amplification.pdf" download="amplification.pdf">Download PDF</a>
+            </div>
+          </div>
+          <div class="artwork artwork--amplification" aria-hidden="true"></div>
+        </div>
+        <div class="paper-body">
+          <section class="paper-section" aria-labelledby="abstract-title">
+            <h2 id="abstract-title">Abstract</h2>
+            <p>Claims that recommendation algorithms amplify antisemitic content rarely say “compared with what”, so they are hard to check. This paper defines amplification as exposure to antisemitic content under the algorithm relative to a named alternative feed, for the same user interests, and shows what randomised <span class="nowrap">test-account</span> audits can and cannot identify. It corrects for detector errors that differ between feeds and gives a stopping rule that lets an audit end as soon as the evidence is clear. It is a methods paper: its results come from simulations on a synthetic recommender, and it reports no <span class="nowrap">real-world</span> findings. An audit protocol with ethical safeguards commits only to a pilot and a feasibility gate.</p>
+          </section>
+          <section class="paper-section" id="methods" aria-labelledby="methods-title">
+            <h2 id="methods-title">Methods</h2>
+            <ul class="methods-outline">
+              <li>Amplification as a contrast at fixed demand</li>
+              <li>A Markov model of sessions and exposure</li>
+              <li>Randomised <span class="nowrap">test-account</span> audits</li>
+              <li>Correcting detector errors separately by feed</li>
+              <li><span class="nowrap">Anytime-valid</span> sequential stopping</li>
+            </ul>
+          </section>
+          <section class="paper-section" aria-labelledby="simulations-title">
+            <h2 id="simulations-title">What the simulations show</h2>
+            <ul class="paper-findings">
+              <li>In simulated data, detector errors that differed between the two feeds turned a true ratio of 0.89 into a naive estimate of 1.45; correcting each feed separately fixed this, while a single pooled correction made it worse.</li>
+              <li>In simulated audits, the planned stopping rule kept its error rates within their stated limits despite skewed data.</li>
+              <li>Under illustrative inputs, an audit powered to detect a material level of amplification for four user profiles would need about 4,900 test accounts, so the protocol commits only to a pilot and a feasibility gate.</li>
+            </ul>
+          </section>
+        </div>
+      </main>
+      <footer class="site-footer"><a class="site-footer__brand" href="/">Kornstein Lab</a></footer>
+    </div>
+  </body>
+</html>
