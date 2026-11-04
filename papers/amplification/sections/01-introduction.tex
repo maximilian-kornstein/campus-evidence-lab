@@ -63,83 +63,64 @@ collected in \cref{tab:notation}.
 
 \IfFileExists{tables/tab-notation.tex}{\input{tables/tab-notation}}{}%
 \paragraph{Contributions}
-Classical results are attributed where they are used, and we flag the results
-that are, to our knowledge, new in the form given.
+Classical results are attributed where used; we flag what is, to our
+knowledge, new in the form given.
 \begin{enumerate}[label=\textbf{C\arabic*},ref=C\arabic*,leftmargin=2.4em,itemsep=2pt]
-  \item\label{contrib:estimands} \textbf{Estimands.} In a potential-outcomes
-  framework \citep{rubin1974,imbensrubin2015}, the amplification ratio
-  $\mathrm{AR}_\rho(d)$ and the additive amplification $\mathrm{AA}_\rho(d)$
-  compare mean exposure under the algorithmic policy with mean exposure under
-  a reference policy $\rho$, such as a reverse-chronological feed, at a fixed
-  demand profile $d$ (\cref{def:amplification}). The reference is part of the
-  estimand. For real users, whose demand responds to what they are shown,
-  observed exposure splits into a demand-driven baseline, a supply effect, a
-  demand-shaping effect and a feedback interaction (\cref{thm:decomp}); the
-  interaction is bounded by the heterogeneity of the supply effect times the
-  distance by which the algorithm has moved demand. The bilinear
-  representation, the bounds on the interaction and the statement of what
-  fixed-demand audits identify (\cref{prop:audit-scope}) are new in this form.
-  \item\label{contrib:markov} \textbf{A Markov model of exposure.} A session is
-  a Markov chain over content states (\cref{fig:markov}). Long-run and
-  finite-horizon exposure, hitting times and \emph{rabbit holes} follow from
-  the fundamental matrix (\cref{prop:markov}; \citealp{kemeny1960,meyer1975}),
-  and a perturbation theorem bounds how much a change in recommendation
-  probabilities can change exposure (\cref{thm:perturb}): a nudge that
-  redirects a share $\varepsilon$ of recommendations to an antisemitic state
-  raises long-run exposure, to first order, by the relative amount
-  $\varepsilon$ times the mean number of items needed to reach it from
-  equilibrium, while within a session of $T$ items the effect is capped at
-  $(T-1)/4$ times the size of the change. The nudge, stickiness and
-  finite-horizon bounds are new in this form.
-  \item\label{contrib:identify} \textbf{Identification.} A design that
-  randomises puppets to persona--policy cells within waves identifies
-  $\mathrm{AR}(d)$, $\mathrm{AA}(d)$ and a persona-contrast decomposition
-  under four stated conditions (\cref{thm:identify}). The puppet, not the
-  session, is the unit for the variance, and blocking by wave keeps drift out
-  of the contrast. Treating waves as groups of partial interference
-  \citep{hudgens2008} and the puppets' share of the engagement signal as an
-  exposure mapping \citep{aronow2017}, we bound the bias from interference by
-  a constant $\xi$ times that share, show that the direction of the bias
-  depends on how much puppet engagement reaches false negatives, so no sign
-  can be assumed, and give a randomised-saturation design and a breakdown
-  value for sensitivity analysis (\cref{prop:interference}).
+  \item\label{contrib:estimands} \textbf{Estimands.} The amplification ratio
+  $\mathrm{AR}_\rho(d)$ and additive amplification $\mathrm{AA}_\rho(d)$
+  compare mean exposure under the algorithm and under a reference policy
+  $\rho$ at fixed demand $d$ (\cref{def:amplification};
+  \citealp{rubin1974,imbensrubin2015}); the reference is part of the
+  estimand. For real users, observed exposure splits into demand, supply,
+  demand shaping and a feedback interaction, bounded by the heterogeneity of
+  supply times the shift in demand (\cref{thm:decomp}), and fixed-demand
+  audits identify only supply (\cref{prop:audit-scope}). The bilinear form,
+  the interaction bounds and \cref{prop:audit-scope} are new in this form.
+  \item\label{contrib:markov} \textbf{A Markov model of exposure.} Long-run
+  and finite-horizon exposure, hitting times and \emph{rabbit holes} follow
+  from the fundamental matrix (\cref{prop:markov};
+  \citealp{kemeny1960,meyer1975}). Redirecting a share $\varepsilon$ of
+  recommendations to an antisemitic state raises long-run exposure, to first
+  order, by the relative amount $\varepsilon$ times the mean number of items
+  needed to reach it from equilibrium, while within a $T$-item session the
+  effect is capped at $(T-1)/4$ times the change (\cref{thm:perturb}); these
+  bounds are new in this form.
+  \item\label{contrib:identify} \textbf{Identification.} Randomising puppets
+  to persona--policy cells within waves identifies $\mathrm{AR}(d)$,
+  $\mathrm{AA}(d)$ and a persona-contrast decomposition under four stated
+  conditions, with the puppet as the unit of variance (\cref{thm:identify}).
+  Treating waves as groups of partial interference \citep{hudgens2008} and the
+  puppets' share of engagement as an exposure mapping \citep{aronow2017}, we
+  bound the bias by a constant $\xi$ times that share, show that the direction
+  of the bias depends on how much puppet engagement reaches false negatives,
+  so no sign can be assumed, and give a randomised-saturation design and a
+  breakdown value for sensitivity analysis (\cref{prop:interference}).
   \item\label{contrib:misclass} \textbf{Misclassification-corrected
-  measurement.} Exposure is observed through a classifier
-  \citep{kornsteinlab2026detection}. When error rates are the same in both
-  arms, the naive ratio is attenuated towards one by a weight that depends on
-  the classifier only through its specificity. When error rates depend on the
-  type of content and the arms deliver different mixtures of types, error
-  differs between arms, and the naive ratio, and even a ratio corrected with
-  pooled error rates, can lie on the other side of one from the true ratio
-  (\cref{thm:misclass}). Validation stratified by arm, which double sampling
-  within puppets provides \citep{rogangladen1978,neyman1938}, is consistent in
-  either case.
+  measurement.} The naive ratio of flagged shares is attenuated towards one
+  through the classifier's specificity, and when error rates depend on content
+  type and the arms show different mixtures of types, the naive and even a
+  pooled-corrected ratio can lie on the wrong side of one
+  (\cref{thm:misclass}). Validation by arm, as double sampling within puppets
+  provides, is consistent in either case \citep{rogangladen1978,neyman1938}.
   \item\label{contrib:sequential} \textbf{Sequential auditing and its cost.} A
-  confidence sequence for $\mathrm{AR}(d)$, updated after each wave from a
-  puppet-level outcome, remains approximately valid at any data-dependent
-  stopping time, and a betting variant is valid exactly
+  confidence sequence from a puppet-level outcome is approximately valid at
+  any data-dependent stopping time, and a betting variant exactly
   (\cref{alg:sequential,thm:sequential};
   \citealp{wald1945,howard2021,ramdas2023}). A closed-form power calculation
-  (\cref{prop:power}) shows what this costs: under plausible inputs a
-  materiality audit of four personas needs about $4{,}900$ accounts and
-  $170{,}000$ coded exposures, and for a ratio corrected with external error
-  rates, below a minimum number of coded items no number of puppets suffices.
-  \item\label{contrib:sim} \textbf{A simulation study.} On a synthetic
-  recommender with known amplification, we evaluate the estimators and the
-  misclassification correction, interference and its remedies, the
-  decomposition, the Markov model and the sequential procedure
+  (\cref{prop:power}) shows the cost: under plausible inputs a materiality
+  audit of four personas needs about $4{,}900$ accounts and $170{,}000$ coded
+  exposures.
+  \item\label{contrib:sim} \textbf{A simulation study} on a synthetic
+  recommender with known amplification evaluates these tools
   (\cref{sec:simulation}).
   \item\label{contrib:protocol} \textbf{A pre-registered protocol with a
-  feasibility gate.} We fix in advance the access route (data access for
-  vetted researchers under Article~40 of the DSA in preference to a
-  sock-puppet audit), the personas, the randomisation, the interference
-  controls, the validation, the estimands and the stopping and decision rules
-  (\cref{sec:protocol}), and an ethics protocol (\cref{sec:ethics}): puppets
-  never post or interact with anyone and never open an item that the
-  classifier flags. Because the materiality audit is infeasible for a small
-  lab, the protocol commits only to a pilot and a registered feasibility gate,
-  which under illustrative capacity caps selects the detection of
-  amplification for a single persona.
+  feasibility gate.} We fix in advance the access route, personas,
+  randomisation, interference controls, validation, estimands and decision
+  rules (\cref{sec:protocol}), with ethical safeguards (\cref{sec:ethics}):
+  puppets never post, interact or open flagged items. Because the materiality
+  audit is infeasible for a small lab, the protocol commits only to a pilot
+  and a registered feasibility gate, which under illustrative caps selects
+  the detection of amplification for a single persona.
 \end{enumerate}
 
 \paragraph{What audits can and cannot show}

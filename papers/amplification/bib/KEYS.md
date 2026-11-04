@@ -84,3 +84,14 @@ main.tex should list: `\bibliography{refs,bib/sources,bib/theory,bib/design,bib/
 - Ledwich, Zaitsev & Laukemper 2022 (personalised follow-up, First Monday) and Bagchi et al. 2024 critique of guess2023: findings not checked; not included.
 - Kemeny & Snell "new appendix" subtitle: library records disagree on which printing added it; not used.
 - Sandvig v. Barr WL citation: not confirmed; replaced by 451 F. Supp. 3d 73, which Van Buren cites (fact-check 2026-11-03).
+
+## bib/lead.bib -- added in revision (TEXT-REVISER, 2026-11-04; each verified by web search, see comments in the file)
+- armitage1969 -- Armitage, McPherson & Rowe 1969 JRSS A 132(2) 235-244: repeated significance tests (17.6% for eight looks)
+- angelopoulos2023 -- Angelopoulos, Bates, Fannjiang, Jordan, Zrnic 2023 Science 382(6671) 669-674: prediction-powered inference
+- egami2023 -- Egami, Hinck, Stewart, Wei 2023 NeurIPS 36: design-based supervised learning with imperfect surrogates
+- johari2022 -- Johari, Li, Liskovich, Weintraub 2022 Management Science 68(10) 7069-7089: interference bias in two-sided platform experiments
+- bajari2023 -- Bajari, Burdick, Imbens, Masoero, McQueen, Richardson, Rosen 2023 Stat Sci 38(3) 458-476: experimental design in marketplaces
+- hiq2022 -- hiQ Labs v. LinkedIn, 639 F. Supp. 3d 944 (N.D. Cal. 2022): user agreement banning scraping and fake profiles enforceable (contract)
+- eu2019dsm -- Directive (EU) 2019/790 (DSM copyright directive), OJ L 130, 17.5.2019, 92-125: Art. 3 text and data mining for research organisations
+Companion papers (kornsteinlab2026darkfigure, ...contagion, ...attitudes) now all read "Working paper, Kornstein Lab, 2026".
+Case entries (sandvigbarr2020, vanburen2021) no longer repeat the year in howpublished. vanderweele2014b: "Sti{}jn" breaks the font's ij ligature.

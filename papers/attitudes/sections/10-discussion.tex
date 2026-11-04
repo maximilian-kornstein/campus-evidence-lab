@@ -33,13 +33,21 @@ size used, which is itself a finding.
 
 Under partial invariance the map can also be compared across
 political, generational and national groups (\cref{thm:dif-bias,prop:anchor}).
-These comparisons can be anchored in the stereotype items alone
+These comparisons can also be anchored in the stereotype items alone
 (\cref{rem:id-anchor-S}). Such an analysis need not assume Israel-related
 items function identically across groups; it assumes the stereotype anchors
-do, which is testable only in part (\cref{prop:anchor}(b)). The plan
-therefore reports the stereotype-anchored comparison with the bound
-\eqref{eq:id-anchor-bound} evaluated at a stated maximum anchor DIF
-(\cref{sec:design-groups}).
+do, which is testable only in part (\cref{prop:anchor}(b)). It is not a
+safe default. In the simulation, the same DIF on two stereotype anchors
+biased it two to three times as much as the default anchors, and it broke
+down at the largest DIF (\cref{sec:sim-dif}). The plan therefore reports it
+as a sensitivity analysis, and every anchored comparison with the bound
+\eqref{eq:id-anchor-bound} at a stated maximum anchor DIF of $0.2$
+latent-response standard deviations (\cref{sec:design-groups}). In the
+simulated design that bound allows a first-order bias of $0.69$ in the
+difference in means of $G$ with the default anchors and $0.89$ with
+stereotype-only anchors, against a true difference of $0.3$, and about $0.2$
+if all anchors' DIF has the same sign. It measures how much a comparison
+rests on its anchors; it does not correct it.
 An item could sit inside the boundary set in one group and outside it in
 another. A finding of that kind would bear directly on whether one rule can
 be applied to speakers from every group, a question that the definitions
@@ -125,14 +133,19 @@ sets between countries could reflect translation rather than attitudes.
 \emph{Latent-variable assumptions.} Every result rests on a model: a graded
 response link, local independence given the factors, normal latent
 distributions, orthogonal factors in the bifactor model, and an assignment of
-each item to exactly one specific factor. Two misspecifications push the
-boundary estimands in the same direction, towards larger general-factor
-shares. If an Israel-related item, for example one that invokes a classic
-trope, also loads on the stereotype factor, a bifactor model without that
-cross-loading credits the shared variance to the general factor; and
-acquiescence to agree-keyed statements, if it is not modelled, loads on the
-general factor too. The plan pre-registers a check for the first, a model for
-the second, and a refit on the items of the disputed categories alone
+each item to exactly one specific factor. Two misspecifications move the
+boundary estimands, though not all in one direction. If an Israel-related
+item, for example one that invokes a classic trope, also loads on the
+stereotype factor, a bifactor model without that cross-loading credits the
+shared variance to the general factor; and acquiescence to agree-keyed
+statements, if it is not modelled, loads on the general factor too. In the
+simulation a cross-loading raised the shares of the trope-based items and
+lowered those of the other Israel-related items, and acquiescence raised the
+shares of agree-keyed items and lowered those of reverse-keyed ones
+(\cref{sec:sim-misspec}). The primary model therefore includes an
+acquiescence factor, and the plan pre-registers a check for cross-loadings,
+with a cross-loading model for the whole trope-based block if the check
+rejects, and a refit on the items of the disputed categories alone
 (\cref{sec:design-decisions}). Our
 identification results state what is identified under the model, not that
 the model is true. The decision rules compare the bifactor model with the

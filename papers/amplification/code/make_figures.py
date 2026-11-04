@@ -778,7 +778,7 @@ def tab_checks(res, path, U="20"):
             x = "external_pooled"
             row(r"External validation: s.d.\ of $\log\widehat{\mathrm{AR}}$, MC; delta (median)",
                 [f"{P_[p]['by_U'][U][x]['logAR_sd_mc']:.3f}; {P_[p]['by_U'][U][x]['logAR_sd_delta_median']:.3f}" for p in PERS])
-            row(r"\quad $\kappa_{\Sp}=v_{\Sp}^{1/2}/(J\mu_r)$", [f"{P_[p]['by_U'][U][x]['kappa_Sp']:.3f}" for p in PERS])
+            row(r"\quad $\mathrm{cv}_{\Sp}=v_{\Sp}^{1/2}/(J\mu_r)$", [f"{P_[p]['by_U'][U][x]['kappa_Sp']:.3f}" for p in PERS])
             row(r"\quad coverage $\log\mathrm{AR}$; AA (\%)",
                 [f"{100 * P_[p]['by_U'][U][x]['logAR']['coverage']:.1f}; {100 * P_[p]['by_U'][U][x]['AA']['coverage']:.1f}" for p in PERS])
         L.append(r"\addlinespace")

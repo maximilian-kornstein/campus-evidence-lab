@@ -16,6 +16,32 @@ def simple_metrics(rubric: dict) -> dict[str, dict]:
             if not k.startswith("_") and isinstance(v, dict) and v.get("type") in SIMPLE_TYPES and "indicator" in v}
 
 
+class COAggregationError(ValueError):
+    """Raised when a rubric would put contested (CO) items into an aggregate. CO is descriptive only."""
+
+
+def co_rubric_keys(rubric: dict) -> set[str]:
+    return {k for k, v in rubric.get("rubrics", {}).items() if v.get("category") == "CO" or k.startswith("CO.")}
+
+
+def assert_co_excluded(rubric: dict) -> None:
+    """CO items are never scored or aggregated (rule R4). Refuse any rubric whose metrics list a CO rubric key."""
+    co = co_rubric_keys(rubric) | {"CO.describe"}
+    bad = {name: sorted(set(m.get("rubric_keys", [])) & co) for name, m in rubric.get("metrics", {}).items()
+           if not name.startswith("_") and isinstance(m, dict) and set(m.get("rubric_keys", [])) & co}
+    if bad:
+        raise COAggregationError(f"rubric metrics list contested (CO) rubric keys, which are never aggregated: {bad}")
+
+
+def in_pool(spec: dict, item) -> bool:
+    """Item-level restriction of a metric's pool beyond rubric_keys (e.g. 'items': 'with_accuracy_key')."""
+    if getattr(item, "category", None) == "CO":
+        return False
+    if spec.get("items") == "with_accuracy_key" and not getattr(item, "accuracy_key", None):
+        return False
+    return True
+
+
 def rg_metrics(rubric: dict) -> dict[str, dict]:
     return {k: v for k, v in simple_metrics(rubric).items() if v.get("rogan_gladen")}
 
