@@ -2,7 +2,7 @@
 
 \paragraph{What a boundary map could show}
 The public argument about Israel-related speech is usually conducted as a
-single question: is this kind of criticism antisemitic? The framework
+single question: is this kind of speech about Israel antisemitic? The framework
 replaces it with many narrower questions, one for each statement in a
 pre-registered item bank, each with an answer that has an interval and
 stated assumptions. For each Israel-related statement, a boundary map would
@@ -16,22 +16,30 @@ correlated-factors model adds a coarser summary, the latent correlation of
 the two attitude domains. It is the quantity closest to the scale-level
 associations reported in earlier studies (\cref{sec:bg-prior}), and it
 cannot by itself separate a common cause from correlated but distinct
-attitudes (\cref{prop:model-sl}); the item-level map can, where the items
-within a domain differ in their general-factor share.
+attitudes (\cref{prop:model-sl}); the item-level map can, where some domain
+has at least four items that differ in their general-factor shares.
 
 Every outcome of such a map is informative to every side of the debate.
 Someone who holds that a category of Israel-related speech typically
 expresses hostility toward Jews learns whether, in the surveyed population,
 statements in that category covary with classic stereotypes as that view
-implies. Someone who holds that the category typically expresses a distinct
-political attitude learns the same thing about the opposite claim. Both learn
-where the evidence is indeterminate at the sample size used, which is itself
-a finding. Under partial invariance the map can also be compared across
+implies. Someone who holds that the category typically expresses an
+attitude distinct from that hostility learns the same thing about the
+opposite claim. A low share shows distinctness from the general factor; it
+does not show what the distinct attitude is, and calling it political
+disagreement or a different form of hostility is interpretation, not
+estimate. Both sides learn where the evidence is indeterminate at the sample
+size used, which is itself a finding.
+
+Under partial invariance the map can also be compared across
 political, generational and national groups (\cref{thm:dif-bias,prop:anchor}).
 These comparisons can be anchored in the stereotype items alone
-(\cref{rem:id-anchor-S}), so no one need assume that any Israel-related
-statement means the same thing to the groups being compared, an assumption
-that would itself be contested.
+(\cref{rem:id-anchor-S}). Such an analysis need not assume Israel-related
+items function identically across groups; it assumes the stereotype anchors
+do, which is testable only in part (\cref{prop:anchor}(b)). The plan
+therefore reports the stereotype-anchored comparison with the bound
+\eqref{eq:id-anchor-bound} evaluated at a stated maximum anchor DIF
+(\cref{sec:design-groups}).
 An item could sit inside the boundary set in one group and outside it in
 another. A finding of that kind would bear directly on whether one rule can
 be applied to speakers from every group, a question that the definitions
@@ -45,7 +53,7 @@ differs between groups, where it acts as DIF. The map is therefore robust to
 the simplest form of strategic answering, though not to a shift that acts
 differently on the general and the specific parts of an item's response. Multilevel regression and
 poststratification would carry the latent trait to regions and states with
-honest intervals (\cref{eq:mrp}), and \cref{prop:index} explains why a
+calibrated intervals (\cref{eq:mrp}), and \cref{prop:index,prop:index-dif} explain why a
 stereotype-count index cannot do the same job without invariance
 diagnostics.
 
@@ -70,8 +78,9 @@ common response style. The design separates some of these, through
 knowledge measures, reverse-keyed items and comparison-state items
 (\cref{sec:design-items}), but not all. Finally, the general factor means
 only what its items make it mean. We read it as hostility toward Jews as
-Jews because the stereotype items that define it are not themselves in
-dispute between the definitions. If those items also share a broader
+Jews because the stereotype items, whose content the definitions do not
+dispute, give $G$ its interpretation; Israel items also shape it, since $G$
+is what both domains share (\cref{sec:model-bifactor}). If the items also share a broader
 disposition, such as a general readiness to endorse conspiratorial claims,
 the general factor absorbs it, and the boundary estimands inherit that
 ambiguity. This is why the stereotype battery, and not only the
@@ -83,7 +92,7 @@ reported as a sensitivity analysis (\cref{rem:id-s1}), is itself part of the
 substantive question.
 
 \paragraph{Limitations}
-We stress five.
+We stress four; the limits on individual and normative readings are set out in \cref{sec:ethics-individual}.
 
 \emph{Survey mode.} The plan uses a self-administered online panel
 (\cref{sec:design-items}). Mode affects what respondents are willing to
@@ -116,9 +125,15 @@ sets between countries could reflect translation rather than attitudes.
 \emph{Latent-variable assumptions.} Every result rests on a model: a graded
 response link, local independence given the factors, normal latent
 distributions, orthogonal factors in the bifactor model, and an assignment of
-each item to exactly one specific factor. If an Israel-related item also
-loads on the stereotype factor, a bifactor model without that cross-loading
-will tend to credit the shared variance to the general factor. Our
+each item to exactly one specific factor. Two misspecifications push the
+boundary estimands in the same direction, towards larger general-factor
+shares. If an Israel-related item, for example one that invokes a classic
+trope, also loads on the stereotype factor, a bifactor model without that
+cross-loading credits the shared variance to the general factor; and
+acquiescence to agree-keyed statements, if it is not modelled, loads on the
+general factor too. The plan pre-registers a check for the first, a model for
+the second, and a refit on the items of the disputed categories alone
+(\cref{sec:design-decisions}). Our
 identification results state what is identified under the model, not that
 the model is true. The decision rules compare the bifactor model with the
 correlated-factors and unidimensional models and report a boundary set only
@@ -127,13 +142,6 @@ when the bifactor model passes pre-registered fit criteria
 under the departures it simulates (\cref{sec:simulation}), not under every
 departure that real data might present.
 
-\emph{Population association is not individual intent.} The estimands
-describe how attitudes covary across a population at the time of fieldwork.
-They say nothing about the intentions of any respondent, speaker or
-organisation, and they may change as events change what statements about
-Israel mean to the people answering them. Every output will carry these
-limits (\cref{sec:ethics-individual}).
-
 \paragraph{Extensions}
 Three extensions seem most valuable. First, \emph{longitudinal invariance}.
 Attitudes about Israel may move with events, and so may the meaning of the
@@ -141,7 +149,7 @@ items. Tracking a boundary map over time requires invariance across waves as
 well as groups, with anchor items that are themselves stable over time; an
 item that drifts across the boundary could be changing in meaning, not in
 the attitudes behind it. The event calendars of the second paper in this
-series \citep{kornsteinlab2026contagion} offer a principled way to place
+series \citep{kornsteinlab2026p2contagion} offer a principled way to place
 waves before and after salient external events. Second, \emph{conjoint
 designs}. The item-level estimand is observational: it describes how
 responses to fixed wordings covary. A conjoint design that randomises
@@ -152,11 +160,13 @@ average marginal component effect of \citet{hainmueller2014}. That would separat
 its wording, and so address the dependence on wording described above.
 Third, \emph{linkage to text}. The lab's other projects propose to measure
 antisemitism in online discourse, to evaluate detection algorithms and to
-trace narratives \citep{kornsteinlab2026measurement,kornsteinlab2026detection,kornsteinlab2026narratives}.
+trace narratives \citep{kornsteinlab2026proposalmeasurement,kornsteinlab2026proposaldetection,kornsteinlab2026proposalnarratives}.
 A boundary map could inform them: the definitional tags and estimated
-$\mathrm{ECV}_j$ of each item give annotators and classifiers a graded,
-population-based description of Israel-related content in place of a single
-binary label. In the other direction, narratives observed in text can
+$\mathrm{ECV}_j$ of each item describe, for a population, how responses to
+Israel-related content covary with responses to stereotypes. That description
+can sit beside the labels that annotators assign under each definition; it
+cannot replace them, because it classifies no utterance
+(\cref{sec:ethics-individual}). In the other direction, narratives observed in text can
 suggest wordings for the item bank. Any linkage of survey respondents to
 their own online text would require separate consent and its own ethics
 review (\cref{sec:ethics}).
@@ -169,7 +179,7 @@ debate also contains empirical claims, and those can be tested in a way that
 does not depend on which side one is on. The threshold, the items, the
 decision rules and the code are fixed before the data are seen; the same
 rule is applied to every item; and every estimate is published whatever its
-direction. A result produced that way is not a weapon for either side. It is
+direction. A result produced that way is harder to use selectively. It is
 a shared reference point that people who disagree about definitions can
 inspect, criticise and replicate. That is what measurement can offer a
 contested question: not an answer to it, but common ground on which to argue

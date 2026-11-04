@@ -64,6 +64,7 @@
 \displaywidowpenalty=10000
 
 \usepackage{booktabs,array,tabularx,multirow}
+\usepackage{placeins}     % \FloatBarrier at the end of Section 4
 \usepackage{graphicx}
 \usepackage{caption,subcaption}
 \usepackage[shortlabels]{enumitem}
@@ -236,6 +237,8 @@
 %  sections (e.g. \mathrm{AR}); section-local helpers such as \osc and \dTV
 %  are declared with \providecommand where they are used.
 \newcommand{\E}{\mathbb{E}}
+\newcommand{\dW}{d_{\mathrm{W}}}            % Wasserstein-1 distance
+\newcommand{\erg}{\operatorname{erg}}       % ergodicity coefficient
 \renewcommand{\Pr}{\mathbb{P}}
 \newcommand{\Var}{\operatorname{Var}}
 \newcommand{\Cov}{\operatorname{Cov}}

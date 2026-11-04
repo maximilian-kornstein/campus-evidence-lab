@@ -227,6 +227,27 @@ def mixture_a(alpha):
     return -2 * np.log(alpha) + np.log(1 - 2 * np.log(alpha))
 
 
+def alg1_cs_mean(D, looks, alpha, t_star, burn=1):
+    """The construction of Algorithm 1 applied to the mean of iid pair differences D (R, N) (the confidence
+    sequence for AA of sec:prot-stopping): plug-in s.d. s_t^2 = t^-1 sum (D_i - Dbar_t)^2, normal-mixture radius
+    with rho^2 = a / t_star, running intersection over the looks after `burn` waves. Returns (L, U), (R, W)."""
+    R, N = D.shape
+    r2 = mixture_a(alpha) / float(t_star)
+    c1, c2 = np.cumsum(D, 1), np.cumsum(D * D, 1)
+    L = np.full(R, -np.inf)
+    U = np.full(R, np.inf)
+    Lo, Up = np.zeros((R, len(looks))), np.zeros((R, len(looks)))
+    for w, t in enumerate(looks):
+        m = c1[:, t - 1] / t
+        s = np.sqrt(np.maximum(c2[:, t - 1] / t - m * m, 0.0))
+        h = s * normal_mixture_radius(t, 1.0, alpha, r2)
+        if w >= burn:
+            L = np.maximum(L, m - h)
+            U = np.minimum(U, m + h)
+        Lo[:, w], Up[:, w] = L, U
+    return Lo, Up
+
+
 def alg1_cs(Ya, Yr, looks, alpha, t_star, lam_range=(1.0, 1.0), burn=1):
     """Algorithm 1 (alg:sequential) for R replications at once.
 

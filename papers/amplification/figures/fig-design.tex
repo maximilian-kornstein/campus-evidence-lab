@@ -191,7 +191,7 @@
     \node[lab,anchor=north] at (0.1,-0.52) {$\log\mathrm{AR}(d)$;\ \textcolor{LabAccent}{margin $\pm\log\delta$}};
   \end{scope}
 
-  % 8. confidence sequence for log AR(d) over waves; stops at tau
+  % 8. confidence sequence for log AR(d) over waves; stops after wave 4
   \begin{scope}[shift={(t8.center)},yshift=\gx cm]
     \def\wx{0.29}   % cm per wave
     \def\vy{0.72}   % cm per unit of log AR
@@ -216,7 +216,7 @@
       \draw[LabNavy,line width=0.4pt] (-1.15+\w*\wx,\yo) -- ++(0,-0.05);}
     \draw[LabAccent,line width=0.7pt] (-1.15+4*\wx,\yo-0.07) -- (-1.15+4*\wx,{\yo+0.27*\vy});
     \fill[LabAccent] (-1.15+4*\wx,{\yo+0.27*\vy}) circle (1.3pt);
-    \node[lab,text=LabAccent,anchor=north] at (-1.15+4*\wx,\yo-0.06) {$\tau$};
+    \node[lab,text=LabAccent,anchor=north] at (-1.15+4*\wx,\yo-0.06) {stop};
     \node[lab,text=LabAccent,anchor=west] at (0.1,{\yo+0.223*\vy+0.1}) {$\log\delta$};
     \node[lab,anchor=north] at (0.62,\yo-0.06) {waves};
     \node[lab,anchor=east] at (-1.17,{\yo}) {$0$};
@@ -235,10 +235,11 @@ score, and gives the sensitivity and specificity of the classifier in each
 arm; exposure is corrected arm by arm, because error rates can differ when the
 content mix differs; the amplification ratio is estimated for each persona and
 compared with a registered margin $[1/\delta,\delta]$; and a confidence
-sequence for $\mathrm{AR}(d)$, built from each puppet's confirmed flagged
-exposure and (asymptotically) valid whenever the audit stops, decides after
-each wave whether to stop. Here, on the log scale, it stops at wave $\tau=4$,
-when it lies entirely above $\log\delta$ (rule S1). Labels under each tile point to the corresponding results.
+sequence for $\mathrm{AR}(d)$, built from a puppet-level outcome (in the
+protocol, each puppet's double-sampled exposure) and approximately valid
+whenever the audit stops, decides after each wave whether to stop. Here, on
+the log scale, it stops after wave~4, when it lies entirely above
+$\log\delta$ (rule S1). Labels under each tile point to the corresponding results.
 \textbf{Schematic:} all glyph values are invented for legibility.}
 \label{fig:design}
 \end{figure}

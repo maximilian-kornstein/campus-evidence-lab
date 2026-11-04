@@ -28,14 +28,13 @@ Future salient events are unknown at time $t$. We forecast conditionally on a gi
 calendar of future events, which is empty unless stated. If event arrivals are modelled
 as a marked Poisson process, the results below hold conditionally on its realisation,
 and therefore also after averaging over it.
-The choice of future calendar matters for calibration. % ALIGN-WITH-SIM
-A forecaster that sets the future calendar to empty while events in fact keep arriving
-is misspecified: its predictive law is not the conditional law of the count, and its
-probability integral transform is not uniform over windows that contain a new event
-(\cref{lem:fc-pit}). A forecaster that averages over a model for event arrivals is
-calibrated when windows are pooled, if that model is correct. What no forecaster can do
-is \emph{time} the events. That limits the recall of an alert rule, not its
-calibration (\cref{sec:sim-alert}).
+The choice of future calendar matters for calibration. A forecaster that sets the
+future calendar to empty while events in fact keep arriving is misspecified: its
+predictive law is not the conditional law of the count, and it under-forecasts. A
+forecaster that averages over a correct model for event arrivals gives the conditional
+law, so its probability integral transform is uniform when windows are pooled
+(\cref{lem:fc-pit}). What no forecaster can do is \emph{time} new events, which limits
+the recall of an alert rule rather than its pooled calibration (\cref{sec:sim-alert}).
 
 \begin{lemma}[The future given the past]\label{lem:fc-future}
 Assume \cref{ass:th-model}, and fix $t\ge0$ and the calendar of events. For $s>t$, let
@@ -57,31 +56,25 @@ $\psi_k(u)=\eta_ke^{-\eta_ku}$, and that there are no future events. Then, for $
   h_{t,k}(s)&=\sum_{j=1}^{M}x_{kj}(t)\,e^{-\beta_{kj}(s-t)}, &
   x_{kj}(t)&=\sum_{i:\,t^j_i\le t}\alpha_{kj}\beta_{kj}e^{-\beta_{kj}(t-t^j_i)},\\
   u_{t,k}(s)&=u_k(t)\,e^{-\eta_k(s-t)}, &
-  u_k(t)&=\sum_{e:\,\tau_e\le t}\beta_kS_e\eta_ke^{-\eta_k(t-\tau_e)} .
+  u_k(t)&=\sum_{e:\,\tau_e\le t}\upsilon_kS_e\eta_ke^{-\eta_k(t-\tau_e)} .
 \end{aligned}
 \end{equation}
-The state $\bm\xi(t)=(\bm x(t),\bm u(t))\in[0,\infty)^{M^2+M}$ is a piecewise-deterministic
+The state $\bm\chi(t)=(\bm x(t),\bm u(t))\in[0,\infty)^{M^2+M}$ is a piecewise-deterministic
 Markov process. Between incidents and events it decays exponentially. At a stream-$j$
 incident, $x_{kj}$ jumps by $\alpha_{kj}\beta_{kj}$ for each $k$. At event $e$, $u_k$
-jumps by $\beta_kS_e\eta_k$. The conditional law of the future given $\Hist_t$ depends on
-$\Hist_t$ only through $\bm\xi(t)$, and the predictive mean is affine in $\bm\xi(t)$.
+jumps by $\upsilon_kS_e\eta_k$. The conditional law of the future given $\Hist_t$ depends on
+$\Hist_t$ only through $\bm\chi(t)$, and the predictive mean is affine in $\bm\chi(t)$.
 The intensity just after $t$ is
 $\lambda_k(t+)=\mu_k(t)+u_k(t)+\sum_jx_{kj}(t)$.
 \end{lemma}
 
 \Cref{lem:fc-future} makes exact forecasting possible, with no discretisation error.
-Generation~0 of the future has three parts:
-\begin{itemize}
-  \item background immigrants on $(t,t+\Delta_{\mathrm a}]$;
-  \item the remaining immigrants of past events;
-  \item the pending offspring of past incidents.
-\end{itemize}
-The pending offspring of stream $j$ in stream $k$ form a Poisson process with intensity
-$x_{kj}(t)e^{-\beta_{kj}(s-t)}$, so their number on $(t,t+\Delta_{\mathrm a}]$ is Poisson with mean
-$x_{kj}(t)(1-e^{-\beta_{kj}\Delta_{\mathrm a}})/\beta_{kj}$. Each generation-0 point then cascades
-as in \cref{sec:th-cluster}, truncated at $t+\Delta_{\mathrm a}$. Repeating this $J$ times gives a
-Monte Carlo predictive distribution with error of order $J^{-1/2}$. Thinning
-simulation from $\bm\xi(t)$ \citep{ogata1981} is an alternative.
+Generation~0 of the future consists of background immigrants on
+$(t,t+\Delta_{\mathrm a}]$, the remaining immigrants of past events, and the pending
+offspring of past incidents; those of stream $j$ in stream $k$ number
+$\Pois\{x_{kj}(t)(1-e^{-\beta_{kj}\Delta_{\mathrm a}})/\beta_{kj}\}$. Each generation-0 point
+then cascades as in \cref{sec:th-cluster}, truncated at $t+\Delta_{\mathrm a}$, and $J$
+repetitions give a Monte Carlo predictive distribution with error of order $J^{-1/2}$.
 The predictive law can also be computed without simulation. Its probability generating
 function solves $M^2$ ordinary differential equations backwards in time, and a discrete
 Fourier transform then gives the predictive probability mass function
@@ -121,10 +114,10 @@ $c_{\mathrm{FA}},c_{\mathrm{miss}}>0$. Let
   $\bm N'\ge\bm N$. In particular $\pi_t(\omega)\le\pi_t(\omega')$ for every upper
   set $\mathcal U$.
   \item \emph{Exponential kernels: a monotone decision region.} Under the
-  exponential specification of \cref{lem:fc-future}, $\pi_t=G_t(\bm\xi(t))$ for a
+  exponential specification of \cref{lem:fc-future}, $\pi_t=G_t(\bm\chi(t))$ for a
   function $G_t$ that is nondecreasing in each coordinate and Lipschitz. The Bayes
-  alert region $\mathcal A_t=\{\bm\xi:G_t(\bm\xi)\ge\pi^*\}$ is therefore a closed
-  upper set: if the rule alerts at $\bm\xi$, it alerts at every $\bm\xi'\ge\bm\xi$.
+  alert region $\mathcal A_t=\{\bm\chi:G_t(\bm\chi)\ge\pi^*\}$ is therefore a closed
+  upper set: if the rule alerts at $\bm\chi$, it alerts at every $\bm\chi'\ge\bm\chi$.
   The function $G_t$ depends on $t$ only through $\bm\mu$ on $(t,t+\Delta_{\mathrm a}]$ and the
   calendar of future events. For constant $\bm\mu$ and no future events it does not
   depend on $t$.
@@ -151,26 +144,16 @@ through $\pi^*$, which is agreed with partners. The analysis plan's grid of cost
 $c_{\mathrm{miss}}/c_{\mathrm{FA}}\in\{2,5,10\}$ corresponds to
 $\pi^*\in\{1/3,1/6,1/11\}$ (\cref{sec:plan-estimands}).
 
-The structural parts (b)--(d) have three operational consequences.
-\begin{enumerate}[(i)]
-  \item \emph{Consistency.} Under the model, an additional incident never turns an
-  alert off.
-  \item \emph{A univariate threshold curve.} In the univariate case, the curve
-  $x^*_t(u)$ can be tabulated once, by \cref{rem:fc-pgf} or by a coupled simulation.
-  Checking for an alert then means comparing the current excitation with the curve.
-  An event's contribution $u(t)$ decays but never vanishes, so the single intensity
-  threshold $\lambda^*_t$ is exact only when $\eta=\beta$ or before any event.
-  \item \emph{An upper set, not a half-space.} In the multivariate case, $\mathcal A_t$
-  is an upper set but in general not a half-space. The predictive mean is affine in
-  $\bm\xi(t)$, so the rule ``alert if the predictive mean exceeds a level'' has a
-  half-space as its region. That rule is not optimal in general, because the tail also
-  depends on the dispersion of the future count, and the dispersion differs by
-  direction. Excitation of a strongly self-exciting stream produces a more dispersed
-  future count than the same increase in the mean from a weakly self-exciting one.
-  When decay rates are set by the receiving stream (\cref{prop:irf}(b)), the state
-  reduces to $(\bm\lambda(t+)-\bm\mu(t)-\bm u(t),\,\bm u(t))\in\mathbb R^{2M}$, and
-  $\mathcal A_t$ is an upper set of current-intensity vectors for a given event state.
-\end{enumerate}
+The structural parts have three operational consequences. Under the model, an
+additional incident never turns an alert off. In the univariate case, the curve
+$x^*_t(u)$ can be tabulated once, and checking for an alert means comparing the current
+excitation with it; since an event's contribution $u(t)$ never vanishes, the single
+intensity threshold $\lambda^*_t$ is exact only when $\eta=\beta$ or before any event. In
+the multivariate case, $\mathcal A_t$ is an upper set but in general not a half-space. The
+predictive mean is affine in $\bm\chi(t)$, so the rule ``alert if the predictive mean
+exceeds a level'' has a half-space as its region. That rule is not optimal in general,
+because the tail of the future count also depends on its dispersion, which is larger when
+the excitation sits in a strongly self-exciting stream.
 With unknown parameters, part (a) applies to the posterior predictive probability.
 Parts (b)--(d) hold for each parameter value, but they need not hold for the posterior
 mixture, because the posterior itself depends on the history.
@@ -183,7 +166,7 @@ matters most.
 
 \begin{assumption}[Recording and reporting]\label{ass:fc-report}
 Each stream-$k$ incident is recorded with probability $p_k\in(0,1]$. A recorded incident
-that occurs at $s$ becomes available to the analyst at $s+D$, where $D$ has distribution
+that occurs at $s$ becomes available to the analyst at $s+d$, where the delay $d$ has distribution
 function $F_k$ on $[0,\infty)$. Recording indicators and delays are independent across
 incidents, and independent of the incident process and the calendar of events.
 \end{assumption}
@@ -234,9 +217,9 @@ Assume \cref{ass:th-model,ass:fc-report}.
   The inequality is strict whenever some incident with $\varphi_{kj}(t-s^j_i)>0$ has
   $F_j(t-s^j_i)<1$. Now suppose $\bm\mu$ is constant, there are no events,
   $\spr(\Amat)<1$ and the process is stationary. Then
-  $\E\tilde x_{kj}(t)=\Pr(D_j\le U_{kj})\,\E x_{kj}(t)$, where $D_j\sim F_j$ and
+  $\E\tilde x_{kj}(t)=\Pr(d_j\le U_{kj})\,\E x_{kj}(t)$, where $d_j\sim F_j$ and
   $U_{kj}\sim g_{kj}$ are independent. For exponential kernels,
-  $\Pr(D_j\le U_{kj})=\E e^{-\beta_{kj}D_j}$.
+  $\Pr(d_j\le U_{kj})=\E e^{-\beta_{kj}d_j}$.
   \item \emph{Consequence for alerts.} If $p_k\equiv1$, then
   $\tilde{\bm x}(t)\le\bm x(t)$ pathwise. By \cref{thm:alert}(c), the alert probability
   computed from the naive state is then at most the one computed from the true state. A
@@ -245,33 +228,23 @@ Assume \cref{ass:th-model,ass:fc-report}.
 \end{enumerate}
 \end{proposition}
 
-Part (a) restates \eqref{eq:data-righttrunc} at the level of intensities. It shows that
-any likelihood for the data available at $t$ must carry the factor $p_kF_k(t-s)$ on
-$\lambda_k(s)$. Because $\lambda_k$ depends on incidents that are not yet available,
-the likelihood of the observed data integrates over them. The complete-data
-log-likelihood, for all incidents with their recording indicators and delays, is
-\eqref{eq:th-loglik} plus the log-likelihood of the recording indicators and, for
-recorded incidents, of their delays. Data augmentation, by Markov chain Monte Carlo or
-stochastic EM, imputes the incidents that are not yet available, using the generative
-structure in (a). This is the self-exciting
-analogue of Bayesian nowcasting \citep{hohle2014,mcgough2020}. There the latent
-quantity is a daily count; here it is an excitation state. A simpler route, adequate
-for estimating $\vartheta$, restricts the likelihood to the settled part of the record,
-$s\le t-L$ with $F_k(L)\approx1$. It uses (b) only for the state near $t$.
+Part (a) restates \eqref{eq:data-righttrunc} at the level of intensities: any likelihood
+for the data available at $t$ must carry the factor $p_kF_k(t-s)$ on $\lambda_k(s)$, and
+integrate over the incidents not yet available. Data augmentation, by Markov chain Monte
+Carlo or stochastic EM, imputes them, the self-exciting analogue of Bayesian nowcasting
+\citep{hohle2014,mcgough2020}. A simpler route, adequate for estimating $\vartheta$,
+restricts the likelihood to the settled part of the record, $s\le t-L$ with
+$F_k(L)\approx1$, and uses (b) only for the state near $t$.
 
 The size of the bias in (c) can be large. With exponentially distributed delays of mean
-two days and a kernel rate $\beta=1.5$ per day, $\E e^{-\beta D}=1/(1+2\beta)=0.25$. On
+two days and a kernel rate $\beta=1.5$ per day, $\E e^{-\beta d}=1/(1+2\beta)=0.25$. On
 average, the naive state then carries a quarter of the true excitation.
 
 The unbiased nowcast has a cost in variance. The weights $1/\{p_jF_j(t-s)\}$ are large
-for recent incidents, and the conditional variance of \eqref{eq:fc-ht} is
-$\sum\Phik_{\cdot j}(s-s_i)^2\{1-p_jF_j(t-s_i)\}/\{p_jF_j(t-s_i)\}$. This is why
-(b) requires $F_j(\delta)>0$. With $\delta=0$ this holds only if $F_j(0)>0$. Without a lag
-floor, weights for incidents arbitrarily close to $t$ are unbounded. Suppose
-$F_j(0)=0$, $F_j(u)=O(u)$ as $u\downarrow0$ and $\varphi(0)>0$. Then the conditional
-variance of the weighted sum over all incidents up to $t$ has infinite expectation. A
-lag floor $\delta>0$ avoids this, at the price of discarding the available incidents in
-$(t-\delta,t]$.
+for recent incidents, and without a lag floor they are unbounded: if $F_j(0)=0$,
+$F_j(u)=O(u)$ as $u\downarrow0$ and $\varphi(0)>0$, the conditional variance of the weighted
+sum over all incidents up to $t$ has infinite expectation. This is why (b) requires
+$F_j(\delta)>0$; a floor $\delta>0$ discards the available incidents in $(t-\delta,t]$.
 
 An unbiased state does not give a calibrated tail probability. $G_t$ is nonlinear, and
 a noisy state that happens to be high produces a high plug-in probability more often
@@ -305,17 +278,13 @@ use two scores, both negatively oriented:
   \mathrm{CRPS}(P,y)=\sum_{z=0}^{\infty}\bigl\{P(z)-\ind{y\le z}\bigr\}^2
   =\E_P|X-y|-\tfrac12\E_P|X-X'| ,
 \end{equation}
-where $X$ and $X'$ are independent with law $P$.
-\begin{itemize}
-  \item The log score is strictly proper and local. It requires $P(y)>0$, so Monte Carlo
-  probability mass functions need a floor, or the exact probability mass function of
-  \cref{rem:fc-pgf} should be used.
-  \item The CRPS for counts, the ranked probability score with infinitely many
-  categories, is strictly proper relative to distributions with a finite mean. It is
-  insensitive to small probabilities, and it is estimated from predictive draws by the
-  sample version of the second expression \citep{gneiting2007,czado2009}.
-  \item For the surge event itself, the Brier score $(\pi_t-Y_t)^2$ is strictly proper.
-\end{itemize}
+where $X$ and $X'$ are independent with law $P$. The log score is local and requires
+$P(y)>0$, so Monte Carlo probability mass functions need a floor, or the exact law of
+\cref{rem:fc-pgf} should be used. The CRPS for counts is strictly proper relative to
+distributions with a finite mean, is insensitive to small probabilities, and is estimated
+from predictive draws by the sample version of the second expression
+\citep{gneiting2007,czado2009}. For the surge event itself, the Brier score
+$(\pi_t-Y_t)^2$ is strictly proper.
 
 \paragraph{Calibration} For discrete counts the probability integral transform (PIT)
 is randomised:
@@ -337,23 +306,15 @@ with $V_t$ uniform on $(0,1)$ and independent of everything else, and $P_t(-1)=0
 \end{lemma}
 
 This is the count-data form of the prequential principle of \citet{dawid1984}; see also
-\citet{gneiting2007b} and \citet{czado2009}. Departures of the PIT histogram from
-uniformity reveal three kinds of error:
-\begin{itemize}
-  \item a slope indicates bias;
-  \item a U shape indicates forecasts that are too narrow;
-  \item a hump indicates forecasts that are too wide.
-\end{itemize}
-With overlapping windows, or with counts that have not settled, the $U_t$ are uniform
-but dependent, so tests of uniformity need block resampling.
+\citet{gneiting2007b} and \citet{czado2009}. A slope in the PIT histogram indicates bias,
+a U shape forecasts that are too narrow, and a hump forecasts that are too wide. With
+overlapping windows, or with counts that have not settled, the $U_t$ are uniform but
+dependent, so tests of uniformity need block resampling.
 
-\paragraph{Alerts} For a threshold $\pi$, define three rates:
-\begin{itemize}
-  \item the hit rate $\mathrm{HR}(\pi)=\Pr(\pi_t\ge\pi\mid Y_t=1)$;
-  \item the false-alarm rate $\mathrm{FAR}(\pi)=\Pr(\pi_t\ge\pi\mid Y_t=0)$;
-  \item the precision $\mathrm{PPV}(\pi)=\Pr(Y_t=1\mid\pi_t\ge\pi)$.
-\end{itemize}
-The ROC curve, $(\mathrm{FAR},\mathrm{HR})$, does not depend on how common surges are.
+\paragraph{Alerts} For a threshold $\pi$, the hit rate (recall) is
+$\mathrm{HR}(\pi)=\Pr(\pi_t\ge\pi\mid Y_t=1)$, the false-alarm rate
+$\mathrm{FAR}(\pi)=\Pr(\pi_t\ge\pi\mid Y_t=0)$ and the precision
+$\mathrm{PPV}(\pi)=\Pr(Y_t=1\mid\pi_t\ge\pi)$. The ROC curve, $(\mathrm{FAR},\mathrm{HR})$, does not depend on how common surges are.
 When surges are rare, the precision--recall curve, $(\mathrm{HR},\mathrm{PPV})$, is more
 informative about the burden of false alarms. The realised cost over a test period,
 $\sum_t\{c_{\mathrm{FA}}a_t(1-Y_t)+c_{\mathrm{miss}}(1-a_t)Y_t\}$, is the criterion of

@@ -1,111 +1,206 @@
 \section{Simulation details}\label{app:simdetails}
 
-This appendix documents the simulation study of \cref{sec:simulation}: software, seeds and runs (\cref{app:sim-run}), configurations (\cref{app:sim-config}), estimator settings (\cref{app:sim-est}), Monte Carlo standard errors (\cref{app:sim-mcse}), exact checks and recomputed illustrations (\cref{app:sim-checks}), further result tables (\cref{app:sim-tables}) and reproduction (\cref{app:sim-repro}). All data are synthetic. Every configuration value below is stored with the results in \texttt{results/sim\_results.json}. The per-replication values are in \texttt{results/raw/E1.json}, \dots, \texttt{results/raw/E5.json}, with the near-proportional design in \texttt{results/raw/E1b.json}.
+This appendix documents the simulation study of \cref{sec:simulation}: software, seeds and runs (\cref{app:sim-run}), configurations (\cref{app:sim-config}), estimator settings (\cref{app:sim-est}), Monte Carlo standard errors (\cref{app:sim-mcse}), exact checks and recomputed illustrations (\cref{app:sim-checks}), further results (\cref{app:sim-tables}) and reproduction (\cref{app:sim-repro}). All data are synthetic. Every configuration value below is stored with the results in \texttt{results/sim\_results.json}, and the per-replication values are in \texttt{results/raw/X1.json}, \dots, \texttt{results/raw/X9.json}, with the near-proportional design in \texttt{X1b.json} and the stereotype-anchor experiment in \texttt{X2b.json}. \texttt{results/SUMMARY-numbers.md} and \texttt{results/SUMMARY-new-experiments.md} print the main numbers from the results file.
 
 \subsection{Software, seeds and runs}\label{app:sim-run}
 
+\paragraph{Experiment labels}
+The experiments are labelled X1 to X9, with X1b (near-proportional design) and X2b (DIF on stereotype anchors). X1 to X5 and X1b were labelled E1 to E5 and E1b when they were run. They were renamed, in the code, the results file, the raw files and the tables, to avoid a clash with the estimands (E1)--(E9) of \cref{sec:design-estimands}. The renaming changed no seed and no number: the seed of each replication depends on a numerical experiment index, which is unchanged, and re-running replications of X1 and X2 with the renamed code reproduces the stored values exactly. The results file records the mapping and, for each renamed experiment, its old label.
+
 \paragraph{Software}
-The experiments are run by \texttt{code/run\_experiments.py}, which calls the package \texttt{code/attsim/}: data generation (\texttt{generate.py}, \texttt{designs.py}), polychoric correlations (\texttt{polychoric.py}, \texttt{bvn.py}), bifactor and correlated-factors fits (\texttt{fit.py}), boundary estimands and intervals (\texttt{boundary.py}), DIF procedures (\texttt{dif.py}), list experiments (\texttt{listexp.py}), MRP (\texttt{mrp.py}) and count indices (\texttt{index.py}). The figures and the tables \texttt{tables/tab-sim-*.tex} are written by \texttt{code/make\_figures.py} from the results file. The recorded environment is Python 3.13.18, NumPy 2.5.3, SciPy 1.18.1 and Matplotlib 3.11.2 on Linux x86\_64 (glibc 2.39). No other packages are used. The unit tests in \texttt{code/tests/} (26 tests, run with \texttt{pytest}) check the generator, the polychoric estimator and its standard errors against Monte Carlo, the analytic Jacobian, exact population fits, the rank deficiency of a two-item specific factor, the list-experiment estimators and allocations, the mixed model and the poststratification identity, the two-step EAP shrinkage, the index quadrature, and the identities of \cref{thm:dif-bias}(d)(i) and \cref{rem:id-anchor-S}.
+The experiments are run by \texttt{code/run\_experiments.py}, which calls the package \texttt{code/attsim/}: data generation (\texttt{generate.py}, \texttt{designs.py}), polychoric correlations (\texttt{polychoric.py}, \texttt{bvn.py}), bifactor and correlated-factors fits (\texttt{fit.py}), fits with arbitrary loading patterns such as cross-loadings and method factors (\texttt{genfit.py}), boundary estimands and intervals (\texttt{boundary.py}), DIF procedures (\texttt{dif.py}), tetrad tests (\texttt{tetrad.py}), list experiments and their link to the measurement model (\texttt{listexp.py}, \texttt{listirt.py}), MRP (\texttt{mrp.py}) and count indices (\texttt{index.py}). The figures and the tables \texttt{tables/tab-sim-*.tex} are written by \texttt{code/make\_figures.py}, and the summary of the new experiments by \texttt{code/make\_summary.py}. The recorded environment is Python 3.13.18, NumPy 2.5.3, SciPy 1.18.1 and Matplotlib 3.11.2 on Linux x86\_64 (glibc 2.39). No other packages are used. The unit tests in \texttt{code/tests/} (32 tests, run with \texttt{pytest}) check the generators, including the cross-loading and acquiescence generators of X6 and the equivalence of the general generator with the bifactor generator; the polychoric estimator and its standard errors against Monte Carlo; the analytic Jacobians; exact population fits of the bifactor model and of the models with cross-loadings or a method factor; the tetrad statistics at null and alternative populations; the rank deficiency of a two-item specific factor; the list-experiment estimators, the allocations and the root of \eqref{eq:le-irt-root}; the mixed model and the poststratification identity; the two-step EAP shrinkage; the index quadrature; and the identities of \cref{thm:dif-bias}(d)(i) and \cref{rem:id-anchor-S}.
 
 \paragraph{Seeds}
-The base seed is $20261103$. Every replication has its own NumPy generator, created by \texttt{np.random.default\_rng} from a seed sequence \texttt{SeedSequence([20261103,\,$i$,\,keys\dots,\,$r$])}, where $i\in\{1,\dots,5\}$ is the experiment index and $r$ the replication.
+The base seed is $20261103$. Every replication has its own NumPy generator, created from a seed sequence \texttt{SeedSequence([20261103,\,$i$,\,keys\dots,\,$r$])}, where $i$ is the experiment index and $r$ the replication.
 \begin{itemize}
-  \item E1 and E1b: keys (design index, $n$), with design indices $0,\dots,4$ for $|\mathcal I|=6$, $3$, $2$, proportional and near-proportional. The sequence is split in two, one stream for the data and one for the bootstrap and the random starts. The weights of the population fits come from one sample of $100{,}000$ respondents per design.
-  \item E2: key $100\kappa$, rounded; the weights of the population fits come from samples of $60{,}000$ per group with keys $(999,\ 100\kappa)$.
-  \item E3: keys (cell index), with cells numbered in the order of \cref{tab:sim-list} (parts A and B) and then \cref{tab:sim-listchoice} (part C), 32 cells in all.
-  \item E4: keys $(n)$; the sequence is split into a population stream and a sample stream.
-  \item E5: keys $(100s,\ 100|\Delta\mu_G|)$ for the random uniform DIF, $(700+100s_a,\ 100\Delta\mu_G)$ for the non-uniform DIF, and $(500+100s,\ 100\Delta\mu_G,\ r)$ for the finite-sample check, each rounded to an integer.
+  \item X1 and X1b ($i=1$): keys (design index, $n$), with design indices $0,\dots,4$ for $|\mathcal I|=6$, $3$, $2$, proportional and near-proportional. The sequence is split in two, one stream for the data and one for the bootstrap and the random starts. The weights of the population fits come from one sample of $100{,}000$ respondents per design.
+  \item X2 ($i=2$): key $100\kappa$, rounded; the weights of the population fits come from samples of $60{,}000$ per group with keys $(999,\ 100\kappa)$. X7 regenerates the X2 data sets from the same seeds.
+  \item X2b ($i=22$): keys $(100\kappa_I,\ 100\kappa_S)$; population weights from $60{,}000$ per group with keys $(999,\ 100\kappa_I,\ 100\kappa_S)$.
+  \item X3 ($i=3$): keys (cell index), with cells numbered in the order of \cref{tab:sim-list} (parts A and B) and then \cref{tab:sim-listchoice} (part C), 32 cells in all.
+  \item X4 ($i=4$): keys $(n)$; the sequence is split into a population stream and a sample stream.
+  \item X5 ($i=5$): keys $(100s,\ 100|\Delta\mu_G|)$ for the random uniform DIF, $(700+100s_a,\ 100\Delta\mu_G)$ for the non-uniform DIF, and $(500+100s,\ 100\Delta\mu_G,\ r)$ for the finite-sample check, each rounded to an integer.
+  \item X6 ($i=6$): keys (cell index), split into a data stream and a stream for the random starts; population weights from a sample of $60{,}000$ with keys $(999,\ \text{cell index})$.
+  \item X8 ($i=8$): keys (scenario index). X9 ($i=9$): keys (configuration index, $n$).
 \end{itemize}
 Because each replication has its own stream, the results do not depend on the number of worker processes or on the order in which tasks run.
 
 \paragraph{Runs}
-All runs were on 3~November 2026, with two worker processes, \texttt{OPENBLAS\_NUM\_THREADS=1} and \texttt{nice}, on a shared four-core machine with a load average of 11 to 14. Run times are therefore conservative.
+All runs were on 3~November 2026, with two worker processes, \texttt{OPENBLAS\_NUM\_THREADS=1} and \texttt{nice}, on a shared four-core machine. Run times are therefore conservative.
 \begin{enumerate}[(1)]
-  \item E1 ran from 21:49:41 UTC, with a wall time of 1{,}276\,s and 2{,}547\,s of CPU time for 870 fits with bootstrap.
-  \item The replications of E1b were computed in a run started at 22:11:23 UTC (wall time 101\,s), which later failed while summarising E2. The final run, started at 22:15:16 UTC, reused these replications unchanged (option \texttt{--reuse-raw E1b}) and recomputed E2, E3, E4 and E5 (wall times 58, 16, 5 and 22\,s).
-  \item At 22:17:13 UTC the summaries of E1, E1b and E2 were recomputed from the raw replications with the final version of \texttt{run\_experiments.py} (option \texttt{--resummarize}). The E1 replications were produced by an earlier version of that script (SHA-256 prefix \texttt{ca450e64a827b7ce}). The modules E1 uses for generation and estimation (\texttt{generate.py}, \texttt{designs.py}, \texttt{polychoric.py}, \texttt{bvn.py}, \texttt{fit.py}, \texttt{boundary.py}) are byte-identical in the two versions, and only the summary code changed. E1b, E2, E3, E4 and E5 were produced by version \texttt{cd237869adbe67af}, and the summaries by the final version \texttt{2729078df210b26b}.
+  \item X1 ran from 21:49:41 UTC, with a wall time of 1{,}276\,s and 2{,}547\,s of CPU time for 870 fits with bootstrap, under a load average of 11 to 14.
+  \item The replications of X1b were computed in a run started at 22:11:23 UTC (wall time 101\,s), which later failed while summarising X2. The run started at 22:15:16 UTC reused these replications unchanged and computed X2, X3, X4 and X5 (wall times 58, 16, 5 and 22\,s). At 22:17:13 UTC the summaries of X1, X1b and X2 were recomputed from the raw replications with the then final version of \texttt{run\_experiments.py}. The X1 replications were produced by an earlier version of that script (SHA-256 prefix \texttt{ca450e64a827b7ce}) whose generation and estimation modules are byte-identical to those of the later one; X1b to X5 were produced by version \texttt{cd237869adbe67af} and the summaries by \texttt{2729078df210b26b}.
+  \item The new experiments ran from 23:26:48 UTC with version \texttt{ad5429c1a40083a8}: X2b, X6, X7, X8 and X9, with wall times of 242, 367, 28, 20 and 146\,s. Afterwards the block of disputed Israel-related items was renamed from IP to ID in the code, the plan's IT$\times$S check and a second identification diagnostic were added to X6, and the X2b bound was extended to a stated maximum DIF of $0.4$. With version \texttt{748bb62959101007}, X6 was then re-run with the same seeds from 23:41:57 UTC (wall time 574\,s), which reproduces every quantity of the first X6 run and adds the new ones, and the population fits and summary of X2b were recomputed from its stored replications (option \texttt{--resummarize}). The generation and estimation code of X2b, X7, X8 and X9 is the same in the two versions.
 \end{enumerate}
-The results file records, for each experiment, the SHA-256 prefixes of every source file that produced it and of the code that recomputed its summary. An earlier full run of E2 to E5 (21:41:53 UTC, in \texttt{results/run\_log.txt}) was superseded by the final run and is not used.
+The results file records, for each experiment, the SHA-256 prefixes of every source file that produced it and of the code that recomputed its summary. An earlier full run of X2 to X5 (21:41:53 UTC, in \texttt{results/run\_log.txt}) was superseded and is not used.
 
 \subsection{Configurations}\label{app:sim-config}
 
-\Cref{tab:sim-design} summarises the five experiments.
+\Cref{tab:sim-design} summarises the experiments.
 
 \begin{table}[tbp]
 \centering
-\caption{Design of the simulation study (synthetic data only). $R$ is the number of Monte Carlo replications.}
+\caption{Design of the simulation study (synthetic data only). $R$ is the number of Monte Carlo replications. X1--X5 were labelled E1--E5 when they were run.}
 \label{tab:sim-design}
 \footnotesize
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.0cm}@{}}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.0cm}@{}}
 \toprule
 Exp. & Results tested & Truth and estimators & $R$ \\
 \midrule
-E1 & \Cref{thm:ident,prop:model-sl,prop:id-boundary-test}; \cref{rem:id-heterogeneity} &
-  One group; 8 stereotype items and $|\mathcal I|\in\{2,3,6\}$ Israel-related items; heterogeneous, nearly proportional or proportional stereotype loadings; $n\in\{500,1000,3000\}$; bifactor and correlated-factors fits &
+X1 & \Cref{thm:ident,prop:model-sl,prop:id-boundary-test}; \cref{rem:id-heterogeneity} &
+  One group; 8 stereotype items and $|\mathcal I|\in\{2,3,6\}$ Israel-related items; heterogeneous, nearly proportional (X1b) or proportional stereotype loadings; $n\in\{500,1000,3000\}$; bifactor and correlated-factors fits &
   100 ($|\mathcal I|=6,3$); 50 ($|\mathcal I|=2$); 40 (others) \\
-E2 & \Cref{thm:dif-bias,prop:anchor}; \cref{rem:id-anchor-S,rem:id-concurrent} &
-  Two groups of 1{,}500; uniform DIF on I1, I2 and non-uniform DIF on I3 of magnitude $\kappa\in\{0,0.2,0.4,0.6\}$; ignoring DIF, correct and contaminated anchors, stereotype-only anchors, and the DIF procedure &
+X2 & \Cref{thm:dif-bias,prop:anchor}; \cref{rem:id-anchor-S,rem:id-concurrent} &
+  Two groups of 1{,}500; uniform DIF on I1, I2 and non-uniform DIF on I3 of magnitude $\kappa\in\{0,0.2,0.4,0.6\}$; ignoring DIF, correct and contaminated anchors, stereotype-only anchors, and the drafted DIF screen &
   100 per $\kappa$ \\
-E3 & \Cref{prop:list-var,thm:joint-sdb,thm:design} &
+X2b & \Cref{prop:anchor}(c); \cref{rem:id-anchor-S} &
+  As X2, with uniform DIF of $\kappa_S\in\{0.1,0.2,0.3\}$ on the stereotype anchors S1, S2, with or without the Israel-related DIF; default and stereotype-only anchors; the bound \eqref{eq:id-anchor-bound} &
+  100 per cell \\
+X3 & \Cref{prop:list-var,thm:joint-sdb,thm:design} &
   One sensitive item with a threshold shift (\cref{def:le-shift}); $n=3{,}000$; split and paired designs; equal, optimal and pilot-based allocations; control lists with $J\in\{2,\dots,6\}$, with and without floor and ceiling effects &
   2{,}000 (allocation, pairing); 1{,}000 (list choice) \\
-E4 & \Cref{eq:mrp,prop:eap} &
+X4 & \Cref{eq:mrp,prop:eap} &
   50 areas, 32 demographic cells each, differential non-response; $n\in\{1000,3000,6000\}$; MRP, MRP on two-step EAP scores, and direct estimates &
   200 per $n$ \\
-E5 & \Cref{prop:index} &
-  Index $P_g(h)=\Pr(S_i\ge h\mid g)$ for the 8 stereotype items, $h\in\{2,4,6\}$; random uniform and non-uniform DIF; unequal latent variances; exact computation &
+X5 & \Cref{prop:index,prop:index-dif} &
+  Index $P_g(q)=\Pr(U_{i+}\ge q\mid g)$ for the 8 stereotype items, $q\in\{2,4,6\}$; random uniform and non-uniform DIF; unequal latent variances; exact computation &
   1{,}000 configurations per cell \\
+X6 & Cross-loadings and acquiescence (\cref{sec:design-decisions}) &
+  Registered sizes (10 S, 8 ID, 6 IT items), $n=6{,}000$; IT cross-loading on $S$; acquiescence with registered or balanced keying; standard fit and four remedies &
+  100 per cell \\
+X7 & The revised DIF screen (\cref{sec:design-groups}) &
+  The X2 data sets; Benjamini--Hochberg screen without effect-size requirement, then refit &
+  100 per $\kappa$ \\
+X8 & \Cref{prop:list-irt}(b),(c); \cref{prop:list-irt-ext} &
+  Sensitive item in the six-item bank, two groups of 3{,}000, direct and list arms; $\delta_j$ from \eqref{eq:le-irt-root}; common, group-specific and non-uniform shifts &
+  300 per scenario \\
+X9 & Rule D2(ii); \cref{asm:id-het,lem:app-tetrad,lem:app-classes} &
+  Registered sizes (10 and 14 items per domain), $n\in\{1500,6000\}$; joint tetrad test, intersection--union test, earlier Bonferroni rule &
+  400 ($n=6{,}000$); 200 ($n=1{,}500$) \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\paragraph{E1}
-All items have five categories with standardised thresholds giving marginal shares $0.30$, $0.30$, $0.20$, $0.12$ and $0.08$, shifted by equally spaced amounts from $-0.3$ to $0.3$ across the items of a design. The link is the normal ogive. The stereotype items S1--S8 have ECVs $0.85$, $0.45$, $0.75$, $0.55$, $0.90$, $0.50$, $0.80$, $0.60$ and communalities $0.55$, $0.50$, $0.60$, $0.50$, $0.55$, $0.60$, $0.50$, $0.55$. In the proportional design every stereotype item has ECV $0.70$ and communality $0.55$. In the near-proportional design (E1b) the ECVs are $0.74$, $0.66$, $0.72$, $0.68$, $0.75$, $0.65$, $0.73$, $0.67$ with communality $0.55$. The Israel-related items I1--I6 have ECVs $0.25$, $0.75$, $0.40$, $0.60$, $0.15$, $0.85$ and communality $0.5$. Standardised loadings are $\lambda_{jG}=(\mathrm{ECV}_jh_j^2)^{1/2}$ and $\lambda_{js}=\{(1-\mathrm{ECV}_j)h_j^2\}^{1/2}$, converted to slopes and thresholds by \cref{lem:id-reduction}. Sample sizes are $n\in\{500,1000,3000\}$; $R=100$ for $|\mathcal I|=6$ and $3$, $50$ for $|\mathcal I|=2$, and $40$ for the proportional and near-proportional designs; $\tau=0.5$. The pseudo-true $\rho_{SI}$ is $0.621$, $0.589$, $0.591$, $0.590$ and $0.590$ for $|\mathcal I|=6$, $3$, $2$, proportional and near-proportional.
+\paragraph{X1}
+All items have five categories with standardised thresholds giving marginal shares $0.30$, $0.30$, $0.20$, $0.12$ and $0.08$, shifted by equally spaced amounts from $-0.3$ to $0.3$ across the items of a design. The link is the normal ogive. The stereotype items S1--S8 have ECVs $0.85$, $0.45$, $0.75$, $0.55$, $0.90$, $0.50$, $0.80$, $0.60$ and communalities $0.55$, $0.50$, $0.60$, $0.50$, $0.55$, $0.60$, $0.50$, $0.55$. In the proportional design every stereotype item has ECV $0.70$ and communality $0.55$. In the near-proportional design (X1b) the ECVs are $0.74$, $0.66$, $0.72$, $0.68$, $0.75$, $0.65$, $0.73$, $0.67$ with communality $0.55$. The Israel-related items I1--I6 have ECVs $0.25$, $0.75$, $0.40$, $0.60$, $0.15$, $0.85$ and communality $0.5$. Standardised loadings are $\lambda_{jG}=(\mathrm{ECV}_jh_j^2)^{1/2}$ and $\lambda_{js}=\{(1-\mathrm{ECV}_j)h_j^2\}^{1/2}$, converted to slopes and thresholds by \cref{lem:id-reduction}. $n\in\{500,1000,3000\}$; $\tau=0.5$. The pseudo-true $\rho_{SI}$ is $0.621$, $0.589$, $0.591$, $0.590$ and $0.590$ for $|\mathcal I|=6$, $3$, $2$, proportional and near-proportional.
 
-\paragraph{E2}
-The six-item design of E1, two groups of $1{,}500$, focal latent means $(0.3,0,0.3)$ and focal covariance $\bm I_3$. Uniform DIF on I1 and I2 sets $b^{(1)}_{jc}=b_{jc}-\kappa\,(1+a_{jG}^2+a_{js}^2)^{1/2}$; non-uniform DIF on I3 sets $a^{(1)}_{jG}=(1-1.25\kappa)a_{jG}$. $\kappa\in\{0,0.2,0.4,0.6\}$, $R=100$ per $\kappa$, and the leave-one-anchor-out refits are run at $\kappa=0.4$ in all 100 replications. Anchor sets: correct S1--S4, I5, I6; one contaminated S1--S4, I1, I6; two contaminated S1--S4, I1, I2; stereotype-only S1--S4. DIF screen: Wald test of equal slopes and thresholds (6 degrees of freedom), Benjamini--Hochberg at $q=0.05$ over the tested items, effect-size threshold $0.25$.
+\paragraph{X2}
+The six-item design of X1, two groups of $1{,}500$, focal latent means $(0.3,0,0.3)$ and focal covariance $\bm I_3$. Uniform DIF on I1 and I2 sets $b^{(1)}_{jc}=b_{jc}-\kappa\,(1+a_{jG}^2+a_{js}^2)^{1/2}$; non-uniform DIF on I3 sets $a^{(1)}_{jG}=(1-1.25\kappa)a_{jG}$. The leave-one-anchor-out refits are run at $\kappa=0.4$ in all 100 replications. Anchor sets: correct S1--S4, I5, I6; one contaminated S1--S4, I1, I6; two contaminated S1--S4, I1, I2; stereotype-only S1--S4. DIF screen: Wald test of equal slopes and thresholds (6 degrees of freedom), Benjamini--Hochberg at $q=0.05$ over the tested items, and, in the drafted screen only, an effect-size threshold of $0.25$ at the focal mean of $G$.
 
-\paragraph{E3}
-The sensitive item's latent response is $0.75\,\theta_G+\varepsilon$ with $\varepsilon\sim\mathrm N(0,1)$. The private threshold gives $\pi=0.30$ and the direct threshold, shifted by $\delta_j$, gives $\pi^D=0.20$. False endorsement, when present, sets $D_i=1$ with probability $0.02/0.7$ when $Z_i=0$, so $\pi^F=0.02$. Control items have prevalence $1/2$. They form $\lfloor J/2\rfloor$ independent pairs, each with $\Pr(1,1)=\Pr(0,0)=(1+\rho)/4$, plus one independent item if $J$ is odd. $n=3{,}000$ and costs are equal. The pilot-based allocation uses a pilot of 300 respondents with equal arms, which is not reused. The covariate-adjusted estimator uses a score of $\theta_G$ with reliability $0.85$ and separate-slope regression adjustment of each arm mean, with HC2 variances. Floor and ceiling effects: in arm $\armT$, a respondent with $Z_i=1$ and $W_i=J$ reports $J$ with probability $\kappa_{\mathrm c}$, and one with $Z_i=1$ and $W_i=0$ reports $0$ with probability $\kappa_{\mathrm f}$. The theoretical MSE-optimal list is computed on the menu $J\in\{2,\dots,6\}\times\rho\in\{0,-0.6\}$ for $n\in\{300,10^3,3\times10^3,\dots,10^6\}$. $R=2{,}000$ in parts A and B and $1{,}000$ in part C.
+\paragraph{X2b}
+As X2, with uniform DIF on two of the four stereotype anchors: in the focal group the thresholds of S1 and S2 are lowered by $\kappa_S\in\{0.1,0.2,0.3\}$ standard deviations of their latent responses, in the same direction, which is the pattern ideology-type DIF would produce if one group were more ready to agree with some stereotype statements at a given level of $G$. The Israel-related DIF of X2 is absent ($\kappa_I=0$) or present at $\kappa_I=0.4$. Strategies: the oracle (all DIF-free items as anchors); the default anchors S1--S4, I5, I6, with a free baseline and with the revised screen and refit; and stereotype-only anchors S1--S4 with the focal $\mu_I$ and $\sigma_I^2$ fixed. Leave-one-anchor-out refits are run for both anchor sets in every replication. $R=100$ per cell.
 
-\paragraph{E4}
+\paragraph{X6}
+The registered sizes of \cref{tab:design-items}: 10 stereotype items with the ECVs of X1 extended by $0.70$ and $0.65$ (communalities $0.50$ to $0.60$), 8 ID items with ECVs $0.10$, $0.15$, $0.20$, $0.25$, $0.30$, $0.40$, $0.60$, $0.70$ and 6 IT items with ECVs $0.35$, $0.40$, $0.45$, $0.60$, $0.75$, $0.85$ (communality $0.5$), five categories, $n=6{,}000$. In part (a) every IT item also loads on $S$ with standardised loading $c\in\{0,0.1,0.2,0.3\}$; its loadings on $G$ and $I$, and so its ECV, are unchanged. In part (b) an acquiescence factor, orthogonal to the content factors, has slope $+\alpha$ on every positively worded item and $-\alpha$ on every reverse-keyed item after reverse scoring, $\alpha\in\{0.25,0.40,0.55\}$ (standardised loadings $0.16$ to $0.17$, $0.25$ to $0.27$ and $0.33$ to $0.36$). The registered keying reverses S2, S7, ID2 and ID6; balanced keying reverses half of every block (5 S, 4 ID and 3 IT items). One further cell has registered keying and item-specific slopes $\alpha$ times $0.5$ to $1.5$. The true ECV is the content ECV $a_{jG}^2/(a_{jG}^2+a_{js}^2)$ of the item's own domain. $R=100$ per cell.
+
+\paragraph{X7}
+The 400 data sets of X2, regenerated from the same seeds, analysed with the revised screen: the free-baseline fit with the anchor set, a Wald test of each non-anchor item, Benjamini--Hochberg at $q=0.05$, every significant item freed, and the partial-invariance refit. The expected-score difference averaged over the focal latent distribution (20-point Gauss--Hermite quadrature in each of $\theta_G$ and the item's specific factor) is recorded as the secondary description.
+
+\paragraph{X8}
+The six-item bank of X1 with I4 (ECV $0.60$) as the sensitive item; agreement is one of the top two categories. Two groups (or covariate values) of $3{,}000$, with $\bm\theta\sim\mathrm N(\bm\mu_x,\bm I)$, $\bm\mu_0=\bm0$ and $\bm\mu_1=(0.5,0,0.3)$. Every respondent is randomised with equal probability to the direct arm or to one of the two list arms, which use four control items in two pairs with $\rho=-0.6$; I4 is missing by design in the list arms. Scenarios: a common shift $\delta=0.4$ latent-response standard deviations; group-specific shifts $0.4$ and $0.8$; and a private response with slope multiplied by $\upsilon=0.5$ (\cref{prop:list-irt-ext}(e)), its threshold chosen so that group~0 has the same private prevalence as under the common shift. $R=300$ per scenario.
+
+\paragraph{X9}
+The registered sizes, $|\mathcal S|=10$ and $|\mathcal I|=14$, $n\in\{1{,}500,6{,}000\}$. Configurations: proportional (all stereotype ECVs $0.70$, all Israel-related ECVs $0.45$); all but one proportional (one item per domain with ECV $0.20$ or $0.90$); two lines (two items per domain with ECV $0.30$ or $0.85$, the rest as in the proportional configuration); near-proportional (stereotype ECVs $0.65$ to $0.75$, Israel-related $0.38$ to $0.52$); and the heterogeneous bank of X6. The first two violate \cref{asm:id-het} in both domains; the other three satisfy it in both. $R=400$ at $n=6{,}000$ and $200$ at $n=1{,}500$.
+
+\paragraph{X3}
+The sensitive item's latent response is $0.75\,\theta_G+\varepsilon$ with $\varepsilon\sim\mathrm N(0,1)$. The private threshold gives $\pi=0.30$ and the direct threshold, shifted by $\delta_j$, gives $\pi^D=0.20$. False endorsement, when present, sets $D_i=1$ with probability $0.02/0.7$ when $Z_i=0$, so $\pi^F=0.02$. Control items have prevalence $1/2$. They form $\lfloor J/2\rfloor$ independent pairs, each with $\Pr(1,1)=\Pr(0,0)=(1+\rho)/4$, plus one independent item if $J$ is odd. $n=3{,}000$ and costs are equal. The pilot-based allocation uses a pilot of 300 respondents with equal arms, which is not reused. The covariate-adjusted estimator uses a score of $\theta_G$ with reliability $0.85$ and separate-slope regression adjustment of each arm mean, with HC2 variances. Floor and ceiling effects: in arm $\armT$, a respondent with $Z_i=1$ and $W_i=J$ reports $J$ with probability $\phi_{\mathrm c}$, and one with $Z_i=1$ and $W_i=0$ reports $0$ with probability $\phi_{\mathrm f}$. The theoretical MSE-optimal list is computed on the menu $J\in\{2,\dots,6\}\times\rho\in\{0,-0.6\}$ for $n\in\{300,10^3,3\times10^3,\dots,10^6\}$. $R=2{,}000$ in parts A and B and $1{,}000$ in part C.
+
+\paragraph{X4}
 Population of $10^7$ in 50 areas with sizes proportional to $\exp(Z_a)$, $Z_a\sim\mathrm N(0,1)$. Within each area, the 32 cells (age 4 $\times$ sex 2 $\times$ education 4) have a Dirichlet mix with concentration $30$ per cell around a uniform national mix. Cell means of $G$ are $b_{\mathrm{age}}+b_{\mathrm{sex}}+b_{\mathrm{edu}}+0.25\,z_a+u_a$ with $b_{\mathrm{age}}=(0.25,0.05,-0.10,-0.20)$, $b_{\mathrm{sex}}=(0.05,-0.05)$, $b_{\mathrm{edu}}=(0.20,0.10,-0.10,-0.20)$, $z_a\sim\mathrm N(0,1)$ and $u_a\sim\mathrm N(0,0.2^2)$. The within-cell standard deviation of $G$ is $0.85$. The relative response propensity is the product of an age factor $(0.6,0.8,1.1,1.4)$ and an education factor $(0.6,0.9,1.1,1.4)$. Respondents are drawn with probability proportional to cell size times propensity, and each contributes $y_i=\theta_{iG}+e_i$ with $e_i\sim\mathrm N(0,0.4^2)$. $n\in\{1000,3000,6000\}$, $R=200$, with a new population in each replication.
 
-\paragraph{E5}
-The eight stereotype items of E1. Agreement is a response in one of the top two categories. The population count distribution is computed by tensor Gauss--Hermite quadrature with 40 nodes per dimension over $(\theta_G,\theta_S)$, and the Poisson-binomial distribution of the count given the latent vector. Uniform DIF adds $\mathrm N(0,s^2)$ times the latent-response standard deviation of each item to its agreement threshold, with $s\in\{0,0.1,\dots,0.5\}$, $|\Delta\mu_G|\in\{0.05,0.1,0.2,0.3\}$ with random sign, $h\in\{2,4,6\}$ and 1{,}000 configurations per cell. Unequal variances: $\sigma_G^{(1)}\in\{0.6,0.8,1.25,1.5\}$ with $\Delta\mu_G\in\{0.1,0.2\}$. Non-uniform DIF: general slopes multiplied by $\exp\{\mathrm N(0,s_a^2)\}$, $s_a\in\{0.2,0.4,0.6\}$, $\Delta\mu_G=0.1$, 1{,}000 configurations each. Finite-sample check: $1{,}000$ respondents per group, $h=4$, $\Delta\mu_G=0.1$, $s\in\{0,0.3\}$, 300 replications each.
+\paragraph{X5}
+The eight stereotype items of X1. Agreement is a response in one of the top two categories, and $U_{i+}$ is the number of statements agreed with. The population count distribution is computed by tensor Gauss--Hermite quadrature with 40 nodes per dimension over $(\theta_G,\theta_S)$, and the Poisson-binomial distribution of the count given the latent vector. Uniform DIF adds $\mathrm N(0,s^2)$ times the latent-response standard deviation of each item to its agreement threshold, with $s\in\{0,0.1,\dots,0.5\}$, $|\Delta\mu_G|\in\{0.05,0.1,0.2,0.3\}$ with random sign, $q\in\{2,4,6\}$ and 1{,}000 configurations per cell. Unequal variances: $\sigma_G^{(1)}\in\{0.6,0.8,1.25,1.5\}$ with $\Delta\mu_G\in\{0.1,0.2\}$. Non-uniform DIF: general slopes multiplied by $\exp\{\mathrm N(0,s_a^2)\}$, $s_a\in\{0.2,0.4,0.6\}$, $\Delta\mu_G=0.1$, 1{,}000 configurations each. Finite-sample check: $1{,}000$ respondents per group, $q=4$, $\Delta\mu_G=0.1$, $s\in\{0,0.3\}$, 300 replications each.
 
 \subsection{Estimator settings}\label{app:sim-est}
 
 \paragraph{Polychorics and weights}
-Thresholds are normal quantiles of the cumulative marginal shares. Each polychoric correlation maximises the bivariate ordinal-probit likelihood of its table with the thresholds fixed, by vectorised Fisher scoring \citep{olsson1979}. The asymptotic covariance $\bm\Gamma$ of thresholds and correlations is the empirical second moment of per-respondent influence functions, including the effect of the estimated thresholds. The weights are $\operatorname{diag}(\bm\Gamma)^{-1}$, and the sandwich covariance is $(\bm\Delta^\top\bm W\bm\Delta)^{-1}\bm\Delta^\top\bm W\bm\Gamma\bm W\bm\Delta(\bm\Delta^\top\bm W\bm\Delta)^{-1}$, where $\bm\Delta$ is the Jacobian of the model-implied statistics. In one group only the correlations are fitted, since the thresholds are saturated. In two groups thresholds and correlations are fitted jointly, with the reference group's means set to zero and its variances to one.
+Thresholds are normal quantiles of the cumulative marginal shares. Each polychoric correlation maximises the bivariate ordinal-probit likelihood of its table with the thresholds fixed, by vectorised Fisher scoring \citep{olsson1979}. The asymptotic covariance $\bm\Gamma$ of thresholds and correlations is the empirical second moment of per-respondent influence functions, including the effect of the estimated thresholds. The weights are $\bm V=\operatorname{diag}(\bm\Gamma)^{-1}$, and the sandwich covariance is $(\bm\Delta^\top\bm V\bm\Delta)^{-1}\bm\Delta^\top\bm V\bm\Gamma\bm V\bm\Delta(\bm\Delta^\top\bm V\bm\Delta)^{-1}$, where $\bm\Delta$ is the Jacobian of the model-implied statistics. In one group only the correlations are fitted, since the thresholds are saturated. In two groups thresholds and correlations are fitted jointly, with the reference group's means set to zero and its variances to one.
 
 \paragraph{Optimisation}
-A projected Levenberg--Marquardt algorithm with analytic Jacobian, at most 200 iterations, and bounds $|a_{jf}|\le12$ (a standardised loading of $0.997$), focal log-variances in $[-3,3]$ and thresholds in $[-40,40]$. Factors are reflected so that the reference group's loadings on each factor sum to a positive number. Starts: a default ($\lambda_{jG}=0.6$, $\lambda_{js}=0.4$ for every item) and four random starts with $\lambda_{jG}\sim\mathrm U(0.2,0.8)$ and $\lambda_{js}\sim\mathrm U(0.1,0.6)$. The fit with the smallest objective is kept. The \emph{start range} of $\mathrm{ECV}_j$ is its range over the starts whose objective is within a relative $10^{-6}$ of the best. A fit is counted as \emph{at a bound} if any slope has $|a_{jf}|\ge0.999\times12$. The identification diagnostic is $\sigma_{\min}/\sigma_{\max}$ of $\bm W^{1/2}\bm\Delta$ at the estimate.
+A projected Levenberg--Marquardt algorithm with analytic Jacobian, at most 200 iterations (300 in X6), and bounds $|a_{jf}|\le12$ (a standardised loading of $0.997$), focal log-variances in $[-3,3]$ and thresholds in $[-40,40]$. Factors are reflected so that the reference group's loadings on each factor sum to a positive number, and the method slope is reported as non-negative. Starts: a default ($\lambda_{jG}=0.6$, $\lambda_{js}=0.4$ for every item; cross-loadings $0$; method slope $0.2$) and random starts with $\lambda_{jG}\sim\mathrm U(0.2,0.8)$ and $\lambda_{js}\sim\mathrm U(0.1,0.6)$ (four in X1, two in X6). The fit with the smallest objective is kept. The \emph{start range} of $\mathrm{ECV}_j$ is its range over the starts whose objective is within a relative $10^{-6}$ of the best. A fit is counted as \emph{at a bound} if any slope has $|a_{jf}|\ge0.999\times12$. The identification diagnostic is $\sigma_{\min}/\sigma_{\max}$ of $\bm V^{1/2}\bm\Delta$ at the estimate.
 
 \paragraph{Intervals}
-Wald intervals for $\mathrm{ECV}_j$ are formed on the logit scale from the delta-method standard error, with $z=1.96$, or $z=\Phi^{-1}\{1-0.05/(2|\mathcal I|)\}$ for the Bonferroni intervals. The bootstrap draws $B=100$ samples of respondents with replacement, re-estimates the polychorics (at most 30 scoring iterations, started at the full-sample values), and refits the bifactor model from the full-sample estimate with the full-sample weights (at most 60 iterations); percentile intervals are reported. The classification is ``in'' if the lower limit is at least $\tau$, ``out'' if the upper limit is below $\tau$, and ``undetermined'' otherwise. The correlated-factors model is fitted by the same weighted least squares with $\rho_{SI}=\tanh z$.
+Wald intervals for $\mathrm{ECV}_j$ are formed on the logit scale from the delta-method (sandwich) standard error, with $z=1.96$, or $z=\Phi^{-1}\{1-0.05/(2|\mathcal I|)\}$ for the Bonferroni intervals. The bootstrap of X1 draws $B=100$ samples of respondents with replacement, re-estimates the polychorics (at most 30 scoring iterations, started at the full-sample values), and refits the bifactor model from the full-sample estimate with the full-sample weights (at most 60 iterations); percentile intervals are reported. The classification is ``in'' if the lower limit is at least $\tau$, ``out'' if the upper limit is below $\tau$, and ``undetermined'' otherwise. The correlated-factors model is fitted by the same weighted least squares with $\rho_{SI}=\tanh z$.
 
-\paragraph{E3 and E4}
-The list estimators are those of \cref{thm:joint-sdb}, with plug-in variances from \eqref{eq:le-split}, \eqref{eq:le-vps} and \eqref{eq:le-vh}. The combined estimator is set to $0$ if a stratum $D_i=0$ of a list arm has fewer than two respondents. MRP uses restricted maximum likelihood for the ratio of the area variance to the residual variance (bounded one-dimensional search on its logarithm), generalised least squares for the fixed effects, best linear unbiased predictors for the area effects, and the prediction-error variance from Henderson's mixed-model equations. The two-step scores use the prior $\mathrm N(m_0,\sigma_0^2)$ with $m_0=\bar y$ and $\sigma_0^2=\widehat{\Var}(y)-0.4^2$, so that $\hat\varrho=\sigma_0^2/(\sigma_0^2+0.4^2)$.
+\paragraph{The anchor bound (X2b)}
+For the limited-information estimator the role of the Fisher information in \cref{prop:anchor}(c) is played by $\bm\Delta^\top\bm V\bm\Delta$. We add focal intercept shifts $\iota_j$ for the anchors (all thresholds of anchor $j$ in the focal group moved by $-\iota_j$) and take $\bm W$ to be the Schur complement of their block of $\bm\Delta^\top\bm V\bm\Delta$ with respect to all parameters of the anchored model other than the focal latent means, at the population fit without anchor DIF. The derivative of the statistics with respect to the focal means equals that with respect to $\bm\iota$ along $\bm A_{\mathcal A}$ plus a combination of the other parameters' columns, to within $3\times10^{-15}$, so the first-order bias is $(\bm A_{\mathcal A}^\top\bm W\bm A_{\mathcal A})^{-1}\bm A_{\mathcal A}^\top\bm W\bm d_{\mathcal A}$, as in \eqref{eq:id-anchor-bias}. For a stated maximum DIF $\delta$, the anchor DIF ranges over $|d_j|\le\delta\,(1+a_{jG}^2+a_{js}^2)^{1/2}$. The largest first-order bias of $\hat\mu_G$ is then $\delta\sum_j|c_j|(1+a_{jG}^2+a_{js}^2)^{1/2}$, where $c_j$ is the entry of the first row of $(\bm A_{\mathcal A}^\top\bm W\bm A_{\mathcal A})^{-1}\bm A_{\mathcal A}^\top\bm W$ for anchor $j$, and the two norms of \eqref{eq:id-anchor-bound} are maximised over the vertices of the box. With stereotype-only anchors $\bm A_{\mathcal A}$ has the columns of $G$ and $S$ only. All of these are linear in $\delta$.
+
+\paragraph{Misspecification models (X6)}
+The fitted models are single-group, correlation-only weighted least squares fits whose slope matrix is linear in the parameters: the standard bifactor model; the same with a free loading on $S$ for every IT item (cross-loading model); the same with a fourth, orthogonal factor whose slopes are $+m$ for positively worded and $-m$ for reverse-keyed items according to the instrument's keying, with one free parameter $m$ (method factor; \citealp{maydeuolivares2006}); and the standard model fitted to the S and ID items alone. The mean-residual check averages the 60 IT$\times$S residual correlations $r_{jk}-\hat\rho_{jk}$ and divides by its standard error from $\bm P\bm\Gamma\bm P^\top$, with $\bm P=\bm I-\bm\Delta(\bm\Delta^\top\bm V\bm\Delta)^{-1}\bm\Delta^\top\bm V$; it rejects one-sidedly at 5\%. The plan's check tests each of the 60 residual correlations two-sidedly with the same covariance, applies Benjamini--Hochberg at $q=0.05$, and fits, for each IT item in turn, the standard model plus that item's loading on $S$, started at the standard fit. An IT item is flagged if any of its residual correlations is significant or its cross-loading has a Wald interval excluding zero. A flagged item is classified only if the standard fit and the Bonferroni interval for its share of common variance due to $G$ in the one-item model, $a_{jG}^2/(a_{jG}^2+a_{jS}^2+a_{jI}^2)$, place it on the same side of $\tau$; otherwise it is undetermined. Because the method slope $m$ enters the correlations only through $m^2$, its information is zero at $m=0$, and the identification diagnostic is also computed over the content parameters alone.
+
+\paragraph{Tetrad tests (X9)}
+For a set of $m\ge4$ items with reference triple $(1,2,3)$, the non-redundant tetrads are $r_{1k}r_{23}-r_{2k}r_{13}$ and $r_{1k}r_{23}-r_{3k}r_{12}$ for $k\ge4$, and $r_{kl}r_{23}-r_{2k}r_{3l}$ for $4\le k<l$, $m(m-3)/2$ in all. Each introduces one new correlation, so their Jacobian $\bm T$ has full row rank when $r_{12}r_{13}r_{23}\neq0$. The statistic $\bm t^\top(\bm T\bm\Gamma\bm T^\top)^{-1}\bm t$ is referred to $\chi^2_{m(m-3)/2}$ \citep{bollen1993tetrad}. The reference triple is the three items with the largest mean absolute correlation with the others. A residual-based test of one-factor structure, which does not depend on how the restrictions are written, gave rejection rates within $4.0$ percentage points of the tetrad test in every cell (\texttt{results/SUMMARY-new-experiments.md}). The intersection--union test applies the tetrad test to every $\mathcal D\setminus\{k\}$ \citep{berger1982}. The earlier rule computes a Wald $z$-statistic for each of the three tetrads of every quadruple, $3\binom{10}{4}+3\binom{14}{4}=3{,}633$ in all, and rejects if any exceeds the Bonferroni critical value at $5\%$.
+
+\paragraph{Lists, MRP and the threshold shift}
+The list estimators are those of \cref{thm:joint-sdb}, with plug-in variances from \eqref{eq:le-split}, \eqref{eq:le-vps} and \eqref{eq:le-vh}. The combined estimator is set to $0$ if a stratum $D_i=0$ of a list arm has fewer than two respondents. In X8, $\hat\delta_x=\hat b^{D}_{jc^*}-\hat{\bm a}_j^\top\hat{\bm\mu}_x+\hat s_x\Phi^{-1}(\hat\pi_x)$ with $\hat s_x=(1+\hat{\bm a}_j^\top\hat{\bm\Sigma}_x\hat{\bm a}_j)^{1/2}$, from the two-group fit to the direct arm with item $j$ free across groups. Its variance adds the delta-method term from the sandwich covariance of that fit (numerical gradient) and $\hat s_x^2\Var(\hat\pi_x)/\phi\{\Phi^{-1}(\hat\pi_x)\}^2$; the two are independent because the arms are disjoint. The test of a common shift is the $z$-test of $\hat\delta_1-\hat\delta_0$ with the shared measurement parameters in its variance. MRP uses restricted maximum likelihood for the ratio of the area variance to the residual variance, generalised least squares for the fixed effects, best linear unbiased predictors for the area effects, and the prediction-error variance from Henderson's mixed-model equations. The two-step scores use the prior $\mathrm N(m_0,\sigma_0^2)$ with $m_0=\bar y$ and $\sigma_0^2=\widehat{\Var}(y)-0.4^2$, so that $\hat\varrho=\sigma_0^2/(\sigma_0^2+0.4^2)$.
 
 \subsection{Monte Carlo standard errors}\label{app:sim-mcse}
 
-For a mean the MCSE is the replication SD divided by $\sqrt R$; for a proportion $p$ it is $\{p(1-p)/R\}^{1/2}$; for an RMSE it is the delta-method value $\mathrm{SD}(e^2)/(2\,\mathrm{RMSE}\sqrt R)$; and for a median it is $1.2533\times\mathrm{IQR}/(1.349\sqrt R)$. A coverage near 95\% therefore has an MCSE of about $2.2$ percentage points with $R=100$ and $3.4$ with $R=40$. Pooled E1 quantities treat the $|\mathcal I|$ items of a replication as independent, which understates their MCSE. In E2 the MCSE of the bias of $\hat\mu_G$ is $0.005$ to $0.020$. In E3 the MCSE of the bias is $0.0005$ to $0.0017$. In E4 the MCSE of the RMSE is at most $0.004$. In E5 a reversal rate from 1{,}000 configurations has an MCSE of at most $1.6$ percentage points. All MCSEs are stored in the results file next to the quantities they refer to.
+For a mean the MCSE is the replication SD divided by $\sqrt R$; for a proportion $p$ it is $\{p(1-p)/R\}^{1/2}$; for an RMSE it is the delta-method value $\mathrm{SD}(e^2)/(2\,\mathrm{RMSE}\sqrt R)$; and for a median it is $1.2533\times\mathrm{IQR}/(1.349\sqrt R)$. A coverage near 95\% therefore has an MCSE of about $2.2$ percentage points with $R=100$ and $3.4$ with $R=40$. Coverages and classification rates far from 95\% have larger MCSEs: in the X1 designs with $R=40$, the item-level Wald coverages have MCSEs of $5.2$ to $7.9$ points and the Bonferroni set coverages $4.7$ to $7.1$ points, about 7 points in round terms. Pooled X1 quantities treat the $|\mathcal I|$ items of a replication as independent, which understates their MCSE. In X2 the MCSE of the bias of $\hat\mu_G$ is $0.005$ to $0.020$; in X2b it is $0.005$ to $0.026$ for the default anchors and up to $1.7$ for the stereotype-only fits at $\kappa_S=0.3$, which break down. In X3 the MCSE of the bias is $0.0005$ to $0.0017$, in X4 the MCSE of the RMSE is at most $0.004$, and in X5 a reversal rate from 1{,}000 configurations has an MCSE of at most $1.6$ points. In X6 and X7 a rate from $R=100$ has an MCSE of at most $5$ points. In X8 the MCSE of the bias of $\hat\delta_j$ is $0.006$ to $0.009$ latent-response SDs and that of a coverage near 95\% about $1.3$ points. In X9 a size near 5\% has an MCSE of $1.1$ points at $n=6{,}000$ and $1.5$ at $n=1{,}500$. All MCSEs are stored in the results file next to the quantities they refer to.
 
 \subsection{Exact checks and recomputed illustrations}\label{app:sim-checks}
 
-Three identities of \cref{sec:identification} were checked on exact population statistics in E2. Uniform DIF $-\bm a_j^\top\bm v$ on every item, with $\bm v=(0.25,-0.10,0.15)$, is fitted exactly by the invariant model with latent mean $\bm\mu+\bm v=(0.55,-0.10,0.45)$ (\cref{thm:dif-bias}(d)(i)). Three anchors (S1, S2, I1) with DIF $-\bm A_{\mathcal A}\bm v$ give the same shift, and every non-anchor item acquires spurious DIF equal to $\bm a_k^\top\bm v$ to within $2.3\times10^{-9}$ (\cref{prop:anchor}(b)). Stereotype-only anchors recover $\mu_G$ and $\mu_S$ to within $2\times10^{-13}$ and every focal ECV to within $2.1\times10^{-14}$ under the Israel-related DIF of E2 at $\kappa=0.4$ (\cref{rem:id-anchor-S}).
+Three identities of \cref{sec:identification} were checked on exact population statistics in X2. Uniform DIF $-\bm a_j^\top\bm v$ on every item, with $\bm v=(0.25,-0.10,0.15)$, is fitted exactly by the invariant model with latent mean $\bm\mu+\bm v=(0.55,-0.10,0.45)$ (\cref{thm:dif-bias}(d)(i)). Three anchors (S1, S2, I1) with DIF $-\bm A_{\mathcal A}\bm v$ give the same shift, and every non-anchor item acquires spurious DIF equal to $\bm a_k^\top\bm v$ to within $2.3\times10^{-9}$ (\cref{prop:anchor}(b)). Stereotype-only anchors recover $\mu_G$ and $\mu_S$ to within $2\times10^{-13}$ and every focal ECV to within $2.1\times10^{-14}$ under the Israel-related DIF of X2 at $\kappa=0.4$ (\cref{rem:id-anchor-S}). The unit tests check that the cross-loading and method-factor models of X6 fit the population statistics of their own data-generating processes exactly, and that the tetrad statistics of X9 vanish at the two null populations.
 
 The results file also recomputes, independently, the illustrative numbers quoted in \cref{sec:sensitive,sec:smallarea,sec:design}. For four independent control items with prevalence $1/2$ and $\pi=0.2$, $L^*=26.96$; for two pairs with $\rho=-0.6$, $L^*=11.92$ (\cref{prop:list-var}). The thresholds of \cref{rem:le-mse} are $0.0456$ ($n=2{,}000$) and $0.0263$ ($n=6{,}000$). For \cref{thm:design}(a) with $\sigma_{\armC}^2=\sigma_{\armT}^2=1$ and $\pi^D=0.2$, $n\Var$ is $6.48$ under equal allocation and $5.76$ at the optimum, with shares $(1/6,5/12,5/12)$. The direct-arm cost threshold of \cref{thm:design}(b) is $1.26\times10^{-4}$, and the paired-to-split variance ratio of \cref{cor:le-paired-split} is $0.810$. The arm size for the power calculation of \cref{sec:design-list} is $1{,}695$ for $\SDB=0.10$ and $6{,}781$ for $\SDB=0.05$. \Cref{ex:sa-index} gives $P_1(5)=0.100$ and $P_2(5)=0.214$ in (i), $P_1(1)=0.999$, $P_2(1)=0.806$, $P_1(10)=0.002$ and $P_2(10)=0.194$ in (ii), and changes of $0.0049$ and $0.0987$ in (iii).
 
-\subsection{Further result tables}\label{app:sim-tables}
+\subsection{Further results}\label{app:sim-tables}
 
-\Cref{tab:sim-list,tab:sim-listchoice,tab:sim-mrp,tab:sim-index} give the full results of E3, E4 and E5 that \cref{sec:sim-list,sec:sim-mrp,sec:sim-index} summarise.
+\Cref{fig:sim-dif,tab:sim-anchors,tab:sim-difrev,tab:sim-misspec,tab:sim-delta} give further results of X2, X2b, X7, X6 and X8, and \cref{fig:sim-list,tab:sim-list,tab:sim-listchoice,tab:sim-mrp,tab:sim-index,fig:sim-mrp,fig:sim-index} the full results of X3, X4 and X5 that \cref{sec:sim-dif,sec:sim-misspec,sec:sim-list,sec:sim-mrp} summarise.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=6.0in]{figures/fig-sim-dif.pdf}
+\caption{X2, group comparisons under DIF on the Israel-related items (synthetic data; $1{,}500$ respondents per group; $R=100$ per $\kappa$). (a), (b) Median error of the focal-minus-reference difference in the means of $G$ and $I$ ($\pm2$ robust MCSE bars); lines are probability limits. Medians are shown because $2\%$ of the fits that ignore DIF at $\kappa=0.6$ reach a variance bound. (c) Flag rates at $\kappa=0.4$ of the drafted screen (bars: Benjamini--Hochberg \emph{and} an expected-score difference of at least $0.25$) and of Benjamini--Hochberg alone (black ticks), which is the revised screen of X7. With the correct anchors the drafted screen never flags the item with non-uniform DIF.}
+\label{fig:sim-dif}
+\end{figure}
 
 \begin{table}[tbp]
 \centering
-\caption{E3 parts A and B, estimation of social-desirability bias (synthetic data; $n=3{,}000$; $R=2{,}000$ per row). Shares $(r_D,r_C,r_T)$ of the direct, list-control and list-treatment arms (means over replications for the pilot-based allocation). SD (theory): exact standard deviation from \eqref{eq:le-split}, or asymptotic from \eqref{eq:le-vps} and \eqref{eq:le-vh}, at the allocation used. Bias and RMSE are as estimators of $\SDB$, which is $0.10$ when $\pi^F=0$ and $0.08$ when $\pi^F=0.02$. Cov.: coverage (\%) of the 95\% Wald interval with the plug-in standard error; SE/SD: mean standard error over the Monte Carlo SD.}
+\caption{X2b, DIF on two of the four stereotype anchors (synthetic data; $1{,}500$ per group; $R=100$ per row). Bias (median over replications, because the stereotype-only fits break down at $\kappa_S=0.3$) and coverage (\%) of $\hat\mu_G^{(1)}-\hat\mu_G^{(0)}$ (true $0.3$) from the free-baseline fits. First order: the first-order bias at the actual anchor DIF. Bound: the largest first-order $|$bias$|$ of $\hat\mu_G$ over all uniform anchor DIF of at most $\kappa_S$ latent-response SDs on every anchor (\cref{app:sim-est}). LOO: mean range of $\hat\mu_G$ over the leave-one-anchor-out refits ($0.043$ with clean anchors in X2).}
+\label{tab:sim-anchors}
+\footnotesize
+\setlength{\tabcolsep}{4.2pt}
+\input{tables/tab-sim-anchors}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{X7, the revised DIF screen (Benjamini--Hochberg at $q=0.05$, no effect-size requirement, then refit) with the correct anchors on the X2 data sets (synthetic data; $1{,}500$ per group; $R=100$ per row). Flag rates of the items with uniform DIF (mean of I1 and I2), of I3 (non-uniform DIF) and of the DIF-free items, and the share of replications with at least one DIF-free item flagged; bias and coverage (\%) of the latent mean differences; bias of the reference and focal ECV of I3.}
+\label{tab:sim-difrev}
+\footnotesize
+\setlength{\tabcolsep}{4.5pt}
+\input{tables/tab-sim-difrev}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{X6, misspecification at the registered sizes (synthetic data; $n=6{,}000$; $R=100$ per row). Flag: \% of replications in which the plan's IT$\times$S check flags at least one IT item. IT, ID: mean bias of $\widehat{\mathrm{ECV}}_j$ in the block under the standard fit. Max: largest $|$Monte Carlo bias$|$ over the Israel-related items in the model (the ID items for the ID-only refit). Wrong: \% of those items on the wrong side of $\tau=0.5$ by Bonferroni intervals. IT wrong: \% of IT items on the wrong side under the standard fit (Std.) and under the plan's rule (Plan). reg., bal.: registered and balanced keying; item-spec.: acquiescence slopes varying between items.}
+\label{tab:sim-misspec}
+\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\input{tables/tab-sim-misspec}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{X8, the threshold shift $\delta_j$ identified by the list experiment (synthetic data; two groups of $3{,}000$, each split equally into direct, list-control and list-treatment arms; $R=300$ per scenario). $\delta_j$ in standard deviations of the item's reference latent response: true value, bias, Monte Carlo SD, mean standard error and coverage (\%) of the 95\% interval; true $\mathrm{SDB}_j$ by group and the bias of its model-based estimate; rejection rate (\%) of the 5\% test of a common shift. Under the non-uniform scenario the uniform shift is misspecified and $\delta_j$ has no true value.}
+\label{tab:sim-delta}
+\footnotesize
+\setlength{\tabcolsep}{4.5pt}
+\input{tables/tab-sim-delta}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=6.0in]{figures/fig-sim-list.pdf}
+\caption{X3, list experiments (synthetic data; $n=3{,}000$). (a) RMSE of the split-design estimator under three allocations, with independent controls or negatively correlated pairs ($R=2{,}000$; $\pm2$ MCSE bars); ticks are the exact SDs from \eqref{eq:le-split}. (b) Error of three estimators of $\SDB$ (bias $\pm1.96$ Monte Carlo SD) under monotonicity ($\pi^F=0$) and with false endorsement ($\pi^F=0.02$). (c) RMSE of the split-design estimator against the number of control items, with independent ($\rho=0$) or paired ($\rho=-0.6$) controls, without and with floor and ceiling effects ($\phi_{\mathrm c}=\phi_{\mathrm f}=0.5$; $R=1{,}000$); lines are the theoretical values from \eqref{eq:le-split} and \eqref{eq:le-fcbias}.}
+\label{fig:sim-list}
+\end{figure}
+
+\begin{table}[tbp]
+\centering
+\caption{X3 parts A and B, estimation of social-desirability bias (synthetic data; $n=3{,}000$; $R=2{,}000$ per row). Shares $(r_D,r_C,r_T)$ of the direct, list-control and list-treatment arms (means over replications for the pilot-based allocation). SD (theory): exact standard deviation from \eqref{eq:le-split}, or asymptotic from \eqref{eq:le-vps} and \eqref{eq:le-vh}, at the allocation used. Bias and RMSE are as estimators of $\SDB$, which is $0.10$ when $\pi^F=0$ and $0.08$ when $\pi^F=0.02$. Cov.: coverage (\%) of the 95\% Wald interval with the plug-in standard error; SE/SD: mean standard error over the Monte Carlo SD.}
 \label{tab:sim-list}
 \scriptsize
 \setlength{\tabcolsep}{4pt}
@@ -114,7 +209,7 @@ The results file also recomputes, independently, the illustrative numbers quoted
 
 \begin{table}[tbp]
 \centering
-\caption{E3 part C, choice of control list (synthetic data; split design, Neyman allocation, $n=3{,}000$; $R=1{,}000$ per row). Exposure is $\Pr(W_i\in\{0,J\})$. Theoretical bias from \eqref{eq:le-fcbias} and SD from \eqref{eq:le-split}; Cov.: coverage (\%) of the 95\% Wald interval.}
+\caption{X3 part C, choice of control list (synthetic data; split design, Neyman allocation, $n=3{,}000$; $R=1{,}000$ per row). Exposure is $\Pr(W_i\in\{0,J\})$; $\phi_{\mathrm c}$ and $\phi_{\mathrm f}$ are the ceiling and floor probabilities. Theoretical bias from \eqref{eq:le-fcbias} and SD from \eqref{eq:le-split}; Cov.: coverage (\%) of the 95\% Wald interval.}
 \label{tab:sim-listchoice}
 \footnotesize
 \input{tables/tab-sim-listchoice}
@@ -122,21 +217,35 @@ The results file also recomputes, independently, the illustrative numbers quoted
 
 \begin{table}[tbp]
 \centering
-\caption{E4, area means of $G$ (synthetic data; 50 areas; $R=200$ populations and samples per $n$). Empty: mean number of areas without respondents. Cov.: coverage (\%) of 95\% intervals. Slope: regression of estimated on true area deviations from the national mean (1 means no attenuation). Direct estimators are evaluated on areas with at least two respondents.}
+\caption{X4, area means of $G$ (synthetic data; 50 areas; $R=200$ populations and samples per $n$). Empty: mean number of areas without respondents. Cov.: coverage (\%) of 95\% intervals. Slope: regression of estimated on true area deviations from the national mean (1 means no attenuation). Direct estimators are evaluated on areas with at least two respondents.}
 \label{tab:sim-mrp}
 \footnotesize
 \setlength{\tabcolsep}{4.5pt}
 \input{tables/tab-sim-mrp}
 \end{table}
 
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=6.0in]{figures/fig-sim-mrp.pdf}
+\caption{X4, small-area estimates of the mean of $G$ (synthetic data; 50 areas; $R=200$ per $n$). (a) RMSE by the realised number of respondents in the area, at $n=3{,}000$. (b) RMSE over areas against the total sample size ($\pm2$ MCSE bars). (c) Slope of estimated on true area deviations from the national mean; the dotted line is $\hat\varrho$ of \cref{prop:eap} times the MRP slope. The measurement step is abstracted: each respondent contributes an unbiased score of $G$, not item responses.}
+\label{fig:sim-mrp}
+\end{figure}
+
 \begin{table}[tbp]
 \centering
-\caption{E5, sign reversals of stereotype-count indices (synthetic data; exact population computations). Percentage of 1{,}000 random uniform-DIF configurations per cell in which $P_1(h)-P_0(h)$ has the opposite sign to $\Delta\mu_G$. Columns: $|\Delta\mu_G|$ within each index threshold $h$ (of $M=8$); rows: standard deviation $s$ of the threshold shifts, in standard deviations of each item's latent response.}
+\caption{X5, sign reversals of stereotype-count indices (synthetic data; exact population computations). Percentage of 1{,}000 random uniform-DIF configurations per cell in which $P_1(q)-P_0(q)$ has the opposite sign to $\Delta\mu_G$. Columns: $|\Delta\mu_G|$ within each index threshold $q$ (of $M=8$); rows: standard deviation $s$ of the threshold shifts, in standard deviations of each item's latent response.}
 \label{tab:sim-index}
 \footnotesize
 \setlength{\tabcolsep}{4.5pt}
 \input{tables/tab-sim-index}
 \end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=6.0in]{figures/fig-sim-index.pdf}
+\caption{X5, stereotype-count indices (synthetic data; exact population computations; 1{,}000 random DIF configurations per point). (a) Share of configurations in which the difference in the index ``agrees with at least $q=4$ of 8'' has the opposite sign to the latent difference $\Delta\mu_G$, against the standard deviation $s$ of random uniform DIF ($\pm2$ MCSE bars). (b) Index difference against $\Delta\mu_G$ under invariance (black) and with $s=0.3$, coloured by whether the sign is reversed. (c) Full invariance with $\Delta\mu_G=0.2$ and unequal standard deviations $\sigma_G^{(1)}$ of $G$: the index difference by threshold $q$ (\cref{prop:index}(b)).}
+\label{fig:sim-index}
+\end{figure}
 
 \subsection{Reproduction}\label{app:sim-repro}
 
@@ -144,11 +253,13 @@ From \texttt{code/}, the commands
 {\small
 \begin{verbatim}
 export OPENBLAS_NUM_THREADS=1
-nice -n 10 python run_experiments.py --only E1
-nice -n 10 python run_experiments.py --only E1b E2 E3 E4 E5
-python run_experiments.py --resummarize E1 E1b E2
+nice -n 10 python run_experiments.py --only X1
+nice -n 10 python run_experiments.py --only X1b X2 X3 X4 X5
+python run_experiments.py --resummarize X1 X1b X2
+nice -n 10 python run_experiments.py --only X2b X6 X7 X8 X9
 python make_figures.py
+python make_summary.py
 python -m pytest tests/
 \end{verbatim}
 }
-regenerate \texttt{results/sim\_results.json}, \texttt{results/raw/}, the figures \texttt{figures/fig-sim-*.pdf}, the tables \texttt{tables/tab-sim-*.tex} and the test report. A single call without \texttt{--only} runs all experiments, and \texttt{--quick} runs a small smoke test. On the shared machine described above, the full study takes about 25 minutes of wall time with two workers, almost all of it in E1. The figures take a few seconds and the tests about six seconds. Because each replication has its own seed, the numbers do not depend on the number of workers. Results can differ in the last digits across platforms or library versions, through floating-point differences in the optimiser.
+regenerate \texttt{results/sim\_results.json}, \texttt{results/raw/}, the figures \texttt{figures/fig-sim-*.pdf}, the tables \texttt{tables/tab-sim-*.tex}, the summary of the new experiments and the test report. A single call without \texttt{--only} runs all experiments, and \texttt{--quick} runs a small smoke test. X7 reads \texttt{results/raw/X2.json} to compare its flags with those of X2, so X2 must be run first. On the shared machine described above, the full study takes about 40 minutes of wall time with two workers, half of it in X1. The figures take a few seconds and the tests about eight seconds. Because each replication has its own seed, the numbers do not depend on the number of workers. Results can differ in the last digits across platforms or library versions, through floating-point differences in the optimiser.

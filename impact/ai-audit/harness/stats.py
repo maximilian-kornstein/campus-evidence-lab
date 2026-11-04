@@ -149,8 +149,8 @@ def paired_bootstrap(units: Sequence, stat_a: Callable[[Sequence], float | None]
     if not diffs:
         return {"diff": a - b, "lo": None, "hi": None, "p": None}
     lo, hi = _percentiles(diffs, alpha)
-    below = sum(1 for d in diffs if d <= 0) / len(diffs)
-    above = sum(1 for d in diffs if d >= 0) / len(diffs)
+    below = (sum(1 for d in diffs if d <= 0) + 1) / (len(diffs) + 1)  # never exactly zero
+    above = (sum(1 for d in diffs if d >= 0) + 1) / (len(diffs) + 1)
     p = min(1.0, 2 * min(below, above))
     return {"diff": a - b, "lo": lo, "hi": hi, "p": p, "B": len(diffs)}
 

@@ -374,3 +374,152 @@ def test_alg1_coverage_and_burn_in():
     # the sensitivity range widens the set by log(lambda+/lambda-)
     o2 = sq.alg1_cs(Ya, Yr, looks, 0.05, 40, lam_range=(0.95, 1.05), burn=1)
     assert np.allclose((o2["hi"] - o2["lo"]) - (o["hi"] - o["lo"]), np.log(1.05 / 0.95))
+
+
+# ------------------------------------------------------------------ E5b: double-sampled exposure (sec:prot-validation)
+from ampsim import doublesample as dsm  # noqa: E402
+
+
+def _random_records(rng, M=6):
+    """Synthetic records: impression counts by (type, band) for 320 positions, and opened positions (unflagged)."""
+    cnt = np.zeros((M, 20), np.int64)
+    opn = np.zeros((M, 20), np.int64)
+    for i in range(M):
+        typ = rng.choice(4, 320, p=[0.93, 0.04, 0.015, 0.015])
+        band = np.where(typ >= 2, rng.choice(5, 320, p=[.02, .05, .13, .4, .4]), rng.choice(5, 320, p=[.5, .33, .15, .01, .01]))
+        cat = typ * 5 + band
+        cnt[i] = np.bincount(cat, minlength=20)
+        unfl = np.flatnonzero(band <= 1)
+        op = rng.choice(unfl, 60, replace=False)
+        opn[i] = np.bincount(cat[op], minlength=20)
+    return cnt, opn
+
+
+def test_neyman_alloc_properties():
+    rng = np.random.default_rng(21)
+    n = rng.integers(0, 120, (500, 3))
+    n[:50, 0] = 0
+    s = np.array([0.007, 0.035, 0.14])
+    a = dsm.neyman_alloc(n, s, 20)
+    assert np.all(a <= n) and np.all(a >= 0)
+    assert np.all(a.sum(1) == np.minimum(20, n.sum(1)))
+    big = (n >= 3).all(1)
+    assert np.all(a[big] >= 1)                                 # floor of one code per non-empty band
+    # proportional to n_h s_h up to rounding when no cap binds
+    full = (n >= 40).all(1)
+    target = 20 * (n * s) / (n * s).sum(1, keepdims=True)
+    assert np.all(np.abs(a[full] - np.maximum(target[full], 1)) <= 1.5)
+
+
+def test_ds_exposure_unbiased_given_record():
+    """E~_u is conditionally unbiased for the puppet's true exposure and lies in [0, 1] (thm:misclass(d))."""
+    rng = np.random.default_rng(22)
+    cnt, opn = _random_records(rng)
+    st = dsm.strata(cnt, opn)
+    assert np.all(st["nO_flagged"] == 0)
+    reps = 40000
+    stR = {k: np.repeat(v[None], reps, 0) for k, v in st.items()}
+    E, codes = dsm.ds_exposure(stR, rng, np.array([0.01, 0.05, 0.15]))
+    assert np.all((E >= 0) & (E <= 1))
+    assert np.all(codes <= 35)
+    se = E.std(0) / np.sqrt(reps)
+    assert np.all(np.abs(E.mean(0) - st["E"]) < 4 * se + 1e-12)
+    # coding every position gives the true exposure exactly
+    Eall, _ = dsm.ds_exposure(st, rng, np.ones(3), m=10 ** 6, m_open=10 ** 6, m_unf=10 ** 6)
+    assert np.allclose(Eall, st["E"])
+
+
+def test_ds_from_pilot_unbiased_for_pilot_exposure():
+    rng = np.random.default_rng(23)
+    cnt, opn = _random_records(rng, 4)
+    st = dsm.strata(cnt, opn)
+    pc = dsm.pilot_codes(st, rng, np.array([0.01, 0.05, 0.15]))
+    j = np.repeat(np.arange(4)[None], 40000, 0)
+    E = dsm.ds_from_pilot(pc, j, rng)
+    se = E.std(0) / np.sqrt(E.shape[0])
+    assert np.all(np.abs(E.mean(0) - pc["Ehat"]) < 4 * se + 1e-12)
+
+
+def test_cell_rates_and_closed_form():
+    rng = np.random.default_rng(24)
+    cnt, _ = _random_records(rng, 50)
+    r = dsm.cell_rates(cnt)
+    assert np.isclose(r["q"] * r["PPV"], r["Se"] * r["mu"])              # thm:misclass(e)
+    assert np.isclose(r["q"] * r["PPV"] + (1 - r["q"]) * r["FOR"], r["mu"])
+    cf = dsm.var_closed_form(r["mu"], 1e-4, r["q"], r["PPV"], r["FOR"], r["Se"], r["Sp"], 320, 10, 25)
+    assert cf["total"] > cf["A"] > 1e-4 / r["mu"] ** 2
+
+
+def test_record_detail_is_consistent_and_draws_nothing(world):
+    """record_detail leaves the simulation unchanged; per-session counts add up; opened positions are unflagged;
+    slate states are recorded once per step."""
+    rec, ch = RecConfig(), ChoiceConfig()
+    outs = []
+    for det in (False, True):
+        rng = np.random.default_rng(31)
+        acc = make_puppets(world, np.repeat(np.arange(4), 6), np.tile(np.arange(2), 12), rng)
+        glob = GlobalState(world, rec)
+        train(world, acc, glob, rec, SES)
+        outs.append(measure(world, acc, glob, rec, ch, SES, rng, "DD", record_detail=det, tail_from=4))
+    a, b = outs
+    assert np.array_equal(a["counts"], b["counts"]) and np.array_equal(a["opens_state"], b["opens_state"])
+    assert np.array_equal(b["sess_counts"].sum(1), b["counts"])
+    op = b["sess_opened"].reshape(-1, 4, 5)
+    assert op[..., 3:].sum() == 0                                  # avoid-on-flag: no flagged position is opened
+    assert np.all(b["sess_opened"].sum(-1) <= SES.T)
+    assert np.all(b["sl_trans"].sum((-1, -2)) == SES.T - 1)
+    assert np.all(b["sl_comp"].sum(1) == SES.n_sessions * SES.T)
+    assert np.all(b["sl_occ_tail"].sum(-1) == SES.T - 4)
+    # a true A slate is a slate with an antisemitic position: occupancy of A matches the composition histogram
+    k = rec.slate_k
+    occA = (b["sl_start"][..., 0] == 2).sum(1) + b["sl_trans"][:, :, 0, :, 2].sum((1, 2))
+    compA = b["sl_comp"].reshape(-1, k + 1, k + 1)[:, :, 1:].sum((1, 2))
+    assert np.array_equal(occA, compA)
+
+
+# ------------------------------------------------------------------ E4b: slate-state chains (sec:prot-estimands)
+def test_slate_confusion_minimal_composition():
+    Se, Sp, k = 0.85, 0.98, 4
+    item = np.array([[0.85, 0.13, 0.02], [0.85, 0.13, 0.02], [0.02, 0.13, 0.85]])
+    C = mk.slate_confusion(item, k)
+    assert np.allclose(C.sum(1), 1)
+    assert np.isclose(C[0, 2], 1 - Sp ** k)                     # N slate misread as A: about k (1 - Sp)
+    assert abs(C[0, 2] - k * (1 - Sp)) < 0.005
+    assert np.isclose(C[2, 2], 1 - (1 - Se) * Sp ** (k - 1))
+    assert np.linalg.cond(C) > 1e10                              # N and B rows identical: not identifiable
+
+
+def test_corrected_chain_recovers_hidden_chain():
+    """Observed labels of a two-state chain with independent misreads: the correction of sec:markov-estimation
+    recovers P and the long-run exposure; the naive chain does not."""
+    rng = np.random.default_rng(41)
+    P = np.array([[0.95, 0.05], [0.6, 0.4]])
+    C = np.array([[0.92, 0.08], [0.12, 0.88]])
+    n, T = 20000, 20
+    x = np.zeros((n, T), np.int64)
+    x[:, 0] = rng.random(n) < 0.05
+    for t in range(1, T):
+        x[:, t] = rng.random(n) < P[x[:, t - 1], 1]
+    y = np.where(rng.random((n, T)) < C[x, 1], 1, 0)
+    tr = np.zeros((2, 2))
+    np.add.at(tr, (y[:, :-1].ravel(), y[:, 1:].ravel()), 1)
+    st = np.bincount(y[:, 0], minlength=2)
+    Pc, a, nneg = mk.correct_chain(tr, st, C)
+    assert nneg == 0
+    assert np.allclose(Pc, P, atol=0.02)
+    piA = mk.stationary(P)[1]
+    assert abs(mk.stationary(Pc)[1] - piA) < 0.005
+    Pn, _ = mk.estimate_P(tr)
+    assert mk.stationary(Pn)[1] > piA + 0.05
+    t3 = rng.integers(0, 50, (3, 3))
+    t2, s2 = mk.collapse_A(t3, np.array([3, 4, 5]))
+    assert t2.sum() == t3.sum() and t2[1, 1] == t3[2, 2] and np.array_equal(s2, [7, 5])
+
+
+def test_alg1_cs_mean_coverage():
+    rng = np.random.default_rng(42)
+    D = rng.gamma(4.0, 0.01, (3000, 120)) - 0.03
+    L, U = sq.alg1_cs_mean(D, np.arange(20, 121, 20), 0.05, 120, burn=1)
+    assert np.all(np.isneginf(L[:, 0]))
+    cover = np.all((L <= 0.01) & (0.01 <= U), 1).mean()
+    assert cover >= 0.94

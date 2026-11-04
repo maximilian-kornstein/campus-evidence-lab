@@ -68,11 +68,14 @@ large effects. We state when randomised sock-puppet audits identify
 amplification, bound the bias when puppets interfere through the system they
 audit, show that classifier error that differs between arms can put a naive
 estimate on the wrong side of one, correct it by arm, and give a confidence
-sequence that lets an audit stop as soon as the evidence is clear. A
-simulation study on a synthetic recommender with known ground truth evaluates
-these tools, and a pre-registered protocol specifies an audit and its ethical
-safeguards. We have audited no real platform and report no finding about any
-service.
+sequence, approximately valid at any stopping time, that lets an audit stop
+as soon as the evidence is clear. A simulation study on a synthetic
+recommender with known ground truth evaluates these tools, and a
+pre-registered protocol specifies an audit and its ethical safeguards. Under
+plausible inputs a materiality audit of four personas needs thousands of
+accounts; the protocol therefore commits only to a pilot and a registered
+feasibility gate. We have audited no real platform and report no finding
+about any service.
 \end{abstract}
 \keywords{algorithm audits; recommender systems; amplification; sock-puppet
 audits; potential outcomes; Markov chains; interference; misclassification;
@@ -104,5 +107,7 @@ anytime-valid inference; Digital Services Act; antisemitism.}
 \IfFileExists{appendix/A-proofs-estimands.tex}{\input{appendix/A-proofs-estimands}}{}
 \IfFileExists{appendix/B-proofs-design.tex}{\input{appendix/B-proofs-design}}{}
 \IfFileExists{appendix/C-simulation-details.tex}{\input{appendix/C-simulation-details}}{}
+% Supplementary appendix: the full registered protocol summarised in Section 8.
+\IfFileExists{appendix/D-protocol.tex}{\input{appendix/D-protocol}}{}
 
 \end{document}

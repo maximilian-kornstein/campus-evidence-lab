@@ -1,7 +1,7 @@
 % =====================================================================
 %  Table: notation (LEAD).  Symbols follow SPEC.md and Sections 3--7.
 % =====================================================================
-\begin{table}[t]
+\begin{table}[!tp]
 \caption{\textbf{Notation.} Symbols used throughout. Bold capitals are
 $M\times M$ matrices indexed by (child stream $k$, parent stream $j$).}
 \label{tab:notation}
@@ -32,21 +32,23 @@ n,\ \bar\Lambda=\mu/(1-n) & univariate branching ratio; stationary mean rate \\
 \begin{tabularx}{\linewidth}[t]{@{}>{$}l<{$}@{\hspace{0.8em}}>{\raggedright\arraybackslash}X@{}}
 \toprule
 \nhead{Background and salient external events}
-\mu_k(t)=e^{B(t)^{\top}\theta_k} & background; spline or seasonal basis $B$, which carries calendar effects \\
+\mu_k(t)=e^{B(t)^{\top}\theta_k} & background; basis $B$ of $K_b$ functions (spline knot spacing $h_b$) that carries calendar effects \\
 e;\ \tau_e,\ S_e & salient external event; its time and size \\
-\psi_k,\ \beta_k & response kernel ($\int\psi_k=1$, e.g.\ $\eta_ke^{-\eta_kt}$); loading \\
+\psi_k,\ \upsilon_k & response kernel ($\int\psi_k=1$, e.g.\ $\eta_ke^{-\eta_kt}$); shock loading \\
 \vartheta & full parameter vector, including the background coefficients $\theta_k$ \\
 \midrule
 \nhead{Recording}
-p_k & recording probability: reciprocal of the companion paper's dark-figure ratio \\
+p_k=1/\mathcal D_k & recording probability; $\mathcal D_k$ is the companion paper's dark-figure ratio \\
 n'=h_p(n) & apparent branching ratio of the $p$-thinned process \\
-F_k(d) & reporting-delay distribution \\
+d,\ F_k & reporting delay; its distribution \\
+e_0,\ e_1 & classifier flag rates for non-antisemitic and antisemitic posts \\
 \midrule
 \nhead{Attribution and alerting}
 B_k,\ D_k,\ C_k & background, direct and contagion parts of $\E\,N_k(\tau_e,\tau_e+H]$ \\
 \bm C^{\mathrm{on}},\ \sigma_k(H) & online-channel contagion; its share \\
 \gamma=\beta(1-n) & decay rate of a cascade (univariate, exponential kernel) \\
 \Delta_{\mathrm a},\ c & alert window; count threshold ($\Delta$ without subscript is a bin width for counts) \\
+\bm\chi(t) & excitation state $(\bm x(t),\bm u(t))$ of the alert rule \\
 \pi_t,\ \pi^* & surge probability; alert threshold \\
 c_{\mathrm{FA}},\ c_{\mathrm{miss}} & costs of a false alarm and of a missed surge \\
 \bottomrule

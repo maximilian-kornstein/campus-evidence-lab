@@ -29,7 +29,7 @@ with $R_{kj}(s_1)=R^{(1)}_{kj}(s_1)=0$. These two recursions give every quantity
   \item \emph{Compensator at the incidents} (for time rescaling). Since
     $\sum_{t^j_l<t}\{1-e^{-\beta_{kj}(t-t^j_l)}\}=N_j(t-)-R_{kj}(t)$,
     \[
-      \Lam_k(t)=\int_0^t\mu_k+\beta_k\sum_eS_e\{\Psi_k(t-\tau_e)-\Psi_k(-\tau_e)\}
+      \Lam_k(t)=\int_0^t\mu_k+\upsilon_k\sum_eS_e\{\Psi_k(t-\tau_e)-\Psi_k(-\tau_e)\}
       +\sum_j\alpha_{kj}\{N_j(t-)-R_{kj}(t)\}.
     \]
   \item \emph{Gradient.} With $\lambda=\lambda_k(t^k_i)$ and sums over the incidents of
@@ -39,7 +39,7 @@ with $R_{kj}(s_1)=R^{(1)}_{kj}(s_1)=0$. These two recursions give every quantity
       \frac{\partial\ell_T}{\partial\beta_{kj}}&=\alpha_{kj}\sum_i\frac{R_{kj}(t^k_i)-\beta_{kj}R^{(1)}_{kj}(t^k_i)}{\lambda}
         -\alpha_{kj}\sum_l(T-t^j_l)e^{-\beta_{kj}(T-t^j_l)},\\
       \frac{\partial\ell_T}{\partial\theta_k}&=\sum_i\frac{\mu_k(t^k_i)B(t^k_i)}{\lambda}-\int_0^T\mu_k(t)B(t)\,\dd t,\\
-      \frac{\partial\ell_T}{\partial\beta_k}&=\sum_i\frac{\sum_eS_e\psi_k(t^k_i-\tau_e)}{\lambda}-\sum_eS_e\Psi^T_k(e).
+      \frac{\partial\ell_T}{\partial\upsilon_k}&=\sum_i\frac{\sum_eS_e\psi_k(t^k_i-\tau_e)}{\lambda}-\sum_eS_e\Psi^T_k(e).
     \end{align*}
     The derivative in $\eta_k$ uses the shock analogues of $R$ and $R^{(1)}$ below.
   \item \emph{EM statistics.} $N_{kj}$ and $W_{kj}$ of \eqref{eq:est-stats} are the sums
@@ -113,7 +113,7 @@ up, so the algorithm restarts there.
 \Ensure Events $\mathcal S$ on $[0,T]$ with intensity \eqref{eq:est-lambda}.
 \State $t\gets0$; $R_{kj}\gets0$ for all $(k,j)$; $\mathcal S\gets\emptyset$.
 \Loop
-  \State $h_k\gets\beta_k\sum_{\tau_e\le t}S_e\eta_ke^{-\eta_k(t-\tau_e)}$ for all $k$;\quad
+  \State $h_k\gets\upsilon_k\sum_{\tau_e\le t}S_e\eta_ke^{-\eta_k(t-\tau_e)}$ for all $k$;\quad
     $\bar\lambda\gets\sum_k\{\bar\mu_k+h_k+\sum_j\alpha_{kj}\beta_{kj}R_{kj}\}$.
   \State Draw $E\sim\mathrm{Exp}(\bar\lambda)$; $s\gets t+E$; let $\tau^+$ be the first
     calendar time in $(t,T]$ (or $+\infty$).
@@ -123,7 +123,7 @@ up, so the algorithm restarts there.
   \EndIf
   \If{$s>T$} \State \Return $\mathcal S$ \EndIf
   \State $R_{kj}\gets R_{kj}e^{-\beta_{kj}(s-t)}$ for all $(k,j)$; $t\gets s$.
-  \State $\lambda_k\gets\mu_k(t)+\beta_k\sum_{\tau_e<t}S_e\eta_ke^{-\eta_k(t-\tau_e)}
+  \State $\lambda_k\gets\mu_k(t)+\upsilon_k\sum_{\tau_e<t}S_e\eta_ke^{-\eta_k(t-\tau_e)}
     +\sum_j\alpha_{kj}\beta_{kj}R_{kj}$ for all $k$; draw $U\sim U(0,1)$.
   \If{$U\bar\lambda\le\sum_k\lambda_k$}
     \State Draw $k$ with probability $\lambda_k/\sum_{k'}\lambda_{k'}$; add $(t,k)$ to
@@ -140,7 +140,7 @@ true branching labels.
   \item \emph{Background immigrants.} Draw a Poisson process with intensity $\mu_k$ on
     $[0,T]$ for each stream. A piecewise-constant $\mu_k$ is sampled directly; any other
     $\mu_k$ by thinning against $\bar\mu_k$.
-  \item \emph{Shock immigrants.} For each $(e,k)$, draw $\Pois\{\beta_kS_e\Psi^T_k(e)\}$
+  \item \emph{Shock immigrants.} For each $(e,k)$, draw $\Pois\{\upsilon_kS_e\Psi^T_k(e)\}$
     points at $\tau_e$ plus delays from $\psi_k$, truncated to the window. The delays are
     drawn by inverting the truncated distribution function.
   \item \emph{Offspring.} Proceed generation by generation. Each point of stream $j$ at
@@ -168,7 +168,7 @@ entry; one-sided differences need only $p$ evaluations but have $O(h)$ error. Tw
 details matter.
 \begin{itemize}
   \item \emph{Boundary parameters.} Free parameters estimated on or near the boundary
-    ($\hat\alpha_{kj}\approx0$, $\hat\beta_k\approx0$) are excluded from the inversion and
+    ($\hat\alpha_{kj}\approx0$, $\hat\upsilon_k\approx0$) are excluded from the inversion and
     flagged. Their sampling distribution is not normal (\cref{prop:lrt}(b)). Intervals for
     them come from the profile likelihood, the parametric bootstrap, or the posterior.
   \item \emph{Alternatives.} The information can also be assembled from complete-data
@@ -201,7 +201,7 @@ the null fit with a small positive $\alpha_{kj}$.
 score in the nuisance parameters vanishes when they are interior. The standardised
 efficient score at decay $\beta$ is therefore
 \[
-  \hat Z(\beta)=\frac{U_\alpha(\beta)}{\{I_{\alpha\alpha}(\beta)-I_{\alpha\xi}(\beta)I_{\xi\xi}^{-1}I_{\xi\alpha}(\beta)\}^{1/2}},\qquad
+  \hat Z(\beta)=\frac{U_\alpha(\beta)}{\{I_{\alpha\alpha}(\beta)-I_{\alpha2}(\beta)I_{22}^{-1}I_{2\alpha}(\beta)\}^{1/2}},\qquad
   U_\alpha(\beta)=\sum_i\frac{\beta R_{kj}(t^k_i;\beta)}{\tilde\lambda_k(t^k_i)}-G_{kj}(\beta).
 \]
 The information blocks are those of the optional-variation form in
@@ -255,3 +255,5 @@ thinning candidates, $n_{\mathrm{ev}}\int\bar\lambda/\int\lambda$ in expectation
 INAR lags.
 \end{minipage}
 \end{table}
+
+\FloatBarrier

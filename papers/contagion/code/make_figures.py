@@ -207,7 +207,7 @@ def fig_spurious(res, path):
     kap_all = np.array([c["kappa"] for c in confs])
     kk = np.geomspace(kap_all.min() / 1.3, kap_all.max() * 1.3, 200)
     nstar = 1 - (1 + kk) ** -0.5
-    fig, axes = plt.subplots(1, 2, figsize=(W2, 3.05), layout="constrained", sharey=True)
+    fig, axes = plt.subplots(1, 2, figsize=(W2, 2.8), layout="constrained", sharey=True)
     for ax in axes:
         _style(ax, "both")
         ax.set_xscale("log")
@@ -288,7 +288,7 @@ def _h(n, p):
 def fig_thinning(res, path, n_floor=0.5):
     s = res["experiments"]["E3"]["summary"]
     hom = s["homogeneous"]
-    fig, axes = plt.subplots(2, 2, figsize=(W2, 4.55), layout="constrained")
+    fig, axes = plt.subplots(2, 2, figsize=(W2, 4.25), layout="constrained")
     (ax1, ax2), (ax3, ax4) = axes
     pp = np.linspace(0.05, 1, 200)
     for ax in (ax1, ax2, ax3):
@@ -341,7 +341,7 @@ def fig_thinning(res, path, n_floor=0.5):
             ax3.axhline(fl, color=col, lw=0.8, ls=(0, (3, 2)), zorder=2)
             hc.append(Line2D([], [], color=col, marker=R_MARK[min(i + 1, 3)], ms=4, lw=0.9, label=f"error {100 * r_:.0f}%"))
         hc.append(Line2D([], [], color=INK2, lw=0.8, ls=(0, (3, 2)), label="floor (dashed)"))
-        ax3.set_ylabel(rf"RMSE of corrected $\hat n$ ($n={n_floor:g}$)")
+        ax3.set_ylabel(r"RMSE of corrected $\hat n$")  # n = n_floor is stated in the caption
         top = max(0.16, 1.55 * np.nanmax([_f(x["rmse"]) for r in h["by_p"] for x in r["corrected_est_p_by_r"]]))
         ax3.set_ylim(0, top)
         ax3.legend(handles=hc, loc="upper center", ncol=3, frameon=False, fontsize=6.3, columnspacing=1.0,
@@ -382,7 +382,7 @@ def fig_thinning(res, path, n_floor=0.5):
                loc="upper center", frameon=False, fontsize=6.5, ncol=4, columnspacing=1.0, handlelength=1.6)
     _panel(ax4, "d")
     fig.legend(handles=handles, loc="outside upper center", ncol=4, frameon=False, fontsize=6.8, columnspacing=1.4)
-    fig.savefig(path)
+    fig.savefig(path, bbox_inches="tight")  # keeps the panel (c) y-label inside the page
     plt.close(fig)
 
 
@@ -590,7 +590,7 @@ def fig_alert(res, path):
     has_int = "oracle_int" in meth
     ratios = sorted(meth["oracle"]["alerts"].keys(), key=float)
     rx = np.array([float(r) for r in ratios])
-    fig, axes = plt.subplots(2, 3, figsize=(W2, 5.0), layout="constrained")
+    fig, axes = plt.subplots(2, 3, figsize=(W2, 4.5), layout="constrained")
     (ax1, ax2, ax3), (ax4, ax5, ax6) = axes
     base = s["surge_rate_test"]
 
@@ -812,8 +812,7 @@ def table_e3(res, path, p_row=0.4):
                 L.append(r"\addlinespace")
             first = False
             st = f"$n={n:g}$, $p={_f(r['p']):g}$"
-            rows = [(r"$\hat n'$ (naive) vs $n'(p)$", r["naive_vs_napp"], r["n_app_theory"], None),
-                    (r"$\hat n'$ (naive) vs $n$", r["naive_vs_n"], n, None),
+            rows = [(r"$\hat n'$ (naive)", r["naive_vs_n"], n, None),
                     (r"$h_p^{-1}(\hat n')$, $p$ known", r["corrected_known_p"], n, None)]
             for x in r.get("corrected_est_p_by_r", []):
                 rows.append((rf"$h_{{\hat p}}^{{-1}}(\hat n')$, ${100 * x['r']:.0f}\%$ error", x, n, x["floor_sd"]))

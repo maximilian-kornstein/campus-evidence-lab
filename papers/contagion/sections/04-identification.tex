@@ -140,9 +140,7 @@ for which $\hat g(\omega)=(1+i\omega/\beta)^{-k}$. For $k=2$ a direct calculatio
 \min_\omega 2\pi f_H(\omega)/\bar\Lambda=1-n/4,
 \]
 attained at $\omega=\beta\sqrt{3-n}$. The dip lies at frequencies of the order of the
-inverse delay, so it is easily lost when counts are binned coarsely. For kernels that
-are not completely monotone but still satisfy $f_H\ge\bar\Lambda/(2\pi)$, whether a
-second-order-equivalent Cox process always exists remains open.
+inverse delay, so it is easily lost when counts are binned coarsely.
 \end{remark}
 
 \paragraph{Several streams.} The equivalence results so far are proved for a single stream.
@@ -275,25 +273,21 @@ Define the \emph{burstiness index}
 \begin{enumerate}[(i)]
   \item \emph{Interpreting $\kappa$.} For $C$, $\kappa=s\,m$, where $s=r m/\bar\Lambda$
   is the share of incidents triggered by unrecorded shocks and $m$ is the mean number
-  of incidents per shock. Hence $n^*=1-(1+sm)^{-1/2}$. As a purely arithmetical
-  illustration, $s=0.3$ and $m=10$ give $n^*=1/2$. Rare, large shocks and slow regime
-  switches give large $\kappa$, and so apparent near-criticality ($n^*\uparrow1$). This
-  is consistent with the ``apparent criticality'' that \citet{filimonov2015} discuss
-  for Hawkes fits to data with non-stationary activity.
+  of incidents per shock, so $n^*=1-(1+sm)^{-1/2}$; $s=0.3$ and $m=10$ give $n^*=1/2$.
+  Rare, large shocks and slow regime switches give large $\kappa$, and so apparent
+  near-criticality \citep{filimonov2015}.
   \item \emph{What is and is not claimed.} Parts (a)--(c) concern second-order
   estimators, such as variance-time and autocovariance fits. Spectral (Whittle-type)
-  estimators from binned counts \citep{cheysson2022} use the whole periodogram, so they
-  are not covered by (b) as stated. Their population contrast
-  $\int\{\log f_\vartheta+f/f_\vartheta\}$ is minimised exactly where $f_\vartheta=f$, which in
-  case (a) happens only at $\vartheta^*$. Under the usual M-estimation conditions, which we
-  do not verify, they therefore also converge to $\vartheta^*$. Part (d) proves
+  estimators \citep{cheysson2022} are not covered by (b) as stated, but their population
+  contrast is minimised only at $\vartheta^*$, so under the usual M-estimation conditions,
+  which we do not verify, they also converge to it. Part (d) proves
   only that the likelihood pseudo-true value has $n>0$. That value depends on the law
   of $N$ beyond second order, so it need not equal $n^*$. Nothing forces the members of
   the matched family of \cref{thm:equiv}, which all share $n^*$, to share it. The
-  simulation study compares maximum likelihood fits with $n^*$: they are close to $n^*$ % ALIGN-WITH-SIM (E2 rerun)
-  for frequent small shocks and below it for rare large shocks and slow regime switches.
-  In the designs with few shocks per path, however, finite-sample bias cannot be
-  separated from a difference in the pseudo-true value (\cref{sec:sim-spurious}).
+  simulation study compares maximum likelihood fits with $n^*$: they are close to $n^*$
+  for frequent small shocks and below it for rare large shocks and slow regime switches
+  (\cref{sec:sim-spurious}). For rare large shocks the gap persists at $T=10{,}000$, so
+  it is not finite-sample bias.
   Under the usual conditions for misspecified likelihoods \citep{white1982,ogata1978},
   the estimator converges to the maximisers of $L$; we do not verify those conditions
   here.
@@ -305,6 +299,9 @@ Define the \emph{burstiness index}
 \end{remark}
 
 \subsection{Restoring identification}\label{sec:th-restore}
+
+Three kinds of information outside the second-order structure break the equivalence: a
+recorded calendar of shocks, higher-order moments, and links between incidents.
 
 \begin{corollary}[Identification restored]\label{cor:equiv-id}
 \begin{enumerate}[(i)]
@@ -327,11 +324,9 @@ Define the \emph{burstiness index}
       are analytic on $(0,\infty)$; then $\int\psi_k=1$ pins down $\upsilon_k$. A
       family such as $\psi_s=s^{-1}\mathbf 1_{[0,s]}$ fails this condition.
   \end{itemize}
-  Spline backgrounds are not analytic, so this sufficient condition does not cover the
-  working model of \cref{ass:th-model}(i). There, separating background from shock
-  response rests on the shock responses not being representable in the spline space,
-  for example through a jump at $\tau_e$ when $\psi_k(0+)>0$ and no knot sits at
-  $\tau_e$. We do not formalise this.
+  Spline backgrounds are not analytic, so for the working model of
+  \cref{ass:th-model}(i) separation rests, informally, on the shock responses not being
+  representable in the spline space, for example through a jump at $\tau_e$.
   In particular, when the $g_{kj}$ do not vanish on $(0,T)$, $\Amat=\zero$ is
   distinguishable from every $\Amat\ne\zero$: clustering explained by recorded shocks
   is not confounded with contagion.
@@ -366,24 +361,12 @@ used in finance for the same reason \citep{rambaldi2015}. Part (ii) is a
 statement of principle. Fourth-order cumulants are expensive to estimate, and the
 practical vehicle for higher-order information is the full likelihood.
 
-\begin{remark}[Why intensity jumps do not settle the question]\label{rem:th-filter}
-It is sometimes said that a Hawkes intensity jumps at events whereas a Cox intensity
-does not. This is true only of the Cox intensity \emph{given} the latent driver $\xi$,
-which is unobservable. With respect to the observed history, the Cox intensity is the
-filter $\lambda^N(t)=\E[\xi(t)\mid\Hist^N_{t-}]$. Wherever $\xi$ is continuous, Bayes'
-rule shows that $\lambda^N$ jumps at each event by
-$\Var(\xi(t)\mid\Hist^N_{t-})/\E(\xi(t)\mid\Hist^N_{t-})\ge0$ \citep[cf.][]{bremaud1981}.
-Learning about an unobserved shock looks like self-excitation.
-
-What does separate the models is the \emph{form} of the filter. For a Hawkes process
-the observable intensity is affine in the past. \Cref{lem:th-affine} shows that, among
-all stationary laws second-order equivalent to $H$, $\Pr_H$ is the only one whose
-observable intensity is affine in the past. Here ``affine'' means
-$\lambda(t)=c+\int_{(-\infty,t)}h(t-s)\,\dN(s)$ with $c>0$, $h\ge0$,
-$h\in L^1\cap L^2$ and $\int h<1$. By (ii),
-the filter of every matched $C$ is therefore nonlinear. The information that separates
-contagion from shocks lies in this nonlinearity.
-\end{remark}
+Intensity jumps do not settle the question either. With respect to the observed history,
+the intensity of a Cox process also jumps at each event, because an event is evidence of
+an unobserved shock. What separates the models is the \emph{form} of the observable
+intensity: among all laws second-order equivalent to a Hawkes process, only the Hawkes
+law has an observable intensity that is affine in the past (\cref{rem:th-filter} in
+\cref{app:th-lemmas}).
 
 \subsection{Under-reporting masks contagion}\label{sec:th-thinning}
 
@@ -450,46 +433,29 @@ estimate. A Bayesian alternative passes posterior draws of $p$ from the companio
 $h_p^{-1}$. If $\hat n'$ is the Hawkes maximum likelihood estimator, its limit is the
 pseudo-true value under $N^p$, so the correction is exact only to the extent that this
 value coincides with $n'$ (\cref{thm:thinning}(d)). In the simulation study the mean
-maximum likelihood estimate is within $0.0104$ of $n'$ for every combination of $n$ and $p$ % ALIGN-WITH-SIM (E3 rerun)
+maximum likelihood estimate is within $0.0104$ of $n'$ for every combination of $n$ and $p$
 that was studied (\cref{sec:sim-thinning}).
 
 \paragraph{Heterogeneous recording.} Severe incidents may be both more likely to be
 recorded and more likely to trigger further incidents. Suppose each incident carries an
-\emph{unpredictable} mark $X\in\{1,\dots,K\}$, such as a severity class. Marks are
-i.i.d.\ with law $\pi$, independent of the past. An incident with mark $x$ has expected
-direct offspring $n_x$ and is recorded independently with probability $p_x$, and the
-kernel is $\beta e^{-\beta t}$. Write $\E$, $\Var$ and $\Cov$ for moments under $\pi$,
-and set $\bar n=\E n_X<1$ and $\bar p=\E p_X$.
-
-\begin{proposition}[Heterogeneous recording]\label{prop:th-hetthin}
-The recorded process is stationary with mean $\bar p\bar\Lambda$, where
-$\bar\Lambda=\mu/(1-\bar n)$, and Bartlett spectrum
+\emph{unpredictable} mark $X$ with law $\pi$, expected direct offspring $n_X$ and recording
+probability $p_X$, with $\bar n=\E n_X<1$, $\bar p=\E p_X$ and an exponential kernel. The
+recorded process is then second-order equivalent to an exponential Hawkes process, and
+the homogeneous correction of \cref{cor:th-darkfig} with $p=\bar p$ returns
+$n_{\mathrm{naive}}$ with
 \[
-f_{\mathrm{rec}}(\omega)=\frac{\bar p\bar\Lambda}{2\pi}\Big[1+\frac{\beta^2\{2(1-\bar n)\E[p_Xn_X]+\bar p\,\E[n_X^2]\}}{\beta^2(1-\bar n)^2+\omega^2}\Big].
+(1-n_{\mathrm{naive}})^{-2}=(1-\bar n)^{-2}\Big[1+\frac{2(1-\bar n)\Cov(p_X,n_X)}{\bar p}+\Var(n_X)\Big]
 \]
-This is the spectrum of an exponential Hawkes process with branching ratio
-\[
-n''=1-\frac{1-\bar n}{\sqrt{(1-\bar n)^2+2(1-\bar n)\E[p_Xn_X]+\bar p\,\E[n_X^2]}} .
-\]
-The homogeneous correction of \cref{cor:th-darkfig} with $p=\bar p$ returns
-$n_{\mathrm{naive}}=h_{\bar p}^{-1}(n'')$, where
-\[
-(1-n_{\mathrm{naive}})^{-2}=(1-\bar n)^{-2}\Big[1+\frac{2(1-\bar n)\Cov(p_X,n_X)}{\bar p}+\Var(n_X)\Big].
-\]
-It overstates $\bar n$ whenever $2(1-\bar n)\Cov(p_X,n_X)/\bar p+\Var(n_X)>0$, in
-particular when more productive incidents are recorded more often.
-\end{proposition}
-
-With $p_x\equiv p$ and $n_x\equiv n$, \cref{prop:th-hetthin} reduces to
-\cref{thm:thinning}. Heterogeneous productivity alone ($p\equiv1$) already inflates the
-apparent branching ratio of unmarked data, to $1-(1-\bar n)/\sqrt{1+\Var(n_X)}$. The
-remedy is to model marks explicitly, with mark-specific productivities, and to use
-category-specific coverage when it is available. With stream-specific recording
-probabilities $p_k$, the excess spectral matrix becomes
-$\operatorname{diag}(\bm p)\,\bm E_H\operatorname{diag}(\bm p)$ (\cref{lem:th-cox2}(b)). This need not be of multivariate exponential-Hawkes form, and
-the univariate correction cannot simply be applied stream by stream, because cascades
-pass through unrecorded incidents. The multivariate case calls for an explicit thinning
-model.
+(\cref{prop:th-hetthin}, stated and proved in \cref{app:th-hetthin}). The correction
+therefore overstates $\bar n$ whenever the bracket exceeds one, in particular when more
+productive incidents are recorded more often; heterogeneous productivity alone already
+inflates the apparent branching ratio. The remedy is to model marks explicitly, with
+mark-specific productivities, and to use category-specific coverage when it is available.
+With stream-specific recording probabilities $p_k$, the excess spectral matrix becomes
+$\operatorname{diag}(\bm p)\,\bm E_H\operatorname{diag}(\bm p)$ (\cref{lem:th-cox2}(b)), which
+need not be of multivariate exponential-Hawkes form; because cascades pass through
+unrecorded incidents, the univariate correction cannot simply be applied stream by stream,
+and the multivariate case calls for an explicit thinning model.
 
 \subsection{Granger causality between online and offline streams}\label{sec:th-granger}
 
@@ -521,21 +487,17 @@ of \cref{sec:estimation}.
   faster than offline incidents, induces online-to-offline Granger causality in the
   modelled system even if $\alpha_{\mathrm{off},\mathrm{on}}=0$
   (\cref{prop:th-mv}(c)).
-  \item \emph{Classifier error.} The online stream is measured with false positives
-  and false negatives. Suppose that, under the null, the offline intensity depends
-  only on the offline history and the calendar. Then it is predictable for every
-  filtration that contains these, so classifier errors that are independent of the
-  offline stream cannot \emph{create} online-to-offline causality. Under the
-  alternative they dilute the signal, attenuating the estimated cross-excitation and
-  the power of the test.
-  \item \emph{Under-recording with reverse excitation.} Suppose offline incidents are
-  recorded with $p<1$, trigger online volume ($\alpha_{\mathrm{on},\mathrm{off}}>0$)
-  and self-excite ($\alpha_{\mathrm{off},\mathrm{off}}>0$). Relative to the observed
-  history $\mathcal G$, the intensity of recorded offline incidents is
-  $p\,\E[\lambda_{\mathrm{off}}(t)\mid\mathcal G_{t-}]$. This depends on the online
-  history whenever that history is informative about \emph{unrecorded} offline
-  incidents. Online volume may then predict recorded offline incidents with
-  $\alpha_{\mathrm{off},\mathrm{on}}=0$. We do not formalise the size of this effect.
+  \item \emph{Classifier error.} If, under the null, the offline intensity depends only
+  on the offline history and the calendar, classifier errors that are independent of the
+  offline stream cannot \emph{create} online-to-offline causality. Under the alternative
+  they dilute the signal, attenuating the estimated cross-excitation and the power of
+  the test.
+  \item \emph{Under-recording with reverse excitation.} If offline incidents are
+  recorded with $p<1$, self-excite and trigger online volume, the intensity of recorded
+  offline incidents given the observed history $\mathcal G$,
+  $p\,\E[\lambda_{\mathrm{off}}(t)\mid\mathcal G_{t-}]$, depends on the online history
+  whenever it is informative about \emph{unrecorded} offline incidents. Online volume may
+  then predict recorded offline incidents with $\alpha_{\mathrm{off},\mathrm{on}}=0$.
   \item \emph{Timestamps.} If offline incidents are dated by report time rather than
   occurrence time, online reactions to an incident can precede its record and appear
   as online-to-offline excitation.

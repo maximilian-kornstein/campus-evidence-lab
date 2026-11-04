@@ -342,11 +342,31 @@ def train(world: World, acc: Accounts, glob: GlobalState, rec: RecConfig, ses: S
         glob.idle(ses.day_rounds - ses.seeds_per_day)
 
 
+def slate_states(world: World, slate, logit):
+    """Slate states of sec:prot-estimands: the most severe TRUE state among the k recorded positions
+    (A if any item has L = 1, else B if any is borderline, else N), and the OBSERVED state read off the
+    classifier (A if any position is flagged, else B if any lies in the registered borderline score band,
+    here band 2 = logit in [-1, 0), else N). Returns (true (B,), observed (B,), n_B (B,), n_A (B,))."""
+    st = world.state[slate]
+    band = world.band_of(logit)
+    ob = np.where(band >= 3, 2, np.where(band == 2, 1, 0))
+    return st.max(1), ob.max(1), (st == 1).sum(1), (st == 2).sum(1)
+
+
 def measure(world: World, acc: Accounts, glob: GlobalState, rec: RecConfig, ch: ChoiceConfig,
             ses: SessionConfig, rng, regime: str = "ND", *, n_sessions=None, T=None, evolve: EvolveConfig = None,
-            record_markov=False, n_groups=0, idle_after=True, record_sessions=False):
+            record_markov=False, n_groups=0, idle_after=True, record_sessions=False, record_detail=False,
+            tail_from=None):
     """Measurement sessions. Returns per-account exposure counts by (type, band) and optional
-    Markov records (transitions, emission sums, hitting times) and per-step traces by group."""
+    Markov records (transitions, emission sums, hitting times) and per-step traces by group.
+
+    record_detail (E4b, E5b; draws no random numbers, so the simulation is unchanged) adds, per account and
+    session: impression counts by (type, band) ('sess_counts', (B, S, 20)); counts by (type, band) of the
+    positions the account opened ('sess_opened'); slate states (slate_states) at the first step
+    ('sl_start', (B, S, 2): true, observed) and transitions between consecutive slates ('sl_trans',
+    (B, S, 2, 3, 3): true, observed); the joint histogram of (n_B, n_A) per slate ('sl_comp', (B, (k+1)^2));
+    and, for steps t >= tail_from, the occupancy of true slate states ('sl_occ_tail', (B, S, 3)) and the
+    number of positions with L = 1 ('posA_tail', (B, S))."""
     S = ses.n_sessions if n_sessions is None else n_sessions
     T = ses.T if T is None else T
     B, k = acc.B, rec.slate_k
@@ -355,6 +375,15 @@ def measure(world: World, acc: Accounts, glob: GlobalState, rec: RecConfig, ch: 
     counts = np.zeros(B * NCAT, np.int64)
     opens_state = np.zeros(B * 3, np.int64)
     out = {}
+    if record_detail:
+        d_cnt = np.zeros((B, S, NCAT), np.int32)
+        d_opn = np.zeros((B, S, NCAT), np.int32)
+        d_start = np.zeros((B, S, 2), np.int8)
+        d_trans = np.zeros((B, S, 2, 9), np.int32)
+        d_comp = np.zeros(B * (k + 1) ** 2, np.int64)
+        d_tail = np.zeros((B, S, 3), np.int32)
+        d_posA_tail = np.zeros((B, S), np.int32)
+        tf = T if tail_from is None else int(tail_from)
     if record_markov:
         trans = np.zeros(B * 9, np.int64)
         emis = np.zeros(B * 3, float)
@@ -374,12 +403,32 @@ def measure(world: World, acc: Accounts, glob: GlobalState, rec: RecConfig, ch: 
             sst = np.zeros(B * 3)
         for t in range(T):
             slate, logit, opened = step(world, acc, glob, rec, ch, rng, regime, alg_r, ref_r, prot_r, nat_r)
+            if record_detail:
+                hs = opened >= 0
+                opos = np.argmax(slate == opened[:, None], axis=1)      # slate position of the opened item
             if rec.replace_anti >= 0:
                 rep = rng.random(B) < rec.replace_anti
                 if rep.any():
                     opened[rep] = world.anti_items[rng.integers(0, world.anti_items.size, int(rep.sum()))]
             cat = world.type[slate] * N_BANDS + world.band_of(logit)
-            counts += np.bincount((rows[:, None] * NCAT + cat).ravel(), minlength=B * NCAT)
+            bc = np.bincount((rows[:, None] * NCAT + cat).ravel(), minlength=B * NCAT)
+            counts += bc
+            if record_detail:
+                d_cnt[:, s, :] += bc.reshape(B, NCAT).astype(np.int32)
+                if hs.any():
+                    oc = cat[rows[hs], opos[hs]]
+                    d_opn[:, s, :] += np.bincount(rows[hs] * NCAT + oc, minlength=B * NCAT).reshape(B, NCAT).astype(np.int32)
+                st_t, st_o, nB_, nA_ = slate_states(world, slate, logit)
+                if t == 0:
+                    d_start[:, s, 0], d_start[:, s, 1] = st_t, st_o
+                else:
+                    d_trans[rows, s, 0, prev_t * 3 + st_t] += 1
+                    d_trans[rows, s, 1, prev_o * 3 + st_o] += 1
+                prev_t, prev_o = st_t, st_o
+                d_comp += np.bincount(rows * (k + 1) ** 2 + nB_ * (k + 1) + nA_, minlength=B * (k + 1) ** 2)
+                if t >= tf:
+                    d_tail[rows, s, st_t] += 1
+                    d_posA_tail[:, s] += nA_.astype(np.int32)
             if record_sessions:
                 sess[:, s, 0] += world.L[slate].sum(1)
                 sess[:, s, 1] += (logit >= 0).sum(1)
@@ -422,6 +471,9 @@ def measure(world: World, acc: Accounts, glob: GlobalState, rec: RecConfig, ch: 
     out["counts"] = counts.reshape(B, NCAT)
     if record_sessions:
         out["sessions"] = sess
+    if record_detail:
+        out.update(sess_counts=d_cnt, sess_opened=d_opn, sl_start=d_start, sl_trans=d_trans.reshape(B, S, 2, 3, 3),
+                   sl_comp=d_comp.reshape(B, (k + 1) ** 2), sl_occ_tail=d_tail, posA_tail=d_posA_tail)
     out["opens_state"] = opens_state.reshape(B, 3)
     out["n_impr"] = S * T * k
     if record_markov:

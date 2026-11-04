@@ -10,7 +10,7 @@ area mean is the poststratified mean of the cell means (eq:mrp), sum_k N_k mu_k 
 
 Measurement: each sampled respondent contributes a score y_i = theta_iG + e_i with
 e_i ~ N(0, s_m^2), i.e. a conditionally unbiased score of G with a stated reliability (the
-measurement-model step is abstracted; see run_experiments.E4 for the reliability).
+measurement-model step is abstracted; see run_experiments.X4 for the reliability).
 
 Sampling: n respondents, drawn with probability proportional to N_k times a response
 propensity that depends on age and education (differential non-response), so unweighted

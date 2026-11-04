@@ -1,22 +1,24 @@
 # Simulation study: results summary
 
-Paper 3, *Where Criticism Ends*. Every number below is copied programmatically from `results/sim_results.json`, which `code/run_experiments.py` produced. The figures and tables come from `code/make_figures.py`. **All data are synthetic. No survey was fielded and no real responses were used.**
+Paper 3, *Where Does Criticism End?*. Every number below is copied programmatically from `results/sim_results.json`, which `code/run_experiments.py` produced. The figures and tables come from `code/make_figures.py`. **All data are synthetic. No survey was fielded and no real responses were used.**
+
+**Experiment labels.** X1-X5 (and X1b) were labelled E1-E5 (E1b) when they were run; they were renamed to avoid a clash with the estimands (E1)-(E9) of the analysis plan. Seeds, configurations and every number below are unchanged; the code-version prefixes below refer to the files that produced them under the old labels. The new experiments X2b, X6, X7, X8 and X9 are summarised in `results/SUMMARY-new-experiments.md` (written by `code/make_summary.py`).
 
 ## Provenance
 
 - Python 3.13.18, numpy 2.5.3, scipy 1.18.1, matplotlib 3.11.2; Linux-6.18.44-fc-v230-x86_64-with-glibc2.39.
 - Base seed 20261103; numpy SeedSequence([base_seed, experiment_index, cell keys..., rep]). Each experiment's own `seeds` field gives its keys.
 - 2 worker processes, `nice`, OPENBLAS_NUM_THREADS=1. The machine was shared and heavily loaded (load average 11-14 on 4 cores).
-- E1: wall 1276 s; run started 2026-11-03T21:49:41Z; run_experiments.py sha256[:16] ca450e64a827b7ce; summary recomputed from raw with run_experiments.py 2729078df210b26b.
-- E1b: wall 100 s; run started 2026-11-03T22:15:16Z; run_experiments.py sha256[:16] cd237869adbe67af; summary recomputed from raw with run_experiments.py 2729078df210b26b.
-- E2: wall 58 s; run started 2026-11-03T22:15:16Z; run_experiments.py sha256[:16] cd237869adbe67af; summary recomputed from raw with run_experiments.py 2729078df210b26b.
-- E3: wall 16 s; run started 2026-11-03T22:15:16Z; run_experiments.py sha256[:16] cd237869adbe67af.
-- E4: wall 5 s; run started 2026-11-03T22:15:16Z; run_experiments.py sha256[:16] cd237869adbe67af.
-- E5: wall 22 s; run started 2026-11-03T22:15:16Z; run_experiments.py sha256[:16] cd237869adbe67af.
+- X1: wall 1276 s; run started 2026-11-03T21:49:41Z; run_experiments.py sha256[:16] ca450e64a827b7ce; summary recomputed from raw with run_experiments.py 2729078df210b26b.
+- X1b: wall 100 s; run started 2026-11-03T22:15:16Z; run_experiments.py sha256[:16] cd237869adbe67af; summary recomputed from raw with run_experiments.py 2729078df210b26b.
+- X2: wall 58 s; run started 2026-11-03T22:15:16Z; run_experiments.py sha256[:16] cd237869adbe67af; summary recomputed from raw with run_experiments.py 2729078df210b26b.
+- X3: wall 16 s; run started 2026-11-03T22:15:16Z; run_experiments.py sha256[:16] cd237869adbe67af.
+- X4: wall 5 s; run started 2026-11-03T22:15:16Z; run_experiments.py sha256[:16] cd237869adbe67af.
+- X5: wall 22 s; run started 2026-11-03T22:15:16Z; run_experiments.py sha256[:16] cd237869adbe67af.
 
-## E1 and E1b: recovery of the boundary estimands
+## X1 and X1b: recovery of the boundary estimands
 
-Single group, bifactor normal-ogive DGP, 8 stereotype items and |I| Israel-related items. True I-item ECVs are [0.25, 0.75, 0.4, 0.6, 0.15, 0.85] (the first |I|), tau = 0.5. B = 100 bootstrap replicates and 5 starts per fit. R per design: {'I6': 100, 'I3': 100, 'I2': 50, 'I3p': 40}; E1b (I3np): R = 40.
+Single group, bifactor normal-ogive DGP, 8 stereotype items and |I| Israel-related items. True I-item ECVs are [0.25, 0.75, 0.4, 0.6, 0.15, 0.85] (the first |I|), tau = 0.5. B = 100 bootstrap replicates and 5 starts per fit. R per design: {'I6': 100, 'I3': 100, 'I2': 50, 'I3p': 40}; X1b (I3np): R = 40.
 Designs: I6 and I3 are identified (S block heterogeneous, thm:ident(a)). I3np has a nearly proportional S block (S ECVs 0.65-0.75), so identification is weak. I2 is not identified (thm:ident(c), two I items). I3p is not identified (proportional S block and three I items, thm:ident(b)).
 
 ECV_I bias and RMSE are pooled over the I items. Coverage is of nominal 95% intervals for ECV_j. B is the three-way classification from the per-item bootstrap interval. 'Bonferroni set cov.' is Pr(B_in subset B_tau subset B_out) with Bonferroni logit-Wald intervals (prop:id-boundary-test(b)). 'ECV start range' is the largest spread of ECV_j across starts that reach the optimum (within 1e-6 relative), averaged over replications. 'ident. diag.' is sigma_min/sigma_max of the weighted Jacobian. phi is the correlated-factors S-I correlation, measured against its pseudo-true value.
@@ -45,7 +47,7 @@ I2 (not identified), n = 3000: I1: true ECV 0.250, identified set (0.125, 0.625)
 Population identification diagnostic (exact population fit): I6 0.0935, I3 0.0679, I3np 0.00603, I2 8.46e-17, I3p 1.04e-16.
 Pseudo-true phi_SI (correlated-factors fit to the population polychorics): I6 0.621, I3 0.589, I3np 0.590, I2 0.591, I3p 0.590.
 
-## E2: DIF, anchors and partial invariance
+## X2: DIF, anchors and partial invariance
 
 Two groups with n = 1500 each, the I6 item bank, focal latent means (G, S, I) = [0.3, 0.0, 0.3] and Sigma = I. Uniform DIF on I1 and I2 (thresholds lowered by kappa SDs of the latent response); non-uniform DIF on I3 (G slope x (1 - 1.25 kappa)). kappa in [0.0, 0.2, 0.4, 0.6], R = 100 per kappa; leave-one-anchor-out at kappa = 0.4 (R = 100). Anchor sets: correct = S1-S4, I5, I6; contam1 = S1-S4, I1, I6; contam2 = S1-S4, I1, I2; stereotype-only = S1-S4 (mu_I and sigma_I fixed). 'plim' is the probability limit from a fit to the exact population statistics.
 
@@ -116,7 +118,7 @@ Per-item flag rates with correct anchors: S5 0% [0%], S6 0% [2%], S7 0% [3%], S8
 
 Exact population checks: stereotype-only anchors give mu_hat = [0.3, -0.0, 0.0] (true [0.3, 0.0, 0.3]; mu_I fixed), max |ECV^(1) error| = 2.11e-14. thm:dif-bias(d)(i): DIF = -a_j'v on all items gives mu_hat = [0.55, -0.1, 0.45] (expected [0.55, -0.1, 0.45]). prop:anchor(b): 3 anchors with DIF -A_A v give mu_hat = [0.55, -0.1, 0.45] and spurious non-anchor DIF equal to a_k'v (max deviation 2.3e-09).
 
-## E3: list experiments and social-desirability bias
+## X3: list experiments and social-desirability bias
 
 One sensitive item, threshold-shift DGP: pi = 0.3, direct prevalence 0.2 so SDB = 0.10 (minus phi when false endorsement phi > 0). n = 3000, equal costs. Controls have prevalence 1/2, in pairs with binary within-pair correlation rho. R = 2000 (parts A and B), 1000 (part C).
 
@@ -175,7 +177,7 @@ MSE-optimal list (thm:design(c)) with fc0.5: theory by n {'300': 'J2_rho-0.6', '
 
 Re-computed illustrations from sec:sensitive and sec:design-list: L* = 26.96 (independent controls) and 11.92 (pairs, rho = -0.6); rem:le-mse thresholds {'2000': 0.04557447708341699, '6000': 0.026312436612287233}; thm:design(a) n*Var equal 6.48 vs optimum 5.76, shares [0.1667, 0.4167, 0.4167]; direct-arm cost threshold 1.26e-04; paired/split variance ratio 0.810; sec:design-list m for power 0.8: 1695 (SDB 0.10), 6781 (SDB 0.05).
 
-## E4: MRP small-area estimates of the mean of G
+## X4: MRP small-area estimates of the mean of G
 
 50 areas with 32 demographic cells each; differential non-response; score y = theta_G + N(0, 0.4^2); R = 200 per n. A new population is drawn in each replication. MRP = REML random-intercept model with demographic fixed effects and an area predictor, then poststratification. Direct estimators are evaluated on areas with at least 2 respondents. 'slope' is the regression of estimated on true area deviations from the national mean.
 
@@ -187,7 +189,7 @@ Re-computed illustrations from sec:sensitive and sec:design-list: L* = 26.96 (in
 
 By realised area sample size (n = 3000): [0,5) 294 area-reps: MRP 0.204, direct 0.602, direct-wtd 0.614, MRP cov 92.2%; [5,10) 682 area-reps: MRP 0.194, direct 0.369, direct-wtd 0.391, MRP cov 90.9%; [10,20) 1647 area-reps: MRP 0.164, direct 0.284, direct-wtd 0.291, MRP cov 93.6%; [20,50) 3517 area-reps: MRP 0.133, direct 0.203, direct-wtd 0.196, MRP cov 93.9%; [50,100) 2246 area-reps: MRP 0.102, direct 0.152, direct-wtd 0.131, MRP cov 93.6%; [100,inf) 1614 area-reps: MRP 0.071, direct 0.124, direct-wtd 0.087, MRP cov 95.2%.
 
-## E5: stereotype-count indices
+## X5: stereotype-count indices
 
 Index = Pr(agree with >= h of the 8 S items), where agree means the top two of five categories. Groups differ by delta in the mean of G only. Random uniform DIF on the S items: b_j^(1) = b_j^(0) + N(0, s^2) sd_j. 1000 random configurations per (s, |delta|), exact population computation by quadrature.
 

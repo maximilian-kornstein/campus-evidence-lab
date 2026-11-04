@@ -1,4 +1,4 @@
-\section{Proofs for Sections~\ref{sec:attribution} and~\ref{sec:forecasting}}\label{app:attrproofs}
+\section{Proofs and supplements for Sections~\ref{sec:attribution} and~\ref{sec:forecasting}}\label{app:attrproofs}
 
 Throughout this appendix, inequalities between vectors, matrices and matrix functions
 hold entrywise, and $\mathbf 1$ is the vector of ones. For nonnegative functions,
@@ -100,7 +100,29 @@ $\tilde\Rker-\Phik=\bm S\bm V=\Phik*\tilde\Rker$. Since $\tilde\Rker$ is continu
 uniqueness in \cref{lem:at-mean}(a) gives $\tilde\Rker=\Rker$.
 \end{proof}
 
-\subsection{Proof of \texorpdfstring{\cref{lem:at-mean}}{the mean-intensity lemma}}\label{app:at-mean}
+\subsection{Resolvent and mean intensity}\label{app:at-mean}
+
+The following lemma, used throughout \cref{sec:attribution}, collects classical facts
+about the resolvent \citep{hawkes1971,gripenberg1990}.
+
+\begin{lemma}[Resolvent and mean intensity]\label{lem:at-mean}
+Let $\Phik\ge0$ be integrable on $[0,\infty)$, with $\int_0^\infty\Phik=\Amat$ and
+$\spr(\Amat)<1$.
+\begin{enumerate}[(a)]
+  \item The series $\Rker=\sum_{m\ge1}\Phik^{*m}$ converges in $L^1[0,\infty)$, and
+  $\int_0^\infty\Rker=\Mmat-\Imat$. The resolvent $\Rker$ is the unique locally
+  integrable solution of $\Rker=\Phik+\Phik*\Rker$, and it also satisfies
+  $\Rker=\Phik+\Rker*\Phik$.
+  \item Let $N$ have intensity
+  $\bm\lambda(t)=\bm\nu(t)+\int_0^{t-}\Phik(t-s)\,\dN(s)$ for a locally integrable
+  $\bm\nu\ge0$. In the cluster representation, the incidents of generation $m$ have
+  mean intensity $\Phik^{*m}*\bm\nu$, with $\Phik^{*0}*\bm\nu:=\bm\nu$. Hence
+  $\E\,\dN(t)=(\mathcal K\bm\nu)(t)\,\dd t$, and $\mathcal K\bm\nu$ is the unique
+  locally integrable solution of the renewal equation $\bm m=\bm\nu+\Phik*\bm m$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}[Proof of \cref{lem:at-mean}]
 
 (a) By \cref{lem:at-young} with $T=\infty$ and induction,
 $\int_0^\infty\Phik^{*m}=\Amat^m$. Since $\spr(\Amat)<1$, the series
@@ -136,7 +158,8 @@ Using $\Phik*\Rker=\Rker-\Phik$,
 $\bm\nu+\Phik*\mathcal K\bm\nu=\bm\nu+\Phik*\bm\nu+(\Rker-\Phik)*\bm\nu=\mathcal K\bm\nu$,
 so $\mathcal K\bm\nu$ solves the renewal equation. If $\tilde{\bm m}$ is another
 locally integrable solution, the difference $\bm\delta$ satisfies $\bm\delta=\Phik*\bm\delta$,
-and the argument of (a) gives $\bm\delta=\zero$. \qed
+and the argument of (a) gives $\bm\delta=\zero$.
+\end{proof}
 
 \subsection{Proof of \texorpdfstring{\cref{thm:attribution}}{the attribution theorem}}\label{app:at-thm}
 
@@ -146,7 +169,7 @@ Every incident belongs to exactly one of them. In $N^e$, generation $0$ consists
 immigrants of event $e$, with intensity $\bm\nu_e$. By \cref{lem:at-mean}(b), the
 later generations have total mean intensity $\Rker*\bm\nu_e$. Integrating over $W_e$
 gives
-$D_k=\beta_kS_e\int_{\tau_e}^{\tau_e+H}\psi_k(t-\tau_e)\,\dd t=\beta_kS_e\Psi_k(H)$ and
+$D_k=\upsilon_kS_e\int_{\tau_e}^{\tau_e+H}\psi_k(t-\tau_e)\,\dd t=\upsilon_kS_e\Psi_k(H)$ and
 the first expression in \eqref{eq:at-C}.
 
 For the second expression, $\bm\nu_e$ vanishes before $\tau_e$, so
@@ -154,16 +177,16 @@ $(\Rker*\bm\nu_e)(\tau_e+u)=\int_0^u\Rker(u-v)\bm\nu_e(\tau_e+v)\,\dd v$. Hence
 \[
 \int_0^H\!\!\int_0^u\Rker(u-v)\bm\nu_e(\tau_e+v)\,\dd v\,\dd u
 =\int_0^H\bar\Rker(H-v)\,\bm\nu_e(\tau_e+v)\,\dd v ,
-\qquad \bm\nu_e(\tau_e+v)=S_e\bigl(\beta_k\psi_k(v)\bigr)_k .
+\qquad \bm\nu_e(\tau_e+v)=S_e\bigl(\upsilon_k\psi_k(v)\bigr)_k .
 \]
 The same lemma applied to $N^\mu$ and $N^{-e}$ gives $\bm B^\mu$ and $\bm O$. Setting
 $S_e=0$ removes $N^e$ and leaves the law of $N^\mu+N^{-e}$ unchanged, so
 $B_k=\E_{S_e=0}N_k(W_e)$.
 
-(b) Since $\int\psi_k=1$, $D_k(H)\uparrow\beta_kS_e$. In \eqref{eq:at-C}, for each $v$
+(b) Since $\int\psi_k=1$, $D_k(H)\uparrow\upsilon_kS_e$. In \eqref{eq:at-C}, for each $v$
 the integrand $\ind{v\le H}\bar\Rker(H-v)$ increases with $H$ to
 $\int_0^\infty\Rker=\Mmat-\Imat$. By monotone convergence,
-$\bm C(H)\uparrow(\Mmat-\Imat)S_e\int_0^\infty(\beta_k\psi_k)_k=(\Mmat-\Imat)\bm d_e$.
+$\bm C(H)\uparrow(\Mmat-\Imat)S_e\int_0^\infty(\upsilon_k\psi_k)_k=(\Mmat-\Imat)\bm d_e$.
 From $\Mmat(\Imat-\Amat)=\Imat$ we get $\Mmat-\Imat=\Mmat\Amat=\Amat\Mmat$, because $\Mmat$
 is a power series in $\Amat$. In the univariate case, $\Mmat=(1-n)^{-1}$ and
 $C(\infty)/\{D(\infty)+C(\infty)\}=(\Mmat-1)d_e/(\Mmat d_e)=1-(1-n)=n$.
@@ -172,7 +195,7 @@ $C(\infty)/\{D(\infty)+C(\infty)\}=(\Mmat-1)d_e/(\Mmat d_e)=1-(1-n)=n$.
 $\int_0^\infty\Rker=\Mmat-\Imat$. In \eqref{eq:at-C}, $\bar\Rker(H-v)\le\bar\Rker(H)$
 for $0\le v\le H$, so
 \[
-\bm C(H)\le\bar\Rker(H)\,S_e\int_0^H\bigl(\beta_k\psi_k(v)\bigr)_k\,\dd v
+\bm C(H)\le\bar\Rker(H)\,S_e\int_0^H\bigl(\upsilon_k\psi_k(v)\bigr)_k\,\dd v
 =\bar\Rker(H)\,\bm D(H)\le(\Mmat-\Imat)\,\bm D(H).
 \]
 In the univariate case $C\le\bar\Rker(H)D$. Since $x\mapsto x/(D+x)$ is increasing,
@@ -193,7 +216,54 @@ becomes $\mathcal K_{\tau_e}$. The part rooted at event $e$ has immigrant intens
 $\bm\nu_e$, exactly as in (a), so $D_k$ and $C_k$ are unchanged. The remaining part gives
 $\bm B^{\mid e}$. \qed
 
-\subsection{Derivations for \texorpdfstring{\cref{rem:at-background,rem:at-expost}}{the remarks of Section 5}}\label{app:at-remarks}
+\subsection{Time-varying backgrounds and realised attribution}\label{app:at-remarks}
+
+The following two remarks supplement \cref{thm:attribution}; their derivations follow.
+
+\begin{remark}[Time-varying background]\label{rem:at-background}
+The background-rooted component $\bm B^\mu=\int_{W_e}\bm\mu+\int_{W_e}\Rker*\bm\mu$
+counts background immigrants plus the cascades that they trigger. If $\bm\mu$ is
+constant and the process has run for long enough, or is started in the infinite past
+(\cref{prop:stationary}), then $\mathcal K\bm\mu\to\Mmat\bm\mu$ and
+$\bm B^\mu=H\,\Mmat\bm\mu$.
+
+A time-varying background is passed through a linear filter with impulse response
+$\delta_0\Imat+\Rker$, where $\delta_0$ is the Dirac delta. The filter amplifies slow variation by up to $\Mmat$ and smooths
+it over the cascade time scale. Suppose each $\mu_j$ is Lipschitz with constant $L$.
+Then
+\[
+\bigl|(\Rker*\bm\mu)(t)-(\Mmat-\Imat)\bm\mu(t)\bigr|
+\le L\int_0^t u\,\Rker(u)\,\dd u\;\mathbf 1+\Bigl(\int_t^\infty\Rker\Bigr)\bm\mu(t).
+\]
+For the univariate exponential kernel, $\int_0^\infty u\Rker(u)\,\dd u=n/\{\beta(1-n)^2\}$.
+When the background varies slowly relative to $1/\{\beta(1-n)\}$, the
+background-driven rate therefore tracks $\Mmat\bm\mu(t)$.
+
+A calendar effect that coincides with $\tau_e$ belongs in $\bm\mu$
+(\cref{ass:th-model}(i)). If it is omitted, its incidents are attributed to $\bm D$ and
+$\bm C$. This is a time-local analogue of the spurious contagion of
+\cref{thm:spurious}.
+\end{remark}
+
+\begin{remark}[Attribution of the realised incidents]\label{rem:at-expost}
+\Cref{thm:attribution} decomposes an expectation. For a realised surge, with parameters
+fixed, the latent structure used by EM \citep{veen2008,marsan2008,mohler2011} gives a
+decomposition after the fact. Given the realised event times, each incident $i$ (in
+stream $k_i$ at time $t_i$) independently selects one of the following:
+\begin{itemize}
+  \item an earlier incident $j$ as its parent, with probability
+  $p_{ij}=\varphi_{k_ik_j}(t_i-t_j)/\lambda_{k_i}(t_i)$;
+  \item event $e$, with probability $p_{ie}=\upsilon_{k_i}S_e\psi_{k_i}(t_i-\tau_e)/\lambda_{k_i}(t_i)$;
+  \item the background or another event, with the remaining probability.
+\end{itemize}
+The probabilities $\rho_{ie}$ that the root of $i$ is an immigrant of event $e$ satisfy
+$\rho_{ie}=p_{ie}+\sum_{j:t_j<t_i}p_{ij}\rho_{je}$. They are computed in one forward
+pass. The realised decomposition over $W_e$ has three parts: the direct part
+$\sum_{i}p_{ie}$; the contagion part $\sum_{i}(\rho_{ie}-p_{ie})$; and the baseline
+$\sum_{i}(1-\rho_{ie})$, each summed over the stream-$k$ incidents in $W_e$. These add up
+to the realised count $N_k(W_e)$. At the true parameters, their expectations are the
+components of \eqref{eq:at-decomp}.
+\end{remark}
 
 \emph{Background bound.} We can write
 $(\Rker*\bm\mu)(t)-(\Mmat-\Imat)\bm\mu(t)=\int_0^t\Rker(u)\{\bm\mu(t-u)-\bm\mu(t)\}\,\dd u-(\int_t^\infty\Rker)\bm\mu(t)$.
@@ -255,7 +325,7 @@ Integration gives the distribution function
 \[
 \frac{\gamma(1-e^{-\eta H})-\eta(1-e^{-\gamma H})}{\gamma-\eta},
 \]
-which is \eqref{eq:at-kappa}. For $\eta=\gamma$, the sum has the $\mathrm{Gamma}(2,\gamma)$ law.
+which is \eqref{eq:at-hypoexp}. For $\eta=\gamma$, the sum has the $\mathrm{Gamma}(2,\gamma)$ law.
 
 The intensity attributable to the event at lag $t$ is
 \[
@@ -284,6 +354,24 @@ $\bm z(u)=\int_0^ue^{\bm Q(u-v)}\bm P\bm\nu(v)\,\dd v$ solves
 $\bm z'=\bm Q\bm z+\bm P\bm\nu$ with $\bm z(0)=\zero$, and $\bm S\bm z=\Rker*\bm\nu$ by (c).
 Finally $\bm D'=\bm\nu$ and $\bm C'=\bm S\bm z$. Together these form the linear system
 $\bm w'=\bm Z\bm w$ with $\bm w(0)=\bm w_0$, so $\bm w(H)=e^{H\bm Z}\bm w_0$. \qed
+
+\subsection{The delta method for the decomposition}\label{app:at-grad}
+
+If $\hat\vartheta$ is asymptotically normal with estimated
+covariance $\hat{\bm V}$ (\cref{sec:estimation}), then
+$\Var g(\hat\vartheta)\approx\nabla g^{\top}\hat{\bm V}\nabla g$, with the joint gradient
+for joint covariances. The infinite-horizon totals have closed-form gradients:
+\begin{equation}\label{eq:at-grad}
+  \frac{\partial\Mmat}{\partial\alpha_{kj}}=\Mmat\bm e_k\bm e_j^{\top}\Mmat,\qquad
+  \frac{\partial(\Mmat\bm d_e)}{\partial\alpha_{kj}}=(\Mmat\bm d_e)_j\,\Mmat\bm e_k,\qquad
+  \frac{\partial(\Mmat\bm d_e)}{\partial\upsilon_{j}}=S_e\,\Mmat\bm e_j .
+\end{equation}
+For the online channel, $\partial\bm C^{\mathrm{on}}(\infty)/\partial\alpha_{kj}$ is
+$(\Mmat\bm d_e)_j\Mmat\bm e_k$, minus $(\Mmat^\circ\bm d_e)_j\Mmat^\circ\bm e_k$ if
+$(k,j)$ is not an online-to-offline entry. Finite-horizon gradients are derivatives of
+the matrix exponential in \eqref{eq:at-augmented} \citep{vanloan1978}. Shares should be
+handled on the logit scale. The delta method is unreliable near the boundary
+$\alpha_{kj}=0$ (\cref{prop:lrt}) and near criticality, where $\Mmat$ has a pole.
 
 \subsection{Proof of \texorpdfstring{\cref{prop:at-channel}}{the channel proposition}}\label{app:at-channel}
 
@@ -354,9 +442,71 @@ expectations proves (d). \qed
 \paragraph{Gradients \eqref{eq:at-grad}} The identity
 $\dd(\Imat-\Amat)^{-1}=(\Imat-\Amat)^{-1}(\dd\Amat)(\Imat-\Amat)^{-1}$ with
 $\dd\Amat=\bm e_k\bm e_j^{\top}$ gives $\partial\Mmat/\partial\alpha_{kj}$. The other
-formulas follow from $\bm d_e=S_e(\beta_1,\dots,\beta_M)^{\top}$. The online-channel
+formulas follow from $\bm d_e=S_e(\upsilon_1,\dots,\upsilon_M)^{\top}$. The online-channel
 formula follows because $\Mmat^\circ$ depends on $\alpha_{kj}$ only when $(k,j)$ is not
 an online-to-offline pair.
+
+\subsection{An illustrative example}\label{sec:at-example}
+
+The following parameter values are invented for illustration. They are not estimates,
+and the example describes no real data. Take two streams, online volume (stream 1) and
+offline incidents (stream 2), with time measured in days, and
+\[
+\Amat=\begin{pmatrix}0.5&0\\0.1&0.3\end{pmatrix},\qquad
+\bm\Omega=\operatorname{diag}(2,\,0.5),\qquad
+\bm\mu=(2,\,0.5)^{\top},\qquad
+\bm d_e=(20,\,5)^{\top},\qquad \eta_1=\eta_2=1 .
+\]
+Thus each online item triggers on average $0.1$ offline incidents. Offline incidents
+trigger no online volume. Online excitation decays within about half a day, and
+offline excitation decays over about two days. The background is constant, and we
+take the process to have run long before the event (\cref{prop:stationary}), so
+$\bm B=H\,\Mmat\bm\mu$ with $\Mmat\bm\mu=(4,\,1.29)^{\top}$ per day. For a process
+started from the empty history at time $0$, as in the standing assumptions, $\bm B$
+approaches this value as $\tau_e$ grows.
+\Cref{tab:at-illus} reports the decomposition, computed from
+\eqref{eq:at-irf-row}--\eqref{eq:at-augmented}.
+
+\begin{table}[!htbp]
+\centering
+\caption{Illustrative surge decomposition with invented parameters (not data). $B$,
+$D$ and $C$ are the expected background, direct and contagion counts over $H$ days
+after the event. $C^{\mathrm{on}}$ is the offline contagion that passes through the
+online stream, and $\sigma=C^{\mathrm{on}}/C$ is its share. At $H=\infty$, the
+background total is infinite and is omitted.}
+\label{tab:at-illus}
+\small
+\begin{tabular}{llrrrrrr}
+\toprule
+Stream & $H$ & $B_k$ & $D_k$ & $C_k$ & $\dfrac{C_k}{D_k+C_k}$ & $C^{\mathrm{on}}_k$ & $\sigma_k$\\
+\midrule
+Online  & 7        & 28.00 & 19.98 & 19.85 & 0.498 & ---  & ---   \\
+        & 14       & 56.00 & 20.00 & 20.00 & 0.500 & ---  & ---   \\
+        & $\infty$ & ---   & 20.00 & 20.00 & 0.500 & ---  & ---   \\
+\addlinespace
+Offline & 7        &  9.00 &  5.00 &  6.63 & 0.570 & 4.77 & 0.719 \\
+        & 14       & 18.00 &  5.00 &  7.75 & 0.608 & 5.63 & 0.727 \\
+        & $\infty$ & ---   &  5.00 &  7.86 & 0.611 & 5.71 & 0.727 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The table illustrates the results above. The online stream receives no excitation from
+offline incidents, so it behaves as a univariate process: its contagion share is at most
+$n_{\mathrm{on}}=0.5$, and the bound binds in the limit (\cref{thm:attribution}(b),(c)). The
+offline share, $0.611$ in the limit, is about twice $\alpha_{\mathrm{off},\mathrm{off}}=0.3$,
+and most offline contagion arrives through the online stream ($\sigma=0.727$). With no
+offline-to-online excitation,
+$C^{\mathrm{on}}_{\mathrm{off}}(\infty)=0.7^{-1}\times0.1\times0.5^{-1}\times20=5.71$ is exactly
+the single-crossing term \eqref{eq:at-chan-nofb}; an event with no direct online response,
+$\bm d_e=(0,5)^{\top}$, would have no online channel at all, and with feedback
+$\alpha_{\mathrm{on},\mathrm{off}}=0.2$ it would have $\sigma_{\mathrm{off}}(\infty)=0.168$
+(from \eqref{eq:at-chan-inf}). Over the first week the expected offline count,
+$B+D+C=20.62$, is $2.3$ times the baseline. Under the model, most of this illustrative surge
+would be event-driven cascade, and most of that cascade would pass through the online
+stream. A model with an omitted common driver of both streams, and no online-to-offline
+excitation at all, could produce similar surges (\cref{rem:at-causal}).
+\FloatBarrier
 
 \subsection{Proof of \texorpdfstring{\cref{lem:fc-future}}{the conditional cluster lemma}}\label{app:fc-future}
 
@@ -376,10 +526,10 @@ origin $t$.
 For exponential kernels,
 $h_{t,k}(s)=\sum_j\sum_{t^j_i\le t}\alpha_{kj}\beta_{kj}e^{-\beta_{kj}(s-t^j_i)}=\sum_je^{-\beta_{kj}(s-t)}x_{kj}(t)$,
 and $u_{t,k}(s)=e^{-\eta_k(s-t)}u_k(t)$ in the same way. Hence $\bm\nu_t$, and with it
-the conditional law of the future, depends on $\Hist_t$ only through $\bm\xi(t)$. The
-dynamics of $\bm\xi$ follow from \eqref{eq:fc-state}. The predictive mean
+the conditional law of the future, depends on $\Hist_t$ only through $\bm\chi(t)$. The
+dynamics of $\bm\chi$ follow from \eqref{eq:fc-state}. The predictive mean
 $\int_t^{t+\Delta_{\mathrm a}}\mathcal K_t\bm\nu_t$ is linear in $\bm\nu_t$, which is affine in
-$\bm\xi(t)$. \qed
+$\bm\chi(t)$. \qed
 
 \subsection{Proof of \texorpdfstring{\cref{thm:alert}}{the alerting theorem}}\label{app:fc-alert}
 
@@ -405,30 +555,30 @@ $\bm N'=\bm N+\bm N^+$ has the predictive law under $\omega'$, and
 $\bm N'(t,t+\Delta_{\mathrm a}]\ge\bm N(t,t+\Delta_{\mathrm a}]$ pathwise. For an upper set $\mathcal U$,
 $\{\bm N\in\mathcal U\}\subseteq\{\bm N'\in\mathcal U\}$.
 
-(c) By \cref{lem:fc-future}, $\pi_t=G_t(\bm\xi(t))$, where $G_t(\bm\xi)$ is the
+(c) By \cref{lem:fc-future}, $\pi_t=G_t(\bm\chi(t))$, where $G_t(\bm\chi)$ is the
 probability that a cluster process with immigrant intensity
 \[
-\nu^{\bm\xi}_k(s)=\mu_k(s)+u_ke^{-\eta_k(s-t)}+\sum_jx_{kj}e^{-\beta_{kj}(s-t)}
+\nu^{\bm\chi}_k(s)=\mu_k(s)+u_ke^{-\eta_k(s-t)}+\sum_jx_{kj}e^{-\beta_{kj}(s-t)}
 \]
-has $\bm N(t,t+\Delta_{\mathrm a}]\in\mathcal U$. If $\bm\xi\le\bm\xi'$, then
-$\bm\nu^{\bm\xi'}-\bm\nu^{\bm\xi}\ge\zero$, and the coupling of (b) gives
-$G_t(\bm\xi)\le G_t(\bm\xi')$.
+has $\bm N(t,t+\Delta_{\mathrm a}]\in\mathcal U$. If $\bm\chi\le\bm\chi'$, then
+$\bm\nu^{\bm\chi'}-\bm\nu^{\bm\chi}\ge\zero$, and the coupling of (b) gives
+$G_t(\bm\chi)\le G_t(\bm\chi')$.
 
-For the Lipschitz bound with $\bm\xi\le\bm\xi'$, write $W=(t,t+\Delta_{\mathrm a}]$. Then
+For the Lipschitz bound with $\bm\chi\le\bm\chi'$, write $W=(t,t+\Delta_{\mathrm a}]$. Then
 \[
-|G_t(\bm\xi')-G_t(\bm\xi)|\le\Pr\{\bm N^+(W)\neq\zero\}\le\E\,\mathbf 1^{\top}\bm N^+(W)
-\le\mathbf 1^{\top}\Mmat\int_W(\bm\nu^{\bm\xi'}-\bm\nu^{\bm\xi})
-\le\Delta_{\mathrm a}\max_j(\mathbf 1^{\top}\Mmat)_j\,\|\bm\xi'-\bm\xi\|_1 ,
+|G_t(\bm\chi')-G_t(\bm\chi)|\le\Pr\{\bm N^+(W)\neq\zero\}\le\E\,\mathbf 1^{\top}\bm N^+(W)
+\le\mathbf 1^{\top}\Mmat\int_W(\bm\nu^{\bm\chi'}-\bm\nu^{\bm\chi})
+\le\Delta_{\mathrm a}\max_j(\mathbf 1^{\top}\Mmat)_j\,\|\bm\chi'-\bm\chi\|_1 ,
 \]
 using \cref{lem:at-mean}(b), \cref{lem:at-young} and the fact that each exponential
 factor is at most $1$. If $\spr(\Amat)\ge1$, replace $\Mmat$ by the finite matrix
 $\Imat+\int_0^{\Delta_{\mathrm a}}\Rker$, where $\Rker$ is the locally integrable resolvent
-\citep[Ch.~2]{gripenberg1990}. For general $\bm\xi,\bm\xi'$, pass through
-$\bm\xi\wedge\bm\xi'$ and note that
-$\|\bm\xi-\bm\xi\wedge\bm\xi'\|_1+\|\bm\xi'-\bm\xi\wedge\bm\xi'\|_1=\|\bm\xi-\bm\xi'\|_1$.
+\citep[Ch.~2]{gripenberg1990}. For general $\bm\chi,\bm\chi'$, pass through
+$\bm\chi\wedge\bm\chi'$ and note that
+$\|\bm\chi-\bm\chi\wedge\bm\chi'\|_1+\|\bm\chi'-\bm\chi\wedge\bm\chi'\|_1=\|\bm\chi-\bm\chi'\|_1$.
 
 Monotonicity makes $\mathcal A_t$ an upper set, and continuity makes it closed. The
-law of the cluster process on $W$ depends on $t$ only through $\bm\nu^{\bm\xi}$ on $W$.
+law of the cluster process on $W$ depends on $t$ only through $\bm\nu^{\bm\chi}$ on $W$.
 The exponential terms depend on $s-t$ alone, so the dependence on $t$ is through
 $\bm\mu$ on $W$ and the future calendar.
 
@@ -489,23 +639,23 @@ The factors $p_{k_i}F_{k_i}(t-s_i)$ do not depend on $U$, which gives
 \eqref{eq:fc-isweight}.
 
 Given the completed history, \cref{lem:fc-future} shows that the probability of a surge
-is $G_t(\bm\xi(t))$, which is bounded. The consistency of self-normalised importance
+is $G_t(\bm\chi(t))$, which is bounded. The consistency of self-normalised importance
 sampling with an absolutely continuous proposal and bounded integrand then gives the
 limit, by the strong law of large numbers applied to numerator and denominator. \qed
 
 \subsection{Proof of \texorpdfstring{\cref{prop:nowcast}}{the nowcasting proposition}}\label{app:fc-nowcast}
 
-(a) Mark each incident with its recording indicator $R_i$ and delay $D_i$. By
+(a) Mark each incident with its recording indicator $R_i$ and delay $d_i$. By
 \cref{ass:fc-report}, the marks are independent of the incident process and of the
 past, so $\bm\lambda$ remains the $\mathcal G^\circ$-intensity of $\bm N$. The marked
 process has $\mathcal G^\circ$-compensator $\lambda_k(s)\,\dd s$ times the law of the
 marks \citep[Ch.~6--7]{daley2003}. Integrating the indicator
-$\ind{R=1,\ D\le t-s}$ against this compensator gives the compensator
+$\ind{R=1,\ d\le t-s}$ against this compensator gives the compensator
 $\int p_kF_k(t-s)\lambda_k(s)\,\dd s$ for $O^{(t)}_k$, and the complement gives the
 second statement. Taking expectations gives the mean.
 
 (b) For an incident of stream $j$ at $s_i\le t-\delta$, the availability indicator
-$A_i=\ind{R_i=1,\ D_i\le t-s_i}$ is independent of $\Hist_\infty$, with
+$A_i=\ind{R_i=1,\ d_i\le t-s_i}$ is independent of $\Hist_\infty$, with
 $\Pr(A_i=1)=p_jF_j(t-s_i)\ge p_jF_j(\delta)>0$. Hence
 $\E[A_i/\{p_jF_j(t-s_i)\}\mid\Hist_{t-\delta}]=1$, and
 $\E[\hat{\bm h}(s)\mid\Hist_{t-\delta}]=\sum_{s_i\le t-\delta}\Phik_{\cdot j}(s-s_i)=\bm h_{t-\delta}(s)$,
@@ -534,11 +684,11 @@ $\bar\Lambda_j$. By Campbell's theorem,
 $\E\sum_{s_i\le t}f(t-s_i)=\bar\Lambda_j\int_0^\infty f$ for $f\ge0$. Hence
 \[
 \E\tilde x_{kj}(t)=\bar\Lambda_j\alpha_{kj}\int_0^\infty F_j(u)g_{kj}(u)\,\dd u
-=\Pr(D_j\le U_{kj})\,\alpha_{kj}\bar\Lambda_j,
+=\Pr(d_j\le U_{kj})\,\alpha_{kj}\bar\Lambda_j,
 \qquad \E x_{kj}(t)=\alpha_{kj}\bar\Lambda_j .
 \]
 For $g_{kj}(u)=\beta_{kj}e^{-\beta_{kj}u}$,
-$\Pr(D_j\le U_{kj})=\E\Pr(U_{kj}\ge D_j\mid D_j)=\E e^{-\beta_{kj}D_j}$.
+$\Pr(d_j\le U_{kj})=\E\Pr(U_{kj}\ge d_j\mid d_j)=\E e^{-\beta_{kj}d_j}$.
 
 (d) If $p_k\equiv1$, the available incidents are a subset of all incidents, so
 $\tilde x_{kj}(t)\le x_{kj}(t)$ for every realisation. The event state $\bm u(t)$ is
@@ -576,12 +726,12 @@ In the univariate case,
 $I(s)=\int_s^{t+\Delta_{\mathrm a}}n\beta e^{-\beta(r-s)}\{G(z;r)-1\}\,\dd r$, and differentiation
 gives $I'(s)=\beta I(s)-n\beta\{G(z;s)-1\}$.
 
-The coordinate $\xi_i$ of the state adds the immigrant intensity
-$\xi_ie^{-b_i(s-t)}$ to one stream $k(i)$, with $b_i$ the corresponding decay rate. Its
-factor in \eqref{eq:fc-pgf} is $\exp\{\xi_ic_i(\hat G_i(z)-1)\}$, where
+The coordinate $\chi_i$ of the state adds the immigrant intensity
+$\chi_ie^{-b_i(s-t)}$ to one stream $k(i)$, with $b_i$ the corresponding decay rate. Its
+factor in \eqref{eq:fc-pgf} is $\exp\{\chi_ic_i(\hat G_i(z)-1)\}$, where
 $c_i=(1-e^{-b_i\Delta_{\mathrm a}})/b_i$ and
 $\hat G_i(z)=c_i^{-1}\int_We^{-b_i(s-t)}G_{k(i)}(z;s)\,\dd s$ is a probability
-generating function. This factor is a compound Poisson law with rate $\xi_ic_i$.
+generating function. This factor is a compound Poisson law with rate $\chi_ic_i$.
 
 For the aliasing bound, the discrete Fourier transform of the values at the $L$th roots
 of unity returns $\sum_{m\ge0}p(y+mL)$ for $y<L$. Its error is therefore at most

@@ -10,10 +10,24 @@ Experiments
       estimates; demand-sufficiency gaps (asm:demand); persona-contrast decomposition.
   E4  Markov exposure model (prop:markov, prop:markov-mle): predictions vs simulated sessions; perturbation
       (thm:perturb) for a score tilt toward antisemitic items and for the replacement nudge of thm:perturb(c).
-  E5  sequential audit (alg:sequential): time-uniform coverage, stopping times vs fixed-n, power vs prop:power.
+  E5  sequential audit (alg:sequential) on the confirmed-flagged statistic Y_u, at a conventional small-lab
+      design kept as a benchmark (waves of 5 pairs, up to 8 waves; 10 sessions per puppet): time-uniform coverage,
+      stopping times vs fixed-n, power vs prop:power.
+  E4b slate-state Markov chains of protocol puppets (sec:prot-estimands): true slate states, observed states, and
+      the slate-level misclassification correction; predictions vs simulated slate and impression exposure.
+  E5b the REGISTERED primary analysis (sec:prot-stopping): double-sampled exposure E~_u (m = 10 flagged, m' = 25
+      unflagged codes per puppet: 5 openings + 20 over score bands by Neyman allocation), S = 4 of the 10 sessions,
+      waves of 20 pairs, W_max = 6, b = 1, alpha in {0.05, 0.025}; AR and AA confidence sequences (normal mixture
+      and betting) under the null, ND and DD; tails of E~_u; variance vs A + n B_ds; the pilot resampling check.
+  E5s E5b's statistic and pilot check under two stress designs (waves of 5 or 2 pairs, no burn-in, t* = 40) on
+      which the normal-mixture sequence fails; tests whether the pilot check detects the failure.
+  E4b, E5b and E5s use detailed pools (raw/pool_detail_<regime>.npz): the E1 pools re-simulated with the same seeds,
+  recording per-session counts, opened positions and slate states (identical counts; checked against raw/pool_*).
 
 Usage (from code/):
   OPENBLAS_NUM_THREADS=1 nice -n 10 python run_experiments.py            # full study (2 worker processes)
+  OPENBLAS_NUM_THREADS=1 nice -n 10 python run_experiments.py --only E4b,E5b --merge   # add E4b, E5b
+  OPENBLAS_NUM_THREADS=1 nice -n 10 python run_experiments.py --only E5s --merge       # add E5s
   python run_experiments.py --quick                                       # smoke run
 Outputs: ../results/sim_results.json (summaries, configs, seeds, R, runtimes, versions)
          ../results/raw/pool_<regime>.npz (E1 puppet pools: per-puppet impression counts by type x band)
@@ -42,6 +56,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 from ampsim import __version__ as AMPSIM_VERSION  # noqa: E402
+from ampsim import doublesample as ds  # noqa: E402
 from ampsim import markov as mk  # noqa: E402
 from ampsim import measurement as ms  # noqa: E402
 from ampsim import sequential as sq  # noqa: E402
@@ -50,7 +65,7 @@ from ampsim.engine import (POL, POLICIES, ChoiceConfig, EvolveConfig, GlobalStat
 from ampsim.world import PERSONAS, REAL_USER_SHARES, REGIMES, World, WorldConfig  # noqa: E402
 
 BASE_SEED = 20261103
-EXP_ID = dict(world=0, E1=1, E2=2, E3=3, E4=4, E5=5)
+EXP_ID = dict(world=0, E1=1, E2=2, E3=3, E4=4, E5=5, E4b=6, E5b=7, E5s=8)
 REG_IDX = {g: i for i, g in enumerate(REGIMES)}
 Z95 = float(norm.ppf(0.975))
 
@@ -62,6 +77,12 @@ CH_NAT_OPEN = ChoiceConfig(beta_cur=2.0, outside=-50.0)   # naturalistic, always
 SES = SessionConfig()
 EVO = EvolveConfig()
 N_IMPR = SES.n_sessions * SES.T * REC.slate_k
+
+
+RUNTIME_NOTE = ("sum of the wall times of all runs listed in runs; each run's by_experiment_cpu gives CPU seconds "
+                "by part (summed over worker processes)")
+E2_XI_NOTE = ("oracle: the sensitivity interval of prop:interference(d) uses xi_Delta at its simulated value (the largest "
+              "|bias| / load over the grid, from the paired comparison with the no-audit state), which no audit observes")
 
 
 def sseq(exp, *keys):
@@ -109,6 +130,16 @@ def experiment_config(quick: bool):
                 alpha_protocol=0.0125, lam_range=[0.95, 1.05], lam_range_wide=[0.8, 1.2], t_star=40, delta=1.25,
                 W_max=8, W_max_list=[8, 40], grid=[0.1, 10.0, 300], R=2000 if not q else 100,
                 R_bet=200 if not q else 20, power_target=0.8),
+        DETAIL=dict(regimes=["ND", "DU", "DD"], policies=["alg", "chron"], T_long=200, tail_from=100),
+        E4b=dict(regimes=["ND", "DU", "DD"], ref="chron", S=4, T=20, T_long=200, tail_from=100, n_audit=120,
+                 R=500 if not q else 50, borderline_band=2),
+        E5b=dict(ref="chron", regimes=["ND", "DD"], S=4, wave=20, W_max=6, burn=1, t_star=120, alphas=[0.05, 0.025],
+                 m=10, m_open=5, m_unf=20, delta=1.25, R=2000 if not q else 200, grid_ratio=[0.1, 10.0, 300],
+                 grid_aa=[-0.1, 0.1, 801],
+                 pilot=dict(n_per_cell=10, m_open=10, m_unf=40, R=200 if not q else 10, B=1000 if not q else 50)),
+        E5s=dict(note="stress designs, run only to test whether the pilot check detects a failing sequence",
+                 designs=[dict(name="moderate", wave=5, burn=0, t_star=40), dict(name="severe", wave=2, burn=0, t_star=40)],
+                 N=120, R=2000 if not q else 200),
     )
 
 
@@ -1136,13 +1167,468 @@ def analyse_e5(pools, cfg):
 
 
 # =============================================================================================
+# Detailed pools (E4b, E5b): the E1 pools re-simulated with the same seeds, with per-session records
+# =============================================================================================
+def task_detail_pool(args):
+    """Re-simulate the E1 pool of `regime` exactly (same seeds, same chunks; record_detail draws no random
+    numbers) and keep, for the algorithmic and reverse-chronological puppets, per-session impression counts,
+    opened positions and slate states, plus one further session of T_long steps (slate states only)."""
+    regime, P, chunk, T_long, tail_from = args
+    w = get_world()
+    t0 = time.perf_counter()
+    pers = np.repeat(np.arange(4), 4 * P)
+    pol = np.tile(np.repeat(np.arange(4), P), 4)
+    n = pers.size
+    S, k = SES.n_sessions, REC.slate_k
+    counts = np.zeros((n, 20), np.int32)
+    D = dict(sc=np.zeros((4, 2, P, S, 20), np.int16), so=np.zeros((4, 2, P, S, 20), np.int16),
+             st=np.zeros((4, 2, P, S, 2), np.int8), tr=np.zeros((4, 2, P, S, 2, 3, 3), np.int16),
+             comp=np.zeros((4, 2, P, (k + 1) ** 2), np.int32),
+             Lc=np.zeros((4, 2, P, 20), np.int32), Lst=np.zeros((4, 2, P, 2), np.int8),
+             Ltr=np.zeros((4, 2, P, 2, 3, 3), np.int16), Ltail=np.zeros((4, 2, P, 3), np.int16),
+             LposA=np.zeros((4, 2, P), np.int32))
+    perm = rng_for("E1", 0, REG_IDX[regime]).permutation(n)
+    for ci, c0 in enumerate(range(0, n, chunk)):
+        idx = perm[c0:c0 + chunk]
+        rng = rng_for("E1", 1, REG_IDX[regime], ci)
+        acc = make_puppets(w, pers[idx], pol[idx], rng)
+        glob = GlobalState(w, REC)
+        train(w, acc, glob, REC, SES)
+        out = measure(w, acc, glob, REC, CH, SES, rng, regime, record_detail=True)
+        counts[idx] = out["counts"]
+        sel = np.flatnonzero(pol[idx] <= 1)
+        gi = idx[sel]
+        dd, qq, pp = gi // (4 * P), (gi // P) % 4, gi % P
+        D["sc"][dd, qq, pp] = out["sess_counts"][sel]
+        D["so"][dd, qq, pp] = out["sess_opened"][sel]
+        D["st"][dd, qq, pp] = out["sl_start"][sel]
+        D["tr"][dd, qq, pp] = out["sl_trans"][sel]
+        D["comp"][dd, qq, pp] = out["sl_comp"][sel]
+        lng = measure(w, acc.subset(sel), glob, REC, CH, SES, rng, regime, n_sessions=1, T=T_long,
+                      record_detail=True, tail_from=tail_from)
+        D["Lc"][dd, qq, pp] = lng["counts"]
+        D["Lst"][dd, qq, pp] = lng["sl_start"][:, 0]
+        D["Ltr"][dd, qq, pp] = lng["sl_trans"][:, 0]
+        D["Ltail"][dd, qq, pp] = lng["sl_occ_tail"][:, 0]
+        D["LposA"][dd, qq, pp] = lng["posA_tail"][:, 0]
+    return dict(regime=regime, counts=counts.reshape(4, 4, P, 20), detail=D, runtime=time.perf_counter() - t0)
+
+
+def _moments(x):
+    x = np.asarray(x, float).ravel()
+    m, sd = x.mean(), x.std()
+    z = (x - m) / sd if sd > 0 else np.zeros_like(x)
+    return dict(mean=float(m), sd=float(sd), skew=float(np.mean(z ** 3)), exkurt=float(np.mean(z ** 4) - 3),
+                max=float(x.max()), q99=float(np.quantile(x, 0.99)), q999=float(np.quantile(x, 0.999)),
+                p_zero=float(np.mean(x == 0)))
+
+
+def _decide_vec(L, U, delta):
+    """Conclusions of tab:prot-decisions for final intervals (R,) for log AR; 'empty' if L > U."""
+    ld = np.log(delta)
+    out = np.full(L.shape, "inconclusive", dtype=object)
+    und = (L > 0) | (U < 0)
+    out[und] = "difference_materiality_undetermined"
+    out[(L > -ld) & (U < ld)] = "no_material_difference"
+    out[U < -ld] = "material_deamplification"
+    out[L > ld] = "material_amplification"
+    out[~(L <= U)] = "empty"
+    return out
+
+
+def _wrong_vec(dec, L, U, logAR, delta):
+    ld = np.log(delta)
+    w = np.zeros(L.shape, bool)
+    w |= (dec == "material_amplification") & (logAR <= ld)
+    w |= (dec == "material_deamplification") & (logAR >= -ld)
+    w |= (dec == "no_material_difference") & ~((-ld < logAR) & (logAR < ld))
+    w |= (dec == "difference_materiality_undetermined") & (((L > 0) & (logAR <= 0)) | ((U < 0) & (logAR >= 0)))
+    return w
+
+
+def _stop_vec(L, U, delta, burn, logAR, wave):
+    """Rules S1-S3 (sec:prot-stopping) on running intervals L, U (R, W) for log AR."""
+    R, W = L.shape
+    ld = np.log(delta)
+    cond = (L > ld) | (U < -ld) | ((L > -ld) & (U < ld) & (L <= U))
+    cond[:, :burn] = False
+    stop = np.where(cond.any(1), cond.argmax(1), W - 1)
+    Lf, Uf = L[np.arange(R), stop], U[np.arange(R), stop]
+    dec = _decide_vec(Lf, Uf, delta)
+    wrong = _wrong_vec(dec, Lf, Uf, logAR, delta)
+    cats, cnt = np.unique(dec.astype(str), return_counts=True)
+    wr = float(wrong.mean())
+    return dict(mean_stop_wave=float(stop.mean() + 1), stopped_early=float(np.mean(stop < W - 1)),
+                mean_pairs_used=float((stop.mean() + 1) * wave), decisions={str(c): float(n / R) for c, n in zip(cats, cnt)},
+                wrong_conclusion=wr, wrong_conclusion_mcse=float(np.sqrt(wr * (1 - wr) / R)),
+                detects=float(np.mean(((Lf > 0) | (Uf < 0)) & (Lf <= Uf))), empty=float(np.mean(~(Lf <= Uf))))
+
+
+def _cov(L, U, target, cols=slice(None)):
+    ok = (L[:, cols] <= target) & (target <= U[:, cols])
+    c = float(np.all(ok, 1).mean())
+    return c, float(np.sqrt(c * (1 - c) / L.shape[0]))
+
+
+def _draw_records(D, d, q, idx, rng, S):
+    """Records of puppets idx (any shape) of cell (d, q), each aggregated over S of its sessions drawn at random
+    without replacement. Returns strata (ampsim.doublesample.strata)."""
+    sc, so = D["sc"][d, q], D["so"][d, q]
+    nS = sc.shape[1]
+    ss = np.argsort(rng.random(idx.shape + (nS,)), -1)[..., :S]
+    cnt = sc[idx[..., None], ss].sum(-2, dtype=np.int64)
+    opn = so[idx[..., None], ss].sum(-2, dtype=np.int64)
+    return ds.strata(cnt, opn)
+
+
+def _band_weights(D):
+    """Design input of the Neyman allocation: s_h = sqrt(FOR_h (1 - FOR_h)) of the non-opened unflagged
+    positions in score band h, pooled over the regime's personas and both arms (an 'ideal pilot')."""
+    st = ds.strata(D["sc"].reshape(-1, 20).astype(np.int64), D["so"].reshape(-1, 20).astype(np.int64))
+    a, nb = st["aB"].sum(0), st["nB"].sum(0)
+    f = a / np.maximum(nb, 1)
+    return np.sqrt(f * (1 - f)), f
+
+
+def analyse_e5b(dp, cfg):
+    """The registered primary analysis on synthetic audits resampled from the detailed pools."""
+    t0 = time.perf_counter()
+    q_ref = POL[cfg["ref"]]
+    assert q_ref == 1
+    wave, Wm, S = cfg["wave"], cfg["W_max"], cfg["S"]
+    N = wave * Wm
+    looks = np.arange(wave, N + 1, wave)
+    R, b = cfg["R"], cfg["burn"]
+    kTS = S * SES.T * REC.slate_k
+    gr = np.exp(np.linspace(np.log(cfg["grid_ratio"][0]), np.log(cfg["grid_ratio"][1]), cfg["grid_ratio"][2]))
+    ga = np.linspace(*cfg["grid_aa"][:2], cfg["grid_aa"][2])
+    gx = (ga + 1) / 2
+    pcfg = cfg["pilot"]
+    out = dict(config=cfg, looks=looks, design={}, personas={})
+    for g in cfg["regimes"]:
+        s_band, for_band = _band_weights(dp[g])
+        out["design"][g] = dict(s_band=s_band, FOR_band=for_band)
+    for d, pn in enumerate(PERSONAS):
+        res = {}
+        for g in cfg["regimes"]:
+            D = dp[g]
+            P = D["sc"].shape[2]
+            s_band = out["design"][g]["s_band"]
+            rates = {pol: ds.cell_rates(D["sc"][d, qq].reshape(-1, 20)) for pol, qq in (("alg", 0), ("chron", 1))}
+            rr = dict(rates=rates, AR=float(rates["alg"]["mu"] / rates["chron"]["mu"]),
+                      AA=float(rates["alg"]["mu"] - rates["chron"]["mu"]))
+            for ci, (case, qa, qr) in enumerate((("alt", 0, 1), ("null", 1, 1))):
+                rng = rng_for("E5b", REG_IDX[g], ci, d)
+                logAR = float(np.log(rr["AR"])) if case == "alt" else 0.0
+                AA0 = rr["AA"] if case == "alt" else 0.0
+                ia, ir = rng.integers(0, P, (R, N)), rng.integers(0, P, (R, N))
+                sa, sr = _draw_records(D, d, qa, ia, rng, S), _draw_records(D, d, qr, ir, rng, S)
+                Ea, codes_a = ds.ds_exposure(sa, rng, s_band, cfg["m"], cfg["m_open"], cfg["m_unf"])
+                Er, codes_r = ds.ds_exposure(sr, rng, s_band, cfg["m"], cfg["m_open"], cfg["m_unf"])
+                mua, mur = rates["alg" if qa == 0 else "chron"]["mu"], rates["chron"]["mu"]
+                cr = dict(target_logAR=logAR, target_AA=AA0, opened_flagged_max=int(max(sa["nO_flagged"].max(), sr["nO_flagged"].max())),
+                          mean_codes_per_puppet=float((codes_a.mean() + codes_r.mean()) / 2),
+                          Etilde_mean_over_mu=[float(Ea.mean() / mua), float(Er.mean() / mur)])
+                # tails of the primary statistic, and of the true exposure of a puppet (S sessions)
+                cr["tails"] = dict(alg=dict(Etilde=_moments(Ea), Etrue=_moments(sa["E"]), mu=float(mua)),
+                                   ref=dict(Etilde=_moments(Er), Etrue=_moments(sr["E"]), mu=float(mur)),
+                                   psi=_moments(Ea / mua - Er / mur))
+                for arm, X, mu_ in (("alg", Ea, mua), ("ref", Er, mur)):
+                    t_ = cr["tails"][arm]
+                    t_["max_over_mu"] = float(X.max() / mu_)
+                    t_["q999_over_mu"] = float(np.quantile(X, 0.999) / mu_)
+                    t_["p_over_5mu"] = float(np.mean(X > 5 * mu_))
+                # variance per pair of the influence psi vs the closed form A + n B_ds
+                sim = dict(alg=float(Ea.var() / mua ** 2), ref=float(Er.var() / mur ** 2),
+                           alg_true=float(sa["E"].var() / mua ** 2), ref_true=float(sr["E"].var() / mur ** 2))
+                cf = {}
+                for arm, qq, st_ in (("alg", qa, sa), ("ref", qr, sr)):
+                    rt = rates["alg" if qq == 0 else "chron"]
+                    cf[arm] = ds.var_closed_form(rt["mu"], float(st_["E"].var()), rt["q"], rt["PPV"], rt["FOR"], rt["Se"],
+                                                 rt["Sp"], kTS, cfg["m"], cfg["m_open"] + cfg["m_unf"])
+                tot_sim = sim["alg"] + sim["ref"]
+                tot_cf = cf["alg"]["total"] + cf["ref"]["total"]
+                cr["variance"] = dict(sim=sim, closed_form=cf, sim_total=tot_sim, closed_form_total=tot_cf,
+                                      ratio_closed_over_sim=tot_cf / tot_sim,
+                                      sim_true_total=sim["alg_true"] + sim["ref_true"],
+                                      A_closed_total=cf["alg"]["A"] + cf["ref"]["A"])
+                Dd = Ea - Er
+                for alpha in cfg["alphas"]:
+                    ka = f"a{alpha:g}"
+                    v = {}
+                    o1 = sq.alg1_cs(Ea, Er, looks, alpha, cfg["t_star"], (1.0, 1.0), burn=b)
+                    o0 = sq.alg1_cs(Ea, Er, looks, alpha, cfg["t_star"], (1.0, 1.0), burn=0)
+                    c1, m1 = _cov(o1["L"], o1["U"], logAR)
+                    c0, m0 = _cov(o0["L"], o0["U"], logAR)
+                    v["nm_ar"] = dict(coverage=c1, coverage_mcse=m1, coverage_no_burn_in=c0, coverage_no_burn_in_mcse=m0,
+                                      excludes_1_by_wave={str(w + 1): float(np.mean((o1["L"][:, w] > 0) | (o1["U"][:, w] < 0)))
+                                                          for w in range(Wm)},
+                                      median_width_final=float(np.median(o1["U"][:, -1] - o1["L"][:, -1])),
+                                      stop=_stop_vec(o1["L"], o1["U"], cfg["delta"], b, logAR, wave))
+                    La, Ua = sq.alg1_cs_mean(Dd, looks, alpha, cfg["t_star"], burn=b)
+                    ca, ma = _cov(La, Ua, AA0)
+                    v["nm_aa"] = dict(coverage=ca, coverage_mcse=ma, excludes_0_final=float(np.mean((La[:, -1] > 0) | (Ua[:, -1] < 0))),
+                                      median_width_final=float(np.median(Ua[:, -1] - La[:, -1])))
+                    blo, bhi = sq.betting_ratio_cs(Ea, Er, alpha, gr)
+                    with np.errstate(divide="ignore", invalid="ignore"):
+                        BL = np.log(np.nan_to_num(blo[:, looks - 1], nan=np.inf))
+                        BU = np.log(np.nan_to_num(bhi[:, looks - 1], nan=0.0))
+                    cb, mb = _cov(BL, BU, logAR)
+                    v["bet_ar"] = dict(coverage=cb, coverage_mcse=mb,
+                                       excludes_1_by_wave={str(w + 1): float(np.mean(((BL[:, w] > 0) | (BU[:, w] < 0)) & (BL[:, w] <= BU[:, w])))
+                                                           for w in range(Wm)},
+                                       median_width_final=float(np.median(BU[:, -1] - BL[:, -1])),
+                                       stop=_stop_vec(BL, BU, cfg["delta"], b, logAR, wave))
+                    xlo, xhi = sq.betting_cs((Dd + 1) / 2, alpha, gx)
+                    AL = np.nan_to_num(2 * xlo[:, looks - 1] - 1, nan=np.inf)
+                    AU = np.nan_to_num(2 * xhi[:, looks - 1] - 1, nan=-np.inf)
+                    cba, mba = _cov(AL, AU, AA0)
+                    v["bet_aa"] = dict(coverage=cba, coverage_mcse=mba,
+                                       excludes_0_final=float(np.mean(((AL[:, -1] > 0) | (AU[:, -1] < 0)) & (AL[:, -1] <= AU[:, -1]))),
+                                       median_width_final=float(np.median(AU[:, -1] - AL[:, -1])))
+                    cr[ka] = v
+                # the pilot check of sec:prot-stopping: resample 10 pilot puppets per arm to estimate the miss rate
+                cr["pilot_check"] = _pilot_check(D, d, qa, qr, s_band, cfg, pcfg, looks, rng)
+                rr[case] = cr
+            res[g] = rr
+        out["personas"][pn] = res
+    out["runtime"] = time.perf_counter() - t0
+    return out
+
+
+def _pilot_check(D, d, qa, qr, s_band, cfg, pcfg, looks, rng):
+    """For each of pcfg['R'] simulated pilots (n_per_cell puppets per arm, S sessions, pilot coding: all flagged
+    and m_open + m_unf unflagged positions), estimate the time-uniform miss rate of the registered sequences by
+    resampling the pilot puppets (B audits of the registered design, the registered statistic re-drawn from the
+    pilot's codes, the pilot's ratio and difference of mean exposures as the truth). The check fails ('flags')
+    when the estimate exceeds the level by more than its Monte Carlo error sqrt(alpha (1 - alpha) / B)."""
+    P = D["sc"].shape[2]
+    n, B, Rp = pcfg["n_per_cell"], pcfg["B"], pcfg["R"]
+    N = looks[-1]
+    est = {f"a{a:g}": dict(ar=[], aa=[]) for a in cfg["alphas"]}
+    n_ok = 0
+    for _ in range(Rp):
+        pcs = []
+        for q in (qa, qr):
+            st = _draw_records(D, d, q, rng.integers(0, P, n), rng, cfg["S"])
+            pcs.append(ds.pilot_codes(st, rng, s_band, pcfg["m_open"], pcfg["m_unf"], cfg["m_unf"]))
+        ma, mr = pcs[0]["Ehat"].mean(), pcs[1]["Ehat"].mean()
+        ja, jr = rng.integers(0, n, (B, N)), rng.integers(0, n, (B, N))
+        Ea = ds.ds_from_pilot(pcs[0], ja, rng, cfg["m"], cfg["m_open"])
+        Er = ds.ds_from_pilot(pcs[1], jr, rng, cfg["m"], cfg["m_open"])
+        ok = ma > 0 and mr > 0
+        n_ok += ok
+        for alpha in cfg["alphas"]:
+            k = f"a{alpha:g}"
+            if ok:
+                o = sq.alg1_cs(Ea, Er, looks, alpha, cfg["t_star"], (1.0, 1.0), burn=cfg["burn"])
+                est[k]["ar"].append(1 - _cov(o["L"], o["U"], float(np.log(ma / mr)))[0])
+            La, Ua = sq.alg1_cs_mean(Ea - Er, looks, alpha, cfg["t_star"], burn=cfg["burn"])
+            est[k]["aa"].append(1 - _cov(La, Ua, float(ma - mr))[0])
+    out = dict(R_pilots=Rp, B=B, n_per_cell=n, computable_ar=float(n_ok / Rp))
+    for alpha in cfg["alphas"]:
+        k = f"a{alpha:g}"
+        thr = alpha + np.sqrt(alpha * (1 - alpha) / B)
+        o = dict(threshold=float(thr))
+        for s_ in ("ar", "aa"):
+            x = np.asarray(est[k][s_], float)
+            o[s_] = dict(n=int(x.size), flag_rate=float(np.mean(x > thr)) if x.size else None,
+                         mean_miss=float(x.mean()) if x.size else None, median_miss=float(np.median(x)) if x.size else None,
+                         q10_miss=float(np.quantile(x, 0.1)) if x.size else None, q90_miss=float(np.quantile(x, 0.9)) if x.size else None)
+        out[k] = o
+    return out
+
+
+def analyse_e5s(dp, cfg, cfg5b):
+    """E5b's statistic and pilot check under stress designs (more looks, no burn-in), on which the normal-mixture
+    sequence is expected to fail; tests whether the pilot resampling check detects the failure."""
+    t0 = time.perf_counter()
+    R, N, S = cfg["R"], cfg["N"], cfg5b["S"]
+    out = dict(config=cfg, personas={})
+    for d, pn in enumerate(PERSONAS):
+        res = {}
+        for g in cfg5b["regimes"]:
+            D = dp[g]
+            P = D["sc"].shape[2]
+            s_band = _band_weights(D)[0]
+            mu = {qq: ds.cell_rates(D["sc"][d, qq].reshape(-1, 20))["mu"] for qq in (0, 1)}
+            rr = {}
+            for ci, (case, qa, qr) in enumerate((("alt", 0, 1), ("null", 1, 1))):
+                rng = rng_for("E5s", REG_IDX[g], ci, d)
+                logAR = float(np.log(mu[qa] / mu[qr]))
+                AA0 = float(mu[qa] - mu[qr])
+                sa = _draw_records(D, d, qa, rng.integers(0, P, (R, N)), rng, S)
+                sr = _draw_records(D, d, qr, rng.integers(0, P, (R, N)), rng, S)
+                Ea, _ = ds.ds_exposure(sa, rng, s_band, cfg5b["m"], cfg5b["m_open"], cfg5b["m_unf"])
+                Er, _ = ds.ds_exposure(sr, rng, s_band, cfg5b["m"], cfg5b["m_open"], cfg5b["m_unf"])
+                cr = {}
+                for di, des in enumerate(cfg["designs"]):
+                    looks = np.arange(des["wave"], N + 1, des["wave"])
+                    v = dict(design=des)
+                    for alpha in cfg5b["alphas"]:
+                        o = sq.alg1_cs(Ea, Er, looks, alpha, des["t_star"], (1.0, 1.0), burn=des["burn"])
+                        La, Ua = sq.alg1_cs_mean(Ea - Er, looks, alpha, des["t_star"], burn=des["burn"])
+                        c1, m1 = _cov(o["L"], o["U"], logAR)
+                        c2, m2 = _cov(La, Ua, AA0)
+                        v[f"a{alpha:g}"] = dict(nm_ar_coverage=c1, nm_ar_coverage_mcse=m1, nm_aa_coverage=c2,
+                                                nm_aa_coverage_mcse=m2)
+                    c5 = dict(cfg5b, burn=des["burn"], t_star=des["t_star"])
+                    v["pilot_check"] = _pilot_check(D, d, qa, qr, s_band, c5, cfg5b["pilot"], looks,
+                                                    rng_for("E5s", REG_IDX[g], ci, d, 1 + di))
+                    cr[des["name"]] = v
+                rr[case] = cr
+            res[g] = rr
+        out["personas"][pn] = res
+    out["runtime"] = time.perf_counter() - t0
+    return out
+
+
+def analyse_e4b(dp, cfg):
+    """Slate-state chains of protocol puppets (sec:prot-estimands) against simulated slate and impression exposure."""
+    t0 = time.perf_counter()
+    S_all, T, TL, tf = SES.n_sessions, cfg["T"], cfg["T_long"], cfg["tail_from"]
+    k = REC.slate_k
+    a2 = 1                                                       # index of A in the collapsed chain
+    out = dict(config=cfg, regimes={})
+
+    def pi_safe(P, a, A):
+        """Long-run share of A from the start law a: the stationary law if it is unique, else the Cesaro limit
+        (a corrected chain with clipped entries can be reducible)."""
+        try:
+            pi = mk.stationary(P)
+            if np.all(np.isfinite(pi)) and np.all(pi > -1e-9):
+                return float(pi[A])
+        except np.linalg.LinAlgError:
+            pass
+        x, acc_ = np.asarray(a, float), 0.0
+        for t_ in range(4000):
+            x = x @ P
+            if t_ >= 2000:
+                acc_ += x[A]
+        return float(acc_ / 2000)
+
+    def chain(tr, st, A=2):
+        P, _ = mk.estimate_P(tr)
+        a = np.asarray(st, float) / max(float(np.sum(st)), 1e-300)
+        return dict(e_T=mk.e_T(P, a, T, A), e_TL=mk.e_T(P, a, TL, A), pi_A=pi_safe(P, a, A), P=P)
+
+    def corrected(tr2o, st2o, C, A=a2):
+        P, a, nneg = mk.correct_chain(tr2o, st2o, C)
+        return dict(e_T=mk.e_T(P, a, T, A), e_TL=mk.e_T(P, a, TL, A), pi_A=pi_safe(P, a, A), P=P, n_neg=nneg)
+
+    for g in cfg["regimes"]:
+        D = dp[g]
+        P_ = D["sc"].shape[2]
+        reg = {}
+        rng = rng_for("E4b", REG_IDX[g])
+        for d, pn in enumerate(PERSONAS):
+            cell = {}
+            for qq, pol in ((0, "alg"), (1, "chron")):
+                sc = D["sc"][d, qq].astype(np.int64)                 # (P, S, 20)
+                c = sc.reshape(-1, 4, 5).sum(0)
+                posA, npos = int(c[2:].sum()), int(c.sum())
+                tr = D["tr"][d, qq].astype(np.int64)                 # (P, S, 2, 3, 3)
+                st = D["st"][d, qq]                                  # (P, S, 2)
+                trT, trO = tr[:, :, 0].sum((0, 1)), tr[:, :, 1].sum((0, 1))
+                stT = np.bincount(st[..., 0].ravel(), minlength=3)
+                stO = np.bincount(st[..., 1].ravel(), minlength=3)
+                occT = stT + trT.sum(0)
+                occO = stO + trO.sum(0)
+                kbarA = posA / max(occT[2], 1)
+                # long session
+                Ltr, Lst = D["Ltr"][d, qq].astype(np.int64), D["Lst"][d, qq]
+                LoccT = np.bincount(Lst[:, 0], minlength=3) + Ltr[:, 0].sum((0, 1))
+                LoccO = np.bincount(Lst[:, 1], minlength=3) + Ltr[:, 1].sum((0, 1))
+                Lc = D["Lc"][d, qq].astype(np.int64).reshape(-1, 4, 5).sum(0)
+                sim = dict(slate_e_T=float(occT[2] / occT.sum()), mu=posA / npos, kbar_A=float(kbarA),
+                           slate_e_TL=float(LoccT[2] / LoccT.sum()), mu_TL=float(Lc[2:].sum() / Lc.sum()),
+                           slate_tail=float(D["Ltail"][d, qq, :, 2].sum() / D["Ltail"][d, qq].sum()),
+                           mu_tail=float(D["LposA"][d, qq].sum() / (D["Ltail"][d, qq].sum() * k)),
+                           obs_slate_e_T=float(occO[2] / occO.sum()), obs_slate_e_TL=float(LoccO[2] / LoccO.sum()))
+                # item-level confusion: true state (N, B, A) -> observed class (band <= 1, band 2, flagged)
+                tb = np.stack([c[0], c[1], c[2] + c[3]])                     # (3 states, 5 bands)
+                Ci = np.stack([tb[:, :2].sum(1), tb[:, 2], tb[:, 3:].sum(1)], 1).astype(float)
+                Ci /= Ci.sum(1, keepdims=True)
+                Se = Ci[2, 2]
+                negs = tb[:2].sum(1)
+                Sp = 1 - float((tb[:2, 3:].sum(1)).sum() / negs.sum())
+                C2min = np.array([[Sp ** k, 1 - Sp ** k], [(1 - Se) * Sp ** (k - 1), 1 - (1 - Se) * Sp ** (k - 1)]])
+                comp = D["comp"][d, qq].sum(0).reshape(k + 1, k + 1)        # (n_B, n_A) histogram over slates
+                fN, fB = Ci[0, 2], Ci[1, 2]
+                p0 = sum(comp[nb, 0] * (1 - (1 - fN) ** (k - nb) * (1 - fB) ** nb) for nb in range(k + 1)) / max(comp[:, 0].sum(), 1)
+                p1 = sum(comp[nb, na] * (1 - (1 - fN) ** (k - nb - na) * (1 - fB) ** nb * (1 - Se) ** na)
+                         for nb in range(k + 1) for na in range(1, k + 1 - nb)) / max(comp[:, 1:].sum(), 1)
+                C2orc = np.array([[1 - p0, p0], [1 - p1, p1]])
+                C3 = mk.slate_confusion(Ci, k)
+                cond3 = float(np.linalg.cond(C3))
+                tr2O, st2O = mk.collapse_A(trO, stO)
+                tr2T, st2T = mk.collapse_A(trT, stT)
+                pred = dict(true3=chain(trT, stT), true2=chain(tr2T, st2T, a2), naive3=chain(trO, stO),
+                            corr2_min=corrected(tr2O, st2O, C2min), corr2_oracle=corrected(tr2O, st2O, C2orc))
+                if cond3 < 100:
+                    pred["corr3_min"] = corrected(trO, stO, C3, A=2)
+                for v in pred.values():
+                    v["mu_T"], v["mu_TL"], v["mu_pi"] = (v["e_T"] * kbarA / k, v["e_TL"] * kbarA / k, v["pi_A"] * kbarA / k)
+                cell[pol] = dict(sim=sim, pred=pred, item_conf=Ci, Se=float(Se), Sp=float(Sp), C2_min=C2min, C2_oracle=C2orc,
+                                 C3_min=C3, cond_C3=cond3, false_A_slate_min=float(C2min[0, 1]),
+                                 share_A_slates_single=float(comp[:, 1].sum() / max(comp[:, 1:].sum(), 1)))
+            # replications at the size of the registered design (n_audit puppets per arm, S sessions each)
+            n_a, S, Rr = cfg["n_audit"], cfg["S"], cfg["R"]
+            rep = {key: {pol: [] for pol in ("alg", "chron")} for key in
+                   ("sesavg_mu", "sesavg_slate", "true3_eT", "true3_pi", "corr2_eT", "corr2_pi", "naive3_pi", "corr2_neg")}
+            for _ in range(Rr):
+                for qq, pol in ((0, "alg"), (1, "chron")):
+                    idx = rng.integers(0, P_, n_a)
+                    ss = np.argsort(rng.random((n_a, S_all)), 1)[:, :S]
+                    tr = D["tr"][d, qq][idx[:, None], ss].astype(np.int64).sum((0, 1))       # (2, 3, 3)
+                    st = D["st"][d, qq][idx[:, None], ss]
+                    stT = np.bincount(st[..., 0].ravel(), minlength=3)
+                    stO = np.bincount(st[..., 1].ravel(), minlength=3)
+                    scs = D["sc"][d, qq][idx[:, None], ss].astype(np.int64).sum((0, 1)).reshape(4, 5)
+                    occT = stT + tr[0].sum(0)
+                    rep["sesavg_mu"][pol].append(scs[2:].sum() / scs.sum())
+                    rep["sesavg_slate"][pol].append(occT[2] / occT.sum())
+                    c3 = chain(tr[0], stT)
+                    rep["true3_eT"][pol].append(c3["e_T"])
+                    rep["true3_pi"][pol].append(c3["pi_A"])
+                    rep["naive3_pi"][pol].append(chain(tr[1], stO)["pi_A"])
+                    t2O, s2O = mk.collapse_A(tr[1], stO)
+                    cc = corrected(t2O, s2O, cell[pol]["C2_min"])
+                    rep["corr2_eT"][pol].append(cc["e_T"])
+                    rep["corr2_pi"][pol].append(cc["pi_A"])
+                    rep["corr2_neg"][pol].append(cc["n_neg"] > 0)
+            summ = {}
+            targets = dict(sesavg_mu=("mu", "mu"), sesavg_slate=("slate_e_T", "slate_e_T"), true3_eT=("slate_e_T", "slate_e_T"),
+                           true3_pi=("slate_tail", "slate_tail"), corr2_eT=("slate_e_T", "slate_e_T"),
+                           corr2_pi=("slate_tail", "slate_tail"), naive3_pi=("slate_tail", "slate_tail"))
+            for key, (ta, _) in targets.items():
+                xa, xr = np.asarray(rep[key]["alg"], float), np.asarray(rep[key]["chron"], float)
+                tA, tR = cell["alg"]["sim"][ta], cell["chron"]["sim"][ta]
+                with np.errstate(divide="ignore", invalid="ignore"):
+                    lr = np.log(xa / xr)
+                fin = np.isfinite(lr)
+                summ[key] = dict(target_alg=tA, target_ref=tR,
+                                 rel_bias_median_alg=float(np.median(xa) / tA - 1), rel_bias_median_ref=float(np.median(xr) / tR - 1),
+                                 cv_alg=float(xa.std() / tA), cv_ref=float(xr.std() / tR),
+                                 log_ratio_target=float(np.log(tA / tR)),
+                                 log_ratio_median=float(np.median(lr[fin])) if fin.any() else None,
+                                 log_ratio_sd=float(lr[fin].std()) if fin.sum() > 1 else None, finite_share=float(fin.mean()))
+            summ["corr2_neg_share"] = {pol: float(np.mean(rep["corr2_neg"][pol])) for pol in ("alg", "chron")}
+            cell["replications"] = dict(n_audit=n_a, S=S, R=Rr, summary=summ)
+            reg[pn] = cell
+        out["regimes"][g] = reg
+    out["runtime"] = time.perf_counter() - t0
+    return out
+
+
+# =============================================================================================
 # main
 # =============================================================================================
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--workers", type=int, default=2)
-    ap.add_argument("--only", default="E1,E1b,E2,E3,E4,E5")
+    ap.add_argument("--only", default="E1,E1b,E2,E3,E4,E5,E4b,E5b,E5s")
     ap.add_argument("--out", default=os.path.join(HERE, "..", "results"))
     ap.add_argument("--merge", action="store_true",
                     help="update the experiments in --only inside an existing sim_results.json; E1 pools not "
@@ -1188,6 +1674,13 @@ def main():
                 rhos = c2["rho_grid"] if dname == "simultaneous" else c2["rho_remedy"]
                 for rho in rhos:
                     futs[("E2", dname, rho)] = ex.submit(task_e2, (dname, des, rho, c2, list(range(c2["R"]))))
+        cd = cfg["DETAIL"]
+        dpath = lambda g: os.path.join(a.out, "raw", f"pool_detail_{g}.npz")  # noqa: E731
+        need_detail = bool(only & {"E4b", "E5b", "E5s"}) and not (a.merge and all(os.path.exists(dpath(g)) for g in cd["regimes"]))
+        if need_detail:
+            for g in cd["regimes"]:
+                futs[("DETAIL", g)] = ex.submit(task_detail_pool, (g, cfg["E1"]["pool"], cfg["E1"]["chunk"],
+                                                                   cd["T_long"], cd["tail_from"]))
         done = {k: f.result() for k, f in futs.items()}
     for k, v in done.items():
         if k[0] == "E1":
@@ -1230,6 +1723,57 @@ def main():
     if "E5" in only:
         results["E5"] = analyse_e5(pools, cfg["E5"])
         runtimes["E5"] = results["E5"]["runtime"]
+    if only & {"E4b", "E5b", "E5s"}:
+        dp, dinfo = {}, {}
+        for g in cd["regimes"]:
+            if ("DETAIL", g) in done:
+                v = done[("DETAIL", g)]
+                dp[g] = v["detail"]
+                np.savez_compressed(dpath(g), counts=v["counts"], **v["detail"])
+                dinfo[g] = dict(runtime=v["runtime"])
+                ref_counts = pools[g]["counts"] if g in pools else (
+                    np.load(os.path.join(a.out, "raw", f"pool_{g}.npz"))["counts"]
+                    if os.path.exists(os.path.join(a.out, "raw", f"pool_{g}.npz")) else None)
+                sess_ok = bool(np.array_equal(v["detail"]["sc"].astype(np.int64).sum(3), v["counts"][:, :2].astype(np.int64)))
+                dinfo[g].update(sessions_sum_to_counts=sess_ok,
+                                reproduces_E1_pool=None if ref_counts is None else bool(np.array_equal(ref_counts, v["counts"])))
+            else:
+                z = np.load(dpath(g))
+                dp[g] = {kk: z[kk] for kk in z.files if kk != "counts"}
+                dinfo[g] = dict(runtime=None, loaded_from=os.path.relpath(dpath(g), os.path.join(HERE, "..")))
+        runtimes["DETAIL_pools"] = {g: dinfo[g]["runtime"] for g in dinfo}
+        with ProcessPoolExecutor(max_workers=a.workers) as ex:
+            jobs = {}
+            if "E5b" in only:
+                for g in cfg["E5b"]["regimes"]:
+                    jobs[("E5b", g)] = ex.submit(analyse_e5b, {g: dp[g]}, dict(cfg["E5b"], regimes=[g]))
+            if "E4b" in only:
+                jobs[("E4b",)] = ex.submit(analyse_e4b, dp, cfg["E4b"])
+            if "E5s" in only:
+                for g in cfg["E5b"]["regimes"]:
+                    jobs[("E5s", g)] = ex.submit(analyse_e5s, {g: dp[g]}, cfg["E5s"], dict(cfg["E5b"], regimes=[g]))
+            got = {k: f.result() for k, f in jobs.items()}
+        if "E5b" in only:
+            e5b = dict(config=cfg["E5b"], pools=dinfo, design={}, personas={p_: {} for p_ in PERSONAS})
+            for g in cfg["E5b"]["regimes"]:
+                r_ = got[("E5b", g)]
+                e5b["looks"] = r_["looks"]
+                e5b["design"][g] = r_["design"][g]
+                for p_ in PERSONAS:
+                    e5b["personas"][p_][g] = r_["personas"][p_][g]
+            results["E5b"] = e5b
+            runtimes["E5b"] = sum(got[("E5b", g)]["runtime"] for g in cfg["E5b"]["regimes"])
+        if "E5s" in only:
+            e5s = dict(config=cfg["E5s"], personas={p_: {} for p_ in PERSONAS})
+            for g in cfg["E5b"]["regimes"]:
+                for p_ in PERSONAS:
+                    e5s["personas"][p_][g] = got[("E5s", g)]["personas"][p_][g]
+            results["E5s"] = e5s
+            runtimes["E5s"] = sum(got[("E5s", g)]["runtime"] for g in cfg["E5b"]["regimes"])
+        if "E4b" in only:
+            results["E4b"] = got[("E4b",)]
+            results["E4b"]["pools"] = dinfo
+            runtimes["E4b"] = results["E4b"]["runtime"]
     path = os.path.join(a.out, "sim_results.json" if not a.quick else "sim_results_quick.json")
     if a.merge and os.path.exists(path):
         with open(path) as f:
@@ -1242,14 +1786,25 @@ def main():
                 old[k] = _clean(results[k])
         if "E2" in old:
             old["E2"]["bounds"] = _clean(e2_bounds(old["E2"]))
+            old["E2"]["sensitivity_xi_source"] = E2_XI_NOTE
         old["meta"]["configs"]["experiments"].update({k: cfg[k] for k in only if k in cfg})
+        if only & {"E4b", "E5b", "E5s"}:
+            old["meta"]["configs"]["experiments"]["DETAIL"] = cfg["DETAIL"]
+            old["meta"]["configs"]["experiments"]["E5b"] = cfg["E5b"]
+        old["meta"]["experiment_seed_ids"] = EXP_ID
         old["meta"]["runtime_s"]["runs"] = _clean(runs)
+        old["meta"]["runtime_s"]["total_wall"] = float(sum(r_["total_wall"] for r_ in runs))
+        old["meta"]["runtime_s"]["total_wall_definition"] = RUNTIME_NOTE
+        old["meta"]["runtime_s"].pop("by_experiment_cpu", None)
         results = old
     else:
         if "E2" in results:
             results["E2"]["bounds"] = e2_bounds(_clean(results["E2"]))
-        results["meta"]["runtime_s"] = dict(total_wall=time.perf_counter() - T0, by_experiment_cpu=runtimes,
-                                            runs=[dict(experiments=sorted(only), total_wall=time.perf_counter() - T0,
+        if "E2" in results:
+            results["E2"]["sensitivity_xi_source"] = E2_XI_NOTE
+        wall = time.perf_counter() - T0
+        results["meta"]["runtime_s"] = dict(total_wall=wall, total_wall_definition=RUNTIME_NOTE,
+                                            runs=[dict(experiments=sorted(only), total_wall=wall,
                                                        by_experiment_cpu=runtimes)])
     with open(path, "w") as f:
         json.dump(_clean(results), f, indent=1)

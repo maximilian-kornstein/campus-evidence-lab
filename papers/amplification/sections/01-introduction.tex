@@ -1,5 +1,5 @@
 % =====================================================================
-%  Section 1 -- Introduction (owner: LEAD).
+%  Section 1 -- Introduction (owner: LEAD; revised by TEXT-REVISER).
 %  Figure 1 (fig:design) and Table 1 (tab:notation) are \input here so that
 %  they float next to their first mention. Facts in the first paragraph are
 %  documented in bib/lead.bib.
@@ -8,55 +8,44 @@
 
 Recommender systems decide much of what the users of large online services
 see. The European Union's Digital Services Act (DSA) puts it in its recitals:
-such systems ``can have a significant impact on the ability of recipients to
-retrieve and interact with information online'', and ``play an important role
-in the amplification of certain messages, the viral dissemination of
-information and the stimulation of online behaviour''
-\citep[Recital~70]{eu2022dsa}. For the largest services, those with at least
-45~million average monthly active recipients in the Union, about a tenth of
-its population, the Act requires providers to assess the systemic risks that
-stem from their services, among them negative effects on human dignity and
-non-discrimination, and to take the design of their recommender systems into
-account when they do (Articles~33 and~34). For Jewish users the question is
-not abstract. In the third survey of Jewish people by the EU Agency for
-Fundamental Rights, conducted online between January and June 2023, 90\% of
-almost 8{,}000 respondents in 13 Member States said they had encountered
-antisemitism online in the previous twelve months
-\citep{fra2024antisemitism}. That figure says that antisemitic content is
-widely seen. It does not say why.
+such systems ``play an important role in the amplification of certain
+messages, the viral dissemination of information and the stimulation of
+online behaviour'' \citep[Recital~70]{eu2022dsa}. For the largest services,
+those with at least 45~million average monthly active recipients in the
+Union, the Act requires providers to assess the systemic risks that stem from
+their services, among them negative effects on human dignity and
+non-discrimination, taking the design of their recommender systems into
+account (Articles~33 and~34). For Jewish users the question is not abstract.
+In the third survey of Jewish people by the EU Agency for Fundamental Rights,
+conducted online in 2023, 90\% of almost 8{,}000 respondents in 13 Member
+States said they had encountered antisemitism online in the previous twelve
+months \citep{fra2024antisemitism}. That figure says that antisemitic content
+is widely seen. It does not say why.
 
 There are two broad answers, and they call for different remedies. Users may
 see antisemitic content because they, or the accounts they follow, seek it
 out: the exposure is driven by \emph{demand}. Or a recommender may put such
 content in front of them more often than an alternative way of choosing
-content would: the exposure is driven by \emph{supply}. The remedies differ:
-exposure driven by demand points to the content and to the accounts that
-provide it, exposure driven by supply to the design of the recommender, which
-is what a systemic-risk assessment of that design has to examine. Public
-argument about whether algorithms
-``amplify'' hateful content, however, rarely says what amplification is
-compared with, or for whom. Published audits of recommender systems differ in
-what they compare (nothing, a logged-out crawl, counterfactual bots or a
-randomised chronological feed), in what they measure (what is recommended,
-what is consumed or what users come to believe), in the content they study and
-in the period they cover (\cref{sec:background}). Their findings vary
-accordingly, and a claim that an algorithm amplifies antisemitic content, or
-that it does not, often cannot be checked against another, because the two
-claims concern different estimands.
+content would: the exposure is driven by \emph{supply}, and the remedy lies in
+the design of the recommender. Public argument about whether algorithms
+``amplify'' hateful content rarely says what amplification is compared with,
+or for whom, and published audits differ in what they compare, what they
+measure, the content they study and the period they cover
+(\cref{sec:background}). A claim that an algorithm amplifies antisemitic
+content, or that it does not, often cannot be checked against another,
+because the two claims concern different estimands.
 
-This paper supplies the missing estimands and the methods to estimate them.
+This paper supplies the estimands and the methods to estimate them.
 \emph{Amplification} is a causal contrast: the expected exposure to
 antisemitic content under the algorithmic policy, divided by the expected
-exposure under a named reference policy, for a fixed demand profile. The
-question ``supply or demand?'' then becomes a decomposition with an explicit
-interaction term, and an audit with sock puppets (synthetic accounts whose
-behaviour the researcher scripts) becomes a randomised experiment whose
-identifying assumptions can be stated and, in part, checked. The design
-problems that follow are those of any experiment on a live system that learns:
-puppets can change the model they audit, the model changes while it is
-audited, the outcome is measured by an imperfect classifier, and every
-additional session adds to the footprint of the audit on a real service.
-\Cref{fig:design} shows the audit design that results.
+exposure under a named reference policy, for a fixed demand profile. An audit
+with sock puppets (synthetic accounts whose behaviour the researcher scripts)
+then becomes a randomised experiment whose identifying assumptions can be
+stated and, in part, checked. Its design problems are those of any experiment
+on a live system that learns: puppets can change the model they audit, the
+model changes while it is audited, the outcome is measured by an imperfect
+classifier, and every session adds to the footprint of the audit on a real
+service. \Cref{fig:design} shows the audit design that results.
 
 \IfFileExists{figures/fig-design.tex}{\input{figures/fig-design}}{}%
 \paragraph{What this paper does, and does not, do}
@@ -68,177 +57,125 @@ known ground truth, and pre-register a protocol for an audit, with its ethical
 and legal conditions. We have run \emph{no} audit of any real platform, and
 nothing here should be read as a finding that any service amplifies
 antisemitic content, or that it does not. Published audits are cited only as
-their authors report them, and the real-world figures above come from their
-named sources and serve only to motivate the question. The language of the
-paper is platform-neutral: the protocol is written for any service with a
-recommendation surface and a reference policy. Notation is collected in
-\cref{tab:notation}.
+their authors report them. The protocol is platform-neutral: it is written for
+any service with a recommendation surface and a reference policy. Notation is
+collected in \cref{tab:notation}.
 
 \IfFileExists{tables/tab-notation.tex}{\input{tables/tab-notation}}{}%
 \paragraph{Contributions}
-Our contributions bring established tools of causal inference, Markov chain
-theory, survey sampling and sequential analysis to a new and sensitive
-question. Classical results are attributed where they are used, and we flag
-the results that are, to our knowledge, new in the form given.
-\begin{enumerate}[label=\textbf{C\arabic*},ref=C\arabic*,leftmargin=2.4em,itemsep=3pt]
+Classical results are attributed where they are used, and we flag the results
+that are, to our knowledge, new in the form given.
+\begin{enumerate}[label=\textbf{C\arabic*},ref=C\arabic*,leftmargin=2.4em,itemsep=2pt]
   \item\label{contrib:estimands} \textbf{Estimands.} In a potential-outcomes
   framework \citep{rubin1974,imbensrubin2015}, the amplification ratio
   $\mathrm{AR}_\rho(d)$ and the additive amplification $\mathrm{AA}_\rho(d)$
   compare mean exposure under the algorithmic policy with mean exposure under
-  a reference policy $\rho$, such as a reverse-chronological feed, a random
-  draw from the eligible pool or a ranking by popularity alone, at a fixed
+  a reference policy $\rho$, such as a reverse-chronological feed, at a fixed
   demand profile $d$ (\cref{def:amplification}). The reference is part of the
-  estimand: the same algorithm can amplify relative to one reference and
-  de-amplify relative to another, and a ladder of references splits
-  amplification by mechanism. For real users, whose demand responds to what
-  they are shown, observed exposure splits into a demand-driven baseline, a
-  supply effect, a demand-shaping effect and a feedback interaction
-  (\cref{thm:decomp}). The interaction is why decompositions of observed
-  exposure are path dependent; it is bounded by the heterogeneity of the
-  supply effect times the distance by which the algorithm has moved demand,
-  and a symmetric (Shapley) attribution splits it evenly. The bilinear
-  representation behind the decomposition, the bounds on its interaction and
-  the statement of what fixed-demand audits identify (\cref{prop:audit-scope})
-  are, to our knowledge, new in this form.
+  estimand. For real users, whose demand responds to what they are shown,
+  observed exposure splits into a demand-driven baseline, a supply effect, a
+  demand-shaping effect and a feedback interaction (\cref{thm:decomp}); the
+  interaction is bounded by the heterogeneity of the supply effect times the
+  distance by which the algorithm has moved demand. The bilinear
+  representation, the bounds on the interaction and the statement of what
+  fixed-demand audits identify (\cref{prop:audit-scope}) are new in this form.
   \item\label{contrib:markov} \textbf{A Markov model of exposure.} A session is
-  a Markov chain over content states, neutral, borderline and antisemitic, with
-  transition matrices $P_{\mathrm{alg}}$ and $P_{\mathrm{ref}}$
-  (\cref{fig:markov}). Long-run and finite-horizon exposure, hitting times and
-  the probability of entering a \emph{rabbit hole}, a closed class of
-  non-neutral content, follow from the fundamental matrix
-  (\cref{prop:markov}; \citealp{kemeny1960,meyer1975}). A perturbation theorem
-  bounds how much a change in recommendation probabilities can change
-  exposure (\cref{thm:perturb}). The condition number is half the oscillation
-  of an \emph{exposure potential}, at most half of Kemeny's constant. A nudge
-  that redirects a share $\varepsilon$ of recommendations to an antisemitic
-  state raises long-run exposure to that state, to first order, by the
-  relative amount $\varepsilon$ times the mean number of items needed to reach
-  it from equilibrium, so that small nudges have large effects in sticky
-  chains. Within a session of $T$ items the effect
-  is capped at $(T-1)/4$ times the size of the change. The classical parts are
-  due to \citet{schweitzer1968}, \citet{meyer1975,meyer1980},
-  \citet{seneta1988} and \citet{cho2000,cho2001}; the nudge, stickiness and
-  finite-horizon bounds are, to our knowledge, new in this form.
-  \item\label{contrib:identify} \textbf{Identification from sock-puppet
-  audits.} A design that randomises puppets to persona--policy cells within
-  waves identifies $\mathrm{AR}(d)$, $\mathrm{AA}(d)$ and the persona-contrast
-  version of the decomposition under four stated conditions: no interference
-  between puppets, policies that are stable or a design blocked by wave,
-  classifier error rates that do not differ between arms, and demand that is
-  a script applied identically in both arms (\cref{thm:identify}). The
-  correction needs the classifier's specificity alone for the ratio, and its
-  Youden index alone for the difference; the puppet, not the session, is the
-  unit for the variance. Under drift, blocking makes the estimand an average
-  over the audit window and keeps drift out of the contrast. Puppets share the
-  learning system they audit, so they can change what it shows to one
-  another. Treating waves as groups of partial interference
+  a Markov chain over content states (\cref{fig:markov}). Long-run and
+  finite-horizon exposure, hitting times and \emph{rabbit holes} follow from
+  the fundamental matrix (\cref{prop:markov}; \citealp{kemeny1960,meyer1975}),
+  and a perturbation theorem bounds how much a change in recommendation
+  probabilities can change exposure (\cref{thm:perturb}): a nudge that
+  redirects a share $\varepsilon$ of recommendations to an antisemitic state
+  raises long-run exposure, to first order, by the relative amount
+  $\varepsilon$ times the mean number of items needed to reach it from
+  equilibrium, while within a session of $T$ items the effect is capped at
+  $(T-1)/4$ times the size of the change. The nudge, stickiness and
+  finite-horizon bounds are new in this form.
+  \item\label{contrib:identify} \textbf{Identification.} A design that
+  randomises puppets to persona--policy cells within waves identifies
+  $\mathrm{AR}(d)$, $\mathrm{AA}(d)$ and a persona-contrast decomposition
+  under four stated conditions (\cref{thm:identify}). The puppet, not the
+  session, is the unit for the variance, and blocking by wave keeps drift out
+  of the contrast. Treating waves as groups of partial interference
   \citep{hudgens2008} and the puppets' share of the engagement signal as an
-  exposure mapping \citep{aronow2017}, we bound the bias by a constant $\xi$
-  times that share, show that under the protocol's choice rule
-  popularity-based interference biases exposure downwards, and give a
-  randomised-saturation design and a breakdown value for sensitivity analysis
-  (\cref{prop:interference}).
+  exposure mapping \citep{aronow2017}, we bound the bias from interference by
+  a constant $\xi$ times that share, show that the direction of the bias
+  depends on how much puppet engagement reaches false negatives, so no sign
+  can be assumed, and give a randomised-saturation design and a breakdown
+  value for sensitivity analysis (\cref{prop:interference}).
   \item\label{contrib:misclass} \textbf{Misclassification-corrected
-  measurement.} Exposure is observed through a classifier, as in the lab's
-  detection proposal \citep{kornsteinlab2026detection}. When error rates are
-  the same in both arms, the naive ratio of flagged shares is attenuated
-  towards one, by a weight that depends on the classifier only through its
-  specificity, which therefore decides the matter when antisemitic content is
-  rare. When error rates differ between arms, the naive ratio, and even a
-  ratio corrected with error rates pooled over the arms, can lie on the other
-  side of one from the true ratio (\cref{thm:misclass}). Such differential
-  error does not require a classifier that treats the arms differently: it
-  arises whenever error rates depend on the type of content and the arms
-  deliver different mixtures of types. A Rogan--Gladen correction
-  \citep{rogangladen1978} with error rates estimated from a validation sample
-  in each arm is consistent in either case, and the delta method gives its
-  variance. If the two arms' sensitivities are equal, the ratio is identified
-  from the flagged shares and coded flagged items alone, whatever the
-  specificities, so that a scarce validation budget is best spent on what the
-  classifier flags and on one ratio of sensitivities.
-  \item\label{contrib:sequential} \textbf{Sequential, anytime-valid
-  auditing.} Platforms change, and every session adds to the footprint of an
-  audit. A confidence sequence for $\mathrm{AR}(d)$, updated after each wave,
-  is built from each puppet's confirmed flagged exposure, so that validation
-  enters its variance, and treats a difference in sensitivity between arms
-  as a declared sensitivity parameter. It remains valid, asymptotically, at
-  any data-dependent stopping time, and a betting variant is valid exactly
-  (\cref{alg:sequential,thm:sequential}; \citealp{howard2021,ramdas2023}),
-  extending the logic of Wald's sequential tests \citep{wald1945}. A
-  closed-form power calculation gives the numbers of puppets, sessions per
-  puppet and coded validation items needed to resolve a registered margin,
-  and shows that for a ratio corrected with external error rates, below a
-  minimum number of coded items no number of puppets suffices
-  (\cref{prop:power}). Stopping early is thus an ethical device as well as a
-  statistical one.
+  measurement.} Exposure is observed through a classifier
+  \citep{kornsteinlab2026detection}. When error rates are the same in both
+  arms, the naive ratio is attenuated towards one by a weight that depends on
+  the classifier only through its specificity. When error rates depend on the
+  type of content and the arms deliver different mixtures of types, error
+  differs between arms, and the naive ratio, and even a ratio corrected with
+  pooled error rates, can lie on the other side of one from the true ratio
+  (\cref{thm:misclass}). Validation stratified by arm, which double sampling
+  within puppets provides \citep{rogangladen1978,neyman1938}, is consistent in
+  either case.
+  \item\label{contrib:sequential} \textbf{Sequential auditing and its cost.} A
+  confidence sequence for $\mathrm{AR}(d)$, updated after each wave from a
+  puppet-level outcome, remains approximately valid at any data-dependent
+  stopping time, and a betting variant is valid exactly
+  (\cref{alg:sequential,thm:sequential};
+  \citealp{wald1945,howard2021,ramdas2023}). A closed-form power calculation
+  (\cref{prop:power}) shows what this costs: under plausible inputs a
+  materiality audit of four personas needs about $4{,}900$ accounts and
+  $170{,}000$ coded exposures, and for a ratio corrected with external error
+  rates, below a minimum number of coded items no number of puppets suffices.
   \item\label{contrib:sim} \textbf{A simulation study.} On a synthetic
-  recommender with known amplification (an embedding-based model whose user
-  representations follow engagement, with a feedback loop through popularity),
-  we evaluate the accuracy of the estimators and of the misclassification
-  correction, the bias from interference and the remedies for it, the
-  supply/demand decomposition for synthetic users whose demand evolves, the
-  agreement between the Markov model's predictions and simulated sessions, and
-  the validity and power of the sequential procedure (\cref{sec:simulation}).
-  \item\label{contrib:protocol} \textbf{A pre-registered audit protocol.} We
-  fix in advance the choice of service and surface, the access route (data
-  access for vetted researchers under Article~40 of the DSA in preference to
-  a sock-puppet audit), the personas, the randomisation, the interference
-  controls, the validation design, the estimands, the stopping and decision
-  rules, and the handling of data (\cref{sec:protocol}). An ethics protocol accompanies it
-  (\cref{sec:ethics}): puppets never post or interact with anyone, never open
-  an item that the classifier flags, and stop as soon as the evidence allows.
+  recommender with known amplification, we evaluate the estimators and the
+  misclassification correction, interference and its remedies, the
+  decomposition, the Markov model and the sequential procedure
+  (\cref{sec:simulation}).
+  \item\label{contrib:protocol} \textbf{A pre-registered protocol with a
+  feasibility gate.} We fix in advance the access route (data access for
+  vetted researchers under Article~40 of the DSA in preference to a
+  sock-puppet audit), the personas, the randomisation, the interference
+  controls, the validation, the estimands and the stopping and decision rules
+  (\cref{sec:protocol}), and an ethics protocol (\cref{sec:ethics}): puppets
+  never post or interact with anyone and never open an item that the
+  classifier flags. Because the materiality audit is infeasible for a small
+  lab, the protocol commits only to a pilot and a registered feasibility gate,
+  which under illustrative capacity caps selects the detection of
+  amplification for a single persona.
 \end{enumerate}
 
 \paragraph{What audits can and cannot show}
-The decomposition sets a limit on every audit with puppets of fixed demand.
-Such an audit identifies supply effects at the personas it audits, and
-population quantities only for a declared weighting of those personas. It
-says nothing about how the algorithm shapes demand: the demand-shaping effect,
-the feedback interaction and the total effect on real users are not
-identified, and without outside information on how demand forms, the
-identified set for the total effect is as wide as the range of exposures under
-the reference policy (\cref{prop:audit-scope}). An audit therefore answers
-half of the question in the title. It can establish that, for a stated
-service, surface, period and persona, the algorithm supplies more, or less,
-antisemitic content than a stated alternative would supply to the same
-demand. It cannot establish that the algorithm made anyone want such content.
-That requires designs that only a platform can run, such as long-running
-randomised holdouts, or panel data on how real users' demand changes
-(\cref{sec:est-audit}). Stating this limit is part of the method, not a
-disclaimer added to it.
+An audit with puppets of fixed demand identifies supply effects at the
+personas it audits. It says nothing about how the algorithm shapes demand:
+without outside information on how demand forms, the identified set for the
+algorithm's total effect on real users is as wide as the range of exposures
+under the reference policy (\cref{prop:audit-scope}). An audit can establish
+that, for a stated service, surface, period and persona, the algorithm
+supplies more, or less, antisemitic content than a stated alternative would
+supply to the same demand. It cannot establish that the algorithm made anyone
+want such content. Stating this limit is part of the method, not a disclaimer
+added to it.
 
 \paragraph{Related work and the series}
 \Cref{sec:background} reviews published audits of recommender systems
-\citep{sandvig2014,ribeiro2020,hosseinmardi2021,whittaker2021,huszar2022,haroon2023,guess2023,hosseinmardi2024},
+\citep{sandvig2014,ribeiro2020,huszar2022,haroon2023,guess2023,hosseinmardi2024},
 the supply-and-demand debate \citep{munger2022}, feedback loops
-\citep{chaney2018,jiang2019}, the regulatory setting, and the measurement of
-antisemitic content with classifiers. Our estimands build on the
-potential-outcomes framework, on mediation analysis
-\citep{robins1992,pearl2001,vanderweele2014} and on the rate-composition
-decomposition of \citet{kitagawa1955}; our design results on the theory of
-interference \citep{hudgens2008,aronow2017}, of prevalence estimation with an
-imperfect test \citep{rogangladen1978} and of time-uniform inference
-\citep{howard2021}. This is the fourth paper in a series. The first estimates
-how many antisemitic hate crimes go unrecorded
-\citep{kornsteinlab2026darkfigure}, the second models surges in incidents,
-including spillover from online to offline streams, as self-exciting
-processes \citep{kornsteinlab2026contagion}, and the third maps antisemitic
-attitudes with a latent-variable model \citep{kornsteinlab2026attitudes}. The
-first three study what is recorded and what is believed; this one studies what
-is shown. It shares with them a commitment to stating estimands before
-estimating them, to correcting for imperfect measurement, and to fixing the
-analysis before the data are seen.
+\citep{chaney2018,jiang2019}, the regulatory setting, and classifier-based
+measurement. Our estimands build on mediation analysis
+\citep{robins1992,pearl2001,vanderweele2014} and on the decomposition of
+\citet{kitagawa1955}. This is the fourth paper in a series. The first
+estimates how many antisemitic hate crimes go unrecorded
+\citep{kornsteinlab2026darkfigure}, the second models surges in incidents as
+self-exciting processes \citep{kornsteinlab2026contagion}, and the third maps
+antisemitic attitudes \citep{kornsteinlab2026attitudes}. The first three study
+what is recorded and what is believed; this one studies what is shown.
 
 \paragraph{Roadmap}
-\Cref{sec:background} reviews prior audits, the methodological debates and the
-regulatory setting. \Cref{sec:estimands} defines the estimands and the
-supply/demand decomposition, and \cref{sec:markov} develops the Markov model
-of exposure. \Cref{sec:identification} gives identification from sock-puppet
-audits under interference and drift, and \cref{sec:measurement} the
-misclassification correction and the sequential procedure.
-\Cref{sec:simulation} reports the simulation study, \cref{sec:protocol} the
-pre-registered audit protocol and \cref{sec:ethics} the ethics and legal
-protocol. \Cref{sec:discussion} discusses what an audit could establish, its
-limitations and extensions. Proofs are in
-\cref{app:proofs-estimands,app:proofs-design}, and simulation details in
-\cref{app:simdetails}.
+\Cref{sec:estimands} defines the estimands and the decomposition,
+\cref{sec:markov} develops the Markov model, \cref{sec:identification} gives
+identification under interference and drift, and \cref{sec:measurement} the
+misclassification correction, the sequential procedure and the power
+calculation. \Cref{sec:simulation} reports the simulation study,
+\cref{sec:protocol} summarises the registered protocol, \cref{sec:ethics}
+sets out the ethical and legal conditions, and \cref{sec:discussion}
+discusses limitations and extensions. Proofs are in
+\cref{app:proofs-estimands,app:proofs-design}, simulation details in
+\cref{app:simdetails}, and the full registered protocol in \cref{app:protocol}.

@@ -6,7 +6,9 @@ Reads ../results/sim_results.json and writes
   ../figures/fig-sim-interference.pdf  E2: bias of AA vs load; arm shifts; remedies and saturation extrapolation
   ../figures/fig-sim-decomp.pdf        E3: supply / demand decomposition vs formation length; persona contrasts
   ../figures/fig-sim-markov.pdf        E4: Markov predictions vs simulation; perturbation (tilt, replacement nudge)
-  ../figures/fig-sim-sequential.pdf    E5: alg:sequential coverage, width and power; comparators
+  ../figures/fig-sim-sequential.pdf    E5 (benchmark design): alg:sequential coverage, width and power; comparators
+  ../figures/fig-sim-primary.pdf       E5b/E5s: registered primary analysis; tails, miss rates, the pilot check
+  ../tables/tab-sim-primary.tex        E5b main table
   ../tables/tab-sim-main.tex           E1 main table (relative bias and coverage of AR by regime and method)
   ../tables/tab-sim-designs.tex        E2-E5 summary (interference, decomposition, Markov, sequential)
   ../tables/tab-sim-checks.tex         E1b + E2 bounds: checks of thm:identify, thm:misclass, prop:interference
@@ -65,13 +67,15 @@ METH_LABEL = dict(true="True labels (oracle)", naive="Naive classifier", rg_pool
                   rg_strat="Rogan–Gladen, arm-stratified")
 METH_SHORT = dict(true="True", naive="Naive", rg_pooled="RG pooled", rg_strat="RG stratified")
 PERS = ["general", "jewish", "mideast", "conspiracy"]
-PERS_LABEL = dict(general="General", jewish="Jewish interest", mideast="Middle East", conspiracy="Conspiracy-adj.")
+# Simulated personas are coded P1-P4 in every figure and table (mapping and neutral descriptions of the synthetic
+# demand profiles: tab:sim-personas in appendix C), so that no cropped panel reads as a finding about a real group.
+PERS_LABEL = dict(general="P1", jewish="P2", mideast="P3", conspiracy="P4")
 PCOL = dict(general="#0072B2", jewish="#009E73", mideast="#E69F00", conspiracy="#CC79A7")
 PMARK = dict(general="o", jewish="s", mideast="^", conspiracy="D")
 REG_LABEL = dict(ND="Non-differential", DU="Differential: borderline FP", DD="Differential: coded FN",
                  NDI="Non-diff. by type, item-level")
 REG_SHORT = dict(ND="ND: non-differential", DU="DU: borderline FP", DD="DD: coded FN", NDI="NDI: item-level")
-PERS_TICK = dict(general="General", jewish="Jewish", mideast="Mid. East", conspiracy="Consp.")
+PERS_TICK = dict(PERS_LABEL)
 
 
 def load(results_dir):
@@ -89,6 +93,13 @@ def _f(x):
     return float(x)
 
 
+def _logfmt(ax):
+    for axis in (ax.xaxis, ax.yaxis):
+        axis.set_major_locator(matplotlib.ticker.FixedLocator([0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50]))
+        axis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}"))
+        axis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+
+
 def _style(ax, grid_axis="y"):
     ax.grid(True, axis=grid_axis, color=GRID, lw=0.5, zorder=0)
     ax.set_axisbelow(True)
@@ -97,6 +108,19 @@ def _style(ax, grid_axis="y"):
 
 def _tag(ax, s):
     ax.set_title(s, loc="left", fontsize=8.5, pad=2)
+
+
+def _stamp(fig):
+    """Stamp SYNTHETIC inside every panel (behind the data), so that no cropped panel can pass as a finding."""
+    for ax in fig.axes:
+        ax.text(0.5, 0.5, "SYNTHETIC", transform=ax.transAxes, ha="center", va="center", rotation=22,
+                fontsize=17, fontweight="bold", color="#000000", alpha=0.085, zorder=0.5, clip_on=True)
+
+
+def _save(fig, path):
+    _stamp(fig)
+    fig.savefig(path)
+    plt.close(fig)
 
 
 # ---------------------------------------------------------------------------
@@ -159,8 +183,7 @@ def fig_ar(res, path, ref="chron", U_show="20"):
                       label=METH_LABEL[m]) for m in meths]
     fig.legend(handles=handles, loc="outside lower center", ncol=4, frameon=False, handletextpad=0.3,
                columnspacing=1.0, fontsize=7.0)
-    fig.savefig(path)
-    plt.close(fig)
+    _save(fig, path)
 
 
 # ---------------------------------------------------------------------------
@@ -233,8 +256,7 @@ def fig_interference(res, path, ref="chron"):
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h + hl, l + [x.get_label() for x in hl], loc="outside lower center", ncol=4, frameon=False,
                fontsize=6.8, columnspacing=1.0, handletextpad=0.3)
-    fig.savefig(path)
-    plt.close(fig)
+    _save(fig, path)
 
 
 # ---------------------------------------------------------------------------
@@ -283,8 +305,7 @@ def fig_decomp(res, path):
     ax.set_ylabel("Persona contrast (pp)")
     ax.legend(frameon=False, fontsize=6.3, loc="upper left")
     _tag(ax, "(b)")
-    fig.savefig(path)
-    plt.close(fig)
+    _save(fig, path)
 
 
 # ---------------------------------------------------------------------------
@@ -292,10 +313,15 @@ def fig_decomp(res, path):
 # ---------------------------------------------------------------------------
 def fig_markov(res, path):
     e4 = res["E4"]
-    fig, axes = plt.subplots(1, 3, figsize=(W2, 2.45), layout="constrained")
+    has_b = "E4b" in res
+    if has_b:
+        fig, axes = plt.subplots(2, 2, figsize=(W2, 4.7), layout="constrained")
+        axes = axes.ravel()
+    else:
+        fig, axes = plt.subplots(1, 3, figsize=(W2, 2.45), layout="constrained")
     ax = axes[0]
     _style(ax, "both")
-    lim = [0, 0]
+    lim = [np.inf, 0]
     T = e4["config"]["T"]
     TL = e4["config"]["T_long"]
     for p in PERS:
@@ -307,7 +333,14 @@ def fig_markov(res, path):
                 ax.plot(100 * pr, 100 * si, marker=mk_, color=PCOL[p], mfc=mfc or PCOL[p], mec=PCOL[p], mew=0.7,
                         ms=3.8, ls="none")
                 lim[1] = max(lim[1], 100 * pr, 100 * si)
-    ax.plot([0, lim[1] * 1.05], [0, lim[1] * 1.05], color=INK2, lw=0.7, zorder=1)
+                lim[0] = min(lim[0], 100 * pr, 100 * si)
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    lo_ = 0.8 * lim[0]
+    ax.plot([lo_, lim[1] * 1.25], [lo_, lim[1] * 1.25], color=INK2, lw=0.7, zorder=1)
+    ax.set_xlim(lo_, lim[1] * 1.25)
+    ax.set_ylim(lo_, lim[1] * 1.25)
+    _logfmt(ax)
     ax.set_xlabel("Markov prediction (%)")
     ax.set_ylabel("Simulated exposure (%)")
     ax.legend(handles=[Line2D([], [], marker="o", color=INK2, ls="none", ms=3.6, label=rf"$e_{{{T}}}$"),
@@ -346,14 +379,43 @@ def fig_markov(res, path):
     ax.set_xlabel(r"Replacement probability $\varepsilon$")
     ax.set_ylabel(r"Long-run exposure (%)")
     ax.legend(handles=[Line2D([], [], color=INK2, marker="o", ms=3, label="simulated (tail)"),
-                       Line2D([], [], color=INK2, ls="--", label="thm:perturb(c), base chain"),
+                       Line2D([], [], color=INK2, ls="--", label="Thm 4.2(c), base chain"),
                        Line2D([], [], color=INK2, ls=":", label="first order")],
               frameon=False, fontsize=6.2, loc="upper left")
     _tag(ax, "(c)")
+    if has_b:
+        ax = axes[3]
+        _style(ax, "both")
+        e4b = res["E4b"]["regimes"]
+        meth = [("true3", "slate chain, true states", "#000000", "o", None),
+                ("naive3", "observed states, uncorrected", "#D55E00", "s", None),
+                ("corr2_min", "observed, corrected (minimal comp.)", "#0072B2", "D", "white"),
+                ("corr2_oracle", "observed, corrected (true comp.)", "#56B4E9", "v", "white")]
+        lo, hi = np.inf, 0
+        for key, lab, col, mk_, mfc in meth:
+            xs, ys = [], []
+            for g in e4b:
+                for p in PERS:
+                    for pol in ("alg", "chron"):
+                        c = e4b[g][p][pol]
+                        xs.append(100 * c["sim"]["mu_tail"])
+                        ys.append(100 * c["pred"][key]["mu_pi"])
+            ax.plot(xs, ys, marker=mk_, color=col, mfc=mfc or col, mec=col, mew=0.7, ms=3.6, ls="none", label=lab)
+            lo, hi = min(lo, min(xs), min(ys)), max(hi, max(xs), max(ys))
+        ax.set_xscale("log")
+        ax.set_yscale("log")
+        lo_, hi_ = 0.8 * lo, 1.25 * hi
+        ax.plot([lo_, hi_], [lo_, hi_], color=INK2, lw=0.7, zorder=1)
+        ax.set_xlim(lo_, hi_)
+        ax.set_ylim(lo_, 3.2 * hi)
+        _logfmt(ax)
+        ax.set_xlabel("Simulated long-run exposure (%)")
+        ax.set_ylabel(r"Prediction $\varpi(\mathcal{A})\,\bar k_{\mathcal{A}}/k$ (%)")
+        ax.legend(frameon=False, fontsize=6.0, loc="upper left", handletextpad=0.2, borderaxespad=0.2)
+        _tag(ax, "(d) protocol puppets, slate states")
     handles = [Line2D([], [], color=PCOL[p], marker=PMARK[p], ls="-", ms=3.6, label=PERS_LABEL[p]) for p in PERS]
     fig.legend(handles=handles, loc="outside lower center", ncol=4, frameon=False, fontsize=7.0)
-    fig.savefig(path)
-    plt.close(fig)
+    _save(fig, path)
 
 
 # ---------------------------------------------------------------------------
@@ -418,8 +480,145 @@ def fig_sequential(res, path):
     _tag(ax, "(c)")
     h, l = axes[2].get_legend_handles_labels()
     fig.legend(h, l, loc="outside lower center", ncol=4, frameon=False, fontsize=7.0)
-    fig.savefig(path)
-    plt.close(fig)
+    _save(fig, path)
+
+
+# ---------------------------------------------------------------------------
+# E5b (registered primary analysis) and E5s (stress designs for the pilot check)
+# ---------------------------------------------------------------------------
+def fig_primary(res, path):
+    e5b = res["E5b"]["personas"]
+    e5s = res.get("E5s", {}).get("personas")
+    regs = [g for g in ("ND", "DD") if g in e5b[PERS[0]]]
+    fig, axes = plt.subplots(1, 3, figsize=(W2, 2.6), layout="constrained", gridspec_kw=dict(width_ratios=[1.0, 1.15, 1.0]))
+    # (a) tails of the primary statistic
+    ax = axes[0]
+    _style(ax)
+    offs = {("ND", "alg"): -0.27, ("ND", "ref"): -0.09, ("DD", "alg"): 0.09, ("DD", "ref"): 0.27}
+    for i, p in enumerate(PERS):
+        for g in regs:
+            for arm in ("alg", "ref"):
+                t_ = e5b[p][g]["alt"]["tails"][arm]
+                x = i + offs[(g, arm)]
+                mfc = PCOL[p] if g == "ND" else "white"
+                ax.plot(x, t_["Etilde"]["exkurt"], marker="o" if arm == "alg" else "s", color=PCOL[p], mfc=mfc,
+                        mec=PCOL[p], mew=0.8, ms=3.8, ls="none")
+                ax.plot(x, t_["Etrue"]["exkurt"], marker="_", color=INK2, ms=4, ls="none")
+    ax.set_xticks(range(len(PERS)))
+    ax.set_xticklabels([PERS_TICK[p] for p in PERS])
+    ax.set_ylabel(r"Excess kurtosis of $\widetilde E_u$")
+    ax.legend(handles=[Line2D([], [], marker="o", color=INK2, ls="none", ms=3.6, label="alg arm"),
+                       Line2D([], [], marker="s", color=INK2, ls="none", ms=3.6, label="ref arm"),
+                       Line2D([], [], marker="o", color=INK2, mfc="white", ls="none", ms=3.6, label="open: DD"),
+                       Line2D([], [], marker="_", color=INK2, ls="none", ms=5, label=r"true $E_u$")],
+              frameon=False, fontsize=6.0, loc="upper right", handletextpad=0.2)
+    _tag(ax, "(a)")
+    # (b) time-uniform miss rate of the normal-mixture sequence for AR
+    ax = axes[1]
+    _style(ax)
+    cats = [("reg", "a0.05", "Reg.\n" + r"$\alpha=.05$", 5.0), ("reg", "a0.025", "Reg.\n" + r"$\alpha=.025$", 2.5)]
+    if e5s:
+        cats += [("moderate", "a0.05", "Stress\n5/wave", 5.0), ("severe", "a0.05", "Stress\n2/wave", 5.0)]
+    for j, (kind, al, lab, nom) in enumerate(cats):
+        ax.plot([j - 0.38, j + 0.38], [nom, nom], color=INK2, lw=0.8, zorder=1)
+        k = 0
+        for p in PERS:
+            for g in regs:
+                for case in ("alt", "null"):
+                    if kind == "reg":
+                        miss = 100 * (1 - e5b[p][g][case][al]["nm_ar"]["coverage"])
+                    else:
+                        miss = 100 * (1 - e5s[p][g][case][kind][al]["nm_ar_coverage"])
+                    x = j - 0.3 + 0.6 * k / 15
+                    ax.plot(x, max(miss, 0.1), marker="o" if case == "alt" else "^", color=PCOL[p],
+                            mfc=PCOL[p] if g == "ND" else "white", mec=PCOL[p], mew=0.7, ms=3.4, ls="none")
+                    k += 1
+    ax.set_yscale("log")
+    ax.set_ylim(0.1, 60)
+    ax.yaxis.set_major_locator(matplotlib.ticker.FixedLocator([0.2, 0.5, 1, 2, 5, 10, 20, 50]))
+    ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}"))
+    ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+    ax.set_xticks(range(len(cats)))
+    ax.set_xticklabels([c[2] for c in cats], fontsize=6.6)
+    ax.set_ylabel("Time-uniform miss rate, AR (%)")
+    ax.legend(handles=[Line2D([], [], marker="o", color=INK2, ls="none", ms=3.4, label="true AR"),
+                       Line2D([], [], marker="^", color=INK2, ls="none", ms=3.4, label="null AR = 1"),
+                       Line2D([], [], color=INK2, lw=0.8, label="nominal")],
+              frameon=False, fontsize=6.0, loc="upper left", handletextpad=0.2)
+    _tag(ax, "(b)")
+    # (c) the pilot check: share of pilots that flag, against the true miss rate
+    ax = axes[2]
+    _style(ax, "both")
+    kinds = [("reg", "o", "registered")]
+    if e5s:
+        kinds += [("moderate", "s", "stress, 5/wave"), ("severe", "^", "stress, 2/wave")]
+    for kind, mk_, lab in kinds:
+        for p in PERS:
+            for g in regs:
+                for case in ("alt", "null"):
+                    if kind == "reg":
+                        miss = 1 - e5b[p][g][case]["a0.05"]["nm_ar"]["coverage"]
+                        fl = e5b[p][g][case]["pilot_check"]["a0.05"]["ar"]["flag_rate"]
+                    else:
+                        miss = 1 - e5s[p][g][case][kind]["a0.05"]["nm_ar_coverage"]
+                        fl = e5s[p][g][case][kind]["pilot_check"]["a0.05"]["ar"]["flag_rate"]
+                    ax.plot(100 * max(miss, 1e-3), 100 * fl, marker=mk_, color=PCOL[p], mfc=PCOL[p] if g == "ND" else "white",
+                            mec=PCOL[p], mew=0.7, ms=3.4, ls="none")
+    ax.axvline(5, color=INK2, lw=0.7, ls=(0, (2, 2)))
+    ax.set_xscale("log")
+    ax.set_xlim(0.2, 60)
+    ax.xaxis.set_major_locator(matplotlib.ticker.FixedLocator([0.5, 1, 2, 5, 10, 20, 50]))
+    ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}"))
+    ax.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+    ax.set_ylim(-4, 104)
+    ax.set_xlabel(r"True miss rate (%), $\alpha=.05$")
+    ax.set_ylabel("Pilots whose check fails (%)")
+    ax.legend(handles=[Line2D([], [], marker=m_, color=INK2, ls="none", ms=3.4, label=l_) for _, m_, l_ in kinds],
+              frameon=False, fontsize=6.0, loc="upper left", handletextpad=0.2)
+    _tag(ax, "(c)")
+    handles = [Line2D([], [], color=PCOL[p], marker="o", ls="none", ms=3.6, label=PERS_LABEL[p]) for p in PERS]
+    handles.append(Line2D([], [], color=INK2, marker="o", mfc="white", ls="none", ms=3.6, label="open: regime DD"))
+    fig.legend(handles=handles, loc="outside lower center", ncol=5, frameon=False, fontsize=7.0)
+    _save(fig, path)
+
+
+def tab_primary(res, path):
+    """E5b main table: the registered primary analysis by persona and regime (alpha = 0.05 unless stated)."""
+    e5b = res["E5b"]["personas"]
+    regs = [g for g in ("ND", "DD") if g in e5b[PERS[0]]]
+    L = [r"\begin{tabular}{@{}llrrrrrrrrrr@{}}", r"\toprule"]
+    L.append(r" & & & \multicolumn{2}{c}{Tails of $\widetilde E_u$} & & \multicolumn{3}{c}{Coverage (\%)} & "
+             r"\multicolumn{2}{c}{Final interval (\%)} & Null \\")
+    L.append(r"\cmidrule(lr){4-5}\cmidrule(lr){7-9}\cmidrule(lr){10-11}")
+    L.append(r"Persona & Error & AR & Kurt.\ alg; ref & $\max/\mu$ & Var.\ ratio & AR & AR, $.025$ & AA & "
+             r"Excl.\ 1 & Material & wrong (\%) \\")
+    L.append(r"\midrule")
+    for p in PERS:
+        for g in regs:
+            x = e5b[p][g]
+            a, nl = x["alt"], x["null"]
+            v, v2 = a["a0.05"], a["a0.025"]
+            t_ = a["tails"]
+            dec = v["nm_ar"]["stop"]["decisions"]
+            row = [PERS_LABEL[p] if g == regs[0] else "", g, f"{x['AR']:.2f}",
+                   f"{t_['alg']['Etilde']['exkurt']:.1f}; {t_['ref']['Etilde']['exkurt']:.1f}",
+                   f"{max(t_['alg']['max_over_mu'], t_['ref']['max_over_mu']):.1f}",
+                   f"{a['variance']['ratio_closed_over_sim']:.2f}",
+                   f"{100 * v['nm_ar']['coverage']:.1f}", f"{100 * v2['nm_ar']['coverage']:.1f}",
+                   f"{100 * v['nm_aa']['coverage']:.1f}",
+                   f"{100 * v['nm_ar']['stop']['detects']:.1f}",
+                   f"{100 * dec.get('material_amplification', 0.0):.1f}",
+                   f"{100 * nl['a0.05']['nm_ar']['stop']['wrong_conclusion']:.2f}"]
+            L.append(" & ".join(row) + r" \\")
+        if p != PERS[-1]:
+            L.append(r"\addlinespace[1pt]")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    c = res["E5b"]["config"]
+    with open(path, "w") as f:
+        f.write("% Generated by code/make_figures.py from results/sim_results.json -- do not edit by hand.\n")
+        f.write(f"% E5b: registered primary analysis; S = {c['S']} sessions, m = {c['m']}, m' = {c['m_open'] + c['m_unf']}, waves of "
+                f"{c['wave']} pairs, W_max = {c['W_max']}, b = {c['burn']}, t* = {c['t_star']}, R = {c['R']}.\n")
+        f.write("\n".join(L) + "\n")
 
 
 # ---------------------------------------------------------------------------
@@ -500,14 +699,32 @@ def tab_designs(res, path):
     if "E4" in res:
         e4 = res["E4"]
         T, TL = e4["config"]["T"], e4["config"]["T_long"]
-        lines.append(rf"\multicolumn{{{1 + len(PERS)}}}{{@{{}}l}}{{\emph{{E4: Markov model, algorithmic policy (consumed items, \%)}}}} \\")
+        lines.append(rf"\multicolumn{{{1 + len(PERS)}}}{{@{{}}l}}{{\emph{{E4: Markov model of consumed items, naturalistic accounts, algorithmic policy (\%)}}}} \\")
         row(rf"$e_{{{T}}}$ predicted / simulated", [f"{100 * e4['fit'][p]['alg']['pred'][f'e_{T}']:.2f} / {100 * e4['fit'][p]['alg']['sim']['e_T']:.2f}" for p in PERS])
         row(rf"$e_{{{TL}}}$ predicted / simulated", [f"{100 * e4['fit'][p]['alg']['pred'][f'e_{TL}']:.2f} / {100 * e4['fit'][p]['alg']['sim']['e_T_long']:.2f}" for p in PERS])
+        row(r"\quad impression exposure of the same accounts", [f"{100 * e4['fit'][p]['alg']['sim']['slate_e_T']:.2f}" for p in PERS])
+        row(r"AR of consumed items; of impressions", [f"{e4['fit'][p]['alg']['sim']['e_T'] / e4['fit'][p]['chron']['sim']['e_T']:.2f}; "
+                                                       f"{e4['fit'][p]['alg']['sim']['slate_e_T'] / e4['fit'][p]['chron']['sim']['slate_e_T']:.2f}" for p in PERS])
         row(r"$\kappa_{\mathcal A}$; Kemeny $K$", [f"{e4['fit'][p]['alg']['pred']['kappa_A']:.2f}; {e4['fit'][p]['alg']['pred']['kemeny']:.2f}" for p in PERS])
         lines.append(r"\addlinespace")
+    if "E4b" in res:
+        for g in ("ND", "DD"):
+            if g not in res["E4b"]["regimes"]:
+                continue
+            b = res["E4b"]["regimes"][g]
+            lines.append(rf"\multicolumn{{{1 + len(PERS)}}}{{@{{}}l}}{{\emph{{E4b: slate chains of protocol puppets, regime {g}, long-run impression exposure, alg; ref (\%)}}}} \\")
+            for key, lab in (("sim", "Simulated (second half of a 200-step session)"), ("true3", r"Chain of true slate states"),
+                             ("naive3", "Chain of observed slate states, uncorrected"),
+                             ("corr2_min", r"Corrected, minimal composition"), ("corr2_oracle", r"Corrected, true composition")):
+                if key == "sim":
+                    vals = [f"{100 * b[p]['alg']['sim']['mu_tail']:.2f}; {100 * b[p]['chron']['sim']['mu_tail']:.2f}" for p in PERS]
+                else:
+                    vals = [f"{100 * b[p]['alg']['pred'][key]['mu_pi']:.2f}; {100 * b[p]['chron']['pred'][key]['mu_pi']:.2f}" for p in PERS]
+                row(lab, vals)
+            lines.append(r"\addlinespace")
     if "E5" in res:
         e5 = res["E5"]["personas"]
-        lines.append(rf"\multicolumn{{{1 + len(PERS)}}}{{@{{}}l}}{{\emph{{E5: \cref{{alg:sequential}}, reference chron, waves of 5 pairs, $\alpha=0.05$ unless stated}}}} \\")
+        lines.append(rf"\multicolumn{{{1 + len(PERS)}}}{{@{{}}l}}{{\emph{{E5, benchmark design: \cref{{alg:sequential}} on $Y_u$, reference chron, waves of 5 pairs, $\alpha=0.05$ unless stated}}}} \\")
         nd = {p: e5[p]["ND"] for p in PERS}
         row("True AR", [f"{nd[p]['AR']:.2f}" for p in PERS])
         row(r"Time-uniform coverage, burn-in 1 wave; none (\%)",
@@ -614,6 +831,9 @@ def main():
         fig_markov(res, os.path.join(a.figures, "fig-sim-markov.pdf"))
     if "E5" in res:
         fig_sequential(res, os.path.join(a.figures, "fig-sim-sequential.pdf"))
+    if "E5b" in res:
+        fig_primary(res, os.path.join(a.figures, "fig-sim-primary.pdf"))
+        tab_primary(res, os.path.join(a.tables, "tab-sim-primary.tex"))
     tab_designs(res, os.path.join(a.tables, "tab-sim-designs.tex"))
     if "E1b" in res:
         tab_checks(res, os.path.join(a.tables, "tab-sim-checks.tex"))

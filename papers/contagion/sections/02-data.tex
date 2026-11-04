@@ -21,14 +21,11 @@ occurrence times. Two departures from that ideal are common, and they bias
 contagion estimates in different ways.
 
 \paragraph{Report dates in place of occurrence dates.}
-If the analysis uses $r_i$ instead of $t_i$, the observed process is the
-true process with every point displaced by an independent delay $d_i \sim
-F_k$. The number of points is preserved, but for distinct points the second-order
-structure is convolved with the law of $d_i - d_j$: a parent--offspring pair
-at lag $u$ appears at lag $u + d_j - d_i$, which is negative with positive
-probability whenever delays are dispersed. The displaced process need not be
-a Hawkes process. Contagion estimated from report dates therefore mixes the
-excitation kernel with the delay distribution, and this matters most when
+If the analysis uses $r_i$ instead of $t_i$, every point is displaced by an independent
+delay $d_i\sim F_k$. A parent--offspring pair at lag $u$ then appears at lag
+$u+d_j-d_i$, which is negative with positive probability whenever delays are dispersed,
+and the displaced process need not be a Hawkes process. Contagion estimated from report
+dates therefore mixes the excitation kernel with the delay distribution, most of all when
 typical delays are comparable with the kernel time scale $1/\beta$.
 
 \paragraph{Coarse time stamps.}
@@ -92,23 +89,16 @@ The shock term $\sum_e \upsilon_k S_e \psi_k(t - \tau_e)$ requires event times
 and sizes that are fixed independently of the incident data. Two established
 event datasets, ACLED \citep{raleigh2010} and GDELT \citep{leetaru2013}, can supply
 candidate events; their licence terms will be recorded and respected at registration.
-Neither dataset settles which events are \emph{salient} for the outcome. The
-risk is that the analyst picks events after seeing surges, which would bias
-the shock loadings $\upsilon_k$ upwards and the contagion terms downwards. We
-therefore fix the event list before outcome data are examined, using a
-content-neutral procedure set out in full in \cref{sec:plan-events}:
-\begin{enumerate}[(i)]
-  \item event classes are defined in advance by type (for example, armed
-  escalations, mass-casualty attacks, high-profile public statements),
-  symmetrically and without reference to the parties involved;
-  \item salience is measured by a pre-specified, outcome-independent index,
-  such as the volume of news coverage relative to its own trailing baseline,
-  and an event enters the list when the index crosses a fixed threshold;
-  \item coding is done by coders who have no access to incident data; and
-  \item the list of times $\tau_e$, classes and sizes $S_e$ is frozen and
-  time-stamped before incident data for the study period are loaded.
-\end{enumerate}
-Calendar effects such as religious holidays and school terms are recurring
+Neither dataset settles which events are \emph{salient} for the outcome. The risk is that
+the analyst picks events after seeing surges, which would bias the shock loadings
+$\upsilon_k$ upwards and the contagion terms downwards. We therefore fix the event list
+before outcome data are examined, by a content-neutral procedure
+(\cref{sec:plan-events}): event classes defined in advance by type, symmetrically and
+without reference to the parties involved; a pre-specified, outcome-independent salience
+index, such as news coverage relative to its own trailing baseline, with a fixed
+threshold; coders without access to incident data; and a list of times $\tau_e$, classes
+and sizes $S_e$ that is frozen and time-stamped before incident data for the study period
+are loaded. Calendar effects such as religious holidays and school terms are recurring
 and predictable, so they enter the background $\mu_k(t)$, not the shock
 list.
 
@@ -122,13 +112,9 @@ online streams as optional, so that the offline analysis does not depend on them
 \paragraph{Classifier-based volume series and their measurement error.}
 An online stream enters the model as a binned count series, which is handled
 by the INAR approximation of \cref{eq:inar} or a binned Hawkes likelihood.
-It is constructed by applying a classifier to a defined corpus, following
-the lab's proposals on detection and measurement
-\citep{kornsteinlab2026detection,kornsteinlab2026measurement}. Two points
-from those proposals carry over. First, the estimand concerns the sampled
-corpus, not platform-wide prevalence. Second, classifier error must be
-reported through both precision and recall, not a single score. For the
-time-series use, let $U_t$ be the number of posts in bin $t$, $V_t$ the
+It is constructed by applying a classifier to a defined corpus
+\citep{kornsteinlab2026detection,kornsteinlab2026measurement}, so it measures the
+sampled corpus, not platform-wide prevalence, and its error has two rates. Let $U_t$ be the number of posts in bin $t$, $V_t$ the
 number that are antisemitic under the reference annotation, and
 $\widehat V_t$ the number flagged. If each post is flagged independently
 with probability $e_1$ when antisemitic and $e_0$ otherwise, then

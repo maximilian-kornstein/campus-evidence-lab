@@ -23,7 +23,7 @@ time-rescaling results, and the Davies problem are in \cref{app:est-supp}; compu
 details are in \cref{app:computation}.
 
 Throughout, $\vartheta$ denotes the full parameter vector: the background coefficients
-$\theta_k$, the shock loadings $\beta_k$, the response parameters, $\Amat$ and the kernel
+$\theta_k$, the shock loadings $\upsilon_k$, the response parameters, $\Amat$ and the kernel
 parameters. We reserve $\theta_k$ for the background, as in \cref{ass:th-model}. We write
 $n_k=N_k(T)$ and $n_{\mathrm{ev}}=\sum_kn_k$ for the total number of incidents; $n$
 without a subscript is the branching ratio, as in \cref{sec:framework}.
@@ -32,7 +32,7 @@ without a subscript is the branching ratio, as in \cref{sec:framework}.
 
 \paragraph{Separation by target stream.} The log-likelihood \eqref{eq:th-loglik} is a sum
 $\ell_T=\sum_k\ell_{T,k}$ of stream terms. The term $\ell_{T,k}$ depends only on the
-parameters of $\lambda_k$: on $\theta_k$, on $\beta_k$ and $\psi_k$, and on row $k$ of
+parameters of $\lambda_k$: on $\theta_k$, on $\upsilon_k$ and $\psi_k$, and on row $k$ of
 $\Amat$ with its kernels. Unless a parameter is shared across rows, such as a common decay
 rate, the likelihood therefore separates. Each row of the model is fitted to its own
 stream, and the other streams enter only as history. We use this separation for testing
@@ -44,9 +44,9 @@ $\Psi_k(u)=0$ for $u\le0$. With the decay sums
 $R_{kj}(t)=\sum_{l:\,t^j_l<t}e^{-\beta_{kj}(t-t^j_l)}$, the intensity and the compensator
 on $[0,T]$ are
 \begin{align}
-  \lambda_k(t)&=\mu_k(t)+\beta_k\sum_{e:\,\tau_e<t}S_e\,\eta_ke^{-\eta_k(t-\tau_e)}
+  \lambda_k(t)&=\mu_k(t)+\upsilon_k\sum_{e:\,\tau_e<t}S_e\,\eta_ke^{-\eta_k(t-\tau_e)}
   +\sum_{j=1}^M\alpha_{kj}\beta_{kj}R_{kj}(t),\label{eq:est-lambda}\\
-  \Lam_k(T)&=\int_0^T\mu_k(t)\,\dd t+\beta_k\sum_eS_e\Psi_k^T(e)
+  \Lam_k(T)&=\int_0^T\mu_k(t)\,\dd t+\upsilon_k\sum_eS_e\Psi_k^T(e)
   +\sum_{j=1}^M\alpha_{kj}G_{kj},\label{eq:est-comp}
 \end{align}
 where $\Psi^T_k(e)=\Psi_k(T-\tau_e)-\Psi_k(-\tau_e)$ is the share of the response to
@@ -59,13 +59,10 @@ kernel is memoryless, so
   R_{kj}(s_m)=e^{-\beta_{kj}(s_m-s_{m-1})}\big\{R_{kj}(s_{m-1})+\ind{d_{m-1}=j}\big\},
   \qquad R_{kj}(s_1)=0 .
 \end{equation}
-For each pair, \eqref{eq:est-recursion} costs $O(n_j+n_k)$. Summed over pairs, every
-intensity at an event costs $O(Mn_{\mathrm{ev}})$ operations and
-$O(n_{\mathrm{ev}}+M^2)$ memory, against $O(n_{\mathrm{ev}}^2)$ for direct summation. Running
-the recursion over all merged events for every pair would cost $O(M^2n_{\mathrm{ev}})$. The
-recursion, and the corresponding recursions for the derivatives, are due to
-\citet{ozaki1979}. \Cref{app:computation} gives the analogous recursions for the gradient
-and for the EM statistics.
+For each pair, \eqref{eq:est-recursion} costs $O(n_j+n_k)$, so all intensities at the
+events cost $O(Mn_{\mathrm{ev}})$ operations, against $O(n_{\mathrm{ev}}^2)$ for direct
+summation. The recursion is due to \citet{ozaki1979}; \cref{app:computation} gives the
+analogous recursions for the gradient and the EM statistics.
 
 \paragraph{Asymptotic theory.} \Citet{ogata1978} proved consistency, asymptotic normality
 and efficiency of the maximum likelihood estimator for stationary point processes. His
@@ -76,34 +73,23 @@ $\sqrt T(\hat\vartheta-\vartheta_0)\Rightarrow N(0,\bm I^{-1})$, where
 $\bm I=\sum_k\E\{\lambda_k(0)^{-1}\nabla\lambda_k(0)\nabla\lambda_k(0)^{\top}\}$ is the Fisher
 information per unit time under the stationary law. The shock-augmented model with a
 spline background is not stationary. A fixed-dimensional theory applies if the number
-$K_b$ of basis functions is held fixed as $T$ grows, for example a periodic background with
-a fixed seasonal basis. Our pre-registered design instead fixes the knot spacing
-(\cref{sec:plan-models}), so $K_b$ grows in proportion to $T$, and the background is a
-semiparametric nuisance. We do not develop that theory here. We use the normal approximation with the observed information (\cref{app:computation}) away
-from the boundary. Where the approximation is in doubt, we use parametric bootstrap or
-posterior draws instead. This applies near $\alpha_{kj}=0$ (\cref{prop:lrt}), near
-criticality, and for nonlinear functionals such as the surge decomposition
-(\cref{sec:at-uncertainty}).
+$K_b$ of basis functions is held fixed as $T$ grows. Our pre-registered design instead
+fixes the knot spacing $h_b$ (\cref{sec:plan-models}), so $K_b$ grows in proportion to $T$
+and the background is a semiparametric nuisance, whose theory we do not develop. We use the
+normal approximation with the observed information (\cref{app:computation}) away from the
+boundary, and parametric bootstrap or posterior draws where it is in doubt: near
+$\alpha_{kj}=0$ (\cref{sec:est-lrt}), near criticality, and for nonlinear functionals such
+as the surge decomposition (\cref{sec:at-uncertainty}).
 
-\paragraph{Constraints.} The parameters satisfy $\alpha_{kj}\ge0$, $\beta_k\ge0$, and
-$\beta_{kj},\eta_k>0$. Then $\lambda_k\ge\mu_k>0$, so the log-likelihood is finite. The
-likelihood on $[0,T]$ is defined for every $\Amat\ge\zero$; stationarity is not needed to
-write it down. The condition $\spr(\Amat)<1$ is needed for the stationary interpretation,
-for $\Mmat=(\Imat-\Amat)^{-1}$ and for the surge decomposition. We handle it in three ways.
-\begin{enumerate}[(i)]
-  \item We fit without the constraint and report $\spr(\hat\Amat)$ with its uncertainty.
-    Unmodelled rate variation produces apparent near-criticality (\cref{thm:spurious},
-    \cref{rem:th-spurious}). An estimate near or above one is therefore read as a symptom
-    of misspecification, not as evidence of an explosive process.
-  \item If the constraint is imposed, the M-step for $\Amat$ with the decay rates held
-    fixed stays a convex problem. On the support of $\Amat$, $\log\spr(\Amat)$ is a convex
-    function of the log-entries $x_{kj}=\log\alpha_{kj}$ \citep{kingman1961}. So
-    $\{\spr(\Amat)\le1-\epsilon\}$ is convex in these coordinates, and the $\Amat$-block
-    of the M-step objective, $\sum_{kj}(N_{kj}x_{kj}-G_{kj}e^{x_{kj}})$ in
-    \cref{prop:est-mstep}, is concave in them. The joint update with the decays is not
-    covered by this argument, because $G_{kj}$ depends on $\beta_{kj}$.
-  \item In the Bayesian fit we impose the constraint by truncation (\cref{lem:est-trunc}).
-\end{enumerate}
+\paragraph{Constraints.} The parameters satisfy $\alpha_{kj}\ge0$, $\upsilon_k\ge0$ and
+$\beta_{kj},\eta_k>0$, so $\lambda_k\ge\mu_k>0$ and the likelihood is defined for every
+$\Amat\ge\zero$. The condition $\spr(\Amat)<1$ is needed only for the stationary
+interpretation, for $\Mmat$ and for the surge decomposition. We fit without it and report
+$\spr(\hat\Amat)$ with its uncertainty, reading an estimate near or above one as a symptom
+of misspecification (\cref{thm:spurious}) rather than as evidence of an explosive process.
+If the constraint is imposed, the M-step for $\Amat$ with the decays fixed stays convex,
+because $\log\spr(\Amat)$ is convex in the log-entries \citep{kingman1961}; in the Bayesian
+fit we impose it by truncation (\cref{lem:est-trunc}).
 
 \paragraph{The background, and why its flexibility matters.} The background is
 $\mu_k(t)=\exp\{B(t)^{\top}\theta_k\}$. Here $B$ consists of cubic B-splines in calendar
@@ -113,12 +99,11 @@ time with $K_b$ basis functions, plus day-of-week and holiday indicators
   \ell^{\mathrm{pen}}_T(\vartheta)=\ell_T(\vartheta)-\tfrac12\sum_{k}\lambda^{\mathrm{pen}}_k\,
   \theta_k^{\top}P\,\theta_k .
 \end{equation}
-Two choices of $P$ are natural. The second-difference penalty $P=D_2^{\top}D_2$ on adjacent
-spline coefficients \citep{eilers1996} leaves linear trends unpenalised. The penalty
-$P=\Imat-\mathbf 1\mathbf 1^{\top}/K_b$ shrinks towards a constant background. It is the
-penalty available in our implementation, whose default is no penalty, with the flexibility
-set by $K_b$ alone. B-splines sum to one, so both penalties vanish on
-constant backgrounds. The background is not a nuisance to be fitted as flexibly as
+Two choices of $P$ are natural: the second-difference penalty on adjacent spline
+coefficients \citep{eilers1996}, which leaves linear trends unpenalised, and
+$P=\Imat-\mathbf 1\mathbf 1^{\top}/K_b$, which shrinks towards a constant background. Our
+implementation offers the second, and by default uses no penalty, with the flexibility set
+by the knot spacing alone. The background is not a nuisance to be fitted as flexibly as
 possible. It is part of the identification strategy, and it can fail in two directions.
 \begin{itemize}
   \item \emph{Too rigid.} Rate variation that the background cannot represent is absorbed
@@ -134,37 +119,23 @@ possible. It is part of the identification strategy, and it can fail in two dire
     therefore cannot separate contagion from background. The separation comes only from
     restricting the roughness of $\mu_k$.
 \end{itemize}
-Identification thus rests on a separation of time scales. The background should be smooth
-on the cascade time scale $1/\{\beta(1-n)\}$, the correlation time of
-\cref{prop:th-spectrum}, while still following seasonal and secular movement. We consider
-two principled ways to choose the flexibility.
-\begin{enumerate}[(a)]
-  \item \emph{Pre-registered knots.} Fix the knot spacing in advance at a multiple of the
-    longest plausible cascade time scale. Then report the estimates for a pre-registered
-    ladder of spacings (\cref{sec:plan-models,sec:plan-sens}). The ladder makes the
-    trade-off visible: an excitation estimate that vanishes as the background becomes
-    more flexible, while the fit stays adequate, is not robustly distinguishable from
-    background variation.
-  \item \emph{Cross-validated log score.} Partition $[0,T]$ into a set $\mathcal I$ of
-    contiguous blocks, each much longer than the cascade time scale. Choose
-    $\lambda^{\mathrm{pen}}$ (or $K_b$) to maximise
-    \begin{equation}\label{eq:est-cv}
-      \mathrm{CV}(\lambda^{\mathrm{pen}})=\sum_{I\in\mathcal I}\sum_{k=1}^{M}\Big[\sum_{t^k_i\in I}
-      \log\hat\lambda^{(-I)}_k(t^k_i)-\int_{I}\hat\lambda^{(-I)}_k(t)\,\dd t\Big].
-    \end{equation}
-    Here $\hat\lambda^{(-I)}$ uses parameters fitted to the likelihood restricted to
-    $[0,T]\setminus I$, and it still conditions on the full observed history. The log
-    score is strictly proper: for a predictable candidate $\lambda$, the expected
-    contribution $\E\int(\lambda_0\log\lambda-\lambda)\,\dd t$ is maximised pointwise at
-    the true intensity $\lambda_0$. The blocked design is what makes the score
-    informative here. In a held-out block, background bumps that were fitted to clusters
-    elsewhere do not help, whereas genuine excitation still predicts clustering from the
-    observed history. The score thus credits the background for what calendar time
-    predicts, and the excitation for what the past predicts.
-\end{enumerate}
-We use (a) for the primary analysis, because it adds no data-dependent selection step to
-inference. We use (b) to check that the pre-registered spacing is not far from the
-cross-validated optimum.
+Identification thus rests on a separation of time scales: the background should be smooth
+on the cascade time scale $1/\{\beta(1-n)\}$ of \cref{prop:th-spectrum}, while still
+following seasonal and secular movement. For the primary analysis we fix the knot spacing
+$h_b$ in advance at a multiple of the longest plausible cascade time scale, and report the
+estimates for a pre-registered ladder of spacings (\cref{sec:plan-models,sec:plan-sens}). An
+excitation estimate that vanishes as the background becomes more flexible, while the fit
+stays adequate, is not robustly distinguishable from background variation. As a check, we
+compare the pre-registered spacing with the one that maximises a blocked cross-validated log
+score,
+\begin{equation}\label{eq:est-cv}
+  \mathrm{CV}=\sum_{I\in\mathcal I}\sum_{k=1}^{M}\Big[\sum_{t^k_i\in I}
+  \log\hat\lambda^{(-I)}_k(t^k_i)-\int_{I}\hat\lambda^{(-I)}_k(t)\,\dd t\Big],
+\end{equation}
+over contiguous blocks $I$ much longer than the cascade time scale, where
+$\hat\lambda^{(-I)}$ is fitted without block $I$ but conditions on the full history. In a
+held-out block, background bumps fitted to clusters elsewhere do not help, whereas genuine
+excitation still predicts clustering.
 
 \subsection{EM via the latent branching structure}\label{sec:est-em}
 
@@ -177,7 +148,7 @@ log-likelihood is therefore
 \begin{equation}\label{eq:est-complete}
 \begin{aligned}
   \ell^{c}_T(\vartheta)={}&\sum_k\Big[\sum_{i:\,Z^k_i=0}\log\mu_k(t^k_i)-\int_0^T\mu_k\Big]
-  +\sum_{k,e}\Big[\sum_{i:\,Z^k_i=e}\log\{\beta_kS_e\psi_k(t^k_i-\tau_e)\}-\beta_kS_e\Psi^T_k(e)\Big]\\
+  +\sum_{k,e}\Big[\sum_{i:\,Z^k_i=e}\log\{\upsilon_kS_e\psi_k(t^k_i-\tau_e)\}-\upsilon_kS_e\Psi^T_k(e)\Big]\\
   &+\sum_{k,j}\Big[\sum_{(i,l):\,Z^k_i=(j,l)}\log\{\alpha_{kj}g_{kj}(t^k_i-t^j_l)\}
   -\alpha_{kj}\,\mathcal G_{kj}\Big],
   \qquad \mathcal G_{kj}=\sum_{l=1}^{n_j}\int_0^{T-t^j_l}g_{kj}(u)\,\dd u .
@@ -194,7 +165,7 @@ shocks.
 \paragraph{E-step.} The posterior label probabilities are
 \[
   p^{k,0}_i=\frac{\mu_k(t^k_i)}{\lambda_k(t^k_i)},\qquad
-  p^{k,e}_i=\frac{\beta_kS_e\psi_k(t^k_i-\tau_e)}{\lambda_k(t^k_i)},\qquad
+  p^{k,e}_i=\frac{\upsilon_kS_e\psi_k(t^k_i-\tau_e)}{\lambda_k(t^k_i)},\qquad
   p^{k,jl}_i=\frac{\alpha_{kj}g_{kj}(t^k_i-t^j_l)}{\lambda_k(t^k_i)} .
 \]
 The M-step needs only the aggregates
@@ -225,7 +196,7 @@ probabilities $p$.
   \item \emph{Branching ratios and loadings.} For fixed kernel shapes,
     \[
       \alpha_{kj}=\frac{N_{kj}}{\mathcal G_{kj}},\qquad
-      \beta_k=\frac{\sum_eN_{ke}}{\sum_eS_e\Psi^T_k(e)} .
+      \upsilon_k=\frac{\sum_eN_{ke}}{\sum_eS_e\Psi^T_k(e)} .
     \]
   \item \emph{Decay rates.} For exponential $g_{kj}$, write $r_l=T-t^j_l$ (for the window
     with a burn-in segment, see \cref{rem:est-edge}) and
@@ -262,83 +233,30 @@ negligible for a short kernel in a long window, but not for a salient event shor
 $T$, which is exactly the case of real-time attribution. \Cref{rem:est-edge} in
 \cref{app:est-edge} gives the details and the window terms for a burn-in segment.
 
-\begin{algorithm}[t]
-\caption{EM for the shock-augmented Hawkes model with exponential kernels.}\label{alg:em}
-\begin{algorithmic}[1]
-\Require Events $\{t^k_i\}$ on $[0,T]$; calendar $\{(\tau_e,S_e)\}$; basis $B$, penalty
-  $(\lambda^{\mathrm{pen}},P)$; start $\vartheta^{(0)}$ with every free $\alpha^{(0)}_{kj}>0$;
-  tolerance $\epsilon$.
-\Ensure $\hat\vartheta$ and the non-decreasing trace $\ell_T(\vartheta^{(r)})$.
-\For{$r=0,1,2,\dots$}
-  \State \textbf{E-step.} For every pair $(k,j)$, run \eqref{eq:est-recursion} and its lag
-    analogue to obtain $R_{kj}(t^k_i)$ and $R^{(1)}_{kj}(t^k_i)$; form $\lambda_k(t^k_i)$ by
-    \eqref{eq:est-lambda}.
-  \State Accumulate $N^0_k$, $N_{kj}=\sum_i\alpha_{kj}\beta_{kj}R_{kj}(t^k_i)/\lambda_k(t^k_i)$,
-    $W_{kj}=\sum_i\alpha_{kj}\beta_{kj}R^{(1)}_{kj}(t^k_i)/\lambda_k(t^k_i)$, $N_{ke}$ and $W_{ke}$.
-  \State $\ell_T(\vartheta^{(r)})\gets\sum_{k,i}\log\lambda_k(t^k_i)-\sum_k\Lam_k(T)$, with
-    $\Lam_k(T)$ from \eqref{eq:est-comp}.
-  \If{$r\ge1$ and $\ell_T(\vartheta^{(r)})-\ell_T(\vartheta^{(r-1)})\le\epsilon\{1+|\ell_T(\vartheta^{(r)})|\}$}
-    \State \Return $\vartheta^{(r)}$
-  \EndIf
-  \State \textbf{M-step} (\cref{prop:est-mstep}). Background: $\mu_k\gets N^0_k/T$, or
-    Newton steps with step halving on $\theta_k$.
-  \State Decay rates: solve $m_j(\beta_{kj})=W_{kj}/N_{kj}$ (or the pooled equation for a
-    shared decay) by a one-dimensional root search; $m_j$ is monotone.
-  \State Branching ratios $\alpha_{kj}\gets N_{kj}/G_{kj}$; response rates $\eta_k$ by
-    the same root equation; loadings $\beta_k\gets\sum_eN_{ke}/\sum_eS_e\Psi^T_k(e)$.
-\EndFor
-\end{algorithmic}
-\end{algorithm}
-
-Four practical points about \cref{alg:em} follow.
-\begin{itemize}
-  \item \emph{Multimodality.} The likelihood can be multimodal in the decay rates. When
-    excitation is weak, for example, a spurious mode with tiny $\alpha$ and very large
-    $\beta$ can appear. Our implementation therefore evaluates the profile likelihood on a
-    grid of decays and starts EM from each local maximum of the grid profile. When
-    excitation is absent, the likelihood can also have a ridge on which $\beta\to0$ while
-    $\alpha$ grows and the expected number of in-window offspring per incident stays small.
-    On that ridge $\hat\alpha$ alone is not a usable estimate of the branching ratio
-    (\cref{sec:sim-spurious}).
-  \item \emph{Speed.} EM converges linearly, at a rate set by the fraction of missing
-    information. It is slow when some $\alpha_{kj}$ is near $0$, because the multiplicative
-    update in \cref{prop:est-mstep}(b) can only approach the boundary. SQUAREM
-    extrapolation \citep{varadhan2008} accelerates it. Extrapolated steps are kept only
-    when they raise the likelihood, so the trace stays monotone. Null fits for testing set
-    $\alpha_{kj}=0$ exactly.
-  \item \emph{Byproducts.} The probabilities $p^{k,\cdot}_i$ give a stochastic
-    declustering of the realised incidents \citep{marsan2008}, used in
-    \cref{rem:at-expost}.
-  \item \emph{Variants.} \citet{veen2008} use partial M-steps for the ETAS model.
-    \citet{lewis2011} replace the parametric kernel by a penalised nonparametric one
-    (\cref{sec:est-nonpar}). Both fit in the same template.
-\end{itemize}
+\Cref{alg:em} in \cref{app:est-supp} summarises the iteration. Three practical points about \cref{alg:em} matter. First, the likelihood can be
+multimodal in the decay rates; when excitation is weak, a spurious mode with tiny $\alpha$
+and very large $\beta$ can appear, so our implementation starts EM from each local maximum
+of a grid profile in the decays. When excitation is absent, the likelihood can also have a
+ridge on which $\beta\to0$ while $\alpha$ grows and the expected number of in-window
+offspring per incident stays small; on that ridge $\hat\alpha$ alone is not a usable
+estimate of the branching ratio (\cref{sec:sim-spurious}). Second, EM converges linearly
+and is slow when some $\alpha_{kj}$ is near $0$; SQUAREM extrapolation \citep{varadhan2008},
+with steps kept only when they raise the likelihood, accelerates it, and null fits set
+$\alpha_{kj}=0$ exactly. Third, the probabilities $p^{k,\cdot}_i$ give a stochastic
+declustering of the realised incidents \citep{marsan2008}, used in \cref{rem:at-expost}.
+The partial M-steps of \citet{veen2008} and the nonparametric kernels of \citet{lewis2011}
+(\cref{sec:est-nonpar}) fit the same template.
 
 \subsection{Bayesian estimation with shrinkage on \texorpdfstring{$\Amat$}{A}}\label{sec:est-bayes}
 
-With many streams (regions $\times$ offence types $\times$ channels), $\Amat$ has $M^2$
-entries, most of which we expect to be small. We use priors that shrink small entries
-strongly and leave large ones nearly untouched.
-\begin{itemize}
-  \item \emph{Local--global gamma prior.} Set
-    $\alpha_{kj}\mid\omega_{kj}\sim\operatorname{Gamma}(a_1,\omega_{kj})$ (shape, rate),
-    $\omega_{kj}\mid\varsigma\sim\operatorname{Gamma}(a_2,\varsigma)$ and
-    $\varsigma\sim\operatorname{Gamma}(a_\varsigma,b_\varsigma)$. Integrating out
-    $\omega_{kj}$ gives $\alpha_{kj}/\varsigma\sim\operatorname{BetaPrime}(a_1,a_2)$, with
-    density proportional to $x^{a_1-1}(1+x)^{-a_1-a_2}$. With $a_1=a_2=\tfrac12$, this
-    is the law of the squared half-Cauchy local scale of the horseshoe \citep{carvalho2010}. Its density has a pole at $0$ and
-    a tail of order $x^{-3/2}$, so it is a horseshoe-type prior placed directly on the
-    nonnegative $\alpha_{kj}$ \citep[cf.][]{armagan2011}.
-  \item \emph{Spike and slab.} Set $\alpha_{kj}=\iota_{kj}\tilde\alpha_{kj}$ with
-    $\iota_{kj}\sim\Bern(\pi_{kj})$ and $\tilde\alpha_{kj}\sim\operatorname{Gamma}(a_{\mathrm s},b_{\mathrm s})$.
-    The $\iota_{kj}$ may follow a random-graph model, as in the network Hawkes process of
-    \citet{linderman2014}. That model uses the same parent augmentation, with logistic-normal
-    impulse responses.
-\end{itemize}
-In both cases the diagonal (self-excitation) entries get their own, less aggressive prior.
-Stationarity is imposed by truncating the prior to $\{\spr(\Amat)<1\}$. The next lemma
-makes the truncation explicit, one entry at a time. It is a standard rank-one fact about
-nonsingular M-matrices; we state and prove it because the sampler needs it in this form.
+With many streams, $\Amat$ has $M^2$ entries, most of which we expect to be small. We use
+priors that shrink small entries strongly and leave large ones nearly untouched: a
+local--global gamma prior, whose marginal is a horseshoe-type prior placed directly on the
+nonnegative $\alpha_{kj}$ \citep{carvalho2010,armagan2011}, or a spike-and-slab prior with
+inclusion indicators $\iota_{kj}$ \citep{linderman2014}; \cref{app:est-gibbs} gives both.
+Stationarity is imposed by truncating the prior to $\{\spr(\Amat)<1\}$. The next lemma, a
+standard rank-one fact about nonsingular M-matrices, makes the truncation explicit one
+entry at a time, in the form the sampler needs.
 
 \begin{lemma}[The stationarity region, entry by entry]\label{lem:est-trunc}
 Let $\Amat\ge\zero$, fix $(k,j)$, and let $\Amat^{(-kj)}$ be $\Amat$ with $\alpha_{kj}$ set
@@ -355,12 +273,10 @@ If $\Mmat^{(-kj)}_{jk}=0$, every $x\ge0$ is admissible.
 
 The proof is in \cref{app:est-proofs}.
 
-The threshold has a direct reading. $\Mmat^{(-kj)}_{jk}$ is the expected number of
-stream-$j$ incidents in a cascade rooted at a stream-$k$ incident, in the network without
-the edge $j\to k$. Adding that edge with weight $x$ closes a feedback loop with gain
-$x\,\Mmat^{(-kj)}_{jk}$, and the cascade stays subcritical exactly when the gain is below
-one. If no path leads from $k$ back to $j$, the edge closes no loop and is unconstrained.
-Online-to-offline entries of a model without offline-to-online feedback are of this kind.
+The threshold has a direct reading: adding the edge $j\to k$ with weight $x$ closes a
+feedback loop with gain $x\,\Mmat^{(-kj)}_{jk}$, and the cascade stays subcritical exactly
+when the gain is below one. An edge that closes no loop, such as an online-to-offline entry
+in a model without offline-to-online feedback, is unconstrained.
 
 \paragraph{Gibbs sampling by data augmentation.} Given the parent labels $Z$, the
 complete-data likelihood \eqref{eq:est-complete} is a product of Poisson-process
@@ -383,7 +299,7 @@ offspring and Poisson immigration is
 \begin{equation}\label{eq:inar}
 \begin{gathered}
   X_{k,t}\mid\Hist_{(t-1)\Delta}\ \sim\ \Pois\Big(\nu_{k,t}+\sum_{j=1}^M\sum_{\ell=1}^p\varphi_{kj,\ell}\,X_{j,t-\ell}\Big),\\
-  \nu_{k,t}=\int_{(t-1)\Delta}^{t\Delta}\Big\{\mu_k(u)+\beta_k\sum_eS_e\psi_k(u-\tau_e)\Big\}\,\dd u,
+  \nu_{k,t}=\int_{(t-1)\Delta}^{t\Delta}\Big\{\mu_k(u)+\upsilon_k\sum_eS_e\psi_k(u-\tau_e)\Big\}\,\dd u,
 \end{gathered}
 \end{equation}
 independently over $k$. In the INAR representation, each of the $X_{j,t-\ell}$ incidents
@@ -392,106 +308,23 @@ variables are Poisson, so \eqref{eq:inar} is the identity-link Poisson autoregre
 \citep{fokianos2009}. Its conditional likelihood is exact for the binned model. It is concave in the lag
 coefficients, and in any linear parametrisation of $\nu$.
 
-\paragraph{Parameter mapping.} For univariate processes, \citet{kirchner2016} showed
-that, with
-\[
-  \nu=\Delta\mu,\qquad \varphi_{\ell}=\Delta\,\varphi(\ell\Delta),\qquad \ell=1,2,\dots,
-\]
-the INAR($\infty$) bin-count process converges weakly to the Hawkes process as
-$\Delta\to0$. \Citet{kirchner2017} extended the mapping to the multivariate case,
-$\nu_k=\Delta\mu_k$ and $\varphi_{kj,\ell}=\Delta\varphi_{kj}(\ell\Delta)$, and turned it
-into an estimator. It applies conditional least squares (CLS) to the INAR($p$)
-representation, with consistency and asymptotic normality as the number of bins grows. The Hawkes parameters are
-read off as
-\[
-  \hat\mu_k=\hat\nu_k/\Delta,\qquad \hat\varphi_{kj}(\ell\Delta)=\hat\varphi_{kj,\ell}/\Delta,\qquad
-  \hat\alpha_{kj}=\sum_{\ell=1}^p\hat\varphi_{kj,\ell}.
-\]
-For exponential kernels the lag weights are geometric, $\varphi_{kj,\ell}\propto e^{-\ell\beta_{kj}\Delta}$.
-The decay can then be estimated from $r=\sum_\ell\varphi_{kj,\ell}/\sum_\ell\ell\,\varphi_{kj,\ell}$
-as $\hat\beta_{kj}=-\log(1-r)/\Delta$. This is exact for geometric weights with $p=\infty$,
-and it is what our implementation reports.
-
-\paragraph{Bias at coarse bins.} The mapping is a first-order statement. Its lag
-coefficients sum to $\alpha\beta\Delta/(e^{\beta\Delta}-1)=\alpha(1-\beta\Delta/2+\dots)$
-for an exponential kernel. The relevant question, however, is what a fitted autoregression
-converges to. The next result answers it exactly.
-
-\begin{proposition}[Binning attenuates contagion]\label{prop:est-binning}
-Let $N$ be a stationary univariate Hawkes process (\cref{prop:stationary}) with branching
-ratio $n\in[0,1)$ and mean rate $\bar\Lambda$. Let $X_t$ be its counts in bins of width
-$\Delta$. Let $\pi_\ell$ be the coefficients of the best linear predictor of $X_t$ from
-$(X_{t-\ell})_{\ell\ge1}$; this is the limit of CLS for INAR($p$) as the number of bins and
-then $p$ tend to infinity. Assume $\sum_\ell|\pi_\ell|<\infty$. Let $\sigma^2_\Delta$ be the
-one-step prediction variance, and let $\varpi_\Delta=\sigma^2_\Delta/(\bar\Lambda\Delta)$
-be the innovation dispersion.
-\begin{enumerate}[(a)]
-  \item \emph{General kernel.} $\varpi_\Delta\ge1$ and
-    \[
-      n_\Delta:=\sum_{\ell\ge1}\pi_\ell=1-(1-n)\,\varpi_\Delta^{1/2}\ \le\ n .
-    \]
-  \item \emph{Exponential kernel} $\varphi(u)=n\beta e^{-\beta u}$. Let $\gamma=\beta(1-n)$,
-    $\rho=e^{-\gamma\Delta}$ and $K=\bar\Lambda\beta n(2-n)/\{2(1-n)\}$. Then $X$ has the
-    autocovariances of an ARMA$(1,1)$ process:
-    \[
-      V:=\Var X_t=\bar\Lambda\Delta+2K\Big(\frac{\Delta}{\gamma}-\frac{1-e^{-\gamma\Delta}}{\gamma^2}\Big),
-      \qquad
-      \Cov(X_t,X_{t+\ell})=C\rho^{\ell}\quad(\ell\ge1),
-    \]
-    where $C=4K\gamma^{-2}\sinh^2(\gamma\Delta/2)$.
-    With $v_0=V(1+\rho^2)-2C\rho^2$ and $v_1=\rho(C-V)$,
-    \[
-      \sigma^2_\Delta=\tfrac12\Big\{v_0+\big(v_0^2-4v_1^2\big)^{1/2}\Big\},\qquad
-      \pi_\ell=(\rho-\zeta)\zeta^{\ell-1},\qquad
-      n_\Delta=\frac{\rho-\zeta}{1-\zeta},\qquad
-      \zeta=-\frac{v_1}{\sigma^2_\Delta}\in(-1,1).
-    \]
-    As $\Delta\to0$,
-    \[
-      \varpi_\Delta=1+n\beta\Delta+O(\Delta^2),\qquad
-      n_\Delta=n-\tfrac12n(1-n)\beta\Delta+O(\Delta^2).
-    \]
-\end{enumerate}
-\end{proposition}
-
-The proof is in \cref{app:est-proofs}. Three consequences follow.
-\begin{enumerate}[(i)]
-  \item \emph{The size of the attenuation.} The bias of autoregressive contagion estimates
-    is of order $\beta\Delta$, the bin width in units of the kernel time scale. It does not
-    vanish for a fixed bin width, however long the series. Offspring born in their
-    parent's bin are invisible to lagged regressors. Their effect shows up only as excess
-    innovation dispersion $\varpi_\Delta>1$, and \cref{prop:est-binning}(a) converts that
-    dispersion into attenuation. The leading relative bias is $-(1-n)\beta\Delta/2$, not
-    $-\beta\Delta/2$ as the Riemann-sum heuristic suggests. Lagged within-bin offspring
-    are counted in $X_{t-\ell}$ and carry their own excitation forward, which partly offsets
-    the loss. With daily bins and a kernel half-life of a day ($\beta\Delta=\log2$), the
-    exact formula should be used rather than the expansion.
-  \item \emph{Link to \cref{thm:spurious}.} Formula (a) reads
-    $n_\Delta=1-(\varpi_\Delta/F_\infty)^{1/2}$. This is the dispersion functional
-    $n_F=1-F_\infty^{-1/2}$ of \cref{thm:spurious}(c), with $\varpi_\Delta$ in place of
-    $1$. The proof of (a) uses only stationarity and conditional overdispersion, so the
-    identity also holds for a Cox process without contagion. There it gives
-    $n_\Delta=1-\{\varpi_\Delta/(1+\kappa)\}^{1/2}$. This is positive when the covariance
-    density of the Cox process is nonnegative, because then
-    $\sigma^2_\Delta\le\Var X_t\le(1+\kappa)\bar\Lambda\Delta$, with strict inequality
-    unless the counts are uncorrelated. Binned autoregressions are therefore exposed to
-    spurious contagion in the same way as continuous-time fits.
-  \item \emph{Multivariate streams.} Within-bin cross-excitation, for example same-day
-    online-to-offline spillover, never enters the lag coefficients. It appears as
-    contemporaneous correlation of the innovations, which has no direction. A lagged model
-    on daily counts can thus miss a same-day effect entirely. Three remedies are available.
-    \begin{itemize}
-      \item Use finer bins for the online stream.
-      \item Use a hybrid likelihood. Model the offline events as a point process whose
-        intensity includes lagged online counts as a piecewise-constant covariate. This
-        gives an exact partial likelihood for the online-to-offline direction.
-      \item Apply the continuous-time likelihood with within-bin randomisation of time
-        stamps (\cref{sec:plan-sens}).
-    \end{itemize}
-    Spectral estimation from binned counts handles aliasing correctly
-    \citep{cheysson2022}. It is a second-order method, however, and so it is subject to
-    \cref{thm:equiv}.
-\end{enumerate}
+Under the parameter mapping $\nu=\Delta\mu$, $\varphi_{kj,\ell}=\Delta\varphi_{kj}(\ell\Delta)$
+of \citet{kirchner2016,kirchner2017}, the INAR($\infty$) bin-count process converges to the
+Hawkes process as $\Delta\to0$, and conditional least squares (CLS) for the INAR($p$)
+representation gives $\hat\alpha_{kj}=\sum_{\ell\le p}\hat\varphi_{kj,\ell}$
+(\cref{app:est-inar}). The mapping is a first-order statement. What a fitted
+autoregression converges to at a fixed bin width is answered exactly by
+\cref{prop:est-binning} in \cref{app:est-inar}. For a stationary univariate Hawkes process
+with branching ratio $n$, the coefficients of the best linear predictor of a bin count
+from its past, which are the limit of CLS, sum to $n_\Delta=1-(1-n)\,\varpi_\Delta^{1/2}\le n$,
+where $\varpi_\Delta\ge1$ is the innovation dispersion; for an exponential kernel,
+$n_\Delta=n-\tfrac12n(1-n)\beta\Delta+O(\Delta^2)$. The bias of autoregressive contagion
+estimates is therefore of order $\beta\Delta$, and it does not vanish for a fixed bin width,
+however long the series: offspring born in their parent's bin are invisible to lagged
+regressors. The same identity holds for a Cox process without contagion, so binned
+autoregressions are exposed to spurious contagion in the same way as continuous-time fits,
+and within-bin cross-excitation, such as same-day online-to-offline spillover, never enters
+the lag coefficients (\cref{app:est-inar}).
 
 \paragraph{Nonparametric kernels and sparse excitation.} Histogram and spline kernels
 \citep{marsan2008,lewis2011} keep every M-step of \cref{alg:em} in closed form, and
@@ -523,77 +356,43 @@ The asymptotic $p$-value of an observed value $\mathrm{LR}_T=x>0$ is
 $\tfrac12\Pr(\chi^2_1\ge x)$, and it is $1$ if $x=0$. The $5\%$ critical value is $2.71$,
 not $3.84$. Moreover $\sqrt T\,\hat\alpha$ converges to the positive part of a centred
 normal variable, so Wald intervals for $\alpha_{kj}$ are invalid near the boundary.
+The conditions require the decay of $\varphi_{kj}$ to be identified under $H_0$: it must be
+fixed in advance, or shared with kernels whose branching ratios are positive under $H_0$,
+as with a common decay within a block (\cref{sec:plan-models}). \Cref{rem:est-lrt} in
+\cref{app:est-lrt} discusses this and the other conditions.
 
-\begin{remark}[When the conditions hold]\label{rem:est-lrt}
-\begin{enumerate}[(i)]
-  \item \emph{The decay must be identified under $H_0$.} The decay of $\varphi_{kj}$ must
-    be fixed in advance, or shared with kernels whose branching ratios are positive under
-    $H_0$, as with a common decay within a block (\cref{sec:plan-models}). Otherwise
-    $\partial\ell_T/\partial\beta_{kj}\equiv0$ at $\alpha_{kj}=0$, so $\bm I$ is singular
-    and (R2) fails. Fixing $\beta_{kj}$ at its unrestricted estimate does not remove the
-    problem, and the test is then liberal. The Davies problem below treats this case.
-  \item \emph{Other nuisance parameters must be interior.} If another branching ratio or a
-    loading is also zero, the tangent cone has more than one boundary face. The limit is
-    then a chi-bar-square mixture whose weights depend on $\bm I$ \citep{self1987}, and a
-    bootstrap from the null fit is simpler.
-  \item \emph{Primitive conditions.} For a stationary process with constant background,
-    (R1)--(R3) can be verified along the lines of \citet{ogata1978}. The ergodic theorem handles
-    $J_T$, and the martingale central limit theorem handles
-    $U_T=T^{-1/2}\sum_k\int\lambda_k^{-1}\nabla\lambda_k(\dN_k-\lambda_k\,\dd t)$. There,
-    interiority of $\vartheta_0$ only serves to locate the maximiser at a stationary point,
-    and Steps 1--3 replace that step. The intensity is affine in $\alpha_{kj}$, so the
-    one-sided derivatives at $0$ exist, and $\lambda_k\ge\mu_k>0$ keeps $\ell_T$ smooth on
-    $\Theta$. With a calendar and a spline background whose number $K_b$ of basis
-    functions is fixed, (R1)--(R3) are assumptions. Under the pre-registered fixed knot
-    spacing, $K_b$ grows with $T$, so $d$ is not fixed and (R1)--(R3) do not apply as
-    stated. The background is then a semiparametric nuisance, and the size of the test is
-    checked by parametric bootstrap from the null fit (\cref{sec:plan-validation}).
-  \item \emph{Only stream $k$ needs refitting.} If no parameter is shared across rows,
-    $\mathrm{LR}_T$ involves only $\ell_{T,k}$ (\cref{sec:est-mle}).
-\end{enumerate}
-\end{remark}
-
-\paragraph{Decays identified only under the alternative.} Suppose $\varphi_{kj}$ has its
-own decay rate, or a whole block of entries that share one decay is tested at once. The
-decay is then not identified under $H_0$, and the chi-bar-square reference is invalid. We
-use the sup-statistic over a grid $\beta_1<\dots<\beta_G$ of decays in a pre-registered
-interval $\mathcal B=[\beta_L,\beta_U]$,
+\paragraph{Decays identified only under the alternative.} If $\varphi_{kj}$ has its own
+decay rate, or a whole block of entries that share one decay is tested at once, the decay
+is not identified under $H_0$ and the chi-bar-square reference is invalid. We then use the
+sup-statistic over a grid $\beta_1<\dots<\beta_G$ in a pre-registered interval
+$\mathcal B=[\beta_L,\beta_U]$,
 \begin{equation}\label{eq:est-suplr}
   \mathrm{LR}_{\sup}=\max_{g\le G}\mathrm{LR}_T(\beta_g),
 \end{equation}
-where $\mathrm{LR}_T(\beta)$ is the statistic with the decay fixed at $\beta$. Its null
-limit, the supremum of the squared positive part of a Gaussian process
-\citep{davies1977,davies1987}, is stochastically larger than
-$\tfrac12\chi^2_0+\tfrac12\chi^2_1$, so referring $\mathrm{LR}_{\sup}$ to the chi-bar-square
-inflates the size. Our reference is the parametric bootstrap. Simulate the full model at the
-null fit $\tilde\vartheta$ (\cref{app:computation}), recompute the sup-statistic with
-refits, and report
+where $\mathrm{LR}_T(\beta)$ fixes the decay at $\beta$. Its null limit
+\citep{davies1977,davies1987} is stochastically larger than
+$\tfrac12\chi^2_0+\tfrac12\chi^2_1$, so our reference is the parametric bootstrap: simulate
+the full model at the null fit $\tilde\vartheta$ (\cref{app:computation}), recompute the
+sup-statistic with refits, and report
 \begin{equation}\label{eq:est-pboot}
-  p_{\mathrm B}=\frac{1+\#\{b\le B:\mathrm{LR}^{(b)}_{\sup}\ge\mathrm{LR}_{\sup}\}}{B+1}
+  p_{\mathrm B}=\frac{1+\#\{b\le B:\mathrm{LR}^{(b)}_{\sup}\ge\mathrm{LR}_{\sup}\}}{B+1}.
 \end{equation}
-for $B$ replicates. \Cref{app:est-davies} gives an upcrossing approximation in the spirit of
-Davies and a score-based bootstrap that needs one null fit per replicate. The
-pre-registered common decay within each block (\cref{sec:plan-models}) keeps tests of
-single entries within the scope of \eqref{eq:est-chibar}, provided another entry of the
-block is positive. A test that a whole block vanishes, such as all online-to-offline
-entries at once, leaves the block's decay unidentified and needs the sup-statistic. The
-analysis plan registers such tests for the steps of its model hierarchy
-(\cref{sec:plan-models}). None of these sup-tests is evaluated in the simulation study.
+\Cref{app:est-davies} gives an upcrossing approximation and a cheaper score-based
+bootstrap. A common decay within each block (\cref{sec:plan-models}) keeps tests of single
+entries within the scope of \eqref{eq:est-chibar} when another entry of the block is
+positive, but a test that a whole block vanishes needs the sup-statistic. The analysis plan
+registers such tests for its model hierarchy (\cref{sec:plan-models}); none is evaluated in
+the simulation study.
 
 \paragraph{Multiple testing.} A full screen of $\Amat$ involves up to $M^2$ tests.
-Statistics for different target streams are asymptotically independent, provided no
-parameter is shared across rows. Their scores are stochastic integrals against the
-martingales $N_k-\Lam_k$, which have no common jumps, so the predictable covariations
-vanish. Statistics for the same target are correlated. The decision rules of the
-pre-registered plan control the family-wise error rate with Holm's procedure
-\citep{holm1979}; see \cref{sec:plan-models}. For exploratory screens of large matrices we
-control the false discovery rate with the step-up procedure of \citet{benjamini1995} at
-level $q$. With $m$ tests and ordered $p$-values $p_{(1)}\le\dots\le p_{(m)}$, it rejects
-the $\hat r$ smallest, where $\hat r=\max\{r:p_{(r)}\le rq/m\}$. The procedure controls
-the false discovery rate under independence and under positive regression dependence
-\citep{benjamini2001}. Scores within a row can be negatively correlated. When rows are
-large, the variant of \citet{benjamini2001}, which replaces $q$ by $q/\sum_{i\le m}i^{-1}$,
-is therefore the safe default.
+Statistics for different target streams are asymptotically independent when no parameter
+is shared across rows, because their scores are stochastic integrals against martingales
+without common jumps; statistics for the same target are correlated. The pre-registered
+plan controls the family-wise error rate with Holm's procedure \citep{holm1979}
+(\cref{sec:plan-models}). For exploratory screens of large matrices we control the false
+discovery rate with the step-up procedure of \citet{benjamini1995}, in the variant of
+\citet{benjamini2001} that is valid under arbitrary dependence, because scores within a row
+can be negatively correlated.
 
 \subsection{Goodness of fit by time rescaling}\label{sec:est-gof}
 
@@ -606,18 +405,13 @@ $\lambda_k\ge\mu_k>0$. The points of different streams, rescaled by their own co
 are moreover independent \citep{meyer1971,brown1988}, so increments can be pooled across
 streams.
 
-\paragraph{Diagnostics.} For each stream we use:
-\begin{itemize}
-  \item a Kolmogorov--Smirnov test of the $u^k_i$ against the uniform law, displayed as a
-    uniform quantile plot with the asymptotic $95\%$ band $\pm1.36/\sqrt{n_k}$
-    \citep{brown2002};
-  \item a lag plot of $(u^k_i,u^k_{i+1})$ and the autocorrelations of the $u^k_i$, which
-    check independence;
-  \item the residual process $N_k(t)-\Lam_k(t)$ against $t$, the residual analysis of
-    \citet{ogata1988}, which shows \emph{where} in time a model fails. A misspecified
-    background shows up as long excursions. A misspecified shock response shows up as
-    excursions that start at the $\tau_e$.
-\end{itemize}
+\paragraph{Diagnostics.} For each stream we use a Kolmogorov--Smirnov test of the $u^k_i$
+against the uniform law, displayed as a uniform quantile plot with the asymptotic $95\%$
+band $\pm1.36/\sqrt{n_k}$ \citep{brown2002}; a lag plot and the autocorrelations of the
+$u^k_i$, which check independence; and the residual process $N_k(t)-\Lam_k(t)$ against
+$t$ \citep{ogata1988}, which shows \emph{where} in time a model fails. A misspecified
+background shows up as long excursions, a misspecified shock response as excursions that
+start at the $\tau_e$.
 
 \paragraph{Estimated parameters.} With $\hat\vartheta$ in place of $\vartheta_0$, the
 $u^k_i$ are no longer exactly i.i.d.\ uniform, and the plug-in Kolmogorov--Smirnov
@@ -630,81 +424,64 @@ statistic $\mathrm{KS}^{(b)}$, and report $(1+\#\{\mathrm{KS}^{(b)}\ge\mathrm{KS
 The time-rescaling check is not evaluated in the simulation study.
 
 \paragraph{What the check can and cannot show.} Time rescaling uses the full conditional
-intensity. In principle it therefore sees beyond second order. A Hawkes model fitted to a
-shot-noise Cox process misplaces where the intensity is high (\cref{rem:th-filter}), and
-the rescaled times register this. In moderate samples, however, its power against the
-second-order-equivalent Cox processes of \cref{thm:equiv} may be low. A passed check
-supports the fitted model as a description of the data. It does not establish
-contagion.
+intensity, so in principle it sees beyond second order: a Hawkes model fitted to a
+shot-noise Cox process misplaces where the intensity is high. In moderate samples,
+however, its power against the matched Cox processes of \cref{thm:equiv} may be low. A
+passed check supports the fitted model as a description of the data; it does not
+establish contagion.
 
 \subsection{Placebo calibration of shock effects}\label{sec:est-placebo}
 
-The loadings $\beta_k$ and the direct components $D_k$ of \cref{thm:attribution} are
+The loadings $\upsilon_k$ and the direct components $D_k$ of \cref{thm:attribution} are
 estimated in a model whose background and kernels are approximations. Suppose the
 background is too rigid around the dates of salient events, or that the calendar overlaps
 with other periods of elevated activity. Then an extra shock term would pick up a response
-at almost any date, and the asymptotic test of $\beta_k=0$, itself a boundary test, would
+at almost any date, and the asymptotic test of $\upsilon_k=0$, itself a boundary test, would
 be miscalibrated. Placebo calendars provide a reference distribution that does not rely on
 the model being correct. The calibration is done one class $c$ of real events at a time.
-\begin{enumerate}[(1)]
-  \item \emph{Base model.} Let $\mathcal M_{-c}$ be the selected model with class $c$
-    removed. The other classes, the background and the kernels stay in it.
-  \item \emph{Design.} Fix a design $\mathcal D_c$ for calendars with the same number of
-    events as class $c$. Dates are drawn uniformly from eligible days, and the sizes $S_e$
-    of class $c$ are randomly permuted over them. The eligible days and any spacing rule
-    may depend on the window, on the holiday calendar and on the calendars of the other
-    classes. They must not depend on the real dates of class $c$. The design should
-    reproduce rules that constrain the real calendar, such as the minimum spacing implied
-    by merging events less than 48 hours apart (\cref{sec:plan-events}). Draw $B$ placebo
-    calendars $C_1,\dots,C_B$ independently from $\mathcal D_c$, and let $C_0$ be the real
-    class-$c$ calendar.
-  \item \emph{Statistics.} For $b=0,\dots,B$, fit $\mathcal M_{-c}$ with $C_b$ added as a
-    shock class. Record the same statistic $\Gamma^{(b)}=\Gamma(C_b;\text{data})$ for every
-    $b$: the loading, its likelihood-ratio statistic, or the direct component $\hat D_k$.
-    The real statistic is thus computed exactly as the placebo ones are.
-  \item \emph{Report.} Give the rank $p$-value
-    $p=(1+\#\{b\ge1:\Gamma^{(b)}\ge\Gamma^{(0)}\})/(B+1)$, and the rejection frequency of the
-    asymptotic shock test across the placebo fits. The latter is the empirical
-    false-positive rate at the nominal level.
-\end{enumerate}
+The \emph{base model} $\mathcal M_{-c}$ is the selected model with class $c$ removed. A
+\emph{design} $\mathcal R_c$ draws calendars with the same number of events as class $c$:
+dates uniformly from eligible days, with the sizes $S_e$ of class $c$ randomly permuted over
+them. The eligible days and any spacing rule may depend on the window and on the calendars
+of the other classes, but not on the real dates of class $c$, and they must include every
+day on which a real event could fall; excluding holidays, for instance, rules out the
+randomisation hypothesis below whenever a real event falls on a holiday. The design should
+also reproduce rules that constrain the real calendar, such as merging events less than 48
+hours apart (\cref{sec:plan-events}). Let $C_0$ be the real class-$c$ calendar and
+$C_1,\dots,C_B$ independent draws from $\mathcal R_c$. For $b=0,\dots,B$, fit
+$\mathcal M_{-c}$ with $C_b$ added as a shock class and record the same \emph{statistic}
+$\Gamma^{(b)}=\Gamma(C_b;\text{data})$: the loading, its likelihood-ratio statistic, or the
+direct component $\hat D_k$. \emph{Report} the rank $p$-value
+$p=(1+\#\{b\ge1:\Gamma^{(b)}\ge\Gamma^{(0)}\})/(B+1)$, and the rejection frequency of the
+asymptotic shock test across the placebo fits, which is the empirical false-positive rate
+at the nominal level.
 
 \begin{lemma}[Validity of the placebo rank test]\label{lem:est-placebo}
-Let $\Gamma(\cdot\,;\text{data})$ be computed by the same procedure for every calendar, as
-in step (3). Suppose that, conditionally on the incident data and on the calendars of the
+Let $\Gamma(\cdot\,;\text{data})$ be computed by the same procedure for every calendar. Suppose that, conditionally on the incident data and on the calendars of the
 other classes, $C_0,C_1,\dots,C_B$ are exchangeable. This holds, for example, when
-$C_1,\dots,C_B$ are drawn independently from $\mathcal D_c$ as in step (2) and, under the
-randomisation hypothesis, $C_0$ is a further independent draw from $\mathcal D_c$ that is
-conditionally independent of the incidents. Then $\Pr(p\le a)\le a$ for every $a\in[0,1]$, whatever the misspecification of
-$\mathcal M_{-c}$.
+$C_1,\dots,C_B$ are drawn independently from $\mathcal R_c$ and, under the
+\emph{randomisation hypothesis}, $C_0$ is a further independent draw from $\mathcal R_c$
+that is conditionally independent of the incidents. Then $\Pr(p\le a)\le a$ for every
+$a\in[0,1]$, whatever the misspecification of $\mathcal M_{-c}$.
 \end{lemma}
 
 The proof is in \cref{app:est-proofs}.
 
-Two tempting shortcuts break exchangeability, and they make the rank test liberal.
-\begin{itemize}
-  \item \emph{Excluding dates near the real events.} If placebo dates must be at least $H$
-    days from the real class-$c$ dates, the design depends on $C_0$, which cannot then be
-    a draw from it. A design that keeps the calendars apart is admissible only if it is
-    jointly exchangeable in $(C_0,\dots,C_B)$.
-  \item \emph{Different base models.} If the placebo classes are fitted with the real
-    class still in the model while the real class is not, the statistics are different
-    functions of the data.
-\end{itemize}
-Under the alternative, placebo dates can fall inside real response windows. This reduces
-the power of the rank test and makes the false-positive estimate conservative, but it
-does not affect validity under the null.
+Two tempting shortcuts break exchangeability and make the rank test liberal: excluding
+placebo dates near the real class-$c$ dates, which makes the design depend on $C_0$; and
+fitting the placebo classes with the real class still in the model, which makes the
+statistics different functions of the data. Under the alternative, placebo dates can fall
+inside real response windows. This reduces power and makes the false-positive estimate
+conservative, but does not affect validity under the null.
 
 The randomisation hypothesis is strong. Salient events cluster in periods of tension, which
-may differ systematically from typical eligible days. The rank $p$-value is exact under
-that hypothesis. Otherwise it is best read as a calibration: does the base model's response
-at the real dates exceed what the same model attributes to comparable dates drawn without
-reference to them? This is the safeguard against over-reading surge attribution.
-\begin{itemize}
-  \item The placebo distribution of $\hat D_k$ estimates the false-attribution floor:
-    the number of incidents the model would credit to an arbitrary date.
-  \item A real-event direct component is interpreted only if it ranks high among its
-    placebo counterparts (\cref{sec:plan-decisions}).
-  \item If the empirical false-positive rate clearly exceeds the nominal level, the model
-    attributes responses where none exist. Inference on shocks then uses the placebo
-    distribution instead of the asymptotic reference (\cref{sec:plan-validation}).
-\end{itemize}
+may differ systematically from typical eligible days. Without it, the rank $p$-value is
+best read as a calibration, not a test: does the base model's response at the real dates
+exceed what the same model attributes to comparable dates drawn without reference to them?
+The placebo distribution of $\hat D_k$ then estimates the false-attribution floor, the
+number of incidents the model would credit to an arbitrary date. A real-event direct
+component is interpreted only if it ranks high among its placebo counterparts, and if the
+empirical false-positive rate clearly exceeds the nominal level, inference on shocks uses
+the placebo distribution instead of the asymptotic reference
+(\cref{sec:plan-validation,sec:plan-decisions}). Placebo calibration is not evaluated in
+the simulation study.

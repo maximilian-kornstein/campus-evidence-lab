@@ -149,3 +149,59 @@ def true_polychoric(bank: Bank, mu=(0, 0, 0), sigma2=(1, 1, 1), pairs=None):
     same = (bank.spec[j] == bank.spec[k]).astype(float)
     c = bank.aG[j] * bank.aG[k] * s2[0] + same * bank.aS[j] * bank.aS[k] * s2[bank.spec[j]]
     return tau, c / (sd[j] * sd[k])
+
+
+# ---------------------------------------------------------------------------
+# General loading patterns (cross-loadings, method factors): used by X6 and X9
+# ---------------------------------------------------------------------------
+def slopes_from_standardised(L):
+    """Slope matrix A (J, F) from standardised loadings L (J, F) of orthogonal unit-variance factors:
+    a_j = lam_j / sqrt(1 - h_j^2), h_j^2 = sum_f lam_jf^2."""
+    L = np.asarray(L, float)
+    h2 = np.sum(L ** 2, axis=1)
+    if np.any(h2 >= 1):
+        raise ValueError("communality must be < 1")
+    return L / np.sqrt(1 - h2)[:, None]
+
+
+def simulate_general(A, b, mu, Sigma, n, rng, link: str = "probit"):
+    """One group from the latent-response GRM with an arbitrary slope matrix A (J, F):
+    Y*_ij = a_j' theta_i + e_ij, theta_i ~ N(mu, Sigma) (F-dimensional), Y_ij = #{c : Y*_ij > b_jc}.
+
+    With F = 3 and A = bank.A() this draws exactly what `simulate` draws for one group from the
+    same generator (the same sequence of random numbers is consumed).  Returns Y (n, J) int8 and
+    theta (n, F)."""
+    rng = np.random.default_rng(rng)
+    A = np.asarray(A, float)
+    b = np.asarray(b, float)
+    F_ = A.shape[1]
+    L = np.linalg.cholesky(np.asarray(Sigma, float))
+    th = np.asarray(mu, float)[None, :] + rng.standard_normal((n, F_)) @ L.T
+    eta = th @ A.T
+    if link == "probit":
+        e = rng.standard_normal(eta.shape)
+    elif link == "logit":
+        u = rng.random(eta.shape)
+        e = np.log(u) - np.log1p(-u)
+    else:
+        raise ValueError(link)
+    ystar = eta + e
+    Y = (ystar[:, :, None] > b[None, :, :]).sum(axis=2).astype(np.int8)
+    return Y, th
+
+
+def true_polychoric_general(A, b, mu=None, Sigma=None, pairs=None):
+    """Population standardised thresholds and polychoric correlations for an arbitrary slope matrix
+    (probit link): tau_jc = (b_jc - a_j' mu) / s_j, rho_jk = a_j' Sigma a_k / (s_j s_k),
+    s_j = sqrt(1 + a_j' Sigma a_j)."""
+    from .polychoric import all_pairs
+    A = np.asarray(A, float)
+    F_ = A.shape[1]
+    mu = np.zeros(F_) if mu is None else np.asarray(mu, float)
+    Sigma = np.eye(F_) if Sigma is None else np.asarray(Sigma, float)
+    C = A @ Sigma @ A.T
+    s = np.sqrt(1 + np.diag(C))
+    tau = (np.asarray(b, float) - (A @ mu)[:, None]) / s[:, None]
+    pairs = all_pairs(A.shape[0]) if pairs is None else pairs
+    j, k = pairs[:, 0], pairs[:, 1]
+    return tau, C[j, k] / (s[j] * s[k])

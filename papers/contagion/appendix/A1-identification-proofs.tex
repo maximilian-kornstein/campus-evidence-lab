@@ -71,8 +71,9 @@ $|1-\hat\varphi(\omega)|^{-2}=(\beta^2+\omega^2)/(\beta^2(1-n)^2+\omega^2)$.
   $\hat{\bm c}_\xi(\omega)$ is Hermitian and positive semidefinite for every $\omega$.
   \item Let $\bm N$ be stationary with mean $\bar{\bm\Lambda}$ and covariance density
   $\bm c$. Record each point of stream $k$ independently with probability $p_k$, and
-  let $\bm P=\operatorname{diag}(p_k)$. The recorded process $\bm N^{\bm P}$ has mean
-  $\bm P\bar{\bm\Lambda}$ and covariance density $\bm P\bm c(u)\bm P$.
+  let $\bm p=(p_k)$. The recorded process $\bm N^{\bm p}$ has mean
+  $\operatorname{diag}(\bm p)\bar{\bm\Lambda}$ and covariance density
+  $\operatorname{diag}(\bm p)\,\bm c(u)\operatorname{diag}(\bm p)$.
 \end{enumerate}
 \end{lemma}
 
@@ -174,6 +175,25 @@ transfer to the Lebesgue--Poisson reference measure. The empty configuration is 
 of that measure, and the one-point configurations carry the measure $\dd s$.
 \end{proof}
 
+\begin{remark}[Why intensity jumps do not settle the question]\label{rem:th-filter}
+It is sometimes said that a Hawkes intensity jumps at events whereas a Cox intensity
+does not. This is true only of the Cox intensity \emph{given} the latent driver $\xi$,
+which is unobservable. With respect to the observed history, the Cox intensity is the
+filter $\lambda^N(t)=\E[\xi(t)\mid\Hist^N_{t-}]$. Wherever $\xi$ is continuous, Bayes'
+rule shows that $\lambda^N$ jumps at each event by
+$\Var(\xi(t)\mid\Hist^N_{t-})/\E(\xi(t)\mid\Hist^N_{t-})\ge0$ \citep[cf.][]{bremaud1981}.
+Learning about an unobserved shock looks like self-excitation.
+
+What does separate the models is the \emph{form} of the filter. For a Hawkes process
+the observable intensity is affine in the past. The next lemma shows that, among
+all stationary laws second-order equivalent to $H$, $\Pr_H$ is the only one whose
+observable intensity is affine in the past. Here ``affine'' means
+$\lambda(t)=c+\int_{(-\infty,t)}h(t-s)\,\dN(s)$ with $c>0$, $h\ge0$,
+$h\in L^1\cap L^2$ and $\int h<1$. By \cref{cor:equiv-id}(ii),
+the filter of every matched $C$ is therefore nonlinear. The information that separates
+contagion from shocks lies in this nonlinearity.
+\end{remark}
+
 \begin{lemma}[Affine observable intensity characterises the Hawkes law]\label{lem:th-affine}
 Let $H=H(\mu,\varphi)$ be a stationary Hawkes process with kernel
 $\varphi\in L^1\cap L^2$, $\int\varphi=n<1$. Let $N$ be a stationary point process,
@@ -253,33 +273,33 @@ degree $K$. These $K$ roots are then all the roots of $P_1$; they are real, nega
 Moreover $P_0-P_1$ has degree $K-1$, so
 \[
 \tilde R=\frac{\tilde\varphi}{1-\tilde\varphi}=\frac{P_0-P_1}{P_1}
-=\sum_{l=1}^K\frac{\upsilon_l}{z-z_l},\qquad
-\upsilon_l=\frac{1}{-\tilde\varphi'(z_l)}>0,
+=\sum_{l=1}^K\frac{\rho_l}{z-z_l},\qquad
+\rho_l=\frac{1}{-\tilde\varphi'(z_l)}>0,
 \]
 since $\tilde\varphi(z_l)=1$ and $\tilde\varphi'<0$. The function
-$\sum_l\upsilon_le^{z_lt}$ and the resolvent $R=\sum_j\varphi^{*j}\in L^1$ have the same
-Laplace transform on $z\ge0$. Hence $R(t)=\sum_l\upsilon_le^{z_lt}$, a positive combination of
+$\sum_l\rho_le^{z_lt}$ and the resolvent $R=\sum_j\varphi^{*j}\in L^1$ have the same
+Laplace transform on $z\ge0$. Hence $R(t)=\sum_l\rho_le^{z_lt}$, a positive combination of
 decaying exponentials, which is completely monotone. Also
 $R(0+)=\lim_{z\to\infty}z\tilde R(z)=\varphi(0+)$.
 
 \emph{Step 2: general completely monotone kernels.} By Bernstein's theorem,
 $\varphi(t)=n\int_{(0,\infty)}e^{-bt}\sigma(\dd b)$ with $\int\sigma(\dd b)/b=1$. Fix
-$\iota\ge1$ and partition $(2^{-\iota},2^\iota]$ into cells of width $2^{-\iota}$. Let
+$L\ge1$ and partition $(2^{-L},2^L]$ into cells of width $2^{-L}$. Let
 \[
-\varphi_\iota(t)=n\sum_I\sigma(I)e^{-b_I^+t},
+\varphi_L(t)=n\sum_I\sigma(I)e^{-b_I^+t},
 \]
-where $b_I^+$ is the right end of cell $I$. Each $\varphi_\iota$ is a finite exponential
-mixture. Refining a cell or extending the range can only increase $\varphi_\iota$, so
-$\varphi_\iota\le\varphi_{\iota+1}\le\varphi$, and $\varphi_\iota\uparrow\varphi$ pointwise by
-monotone convergence. Hence $\int\varphi_\iota\le n<1$ and, by Step 1, each
-$R_\iota=\sum_k\varphi_\iota^{*k}$ is completely monotone.
+where $b_I^+$ is the right end of cell $I$. Each $\varphi_L$ is a finite exponential
+mixture. Refining a cell or extending the range can only increase $\varphi_L$, so
+$\varphi_L\le\varphi_{L+1}\le\varphi$, and $\varphi_L\uparrow\varphi$ pointwise by
+monotone convergence. Hence $\int\varphi_L\le n<1$ and, by Step 1, each
+$R_L=\sum_k\varphi_L^{*k}$ is completely monotone.
 
-Convolution powers are monotone in the kernel, so $R_\iota\uparrow R$ pointwise by monotone
+Convolution powers are monotone in the kernel, so $R_L\uparrow R$ pointwise by monotone
 convergence. The limit $R$ is nonincreasing and integrable, with $\int R=n/(1-n)$, so it
 is finite on $(0,\infty)$. A pointwise limit of completely monotone functions is
 completely monotone \citep[Cor.~1.6]{schilling2012}. Moreover
 \[
-R(0+)=\sup_{\iota}R_\iota(0+)=\sup_{\iota}\varphi_\iota(0+)\le\varphi(0+)<\infty .
+R(0+)=\sup_{L}R_L(0+)=\sup_{L}\varphi_L(0+)\le\varphi(0+)<\infty .
 \]
 
 \emph{Step 3: covariance.} By \cref{prop:th-spectrum},
@@ -407,12 +427,12 @@ on $(0,T)$.
 
 For the sufficient condition, $m_k=\mu_k$ on $(0,\tau_1)$. This determines $\mu_k$ when
 $\mu_k$ is constant, and on all of $[0,T]$ by analytic continuation when it is analytic.
-Then $\sum_eS_e\beta_k\psi_k(t-\tau_e)=m_k(t)-\mu_k(t)$ is known. On
+Then $\sum_eS_e\upsilon_k\psi_k(t-\tau_e)=m_k(t)-\mu_k(t)$ is known. On
 $[\tau_1,\tau_2)$ only the first shock is active, so this determines the product
-$\beta_kS_1\psi_k$ there. Since $S_1>0$ is observed, it determines $\beta_k\psi_k$ on
-$[0,\tau_2-\tau_1)$. By the condition on the scaled family, $\beta_k\psi_k$ is then
+$\upsilon_kS_1\psi_k$ there. Since $S_1>0$ is observed, it determines $\upsilon_k\psi_k$ on
+$[0,\tau_2-\tau_1)$. By the condition on the scaled family, $\upsilon_k\psi_k$ is then
 determined on $(0,\infty)$. Then $\int\psi_k=1$ gives
-$\beta_k=\int\beta_k\psi_k$, and hence $\psi_k$. Finally, if $\alpha_{kj}>0$ and $g_{kj}$ does not
+$\upsilon_k=\int\upsilon_k\psi_k$, and hence $\psi_k$. Finally, if $\alpha_{kj}>0$ and $g_{kj}$ does not
 vanish on $(0,T)$, then $\varphi_{kj}\ne0$ on a set of positive measure, so the law
 differs from that with $\alpha_{kj}=0$.
 
@@ -441,15 +461,15 @@ $7m^2+6m^3+m^4=m^2\{(m+3)^2-2\}$,
 \[
 \chi_4^C=\chi_1+\frac{(\chi_3-\chi_1)^2}{\chi_2-\chi_1}-2(\chi_2-\chi_1),
 \qquad
-\chi_4^H-\chi_4^C=\frac{\mathcal D}{\chi_2-\chi_1},
+\chi_4^H-\chi_4^C=\frac{\mathcal Y}{\chi_2-\chi_1},
 \]
 where
 \[
-\mathcal D=(\chi_4-\chi_1)(\chi_2-\chi_1)+2(\chi_2-\chi_1)^2-(\chi_3-\chi_1)^2 .
+\mathcal Y=(\chi_4-\chi_1)(\chi_2-\chi_1)+2(\chi_2-\chi_1)^2-(\chi_3-\chi_1)^2 .
 \]
 Direct expansion gives
 \[
-u^{10}\mathcal D=6-8u-13u^2+20u^3+2u^4-4u^5-5u^6+2u^8=(1-u)^4\,Q(u).
+u^{10}\mathcal Y=6-8u-13u^2+20u^3+2u^4-4u^5-5u^6+2u^8=(1-u)^4\,Q(u).
 \]
 Using $\chi_2-\chi_1=n(2-n)(1-n)^{-3}$ yields the stated difference, which is
 positive for $n\in(0,1)$ since $Q>0$ on $(0,1)$. If $\Pr_H=\Pr_C$, all cumulant rates
@@ -543,7 +563,37 @@ using $(1-n')^{-2}-1=p\{(1-n)^{-2}-1\}$. The map $h^{-1}$ is $C^1$ on
 $(0,1)\times(0,1]$. Consistency follows from the continuous mapping theorem, and
 \eqref{eq:th-delta} from the delta method and independence. \qed
 
-\subsection{Proof of \texorpdfstring{\cref{prop:th-hetthin}}{Proposition (heterogeneous recording)}}
+\subsection{Heterogeneous recording}\label{app:th-hetthin}
+
+Severe incidents may be both more likely to be
+recorded and more likely to trigger further incidents. Suppose each incident carries an
+\emph{unpredictable} mark $X\in\{1,\dots,K\}$, such as a severity class. Marks are
+i.i.d.\ with law $\pi$, independent of the past. An incident with mark $x$ has expected
+direct offspring $n_x$ and is recorded independently with probability $p_x$, and the
+kernel is $\beta e^{-\beta t}$. Write $\E$, $\Var$ and $\Cov$ for moments under $\pi$,
+and set $\bar n=\E n_X<1$ and $\bar p=\E p_X$.
+
+\begin{proposition}[Heterogeneous recording]\label{prop:th-hetthin}
+The recorded process is stationary with mean $\bar p\bar\Lambda$, where
+$\bar\Lambda=\mu/(1-\bar n)$, and it is second-order equivalent to an exponential Hawkes
+process with branching ratio
+\[
+n''=1-\frac{1-\bar n}{\sqrt{(1-\bar n)^2+2(1-\bar n)\E[p_Xn_X]+\bar p\,\E[n_X^2]}} .
+\]
+The homogeneous correction of \cref{cor:th-darkfig} with $p=\bar p$ returns
+$n_{\mathrm{naive}}=h_{\bar p}^{-1}(n'')$, where
+\[
+(1-n_{\mathrm{naive}})^{-2}=(1-\bar n)^{-2}\Big[1+\frac{2(1-\bar n)\Cov(p_X,n_X)}{\bar p}+\Var(n_X)\Big].
+\]
+It overstates $\bar n$ whenever $2(1-\bar n)\Cov(p_X,n_X)/\bar p+\Var(n_X)>0$, in
+particular when more productive incidents are recorded more often.
+\end{proposition}
+
+With $p_x\equiv p$ and $n_x\equiv n$, \cref{prop:th-hetthin} reduces to \cref{thm:thinning}.
+Heterogeneous productivity alone ($p\equiv1$) inflates the apparent branching ratio of
+unmarked data to $1-(1-\bar n)/\sqrt{1+\Var(n_X)}$.
+
+\begin{proof}[Proof of \cref{prop:th-hetthin}]
 
 Marks are unpredictable with law $\pi$, so incidents with mark $x$ have intensity
 $\pi_x\{\mu+\sum_in_{X_i}g(t-t_i)\}$. The marked process is therefore a $K$-variate
@@ -556,9 +606,9 @@ $\hat\Phik=\hat g\,\bm\pi\bm n^{\top}$,
 \[
 \bm G=\Imat+\mathsf H\bm\pi\bm n^{\top},\qquad \mathsf H=\hat g/(1-\bar n\hat g).
 \]
-The recorded process is $\mathbf 1^{\top}\bm N^{\bm P}$ with $\bm P=\operatorname{diag}(p_x)$.
+The recorded process is $\mathbf 1^{\top}\bm N^{\bm p}$ with $\bm p=(p_x)$.
 By \cref{lem:th-cox2}(b) and \cref{prop:th-spectrum}, with
-$\bm\Delta=\bar\Lambda\operatorname{diag}(\bm\pi)$ and $\bm p=(p_x)$,
+$\bm\Delta=\bar\Lambda\operatorname{diag}(\bm\pi)$,
 \[
 2\pi f_{\mathrm{rec}}=\bm p^{\top}\bar{\bm\Lambda}+\bm p^{\top}(\bm G\bm\Delta\bm G^*-\bm\Delta)\bm p .
 \]
@@ -571,14 +621,19 @@ $\bm n^{\top}\bm\Delta\bm n=\bar\Lambda\E[n_X^2]$,
 \]
 For $g(t)=\beta e^{-\beta t}$, $\mathsf H=\beta/(b+i\omega)$ with $b=\beta(1-\bar n)$, so
 $2\operatorname{Re}\mathsf H=2\beta b/(b^2+\omega^2)$ and
-$|\mathsf H|^2=\beta^2/(b^2+\omega^2)$. This gives the stated spectrum. Matching with
+$|\mathsf H|^2=\beta^2/(b^2+\omega^2)$. This gives the Bartlett spectrum
+\[
+f_{\mathrm{rec}}(\omega)=\frac{\bar p\bar\Lambda}{2\pi}\Big[1+\frac{\beta^2\{2(1-\bar n)\E[p_Xn_X]+\bar p\,\E[n_X^2]\}}{\beta^2(1-\bar n)^2+\omega^2}\Big].
+\]
+Matching with
 an exponential Hawkes spectrum, as in \cref{thm:thinning}(b), gives $b''=b$ and
 \[
 (1-n'')^{-2}=1+\frac{2(1-\bar n)\E[p_Xn_X]+\bar p\,\E[n_X^2]}{(1-\bar n)^2}.
 \]
 Finally, $(1-n_{\mathrm{naive}})^{-2}=1+\{(1-n'')^{-2}-1\}/\bar p$. Substituting
 $\E[p_Xn_X]=\bar p\bar n+\Cov(p_X,n_X)$, $\E[n_X^2]=\bar n^2+\Var(n_X)$ and
-$1-(1-\bar n)^2=2\bar n(1-\bar n)+\bar n^2$ gives the stated expression. \qed
+$1-(1-\bar n)^2=2\bar n(1-\bar n)+\bar n^2$ gives the stated expression.
+\end{proof}
 
 \subsection{Proof of \texorpdfstring{\cref{prop:granger}}{Proposition (Granger)}}
 
@@ -593,12 +648,12 @@ $\Hist^{V\setminus\{j\}}$-predictable.
 Conversely, suppose $\lambda_k$ has a $\Hist^{V\setminus\{j\}}$-predictable version.
 Predictable processes of a point-process history are measurable functionals of the
 history strictly before $t$ \citep[Ch.~14]{daley2008}. So
-$h_k(t;x)=\Psi(t,x_{-j})$ for $\Pr\otimes\dd t$-almost every $(t,x)$, and, because the
+$h_k(t;x)=\tilde h_k(t,x_{-j})$ for $\Pr\otimes\dd t$-almost every $(t,x)$, and, because the
 Janossy densities are positive, for almost every $(t,x)$ with respect to Lebesgue
 measure times the Lebesgue--Poisson measure. The configurations $x=\emptyset$ and
 $x=\{(s,j)\}$ have the same $x_{-j}=\emptyset$. Hence
 \[
-m_k(t)=\Psi(t,\emptyset)=m_k(t)+\varphi_{kj}(t-s)\qquad\text{for almost every }0<s<t<T,
+m_k(t)=\tilde h_k(t,\emptyset)=m_k(t)+\varphi_{kj}(t-s)\qquad\text{for almost every }0<s<t<T,
 \]
 that is, $\varphi_{kj}=0$ almost everywhere on $(0,T)$. For exponential kernels,
 $g_{kj}>0$ everywhere, so this is equivalent to $\alpha_{kj}=0$. \qed

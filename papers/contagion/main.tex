@@ -50,36 +50,30 @@ estimates how many incidents go unrecorded; this paper uses its output.}
   sharp corners,left=12pt,right=12pt,top=9pt,bottom=9pt,
   borderline west={2pt}{0pt}{LabNavy},before skip=4pt,after skip=12pt]
 \begin{abstract}
-Surges in antisemitic incidents often follow salient external events.
-Communities and security planners need to know how much of a surge is a
-direct reaction to the event, how much is incidents triggering further
-incidents, and whether online hostility spills over into offline incidents.
-This is a methods paper. It models incident streams across regions, offence
-types and online and offline channels as a multivariate Hawkes process with
-exogenous shocks, and makes three traps precise. The autocorrelation of
-counts cannot distinguish contagion from clustered shocks that go
-unrecorded. A rigid background produces spurious contagion, with an explicit
-pseudo-true branching ratio. Under-reporting attenuates apparent contagion
-through a closed-form map that the companion paper's dark-figure estimates
-can invert. Identification is restored by a pre-specified calendar of
-events, by higher-order information or by provenance links. We decompose
-the expected surge after an event into background, direct and contagion
-components, isolate the online-to-offline channel, and derive a
-Bayes-optimal alert rule whose state is corrected for reporting delays.
-Estimation uses EM over the latent branching structure, Bayesian shrinkage,
-boundary-corrected likelihood-ratio tests and time-rescaling diagnostics. A
-simulation study on synthetic data with known ground truth evaluates these
-tools. EM recovers the branching matrix and the surge decomposition with
-close to nominal interval coverage. In data without any contagion, a
-constant background yields apparent branching ratios of up to 0.63, and
-maximum likelihood does not reproduce the second-order prediction exactly; a
-flexible background removes the artefact of slow rate changes but not that
-of fast unrecorded shocks, which only known event times remove. The
-dark-figure correction restores the coverage that naive estimates lose,
-except when excitation is weak and recording poor. Forecasts are calibrated only in windows without new external events, which
-no model of the past can anticipate. A pre-registered plan with an ethics
-protocol specifies the real-data analysis. We report no empirical estimates
-from real data.
+After salient external events, how much of a surge in antisemitic incidents
+is direct reaction, how much is contagion, and does online hostility spill
+offline? We model incident streams as a multivariate Hawkes process with
+exogenous shocks. Within a stream, the autocorrelation of counts cannot
+separate contagion from unrecorded shocks, although dominant
+cross-excitation is identifiable at second order; a rigid background
+manufactures contagion; and under-reporting attenuates it through an
+invertible map. We decompose post-event surges into background, direct and
+contagion parts. The alert rule is Bayes-optimal given the model's state,
+not with a plug-in state under reporting delays. Synthetic-data simulations
+evaluate EM, attribution, the boundary test, the thinning correction and a
+plug-in alert; Bayesian shrinkage, time-rescaling diagnostics, an
+imputation-based alert, sup-tests and nonparametric kernels were not
+evaluated. Without contagion, a constant background yields branching ratios
+of up to 0.63; for rare large shocks maximum likelihood settles 0.06--0.07
+below the second-order value even with $T=10{,}000$. Known event times
+largely removed the artefact where tested; a single spline background did
+not. The dark-figure correction restores coverage unless excitation is weak
+and recording poor, and a 30--50\% error in the recording probability sets a floor under its precision that more data
+cannot lower. Forecasts that ignore future external events under-forecast;
+forecasts that integrate over the event process are calibrated when windows
+are pooled. No forecaster can time new events, which limits recall rather
+than pooled calibration. We pre-register a real-data analysis and report no
+empirical estimates.
 \end{abstract}
 \keywords{Hawkes processes; self-exciting point processes; contagion;
 identification; under-reporting; surge attribution; early warning; hate
@@ -105,6 +99,23 @@ crime; antisemitism.}
 \IfFileExists{sections/09-analysis-plan.tex}{\input{sections/09-analysis-plan}}{}
 \IfFileExists{sections/10-ethics.tex}{\input{sections/10-ethics}}{}
 \IfFileExists{sections/11-discussion.tex}{\input{sections/11-discussion}}{}
+
+% ======================= declarations =======================
+\section*{Declarations}
+\paragraph{Funding} None.
+\paragraph{Competing interests} None declared.
+\paragraph{AI assistance} This paper was drafted with substantial assistance
+from AI language models (Anthropic's Claude), directed and reviewed by the
+Kornstein Lab; all derivations were checked numerically and by independent
+automated review, and all simulation numbers are produced by the released
+code.
+\paragraph{Code and data availability} The code for the simulation study (the
+\texttt{hawkes} Python package, the experiment driver
+\texttt{run\_experiments.py} with its deterministic seeds, and the script that
+produces every figure and table of \cref{sec:simulation}) is in the paper's
+repository, together with the simulation output (\cref{app:sim-repro}). All
+data in this paper are synthetic and are regenerated by that code. No real
+incident data were used.
 
 \bibliographystyle{plainnat}
 \bibliography{refs,bib/sources,bib/theory,bib/attribution,bib/estimation,bib/lead}

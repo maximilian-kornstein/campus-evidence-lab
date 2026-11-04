@@ -4,8 +4,8 @@
 %  exponential-kernel Hawkes process with an exponential shock response,
 %  evaluated in TikZ for illustrative parameters:
 %    mu = 1, n = 0.6, kernel rate beta = 0.5 (so Lambda-bar = mu/(1-n) = 2.5),
-%    beta_k S_e = 10 expected direct incidents, response rate gamma = 0.8.
-%  direct     d(t) = beta_k S_e gamma exp(-gamma t)            = 8 exp(-0.8 t)
+%    upsilon_k S_e = 10 expected direct incidents, response rate gamma = 0.8.
+%  direct     d(t) = upsilon_k S_e gamma exp(-gamma t)            = 8 exp(-0.8 t)
 %  contagion  c(t) = (R * d)(t), R(t) = n beta exp(-beta(1-n)t)
 %                  = 4 [exp(-0.2 t) - exp(-0.8 t)]
 %  Window H = 14 (the plan's primary horizon): B = 35.0, D = 10.0, C = 13.8
@@ -72,7 +72,7 @@
     {contagion $C_k$\\[-1pt]\textcolor{LabGrey}{their offspring, all generations}};
   \draw[LabNavyMid,line width=0.4pt] (cl.west) -- (6.0,3.5);
   \fill[white] (6.0,3.5) circle (1pt);
-  \node[lab,text=LabGrey,anchor=west,align=left,font=\scriptsize\itshape] at (19.3,3.8)
+  \node[lab,text=LabGrey,anchor=west,align=left,font=\scriptsize\itshape] at (19.3,4.3)
     {the cascade decays at rate $\beta(1-n)$,\\[-1pt]more slowly than\\[-1pt]the direct response};
 
   % ---------------- integrated decomposition over the window ----------------
@@ -109,7 +109,7 @@ $\beta(1-n)$ (\cref{prop:irf}), so a surge can outlast its trigger and be
 mistaken for a shift in the background. In a univariate model the contagion
 share $C_k/(D_k+C_k)$ rises with $H$ towards the branching ratio $n$.
 Curves are exact expected intensities for illustrative parameters: $\mu=1$,
-$n=0.6$, kernel rate $\beta=0.5$ per day, $\beta_kS_e=10$ expected direct
+$n=0.6$, kernel rate $\beta=0.5$ per day, $\upsilon_kS_e=10$ expected direct
 incidents, $\psi_k(t)=\eta e^{-\eta t}$ with $\eta=0.8$ per day, and the
 plan's primary horizon $H=14$ days (\cref{sec:plan-estimands}).}
 \label{fig:attribution}

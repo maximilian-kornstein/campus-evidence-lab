@@ -1,6 +1,6 @@
 \section{Introduction}\label{sec:intro}
 
-Whether, and when, hostility expressed toward Israel reflects hostility
+Whether, and when, negative attitudes toward Israel reflect hostility
 toward Jews is among the most consequential and contested questions in
 public life today. The answer shapes campus policy, law and community
 safety. In 2017 the European Parliament called on the Member States and the
@@ -17,14 +17,13 @@ agencies from diminishing or infringing any right protected by federal law
 or the First Amendment, and its statement of policy refers to harassment in
 schools and on university and college campuses \citep{eo13899}; a 2025 order
 reaffirmed it \citep{eo14188}. Several of the IHRA examples concern Israel
-\citep{ihra2016}. Scholars who regard the IHRA text as unclear in key
-respects have proposed the Jerusalem Declaration on Antisemitism as an
-alternative or corrective \citep{jda2021}, and the Nexus Document offers a
-third formulation \citep{nexus2021}. The three texts draw the line around
+\citep{ihra2016}. Two later texts, the Jerusalem Declaration on
+Antisemitism \citep{jda2021} and the Nexus Document \citep{nexus2021},
+offer other formulations. The three texts draw the line around
 Israel-related speech in different places (\cref{sec:bg-definitions}). The
 same line runs through incident statistics. The incident lists studied in
 the first paper of this series differ most in how they treat Israel- or
-Zionism-related expression \citep{kornsteinlab2026darkfigure}, so counts of
+Zionism-related expression \citep{kornsteinlab2026p1darkfigure}, so counts of
 incidents, and the security planning that rests on them, inherit a choice of
 definition.
 
@@ -36,14 +35,16 @@ claims alongside the normative ones. Take a particular statement about
 Israel. One claim is that endorsing it typically expresses the same hostility
 toward Jews that drives endorsement of classic antisemitic stereotypes. The
 competing claim is that, in the population at large, endorsing it mainly
-expresses a distinct political attitude toward a state and its policies.
-Each is a claim about how attitudes are structured in a population,
-statement by statement. Either can be right for some statements and wrong
-for others. And each implies restrictions on a measurement model, so
-measurement can test it. This paper builds the tools for that test. It does
-not choose between the definitions, and it is designed so that its results
-would be equally usable, and equally open to checking, by people on every
-side of the debate.
+expresses a distinct attitude toward a state and its policies. Each is a
+claim about how attitudes are structured in a population, statement by
+statement, and either can be right for some statements and wrong for others.
+Measurement can test the structural part of each claim: whether responses to
+the statement share their variance with responses to the stereotypes or are
+distinct from them. What a distinct attitude is, political disagreement or a
+different form of hostility, is interpretation, not estimate. This paper
+builds the tools for that test. It does not choose between the definitions,
+and it is designed so that its results would be equally usable, and equally
+open to checking, by people on every side of the debate.
 
 \IfFileExists{figures/fig-bifactor.tex}{\input{figures/fig-bifactor}}{}%
 \paragraph{A latent-variable map}
@@ -56,166 +57,146 @@ other, and $I$, which the Israel-related items share only with each other.
 For each Israel-related item, the share of its common variance that is due to
 $G$, an item-level explained common variance $\mathrm{ECV}_j$, places the
 item on a map. Near $0$, the item's common variance is what it shares with
-the other Israel-related items alone; near $1$, it is what it shares with the
-classic stereotypes. The \emph{boundary set} $\mathcal{B}_\tau$ collects the items
-whose share reaches a threshold $\tau$ fixed before any data are seen, and
-sampling uncertainty sorts each item into \emph{in}, \emph{out} or
-\emph{undetermined} (\cref{fig:boundary}). The map is drawn item by item,
-and the same rule applies to every item. Earlier studies suggest that the
-relation between the two domains is not uniform. \Citet{beattie2017}
-reports that some criticisms of the Israeli government are more reliable
-indicators of antisemitic sentiment than others, and \citet{staetsky2017}
-that more intense anti-Israel attitudes are more likely to be accompanied by
-antisemitic ones. A correlated-factors
-model, with no general factor, supplies a second, coarser estimand: the
-latent correlation $\rho_{SI}$ between the stereotype and the
-Israel-attitude factors. On its own, that correlation cannot tell a common
-latent cause from distinct but correlated attitudes: every correlated-factors
-model is also a bifactor model in which the Israel-related items' share of
-general-factor variance can be anywhere between $\rho_{SI}^2$ and one
-(\cref{prop:model-sl}).
-The general factor has no meaning of its own. It is defined by the items
-that load on it, which is why the item bank and its balance across the
-disputed categories are fixed in advance (\cref{sec:design-items}).
+the other Israel-related items alone; near $1$, it is what it shares, through
+$G$, with the classic stereotypes. The \emph{boundary set} $\mathcal{B}_\tau$
+collects the items whose share reaches a threshold $\tau$ fixed before any
+data are seen, and sampling uncertainty sorts each item into \emph{in},
+\emph{out} or \emph{undetermined} (\cref{fig:boundary}). The map is drawn
+item by item, and the same rule applies to every item. Earlier studies
+suggest that the relation between the two domains is not uniform.
+\Citet{beattie2017} reports that some criticisms of the Israeli government
+are more reliable indicators of antisemitic sentiment than others, and
+\citet{staetsky2017} that the two sets of attitudes occur both separately and
+together, with more intense anti-Israel attitudes more likely to be
+accompanied by antisemitic ones. A correlated-factors model, with no general
+factor, supplies a second, coarser estimand: the latent correlation
+$\rho_{SI}$ between the stereotype and the Israel-attitude factors. On its
+own, that correlation cannot tell a common latent cause from distinct but
+correlated attitudes: every correlated-factors model is also a bifactor model
+in which the Israel-related items' share of general-factor variance can be
+anywhere between $\rho_{SI}^2$ and one (\cref{prop:model-sl}). The general
+factor has no meaning of its own. It is defined by the items that load on it,
+which is why the item bank and its balance across the disputed categories are
+fixed in advance (\cref{sec:design-items}).
 
 \IfFileExists{figures/fig-boundary.tex}{\input{figures/fig-boundary}}{}%
-\paragraph{Four obstacles}
-Fitting such a model is easy; reading it correctly is not. We formalise four
-obstacles.
-\begin{enumerate}[(i),leftmargin=2.2em]
-  \item \emph{Identification.} A bifactor model can be fitted to data that do
-  not identify it. The decomposition is identified by heterogeneity, not by
-  correlation: if, within each domain, all items but at most one have the
-  same general-factor share, a whole curve of parameter values fits the
-  data equally well and
-  $\mathrm{ECV}_j$ is not determined, and with only two Israel-related items
-  it is only bounded (\cref{thm:ident}).
-  \item \emph{Invariance.} Respondents who differ in ideology, age or country
-  may read an Israel-related statement differently, so that the item
-  functions differently across groups. Ignoring such differential item
-  functioning (DIF) biases group comparisons of latent means and of the
-  boundary estimands. To first order the bias is an information-weighted
-  projection of the DIF onto the loadings, and uniform DIF proportional to
-  the general loadings is indistinguishable from a true difference in the
-  general factor (\cref{thm:dif-bias}). Invariant anchor items restore the
-  comparison, but DIF in the anchors themselves shifts every comparison
-  they carry, undetectably when there are only three of them
-  (\cref{prop:anchor}).
-  \item \emph{Social desirability.} Direct questions on these topics may be
-  answered strategically, and not necessarily in the same direction in every
-  group. List experiments protect individual answers, at a variance cost
-  that we quantify (\cref{prop:list-var}). When strategic answering acts as a
-  uniform shift of an item's thresholds, it biases prevalences but not the
-  boundary estimands (\cref{prop:list-irt}); latent-mean comparisons are
-  affected only if the shift differs between groups, in which case it is a
-  form of DIF.
-  \item \emph{Aggregation.} Policy questions are often local, while samples
-  are national. Small-area estimates must be built from a model, and scoring
-  respondents first and averaging the scores afterwards shrinks every
-  difference between areas (\cref{prop:eap}). Indices that report the share
-  of respondents agreeing with at least $h$ of $M$ stereotype statements
-  rank groups correctly under invariance and stochastic dominance, but not
-  in general (\cref{prop:index}).
-\end{enumerate}
-
 \paragraph{What this paper does, and does not, do}
 This is a methods paper. We set out the measurement model and its boundary
 estimands, prove when they are identified and what goes wrong when the
 model's assumptions fail, develop the corrections for social desirability and
-the small-area estimators, evaluate all of them in a simulation study on
-synthetic survey data with known ground truth, and pre-register a survey
-design and analysis plan. We report \emph{no} empirical estimates. We have
-fielded no survey and fitted no model to real data, and nothing here should
-be read as a finding that any attitude toward Israel is, or is not,
-antisemitic, or about the attitudes of any group. Survey results published by
-others are quoted only as their authors report them. Notation is collected in
+the small-area estimators, evaluate them in a simulation study on synthetic
+survey data with known ground truth, and pre-register a survey design and
+analysis plan. We report \emph{no} empirical estimates. We have fielded no
+survey and fitted no model to real data, and nothing here should be read as a
+finding that any attitude toward Israel is, or is not, antisemitic, or about
+the attitudes of any group. Survey results published by others are quoted
+only as their authors report them. Notation is collected in
 \cref{tab:notation}.
 
 \IfFileExists{tables/tab-notation.tex}{\input{tables/tab-notation}}{}%
 \paragraph{Contributions}
-Our contributions bring established psychometric and survey methods to a
-contested question and adapt them to it. Classical results are attributed
-where they are used. Most of the formal results specialise known theory to
-the two-domain bifactor design and to the boundary estimands, and we claim
-novelty for none of them beyond that specialisation and the explicit forms
-given.
+Fitting such a model is easy; reading it correctly is not. Four obstacles
+stand in the way, identification, invariance, social desirability and
+aggregation, and contributions \ref{contrib:ident}--\ref{contrib:mrp} take
+them in turn. Throughout we bring established psychometric and survey methods
+to a contested question and adapt them to it. Classical results are
+attributed where they are used. Most of the formal results specialise known
+theory to the two-domain bifactor design and to the boundary estimands, and
+we claim novelty for none of them beyond that specialisation and the explicit
+forms given.
 \begin{enumerate}[label=\textbf{C\arabic*},ref=C\arabic*,leftmargin=2.4em,itemsep=3pt]
   \item\label{contrib:model} \textbf{Measurement model and boundary
   estimands.} A multidimensional graded response model
-  \citep{samejima1969} with a bifactor structure
+  \citep{samejima1969,birnbaum1968,lord1980} with a bifactor structure
   \citep{gibbons1992,reise2012}: a general factor and specific factors for
   classic stereotypes and for Israel-related attitudes (\cref{sec:model}).
   Within it we define three boundary estimands (\cref{def:boundary}): the
-  item-level explained common variance $\mathrm{ECV}_j$ of each
-  Israel-related item, overall and by group; the latent correlation
-  $\rho_{SI}$ between the stereotype and Israel-attitude factors in a
-  correlated-factors model; and the boundary set $\mathcal{B}_\tau$ for a
-  pre-registered threshold $\tau$, reported with a three-way classification
-  that shows indeterminacy instead of hiding it. We state what the estimands
-  would and would not mean (\cref{sec:model-meaning}), and show that the
-  correlated-factors model identifies $\rho_{SI}$ but only bounds the
-  item-level shares (\cref{prop:model-sl}; \citealp{schmid1957}).
-  \item\label{contrib:ident} \textbf{Identification and invariance.} With at
-  least three items carrying specific variance in each domain and a general
-  loading in each, the item parameters and every $\mathrm{ECV}_j$ are
-  identified when, in at least one domain, the items differ in their
-  general-factor shares in a tetrad sense; when this fails in both domains,
-  an explicit curve of observationally equivalent solutions moves the
-  boundary ECVs, and with two Israel-related items their identified sets are
-  given in closed form (\cref{thm:ident}; \cref{rem:id-literature} relates
-  it to the classical and bifactor literature). An explicit first-order formula for the
-  bias in group comparisons of latent means and of the group-specific
-  $\mathrm{ECV}^{(g)}_j$ when DIF is ignored, which shows how DIF can
-  manufacture or mask a difference in the general factor and how
-  non-uniform DIF in some items moves the reported shares of all items
-  (\cref{thm:dif-bias}). Identification of group comparisons with anchor
-  items under partial invariance \citep{byrne1989}, the undetectable
-  failure mode when the anchors themselves have DIF, and a sensitivity bound
-  in terms of the anchors' leverage (\cref{prop:anchor}); anchors drawn
-  from the stereotype items alone suffice for comparisons of the general
-  factor and of the boundary (\cref{rem:id-anchor-S}). Tests and confidence
-  sets for $\mathcal{B}_\tau$ that justify the three-way classification
+  item-level explained common variance $\mathrm{ECV}_j$
+  \citep{rodriguez2016} of each Israel-related item, overall and by group;
+  the latent correlation $\rho_{SI}$ between the stereotype and
+  Israel-attitude factors in a correlated-factors model; and the boundary set
+  $\mathcal{B}_\tau$ for a pre-registered threshold $\tau$, reported with a
+  three-way classification that shows indeterminacy instead of hiding it. We
+  state what the estimands would and would not mean
+  (\cref{sec:model-meaning}), and show that the correlated-factors model
+  identifies $\rho_{SI}$ but only bounds the item-level shares
+  (\cref{prop:model-sl}; \citealp{schmid1957}).
+  \item\label{contrib:ident} \textbf{Identification and invariance.}
+  A bifactor model can be fitted to data that do not identify it. The
+  decomposition is identified by heterogeneity, not correlation: some domain
+  must contain at least four items whose general-factor shares are not all
+  equal save one. With three items per domain, or proportional loadings, a
+  curve of parameter values fits equally well and moves the boundary ECVs;
+  with two Israel-related items their identified sets are given in closed
+  form (\cref{thm:ident}). Respondents who differ in ideology, age or
+  country may also read a statement, about Israel or about Jews,
+  differently. When such differential item functioning (DIF) is ignored,
+  the first-order bias in group comparisons of latent means and of the
+  group-specific $\mathrm{ECV}^{(g)}_j$ is an information-weighted
+  projection of the DIF onto the loadings. Uniform DIF proportional to the
+  general loadings is indistinguishable from a true difference in the
+  general factor, and non-uniform DIF in some items moves the reported
+  shares of all items (\cref{thm:dif-bias}). Invariant anchor items restore
+  the comparison under partial invariance \citep{byrne1989}. DIF in the
+  anchors themselves shifts every comparison they carry, undetectably when
+  there are only three of them, and we bound the shift by the anchors'
+  leverage (\cref{prop:anchor}). Anchors drawn from the stereotype items
+  alone suffice for comparisons of the general factor and of the boundary
+  (\cref{rem:id-anchor-S}); they assume that those anchors function
+  identically across groups, which is testable only in part
+  (\cref{prop:anchor}(b)). Tests and confidence sets for
+  $\mathcal{B}_\tau$ justify the three-way classification
   (\cref{prop:id-boundary-test}).
-  \item\label{contrib:sdb} \textbf{Social-desirability correction.} The
-  exact variance of the list experiment \citep{miller1984,glynn2013} and its
-  cost relative to direct questioning, which no choice of control items can
-  remove without revealing individual answers (\cref{prop:list-var}). A
-  joint model of direct and list responses that identifies item-level
-  social-desirability bias in split and paired designs, with and without
-  the monotonicity assumption of \citet{aronow2015}, and decomposes it into
-  hidden and false endorsement where the design allows
-  (\cref{thm:joint-sdb}). The budget-optimal allocation of respondents across
-  direct and list arms and the choice of control list under floor and
-  ceiling effects \citep{blair2012}: larger budgets favour lists that are
-  noisier but less exposed (\cref{thm:design}). A link to the measurement
-  model that treats social desirability as a shift of an item's thresholds
-  and identifies the shift from a list experiment (\cref{prop:list-irt}).
+  \item\label{contrib:sdb} \textbf{Social-desirability correction.} Direct
+  questions on these topics may be answered strategically, and not
+  necessarily in the same direction in every group. List experiments
+  \citep{miller1984,glynn2013} reduce what an individual answer reveals. We
+  give their exact variance and its cost relative to direct questioning,
+  which no choice of control items can remove without making some answers
+  fully revealing (\cref{prop:list-var}). A joint model of direct and list
+  responses identifies item-level social-desirability bias in split and
+  paired designs, with and without the monotonicity assumption of
+  \citet{aronow2015}, and decomposes it into hidden and false endorsement
+  where the design allows (\cref{thm:joint-sdb}). We derive the
+  budget-optimal allocation of respondents across direct and list arms and
+  the choice of control list under floor and ceiling effects
+  (\citealp{blair2012}; \cref{thm:design}). Treated as a shift of an item's
+  thresholds, social desirability biases prevalences but not the boundary
+  estimands; it affects latent-mean comparisons only if the shift differs
+  between groups, in which case it is a form of DIF, and a list experiment
+  identifies the shift (\cref{prop:list-irt}).
   \item\label{contrib:mrp} \textbf{Small-area estimation and indices.}
-  Multilevel regression and poststratification \citep{gelman1997,park2004}
-  on the latent traits, fitted jointly with the measurement model, with an
+  Policy questions are often local, while samples are national. We adapt
+  multilevel regression and poststratification \citep{gelman1997,park2004}
+  to the latent traits, fitted jointly with the measurement model, with an
   explicit poststratification identity for area means (\cref{eq:mrp}) that
   extends to area covariances and area-level boundary summaries
-  (\cref{sec:sa-mrp}). Two-step scoring attenuates area differences by an
-  explicit factor (\cref{prop:eap}). For stereotype-count indices, a
-  sufficient condition under which group differences in the index have the
-  sign of the latent difference, and constructions in which unequal
-  dispersion, uniform DIF or non-uniform DIF reverse it
-  (\cref{prop:index}). We make no claim about the results of any real
-  index.
+  (\cref{sec:sa-mrp}). Scoring respondents first and averaging the scores
+  afterwards attenuates area differences by an explicit factor
+  (\cref{prop:eap}). Indices that report the share of respondents agreeing
+  with at least $q$ of $M$ stereotype statements rank groups correctly
+  under invariance and stochastic dominance, but unequal dispersion,
+  uniform DIF or non-uniform DIF can reverse the ranking
+  (\cref{prop:index,prop:index-dif}). We make no claim about the results of
+  any real index.
   \item\label{contrib:sim} \textbf{A simulation study.} In synthetic surveys
   with known parameters we assess recovery of the boundary estimands, the
   bias from ignoring DIF, the failure caused by a misspecified anchor, the
   accuracy of the list-experiment correction and of the optimal design, the
-  accuracy of small-area estimates, and how often a stereotype-count index
-  ranks two groups in the wrong order when its items carry DIF
-  (\cref{sec:simulation}). The fits use a limited-information estimator,
-  not the full-information estimator of the plan, and the small-area
-  experiment starts from a score of the general factor rather than from item
-  responses. The results agree with the theory in the designs studied. They
-  also show that convergence and agreement across starting values do not
-  reveal an unidentified decomposition, and they exposed a flaw in our own
-  draft plan: a DIF screen that also required a minimum expected-score
-  difference missed non-uniform DIF. The plan was revised accordingly.
+  accuracy of small-area estimates, how often a stereotype-count index ranks
+  two groups in the wrong order when its items carry DIF, and how the plan
+  detects and corrects two misspecifications that would inflate
+  general-factor shares, cross-loadings of trope-based Israel items and
+  acquiescence (\cref{sec:simulation}). The fits use a limited-information estimator,
+  which the plan adopts as primary, and the small-area experiment starts
+  from a score of the general factor rather than from item responses. The
+  results agree with the theory in the designs studied. They also show that
+  convergence and agreement across starting values need not reveal an
+  unidentified decomposition: agreement across starts exposed the two-item
+  case but neither the proportional nor the near-proportional case. And they
+  exposed a flaw in our own draft plan: a DIF screen that also required a
+  minimum expected-score difference missed non-uniform DIF. The plan was
+  revised accordingly, and the revised screen was simulated again.
   \item\label{contrib:design} \textbf{A pre-registered survey design and
   analysis plan.} An item bank described by construct, with no claim of
   validation; the list-experiment module; the sampling frame and the
@@ -224,59 +205,41 @@ given.
 \end{enumerate}
 
 \paragraph{What the method cannot settle}
-Two limits are built into the approach, and we state them at the outset.
-First, \emph{the method does not answer normative questions.} An estimate of
-$\mathrm{ECV}_j$ says how responses to a statement covary with responses to
-classic stereotypes in a surveyed population. Whether speech with that
-content should be called antisemitic, restricted, disciplined or protected is
-a question of values, law and context. Evidence about covariance can inform
-that question, but it cannot answer it, and a high or low $\mathrm{ECV}_j$ is
-compatible with more than one normative position. Second, \emph{the method
-does not diagnose individuals.} The estimands describe populations. An item
-in $\mathcal{B}_\tau$ does not show that a particular person who endorses it is hostile
-toward Jews, or that a particular utterance with similar content is
-antisemitic in its context; an item outside $\mathcal{B}_\tau$ is not thereby shown to
-be acceptable in every context. Definitions classify speech and conduct in
-context, often with reference to intent (\cref{sec:bg-definitions}); our
-estimands do neither, and \cref{sec:ethics-individual} turns these limits
-into commitments about how results are reported.
+Two limits are built into the approach. First, \emph{the method does not
+answer normative questions.} An estimate of $\mathrm{ECV}_j$ says how
+responses to a statement covary with responses to classic stereotypes in a
+surveyed population. Whether speech with that content should be called
+antisemitic, restricted, disciplined or protected is a question of values,
+law and context. Evidence about covariance can inform that question, but it
+cannot answer it, and a high or low $\mathrm{ECV}_j$ is compatible with more
+than one normative position. Second, \emph{the method does not diagnose
+individuals.} The estimands describe populations. An item in
+$\mathcal{B}_\tau$ does not show that a particular person who endorses it is
+hostile toward Jews, or that a particular utterance with similar content is
+antisemitic in its context; an item outside $\mathcal{B}_\tau$ is not thereby
+shown to be acceptable in every context. Definitions classify speech and
+conduct in context, often with reference to intent
+(\cref{sec:bg-definitions}); our estimands do neither, and
+\cref{sec:ethics-individual} turns these limits into commitments about how
+results are reported.
 
-\paragraph{Related work}
-The graded response model goes back to \citet{samejima1969}, building on
-the logistic models of \citet{birnbaum1968} and the item response theory of
-\citet{lord1980}. Full-information bifactor analysis is due to
-\citet{gibbons1992}, its revival in the measurement of psychological
-constructs to \citet{reise2012}, and the bifactor indices used here,
-including explained common variance, are reviewed by \citet{rodriguez2016}.
-The theory of measurement invariance is that of \citet{meredith1993} and
-\citet{millsap2011}; DIF is tested with the Mantel--Haenszel procedure
-\citep{holland1988} and with likelihood-ratio tests in an item response model
-\citep{thissen1993}; partial invariance is due to \citet{byrne1989}. The
-list experiment originates with \citet{miller1984} and is analysed by
-\citet{glynn2013}, \citet{imai2011} and \citet{blair2012}; randomised
-response is due to \citet{warner1965}. Multilevel regression and
-poststratification was introduced by \citet{gelman1997} and
-\citet{park2004}. On the substantive side, \cref{sec:background} reviews the
-three definitions, the main survey programmes and prior evidence on the
-relation between anti-Israel and antisemitic attitudes; several studies
-report positive associations between the two domains
-\citep{kaplan2006,staetsky2017,beattie2017}. This paper is the third in a
-series. The first
-estimates the number of antisemitic hate crimes that no list records
-\citep{kornsteinlab2026darkfigure}; the second models surges in recorded
-incidents after salient external events \citep{kornsteinlab2026contagion}.
+\paragraph{Related work and roadmap}
+Methodological sources are attributed in
+\cref{sec:model,sec:identification,sec:sensitive,sec:smallarea} where they
+are used; \cref{sec:background} reviews the three definitions, the main
+survey programmes and prior evidence relating the two attitude domains. This
+paper is the third in a series. The first estimates the number of
+antisemitic hate crimes that no list records
+\citep{kornsteinlab2026p1darkfigure}; the second models surges in recorded
+incidents after salient external events \citep{kornsteinlab2026p2contagion}.
 Both study incidents. This one studies attitudes, which no incident list
-records.
-
-\paragraph{Roadmap}
-\Cref{sec:background} reviews the definitions, the surveys and prior
-evidence. \Cref{sec:model} defines the measurement model and the boundary
-estimands. \Cref{sec:identification} develops identification and invariance.
-\Cref{sec:sensitive} treats social desirability and list experiments, and
+records. \Cref{sec:model} defines the measurement model and the boundary
+estimands, \cref{sec:identification} develops identification and invariance,
+\cref{sec:sensitive} treats social desirability and list experiments, and
 \cref{sec:smallarea} small-area estimation and count indices.
 \Cref{sec:simulation} reports the simulation study, \cref{sec:design} the
-pre-registered design and analysis plan, and \cref{sec:ethics} the ethics
-protocol. \Cref{sec:discussion} discusses what a boundary map could and could
-not show, limitations and extensions. Proofs are in
-\cref{app:proofs-measurement,app:proofs-design} and simulation details in
+pre-registered plan and \cref{sec:ethics} the ethics protocol.
+\Cref{sec:discussion} discusses what a boundary map could and could not
+show. Supplementary results and proofs are in
+\cref{app:proofs-measurement,app:proofs-design}, and simulation details in
 \cref{app:simdetails}.

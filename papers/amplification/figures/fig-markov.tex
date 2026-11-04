@@ -54,9 +54,9 @@
   % ====================== (a) reference policy ======================
   \begin{scope}[shift={(0,0)}]
     \node[panel] at (-0.4,1.78) {(a)\enspace Reference policy $P_{\mathrm{ref}}$};
-    \node[stN] (N) at (0.7,0) {$N$};
-    \node[stB] (B) at (3.3,1.05) {$B$};
-    \node[stA] (A) at (3.3,-1.05) {$A$};
+    \node[stN] (N) at (0.7,0) {$\mathsf N$};
+    \node[stB] (B) at (3.3,1.05) {$\mathsf B$};
+    \node[stA] (A) at (3.3,-1.05) {$\mathsf A$};
     \node[capt,anchor=north] at ([yshift=-1pt]N.south) {neutral};
     \node[capt,anchor=south east] at ([xshift=-2pt]B.north west) {borderline};
     \node[capt,anchor=north east] at ([xshift=-2pt]A.south west) {antisemitic};
@@ -71,15 +71,15 @@
     \tedge{A}{B}{.30}{LabNavyMid}{35}{0.5}
     \statbar{0.2}{0.9049}{0.0719}{0.0232}
     \node[stat] at (0.2,-2.47) {$\varpi(\mathcal A)=0.023$\\[1pt]
-      $e_{20}=0.021$,\enspace $M_{N\mathcal A}=64$};
+      $e_{20}=0.021$,\enspace $M_{\mathsf N\mathcal A}=64$};
   \end{scope}
 
   % ====================== (b) algorithmic policy ======================
   \begin{scope}[shift={(5.42,0)}]
     \node[panel] at (-0.4,1.78) {(b)\enspace Algorithmic policy $P_{\mathrm{alg}}$};
-    \node[stN] (N) at (0.7,0) {$N$};
-    \node[stB] (B) at (3.3,1.05) {$B$};
-    \node[stA] (A) at (3.3,-1.05) {$A$};
+    \node[stN] (N) at (0.7,0) {$\mathsf N$};
+    \node[stB] (B) at (3.3,1.05) {$\mathsf B$};
+    \node[stA] (A) at (3.3,-1.05) {$\mathsf A$};
     \tloop{N}{.92}{LabNavyLight}{203}{157}{-0.86,0.36}
     \tloop{B}{.55}{LabNavyMid}{40}{-10}{0.93,0.34}
     \tloop{A}{.45}{LabAccent}{10}{-40}{0.93,-0.34}
@@ -93,7 +93,7 @@
     \node[stat] at (0.2,-2.47) {$\varpi(\mathcal A)=0.071$\enspace
       \textcolor{LabGrey}{($\times3.07$)}\\[1pt]
       $e_{20}=0.060$\enspace\textcolor{LabGrey}{($\times2.89$)},\enspace
-      $M_{N\mathcal A}=28.3$};
+      $M_{\mathsf N\mathcal A}=28.3$};
   \end{scope}
 
   % ====================== (c) rabbit-hole variant ======================
@@ -106,10 +106,10 @@
         (2.66,-1.62) rectangle (4.62,1.62);
     \end{scope}
     \node[font=\scriptsize\itshape,text=LabAccent,anchor=north,inner sep=1pt]
-      at (3.64,-1.64) {closed class $\{B,A\}$};
-    \node[stN] (N) at (0.7,0) {$N$};
-    \node[stB] (B) at (3.3,1.05) {$B$};
-    \node[stA] (A) at (3.3,-1.05) {$A$};
+      at (3.64,-1.64) {closed class $\{\mathsf B,\mathsf A\}$};
+    \node[stN] (N) at (0.7,0) {$\mathsf N$};
+    \node[stB] (B) at (3.3,1.05) {$\mathsf B$};
+    \node[stA] (A) at (3.3,-1.05) {$\mathsf A$};
     \tloop{N}{.92}{LabNavyLight}{203}{157}{-0.86,0.36}
     \tloop{B}{.70}{LabNavyMid}{40}{-10}{0.93,0.34}
     \tloop{A}{.55}{LabAccent}{10}{-40}{0.93,-0.34}
@@ -121,29 +121,29 @@
     \tedge{A}{B}{.45}{LabNavyMid}{35}{0.5}
     \statbar{0.2}{0}{0.6}{0.4}
     \node[stat] at (0.2,-2.47) {$\varpi(\mathcal A)=0.400$\\[1pt]
-      $e_{20}=0.189$,\enspace $M_{N\mathcal A}=15.0$};
+      $e_{20}=0.189$,\enspace $M_{\mathsf N\mathcal A}=15.0$};
   \end{scope}
 
   \node[font=\scriptsize\itshape,text=LabGrey,anchor=north east,inner sep=0pt]
     at (15.46,-3.22) {Schematic: invented transition probabilities, not data};
 \end{tikzpicture}
 \caption{\textbf{A session as a Markov chain over content states, under two
-policies.} Each node is a content state, neutral ($N$), borderline ($B$) or
-antisemitic ($A$); each arrow is the probability that an item in one state is
+policies.} Each node is a content state, neutral ($\mathsf N$), borderline ($\mathsf B$) or
+antisemitic ($\mathsf A$); each arrow is the probability that an item in one state is
 followed by an item in another, and its width is proportional to that
 probability (zero transitions are dashed). Arrows are coloured by the state
 they lead to. \emph{(a)} A reference policy. \emph{(b)} The algorithmic policy
 moves at most $0.2$ of each row's probability, yet long-run antisemitic
-exposure $\varpi(\mathcal A)$ triples: the extra mass sent from $N$ is small,
+exposure $\varpi(\mathcal A)$ triples: the extra mass sent from $\mathsf N$ is small,
 but borderline and antisemitic content now lead back to neutral content less
 often, so sessions that reach them stay longer (\cref{thm:perturb}).
 \emph{(c)} A rabbit-hole variant: borderline and antisemitic content never lead
-back to neutral content, so $\{B,A\}$ is a closed class, a rabbit hole. A
-session that starts in $N$ enters it after $12.5$ items on average and never
+back to neutral content, so $\{\mathsf B,\mathsf A\}$ is a closed class, a rabbit hole. A
+session that starts in $\mathsf N$ enters it after $12.5$ items on average and never
 leaves, and long-run exposure is $\varpi(\mathcal A)=0.4$ whatever the entry
 probability (\cref{prop:markov}(d)). Bars show the stationary
 distribution $\varpi$; $e_{20}$ is the expected share of antisemitic items in a
-20-item session that starts in $N$, and $M_{N\mathcal A}$ the expected number
+20-item session that starts in $\mathsf N$, and $M_{\mathsf N\mathcal A}$ the expected number
 of further items before the first antisemitic one; ratios in (b) are relative
 to (a). \textbf{Schematic:} the transition matrices are the invented ones of
 \cref{sec:markov-example}, and the summaries are exact computations from them

@@ -1,12 +1,11 @@
 \section{Self-exciting point processes for incident streams}\label{sec:framework}
 
-This section fixes the model class used throughout the paper. We first recall the
-likelihood theory of multivariate point processes. We then define a Hawkes process
-augmented by exogenous shocks and recall its branching (cluster) representation and
-its first- and second-order structure. The results in this section are classical; we
-state them in the form needed later, with attributions and short proofs where the
-argument is brief. \Cref{sec:th-meaning} explains what ``contagion'' means, and does
-not mean, when the model is applied to antisemitic incidents.
+This section fixes the model class: the likelihood of multivariate point processes, a
+Hawkes process augmented by exogenous shocks, and its cluster representation and
+first- and second-order structure. The results are classical; we state them in the form
+needed later, with proofs in \cref{app:fw-proofs}. \Cref{sec:th-meaning} explains what
+``contagion'' means, and does not mean, when the model is applied to antisemitic
+incidents.
 
 \subsection{Marked multivariate point processes}\label{sec:th-mpp}
 
@@ -193,30 +192,17 @@ $F_\infty-1=n(2-n)/(1-n)^2$, which grows without bound as $n\uparrow1$.
 
 \subsection{Interpretation for antisemitic incidents}\label{sec:th-meaning}
 
-\paragraph{Streams.} Offline streams may be incidents recorded by police or monitoring
-organisations, split by region and by offence type. An online stream may be the volume
-of items that a classifier labels antisemitic on one platform. It can be modelled
-either as a point process or, after binning, through the discrete-time approximation
-of \cref{sec:estimation} \citep{kirchner2016}. Online volume is a \emph{measured}
-quantity whose errors matter for inference (\cref{rem:th-granger-caveats}).
-
-\paragraph{What self-excitation can represent.} A positive $\alpha_{kj}$ says that,
-under the model, a stream-$j$ incident raises the short-run probability of further
-stream-$k$ incidents. Several mechanisms could produce this, and each is a
-\emph{hypothesis} that the model does not by itself verify:
-\begin{itemize}
-  \item \emph{imitation}, or copycat behaviour;
-  \item \emph{emboldening}, where visible incidents shift perceived norms about what is
-    tolerated;
-  \item \emph{network diffusion} through online communities, coordinated campaigns or
-    repeat offenders;
-  \item \emph{repeat or near-repeat targeting} of the same location, as in
-    self-exciting models of crime \citep{mohler2011}.
-\end{itemize}
-Cross-excitation from an online to an offline stream is the formal counterpart of the
-hypothesis that online hostility precedes offline incidents.
-
-\paragraph{What contagion does not mean.} Three limits apply.
+Offline streams may be incidents recorded by police or monitoring organisations, split by
+region and by offence type. An online stream may be the volume of items that a classifier
+labels antisemitic on one platform, a \emph{measured} quantity whose errors matter for
+inference (\cref{rem:th-granger-caveats}). A positive $\alpha_{kj}$ says that, under the
+model, a stream-$j$ incident raises the short-run probability of further stream-$k$
+incidents. Imitation, emboldening (visible incidents shifting perceived norms about what
+is tolerated), diffusion through online communities, coordinated campaigns or repeat
+offenders, and repeat or near-repeat targeting of the same location \citep{mohler2011}
+could all produce this; each is a \emph{hypothesis} that the model does not by itself
+verify. Cross-excitation from an online to an offline stream is the formal counterpart of
+the hypothesis that online hostility precedes offline incidents. Three limits apply.
 \begin{itemize}
   \item The parameters describe predictive dependence in a probability model.
     ``Contagion'' is used in its technical sense of self-excitation; compare the
@@ -224,14 +210,11 @@ hypothesis that online hostility precedes offline incidents.
     It attributes no moral responsibility to victims, to Jewish communities, or to anyone
     connected with an earlier incident. Responsibility for an act rests with its
     perpetrator.
-  \item A positive $\alpha_{kj}$ is not proof of a causal mechanism.
-    \Cref{sec:identification} shows that, within a single stream, unobserved shocks can
-    mimic contagion exactly at second order, for exponential and completely monotone
-    kernels. It also shows that under-recording attenuates contagion,
-    and that common drivers can induce online-to-offline Granger causality without any
-    direct link.
-  \item Shocks are modelled as \emph{salient external events} whose timing is taken
-    from an external calendar. Including an event in the calendar, and estimating its
-    loading, is a statement about incident dynamics. It is not a judgement about the
-    event, its actors or its merits.
+  \item A positive $\alpha_{kj}$ is not proof of a causal mechanism. Within a single
+    stream, unobserved shocks can mimic contagion exactly at second order; under-recording
+    attenuates contagion; and common drivers can induce online-to-offline Granger
+    causality without any direct link (\cref{sec:identification}).
+  \item Shocks are \emph{salient external events} whose timing is taken from an external
+    calendar. Including an event, and estimating its loading, is a statement about
+    incident dynamics, not a judgement about the event, its actors or its merits.
 \end{itemize}

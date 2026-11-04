@@ -2,6 +2,9 @@
 %  Appendix C -- Simulation details (owner: phase-2 SIM writer).
 %  Source of truth: results/sim_results.json (meta.configs, meta.runtime_s).
 % =====================================================================
+\providecommand{\simfit}[1]{\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{#1}}
+\providecommand{\Sp}{\mathrm{Sp}}
+\providecommand{\Se}{\mathrm{Se}}
 \section{Simulation details}\label{app:simdetails}
 
 This appendix documents the simulation study of \cref{sec:simulation}. All data are synthetic. The catalogue, the classifier, the personas and the users are generated from random numbers and invented parameters, and no real platform, item or user is represented. The source of truth is \texttt{results/sim\_results.json}, which records the configurations (\texttt{meta.configs}), the seeds, the software versions and the runtimes of every run, as well as the results. \texttt{results/SUMMARY.md} prints the same values, formatted by \texttt{code/write\_summary.py}. The code is the package \texttt{code/ampsim} (version 1.0.0), with modules for the catalogue and classifier (\texttt{world}), the recommender and the accounts (\texttt{engine}), validation and correction (\texttt{measurement}), Markov chains (\texttt{markov}) and confidence sequences (\texttt{sequential}), and the scripts \texttt{run\_experiments.py}, \texttt{make\_figures.py} and \texttt{write\_summary.py}.
@@ -21,7 +24,8 @@ This appendix documents the simulation study of \cref{sec:simulation}. All data 
 \caption{Configuration of the synthetic world (\texttt{meta.configs} of \texttt{results/sim\_results.json}). All values are invented. Topic order: news, sport, entertainment, Jewish culture and community, Middle East, conspiracy. Type order: neutral, borderline, coded antisemitic, explicit antisemitic. Appetites are utility shifts for the content states $(N,B,A)$ in the choice rule of naturalistic accounts; they make the synthetic personas differ and describe no real users.}\label{tab:sim-config}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.6cm}>{\raggedright\arraybackslash}X@{}}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{6.2cm}>{\raggedright\arraybackslash}X@{}}
 \toprule
 Parameter & Value \\
 \midrule
@@ -35,31 +39,31 @@ Bait: mean by type; s.d. & $0$, $0.5$, $0.4$, $0.3$; $0.3$ \\
 Background popularity: s.d.\ of log; loading on bait & $1.0$; $1.0$ \\
 Posting rate: multiplier by type; s.d.\ of log & $1$, $1.2$, $1.3$, $1.5$; $0.5$ \\
 Item neighbours; persona seed pool & $15$; $200$ neutral items \\
-\addlinespace
+\addlinespace[2pt]
 \multicolumn{2}{@{}l}{\emph{Recommender}} \\
 Eligible pool; trending candidates; slate $k$ & $50$; $15$; $4$ \\
 Algorithmic score: weights on $\langle v_u,x_c\rangle$, log popularity, bait; Gumbel scale & $2.0$, $0.3$, $1.0$; $0.5$ \\
 Embedding update $v_u\leftarrow(1-\lambda)v_u+\lambda x_c$ & $\lambda=0.1$ \\
 Popularity-only feed: Gumbel scale & $0.05$ \\
-\addlinespace
+\addlinespace[2pt]
 \multicolumn{2}{@{}l}{\emph{Choice and sessions}} \\
 Protocol puppets: $\tau_{\mathrm{safe}}$; similarity threshold & $-0.5$; $0.25$ \\
 Naturalistic: weights on taste, bait, position, current item & $3.0$, $0.8$, $-0.3$, $2.0$ \\
 Naturalistic: utility of opening nothing & $1.0$ (E3); $-50$, so never (E4) \\
 Training: days $\times$ seeds per day; seeds drawn per puppet & $3\times10$; $30$ \\
 Measurement: sessions $S$ $\times$ steps $T$; rounds per day & $10\times20$; $100$ \\
-\addlinespace
+\addlinespace[2pt]
 \multicolumn{2}{@{}l}{\emph{Synthetic personas: topic weights; appetites $(N,B,A)$}} \\
 General interest ($d_0$) & news $1$, sport $0.8$, entertainment $0.8$; $(0,-0.5,-2.5)$ \\
 Jewish interest & Jewish culture $1$, news $0.4$, entertainment $0.25$; $(0,-1.0,-4.0)$ \\
 Middle East news & Middle East $1$, news $0.5$, Jewish culture $0.2$; $(0,0,-2.0)$ \\
 Conspiracy-adjacent & conspiracy $1$, news $0.3$, Middle East $0.25$; $(0,0.5,-1.0)$ \\
 Shares in the E3 population & $0.6$, $0.1$, $0.15$, $0.15$ \\
-\addlinespace
+\addlinespace[2pt]
 \multicolumn{2}{@{}l}{\emph{Demand evolution (E3)}} \\
 Taste drift; appetite gain, decay, cap & $0.05$; $0.4$, $0.1$, $2.0$ \\
 Followed-fringe gain, decay, cap & $0.02$, $0.1$, $0.5$ \\
-\addlinespace
+\addlinespace[2pt]
 \multicolumn{2}{@{}l}{\emph{Classifier regimes: flag rate by type}} \\
 ND, non-differential & $0.02$, $0.02$, $0.85$, $0.85$ \\
 DU, borderline false positives & $0.01$, $0.40$, $0.85$, $0.85$ \\
@@ -137,3 +141,30 @@ python make_figures.py       # figures/fig-sim-*.pdf and tables/tab-sim-*.tex
 python -m pytest tests/ -q   # 21 tests
 \end{verbatim}
 The first command takes about $13$ minutes with two workers, and the other two well under a minute each (\cref{tab:sim-runs}). \texttt{run\_experiments.py} without \texttt{--only} runs all six experiments at once from the same seeds, and \texttt{--quick} makes a smoke run that writes \texttt{results/sim\_results\_quick.json}. \Cref{tab:sim-main,tab:sim-checks,tab:sim-designs} are generated by \texttt{make\_figures.py}. Every other number in \cref{sec:simulation} is read from \texttt{results/sim\_results.json}, or computed from values in it (for instance a relative error or a range over personas).
+
+\subsection{Further results}\label{app:sim-further}
+
+\Cref{tab:sim-checks} gives the results of E1b that \cref{sec:sim-checks} summarises, together with the checks of the bounds of \cref{prop:interference} from E2. \Cref{tab:sim-designs} summarises E2--E5. Four further results support \cref{sec:simulation}.
+\begin{itemize}
+  \item \emph{E1b, known error rates.} With $20$ puppets per cell and no buckets, cluster-robust intervals for $\mathrm{AA}$ cover in $93.7$--$94.6\%$ of audits, and session-level ones in $92.8$--$95.0\%$. With buckets, cluster-robust intervals for $\log\mathrm{AR}$ cover in $93.2$--$94.2\%$ and session-level ones in $69.3$--$85.0\%$. Under DD the pooled correction with external validation covers in $73.5$, $78.5$, $15.7$ and $1.5\%$ of audits and the correction by arm in $95.0$--$97.9\%$. The attenuation formula \eqref{eq:mc-attenuation} gives $1.325$, $1.231$, $1.534$ and $1.033$ under ND against naive ratios of $1.316$, $1.232$, $1.532$ and $1.027$; it would be exact if the realised error rates of the two arms were identical. Under DD it fails ($1.289$ against $1.182$ for the general persona), while the limit $\mathrm{AR}^{\mathrm{pool}}$ of \eqref{eq:mc-diff} ($1.494$, $1.254$, $1.487$, $0.861$) matches the median pooled correction with $20$ puppets per cell ($1.489$, $1.250$, $1.483$, $0.861$). In the delta-method comparison, the median s.d.\ for the general persona under ND is $0.159$ against a Monte Carlo s.d.\ of $0.188$ with $20$ puppets, and the mean of the delta-method variance overstates, because a few audits with a corrected reference exposure near zero dominate it.
+  \item \emph{E2, bounds.} The slopes $\xi$ are estimated from the same grid on which the bound of \cref{prop:interference}(a) is checked, so that bound holds by construction for $\mathrm{AA}$. The ratio bound holds with room: at share $0.3$, $|$bias of $\log\widehat{\mathrm{AR}}|$ is $0.070$--$0.120$ against bounds of $0.087$--$0.323$. The extrapolated estimators of part (c) have biases within the bound $\zeta\ell_1\ell_2/2$ for every pair of loads.
+  \item \emph{E3.} The fixed-demand audit at $F_0$ gives $\mathrm{AR}=1.36$; protocol puppets with the persona mix of the population give $\mathrm{AA}=1.91$ points and $\mathrm{AR}=1.42$, because the avoid-on-flag rule is part of the persona. In the persona contrasts relative to the general persona, the supply contrast is $1.40$ points, the demand contrasts are $3.65$, $6.45$ and $9.54$, the interactions $0.41$, $4.08$ and $-0.92$ (MCSE $0.05$--$0.07$), and the totals $5.46$, $11.93$ and $10.02$, for the Jewish-interest, Middle East and conspiracy-adjacent personas.
+  \item \emph{E4, hitting.} The probability of reaching $A$ within $20$ items is predicted less well than exposure. It is overpredicted by a factor of up to $1.9$ where it is small ($0.061$ against $0.032$ for the general persona under the reverse-chronological feed), presumably because the pooled chain treats accounts as exchangeable when a few accounts carry most visits to $A$. The mean time to reach $A$ from equilibrium is $302$--$363$ items for the general and Jewish-interest personas and $16$--$41$ for the other two.
+  \item \emph{E5.} The confidence sequence for $\mathrm{AA}$, on corrected pair differences with known error rates, covers in $94.5$--$96.7\%$ of audits. With the range $[0.95,1.05]$ under ND, the general persona stops after $5.9$ waves instead of $5.1$ and concludes material amplification in $68.5\%$ of audits. Under DD with the range $[0.8,1.2]$ at $\alpha=0.0125$, the Jewish-interest and conspiracy-adjacent personas end inconclusive in $97.8\%$ and $100\%$ of audits. By $400$ pairs the exact betting sequence excludes $\mathrm{AR}=1$ only for the Middle East persona.
+\end{itemize}
+
+\begin{table}[tp]
+\centering
+\caption{Synthetic data, E1b and E2: checks of \cref{thm:identify,thm:misclass,prop:interference}. E1b: $R=2{,}000$ audits; error rates known unless stated; external validation with $n_1=300$ coded positives and $n_0=1{,}500$ coded negatives. Design effect: $S\sigma^2/\tau^2$ of \cref{thm:identify} for $S=10$ sessions. Sessions iid: variance that treats the sessions of a puppet as independent. Experiment buckets: every account has a persistent random shift (s.d.\ $1$) in the algorithm's weight on the engagement prior. s.d.\ of $\log\widehat{\mathrm{AR}}$: Monte Carlo, and the median over audits of the delta-method value. Interference block: E2, simultaneous design ($R=24$). There $\xi_\Delta$ is the largest $|\text{bias}|/\bar\ell$ over the grid of loads and $\zeta$ the largest second divided difference of the bias in the load, so the bound of part (a) holds by construction and is attained where the largest ratio occurs.}\label{tab:sim-checks}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\simfit{\input{tables/tab-sim-checks}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{Synthetic data: summary of E2--E5. E2: bias of the additive amplification relative to the reverse-chronological feed at traffic share $0.3$ ($R=24$; SE $0.4$--$0.7\times10^{-3}$), simultaneous design (load $0.33$), low co-viewing ($0.33$), staggered waves ($0.12$). E3: the ``real users'' are synthetic accounts whose demand evolves. E4: consumed items of naturalistic accounts. E5: $R=2{,}000$ audits (MCSE about $0.5$ near $95\%$); coverage over all $80$ waves; peeking: fixed-sample interval after each of waves $1$--$8$; false detection: the sequence excludes $\mathrm{AR}=1$ when it is true; $n_{\mathrm{fix}}$, $n_{\mathrm{seq}}$ from $A_Y$ of \cref{prop:power}(d) for detecting $\mathrm{AR}\ne1$; last row: regime DD.}\label{tab:sim-designs}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\simfit{\input{tables/tab-sim-designs}}
+\end{table}

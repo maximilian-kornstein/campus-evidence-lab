@@ -44,16 +44,13 @@ The expected numbers of offspring form a branching matrix
 $\Amat=[\alpha_{kj}]$ across streams (regions, offence types, online and
 offline channels), and the multiplier $\Mmat=(\Imat-\Amat)^{-1}$ counts the
 whole cascade that one incident sets off. Self-exciting models are
-established in seismology \citep{ogata1988}, in crime
-\citep{mohler2011,reinhart2018}, in conflict \citep{lewis2012} and in the
-study of online popularity \citep{zhao2015,rizoiu2017}, and related
-spatiotemporal methods have been used to ask whether gun violence is
-contagious \citep{loeffler2018}. Evidence that online content predicts
-offline hate crime comes from studies of anti-refugee posts in Germany
-\citep{muller2021} and of anti-Black and anti-Muslim posts in London
-\citep{williams2020}. As far as we know, no study has estimated a
-multivariate branching matrix for antisemitic incidents, and this paper does
-not either. It builds and tests the tools that such an analysis requires.
+established in seismology \citep{ogata1988}, crime
+\citep{mohler2011,reinhart2018}, conflict \citep{lewis2012}, online popularity
+\citep{zhao2015,rizoiu2017} and gun violence \citep{loeffler2018}, and online
+content has been found to predict offline hate crime \citep{muller2021,williams2020}.
+As far as we know, no study has estimated a multivariate branching matrix for
+antisemitic incidents, and this paper does not either. It builds and tests the
+tools that such an analysis requires.
 
 \paragraph{Three traps}
 Applied naively, the model is easy to fit and easy to over-read. We
@@ -78,8 +75,10 @@ formalise three traps.
   ratio is explicit, $n^*=1-(1+\kappa)^{-1/2}$, where $\kappa$ measures the
   burstiness of the unrecorded driver. Maximum likelihood need not reproduce
   $n^*$ exactly. In our simulations a single spline background removed the
-  artefact of slow rate changes but not that of fast unrecorded shocks, and % ALIGN-WITH-SIM (E2 rerun)
+  artefact of slow rate changes but not that of fast unrecorded shocks, and
   known event times largely removed it where tested (\cref{sec:sim-spurious}).
+  For rare large shocks, maximum likelihood settled 0.06--0.07 below $n^*$ even
+  with $T=10{,}000$.
   \item \emph{Under-reporting masks contagion.} Most incidents are never
   recorded. That is the subject of the companion paper
   \citep{kornsteinlab2026darkfigure}, which estimates the size of this dark
@@ -102,14 +101,12 @@ that coefficient (\cref{rem:th-granger-caveats}).
 \paragraph{What this paper does, and does not, do}
 This is a methods paper. We set out the model, prove what can and cannot be
 identified, derive the surge decomposition and an alert rule, give
-estimation and testing procedures, evaluate some of them in a simulation study on
-synthetic data with known ground truth, and pre-register an analysis plan
-for real data. We report \emph{no} empirical estimates. We have fitted no
-model to real incident data, and nothing here should be read as a finding
-that antisemitic incidents are, or are not, contagious. The real-world
-figures quoted above come from their named sources and serve only to
-motivate the questions. \Cref{fig:network} shows the multivariate model and
-its multiplier; notation is collected in \cref{tab:notation}.
+estimation and testing procedures, evaluate some of them on synthetic data
+with known ground truth, and pre-register an analysis plan for real data. We
+report \emph{no} empirical estimates, and nothing here should be read as a
+finding that antisemitic incidents are, or are not, contagious; the figures
+quoted above serve only to motivate the questions. \Cref{fig:network} shows
+the multivariate model; notation is collected in \cref{tab:notation}.
 
 \IfFileExists{tables/tab-notation.tex}{\input{tables/tab-notation}}{}%
 \paragraph{Contributions}
@@ -117,100 +114,81 @@ Our contributions are a synthesis, generalisation and application of
 existing ideas to a new and sensitive domain. Classical results are
 attributed where they are used; we flag the results that are, to our
 knowledge, new in the form given.
-\begin{enumerate}[label=\textbf{C\arabic*},ref=C\arabic*,leftmargin=2.4em,itemsep=3pt]
+\begin{enumerate}[label=\textbf{C\arabic*},ref=C\arabic*,leftmargin=2.4em,itemsep=2pt]
   \item\label{contrib:framework} \textbf{Framework.} A multivariate Hawkes
-  process with exogenous shocks for incident streams across regions,
-  offence types and online and offline channels
-  (\cref{sec:framework}, \cref{eq:th-intensity}), with salient external events
-  entering through a calendar of times, sizes and stream-specific loadings. We
-  spell out what ``contagion'' does and does not mean when the model is applied
-  to antisemitic incidents (\cref{sec:th-meaning}).
-  \item\label{contrib:id} \textbf{Identification.} For a single stream, or for
-  streams that do not excite one another, we make the observational
-  equivalence of contagion and clustered shocks exact: for exponential kernels
-  we give the full matched family of shock processes (\cref{thm:equiv}), and we
-  extend it to completely monotone kernels (\cref{prop:th-cm}). With
+  process with exogenous shocks for incident streams across regions, offence
+  types and online and offline channels (\cref{sec:framework}), and what
+  ``contagion'' does and does not mean when it is applied to antisemitic
+  incidents (\cref{sec:th-meaning}).
+  \item\label{contrib:id} \textbf{Identification.} For a single stream, or
+  for streams that do not excite one another, the observational equivalence of
+  contagion and clustered shocks is exact, for exponential
+  (\cref{thm:equiv}) and completely monotone kernels (\cref{prop:th-cm}). With
   cross-excitation, equivalence requires the excess spectral matrix
-  $\bm E_H(\omega)$ to be positive semidefinite at every frequency. This fails
-  for excite-only streams and when cross-excitation dominates self-excitation
-  (\cref{prop:th-mv,ex:th-mv-cross}), and delayed kernels leave a trace too
-  (\cref{rem:th-noncm}); contagion between streams is then identified at second
-  order. Identification is restored by a recorded calendar of events, by
-  higher-order information (the fourth cumulant already separates the models)
-  or by provenance links between incidents (\cref{cor:equiv-id}). A
-  misspecified background yields spurious contagion with an explicit
-  pseudo-true branching ratio for moment-based estimators, and a strictly
-  positive one for maximum likelihood (\cref{thm:spurious}), the point-process
-  counterpart of the apparent criticality reported for financial data
-  \citep{filimonov2015}.
-  \item\label{contrib:thin} \textbf{Under-reporting.} Independent thinning
-  maps a branching ratio $n$ to an apparent $n'=h_p(n)$ in closed form
-  (\cref{thm:thinning}). Inverting the map with the companion paper's
-  estimate of $p$ gives a dark-figure correction whose variance has a floor
-  set by the uncertainty about coverage (\cref{cor:th-darkfig}). When
-  recording and productivity vary together, the homogeneous correction
-  overstates contagion (\cref{prop:th-hetthin}).
-  \item\label{contrib:attr} \textbf{Surge attribution.} The expected count
-  after an event splits exactly into background, direct and contagion
-  components (\cref{thm:attribution}, \cref{fig:attribution}). In a univariate
-  model the contagion share of event-attributable incidents equals the
-  branching ratio $n$ in the limit, and stays below it at every finite
-  horizon. For exponential kernels the components have hypoexponential closed
-  forms (\cref{prop:irf}), and a channel decomposition isolates the
-  online-to-offline spillover as a sum over paths, with shares that are not
-  additive (\cref{prop:at-channel}). The ingredients are classical
-  \citep{hawkes1971,hawkes1974}; we have not found the closed forms or the
-  channel decomposition stated in this form.
-  \item\label{contrib:est} \textbf{Estimation and testing.} EM over the latent
-  branching structure (\cref{alg:em}; \citealp{veen2008,marsan2008}), with an
-  exact treatment of the observation window under which each decay update is a
-  strictly concave one-dimensional problem (\cref{prop:est-mstep}); Bayesian
-  shrinkage on $\Amat$, with an entrywise description of the stationarity
-  region (\cref{lem:est-trunc}); an exact formula for the attenuation of
-  contagion by binning (\cref{prop:est-binning}); a boundary-corrected
-  likelihood-ratio test of $\alpha_{kj}=0$ \citep{chernoff1954,self1987} and a
-  sup-statistic for decays identified only under the alternative
-  (\cref{sec:est-lrt}); time-rescaling goodness of fit \citep{brown2002}; and
-  placebo calendars (\cref{sec:est-placebo}). The placebo rank test is valid
-  whatever the misspecification of the base model, but only under the
-  randomisation hypothesis that the real event dates are exchangeable with
-  dates drawn from the placebo design (\cref{lem:est-placebo}); without it, the
-  placebo distribution is a calibration, not a test. The window treatment, the
-  stationarity region and the binning formula are, to our knowledge, new in
-  this form.
-  \item\label{contrib:alert} \textbf{Forecasting and alerting.} Given the
-  past, the future is again a Poisson cluster process. When the model's state
-  is known, the Bayes-optimal alert rule thresholds the predictive probability
-  of a surge at $\pi^*=c_{\mathrm{FA}}/(c_{\mathrm{FA}}+c_{\mathrm{miss}})$; an
-  additional incident never switches an alert off, and the alert region is an
-  upper set in the excitation state (\cref{thm:alert}). Reporting delays bias
-  the state downward, so ignoring them can postpone an alert but never bring
-  one forward, and a delay-weighted nowcast corrects the bias in the mean
-  (\cref{prop:nowcast}). Plugging the nowcast into the rule is not the Bayes
-  rule for delayed data. An imputation algorithm targets that rule
-  (\cref{alg:alert}), but we have not run it.
+  $\bm E_H(\omega)$ to be positive semidefinite at every frequency; this fails
+  for excite-only streams and when cross-excitation dominates self-excitation,
+  and contagion between streams is then identified at second order
+  (\cref{prop:th-mv,ex:th-mv-cross}). Identification is restored by a recorded
+  calendar, higher-order information or provenance links
+  (\cref{cor:equiv-id}), and a misspecified background yields spurious
+  contagion (\cref{thm:spurious}).
+  \item\label{contrib:thin} \textbf{Under-reporting.} A closed-form map from
+  $n$ to the apparent $n'=h_p(n)$ (\cref{thm:thinning}), whose inversion with
+  the companion paper's estimate of $p$ gives a dark-figure correction with a
+  variance floor (\cref{cor:th-darkfig}), and the bias of that correction
+  under heterogeneous recording (\cref{prop:th-hetthin}).
+  \item\label{contrib:attr} \textbf{Surge attribution.} An exact split of the
+  expected count after an event into background, direct and contagion
+  components (\cref{thm:attribution}), hypoexponential closed forms for
+  exponential kernels (\cref{prop:irf}), and a channel decomposition that
+  isolates the online-to-offline spillover as a sum over paths
+  (\cref{prop:at-channel}); the last two are, to our knowledge, new in this
+  form.
+  \item\label{contrib:est} \textbf{Estimation and testing.} EM with an exact
+  treatment of the observation window (\cref{alg:em,prop:est-mstep}); Bayesian
+  shrinkage with an entrywise description of the stationarity region
+  (\cref{lem:est-trunc}); an exact formula for the attenuation of contagion by
+  binning (\cref{prop:est-binning}); boundary-corrected and sup-type
+  likelihood-ratio tests (\cref{sec:est-lrt}); time-rescaling goodness of fit
+  (\cref{sec:est-gof}); and placebo calendars (\cref{sec:est-placebo}). The
+  placebo rank test is valid whatever the misspecification of the base model,
+  but only under the randomisation hypothesis that the real event dates are
+  exchangeable with dates drawn from the placebo design
+  (\cref{lem:est-placebo}); without it, the placebo distribution is a
+  calibration, not a test.
+  \item\label{contrib:alert} \textbf{Forecasting and alerting.} When the
+  model's state is known, the Bayes-optimal alert rule thresholds the
+  predictive probability of a surge at
+  $\pi^*=c_{\mathrm{FA}}/(c_{\mathrm{FA}}+c_{\mathrm{miss}})$, and its alert
+  region is an upper set in the excitation state (\cref{thm:alert}). Reporting
+  delays bias the state downward; a delay-weighted nowcast corrects the bias
+  in the mean (\cref{prop:nowcast}). Plugging the nowcast into the rule is not
+  the Bayes rule for delayed data. An imputation algorithm that targets it
+  (\cref{alg:alert}) is given but was not run.
   \item\label{contrib:sim} \textbf{A simulation study.} Simulations on
   synthetic data with known ground truth evaluate EM, surge attribution, the
   boundary test, the thinning correction and a plug-in alert with a nowcast
   state (\cref{sec:simulation}). Under the model these tools perform as the
-  theory says, with close to nominal coverage. The study also shows their
-  limits: a single spline background did not remove spurious contagion from
-  fast unrecorded shocks, and intervals fail when excitation is weak and
-  recording is poor. Forecasts that ignore future external events are % ALIGN-WITH-SIM (E6 rerun)
-  miscalibrated in windows that contain one, and integrating over the event
-  process corrects this; what no forecaster can do is time the events, which
-  limits recall rather than calibration. Several tools were \emph{not}
-  evaluated: Bayesian shrinkage and its Gibbs sampler, time-rescaling goodness
-  of fit, the imputation-based alert of \cref{alg:alert}, the sup-statistic for
-  a decay identified only under the alternative with its Davies approximation
-  and bootstrap, nonparametric kernels, the INAR approximation, placebo
+  theory says. The study also shows their limits: a single spline background
+  did not remove spurious contagion from fast unrecorded shocks, and intervals
+  fail when excitation is weak and recording is poor; a 30--50\% error in the
+  recording probability sets a floor under the precision of the corrected
+  estimate that more data cannot lower. Forecasts that ignore future external
+  events under-forecast; forecasts that integrate over the event process are
+  calibrated when windows are pooled. What no forecaster can do is time new
+  events, which limits recall rather than pooled calibration. On
+  Hawkes-generated data the plug-in rule beats two simple baselines, which are
+  not the plan's. Not
+  evaluated are Bayesian shrinkage, time-rescaling goodness of fit, the
+  imputation-based alert of \cref{alg:alert}, the sup-statistic for a decay
+  identified only under the alternative (with its Davies approximation and
+  bootstrap), nonparametric kernels, the INAR approximation, placebo
   calibration and the CUSUM monitor.
-  \item\label{contrib:plan} \textbf{A pre-registered analysis plan.} We fix
-  in advance how the analysis would be run on real data, with New York City
-  police hate-crime records as the candidate pilot \citep{nypdhate}: an event
-  list completed blind to incident data, a model hierarchy with registered
-  block tests, sensitivity analyses, placebo shocks and decision rules
-  (\cref{sec:plan}), and an ethics protocol (\cref{sec:ethics}).
+  \item\label{contrib:plan} \textbf{A pre-registered analysis plan} for New
+  York City police hate-crime records \citep{nypdhate}, with an event list
+  completed blind to incident data, registered block tests, sensitivity
+  analyses, placebo shocks and decision rules (\cref{sec:plan}), and an ethics
+  protocol (\cref{sec:ethics}).
 \end{enumerate}
 
 \paragraph{Related work}

@@ -42,6 +42,9 @@ def main():
       "JSON (rounded for display only). All data are synthetic: no real platform, item or user was involved.\n")
     w(f"- Versions: {m['versions']}; base seed {m['base_seed']}; seeds `SeedSequence([base_seed, experiment_id, *keys])`, "
       f"experiment ids {m['experiment_seed_ids']}.")
+    w(f"- Total wall time over all runs: {f(m['runtime_s']['total_wall'], 1)} s ({m['runtime_s'].get('total_wall_definition', '')}).")
+    w("- Personas are coded P1-P4 in the paper: " + ", ".join(f"P{i + 1} = {p}" for i, p in enumerate(PERS)) +
+      " (synthetic demand profiles; see appendix C).")
     for run in m["runtime_s"].get("runs", []):
         w(f"- Run of {run['experiments']}: wall {f(run['total_wall'], 1)} s; CPU by part (s): "
           + ", ".join(f"{k}: {f(v, 1) if not isinstance(v, dict) else {kk: round(vv, 1) for kk, vv in v.items() if vv is not None}}"
@@ -157,8 +160,8 @@ def main():
                 f"{p} {f(sat[p]['chron']['bias_naive_l1']['mean'], 4)} / {f(sat[p]['chron']['bias_extrapolated']['mean'], 4)} "
                 f"({f(sat[p]['chron']['bias_extrapolated']['se'], 4)}), x{f(sat[p]['chron']['variance_ratio'], 1)}" for p in PERS))
         w("")
-        w("Sensitivity interval (prop:interference(d)) with xi_Delta at its simulated value, reference chron "
-          "(Wald cov. % -> sensitivity cov. %; mean breakdown xi*):\n")
+        w("Sensitivity interval (prop:interference(d)) with the ORACLE xi_Delta (its simulated value, which no audit "
+          "observes), reference chron (Wald cov. % -> sensitivity cov. %; mean breakdown xi*):\n")
         for rho, sv in e2["sensitivity"].items():
             w(f"- share {rho}: " + "; ".join(
                 f"{p} {pc(sv[p]['chron']['coverage_wald'])} -> {pc(sv[p]['chron']['coverage_sensitivity'])}; xi* {f(sv[p]['chron']['breakdown_xi']['mean'], 3)}"
@@ -246,7 +249,8 @@ def main():
     if "E5" in r:
         e5 = r["E5"]
         c = e5["config"]
-        w("## E5: sequential audit (alg:sequential, Algorithm 1), reference chron\n")
+        w("## E5 (benchmark: conventional small-lab design, 40 pairs per persona in 8 waves of 5, 10 sessions per puppet): "
+          "Algorithm 1 on the confirmed-flagged statistic, reference chron\n")
         w(f"Pairs resampled from the E1 pools (regimes {c['regimes']}); waves of {c['wave']} pairs; m = {c['m']} coded flagged "
           f"positions per puppet; Y_u = Qbar_u * Phat_u; R = {c['R']} audits (betting R = {c['R_bet']}); N_max = {c['N_max']} pairs; "
           f"mixture tuned to t* = {c['t_star']}; c_alpha = {e5['c_alpha']}; protocol alpha = {c['alpha_protocol']}, delta = {c['delta']}, "
@@ -309,6 +313,115 @@ def main():
               f"{f(pw.get('fixed_power_at_n_fix_Y'))}; sequential power by horizon ({pw.get('horizon_waves')} waves) "
               f"{f(pw.get('seq_power_by_horizon'))}, mean stop {f(pw.get('seq_mean_stop_pairs'), 1)} pairs "
               f"({f(pw.get('seq_mean_stop_over_n_fix'), 2)} x n_fix)")
+        w("")
+    if "E4b" in r:
+        e4b = r["E4b"]
+        c = e4b["config"]
+        w("## E4b: slate-state Markov chains of protocol puppets (sec:prot-estimands), reference chron\n")
+        w(f"Slate state = most severe true state among the k = 4 recorded positions; observed state read off the classifier "
+          f"(A if any position flagged, B if any in score band {c['borderline_band']}). Population fits use all puppets "
+          f"of the detailed pools and all 10 sessions of T = {c['T']}; the long session has {c['T_long']} steps (tail = steps "
+          f">= {c['tail_from']}). Impression scale = slate prediction x kbar_A / k (kbar_A from the 10 sessions, oracle). "
+          f"Corrections use the cell's known item-level error rates; 'min' = minimal composition (misread prob. of a "
+          f"non-A slate 1 - Sp^k), 'oracle' = the simulated composition. Replications: {c['n_audit']} puppets per arm, "
+          f"S = {c['S']} sessions, R = {c['R']}.\n")
+        for g, reg in e4b["regimes"].items():
+            w(f"### Regime {g}\n")
+            w("| persona | arm | sim mu (10 sess.) / long-run mu (tail) | sim slate e_T | true3 mu_T / mu_pi | naive3 mu_T / mu_pi | "
+              "corr2 min mu_T / mu_pi | corr2 oracle mu_T / mu_pi | corr3 min mu_pi | false-A slate (min) | cond C3 |")
+            w("|---|---|---|---|---|---|---|---|---|---|---|")
+            for p in PERS:
+                for pol in ("alg", "chron"):
+                    x = reg[p][pol]
+                    sm, pr = x["sim"], x["pred"]
+                    c3 = pr.get("corr3_min")
+                    w(f"| {p} | {pol} | {f(sm['mu'], 4)} / {f(sm['mu_tail'], 4)} | {f(sm['slate_e_T'], 4)} | "
+                      f"{f(pr['true3']['mu_T'], 4)} / {f(pr['true3']['mu_pi'], 4)} | {f(pr['naive3']['mu_T'], 4)} / {f(pr['naive3']['mu_pi'], 4)} | "
+                      f"{f(pr['corr2_min']['mu_T'], 4)} / {f(pr['corr2_min']['mu_pi'], 4)} | "
+                      f"{f(pr['corr2_oracle']['mu_T'], 4)} / {f(pr['corr2_oracle']['mu_pi'], 4)} | "
+                      f"{f(c3['mu_pi'], 4) if c3 else 'not identifiable'} | {f(x['false_A_slate_min'], 4)} | {x['cond_C3']:.1e} |")
+            w("")
+            w("Replications at the registered size (median relative bias % alg / ref; CV alg / ref; log-ratio median vs target, s.d.):\n")
+            for p in PERS:
+                sm = reg[p]["replications"]["summary"]
+                w(f"- {p}: " + "; ".join(
+                    f"{k} {pc(v['rel_bias_median_alg'])}/{pc(v['rel_bias_median_ref'])}, CV {f(v['cv_alg'], 2)}/{f(v['cv_ref'], 2)}, "
+                    f"logAR {f(v['log_ratio_median'])} vs {f(v['log_ratio_target'])} (sd {f(v['log_ratio_sd'])})"
+                    for k, v in sm.items() if isinstance(v, dict) and "cv_alg" in v)
+                  + f"; corrected chain clipped in {pc(sm['corr2_neg_share']['alg'])}/{pc(sm['corr2_neg_share']['chron'])}% of replications")
+            w("")
+    if "E5b" in r:
+        e5b = r["E5b"]
+        c = e5b["config"]
+        w("## E5b: the registered primary analysis (double-sampled exposure E~_u), reference chron\n")
+        w(f"S = {c['S']} of the 10 sessions per puppet; codes per puppet m = {c['m']} flagged, {c['m_open']} openings, {c['m_unf']} "
+          f"over unflagged score bands (Neyman); waves of {c['wave']} pairs, W_max = {c['W_max']}, b = {c['burn']}, t* = {c['t_star']}; "
+          f"R = {c['R']} audits; delta = {c['delta']}. Pools: {e5b['pools']}. Neyman design input s_h by regime: "
+          + "; ".join(f"{g} {[round(x, 4) for x in v['s_band']]}" for g, v in e5b["design"].items()) + ".\n")
+        w("| persona | regime | case | AR | mu alg / ref | exkurt E~ alg / ref (true E) | max/mu alg / ref | P(E~>5mu) alg / ref | "
+          "var: closed / sim (ratio) | codes |")
+        w("|---|---|---|---|---|---|---|---|---|---|")
+        for p in PERS:
+            for g, rr in e5b["personas"][p].items():
+                for case in ("alt", "null"):
+                    x = rr[case]
+                    t_ = x["tails"]
+                    v = x["variance"]
+                    w(f"| {p} | {g} | {case} | {f(rr['AR'] if case == 'alt' else 1.0)} | {f(t_['alg']['mu'], 4)} / {f(t_['ref']['mu'], 4)} | "
+                      f"{f(t_['alg']['Etilde']['exkurt'], 1)} / {f(t_['ref']['Etilde']['exkurt'], 1)} "
+                      f"({f(t_['alg']['Etrue']['exkurt'], 1)} / {f(t_['ref']['Etrue']['exkurt'], 1)}) | "
+                      f"{f(t_['alg']['max_over_mu'], 1)} / {f(t_['ref']['max_over_mu'], 1)} | "
+                      f"{pc(t_['alg']['p_over_5mu'], 2)} / {pc(t_['ref']['p_over_5mu'], 2)} | "
+                      f"{f(v['closed_form_total'], 3)} / {f(v['sim_total'], 3)} ({f(v['ratio_closed_over_sim'], 2)}) | "
+                      f"{f(x['mean_codes_per_puppet'], 1)} |")
+        w("")
+        w("Sequences: time-uniform coverage % (MCSE) over waves after the burn-in; NM = normal mixture (Algorithm 1 on E~_u), "
+          "bet = betting (exact); stopping on the AR sequence (S1-S3); detects = final interval excludes AR = 1:\n")
+        for p in PERS:
+            for g, rr in e5b["personas"][p].items():
+                for case in ("alt", "null"):
+                    x = rr[case]
+                    for al in [k for k in x if k.startswith("a0")]:
+                        v = x[al]
+                        st_, sb = v["nm_ar"]["stop"], v["bet_ar"]["stop"]
+                        w(f"- {p} {g} {case} {al}: NM AR {pc(v['nm_ar']['coverage'])} ({pc(v['nm_ar']['coverage_mcse'])}), "
+                          f"no burn-in {pc(v['nm_ar']['coverage_no_burn_in'])}; NM AA {pc(v['nm_aa']['coverage'])}; bet AR "
+                          f"{pc(v['bet_ar']['coverage'])}; bet AA {pc(v['bet_aa']['coverage'])} | NM: stop wave {f(st_['mean_stop_wave'], 2)}, "
+                          f"detects {pc(st_['detects'])}%, wrong {pc(st_['wrong_conclusion'], 2)}%, "
+                          + ", ".join(f"{a_} {pc(b_)}%" for a_, b_ in st_["decisions"].items())
+                          + f" | bet: detects {pc(sb['detects'])}%, wrong {pc(sb['wrong_conclusion'], 2)}% | AA excl. 0: NM "
+                          f"{pc(v['nm_aa']['excludes_0_final'])}%, bet {pc(v['bet_aa']['excludes_0_final'])}% | median final width "
+                          f"log AR NM {f(v['nm_ar']['median_width_final'], 2)}, bet {f(v['bet_ar']['median_width_final'], 2)}")
+        w("")
+        w("Pilot check (sec:prot-stopping): share of simulated pilots in which the resampling estimate of the miss rate "
+          "exceeds alpha + sqrt(alpha(1-alpha)/B) (flag), with the mean estimated miss rate:\n")
+        for p in PERS:
+            for g, rr in e5b["personas"][p].items():
+                for case in ("alt", "null"):
+                    pcx = rr[case]["pilot_check"]
+                    w(f"- {p} {g} {case}: R = {pcx['R_pilots']} pilots, B = {pcx['B']}; AR computable {pc(pcx['computable_ar'])}%; "
+                      + "; ".join(f"{al}: AR flag {pc(pcx[al]['ar']['flag_rate'])}% (mean est. miss {pc(pcx[al]['ar']['mean_miss'], 2)}%, "
+                                  f"q10-q90 {pc(pcx[al]['ar']['q10_miss'], 2)}-{pc(pcx[al]['ar']['q90_miss'], 2)}%), AA flag "
+                                  f"{pc(pcx[al]['aa']['flag_rate'])}% (mean est. miss {pc(pcx[al]['aa']['mean_miss'], 2)}%); true NM miss "
+                                  f"AR {pc(1 - rr[case][al]['nm_ar']['coverage'], 2)}%, AA {pc(1 - rr[case][al]['nm_aa']['coverage'], 2)}%"
+                                  for al in [k for k in pcx if k.startswith("a0")]))
+        w("")
+    if "E5s" in r:
+        e5s = r["E5s"]
+        c = e5s["config"]
+        w("## E5s: stress designs for the pilot check (E5b statistic; " + c["note"] + ")\n")
+        w("Designs: " + "; ".join(f"{d_['name']}: waves of {d_['wave']} pairs, burn-in {d_['burn']}, t* = {d_['t_star']}"
+                                  for d_ in c["designs"]) + f"; N = {c['N']} pairs; R = {c['R']}.\n")
+        for p in PERS:
+            for g, rr in e5s["personas"][p].items():
+                for case in ("alt", "null"):
+                    w(f"- {p} {g} {case}: " + "; ".join(
+                        f"{dn}: " + ", ".join(
+                            f"{al} coverage AR {pc(v[al]['nm_ar_coverage'])}% (MCSE {pc(v[al]['nm_ar_coverage_mcse'])}), AA "
+                            f"{pc(v[al]['nm_aa_coverage'])}%, pilot flag AR {pc(v['pilot_check'][al]['ar']['flag_rate'])}% "
+                            f"(mean est. miss {pc(v['pilot_check'][al]['ar']['mean_miss'], 2)}%)"
+                            for al in [k for k in v if k.startswith("a0")])
+                        for dn, v in rr[case].items()))
         w("")
     notes = os.path.join(a.results, "SUMMARY_notes.md")
     if os.path.exists(notes):

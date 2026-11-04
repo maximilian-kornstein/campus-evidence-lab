@@ -161,6 +161,66 @@ def perturbation(P0, P1, A=2, a=None, T=None):
     return out
 
 
+def collapse_A(trans, start=None):
+    """Collapse 3-state (N, B, A) transition counts (..., 3, 3) and start counts (..., 3) to {not A, A}."""
+    t = np.asarray(trans, float)
+    t2 = np.stack([np.stack([t[..., :2, :2].sum((-1, -2)), t[..., :2, 2].sum(-1)], -1),
+                   np.stack([t[..., 2, :2].sum(-1), t[..., 2, 2]], -1)], -2)
+    if start is None:
+        return t2
+    s = np.asarray(start, float)
+    return t2, np.stack([s[..., :2].sum(-1), s[..., 2]], -1)
+
+
+def slate_confusion(item_conf, k, comp=None):
+    """Slate-level confusion matrix (sec:prot-estimands) from item-level confusion item_conf (3 x 3: true
+    state N, B, A -> observed class N, B, A of one position), assuming independent errors across the k
+    positions. The observed slate state is the most severe observed class.
+    comp=None: 'minimal composition', a slate in state N has k neutral items and a slate in state B or A has
+    one item of that state and k - 1 neutral items (the approximation behind 'misread with probability about
+    k(1 - Sp)'). Otherwise comp is a dict state -> list of ((n_N, n_B, n_A), weight) and the rows average
+    over those compositions (oracle composition)."""
+    c = np.asarray(item_conf, float)
+    cum = np.cumsum(c, 1)                                    # P(observed class <= y | true state)
+
+    def row(nvec):
+        le = np.array([np.prod(cum[:, y] ** np.asarray(nvec)) for y in range(3)])
+        return np.array([le[0], le[1] - le[0], 1.0 - le[1]])
+    if comp is None:
+        comps = {0: [((k, 0, 0), 1.0)], 1: [((k - 1, 1, 0), 1.0)], 2: [((k - 1, 0, 1), 1.0)]}
+    else:
+        comps = comp
+    C = np.zeros((3, 3))
+    for x in range(3):
+        w = np.array([wt for _, wt in comps[x]], float)
+        if w.sum() <= 0:
+            C[x] = row({0: (k, 0, 0), 1: (k - 1, 1, 0), 2: (k - 1, 0, 1)}[x])
+            continue
+        C[x] = sum(wt * row(nv) for nv, wt in comps[x]) / w.sum()
+    return C
+
+
+def slate_confusion_2(C3, occ=None):
+    """Collapse a 3 x 3 slate confusion matrix to {not A, A}; occ weights the N and B rows (default equal)."""
+    w = np.array([0.5, 0.5]) if occ is None else np.asarray(occ[:2], float) / max(float(np.sum(occ[:2])), 1e-300)
+    notA = w[0] * C3[0] + w[1] * C3[1]
+    return np.array([[notA[0] + notA[1], notA[2]], [C3[2, 0] + C3[2, 1], C3[2, 2]]])
+
+
+def correct_chain(trans_obs, start_obs, C):
+    """Misclassification-corrected chain (sec:markov-estimation): E(observed counts) = C' diag(nu) P C, so
+    diag(nu) P is estimated by (C')^{-1} N_obs C^{-1}, and the start law by a_obs C^{-1}. Negative entries
+    are set to zero before row normalisation; their number is returned ('n_neg')."""
+    Ci = np.linalg.inv(np.asarray(C, float))
+    D = Ci.T @ np.asarray(trans_obs, float) @ Ci
+    a = np.asarray(start_obs, float) @ Ci
+    n_neg = int((D < -1e-12).sum() + (a < -1e-12).sum())
+    D = np.clip(D, 0.0, None)
+    a = np.clip(a, 0.0, None)
+    P, _ = estimate_P(D)
+    return P, a / max(a.sum(), 1e-300), n_neg
+
+
 def summaries(P, a, A=2, horizons=(20, 100, 200)):
     """Exposure functionals of prop:markov for one chain."""
     P = np.asarray(P, float)

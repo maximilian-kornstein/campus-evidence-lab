@@ -5,7 +5,7 @@
 \caption{\textbf{Notation.} Symbols used throughout. Item parameters carry
 a superscript $(g)$ when they are allowed to differ across groups.}
 \label{tab:notation}
-\small
+\footnotesize
 \renewcommand{\arraystretch}{1.08}
 \newcommand{\nhead}[1]{\multicolumn{2}{@{}l}{\footnotesize\scshape\bfseries\color{LabNavy}#1}\\[1pt]}
 \begin{minipage}[t]{0.485\textwidth}
@@ -13,8 +13,8 @@ a superscript $(g)$ when they are allowed to differ across groups.}
 \toprule
 \nhead{Respondents, groups and items}
 i=1,\dots,n & respondent \\
-g\in\{0,\dots,m\} & group (ideology, cohort, country, \dots); $g=0$ the reference \\
-j;\ Y_{ij}\in\{0,\dots,C_j\} & item; ordinal response of respondent $i$ \\
+g\in\{0,\dots,m\};\ w_g & group (ideology, cohort, country, \dots), $g=0$ the reference; group share \\
+j\in\mathcal{J};\ Y_{ij}\in\{0,\dots,C_j\} & item; ordinal response of respondent $i$ \\
 \mathcal{S},\ \mathcal{I};\ s(j) & stereotype items; Israel-related items; item $j$'s domain \\
 \mathcal{A}\subset\mathcal{S}\cup\mathcal{I} & anchor items, assumed invariant across groups \\
 \midrule
@@ -26,6 +26,7 @@ b_{jc} & threshold for category $c$ of item $j$ \\
 F & link: logistic $\Lambda$ or normal $\Phi$ (normal ogive) \\
 \bm\lambda_j,\ h_j^2 & standardised loadings; communality \\
 \bm a^{(g)}_j,\ b^{(g)}_{jc} & group-specific parameters: DIF \\
+\operatorname{lev}_j & leverage of anchor $j$ (\cref{prop:anchor}) \\
 \zeta_S,\ \zeta_I;\ \alpha_j & correlated domain factors; their loadings \\
 \bottomrule
 \end{tabularx}
@@ -35,6 +36,7 @@ F & link: logistic $\Lambda$ or normal $\Phi$ (normal ogive) \\
 \toprule
 \nhead{Boundary estimands}
 \mathrm{ECV}_j,\ \mathrm{ECV}^{(g)}_j & share of item $j$'s common variance due to $G$; in group $g$ \\
+\varkappa_j=\logit\mathrm{ECV}_j & scale on which the boundary is tested \\
 \rho_{SI} & latent domain correlation of $\zeta_S$ and $\zeta_I$ \\
 \tau;\ \mathcal{B}_\tau & pre-registered threshold; boundary set $\{j\in\mathcal{I}:\mathrm{ECV}_j\ge\tau\}$ \\
 \midrule
@@ -42,14 +44,16 @@ F & link: logistic $\Lambda$ or normal $\Phi$ (normal ogive) \\
 \mathsf{T},\ \mathsf{C},\ \mathsf{D} & list-treatment, list-control and direct arms \\
 J & number of control items in a list (\cref{sec:sensitive} only) \\
 \pi;\ \pi^D & prevalence of private agreement; of direct agreement \\
-\widehat\pi=\overline Y_{\mathsf{T}}-\overline Y_{\mathsf{C}} & list-experiment (difference-in-means) estimator \\
 \mathrm{SDB}=\pi-\pi^D & social-desirability bias \\
 \pi^H;\ \delta_j & hidden-endorsement rate; threshold shift of item $j$ \\
+\phi_{\mathrm c},\ \phi_{\mathrm f} & ceiling and floor suppression probabilities \\
 \midrule
-\nhead{Small areas}
+\nhead{Small areas and count indices}
 k;\ N_k & poststratification cell; its population count \\
-r;\ \omega_k=N_k/N_r & area; cell $k$'s share of its area \\
-\bar\theta_r & poststratified area mean of the latent traits (\cref{eq:mrp}) \\
+r;\ w_k=N_k/N_r & area; cell $k$'s share of its area \\
+\omega^2_{fu} & variance of a batch of random effects \\
+\bar{\bm\theta}_r & poststratified area mean (\cref{eq:mrp}) \\
+U_{i+};\ P_g(q) & number of the $M$ stereotype statements agreed with; share of group $g$ with $U_{i+}\ge q$ \\
 \bottomrule
 \end{tabularx}
 \end{minipage}

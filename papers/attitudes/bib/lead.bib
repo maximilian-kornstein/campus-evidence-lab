@@ -13,25 +13,25 @@
 % =====================================================================
 
 % ---------------------------------------------------------------------
-%  Companion papers of the series (lab documents). The key and fields of
-%  kornsteinlab2026darkfigure are copied from ../contagion/bib/sources.bib.
-%  (plainnat orders same-author, same-year entries by cite key, so Paper 2,
-%  ...contagion, is labelled 2026a and Paper 1, ...darkfigure, 2026b.)
-%  If SOURCES later adds either key to bib/sources.bib, delete it here.
+%  Companion papers of the series (lab documents). Fields of the first are
+%  copied from ../contagion/bib/sources.bib (key kornsteinlab2026darkfigure
+%  there). plainnat orders same-author, same-year entries by cite key, so the
+%  keys carry p1/p2 (series order) and "proposal" (design-stage documents):
+%  Paper 1 is labelled 2026a, Paper 2 2026b, and the proposals 2026c--e.
 % ---------------------------------------------------------------------
-@misc{kornsteinlab2026darkfigure,
+@misc{kornsteinlab2026p1darkfigure,
   author       = {{Kornstein Lab for Antisemitism Research}},
   title        = {The Dark Figure: Estimating Unreported Antisemitic Hate Crime with {B}ayesian Record Linkage and Multiple-Systems Estimation},
-  howpublished = {Companion methods paper},
+  howpublished = {Companion methods paper, first in the series},
   year         = {2026},
   note         = {November 2026}
 }
 
 % Title as in ../contagion/main.tex (pdftitle and title block).
-@misc{kornsteinlab2026contagion,
+@misc{kornsteinlab2026p2contagion,
   author       = {{Kornstein Lab for Antisemitism Research}},
   title        = {Shock and Contagion: Self-Exciting Point Processes for Surges in Antisemitic Incidents},
-  howpublished = {Companion methods paper},
+  howpublished = {Companion methods paper, second in the series},
   year         = {2026},
   note         = {November 2026}
 }
@@ -39,7 +39,7 @@
 % Design-stage proposals (lab documents ../measurement.tex, ../detection.tex,
 % ../narratives.tex). Fields as in ../contagion/bib/sources.bib for the first
 % two; the third follows the same pattern, with the title from \papertitle.
-@misc{kornsteinlab2026measurement,
+@misc{kornsteinlab2026proposalmeasurement,
   author       = {{Kornstein Lab for Antisemitism Research}},
   title        = {Measuring antisemitism in online discourse},
   howpublished = {Design-stage research proposal},
@@ -47,7 +47,7 @@
   note         = {Reports no empirical results}
 }
 
-@misc{kornsteinlab2026detection,
+@misc{kornsteinlab2026proposaldetection,
   author       = {{Kornstein Lab for Antisemitism Research}},
   title        = {Evaluating algorithms for antisemitism detection},
   howpublished = {Design-stage research proposal},
@@ -55,7 +55,7 @@
   note         = {Reports no empirical results}
 }
 
-@misc{kornsteinlab2026narratives,
+@misc{kornsteinlab2026proposalnarratives,
   author       = {{Kornstein Lab for Antisemitism Research}},
   title        = {Mapping the spread of antisemitic narratives},
   howpublished = {Design-stage research proposal},
@@ -162,4 +162,44 @@
   pages   = {1--30},
   year    = {2014},
   doi     = {10.1093/pan/mpt024}
+}
+
+% ---------------------------------------------------------------------
+%  Analysis plan (Section 8): tests and response-style model, added in the
+%  revision. Each checked by web search, November 2026.
+% ---------------------------------------------------------------------
+% Supports: the intersection-union principle (an IUT whose component tests
+% each have level alpha has level alpha). Volume, issue, pages confirmed;
+% DOI not confirmed and therefore omitted.
+@article{berger1982,
+  author  = {Berger, Roger L.},
+  title   = {Multiparameter hypothesis testing and acceptance sampling},
+  journal = {Technometrics},
+  volume  = {24},
+  number  = {4},
+  pages   = {295--300},
+  year    = {1982}
+}
+
+% Supports: simultaneous chi-square test of a non-redundant set of vanishing
+% tetrads. Sources give the end page as 175 or 176, so pages are omitted.
+@article{bollen1993tetrad,
+  author  = {Bollen, Kenneth A. and Ting, Kwok-fai},
+  title   = {Confirmatory tetrad analysis},
+  journal = {Sociological Methodology},
+  volume  = {23},
+  year    = {1993}
+}
+
+% Supports: random-intercept item factor model for acquiescence (a person-
+% specific intercept common to all items, with fixed equal loadings).
+@article{maydeuolivares2006,
+  author  = {Maydeu-Olivares, Alberto and Coffman, Donna L.},
+  title   = {Random intercept item factor analysis},
+  journal = {Psychological Methods},
+  volume  = {11},
+  number  = {4},
+  pages   = {344--362},
+  year    = {2006},
+  doi     = {10.1037/1082-989X.11.4.344}
 }

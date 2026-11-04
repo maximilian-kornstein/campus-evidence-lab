@@ -73,6 +73,17 @@ PROVIDER_DEFAULTS: dict[str, dict[str, Any]] = {
 
 RETRYABLE_STATUS = {408, 409, 425, 429, 500, 502, 503, 504, 520, 522, 524, 529}
 
+# Models that spend hidden "thinking" tokens out of the output budget. For these the harness raises
+# max_tokens to at least ``reasoning_max_tokens`` (default 8192) so that a reply is not cut off before
+# any visible text (which the judge would otherwise score as off-topic, i.e. as over-refusal), and,
+# for OpenAI reasoning models, omits temperature, which they reject. Override per provider or per
+# model in --provider-config ("reasoning_pattern", "reasoning_max_tokens", "omit_temperature").
+REASONING_PATTERNS = {
+    "openai": r"^(o\d|gpt-5(?!.*chat))",
+    "google": r"^(models/)?gemini-(2\.5|3)",
+}
+LENGTH_STOPS = {"length", "max_tokens", "MAX_TOKENS", "model_context_window_exceeded"}
+
 
 class ProviderError(RuntimeError):
     """A provider call failed. The message never contains an API key."""
@@ -210,15 +221,39 @@ class Provider:
                 provider=self.name, model=self.model)
         return None
 
+    def is_reasoning(self) -> bool:
+        pat = self.config.get("reasoning_pattern")
+        if pat is None:
+            pat = REASONING_PATTERNS.get(self.config.get("type", self.name))
+        return bool(pat) and re.search(pat, self.model) is not None
+
+    def effective_params(self, params: dict) -> dict:
+        """The sampling params actually sent (reasoning models get a larger output budget)."""
+        p = dict(params)
+        p.update(self.config.get("params") or {})
+        if self.is_reasoning():
+            floor = int(self.config.get("reasoning_max_tokens", 8192))
+            p["max_tokens"] = max(int(p.get("max_tokens", 1024)), floor)
+        return p
+
+    def omits_temperature(self) -> bool:
+        flag = self.config.get("omit_temperature")
+        if flag is None:
+            return self.config.get("type", self.name) == "openai" and self.is_reasoning()
+        return bool(flag)
+
     def settings_fingerprint(self) -> dict:
         """Settings that change the output, used in the cache key (never includes keys)."""
-        keep = ("type", "base_url", "api_version", "max_tokens_field", "omit_temperature", "system_role",
-                "extra_body")
-        return {k: self.config.get(k) for k in keep if self.config.get(k) is not None}
+        keep = ("type", "base_url", "api_version", "max_tokens_field", "system_role", "extra_body",
+                "safety_settings")
+        fp = {k: self.config.get(k) for k in keep if self.config.get(k) is not None}
+        fp["omit_temperature"] = self.omits_temperature()
+        fp["reasoning"] = self.is_reasoning()
+        return fp
 
     # -- the common interface --------------------------------------------------------------------
     def complete(self, messages: list[dict], system: str | None = None, params: dict | None = None) -> dict:
-        params = dict(params or {})
+        params = self.effective_params(params or {})
         url, headers, body = self.build_request(messages, system, params)
         data = self._post(url, headers, body)
         out = self.parse_response(data)
@@ -307,7 +342,7 @@ class AnthropicProvider(Provider):
         }
         if system:
             body["system"] = system
-        if params.get("temperature") is not None and not self.config.get("omit_temperature"):
+        if params.get("temperature") is not None and not self.omits_temperature():
             body["temperature"] = float(params["temperature"])
         if params.get("top_p") is not None:
             body["top_p"] = float(params["top_p"])
@@ -344,7 +379,7 @@ class OpenAIProvider(Provider):
         body: dict[str, Any] = {"model": self.model, "messages": msgs}
         mt_field = self.config.get("max_tokens_field", "max_tokens")
         body[mt_field] = int(params.get("max_tokens", 1024))
-        if params.get("temperature") is not None and not self.config.get("omit_temperature"):
+        if params.get("temperature") is not None and not self.omits_temperature():
             body["temperature"] = float(params["temperature"])
         if params.get("top_p") is not None:
             body["top_p"] = float(params["top_p"])
@@ -383,7 +418,7 @@ class GoogleProvider(Provider):
         contents = [{"role": "model" if m["role"] == "assistant" else "user", "parts": [{"text": m["content"]}]}
                     for m in _check_messages(messages)]
         gen: dict[str, Any] = {"maxOutputTokens": int(params.get("max_tokens", 1024))}
-        if params.get("temperature") is not None and not self.config.get("omit_temperature"):
+        if params.get("temperature") is not None and not self.omits_temperature():
             gen["temperature"] = float(params["temperature"])
         if params.get("top_p") is not None:
             gen["topP"] = float(params["top_p"])
@@ -440,11 +475,14 @@ def load_provider_config(path: str | None) -> dict[str, dict]:
     if path:
         with open(path, encoding="utf-8") as fh:
             user = json.load(fh)
-        for name, over in (user.get("providers", user)).items():
+        sections = list((user.get("providers") or {}).items()) + list((user.get("models") or {}).items())
+        for name, over in sections:
             if any(k.lower().endswith("api_key") or k.lower() == "key" for k in over):
                 raise ConfigError(f"provider config for {name!r} contains an API key field; put keys in "
                                   f"environment variables and name them with api_key_env instead")
+        for name, over in (user.get("providers") or {}).items():
             cfg.setdefault(name, {}).update(over)
+        cfg["models"] = dict(user.get("models") or {})
     return cfg
 
 
@@ -455,10 +493,11 @@ def make_provider(spec: str, provider_config: dict | None = None, *, transport: 
 
     name, model = parse_spec(spec)
     cfgs = provider_config or load_provider_config(None)
-    if name not in cfgs:
+    if name not in cfgs or name == "models":
         raise ValueError(f"unknown provider {name!r}. Known: {', '.join(sorted(cfgs))}. "
                          "Add OpenAI-compatible endpoints with --provider-config.")
     cfg = dict(cfgs[name])
+    cfg.update((cfgs.get("models") or {}).get(f"{name}:{model}", {}))  # per-model overrides
     environ = os.environ if env is None else env
     env_base = environ.get(f"KLAA_{name.upper()}_BASE_URL")
     if env_base:
@@ -485,7 +524,8 @@ def is_mock(spec: str) -> bool:
 def settings_hash(provider: Provider, params: dict) -> str:
     """Stable hash of the provider settings and sampling params that determine a response (not the
     prompt, which is hashed separately, and never the API key)."""
-    clean = {k: v for k, v in sorted(params.items()) if not k.startswith("_")}
+    eff = provider.effective_params(params) if hasattr(provider, "effective_params") else params
+    clean = {k: v for k, v in sorted(eff.items()) if not k.startswith("_")}
     blob = json.dumps({"spec": provider.spec, "settings": provider.settings_fingerprint(), "params": clean},
                       sort_keys=True, ensure_ascii=False)
     return hashlib.sha256(blob.encode("utf-8")).hexdigest()[:16]

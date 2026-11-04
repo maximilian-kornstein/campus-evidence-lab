@@ -56,7 +56,7 @@
   \draw[shk] ($(r2)+(1.0,-1.25)$) -- (r2.-55);
   \draw[shk] ([xshift=-0.95cm]r3.west) -- (r3.west);
   \node[font=\scriptsize,text=LabAccent,anchor=east,align=right,inner sep=1pt]
-    at ([xshift=-0.98cm]on.west) {shock\\[-2pt]$\beta_kS_e\psi_k$};
+    at ([xshift=-0.98cm]on.west) {shock\\[-2pt]$\upsilon_kS_e\psi_k$};
 
   % ============================ (b) matrices ===========================
   \def\cs{0.5}          % cell size
@@ -76,10 +76,10 @@
         \ifnum\pgfmathresult=1
           \ifnum\dark=1
             \node[font=\tiny,text=white,inner sep=0pt] at (#1+\j*\cs+\cs/2,\Ty-\i*\cs-\cs/2)
-              {\pgfmathprintnumber[fixed,precision=2,fixed zerofill]{\v}};
+              {\pgfmathprintnumber[fixed,precision=2,fixed zerofill,skip 0.]{\v}};
           \else
             \node[font=\tiny,text=LabInk,inner sep=0pt] at (#1+\j*\cs+\cs/2,\Ty-\i*\cs-\cs/2)
-              {\pgfmathprintnumber[fixed,precision=2,fixed zerofill]{\v}};
+              {\pgfmathprintnumber[fixed,precision=2,fixed zerofill,skip 0.]{\v}};
           \fi
         \else
           \node[font=\tiny,text=LabGrey,inner sep=0pt] at (#1+\j*\cs+\cs/2,\Ty-\i*\cs-\cs/2) {$\cdot$};
@@ -127,7 +127,7 @@ regions. A directed edge $j\to k$ carries the branching coefficient
 $\alpha_{kj}$, the expected number of stream-$k$ incidents directly triggered
 by one stream-$j$ incident; edge width grows with $\alpha_{kj}$. Loops are
 self-excitation. Every stream also responds directly to salient external
-events, with loading $\beta_k$ (dashed, orange). \emph{(b)} The branching
+events, with loading $\upsilon_k$ (dashed, orange). \emph{(b)} The branching
 matrix $\Amat$ (rows: child stream $k$; columns: parent stream $j$) and the
 multiplier $\Mmat=(\Imat-\Amat)^{-1}=\sum_{m\ge0}\Amat^m$, which counts
 incidents along paths of every length (\cref{sec:th-hawkes}). Shading grows with

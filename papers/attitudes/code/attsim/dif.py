@@ -133,3 +133,24 @@ def fit_mg_s_anchored(stats, spec, C, free):
     m = BifactorMG(spec, C, n_groups=len(stats), free=free, fit_thresholds=True)
     fix_latent(m, [("mu", 2, 1), ("lv", 2, 1)])
     return m.fit(stats)
+
+
+def effect_size_avg(fit, items, n_nodes=20):
+    """Revised secondary screen (sec:design-groups): the absolute difference between the expected item
+    scores under the focal and the reference item parameters, averaged over the focal group's estimated
+    latent distribution N(mu_1, diag(sigma_1^2)) of (theta_G, theta_s(j)) (Gauss-Hermite quadrature)."""
+    from numpy.polynomial.hermite_e import hermegauss
+    x, wq = hermegauss(n_nodes)
+    wq = wq / wq.sum()
+    p0, p1 = fit.params(0), fit.params(1)
+    spec = fit.model.spec
+    mu1, s1 = p1["mu"], np.sqrt(np.exp(p1["lv"]))
+    out = []
+    for j in items:
+        f = spec[j]
+        tG = mu1[0] + s1[0] * x[:, None]
+        tS = mu1[f] + s1[f] * x[None, :]
+        e1 = np.sum(ndtr(p1["aG"][j] * tG[..., None] + p1["aS"][j] * tS[..., None] - p1["b"][j][None, None, :]), axis=-1)
+        e0 = np.sum(ndtr(p0["aG"][j] * tG[..., None] + p0["aS"][j] * tS[..., None] - p0["b"][j][None, None, :]), axis=-1)
+        out.append(float(np.sum(wq[:, None] * wq[None, :] * np.abs(e1 - e0))))
+    return np.array(out)

@@ -8,22 +8,34 @@ Debate about recommender systems and hateful content tends to ask whether
 ``the algorithm'' amplifies it. The framework replaces that question with
 several that have precise answers under stated assumptions. For a stated
 service, recommendation surface, jurisdiction and audit window, and for each
-registered persona, an audit run under the protocol of \cref{sec:protocol}
+confirmatory persona, an audit run under the protocol of \cref{sec:protocol}
 would report the amplification ratio and the additive amplification relative
 to a named reference policy (\cref{def:amplification}), corrected for
 classifier error in each arm (\cref{thm:misclass}), with a confidence sequence
-that remains valid however early the audit stopped (\cref{alg:sequential}),
-and a conclusion fixed in advance: material amplification, material
-de-amplification, no material difference at the registered margin, or an
-inconclusive result (\cref{tab:prot-decisions}). It would also report the
-persona-contrast decomposition, which separates what the algorithm adds for a
-baseline persona from what differs between personas and from their
-interaction (\cref{sec:est-audit}), and the Markov summaries of each arm
-(\cref{prop:markov,thm:perturb}). The Markov summaries are model-based. Their
-value is that they reach beyond the audited session length, to other horizons
-and to the long run, where short sessions can understate the effect of a
-change many times over (\cref{sec:markov-perturb}), and that they say how
-sensitive exposure is to small changes in recommendation probabilities.
+that is approximately valid at whatever point the audit stopped
+(\cref{alg:sequential,thm:sequential}), and a conclusion fixed in advance:
+material amplification, material de-amplification, no material difference at
+the registered margin, a difference of undetermined materiality, or an
+inconclusive result (\cref{tab:prot-decisions}). Only the four-persona
+materiality audit, rung R1 of the feasibility gate, would also report the
+persona-contrast decomposition (\cref{sec:est-audit}).
+% ALIGN-WITH-SIM: the status of the Markov summaries depends on E4b; finalise.
+The Markov summaries of each arm (\cref{prop:markov,thm:perturb}) would be
+reported as exploratory and model-based. Their value is that they reach beyond
+the audited session length, where short sessions can understate the effect of
+a change many times over (\cref{sec:markov-perturb}), but the slate states of
+the protocol are observed through a classifier whose errors the chain
+correction must undo.
+
+What the audit would in fact establish is smaller, and the paper's power
+calculations say so. Under plausible inputs, the four-persona materiality
+audit needs about $4{,}900$ accounts and $170{,}000$ coded exposures, and
+under illustrative capacity caps the feasibility gate selects rung R4: the
+detection of amplification, or de-amplification, for the Jewish-interest
+persona alone, with ``difference detected; materiality undetermined'' as the
+conclusion it is powered to reach. That is a modest result, but a defined
+one, and the alternative, an audit too small to answer its question, would
+spend its footprint on no knowledge (\cref{sec:prot-power}).
 
 Such an audit could not establish everything that is asked of it, and the
 framework says exactly what it leaves out. A fixed-demand audit says nothing
@@ -43,7 +55,7 @@ given demand, and it is the claim an independent audit can test
 (\cref{sec:bg-governance}).
 
 \paragraph{Limitations}
-We stress five.
+We stress six.
 
 \emph{The moving target.} Recommenders are retrained and re-tuned
 continuously, and the eligible pool changes by the hour. An audit estimates
@@ -126,6 +138,22 @@ $\xi$ times that share, but $\xi$ is not identified by the audit. Sentinels
 and a randomised-saturation design provide evidence about it, not a bound,
 which is why the protocol reports the breakdown value of each conclusion
 rather than a single corrected estimate.
+
+\emph{Feasibility.} The audit the questions call for is not the audit a
+small lab can run. A materiality test across four personas needs thousands of
+accounts and coded exposures (\cref{tab:prot-power}), and the protocol
+therefore commits only to a pilot and a registered gate, which under
+illustrative caps selects detection for one persona. The decomposition across
+personas, materiality conclusions and evidence of no material difference are
+then out of reach. Platform-side access under Article~40(4), where it can
+deliver exposure under a fixed demand profile, removes the need for accounts
+and with it most of this constraint; until it does, single-persona detection
+audits are what independent researchers can responsibly run. The
+approximations add to this: the sequential guarantee is asymptotic, and at
+the registered sizes its level is checked by simulation and by a pilot whose
+ten puppets per cell cannot reveal the tails of the double-sampled outcome
+(\cref{sec:prot-stopping}).
+% ALIGN-WITH-SIM: add the E5b finding on the primary sequence here if it changes the claim.
 
 \paragraph{Extensions}
 Three extensions seem most valuable. First, \emph{generative answer engines}.

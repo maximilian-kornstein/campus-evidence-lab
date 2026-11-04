@@ -1,5 +1,8 @@
 """SHA-256 of a canonicalised items file (and optionally the rubric), for pre-registration.
 
+items_sha256 is the pre-registration hash. The raw-bytes SHA-256 (as printed by `sha256sum` and
+bench/validate.py) is reported too; it changes with whitespace or line order, the canonical one does not.
+
 Canonical form: every non-blank JSONL line is parsed and re-serialised with sorted keys, compact
 separators and UTF-8 (no ASCII escaping); the records are sorted by "id" (then by their canonical
 text); and the lines are joined with "\\n" plus a trailing newline. Whitespace, key order and line
@@ -39,6 +42,12 @@ def items_hash(path: str | pathlib.Path) -> str:
     return hashlib.sha256(canonical_items(path).encode("utf-8")).hexdigest()
 
 
+def raw_file_hash(path: str | pathlib.Path) -> str:
+    """SHA-256 of the file's exact bytes (what `sha256sum` and bench/validate.py print)."""
+    with open(path, "rb") as fh:
+        return hashlib.sha256(fh.read()).hexdigest()
+
+
 def file_json_hash(path: str | pathlib.Path) -> str:
     with open(path, encoding="utf-8") as fh:
         return hashlib.sha256(canonical_json(json.load(fh)).encode("utf-8")).hexdigest()
@@ -55,12 +64,15 @@ def main(argv=None) -> int:
     ap.add_argument("--rubric", help="rubric JSON to hash as well")
     ap.add_argument("--json", action="store_true", help="print machine-readable JSON")
     a = ap.parse_args(argv)
-    out = {"items_file": str(a.items), "items_count": count_items(a.items), "items_sha256": items_hash(a.items)}
+    out = {"items_file": str(a.items), "items_count": count_items(a.items),
+           "items_sha256": items_hash(a.items), "items_file_sha256_raw_bytes": raw_file_hash(a.items)}
     if a.rubric:
         out["rubric_file"] = str(a.rubric)
         out["rubric_sha256"] = file_json_hash(a.rubric)
+        out["rubric_file_sha256_raw_bytes"] = raw_file_hash(a.rubric)
         try:
-            out["rubric_version"] = json.load(open(a.rubric, encoding="utf-8")).get("version")
+            r = json.load(open(a.rubric, encoding="utf-8"))
+            out["rubric_version"] = r.get("rubric_version") or r.get("version")
         except Exception:  # noqa: BLE001
             pass
     if a.json:
