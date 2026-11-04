@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Overview of the Kornstein Lab's four methods papers on measuring antisemitism, with links to one-page plain-language briefs. Methods papers only; no real-world findings.">
+<title>Kornstein Lab Research Briefs</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --ink: #1b1d22;
+  --muted: #5b6069;
+  --navy: #14284b;
+  --navy-mid: #3d5a80;
+  --rule: #c8ceda;
+  --tint: #f2f4f8;
+  --accent: #b8460e;
+  --sand: #fbf7f3;
+  --sand-rule: #e9d9cb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1522;
+    --ink: #e4e8ef;
+    --muted: #a3aab6;
+    --navy: #b4c5e4;
+    --navy-mid: #8fa7cf;
+    --rule: #2f3b54;
+    --tint: #172036;
+    --accent: #f0a26e;
+    --sand: #211a15;
+    --sand-rule: #4a3626;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1522;
+  --ink: #e4e8ef;
+  --muted: #a3aab6;
+  --navy: #b4c5e4;
+  --navy-mid: #8fa7cf;
+  --rule: #2f3b54;
+  --tint: #172036;
+  --accent: #f0a26e;
+  --sand: #211a15;
+  --sand-rule: #4a3626;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  /* System fonts only. Platform UI fonts first; Arial-metric fallbacks before the generic
+     system-ui so that wide Linux defaults do not push a brief onto a second printed page. */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, "Liberation Sans", system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.page {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 2.25rem 16px 2rem;
+}
+a { color: var(--navy-mid); text-underline-offset: 0.15em; }
+a:hover { color: var(--navy); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.topnav { margin: 0 0 1rem; font-size: 0.875rem; }
+.kicker {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.kicker .sep { color: var(--rule); margin: 0 0.45em; }
+.kicker .k2 { color: var(--muted); }
+.masthead { border-bottom: 2px solid var(--navy); padding-bottom: 0.9rem; margin-bottom: 1.1rem; }
+.masthead::before {
+  content: ""; display: block; height: 0; border-top: 1px solid transparent;
+}
+h1 {
+  margin: 0.55rem 0 0.2rem;
+  font-size: 2.15rem;
+  line-height: 1.12;
+  color: var(--navy);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.subtitle { margin: 0; font-size: 1.05rem; color: var(--ink); line-height: 1.35; }
+h2 {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--navy);
+  font-weight: 700;
+}
+section { margin: 0 0 1.05rem; }
+p { margin: 0 0 0.5rem; }
+p:last-child { margin-bottom: 0; }
+.oneline {
+  background: var(--tint);
+  border-left: 3px solid var(--navy);
+  padding: 0.7rem 1rem 0.75rem;
+}
+.oneline p { font-size: 1.1rem; line-height: 1.45; }
+ul { margin: 0; padding-left: 1.15rem; }
+li { margin: 0 0 0.4rem; padding-left: 0.1rem; }
+li:last-child { margin-bottom: 0; }
+li::marker { color: var(--navy-mid); }
+.lead { font-weight: 650; color: var(--navy); }
+.note { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.35rem; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin: 0 0 1.05rem; }
+.pair section { margin: 0; }
+.status {
+  background: var(--sand);
+  border: 1px solid var(--sand-rule);
+  border-left: 3px solid var(--accent);
+  padding: 0.7rem 0.9rem 0.75rem;
+}
+.status h2 { color: var(--accent); }
+.status .badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  padding: 0 0.35em;
+  margin-right: 0.35em;
+  vertical-align: 0.08em;
+}
+.next { border-top: 1px solid var(--rule); padding-top: 0.6rem; }
+footer {
+  border-top: 1px solid var(--rule);
+  padding-top: 0.55rem;
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+/* index page */
+.intro { font-size: 1.02rem; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin: 0 0 1.1rem; padding: 0; list-style: none; }
+.card {
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--navy);
+  background: var(--bg);
+  padding: 0.75rem 0.9rem 0.8rem;
+  display: flex; flex-direction: column;
+  margin: 0;
+}
+.card .num { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0; }
+.card h3 { margin: 0.15rem 0 0.1rem; font-size: 1.2rem; line-height: 1.2; color: var(--navy); }
+.card h3 a { color: inherit; text-decoration: none; }
+.card h3 a:hover { text-decoration: underline; }
+.card .q { margin: 0 0 0.4rem; font-style: italic; color: var(--ink); font-size: 0.95rem; }
+.card .one { font-size: 0.92rem; margin: 0 0 0.5rem; flex: 1; }
+.card .more { font-size: 0.88rem; font-weight: 600; margin: 0; }
+.howmade { background: var(--tint); border-left: 3px solid var(--navy); padding: 0.7rem 1rem 0.75rem; }
+
+@media (max-width: 640px) {
+  .page { padding-top: 1.5rem; }
+  h1 { font-size: 1.75rem; }
+  .pair, .cards { grid-template-columns: 1fr; }
+  .oneline p { font-size: 1.02rem; }
+}
+
+@page { size: Letter; margin: 0.5in 0.6in 0.45in; }
+@media print {
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    color-scheme: light;
+    --bg: #ffffff; --ink: #1b1d22; --muted: #5b6069; --navy: #14284b; --navy-mid: #3d5a80;
+    --rule: #c8ceda; --tint: #f2f4f8; --accent: #b8460e; --sand: #fbf7f3; --sand-rule: #e9d9cb;
+  }
+  html { font-size: 9pt; }
+  body { line-height: 1.38; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { max-width: none; padding: 0; }
+  h1 { font-size: 2rem; margin-top: 0.4rem; }
+  .masthead { padding-bottom: 0.7rem; margin-bottom: 0.85rem; }
+  section, .pair { margin-bottom: 0.75rem; }
+  .oneline { padding: 0.55rem 0.9rem 0.6rem; }
+  .oneline p { font-size: 1.05rem; line-height: 1.38; }
+  li { margin-bottom: 0.3rem; }
+  .note { margin-bottom: 0.25rem; }
+  .status { padding: 0.55rem 0.8rem 0.6rem; }
+  .next { padding-top: 0.5rem; }
+  footer { margin-top: 0.2rem; }
+  .topnav { display: none; }
+  a { color: inherit; text-decoration: none; }
+  section, .pair, .card, li { break-inside: avoid; }
+  .pair { grid-template-columns: 1fr 1fr; }
+  .cards { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+<p class="kicker">Kornstein Lab for Antisemitism Research<span class="sep" aria-hidden="true">|</span><span class="k2">Research program · Plain-language overview</span></p>
+<h1>Measuring Antisemitism Carefully</h1>
+<p class="subtitle">Four methods papers on what is recorded, how it spreads, what people believe, and what algorithms show.</p>
+</header>
+<main>
+<section aria-label="Introduction">
+<p class="intro">Decisions about antisemitism, such as where to send security resources, how to judge a policy or what to ask of a platform, rest on numbers. Each of our first four papers takes one kind of number, shows how it can mislead, builds methods to measure it more honestly, and tests those methods on computer-simulated data where the right answer is known. <strong>None reports real-world findings yet;</strong> each ends with a plan for how the real measurement would be done.</p>
+</section>
+<section aria-labelledby="h-papers">
+<h2 id="h-papers">The four papers</h2>
+<ul class="cards">
+<li class="card">
+<p class="num">Paper 1</p>
+<h3><a href="dark-figure.html">The Dark Figure</a></h3>
+<p class="q">How many antisemitic incidents go unrecorded?</p>
+<p class="one">By checking which antisemitic incidents turn up on more than one incomplete list, we can estimate how many incidents every list missed, and say honestly how unsure that estimate is.</p>
+<p class="more"><a href="dark-figure.html" aria-label="Read the one-page brief: The Dark Figure">Read the one-page brief &rarr;</a></p>
+</li>
+<li class="card">
+<p class="num">Paper 2</p>
+<h3><a href="contagion.html">Shock and Contagion</a></h3>
+<p class="q">After a major event, how much of a surge is reaction, and how much is contagion?</p>
+<p class="one">When antisemitic incidents spike after a major event, our tools estimate how much of the spike is a direct reaction and how much is incidents setting off more incidents, and say clearly when the data cannot tell the two apart.</p>
+<p class="more"><a href="contagion.html" aria-label="Read the one-page brief: Shock and Contagion">Read the one-page brief &rarr;</a></p>
+</li>
+<li class="card">
+<p class="num">Paper 3</p>
+<h3><a href="attitudes.html">Where Does Criticism End?</a></h3>
+<p class="q">How closely do views about Israel travel with stereotypes about Jews?</p>
+<p class="one">We built a survey method that checks, one statement at a time and with rules fixed in advance, how closely agreeing with a statement about Israel goes together with agreeing with classic stereotypes about Jews, without taking a side in the debate over where criticism ends.</p>
+<p class="more"><a href="attitudes.html" aria-label="Read the one-page brief: Where Does Criticism End?">Read the one-page brief &rarr;</a></p>
+</li>
+<li class="card">
+<p class="num">Paper 4</p>
+<h3><a href="amplification.html">Supply or Demand?</a></h3>
+<p class="q">Do recommendation algorithms supply antisemitic content beyond what users seek?</p>
+<p class="one">We define precisely what it would mean for a recommendation algorithm to push antisemitic posts to people beyond what they go looking for, and design a careful, ethical way to test whether one does.</p>
+<p class="more"><a href="amplification.html" aria-label="Read the one-page brief: Supply or Demand?">Read the one-page brief &rarr;</a></p>
+</li>
+</ul>
+</section>
+<section class="status" aria-labelledby="h-status">
+<h2 id="h-status">What these papers are not</h2>
+<p><span class="badge">Status</span><strong>Methods papers, with no real-world findings.</strong> No actual incident counts, contagion, attitudes or platform behaviour have been measured yet. Each paper proposes how to measure these things responsibly and sets out a plan, with its analysis code, to be registered publicly before any real data are examined.</p>
+</section>
+<section class="howmade" aria-labelledby="h-how">
+<h2 id="h-how">How this work was made</h2>
+<p>These papers were drafted with substantial AI assistance (Anthropic’s Claude). The lab chose the questions, directed the research and reviewed the results. The drafts then went through independent automated review passes (referee-style critiques, fact-checks of cited sources and, for the first two papers, independent audits of the simulation code) and were revised in response. Every simulation result in the papers is produced by the released code, from computer-simulated data. They are methods papers, not findings: they have not been peer-reviewed or published, and none of the real-world studies they plan has been carried out.</p>
+</section>
+</main>
+<footer>
+<p>Kornstein Lab for Antisemitism Research · November 2026 · Drafted with substantial AI assistance (Anthropic’s Claude), directed and reviewed by the lab; full paper and code available on request.</p>
+</footer>
+</div>
+</body>
+</html>

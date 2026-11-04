@@ -111,13 +111,14 @@ deliver exposure under a fixed demand profile, removes the need for accounts
 and with it most of this constraint; until it does, single-persona detection
 audits are what independent researchers can responsibly run. The
 approximations add to this: the sequential guarantee is asymptotic, and at
-the registered sizes its level is checked by simulation and by a pilot whose
-ten puppets per cell cannot reveal the tails of the double-sampled outcome
-(\cref{sec:prot-stopping}).
-% ALIGN-WITH-SIM: E5b finding on the primary sequence, aligned (07, sec:sim-sequential).
-In simulation the sequence on $\widetilde E_u$ was conservative at the
-registered design despite heavy tails, but that is evidence about one
-synthetic world, not a guarantee for a real audit.
+the registered sizes its level is checked by simulation and by a pilot check
+on ten puppets per cell (\cref{sec:prot-stopping}). In simulation the
+sequence on $\widetilde E_u$ was conservative at the registered design
+despite heavy tails, and the pilot check failed whenever the sequence did not
+hold (\cref{sec:sim-sequential}). This support holds only at the synthetic
+world's inputs, which are more exposed and less variable than the
+illustrative ones; rung R1 was not simulated, and tails rarer than ten pilot
+puppets can show would escape the pilot check.
 
 \paragraph{Extensions}
 Three extensions seem most valuable. For \emph{generative answer engines},

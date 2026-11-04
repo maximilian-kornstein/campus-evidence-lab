@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Plain-language brief of a methods paper on defining and auditing algorithmic amplification of antisemitic content. Simulation study on an invented recommender only; no real platform audited.">
+<title>Supply or Demand? · Brief</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --ink: #1b1d22;
+  --muted: #5b6069;
+  --navy: #14284b;
+  --navy-mid: #3d5a80;
+  --rule: #c8ceda;
+  --tint: #f2f4f8;
+  --accent: #b8460e;
+  --sand: #fbf7f3;
+  --sand-rule: #e9d9cb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1522;
+    --ink: #e4e8ef;
+    --muted: #a3aab6;
+    --navy: #b4c5e4;
+    --navy-mid: #8fa7cf;
+    --rule: #2f3b54;
+    --tint: #172036;
+    --accent: #f0a26e;
+    --sand: #211a15;
+    --sand-rule: #4a3626;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1522;
+  --ink: #e4e8ef;
+  --muted: #a3aab6;
+  --navy: #b4c5e4;
+  --navy-mid: #8fa7cf;
+  --rule: #2f3b54;
+  --tint: #172036;
+  --accent: #f0a26e;
+  --sand: #211a15;
+  --sand-rule: #4a3626;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  /* System fonts only. Platform UI fonts first; Arial-metric fallbacks before the generic
+     system-ui so that wide Linux defaults do not push a brief onto a second printed page. */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, "Liberation Sans", system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.page {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 2.25rem 16px 2rem;
+}
+a { color: var(--navy-mid); text-underline-offset: 0.15em; }
+a:hover { color: var(--navy); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.topnav { margin: 0 0 1rem; font-size: 0.875rem; }
+.kicker {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.kicker .sep { color: var(--rule); margin: 0 0.45em; }
+.kicker .k2 { color: var(--muted); }
+.masthead { border-bottom: 2px solid var(--navy); padding-bottom: 0.9rem; margin-bottom: 1.1rem; }
+.masthead::before {
+  content: ""; display: block; height: 0; border-top: 1px solid transparent;
+}
+h1 {
+  margin: 0.55rem 0 0.2rem;
+  font-size: 2.15rem;
+  line-height: 1.12;
+  color: var(--navy);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.subtitle { margin: 0; font-size: 1.05rem; color: var(--ink); line-height: 1.35; }
+h2 {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--navy);
+  font-weight: 700;
+}
+section { margin: 0 0 1.05rem; }
+p { margin: 0 0 0.5rem; }
+p:last-child { margin-bottom: 0; }
+.oneline {
+  background: var(--tint);
+  border-left: 3px solid var(--navy);
+  padding: 0.7rem 1rem 0.75rem;
+}
+.oneline p { font-size: 1.1rem; line-height: 1.45; }
+ul { margin: 0; padding-left: 1.15rem; }
+li { margin: 0 0 0.4rem; padding-left: 0.1rem; }
+li:last-child { margin-bottom: 0; }
+li::marker { color: var(--navy-mid); }
+.lead { font-weight: 650; color: var(--navy); }
+.note { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.35rem; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin: 0 0 1.05rem; }
+.pair section { margin: 0; }
+.status {
+  background: var(--sand);
+  border: 1px solid var(--sand-rule);
+  border-left: 3px solid var(--accent);
+  padding: 0.7rem 0.9rem 0.75rem;
+}
+.status h2 { color: var(--accent); }
+.status .badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  padding: 0 0.35em;
+  margin-right: 0.35em;
+  vertical-align: 0.08em;
+}
+.next { border-top: 1px solid var(--rule); padding-top: 0.6rem; }
+footer {
+  border-top: 1px solid var(--rule);
+  padding-top: 0.55rem;
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+/* index page */
+.intro { font-size: 1.02rem; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin: 0 0 1.1rem; padding: 0; list-style: none; }
+.card {
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--navy);
+  background: var(--bg);
+  padding: 0.75rem 0.9rem 0.8rem;
+  display: flex; flex-direction: column;
+  margin: 0;
+}
+.card .num { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0; }
+.card h3 { margin: 0.15rem 0 0.1rem; font-size: 1.2rem; line-height: 1.2; color: var(--navy); }
+.card h3 a { color: inherit; text-decoration: none; }
+.card h3 a:hover { text-decoration: underline; }
+.card .q { margin: 0 0 0.4rem; font-style: italic; color: var(--ink); font-size: 0.95rem; }
+.card .one { font-size: 0.92rem; margin: 0 0 0.5rem; flex: 1; }
+.card .more { font-size: 0.88rem; font-weight: 600; margin: 0; }
+.howmade { background: var(--tint); border-left: 3px solid var(--navy); padding: 0.7rem 1rem 0.75rem; }
+
+@media (max-width: 640px) {
+  .page { padding-top: 1.5rem; }
+  h1 { font-size: 1.75rem; }
+  .pair, .cards { grid-template-columns: 1fr; }
+  .oneline p { font-size: 1.02rem; }
+}
+
+@page { size: Letter; margin: 0.5in 0.6in 0.45in; }
+@media print {
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    color-scheme: light;
+    --bg: #ffffff; --ink: #1b1d22; --muted: #5b6069; --navy: #14284b; --navy-mid: #3d5a80;
+    --rule: #c8ceda; --tint: #f2f4f8; --accent: #b8460e; --sand: #fbf7f3; --sand-rule: #e9d9cb;
+  }
+  html { font-size: 9pt; }
+  body { line-height: 1.38; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { max-width: none; padding: 0; }
+  h1 { font-size: 2rem; margin-top: 0.4rem; }
+  .masthead { padding-bottom: 0.7rem; margin-bottom: 0.85rem; }
+  section, .pair { margin-bottom: 0.75rem; }
+  .oneline { padding: 0.55rem 0.9rem 0.6rem; }
+  .oneline p { font-size: 1.05rem; line-height: 1.38; }
+  li { margin-bottom: 0.3rem; }
+  .note { margin-bottom: 0.25rem; }
+  .status { padding: 0.55rem 0.8rem 0.6rem; }
+  .next { padding-top: 0.5rem; }
+  footer { margin-top: 0.2rem; }
+  .topnav { display: none; }
+  a { color: inherit; text-decoration: none; }
+  section, .pair, .card, li { break-inside: avoid; }
+  .pair { grid-template-columns: 1fr 1fr; }
+  .cards { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+<nav class="topnav" aria-label="Breadcrumb"><a href="index.html">&larr; All four briefs</a></nav>
+<header class="masthead">
+<p class="kicker">Kornstein Lab for Antisemitism Research<span class="sep" aria-hidden="true">|</span><span class="k2">Plain-language brief · Paper 4 of 4</span></p>
+<h1>Supply or Demand?</h1>
+<p class="subtitle">Auditing Algorithmic Amplification of Antisemitic Content</p>
+</header>
+<main>
+<section class="oneline" aria-labelledby="h-oneline">
+<h2 id="h-oneline">In one line</h2>
+<p>We define precisely what it would mean for a recommendation algorithm to push antisemitic posts to people beyond what they go looking for, and design a careful, ethical way to test whether one does.</p>
+</section>
+<section aria-labelledby="h-problem">
+<h2 id="h-problem">The problem</h2>
+<p>In a 2023 EU survey of almost 8,000 Jewish people in 13 countries, 90% said they had encountered antisemitism online in the previous year. That shows such content is widely seen, not why. People may see it because they seek it out (demand) or because a recommendation algorithm shows it more than an alternative feed would (supply), and the two call for different remedies. Claims that algorithms do or do not “amplify” hateful content rarely say “compared with what”, so they often cannot be checked, even as EU law (the Digital Services Act) asks the largest platforms to assess such risks.</p>
+</section>
+<section aria-labelledby="h-built">
+<h2 id="h-built">What we built</h2>
+<ul>
+<li><span class="lead">A precise definition.</span> <em>Amplification ratio = exposure to antisemitic content under the algorithm ÷ exposure under a named alternative feed</em> (for example, newest-first), for the same interests. Above 1 means the algorithm supplies more.</li>
+<li><span class="lead">A randomised test-account audit.</span> Scripted accounts with fixed interests are randomly assigned to the algorithmic or the alternative feed. They never post, interact with real people or open flagged content.</li>
+<li><span class="lead">Correcting for an imperfect detector.</span> Automated classifiers make mistakes, and different mistakes in the two feeds can make a naive comparison point the wrong way. Human checks of samples from each feed correct this.</li>
+<li><span class="lead">Stopping when the evidence is clear.</span> A statistical rule lets an audit end early without inflating false alarms, keeping its footprint on a real service small.</li>
+</ul>
+</section>
+<section aria-labelledby="h-sims">
+<h2 id="h-sims">What our simulations show</h2>
+<p class="note">Results come from an invented recommender system in which we know the true answer, and from sample-size calculations.</p>
+<ul>
+<li><span class="lead">Detector errors can flip the answer.</span> When the detector erred differently in the two feeds, a naive comparison turned a true ratio of 0.89 (less exposure) into 1.45 (more). Checking samples separately in each feed fixed this; a single pooled correction made it worse.</li>
+<li><span class="lead">Test accounts can disturb what they measure.</span> When they made up a large share of activity, the estimate was biased, in one case enough to reverse its sign. And such audits measure supply only, not whether an algorithm changes what people want.</li>
+<li><span class="lead">The planned stopping rule held up.</span> In simulated audits it kept false conclusions within its stated error rate despite skewed data, and a pilot check flagged nearly all of the test designs in which it broke down.</li>
+<li><span class="lead">A full audit is beyond a small lab.</span> Our sample-size calculations show that testing for meaningful amplification across four user profiles needs about 4,900 test accounts and 170,000 human-checked items. The plan therefore commits only to a pilot; within illustrative limits, it could then ask a narrower question for one profile (Jewish interest): is there any difference at all?</li>
+</ul>
+</section>
+<div class="pair">
+<section class="status" aria-labelledby="h-not">
+<h2 id="h-not">What this is not</h2>
+<p><span class="badge">Status</span><strong>A methods paper, with no real-world findings.</strong> No real platform has been measured yet: we have audited none, and nothing here is a finding that any service amplifies antisemitic content, or that it does not. Every simulation result comes from an invented recommender, and the EU survey figure is quoted only to frame the problem. The paper proposes how to run such an audit responsibly.</p>
+</section>
+<section class="next" aria-labelledby="h-next">
+<h2 id="h-next">What would come next</h2>
+<p>A pilot audit of one feed on one service in one EU country, only after ethics and legal review, preferring official researcher data access under the Digital Services Act to test accounts, with the protocol and code registered before any account is created. A pre-set feasibility gate then picks the most informative audit the lab can responsibly run, or stops the audit; the platform would see any findings 30 days before release, with no veto.</p>
+</section>
+</div>
+</main>
+<footer>
+<p>Kornstein Lab for Antisemitism Research · November 2026 · Drafted with substantial AI assistance (Anthropic’s Claude), directed and reviewed by the lab; full paper and code available on request.</p>
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Plain-language brief of a methods paper on separating direct reactions from contagion in surges of antisemitic incidents. Simulation study only; no real-world estimates.">
+<title>Shock and Contagion · Brief</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --ink: #1b1d22;
+  --muted: #5b6069;
+  --navy: #14284b;
+  --navy-mid: #3d5a80;
+  --rule: #c8ceda;
+  --tint: #f2f4f8;
+  --accent: #b8460e;
+  --sand: #fbf7f3;
+  --sand-rule: #e9d9cb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1522;
+    --ink: #e4e8ef;
+    --muted: #a3aab6;
+    --navy: #b4c5e4;
+    --navy-mid: #8fa7cf;
+    --rule: #2f3b54;
+    --tint: #172036;
+    --accent: #f0a26e;
+    --sand: #211a15;
+    --sand-rule: #4a3626;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1522;
+  --ink: #e4e8ef;
+  --muted: #a3aab6;
+  --navy: #b4c5e4;
+  --navy-mid: #8fa7cf;
+  --rule: #2f3b54;
+  --tint: #172036;
+  --accent: #f0a26e;
+  --sand: #211a15;
+  --sand-rule: #4a3626;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  /* System fonts only. Platform UI fonts first; Arial-metric fallbacks before the generic
+     system-ui so that wide Linux defaults do not push a brief onto a second printed page. */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, "Liberation Sans", system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.page {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 2.25rem 16px 2rem;
+}
+a { color: var(--navy-mid); text-underline-offset: 0.15em; }
+a:hover { color: var(--navy); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.topnav { margin: 0 0 1rem; font-size: 0.875rem; }
+.kicker {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.kicker .sep { color: var(--rule); margin: 0 0.45em; }
+.kicker .k2 { color: var(--muted); }
+.masthead { border-bottom: 2px solid var(--navy); padding-bottom: 0.9rem; margin-bottom: 1.1rem; }
+.masthead::before {
+  content: ""; display: block; height: 0; border-top: 1px solid transparent;
+}
+h1 {
+  margin: 0.55rem 0 0.2rem;
+  font-size: 2.15rem;
+  line-height: 1.12;
+  color: var(--navy);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.subtitle { margin: 0; font-size: 1.05rem; color: var(--ink); line-height: 1.35; }
+h2 {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--navy);
+  font-weight: 700;
+}
+section { margin: 0 0 1.05rem; }
+p { margin: 0 0 0.5rem; }
+p:last-child { margin-bottom: 0; }
+.oneline {
+  background: var(--tint);
+  border-left: 3px solid var(--navy);
+  padding: 0.7rem 1rem 0.75rem;
+}
+.oneline p { font-size: 1.1rem; line-height: 1.45; }
+ul { margin: 0; padding-left: 1.15rem; }
+li { margin: 0 0 0.4rem; padding-left: 0.1rem; }
+li:last-child { margin-bottom: 0; }
+li::marker { color: var(--navy-mid); }
+.lead { font-weight: 650; color: var(--navy); }
+.note { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.35rem; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin: 0 0 1.05rem; }
+.pair section { margin: 0; }
+.status {
+  background: var(--sand);
+  border: 1px solid var(--sand-rule);
+  border-left: 3px solid var(--accent);
+  padding: 0.7rem 0.9rem 0.75rem;
+}
+.status h2 { color: var(--accent); }
+.status .badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  padding: 0 0.35em;
+  margin-right: 0.35em;
+  vertical-align: 0.08em;
+}
+.next { border-top: 1px solid var(--rule); padding-top: 0.6rem; }
+footer {
+  border-top: 1px solid var(--rule);
+  padding-top: 0.55rem;
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+/* index page */
+.intro { font-size: 1.02rem; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin: 0 0 1.1rem; padding: 0; list-style: none; }
+.card {
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--navy);
+  background: var(--bg);
+  padding: 0.75rem 0.9rem 0.8rem;
+  display: flex; flex-direction: column;
+  margin: 0;
+}
+.card .num { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0; }
+.card h3 { margin: 0.15rem 0 0.1rem; font-size: 1.2rem; line-height: 1.2; color: var(--navy); }
+.card h3 a { color: inherit; text-decoration: none; }
+.card h3 a:hover { text-decoration: underline; }
+.card .q { margin: 0 0 0.4rem; font-style: italic; color: var(--ink); font-size: 0.95rem; }
+.card .one { font-size: 0.92rem; margin: 0 0 0.5rem; flex: 1; }
+.card .more { font-size: 0.88rem; font-weight: 600; margin: 0; }
+.howmade { background: var(--tint); border-left: 3px solid var(--navy); padding: 0.7rem 1rem 0.75rem; }
+
+@media (max-width: 640px) {
+  .page { padding-top: 1.5rem; }
+  h1 { font-size: 1.75rem; }
+  .pair, .cards { grid-template-columns: 1fr; }
+  .oneline p { font-size: 1.02rem; }
+}
+
+@page { size: Letter; margin: 0.5in 0.6in 0.45in; }
+@media print {
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    color-scheme: light;
+    --bg: #ffffff; --ink: #1b1d22; --muted: #5b6069; --navy: #14284b; --navy-mid: #3d5a80;
+    --rule: #c8ceda; --tint: #f2f4f8; --accent: #b8460e; --sand: #fbf7f3; --sand-rule: #e9d9cb;
+  }
+  html { font-size: 9pt; }
+  body { line-height: 1.38; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { max-width: none; padding: 0; }
+  h1 { font-size: 2rem; margin-top: 0.4rem; }
+  .masthead { padding-bottom: 0.7rem; margin-bottom: 0.85rem; }
+  section, .pair { margin-bottom: 0.75rem; }
+  .oneline { padding: 0.55rem 0.9rem 0.6rem; }
+  .oneline p { font-size: 1.05rem; line-height: 1.38; }
+  li { margin-bottom: 0.3rem; }
+  .note { margin-bottom: 0.25rem; }
+  .status { padding: 0.55rem 0.8rem 0.6rem; }
+  .next { padding-top: 0.5rem; }
+  footer { margin-top: 0.2rem; }
+  .topnav { display: none; }
+  a { color: inherit; text-decoration: none; }
+  section, .pair, .card, li { break-inside: avoid; }
+  .pair { grid-template-columns: 1fr 1fr; }
+  .cards { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+<nav class="topnav" aria-label="Breadcrumb"><a href="index.html">&larr; All four briefs</a></nav>
+<header class="masthead">
+<p class="kicker">Kornstein Lab for Antisemitism Research<span class="sep" aria-hidden="true">|</span><span class="k2">Plain-language brief · Paper 2 of 4</span></p>
+<h1>Shock and Contagion</h1>
+<p class="subtitle">Self-Exciting Point Processes for Surges in Antisemitic Incidents</p>
+</header>
+<main>
+<section class="oneline" aria-labelledby="h-oneline">
+<h2 id="h-oneline">In one line</h2>
+<p>When antisemitic incidents spike after a major event, our tools estimate how much of the spike is a direct reaction and how much is incidents setting off more incidents, and say clearly when the data cannot tell the two apart.</p>
+</section>
+<section aria-labelledby="h-problem">
+<h2 id="h-problem">The problem</h2>
+<p>Antisemitic incidents arrive in surges, often after salient events: the UK’s Community Security Trust recorded an average of 5 incidents a day in 2023 before 7&nbsp;October, and 31 a day from 7&nbsp;October to the end of the year. A surge raises three questions: how much is a direct reaction to the event, how much is incidents prompting further incidents through imitation or emboldenment, and does online hostility spill over into offline incidents? The answers call for different responses, from vigilance after similar events to breaking chains early or watching online activity for early warning. Handled carelessly, the same data can seem to show “contagion” that is not there, which matters to any community that plans its security around such patterns.</p>
+</section>
+<section aria-labelledby="h-built">
+<h2 id="h-built">What we built</h2>
+<ul>
+<li><span class="lead">A “ripple” model of incidents</span> (a Hawkes process). Each incident is either a response to background conditions or to an outside event, or is triggered by an earlier incident, possibly across regions or between online and offline channels.</li>
+<li><span class="lead">A surge breakdown.</span> The expected number of incidents after an event is split into what would have happened anyway, the direct reaction, and the knock-on cascade, each with a margin of uncertainty.</li>
+<li><span class="lead">Three traps, proven and named.</span> Within a single stream of incidents, cascades and clusters of unrecorded outside shocks can look identical; a model that misses events or is too rigid “finds” contagion that is not there; and under-reporting hides real contagion, which we correct using Paper&nbsp;1’s estimate of how many incidents go unrecorded.</li>
+<li><span class="lead">An early-warning rule</span> that makes the trade-off between false alarms and missed surges an explicit choice, agreed with the people who bear the costs, plus an adjustment for reporting delays.</li>
+</ul>
+</section>
+<section aria-labelledby="h-sims">
+<h2 id="h-sims">What our simulations show</h2>
+<p class="note">All results come from computer-simulated incident data in which we know the true answer.</p>
+<ul>
+<li><span class="lead">Phantom contagion is a real risk.</span> In data with no contagion at all, a model with a fixed background rate attributed up to 63% of incidents to earlier incidents. Smoothing the background did not remove this when the hidden shocks were short and sharp; supplying the dates of the outside events largely did, where tested.</li>
+<li><span class="lead">Correcting for under-reporting mostly works, within limits.</span> It restored accurate uncertainty ranges except when contagion was weak and few incidents were recorded. If the recording rate itself is uncertain by 30–50%, that sets a floor on precision that more data cannot lower.</li>
+<li><span class="lead">No model sees a new event coming.</span> A model-based alert rule beat two simple baselines, but on data generated by that same model, a favourable test. In 62% of simulated surges a new event occurred after the forecast was made; the rule caught 28% of those surges, against 89% of the others.</li>
+</ul>
+</section>
+<div class="pair">
+<section class="status" aria-labelledby="h-not">
+<h2 id="h-not">What this is not</h2>
+<p><span class="badge">Status</span><strong>A methods paper, with no real-world findings.</strong> No real contagion has been measured yet: nothing here shows that antisemitic incidents are, or are not, contagious. The figures under “The problem” only motivate the questions; every result comes from simulated data. The paper proposes how to measure these patterns responsibly.</p>
+</section>
+<section class="next" aria-labelledby="h-next">
+<h2 id="h-next">What would come next</h2>
+<p>An analysis of New York City police records of anti-Jewish hate crimes from 2019 on, borough by borough, with a list of salient events fixed by coders who never see the incident data, and a plan registered publicly before any outcome data are examined. Contagion will be claimed only if it passes several pre-set tests, online–offline links will be reported as predictive, never causal, and any alerts would go only to vetted community-security partners, never published or mapped below borough level.</p>
+</section>
+</div>
+</main>
+<footer>
+<p>Kornstein Lab for Antisemitism Research · November 2026 · Drafted with substantial AI assistance (Anthropic’s Claude), directed and reviewed by the lab; full paper and code available on request.</p>
+</footer>
+</div>
+</body>
+</html>

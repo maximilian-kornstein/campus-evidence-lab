@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Plain-language brief of a methods paper on estimating how many antisemitic hate crimes are missed by every incident list. Simulation study only; no real-world estimates.">
+<title>The Dark Figure · Brief</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --ink: #1b1d22;
+  --muted: #5b6069;
+  --navy: #14284b;
+  --navy-mid: #3d5a80;
+  --rule: #c8ceda;
+  --tint: #f2f4f8;
+  --accent: #b8460e;
+  --sand: #fbf7f3;
+  --sand-rule: #e9d9cb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1522;
+    --ink: #e4e8ef;
+    --muted: #a3aab6;
+    --navy: #b4c5e4;
+    --navy-mid: #8fa7cf;
+    --rule: #2f3b54;
+    --tint: #172036;
+    --accent: #f0a26e;
+    --sand: #211a15;
+    --sand-rule: #4a3626;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1522;
+  --ink: #e4e8ef;
+  --muted: #a3aab6;
+  --navy: #b4c5e4;
+  --navy-mid: #8fa7cf;
+  --rule: #2f3b54;
+  --tint: #172036;
+  --accent: #f0a26e;
+  --sand: #211a15;
+  --sand-rule: #4a3626;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  /* System fonts only. Platform UI fonts first; Arial-metric fallbacks before the generic
+     system-ui so that wide Linux defaults do not push a brief onto a second printed page. */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, "Liberation Sans", system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.page {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 2.25rem 16px 2rem;
+}
+a { color: var(--navy-mid); text-underline-offset: 0.15em; }
+a:hover { color: var(--navy); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.topnav { margin: 0 0 1rem; font-size: 0.875rem; }
+.kicker {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.kicker .sep { color: var(--rule); margin: 0 0.45em; }
+.kicker .k2 { color: var(--muted); }
+.masthead { border-bottom: 2px solid var(--navy); padding-bottom: 0.9rem; margin-bottom: 1.1rem; }
+.masthead::before {
+  content: ""; display: block; height: 0; border-top: 1px solid transparent;
+}
+h1 {
+  margin: 0.55rem 0 0.2rem;
+  font-size: 2.15rem;
+  line-height: 1.12;
+  color: var(--navy);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.subtitle { margin: 0; font-size: 1.05rem; color: var(--ink); line-height: 1.35; }
+h2 {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--navy);
+  font-weight: 700;
+}
+section { margin: 0 0 1.05rem; }
+p { margin: 0 0 0.5rem; }
+p:last-child { margin-bottom: 0; }
+.oneline {
+  background: var(--tint);
+  border-left: 3px solid var(--navy);
+  padding: 0.7rem 1rem 0.75rem;
+}
+.oneline p { font-size: 1.1rem; line-height: 1.45; }
+ul { margin: 0; padding-left: 1.15rem; }
+li { margin: 0 0 0.4rem; padding-left: 0.1rem; }
+li:last-child { margin-bottom: 0; }
+li::marker { color: var(--navy-mid); }
+.lead { font-weight: 650; color: var(--navy); }
+.note { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.35rem; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin: 0 0 1.05rem; }
+.pair section { margin: 0; }
+.status {
+  background: var(--sand);
+  border: 1px solid var(--sand-rule);
+  border-left: 3px solid var(--accent);
+  padding: 0.7rem 0.9rem 0.75rem;
+}
+.status h2 { color: var(--accent); }
+.status .badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  padding: 0 0.35em;
+  margin-right: 0.35em;
+  vertical-align: 0.08em;
+}
+.next { border-top: 1px solid var(--rule); padding-top: 0.6rem; }
+footer {
+  border-top: 1px solid var(--rule);
+  padding-top: 0.55rem;
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+/* index page */
+.intro { font-size: 1.02rem; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin: 0 0 1.1rem; padding: 0; list-style: none; }
+.card {
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--navy);
+  background: var(--bg);
+  padding: 0.75rem 0.9rem 0.8rem;
+  display: flex; flex-direction: column;
+  margin: 0;
+}
+.card .num { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0; }
+.card h3 { margin: 0.15rem 0 0.1rem; font-size: 1.2rem; line-height: 1.2; color: var(--navy); }
+.card h3 a { color: inherit; text-decoration: none; }
+.card h3 a:hover { text-decoration: underline; }
+.card .q { margin: 0 0 0.4rem; font-style: italic; color: var(--ink); font-size: 0.95rem; }
+.card .one { font-size: 0.92rem; margin: 0 0 0.5rem; flex: 1; }
+.card .more { font-size: 0.88rem; font-weight: 600; margin: 0; }
+.howmade { background: var(--tint); border-left: 3px solid var(--navy); padding: 0.7rem 1rem 0.75rem; }
+
+@media (max-width: 640px) {
+  .page { padding-top: 1.5rem; }
+  h1 { font-size: 1.75rem; }
+  .pair, .cards { grid-template-columns: 1fr; }
+  .oneline p { font-size: 1.02rem; }
+}
+
+@page { size: Letter; margin: 0.5in 0.6in 0.45in; }
+@media print {
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    color-scheme: light;
+    --bg: #ffffff; --ink: #1b1d22; --muted: #5b6069; --navy: #14284b; --navy-mid: #3d5a80;
+    --rule: #c8ceda; --tint: #f2f4f8; --accent: #b8460e; --sand: #fbf7f3; --sand-rule: #e9d9cb;
+  }
+  html { font-size: 9pt; }
+  body { line-height: 1.38; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { max-width: none; padding: 0; }
+  h1 { font-size: 2rem; margin-top: 0.4rem; }
+  .masthead { padding-bottom: 0.7rem; margin-bottom: 0.85rem; }
+  section, .pair { margin-bottom: 0.75rem; }
+  .oneline { padding: 0.55rem 0.9rem 0.6rem; }
+  .oneline p { font-size: 1.05rem; line-height: 1.38; }
+  li { margin-bottom: 0.3rem; }
+  .note { margin-bottom: 0.25rem; }
+  .status { padding: 0.55rem 0.8rem 0.6rem; }
+  .next { padding-top: 0.5rem; }
+  footer { margin-top: 0.2rem; }
+  .topnav { display: none; }
+  a { color: inherit; text-decoration: none; }
+  section, .pair, .card, li { break-inside: avoid; }
+  .pair { grid-template-columns: 1fr 1fr; }
+  .cards { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+<nav class="topnav" aria-label="Breadcrumb"><a href="index.html">&larr; All four briefs</a></nav>
+<header class="masthead">
+<p class="kicker">Kornstein Lab for Antisemitism Research<span class="sep" aria-hidden="true">|</span><span class="k2">Plain-language brief · Paper 1 of 4</span></p>
+<h1>The Dark Figure</h1>
+<p class="subtitle">Estimating Unreported Antisemitic Hate Crime with Bayesian Record Linkage and Multiple-Systems Estimation</p>
+</header>
+<main>
+<section class="oneline" aria-labelledby="h-oneline">
+<h2 id="h-oneline">In one line</h2>
+<p>By checking which antisemitic incidents turn up on more than one incomplete list, we can estimate how many incidents every list missed, and say honestly how unsure that estimate is.</p>
+</section>
+<section aria-labelledby="h-problem">
+<h2 id="h-problem">The problem</h2>
+<p>Debates about antisemitism are argued in counts, yet every count is partial. For 2025, the FBI’s police-based statistics listed 1,528 anti-Jewish hate-crime incidents, while the ADL’s audit, which also counts non-criminal harassment, listed 6,274: different filters on the same reality, not rival answers. Incidents go missing when victims do not report, police do not record a bias motive, or agencies do not submit data, so a rising or falling count can reflect reporting as much as hate. If missing incidents cluster where victims trust institutions least, resources allocated by recorded counts miss the communities most affected, Jewish or otherwise.</p>
+</section>
+<section aria-labelledby="h-built">
+<h2 id="h-built">What we built</h2>
+<ul>
+<li><span class="lead">Comparing overlapping lists.</span> Police, NGO audits, community-security groups and reporting portals each record some of the same incidents. The pattern of overlap carries information about the incidents all of them missed (“capture–recapture”, already used to estimate conflict casualties and victims of modern slavery).</li>
+<li><span class="lead">An honest “what-if” dial.</span> One key assumption about how the lists relate to each other can never be tested from the data. We turn it into a single adjustable setting and report the range of answers it allows, in both directions, rather than one confident number.</li>
+<li><span class="lead">Fixing known distortions.</span> Some lists copy others (an audit may take in police reports); recording where each record came from removes that bias. Lists share no ID number, so records must be matched by date, place and type, and we model how matching mistakes distort the result.</li>
+<li><span class="lead">A reporting funnel.</span> We split the path from incident to federal statistics into stages (reported, recognised as bias-motivated, submitted), so a gap between two places can be traced to where incidents are lost. Incidents never reported to anyone can only be estimated with victim surveys.</li>
+</ul>
+</section>
+<section aria-labelledby="h-sims">
+<h2 id="h-sims">What our simulations show</h2>
+<p class="note">All results come from computer-simulated data with a known true answer (2,000 invented incidents, four invented lists).</p>
+<ul>
+<li><span class="lead">The theory’s warnings held up.</span> When some incidents were far less visible than others, the classic two-list estimate came out about 39% too low. When one list copied half of another’s records, using each record’s source flag cut the error from about −39% to about −1%.</li>
+<li><span class="lead">The “what-if” ranges worked, but were wide.</span> At the wider setting they contained the true number of missed incidents in 87–98% of simulated datasets, but in one scenario the typical range ran from about 230 to 1,680 when the truth was about 620. Without outside knowledge to narrow the dial, ranges this wide cannot guide policy.</li>
+<li><span class="lead">Our correction for matching errors failed under realistic errors.</span> It worked when errors followed its simplified model, but with realistic typos and date slips most errors were “swaps” (a record matched to the wrong partner), which that model leaves out. The correction then made things worse (about 47% too high, against 40% uncorrected), and averaging over many possible matchings did not remove the bias either, so we use it only as a warning light.</li>
+</ul>
+</section>
+<div class="pair">
+<section class="status" aria-labelledby="h-not">
+<h2 id="h-not">What this is not</h2>
+<p><span class="badge">Status</span><strong>A methods paper, with no real-world findings.</strong> No actual incident counts have been measured yet, and no real records have been linked. Every result here comes from simulated data; the FBI and ADL figures are published counts, quoted for context. The paper proposes how to measure these numbers responsibly.</p>
+</section>
+<section class="next" aria-labelledby="h-next">
+<h2 id="h-next">What would come next</h2>
+<p>A pilot for New York City, 2024–2025, linking police, NGO, community-security and reporting-portal records under data-use agreements, ethics review and privacy-protecting linkage, with the analysis plan and code registered publicly before any real record is accessed. If its checks show the lists cannot support a reliable estimate, we will report that as prominently as we would an estimate.</p>
+</section>
+</div>
+</main>
+<footer>
+<p>Kornstein Lab for Antisemitism Research · November 2026 · Drafted with substantial AI assistance (Anthropic’s Claude), directed and reviewed by the lab; full paper and code available on request.</p>
+</footer>
+</div>
+</body>
+</html>
